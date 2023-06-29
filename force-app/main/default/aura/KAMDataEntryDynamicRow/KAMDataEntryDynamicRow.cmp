@@ -1,0 +1,58 @@
+<aura:component controller="KAMDataEntryClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="payoutWrapper" type="object" />
+    <aura:attribute name="draftQty" type="Decimal"/>
+    <aura:attribute name="productPrice" type="Decimal"/>
+    <aura:attribute name="Tier" type="Decimal"/>
+    <aura:attribute name="pType" type="String"/>
+    <aura:attribute name="quantity" type="Decimal"/>
+    <aura:attribute name="threshold" type="Decimal"/>
+    <aura:attribute name="payout" type="Decimal"/>
+    <aura:attribute name="rowIndex" type="Integer"/>
+    <aura:attribute name="totalItems" type="Integer"/>
+    <aura:attribute name="frezzein" type="boolean"/>
+    
+    <aura:attribute name="showAdd" type="boolean" default="false"/>
+    <aura:attribute name="freezeInput" type="boolean" default="false"/>
+    
+    <aura:registerEvent name="KAMDataEntryDynamicRowRemove" type="c:KAMDataEntryDynamicRowRemove"/> 
+    <aura:registerEvent name="KAMDataEntryDynamicRowAdd" type="c:KAMDataEntryDynamicRowAdd"/>
+    <aura:registerEvent name="KAMDataEntryDynamicRowPayout" type="c:KAMDataEntryDynamicRowPayout"/>
+    
+    <lightning:layout  horizontalAlign="center" multipleRows="true">
+        
+        <lightning:layoutItem class="slds-align_absolute-center" size="2">
+            <b>
+                <lightning:input class="disabledCss center-text-align slds-m-right_xx-small" type="number" disabled="true" value="{!v.payoutWrapper.Tier}" variant="label-hidden"/>  
+            </b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="slds-align_absolute-center" size="2">
+            <b>
+                <lightning:input class="disabledCss right-text-align slds-m-right_xx-small" type="number" disabled="{!v.frezzein}"  variant="label-hidden" onchange="{!c.CalcPct}" value="{!v.payoutWrapper.threshold}" onblur="{!c.AddWrapper}"  />  
+            </b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="right-align" size="2">
+            <b> <lightning:input class="disabledCss center-text-align slds-m-right_xx-small" type="number" disabled="true" value="{!v.payoutWrapper.quantity}" maximumFractionDigits="2" minimumFractionDigits="2" variant="label-hidden"  step=".01"/> </b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="slds-align_absolute-center" size="2">
+            <b>
+                <lightning:input class="disabledCss right-text-align slds-m-right_xx-small" type="number" disabled="{!or(v.frezzein, v.pType =='Pct of Product Price')}" variant="label-hidden"  value="{!v.payoutWrapper.payout}" onchange="{!c.handlePayout}" onblur="{!c.AddWrapper}"   step=".01"/>  
+            </b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="slds-align_absolute-center" size="2">
+            <b>
+                <lightning:input class="disabledCss right-text-align slds-m-right_xx-small" type="number" disabled="{!or(v.frezzein, v.pType =='Value')}" variant="label-hidden"  value="{!v.payoutWrapper.payoutPct}" onchange="{!c.handlePayoutPct}" onblur="{!c.AddWrapper}"   step=".01"/>  
+            </b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="" size="2">
+            <a onclick="{!c.removeRow}" class="slds-m-right_xx-small" data-index="{!v.rowIndex}">
+                <lightning:buttonIcon  iconName="utility:dash" variant="bare"  alternativeText="Remove" title="Remove" />
+            </a>
+            <aura:if isTrue="{!v.totalItems==v.rowIndex+1}">
+                <a onclick="{!c.AddNewRow}" data-index="{!v.rowIndex}">
+                    <lightning:buttonIcon iconName="utility:add" variant="bare"  alternativeText="Add" title="Add" />
+                </a> 
+            </aura:if>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <br/>
+</aura:component>

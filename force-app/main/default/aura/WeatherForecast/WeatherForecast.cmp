@@ -1,0 +1,10 @@
+<aura:component implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global">
+    <lightning:tabset selectedTabId="one">
+        <lightning:tab label="Weekly" id="one">
+           <c:WeatherForecastWeekly recordId="{!v.recordId}"></c:WeatherForecastWeekly>
+        </lightning:tab>
+        <lightning:tab label="Hourly" id="two">
+            <c:WeatherForecastHourly recordId="{!v.recordId}" ></c:WeatherForecastHourly>
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>

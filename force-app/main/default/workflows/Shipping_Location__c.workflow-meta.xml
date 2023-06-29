@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Expiry_Date</fullName>
+        <field>Expiry_Date__c</field>
+        <formula>Issuing_Date__c + 1825</formula>
+        <name>Update Expiry Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Update Expiry Date</fullName>
+        <actions>
+            <name>Update_Expiry_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Shipping_Location__c.Sales_Org_Code__c</field>
+            <operation>equals</operation>
+            <value>2410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Shipping_Location__c.Issuing_Date__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>Expiry date for Italy shipping locations will be 5 years more than the Issuing date</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

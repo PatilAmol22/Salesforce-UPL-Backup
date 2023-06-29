@@ -1,0 +1,140 @@
+.THIS {
+}
+.THIS .bccolor{
+    background-color:#F7F7F7 !important;
+}
+.THIS .fontcolor{
+    color: #696969 !important;
+    margin-left: 70px;
+}
+.THIS .slds-select{
+    background-color:#F7F7F7 !important;
+}
+.THIS .headingCSS{  
+    text-align: left;
+    color: #000000;
+    font-size:30px;
+    background-color:#F7F7F7;
+}
+.THIS .errorcolor{
+    color:red;
+}
+.THIS .maindiv{
+    background-color:white;
+}
+.THIS .textCSS{
+    font-size:16px;
+    color: #000000;
+}
+.THIS .inputboxCSS{
+    font-size:13px;
+    color: #000000;
+    background: #F7F7F7 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+.THIS .cancelCSS{
+    border: 2px solid #FF8833;
+    color: #000000;  
+    font-size:13px;
+}
+.THIS .saveBtn{
+    background-color: #00BDF2;
+    border:1px solid #00BDF2;
+    color: #ffffff;  
+    font-size:13px;
+}
+.THIS .slds-dropdown-trigger .slds-combobox__input {
+    background-color: #f7f7f7;
+}
+@media only screen and (max-width: 1023px) and (min-device-width: 768px){
+    .THIS .hidepaddingleft{
+        padding-left:0px;
+    }
+    
+}
+@media only screen and (max-width: 1023px) {
+    .THIS .custom-mob-css{
+        padding-left: 0;
+    }
+    .THIS .case-tel{
+        padding-left: 0;
+    }
+    .THIS .case-cat{
+        padding-left: 0;
+    }
+}
+@media screen and (max-width: 480px) and (min-width: 300px){
+    .THIS .headingCSS{  
+        font-size:24px;
+    }
+    .THIS .divcss{
+        margin: 4%;
+    }
+    .THIS .hidepaddingleft{
+        padding-left:0px;
+    }
+    .THIS .richTextStyle{
+        height:300px;
+        float:left !important;
+    }
+    .THIS .checkboxStyle{
+        top:6px;
+        float:left !important;
+    }
+    .THIS .responsiveStyle{
+        display:block;
+        border:none;
+        margin-top:2%;
+    }
+    .THIS .paddingtopcls{
+        padding-top: 2%;
+    }
+}
+@media screen and (max-width: 767px) and (min-width: 481px){
+    .THIS .divcss{
+        margin: 4%;
+    }
+    .THIS .paddingtopcls{
+        padding-top: 2%;
+    }
+    .THIS .hidepaddingleft{
+        padding-left:0px;
+    }
+    .THIS .richTextStyle{
+        height: 250px;
+        float: left !important;
+        top: 10px;
+        width:100%;
+    }
+    .THIS .checkboxStyle{
+        top:6px;
+        float:left !important;
+        padding-bottom:2%;
+    }
+    .THIS .richTextLabelStyle
+    {
+        float: left !important;
+        position: relative;
+        padding-top:4%;
+        padding-bottom:2%;
+    }
+    .THIS .richTextLabelAddStyle
+    {
+        float: left !important;
+        position: relative;
+        top: 78px;
+        left: -360px;
+        padding-top:4%;
+        padding-bottom:2%;
+    }
+    .THIS .responsiveStyle{
+        display:block;
+        border:none;
+        margin-top:2%;
+    }
+}
+@media only screen and (max-width: 375px) {
+    .THIS .fontcolor{
+        margin-left: 55px;
+    }
+}

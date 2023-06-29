@@ -1,0 +1,108 @@
+<aura:component implements="force:hasRecordId,force:lightningQuickActionWithoutHeader" 
+                controller="OrderBlocking">
+    
+    
+    <aura:attribute name="cancelMap" type="Map"/><!--Added by Harshit@wipro for SOCR-002-->
+    <aura:attribute name="cancel" type="Sales_Order__c" default="{'sobjectType':'Sales_Order__c', 
+                                                                 'Cancellation_Reason__c':''}"/><!--Added by Harshit@wipro for SOCR-002-->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    
+    <aura:attribute name="recordError" type="String"/>
+    <aura:attribute name="recordInfo" type="Object" />
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="ShowSpinner" type="boolean" default="true"/>
+    <aura:attribute name="ShowLC" type="boolean" default="false"/>
+    <aura:attribute name="GetOrder" type="boolean" default="false"/>
+    <aura:attribute name="User" type="Object" />
+    <aura:attribute name="ShowModel" type="boolean"/>
+    <force:recordData recordId="{!$SObjectType.CurrentUser.Id}"
+                      layoutType="FULL"
+                      fields="Profile.Name"
+                      targetFields="{!v.User}" 
+                      recordUpdated="{!c.handleUserUpdated}"/>
+    
+    
+    <aura:if isTrue="{!v.GetOrder}">  
+        <force:recordData aura:id="recordLoader"
+                          recordId="{!v.recordId}"
+                          fields="Order_Status__c,Type_of_Order__c,SAP_Order_Number__c,BrazilSalesOrderStatus__c,Blocked_Cancellation_Message__c,Cancel_Comment__c"                   
+                          targetFields="{!v.simpleRecord}"
+                          targetError="{!v.recordError}"
+                          recordUpdated="{!c.handleRecordUpdated}"/> <!--targetRecord="{!v.record}" --> 
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowLC}">
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="12">
+                {!$Label.c.OBQuestion}
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="2">
+                Observação: 
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" size="10">
+                <lightning:textarea label="Observação"
+                                    aura:id="Comments"
+                                    name="blue"                                  
+                                    variant="label-hidden"
+                                    />
+                
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        <!--Added by Harshit@wipro for SOCR-002 START-->
+        <lightning:layout >
+
+            <div class="form-group" style="padding:10px; float:right; display:inline; width:100%; margin:10px -89px 20px 0px;">
+              <span class="required " data-aura-rendered-by="402:353;a">*</span>
+               <lightning:layoutItem padding="around-small" size="2">
+                   {!$Label.c.Cancellation_Reason}
+                </lightning:layoutItem>
+            </div>
+
+            
+            <div class="form-group" style="padding:10px; float:left; display:inline; width:500%; margin:0px 0px 20px 71px;">
+                <lightning:select aura:id="CancellationReasonPicklist" value="{!v.cancel.Cancellation_Reason__c}" onchange="{!c.cancellationReason}" name="cancelReason">
+                    <option value=" ">--None--</option>
+                    
+                    <aura:iteration items="{!v.cancelMap}" var="ind" indexVar="key">
+                        <option text="{!ind.value}" value="{!ind.key}" selected="{!ind.key==v.cancel.Cancellation_Reason__c}"/>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+            
+        </lightning:layout>
+        <!--END-->
+        
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="8">
+                
+            </lightning:layoutItem>
+
+            <lightning:layoutItem padding="around-small" size="4">
+                <lightning:button label="{!$Label.c.OBNo}" title="{!$Label.c.OBNo}" onclick="{! c.No }"/>
+                                <lightning:button label="{!$Label.c.OBYes}" title="{!$Label.c.OBYes}" onclick="{! c.Yes }"/>
+
+
+            </lightning:layoutItem>
+              
+            <!-- <lightning:layoutItem padding="around-small" size="2">
+          
+        </lightning:layoutItem> -->
+            
+        </lightning:layout>
+        
+        
+    </aura:if>
+    
+    
+    <aura:if isTrue="{!v.ShowSpinner}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if> 
+    
+</aura:component>

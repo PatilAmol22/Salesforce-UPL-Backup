@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>France_Contract_SM_Approval_Mail</fullName>
+        <description>France Contract SM Approval Mail</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/France_Contract_SM_Approval_Mail</template>
+    </alerts>
+    <alerts>
+        <fullName>France_Contract_SM_Rejection_Mail</fullName>
+        <description>France Contract SM Rejection Mail</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/France_Contract_SM_Rejection_Mail</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>CommercialManager_Approv_Response_Status</fullName>
+        <field>Commercial_Manager_Response_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>CommercialManager Approv Response Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CommercialManager_Reject_Response_Status</fullName>
+        <field>Commercial_Manager_Response_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>CommercialManager Reject Response Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Commercial_Manager_ApprovedResponse_Date</fullName>
+        <field>Commercial_Manager_Response_Date__c</field>
+        <formula>today()</formula>
+        <name>Commercial Manager ApprovedResponse Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Commercial_Manager_Reject_Response_Date</fullName>
+        <field>Commercial_Manager_Response_Date__c</field>
+        <formula>today()</formula>
+        <name>Commercial Manager Reject Response Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_SM_Approved</fullName>
+        <field>Status__c</field>
+        <literalValue>Sales Manager Approved</literalValue>
+        <name>Status SM Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_SM_Not_Approved</fullName>
+        <field>Status__c</field>
+        <literalValue>Sales Manager Rejected</literalValue>
+        <name>Status SM Not Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

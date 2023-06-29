@@ -1,0 +1,20 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+	<aura:attribute name="IsSpinner" type="Boolean" default="true"/>
+    
+    <!--aura:html tag="style">
+        .slds-modal {
+        visibility: hidden;
+        display: none;
+        }
+        .slds-backdrop {
+        display: none;
+        }        
+    </aura:html-->
+    
+    <aura:if isTrue="{!v.IsSpinner}">
+        <lightning:spinner variant="brand" alternativeText="Loading" size="large" />
+    </aura:if>
+    <aura:if isTrue="{!v.IsSpinner}">
+    	<c:updateMetricsLWC recordId="{!v.recordId}" onshowSpinner="{!c.showSpinnerMethod}" onclose="{!c.closeModal}"></c:updateMetricsLWC>
+    </aura:if>
+</aura:component>

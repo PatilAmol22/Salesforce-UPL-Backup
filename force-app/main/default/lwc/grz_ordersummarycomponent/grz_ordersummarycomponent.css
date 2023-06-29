@@ -1,0 +1,230 @@
+.divstyle{
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+    opacity: 1;
+    background-color: white;
+}
+
+.divstyleParent{
+    /* position: relative;
+    height: 105px; */
+}
+
+
+.childdivstyle{
+    /* width: 100%;
+    position: absolute;
+    background-color: white;
+    border-radius: 4px;
+    border-bottom: 1px solid #e5e5e5; */
+}
+
+.borderclr{
+    background-color: #F5F5F5;
+    opacity: 1;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+}
+
+.divbordertop{
+    border-top: 1px solid #E5E5E5;
+}
+
+.borderleft{
+    border-left: 1px solid #E5E5E5;
+}
+
+.fontTitleClr{
+    color:#000000;
+    font-size: 14px;
+}
+.fontlableClr{
+   color: #000000;
+   font-size: 14px;
+}
+.fontTextClr{
+    color:#FF6D00;
+    font-size: 14px;
+}
+
+.my-menu1{
+    max-height: 40px;
+    overflow-y: hidden;
+    transition: max-height 0.15s ease-out;
+}
+.my-menu2hover{
+    /* height: 250px; */
+    max-height: 500px;
+    transition: max-height 0.40s ease-in;
+}
+
+.iconborder{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #E5E5E5;
+    border-radius: 2px;
+    opacity: 1;
+}
+.pointer{
+    cursor: pointer;
+}
+
+.imgpadding{
+    padding-left: 22%;
+}
+
+.status{
+    display: inline-block;
+    min-width: 140px;
+    font-size: 12px;
+    background-clip: content-box;
+}
+
+.nodatacss{
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    opacity: 1;
+    background-color: white;
+    padding: 2%;
+}
+
+.textoverflowcls{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 767px) {
+    .status{
+        padding-top: 6px;
+    }
+    .paddingclass{
+        padding-right: 19px;
+        }
+         .paddingclass1{
+        padding-right: 26px;
+        }
+         .paddingclass2{
+        padding-right: 25px;
+        }
+    .productpadding{
+        padding-bottom: 2px;
+    }
+    .my-menu1{
+        max-height: 54px;
+        overflow-y: hidden;
+        transition: max-height 0.15s ease-out;
+    }
+    .my-menu2hover{
+        max-height: 500px;
+        transition: max-height 0.40s ease-in;
+    }
+    .divstyleParent{
+        /* position: relative;
+        height: 116px; */
+    }
+    
+    .childdivstyle{
+        /* width: 100%;
+        position: absolute;
+        background-color: white;
+        border-radius: 4px;
+        border-bottom: 1px solid #e5e5e5; */
+    }
+    .fontTitleClr {
+        color: #000;
+        font-size: 13px;
+    }
+    .orderIddivpadding{
+        padding-top: 2%;
+    }
+    .borderleft{
+        border-left: 0px solid #E5E5E5;
+    }
+    .hidePaddingleft{
+        padding-left: 0px;
+    }
+        
+    .onmobileViewHide{
+        display: none;
+    }
+    .fontTextClr {
+        font-size: 13px;
+    }    
+    .fontlableClr{
+        font-size: 13px;
+    }
+     .shadoweffect{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+}
+
+@media only screen and (max-width: 1023px) and (min-device-width: 768px) {
+
+      .paddingclass1{
+        padding-right: 29px;
+        }
+          .paddingclass2{
+        padding-right: 28px;
+        }
+        .my-menu1{
+        max-height: 60px;
+        overflow-y: hidden;
+        transition: max-height 0.15s ease-out;
+    }
+    .my-menu2hover{
+        max-height: 500px;
+        transition: max-height 0.40s ease-in;
+    }
+    .divstyleParent{
+        /* position: relative;
+        height: 125px; */
+    }
+    
+    .childdivstyle{
+        /* width: 100%;
+        position: absolute;
+        background-color: white;
+        border-radius: 4px;
+        border-bottom: 1px solid #e5e5e5; */
+    }
+    .fontTitleClr {
+        font-size: 15px;
+    }
+    .borderleft{
+        border-left: 0px solid #E5E5E5;
+    }
+    .hidePaddingleft{
+        padding-left: 0px;
+        padding-top: 1%;
+    }
+    .hidepaddingleftvalue{
+        padding-left: 0px;
+    }
+    
+    .fontTextClr {
+        font-size: 15px;
+    }
+    
+    .fontlableClr{
+        font-size: 15px;
+    }
+
+    .orderIddivpadding{
+        padding-top: 1%;
+    }
+
+
+}
+@media screen and (max-width: 900px) and (orientation:Landscape){
+
+    .my-menu1{
+        max-height: 64px;
+        overflow-y: hidden;
+        transition: max-height 0.15s ease-out;
+    }
+    .my-menu2hover{
+        max-height: 500px;
+        transition: max-height 0.40s ease-in;
+    }
+}

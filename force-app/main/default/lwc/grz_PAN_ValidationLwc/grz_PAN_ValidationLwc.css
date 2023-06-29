@@ -1,0 +1,14 @@
+.error{
+    text-align: center;
+    color: red;
+    font-size: 15px;
+    padding-top: 5%;
+}
+.message{
+    text-align: center;
+    font-size: 15px;
+    padding-top: 5%;
+}
+.modal-height{
+    min-height: 100px;
+}

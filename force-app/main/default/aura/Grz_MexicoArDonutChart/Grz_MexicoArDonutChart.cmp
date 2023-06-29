@@ -1,0 +1,94 @@
+<aura:component controller="Grz_MexicoAccountReceivable" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+	<aura:attribute name="OpeningBalance" type="String"/>
+    <aura:attribute name="ClosingBalance" type="String"/>
+    <aura:attribute name="response" type="Object"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="chart" type="Object"/>
+    <aura:attribute name="delay" type="Integer" default = "2"/>
+    <aura:attribute name="TotalOverdue" type="String" default = "0"/>
+    <aura:attribute name="NotYetDue" type="String" default = "0"/>
+    <aura:attribute name="NotDueAndOverdueLabels" type="List"/>
+    <aura:attribute name="OpenClosingBalanceLabels" type="List"/>
+    <aura:attribute name="NoCreditDebitTotal" type="String" default="Datos no disponibles"/>
+    <aura:attribute name="IsCreditDebitTotal" type="Boolean" default="false" />
+    <aura:attribute name="error" type="Boolean" default="true" />
+    <aura:attribute name="Message" type="String"/>
+    
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    
+    <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small">
+        <div class="slds-grid slds-wrap slds-m-left_small slds-m-right_small slds-m-top_small slds-p-bottom_small slds-m-bottom_small slds-border_bottom">
+            <div class="slds-col slds-size_12-of-12">
+                <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_ArChartLabel}</span>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.loaded }">
+               <aura:if isTrue="{!v.error}">
+                    <!--<div class="slds-grid slds-wrap slds-m-around_small">
+                        <div class="slds-col slds-size_12-of-12 slds-p-bottom_x-small"> 
+                            <div class="componentNotoSansMedium" style="font-size: 13px;">
+                                <span>{!v.OpenClosingBalanceLabels[0]} :<span class="componentNotoSansBold">&nbsp;{!$Locale.currencyCode}&nbsp;{!v.OpeningBalance}</span></span>
+                            </div>                  
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-p-bottom_xx-small"> 
+                            <div class="componentNotoSansMedium" style="font-size: 13px;">
+                                <span>{!v.OpenClosingBalanceLabels[1]} :<span class="componentNotoSansBold">&nbsp;{!$Locale.currencyCode}&nbsp;{!v.ClosingBalance}</span></span>
+                            </div>                  
+                        </div>
+                    </div>-->
+            	</aura:if>
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:set>
+            
+        </aura:if>
+        <div>
+            <canvas class="canCSS slds-align_absolute-center"  id="pie-chartMexicoArStat" width="300" height="230"/>
+        </div>
+        <aura:if isTrue="{!v.IsCreditDebitTotal}">
+            <div class="slds-p-left_medium slds-p-right_medium">
+                <p class="componentNotoSansMedium">{!v.NoCreditDebitTotal}</p>
+            </div>
+        </aura:if> 
+        <aura:if isTrue="{!v.loaded }">
+            <aura:if isTrue="{!v.error }">
+                <div class="slds-m-around_medium">
+                    <div class="borderCSS">
+                        <div class="slds-grid slds-wrap slds-border_top" >                    
+                            <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="background-color: #0000FF">
+                            </div>
+                            <div class="slds-col slds-size_10-of-12 slds-p-bottom_x-small slds-p-top_x-small slds-p-left_x-small slds-grid slds-wrap">
+                                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12  slds-small-size_7-of-12 slds-x-small-size_12-of-12">
+                                    <p aura:id="p1" class="chartCSS slds-p-top_xx-small slds-p-bottom_xx-small componentNotoSansMedium">{!v.NotDueAndOverdueLabels[0]}</p>
+                                </div>
+                                <div class="Res slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-small-size_5-of-12 slds-x-small-size_12-of-12">
+                                    <p class="chartCSS slds-p-left_x-small slds-p-top_xx-small slds-p-right_xx-small hidePadding"><p class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;<lightning:formattedNumber value="{!v.TotalOverdue}"></lightning:formattedNumber></p></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-border_top" >
+                            <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="background-color: #FFFF00">
+                            </div>
+                            <div class="slds-col slds-size_10-of-12 slds-p-bottom_x-small slds-p-top_x-small slds-p-left_x-small">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12  slds-small-size_7-of-12 slds-x-small-size_12-of-12">
+                                        <p aura:id="p1" class="chartCSS slds-p-top_xx-small slds-p-bottom_xx-small componentNotoSansMedium">{!v.NotDueAndOverdueLabels[1]}</p>
+                                    </div>
+                                    <div  class="Res slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-small-size_5-of-12 slds-x-small-size_12-of-12">
+                                        <p class="chartCSS slds-p-left_x-small slds-p-top_xx-small slds-p-right_xx-small hidePadding"><p class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;<lightning:formattedNumber value="{!v.NotYetDue}"></lightning:formattedNumber></p></p>
+                                    </div>
+                                </div>                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-p-left_medium slds-p-right_medium noteclass componentNotoSansBold">
+                     <b>*Nota:- Al pasar el gráfico por encima, solo mostramos el valor de entero positivo.</b>
+            	</div>
+                <aura:set attribute="else">
+                        <p class="Errors componentNotoSansBold">{!v.Message}</p>
+                </aura:set>
+            </aura:if>
+        </aura:if>        
+    </div>
+</aura:component>

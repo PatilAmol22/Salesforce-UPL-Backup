@@ -1,0 +1,113 @@
+<template>
+	<div class='Main'>
+		Resultados da pesquisa
+	</div>
+	<div class='tabs'>
+		<lightning-tabset>
+			<lightning-tab label="Fale com o Customer" value="Fale com o Customer" onactive={handleCase}>
+			</lightning-tab>
+			<template if:true={userValid}>
+				<lightning-tab label="Pedido de Venda" value="Pedido de Venda" onactive={handleSalesOrder}>
+				</lightning-tab>
+			</template>
+		</lightning-tabset>
+	</div>
+	<div class="Len">
+		{datalenght} resultado
+	</div>
+	<div if:true={salesOrderTile}>
+		<div class="table-scroll">
+			<div class="slds-grid slds-wrap table-width-scroll">
+				<table class="slds-m-bottom_small">
+					<thead class="componentNotoSansLight table-head">
+						<tr class='rowcolor'>
+							<th class="slds-p-left_x-small table-head-css" scope="col">
+								<div class="slds-truncate" title="Pedido de Venda">Número do Pedido WEB</div>
+							</th>
+							<th class="slds-p-left_x-small table-head-css" scope="col">
+								<div class="slds-truncate" title="Status do Pedido">nome do proprietário</div>
+							</th>
+							<th class="slds-p-left_x-small table-head-css" scope="col">
+								<div class="slds-truncate" title="Data de Criação">CLIENTE</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody class="table-body">
+						<template for:each={salesData} for:item="Data">
+							<tr key={Data.Id} class="slds-border_bottom">
+								<td class="slds-p-left_x-small table-body-css">
+									<a data-value={Data.Id} onclick={handleOrderDetail} href={salesOrderdetailPageLink}
+										target="_blank" class="order-link">{Data.Name}</a>
+								</td>
+								<td class="slds-p-left_x-small table-body-css" scope="col">
+									<div>{Data.CreatedBy.Name}</div>
+								</td>
+								<td class="slds-p-left_x-small table-body-css" scope="col">
+									<div>{Data.Sold_to_Party__r.Name}</div>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+	<div if:true={salesNoData}>
+		<div class="erMsg">
+			Nenhum resultado para "{recId}" nos registros do pedido de vendas
+		</div>
+	</div>
+
+	<div if:true={caseTile}>
+		<div class="table-scroll">
+			<div class="slds-grid slds-wrap table-width-scroll">
+				<table class="slds-m-bottom_small">
+					<thead class="componentNotoSansLight table-head">
+						<tr class='rowcolor'>
+							<th class="slds-p-left_x-small table-head-css" scope="col">
+								<div class="slds-truncate" title="Pedido de Venda">Número do fale com o customer</div>
+							</th>
+							<th class="slds-p-left_x-small table-head-css" scope="col">
+								<div class="slds-truncate" title="Status do Pedido">Nome da Cliente</div>
+							</th>
+							<th class="slds-p-left_x-small table-head-css" scope="col">
+								<div class="slds-truncate" title="Data de Criação">STATUS</div>
+							</th>
+							<th class="slds-p-left_x-small table-head-css" scope="col">
+								<div class="slds-truncate" title="Data de Criação">Nome do proprietário</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody class="table-body">
+						<template for:each={caseData} for:item="Data">
+							<tr key={Data.Id} class="slds-border_bottom">
+								<td class="slds-p-left_x-small table-body-css">
+									<a data-value={Data.Id} onclick={handleCaseDetail} href={caseDetailPageLink}
+										target="_blank" class="order-link">{Data.CaseNumber}</a>
+								</td>
+								<td class="slds-p-left_x-small table-body-css" scope="col">
+									<div>{Data.Account.Name}</div>
+								</td>
+								<td class="slds-p-left_x-small table-body-css" scope="col">
+									<div>{Data.Status}</div>
+								</td>
+								<td class="slds-p-left_x-small table-body-css" scope="col">
+									<div>{Data.CreatedBy.Name}</div>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div if:true={caseNoData}>
+		<div class="erMsg">
+			Nenhum resultado para "{recId}" nos registros de caso
+		</div>
+	</div>
+
+</template>

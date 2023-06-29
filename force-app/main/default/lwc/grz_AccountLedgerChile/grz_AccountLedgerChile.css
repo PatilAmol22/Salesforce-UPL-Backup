@@ -1,0 +1,934 @@
+.hidedefaultvalue {
+    display: none;
+  }
+  .showfaultvalue {
+    display: block;
+  }
+  .customer-num-div{
+    margin-top: 24px;
+  }
+  .divmargenclstable {
+    margin-left: 8%;
+    margin-bottom: 5%;
+  }
+  .divheightaccount {
+    min-height: 100px;
+  }
+  .exampleHolder {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    background-color: #f7f7f7;
+  }
+  /*New Css*/
+  .banner-div {
+    margin: -35px -12px 0 -12px;
+    position: relative;
+  }
+  .banner-img {
+    height: 116px;
+    width: 100%;
+  }
+  .banner-text {
+    position: absolute;
+    text-align: center;
+    color: #fff;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+    font-size: 30px;
+  }
+  .bread-crumb {
+    margin-left: 0%;
+  }
+  .tab-div {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .cust-info-div {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 2% 0%;
+    border: 1px solid #ddd;
+  }
+  .first-block {
+    border-right: 2px solid #dddddd;
+    padding-left: 2%;
+    width: 24%;
+    display: flex;
+  }
+  .second-block {
+    border-right: 2px solid #dddddd;
+    padding-left: 2%;
+    width: 50%;
+    display: flex;
+  }
+  .third-block {
+    padding-left: 2%;
+    width: 24%;
+    display: flex;
+  }
+  .cust-data-text {
+    color: #888888;
+    font-size: 16px;
+  }
+  .lab-btn {
+    margin-bottom: 0px;
+  }
+  .cust-data {
+    margin-left: 2%;
+    color: #000000;
+    font-size: 16px;
+  }
+  .table-comp-div {
+    margin-bottom: 2%;
+    margin-top: 2%;
+    background-color: white;
+    border: 1px solid #ddd;
+  }
+  .filter-div {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  .filter-icon-div {
+    margin-top: 23px;
+  }
+  .ledger-statement-btn {
+    background-color: #00bdf2;
+    color: #fff;
+    border: none;
+    padding: 6px 6px;
+    font-size: 14px;
+    margin-top: 23px;
+  }
+  .quarter-div {
+    width: 14%;
+  }
+  .year-div {
+    width: 14%;
+  }
+  .table-head-div {
+    margin-top: 2%;
+  }
+  .table-head {
+    color: #888888;
+    font-size: 12px;
+  }
+  .error-div {
+    background-color: white;
+    border: 1px solid #ddd;
+    margin-top: 2%;
+  }
+  .head-element,
+  .table-element {
+    height: 33px;
+    width: 12.5%;
+  }
+  .cell-height{
+    height: 33px;
+  }
+  .cell-height-bal{
+    height: 40px;
+  }
+  .fixed-header-row1{
+    position: sticky;
+    top: 0;
+  }
+  .fixed-header-row2{
+    position: sticky;
+    top: 40px;
+  }
+  .fixed-header-row3{
+    position: sticky;
+    bottom: 40px;
+  }
+  .fixed-header-row4{
+    position: sticky;
+    bottom: 0;
+  }
+  .head-element-combine,
+  .table-element-combine {
+    width: 39%;
+  }
+  .merge-table1{
+    width:29%;
+  }
+  .merge-table2{
+    width:70%;
+  }
+  .head-element-doc,
+  .table-element-doc {
+    height: 40px;
+    width: 15.5%;
+  }
+  .head-element-special1,
+  .table-element-special1 {
+    width: 10.5%;
+  }
+  .head-element-special2,
+  .table-element-special2 {
+    width: 12.5%;
+  }
+  .open-bal-div,
+  .close-bal-div {
+    display: flex;
+    height: 40px;
+    background-color: #ebebeb;
+    margin-top: -12px;
+    margin-left: 12px;
+    margin-right: -12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .bf-text {
+    margin-left: 12px;
+    width: 63%;
+  }
+  .bf-data {
+    width: 13%;
+  }
+  .bf-data2 {
+    width: 25%;
+  }
+  .close-bal-div {
+    margin-top: 0;
+  }
+  .cf-text {
+    margin-left: 12px;
+    width: 62%;
+  }
+  .cf-data {
+    width: 13%;
+  }
+  .cf-data2 {
+    width: 25%;
+  }
+  .customer-total-div {
+    display: flex;
+    height: 45px;
+    font-size: 16px;
+    background-color: rgb(38 64 138);
+    color: white;
+    margin-left: 12px;
+    margin-right: -12px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .total-ledger-css{
+    font-size: 14px;
+    background-color: rgb(38 64 138);
+    color: white;
+  }
+  .customer-total-text {
+    margin-left: 12px;
+    width: 30%;
+  }
+  .customer-total-debit {
+    width: 34%;
+      text-align: right;
+  }
+  .customer-total-credit {
+    width: 25%;
+  }
+  .table-body-data {
+    color: #000000;
+  }
+  .table-data-scroll {
+    width: 100%;
+    height: 495px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  /*.table-data-scroll::-webkit-scrollbar {
+    width: 0;
+  }*/
+  .acc-table-data-scroll {
+    width: 101.5%;
+    height: 495px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  /*.acc-table-data-scroll::-webkit-scrollbar {
+    width: 0;
+  }*/
+  .download-div {
+    margin: 13px 0 13px 12px;
+  }
+  .dwnld-btn {
+    border: 2px solid rgb(255 136 51);
+    padding: 7px 17px;
+    background-color: white;
+    color: black;
+  }
+  .download-icon {
+    padding-right: 10px;
+  }
+  
+  .acc-statement-div {
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  .acc-head-element,
+  .acc-table-element {
+    height: 40px;
+    width: 16.5%;
+  }
+  .acc-filter-div {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .acc-doc-filter {
+    width: 26%;
+  }
+  .acc-date-filter {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+  }
+  .acc-st-div {
+    width: 31%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .acc-year-div {
+    width: 25%;
+  }
+  .acc-start-date,
+  .acc-end-date {
+    width: 35%;
+  }
+  
+  .acc-statement-filter {
+    width: 49%;
+  }
+  .acc-st-btn {
+    width: 49%;
+  }
+  .acc-table-head-div {
+    margin-right: 28px;
+  }
+  .acc-total-div {
+    display: flex;
+    height: 45px;
+    font-size: 16px;
+    background-color: rgb(38 64 138);
+    color: white;
+    margin-left: 12px;
+    margin-right: -12px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .acc-total-text {
+    margin-left: 12px;
+    width: 64%;
+  }
+  .acc-total-debit {
+    width: 18%;
+  }
+  .acc-total-credit {
+    width: 18%;
+  }
+  .no-record-error {
+    text-align: center;
+    color: red;
+    font-size: 20px;
+    padding-bottom: 4%;
+    padding-top: 4%;
+  }
+  .doc-types-div {
+    margin-bottom: 6%;
+    margin-top: 3%;
+  }
+  .doc-desc {
+    font-size: 28px;
+    font-family: "NotoSansLight";
+    margin-bottom: 2%;
+  }
+  .main-doc-value-div {
+    display: flex;
+    justify-content: space-between;
+  }
+  .doc-value-left-div {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+  }
+  .doc-value-right-div {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+  }
+  .single-doc-block-left {
+    width: 50%;
+  }
+  .single-doc-block-right {
+    width: 50%;
+  }
+  .doc-row {
+    margin-bottom: 3%;
+    font-size: 13px;
+  }
+  .doc-space{
+    display: inline-block;
+    width: 12%;
+  }
+  .acc-customer-num-div-int{
+    margin-top: 24px;
+    width: 25%;
+  }
+  .acc-date-filter-int {
+    display: flex;
+    justify-content: space-between;
+    width: 55%;
+  }
+  .acc-statement-filter-int {
+    width: 20%;
+  }
+  .acc-filter2-div{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+  .acc-doc-filter-int {
+    width: 26%;
+  }
+  .int-btn-wdth{
+    width: unset;
+  }
+  .btn-xtr{
+    margin-top:18px;
+  }
+  .btn-itr{
+    margin-top:25px;
+  }
+  @media only screen and (max-width: 1232px) {
+    .cust-data-text {
+      font-size: 14px;
+    }
+    .cust-data {
+      font-size: 14px;
+    }
+    .ledger-statement-btn {
+      padding: 6px 20px;
+      font-size: 13px;
+    }
+  }
+  @media only screen and (max-width: 1120px) {
+    .cust-data-text {
+      font-size: 13px;
+    }
+    .cust-data {
+      font-size: 13px;
+    }
+    .table-data-scroll {
+      overflow-x: visible;
+    }
+    .table-head-div {
+      overflow-x: auto;
+      margin-right: 12px;
+    }
+    .table-data-scroll::-webkit-scrollbar {
+      width: 0;
+    }
+    .ledger-table-head-width{
+      width:135%;
+    }
+    .table-data-scroll{
+      width:100%;
+      overflow-x: hidden;
+    }
+    .table-no-scroll{
+      width:135%;
+    }
+    .close-bal-div, .open-bal-div, .customer-total-div{
+      width:135%;
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    .table-data-scroll {
+      overflow-x: visible;
+    }
+    .table-head-div {
+      overflow-x: auto;
+      margin-right: 12px;
+    }
+    .table-data-scroll::-webkit-scrollbar {
+      width: 0;
+    }
+    .ledger-table-head-width{
+      width:135%;
+    }
+    .table-data-scroll{
+      width:100%;
+      overflow-x: hidden;
+    }
+    .table-no-scroll{
+      width:135%;
+    }
+    .close-bal-div, .open-bal-div, .customer-total-div{
+      width:135%;
+    }
+    .acc-table-data-scroll {
+      width: 100%;
+    }
+    .tab-div {
+      margin-left: 0%;
+      margin-right: 0%;
+    }
+    
+    .bread-crumb {
+      margin-left: 0%;
+    }
+    .acc-st-div{
+      display: block;
+    }
+    .acc-statement-filter{
+      width: 100%;
+      padding-right: 12px;
+    }
+    .acc-st-btn{
+      width: 100%;
+    }
+    .acc-doc-filter{
+      width: 34%;
+    }
+    .acc-date-filter{
+      width: 43%;
+    }
+    .acc-st-div{
+      width: 21%;
+    }
+    .int-btn-wdth{
+      width: unset;
+    }
+  }
+  @media only screen and (max-width: 990px) {
+    .table-data-scroll{
+      width:135%;
+      overflow-x: hidden;
+    }
+  }
+  @media only screen and (max-width: 912px) {
+    .acc-filter-div {
+      display: block;
+    }
+    .acc-customer-num-div-int{
+      margin-top: 24px;
+      width: 100%;
+    }
+    .acc-date-filter-int {
+      width: 100%;
+      padding: 0 12px;
+    }
+    .acc-statement-filter-int {
+      width: 100%;
+    }
+    .acc-doc-filter-int {
+      width: 100%;
+      padding-left: 12px;
+    }
+    .int-btn-wdth{
+      width: unset;
+    }
+    .acc-doc-filter {
+      padding-right: 15px;
+      width: 100%;
+    }
+    .acc-date-filter {
+      padding: 0 15px;
+      width: 100%;
+    }
+    .acc-st-div {
+      width: 100%;
+      padding: 0 15px;
+      display: block;
+    }
+    .acc-statement-filter {
+      width: 100%;
+      padding-right: 0;
+    }
+    .acc-st-btn {
+      text-align: center;
+      width: 100%;
+    }
+    .table-data-scroll {
+      overflow-x: visible;
+    }
+    .table-head-div {
+      overflow-x: auto;
+      margin-right: 12px;
+    }
+    .table-data-scroll::-webkit-scrollbar {
+      width: 0;
+    }
+    .ledger-table-head-width{
+      width:135%;
+    }
+    .table-data-scroll{
+      width:135%;
+      overflow-x: hidden;
+    }
+    .table-no-scroll{
+      width:135%;
+    }
+    .close-bal-div, .open-bal-div, .customer-total-div{
+      width:135%;
+    }
+  }
+  @media only screen and (max-width: 894px) {
+    .cust-data-text {
+      font-size: 11px;
+    }
+    .cust-data {
+      font-size: 11px;
+      margin-left: 3%;
+    }
+    .ledger-table-head-width{
+      width:150%;
+    }
+    .table-data-scroll{
+      width:150%;
+      overflow-x: hidden;
+    }
+    .table-no-scroll{
+      width:150%;
+    }
+    .close-bal-div, .open-bal-div, .customer-total-div{
+      width:150%;
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .dwnld-btn {
+      padding: 4px 5px;
+      font-size: 11px;
+    }
+    .acc-table-data-scroll {
+      overflow-x:visible;
+    }
+
+    .acc-table-data-scroll::-webkit-scrollbar {
+      width: 0;
+    }
+    
+    .ledger-table-head-width{
+      width:180%;
+    }
+    .table-data-scroll{
+      width:180%;
+      overflow-x: hidden;
+    }
+    .table-no-scroll{
+      width:180%;
+    }
+    .close-bal-div, .open-bal-div, .customer-total-div{
+      width:180%;
+    }
+    .cust-data-text {
+      font-size: 10px;
+    }
+    .cust-data {
+      font-size: 10px;
+    }
+    .filter-div {
+      justify-content: center;
+    }
+    .quarter-div,
+    .year-div {
+      width: 20%;
+    }
+    .doc-row {
+      margin-bottom: 1%;
+    }
+    .doc-value-left-div,
+    .doc-value-right-div {
+      display: block;
+    }
+    .single-doc-block-left,
+    .single-doc-block-right {
+      width: 100%;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+.hidePadding{
+  padding-left: 0;
+}
+.tab-font{
+  font-size: 15px !important;
+}
+  }
+  @media only screen and (max-width: 675px) {
+    .table-data-scroll {
+      width: 200%;
+    }
+    .ledger-table-head-width{
+      width:200%;
+    }
+    .open-bal-div,
+    .close-bal-div,
+    .customer-total-div {
+      width: 200%;
+    }
+    .table-no-scroll {
+      width: 200%;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    
+    .filter-div {
+      display: block;
+    }
+    .filter-icon-div {
+      display: none;
+    }
+    .quarter-div,
+    .year-div {
+      width: 100%;
+      padding-right: 2%;
+    }
+    .cust-data-text {
+      font-size: 8px;
+    }
+    .cust-data {
+      font-size: 8px;
+    }
+    .mobile-ledger-statement-btn {
+      text-align: center;
+    }
+    .table-data-scroll {
+      width: 220%;
+    }
+    .ledger-table-head-width{
+      width:220%;
+    }
+    .open-bal-div,
+    .close-bal-div,
+    .customer-total-div {
+      width: 220%;
+    }
+    .table-no-scroll {
+      width: 220%;
+    }
+    .acc-table-head-div{
+      overflow-x: auto;
+      margin-right: 12px;
+    }
+    .acc-table-head-width{
+      width:160%;
+    }
+    .acc-total-div{
+      width:160%;
+    }
+    .acc-table-data-scroll{
+      overflow-x: hidden;
+      width:160%;
+    }
+    .acc-table-no-scroll{
+      width:160%;
+    }
+    
+  }
+  @media only screen and (max-width: 425px) {
+    .acc-date-filter {
+      display: block;
+    }
+    .acc-date-filter-int{
+      display: block;
+    }
+    .acc-filter2-div{
+      display: block;
+      padding-right: 12px;
+    }
+    .int-btn-wdth{
+      margin-bottom: 20px;
+      
+    }
+    .acc-year-div,
+    .acc-start-date,
+    .acc-end-date {
+      width: 100%;
+    }
+    .doc-row {
+      font-size: 9px;
+    }
+    .acc-table-data-font {
+      font-size: 11px;
+    }
+    .acc-total-div {
+      font-size: 13px;
+    }
+    .cust-data-text {
+      font-size: 11px;
+    }
+    .cust-data {
+      font-size: 11px;
+    }
+    .cust-info-div {
+      display: block;
+    }
+    .first-block {
+      width: 100%;
+      border: none;
+    }
+    .second-block {
+      width: 100%;
+      border: none;
+    }
+    .third-block {
+      width: 100%;
+      border: none;
+    }
+    .lab-btn,
+    .mobile-cust-text {
+      margin-bottom: 7px;
+    }
+    .cust-data-mobile-1 {
+      margin-left: 21%;
+    }
+    .cust-data-mobile-2 {
+      margin-left: 5%;
+    }
+    .cust-data-mobile-3 {
+      margin-left: 21%;
+    }
+    .filter-div {
+      display: block;
+    }
+    .filter-icon-div {
+      display: none;
+    }
+    .quarter-div,
+    .year-div {
+      width: 100%;
+      padding-right: 2%;
+    }
+    .mobile-ledger-statement-btn {
+      text-align: center;
+    }
+    
+    .table-head-div {
+      overflow-x: auto;
+      margin-right: 3%;
+    }
+    .mobile-table-font {
+      font-size: 11px;
+    }
+    .table-data-scroll {
+      width: 265%;
+    }
+    .ledger-table-head-width{
+      width:265%;
+    }
+    .open-bal-div,
+    .close-bal-div,
+    .customer-total-div {
+      width: 265%;
+      font-size: 13px;
+    }
+    .table-no-scroll {
+      width: 265%;
+    }
+    .acc-table-head-width{
+      width:200%;
+    }
+    .acc-total-div{
+      width:200%;
+    }
+    .acc-table-data-scroll{
+      overflow-x: hidden;
+      width:200%;
+    }
+    .acc-table-no-scroll{
+      width:200%;
+    }
+  }
+  
+  @media only screen and (max-width: 375px) {
+    .ledger-table-head-width{
+      width:280%;
+    }
+    .open-bal-div,
+    .close-bal-div,
+    .customer-total-div {
+      width: 280%;
+      font-size: 13px;
+    }
+    .doc-desc {
+      font-size: 20px;
+    }
+    .table-data-scroll {
+      width: 280%;
+    }
+    .table-no-scroll {
+      width: 280%;
+    }
+    .cust-data-mobile-1 {
+      margin-left: 22%;
+    }
+    .cust-data-mobile-3 {
+      margin-left: 22%;
+    }
+    .cust-data-mobile-2 {
+      margin-left: 4%;
+    }
+    
+  }
+  @media only screen and (max-width: 360px) {
+    .cust-data-mobile-1 {
+      margin-left: 26%;
+    }
+    .cust-data-mobile-2 {
+      margin-left: 7%;
+    }
+    .cust-data-mobile-3 {
+      margin-left: 26%;
+    }
+  }
+  @media only screen and (max-width: 320px) {
+    .cust-data-mobile-2 {
+      margin-left: 1%;
+    }
+    .cust-data-mobile-1 {
+      margin-left: 22%;
+    }
+    .cust-data-mobile-3 {
+      margin-left: 22%;
+    }
+    .table-data-scroll {
+      width: 320%;
+    }
+
+     /*added by Akhilesh w.r.t Mobile changes*/
+    .slds-card {
+      background-color: rgb(38 64 138);
+      color: white;
+      padding: 6px 15px;
+      font-size: 14px;
+      margin-top: 23px;
+    }
+    @media screen and (max-width: 1023px) {
+      .slds-card {
+        background-color: rgb(38 64 138);
+        color: white;   
+          margin-left: 2px;
+          margin-right: 2px;
+          margin-bottom: 2px;
+          margin-top: 2px;  
+          border-radius: 10px;
+      } 
+    }
+    .u-break-word {
+      overflow-wrap: break-word;
+    }
+    .total-ledger-css-std{
+      font-size: 18px;
+      background-color: rgb(38 64 138);
+      color: white;
+    }
+  }

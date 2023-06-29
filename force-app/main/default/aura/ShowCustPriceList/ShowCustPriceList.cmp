@@ -1,0 +1,278 @@
+<aura:component  controller="customer_Price_List" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="Brand" type="String"/>
+    <aura:attribute name="SKU" type="String"/>
+       <aura:attribute name="end1" type="String" default="1"/>
+    <aura:attribute name="SKUName" type="String"/>
+    <aura:attribute name="minPrice" type="String"/>
+    <aura:attribute name="futureSP" type="String"/>
+    <aura:attribute name="finalPrice" type="String"/>    
+    <aura:attribute name="ShowSpinner" type="Boolean" default="False"/>        
+    <aura:attribute name="displayDetails" type="Boolean" default="False"/> 
+    <aura:attribute name="showFSP" type="Boolean" default="False"/> 
+    <aura:attribute name="showMinP" type="Boolean" default="False"/>   
+    
+    <aura:attribute name="showBRLPrice" type="Boolean" default="False"/> 
+    <aura:attribute name="showUSDPrice" type="Boolean" default="False"/> 
+    <aura:attribute name="pricebookdetail" type="customer_Price_List.pricebookdetaillist[]"/>
+    <aura:attribute name="Id" type="String"/>
+    <aura:attribute name="custPLs" type="List" default="False"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="FilterList" type="List"/> 
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="startPage" type="Integer"/>
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="30"/>
+    <aura:attribute name="TotalPages" type="Integer"/>
+    <aura:attribute name="PageNumber" type="Integer"/>
+    
+    
+    
+    <!--  <body class="bgColor slds-scrollable_x" style="height:200px; width:300;" >-->
+    
+    <!-- Search Filter -->
+    <!-- Divya Start-->
+    
+    <lightning:layout multiplerows="true">
+        
+        <lightning:layoutItem  size="12">
+            <div class="slds-align_absolute-center">        
+                <lightning:button label="{!$Label.c.Export_PriceList}" 
+                                  class="slds-m-top--medium"
+                                  variant="brand"
+                                  onclick="{!c.downloadCSV}"/>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout> 
+     <ui:scrollerWrapper class="scrollerSize">
+    <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+        <lightning:layoutItem class="border" padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+            <div>
+                <ui:inputText aura:id="brandSearch" updateOn="keyup"   keyup="{!c.handleSearch}"/>
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="border" padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+            <div>
+                <ui:inputText aura:id="SKUNameSearch" updateOn="keyup"   keyup="{!c.handleSearch}"/>
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="1">
+            <div>
+                <ui:inputText aura:id="SKUSearch" updateOn="keyup"   keyup="{!c.handleSearch}"/>
+            </div> 
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="1">
+            
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="2" largeDeviceSize="1">
+            
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="2" largeDeviceSize="1">
+            
+        </lightning:layoutItem> 
+        
+        <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="2" largeDeviceSize="1">
+            
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="2" largeDeviceSize="1">
+            
+        </lightning:layoutItem> 
+        
+        <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="2" largeDeviceSize="1">
+            
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="2" largeDeviceSize="1">
+            
+        </lightning:layoutItem> 
+        
+    </lightning:layout>
+    <lightning:layout class="Test" multipleRows="false">
+        <lightning:layoutItem class="border" padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+            <div style="font-weight: bold;">{!$Label.c.Brand_Name}</div>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="border" padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+            <div align="center" style="font-weight: bold;">  {!$Label.c.SKU_Name}</div>
+        </lightning:layoutItem>
+        <lightning:layoutItem  padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="1">
+            <div align="center" style="font-weight: bold;">{!$Label.c.SKU_Code}</div>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="border" padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="1">
+            <div style="font-weight: bold;"> {!$Label.c.Currency_ISO_Code}</div>
+        </lightning:layoutItem>
+        
+        
+        <aura:iteration start="0" end="1" items="{!v.pricebookdetail}" var="item2" indexVar="index">
+            <aura:iteration   items="{!item2.lstMonthPrice}" var="item3" indexVar="index">
+            
+            
+        <aura:if isTrue="{!v.showBRLPrice}">
+            <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="2" largeDeviceSize="1">
+                <div style="font-weight: bold;"> {!item3.Month}  &nbsp;    {!$Label.c.Unit_Price_B} &nbsp;</div>
+            </lightning:layoutItem> 
+        </aura:if>    
+        <aura:if isTrue="{!v.showUSDPrice}">
+            <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="2" largeDeviceSize="1">
+                <div style="font-weight: bold;"> {!item3.Month}  &nbsp;    {!$Label.c.Unit_Price_U} &nbsp; </div>
+            </lightning:layoutItem> 
+        </aura:if>   
+        
+        <aura:if isTrue="{!v.showMinP}">
+            <aura:if isTrue="{!v.showBRLPrice}">
+                
+                <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="1" largeDeviceSize="1">
+                    <div style="font-weight: bold;">{!item3.Month} &nbsp;     {!$Label.c.Minimum_Price_R}</div>
+                </lightning:layoutItem>
+            </aura:if>   
+            
+            <aura:if isTrue="{!v.showUSDPrice}">
+                
+                <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="1" largeDeviceSize="1">
+                    <div style="font-weight: bold;">{!item3.Month} &nbsp;     {!$Label.c.Minimum_Price_U}</div>
+                </lightning:layoutItem>
+            </aura:if>   
+            
+        </aura:if>
+        
+        <br/>
+        </aura:iteration>
+        
+        
+        <aura:if isTrue="{!v.showFSP}">
+            <aura:if isTrue="{!v.showBRLPrice}">
+                
+                <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="1" largeDeviceSize="1">
+                    <div style="font-weight: bold;">     {!$Label.c.Future_Sales_Price_B} </div>
+                </lightning:layoutItem>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.showUSDPrice}">
+                
+                <lightning:layoutItem padding="around-small" size="1" smallDeviceSize="1" largeDeviceSize="1">
+                    <div style="font-weight: bold;">    {!$Label.c.Future_Sales_Price_U} </div>
+                </lightning:layoutItem>
+            </aura:if>
+            
+        </aura:if>
+        <br/>
+         </aura:iteration>
+        
+        
+    </lightning:layout>
+    <aura:iteration items="{!v.PaginationList}" var="item" indexVar="index">
+        <lightning:layout class="Test" multipleRows="false">
+            <lightning:layoutItem class="border uiOutputText" padding="around-small" size="2" >
+                {!item.brand}                
+            </lightning:layoutItem>
+            <lightning:layoutItem class="border uiOutputText" padding="around-small" size="2" >
+                {!item.SKUName}                
+            </lightning:layoutItem>
+            <lightning:layoutItem class="border uiOutputText" padding="around-small" size="1" >
+                {!item.SKUCode}
+            </lightning:layoutItem>
+            <lightning:layoutItem class="border uiOutputText" padding="around-small" size="1" >
+                <div class="LeftPadding">
+                    {!item.currISOCode}
+                </div>
+            </lightning:layoutItem> 
+            
+            
+            
+            
+            
+             
+            <aura:iteration  items="{!item.lstMonthPrice1}" var="item4" indexVar="index">
+            
+            <aura:if isTrue="{!v.showBRLPrice}">
+                <lightning:layoutItem class="border uiOutputText" padding="around-small" size="1" >
+                    <lightning:formattedNumber value="{!item4.unitPrice}" style="decimal" minimumFractionDigits="2" maximumFractionDigits="2" currencyCode="{!item.currISOCode}"/>
+                    
+                </lightning:layoutItem>
+            </aura:if>
+            <aura:if isTrue="{!v.showUSDPrice}">
+                <lightning:layoutItem class="border uiOutputText" padding="around-small" size="1" >
+                    <lightning:formattedNumber value="{!item4.unitPrice}" style="decimal" minimumFractionDigits="2" maximumFractionDigits="2" currencyCode="{!item.currISOCode}"/>
+                    
+                    
+                </lightning:layoutItem>
+            </aura:if>
+            
+            
+            <aura:if isTrue="{!v.showMinP}">
+                <aura:if isTrue="{!v.showBRLPrice}">
+                    
+                    <lightning:layoutItem class="border uiOutputText" padding="around-small" size="1" >
+                        <lightning:formattedNumber value="{!item4.minPrice}" style="decimal" minimumFractionDigits="2" maximumFractionDigits="2" currencyCode="{!item.currISOCode}"/>
+                        
+                        
+                    </lightning:layoutItem>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.showUSDPrice}">
+                    
+                    <lightning:layoutItem class="border uiOutputText" padding="around-small" size="1" >
+                        <lightning:formattedNumber value="{!item4.minPrice}" style="decimal" minimumFractionDigits="2" maximumFractionDigits="2" currencyCode="{!item.currISOCode}"/>
+                        
+                        
+                    </lightning:layoutItem>
+                </aura:if>
+                
+            </aura:if>
+            
+             </aura:iteration>
+            
+            <aura:if isTrue="{!v.showFSP}">
+                <aura:if isTrue="{!v.showBRLPrice}">
+                    
+                    <lightning:layoutItem class="border uiOutputText" padding="around-small" size="1" >
+                        <lightning:formattedNumber value="{!item.futureSalesPriceBR}" style="decimal" minimumFractionDigits="2" maximumFractionDigits="2" currencyCode="{!item.currISOCode}"/>
+                        
+                        
+                    </lightning:layoutItem>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.showUSDPrice}">
+                    
+                    <lightning:layoutItem class="border uiOutputText" padding="around-small" size="1" >
+                        <lightning:formattedNumber value="{!item.futureSalesPriceUS}" style="decimal" minimumFractionDigits="2" maximumFractionDigits="2" currencyCode="{!item.currISOCode}"/>
+                        
+                        
+                    </lightning:layoutItem>
+                </aura:if>
+                
+            </aura:if>
+            
+            
+            
+            
+           
+            
+            
+        </lightning:layout>
+    </aura:iteration>
+    <br/><br/>
+    </ui:scrollerWrapper>
+    <lightning:layout >
+        <lightning:layoutItem padding="around-small" size="2">
+            <div class="slds-float_left slds-p-left_xx-small">
+                <p class=" slds-col ">Page {!v.PageNumber} of {!v.TotalPages}</p> 
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="8">
+            <div class="slds-align_absolute-center">  
+                <lightning:buttonGroup >
+                    
+                    <lightning:button disabled="{!v.startPage == 0}" variant="brand" aura:id="prevPage" label="{!$Label.c.SIC_Prev}" onclick="{!c.handlePrev}" />            
+                    
+                    <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="{!$Label.c.SIC_Next}" onclick="{!c.handleNext}"/>
+                    
+                </lightning:buttonGroup> 
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="2">
+            
+        </lightning:layoutItem>
+    </lightning:layout> 
+    
+</aura:component>

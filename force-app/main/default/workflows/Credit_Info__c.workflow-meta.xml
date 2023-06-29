@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notify_all_on_credit_info</fullName>
+        <description>Notify all on credit info</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Distributor_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Regional_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>Territory_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Credit_Info_Template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Country_to_Italy</fullName>
+        <field>Country__c</field>
+        <formula>&apos;Italy&apos;</formula>
+        <name>Update Country to Italy</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Credit_Information_Country_to_UK</fullName>
+        <field>Country__c</field>
+        <formula>&apos;UK/IE&apos;</formula>
+        <name>Update Credit Information Country to UK/</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Notify All on Credit Information</fullName>
+        <actions>
+            <name>Notify_all_on_credit_info</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <formula>true</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Credit Information Country to Italy</fullName>
+        <actions>
+            <name>Update_Country_to_Italy</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Credit_Info__c.Sales_Org_Code__c</field>
+            <operation>equals</operation>
+            <value>2410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Credit_Info__c.Sales_Org_Code__c</field>
+            <operation>equals</operation>
+            <value>2420</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Credit_Info__c.Country__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Credit Information Country to UK%2FIE</fullName>
+        <actions>
+            <name>Update_Credit_Information_Country_to_UK</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Credit_Info__c.Sales_Org_Code__c</field>
+            <operation>equals</operation>
+            <value>2031</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Credit_Info__c.Sales_Org_Code__c</field>
+            <operation>equals</operation>
+            <value>2032</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Credit_Info__c.Country__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

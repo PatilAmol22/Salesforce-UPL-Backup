@@ -1,0 +1,35 @@
+.title{
+    text-align: left;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    border-bottom: 1px solid #DDDDDD;
+    font-size: 20px;
+}
+.main{
+    border: 1px solid #E6ECEE;
+    opacity: 1;
+    background: white;
+}
+.textCSS{
+    border: 1px solid #DDDDDD;
+    border-bottom: none;
+}
+.textcolor{
+    color:#000000 !important;
+    font-size:15px;
+    font-weight: 500;
+   
+}
+.pCSS{
+    height: 50px !important;
+}
+@media only screen and (min-width: 767px) and (max-width:900px) {
+    .title{
+        font-size: 20px;
+    }
+    .textcolor{
+        font-size:13px;       
+    }
+
+}

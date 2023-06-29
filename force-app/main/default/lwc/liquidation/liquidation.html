@@ -1,0 +1,322 @@
+<template>
+        <div class="slds-grid slds-wrap" style="background:#fff; padding:10px; border-radius:5px 5px 0 0;">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <h1 style="float:left; margin:8px;">
+                <span class="slds-page-header__title" title={labels.Liquidation_title}>{labels.Liquidation_title}</span>
+            </h1>
+            </div>
+          </div>
+        <div class="slds-grid slds-wrap" style="background:#fff; padding:10px; border-radius:5px 5px 0 0;">
+               
+                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-right:5px;">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Sales_Org}</p>
+                                <lightning-combobox style="margin-top: -19px;"
+                                name={labels.Sales_Org}  
+                                value={Sales_Org} 
+                                placeholder={labels.Sales_Org} 
+                                disabled={disable_Sales_Org}
+                                options={salesOrgOption} 
+                                onchange={handleChangeSalesOrg}>
+                                </lightning-combobox>
+                </div>
+
+                <div if:false={isCommunityUsr} class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-right:5px;">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Sales_District}</p>
+                        <c-liquidationlookupcmps placeholder={labels.Select_Sales_District} iconname='standard:product' multiselect=false sobject='Sales_District__c' fieldname='Name,User__c' filter={salesdistrict_filter} displayfield='Name' onselected={handleChangeSalesdistrict} singleselectedrec={sales_district_name} onremove={handleRemoveSalesdistrict} cmpwidth='small' dependent=false disable={disable_salesDistrict}></c-liquidationlookupcmps> 
+                </div>
+                
+                
+                <div if:true={isCommunityUsr} class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-right:5px;">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Sales_District}</p>
+                        <lightning-input value={sales_district_name} disabled style="margin-top: -18px;"></lightning-input>
+                </div>
+               
+                <div if:false={isCommunityUsr} class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-right:5px;">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Distributor}</p>
+                        <c-liquidationlookupcmps placeholder={labels.Distributor} iconname='standard:product' multiselect=false sobject='DistributorSalesAreaMapping__c' fieldname='count( Id), Distributor__c,Distributor__r.Name,Distributor__r.SAP_code__c' filter={distributor_filter} displayfield='Distributor_Name__c' onselected={handleChangeDistributor} singleselectedrec={distributorName} onremove={handleRemoveDistributor} cmpwidth='small' dependent=false disable={disable_distributor}></c-liquidationlookupcmps>
+                </div> 
+                <div if:true={isCommunityUsr} class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-right:5px;">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Distributor}</p>
+                        <lightning-input value={distributorName} disabled style="margin-top: -18px;"></lightning-input>
+                </div> 
+                
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12" style="margin-right:5px;">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Year}</p>
+                                <lightning-combobox style="margin-top: -19px;"
+                                name={labels.Year}
+                                value={year} 
+                                placeholder={labels.Select_Year} 
+                                disabled={disable_year}
+                                options={yearOption} onchange={handleChangeYear}>
+                                </lightning-combobox>
+                </div> 
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12" style="margin-right:5px;">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Month}</p>
+                                <lightning-combobox style="margin-top: -19px;"
+                                name={labels.Month}  
+                                value={month} 
+                                placeholder={labels.Month} 
+                                disabled={disable_month}
+                                options={monthOption} onchange={handleChangeMonth}>
+                                </lightning-combobox>
+                </div> 
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12" style="margin-right:5px;">
+                        
+                </div> 
+                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:22px">
+                        <lightning-button variant="success" label={labels.Submit} title={labels.Submit} onclick={handleSubmit} disabled={disable_submit_btn} class="slds-var-m-right_x-small" hidden={hide_uploadbtn}></lightning-button>
+                        <lightning-button variant="success" label={labels.upload_file} title={labels.upload_file} onclick={handleUploadCSV} disabled={disable_upload_btn} hidden={hide_uploadbtn} class=""></lightning-button>
+                </div>
+               
+        </div>
+        <div class="slds-grid slds-wrap" style="background:#D3D3D3; padding-bottom: 10px; padding-left: 10px">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-right:5px;">
+                        <lightning-input
+                        style="margin-top: 10px;"
+                        name={labels.Search}
+                        label={labels.Search}
+                        value={search_str}
+                        placeholder={labels.Search}
+                        type="search"
+                        variant="label-hidden"
+                        onchange={handlesearch}
+                    ></lightning-input>
+                    </div> 
+
+                    <!-- ------------Start GRZ(Butesh Singla) : APPS-1395 PO And Delivery Date :17-07-2022 -->
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_9-of-12 slds-text-align_right slds-p-top_small">
+                        <!-- <div if:true={isVisiblePDFandXLS} class="download-div slds-text-align_right slds-p-right_small"> -->
+                                <span class="componentNotoSansBold slds-m-right_xx-small">
+                                        <a onclick={downloadPDF} target="_blank" ><button class="dwnld-btn"><span class="download-icon">
+                                                <!--<img src={downloadIcon} style="height:15px; width:15px;"/>-->
+                                                <lightning-icon class="slds-p-right_xx-small" icon-name="utility:preview" alternative-text={labels.DownloadPDF} size="x-small" title={labels.DownloadPDF}></lightning-icon>
+                                        </span><span>{labels.DownloadPDF}</span></button></a> 
+                                </span>
+                                <span class="componentNotoSansBold">
+                                        <a onclick={downloadXLS} download="POGReport.xls" target="_blank" ><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon} style="height:15px; width:15px;"/></span><span>{labels.DownloadXLS}</span></button></a> 
+                                </span>
+                        <!-- </div> -->
+                </div>
+				
+		 <!-- -->		
+				
+				
+        </div>
+        <div if:true={liquidation_found}>
+        <div class="slds-scrollable_x slds-scrollable_y" style="max-height: 440px; overflow-y:scroll;">
+                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_col-bordered slds-table_resizable-cols table_fixed" role="grid">
+                        <thead>
+                                <tr class="slds-line-height_reset">
+                                        <template for:each={columns} for:item="item">
+                                                        <th key={item.Id}  class={item.class} style="height: 45px;position: sticky;top: 0;
+                                                        background: #FAFAF9;z-index: 1;" id={item.Id}
+                                                                scope="col">
+                                                                <div class="slds-truncate slds-cell-wrap" style="text-align: center;max-width: 275px;min-width: 100px;">{item.label} 
+                                                                <span if:true={item.sortable} style="margin-left: 10px;">
+                                                                        <lightning-icon style="display: inline;text-align: right;" icon-name="utility:sort" data-fieldname={item.fieldName}
+                                                                        alternative-text="sort" onclick={handlesortData} size="x-small" title=""></lightning-icon>
+                                                                </span>
+                                                                </div>
+                                                        </th>
+                                        </template>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                
+                                <template for:each={liquidation_data} for:item="item">
+                                        <tr class="slds-hint-parent tr_fixed" key={item.Id}>
+                                                <td key={item.Id}>
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.Brand}
+                                                        </div>
+                                                </td>
+                                                <td key={item.Id}>
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.SKU_Code}
+                                                        </div>
+                                                </td>
+                                                <td key={item.Id}>
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.SKU_Description}
+                                                        </div>
+                                                </td>
+                                                <td if:true={item.loggedinRecord} key={item.Id}>
+                                                        <lightning-input id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        name={fieldsapiname.Opening_inventory}
+                                                        data-id ={item.Opening_inventoryId}
+                                                        value={item.Opening_inventory}
+                                                        disabled={disable_openingInventory}
+                                                        variant="label-hidden"
+                                                        onkeyup={handleCellChanges}
+                                                        onkeypress={handleCellChanges}
+                                                        onchange={handleCellChanges}
+                                                        onclick={handlePlaceholder}
+                                                        onmouseout={handlePlaceholderSpace}
+                                                        style="margin-left:10px;">
+                                                        </lightning-input>
+                                                </td>
+                                                <td if:false={item.loggedinRecord} key={item.Id}>
+                                                        <lightning-input id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        name={fieldsapiname.Opening_inventory}
+                                                        data-id ={item.Opening_inventoryId}
+                                                        value={item.Opening_inventory}
+                                                        disabled
+                                                        variant="label-hidden"
+                                                        onkeyup={handleCellChanges}
+                                                        onkeypress={handleCellChanges}
+                                                        onchange={handleCellChanges}
+                                                        onclick={handlePlaceholder}
+                                                        onmouseout={handlePlaceholderSpace}
+                                                        style="margin-left:10px;">
+                                                        </lightning-input>
+                                                </td>
+                                                <td key={item.Id} class="hideCommunityColumn">
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.YTD_sales}
+                                                        </div>
+                                                </td>
+                                                <td key={item.Id} class="hideCommunityColumn">
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.Total_Available_Stock}
+                                                        </div>
+                                                </td>
+                                                <td if:true={item.loggedinRecord} key={item.Id}>
+                                                        <lightning-input id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        name={fieldsapiname.Distributor_inventory}
+                                                        data-key ={item.key_di}
+                                                        value={item.Distributor_Inventory}
+                                                        disabled={disable_fieldsdistributorInventory}
+                                                        onkeyup={handleCellChanges}
+                                                        onchange={handleCellChanges}
+                                                        onkeypress={handleCellChanges}
+                                                        onclick={handlePlaceholder}
+                                                        onmouseout={handlePlaceholderSpace}
+                                                        variant="label-hidden"
+                                                        style="margin-left:10px;">
+                                                        </lightning-input>
+                                                </td>
+                                                <td if:false={item.loggedinRecord} key={item.Id}>
+                                                        <lightning-input id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        name={fieldsapiname.Distributor_inventory}
+                                                        data-key ={item.key_di}
+                                                        value={item.Distributor_Inventory}
+                                                        disabled
+                                                        onkeyup={handleCellChanges}
+                                                        onchange={handleCellChanges}
+                                                        onkeypress={handleCellChanges}
+                                                        onclick={handlePlaceholder}
+                                                        onmouseout={handlePlaceholderSpace}
+                                                        variant="label-hidden"
+                                                        style="margin-left:10px;">
+                                                        </lightning-input>
+                                                </td>
+                                                <td  key={item.Id} class="hideCommunityColumn">
+                                                        <lightning-input id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        name={fieldsapiname.Retailerinventory}
+                                                        data-key ={item.key_ri}
+                                                        value={item.Retailers_Inventory}
+                                                        disabled={disable_fields}
+                                                        onkeyup={handleCellChanges}
+                                                        onchange={handleCellChanges}
+                                                        onkeypress={handleCellChanges}
+                                                        onclick={handlePlaceholder}
+                                                        onmouseout={handlePlaceholderSpace}
+                                                        variant="label-hidden"
+                                                        style="margin-left:10px;">
+                                                        </lightning-input>
+                                                </td>
+                                                
+                                                <td key={item.Id} class="hideCommunityColumn">
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.Total_market_Inventory}
+                                                        </div>
+                                                </td>
+                                                <td key={item.Id} class="hideCommunityColumn">
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.plan_for_month}
+                                                        </div>
+                                                </td>
+                                                <td key={item.Id} class="hideCommunityColumn">
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.Liquidation_YTD}
+                                                        </div>
+                                                </td>
+                                                <td key={item.Id} class="hideCommunityColumn">
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.Liquidation_percentage_YTD}
+                                                        </div>
+                                                </td>
+                                                <td key={item.Id} id={hidebyid} class="hideCommunityColumn">
+                                                        <div id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        onchange={handleChange}
+                                                        style="margin-left:10px;">{item.Liquidation_YTD_per_plan_YTD}
+                                                        </div>
+                                                </td>
+                                                <td key={item.Id} class="hideCommunityColumn">
+                                                        <lightning-input id={item.Id} 
+                                                        class="slds-cell-wrap"
+                                                        name={fieldsapiname.plan_for_next_month}
+                                                        data-key ={item.key_pfnm}
+                                                        value={item.Plan_for_next_month}
+                                                        disabled={disable_fields}
+                                                        onkeyup={handleCellChanges}
+                                                        onchange={handleCellChanges}
+                                                        onclick={handlePlaceholder}
+                                                        onkeypress={handleCellChanges}
+                                                        onmouseout={handlePlaceholderSpace}
+                                                        variant="label-hidden"
+                                                        style="margin-left:10px;">
+                                                        </lightning-input>
+                                                </td>
+                                        </tr>
+                                </template>
+                        </tbody>
+                </table>
+        </div>
+        
+        </div>
+        <div if:false={liquidation_found}>
+                <lightning-card>
+                        <b><center>{labels.no_data}</center></b>
+                </lightning-card>
+        </div>
+        <template if:true={spinner} class="demo-only" style="height:6rem;position:absolute;left: 600px;top: 149px;">
+                <div class="slds-spinner_container">
+                  <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                    <span class="slds-assistive-text">{labels.loading}</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                  </div>
+                </div>
+        </template>
+
+        <div if:true={openModel}>
+                <c-liquidation-Upload sales-org-code={Sales_Org} sales-dist-id={sales_district} distributor-id={distributor} year={selected_year} month={month} onclosemodel={handleCloseModel} onuploadfile={refreshLiquidation}></c-liquidation-Upload>
+        </div>
+
+</template>

@@ -1,0 +1,317 @@
+<aura:component controller="BRRebateModule" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+   <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}" />-->
+  <!--<aura:handler name="change" value="{!v.ContractHeader}" action="{!c.doInit}"/>-->
+    
+    <aura:attribute name="showHome" type="boolean" default="true"/>
+    <aura:attribute name="showGoal" type="boolean" default="false"/>
+    <aura:attribute name="showTotal" type="boolean" default="true"/>
+    <aura:attribute name="Editable" type="boolean" default="true"/>
+    
+    
+    
+    <aura:attribute name="Materialsdata" type="Object"/>
+    <aura:attribute name="Materialscolumns" type="List"/>
+    
+    <aura:attribute name="Historydata" type="Object"/>
+    
+    <aura:attribute name="Historycolumns" type="List"/>
+    
+    <aura:attribute name="ContractHeader" type="Object"/>
+    <aura:attribute name="draftValues" type="Object" default="[]"/> 
+     <aura:attribute name="spinner" type="boolean" default="false"/>
+    <aura:attribute name="UserType" type="string"/>
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:html tag="style">.toastMessage.forceActionsText{
+        white-space : pre-line !important;
+        }</aura:html>
+   
+    <!-- Lightning Spinner -->
+     <!-- Spinner -->
+    <aura:if isTrue="{!v.spinner}">
+        <lightning:spinner class="spins" size="large" variant="brand" alternativeText="Fetching Records" />
+    </aura:if>
+    <!-- -->
+    
+    
+    <lightning:card>
+        <aura:set attribute="title">
+        </aura:set>
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="12" largeDeviceSize="12" padding="horizontal-medium">
+                    <div class="slds-align_absolute-center">
+                        <lightning:button label="{!$Label.c.REB_Back}" title="Back" onclick="{! c.Back }"/>
+                    </div>
+                </lightning:layoutItem>
+                
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem size="7" padding="around-small">
+                    <div style="text-align:right">
+                        <b>{!$Label.c.Rebate_Insert_Goals}</b>
+                    </div>
+                </lightning:layoutItem>
+               <lightning:layoutItem size="5" padding="around-small">
+                   <!--
+                    <div style="text-align:right">
+                        <lightning:button label="Send Goals" title="Send Goals" onclick="{! c.sendGoalsJS }"/>
+                    </div>
+                   -->
+                </lightning:layoutItem>
+                
+            </lightning:layout>   
+        
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" ><!--padding="around-small"-->
+                <div class="slds-p-left_x-small">
+                <b>{!$Label.c.RebateContract}</b>:  {!v.ContractHeader.Contract}
+                    </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <aura:if isTrue="{!!$Browser.isPhone}">
+                 <b> {!$Label.c.RebateWFStatus}</b>:  {!v.ContractHeader.Status}
+                </aura:if>
+                 <aura:if isTrue="{!$Browser.isPhone}">
+                     <div class="slds-p-left_x-small">
+                 <b> {!$Label.c.RebateWFStatus}</b>:  {!v.ContractHeader.Status}
+                     </div>
+                </aura:if>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                 <aura:if isTrue="{!!$Browser.isPhone}">
+                <b>{!$Label.c.RebateCurrency}</b>: {!v.ContractHeader.curr}
+                </aura:if>
+                  <aura:if isTrue="{!$Browser.isPhone}">
+                       <div class="slds-p-left_x-small">
+                <b>{!$Label.c.RebateCurrency}</b>: {!v.ContractHeader.curr}
+                      </div>
+                </aura:if>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <aura:if isTrue="{!!$Browser.isPhone}"> 
+                <b>Status</b>: {!v.ContractHeader.pStatus}
+                </aura:if>
+                 <aura:if isTrue="{!$Browser.isPhone}">
+                     <div class="slds-p-left_x-small">
+                <b>Status</b>: {!v.ContractHeader.pStatus}
+                     </div>
+                </aura:if>
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <div class="slds-p-left_x-small">
+                <b>{!$Label.c.RebateDistributor}</b>: {!v.ContractHeader.DistributorCode} - {!v.ContractHeader.Distributor}
+                </div>
+                </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <aura:if isTrue="{!!$Browser.isPhone}"> 
+                <b>{!$Label.c.RebateType}</b>: {!v.ContractHeader.Type}
+                </aura:if>
+                 <aura:if isTrue="{!$Browser.isPhone}">
+                     <div class="slds-p-left_x-small">
+                         <b>{!$Label.c.RebateType}</b>: {!v.ContractHeader.Type}
+                     </div>
+                </aura:if>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <aura:if isTrue="{!!$Browser.isPhone}">
+                <b>{!$Label.c.RebateCategoryName}</b>: {!v.ContractHeader.Category_Name}
+                </aura:if>
+                 <aura:if isTrue="{!$Browser.isPhone}">
+                     <div class="slds-p-left_x-small">
+                      <b>{!$Label.c.RebateCategoryName}</b>: {!v.ContractHeader.Category_Name}   
+                     </div>
+                </aura:if>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+               <aura:if isTrue="{!!$Browser.isPhone}">
+                <b>{!$Label.c.RebateValidity}</b>: {!v.ContractHeader.Initial_date} até {!v.ContractHeader.Final_date} 
+                </aura:if>
+                <aura:if isTrue="{!$Browser.isPhone}">
+                     <div class="slds-p-left_x-small">
+                      <b>{!$Label.c.RebateValidity}</b>: {!v.ContractHeader.Initial_date} até {!v.ContractHeader.Final_date}    
+                    </div>
+                </aura:if>
+                </lightning:layoutItem>
+        </lightning:layout>
+        
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <div class="slds-p-left_x-small">
+                <b>{!$Label.c.Rebate}</b>: {!v.ContractHeader.Director}
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <aura:if isTrue="{!!$Browser.isPhone}">
+                <b>{!$Label.c.RebateBU}</b>: {!v.ContractHeader.BU}
+                </aura:if>
+                 <aura:if isTrue="{!$Browser.isPhone}">
+                     <div class="slds-p-left_x-small">
+                       <b>{!$Label.c.RebateBU}</b>: {!v.ContractHeader.BU}  
+                     </div>
+                </aura:if>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <aura:if isTrue="{!!$Browser.isPhone}">
+                <b>{!$Label.c.RebateRegionalName}</b>: {!v.ContractHeader.Branch}
+                </aura:if>
+                 <aura:if isTrue="{!$Browser.isPhone}">
+                     <div class="slds-p-left_x-small">
+                      <b>{!$Label.c.RebateRegionalName}</b>: {!v.ContractHeader.Branch}  
+                     </div>
+                </aura:if>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="3" >
+                <aura:if isTrue="{!!$Browser.isPhone}">
+                <b>{!$Label.c.RebateSalesRep}</b>: {!v.ContractHeader.CTC}
+                </aura:if>
+                 <aura:if isTrue="{!$Browser.isPhone}">
+                     <div class="slds-p-left_x-small">
+                          <b>{!$Label.c.RebateSalesRep}</b>: {!v.ContractHeader.CTC}
+                     </div>
+                </aura:if>
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        <lightning:layout>
+            <lightning:layoutItem size="12" padding="horizontal-medium">
+               
+                <lightning:tabset selectedTabId="one">
+                    <lightning:tab label="{!$Label.c.REB_Materials}" id="one" onactive="{! c.doInit }"><!--onactive="{! c.doInit }"-->
+                        <div style="height: 300px">
+                            <lightning:datatable
+                                                 keyField="Id"
+                                                 data="{! v.Materialsdata }"
+                                                 columns="{! v.Materialscolumns }"
+                                                 hideCheckboxColumn="true"
+                                                 draftValues="{! v.draftValues }"
+                                                 suppressBottomBar = "true"
+                                                 showRowNumberColumn = "false"
+                                                 oncellchange="{! c.handleEditCellChange}"
+                                                 
+                                                 />
+                        </div>
+                    </lightning:tab>
+                    <lightning:tab label="{!$Label.c.REB_History}" id="two" onactive="{! c.getHistory }">
+                        <div style="height: 300px">
+                            <lightning:datatable
+                                                 keyField="id"
+                                                 data="{! v.Historydata }"
+                                                 columns="{! v.Historycolumns }"
+                                                 showRowNumberColumn = "false"
+                                                 hideCheckboxColumn="true"/>
+                        </div>
+                    </lightning:tab>
+                    
+                    
+                </lightning:tabset>
+                
+            </lightning:layoutItem>
+        </lightning:layout >
+        <aura:if isTrue="{!v.showTotal}">
+        <lightning:layout multipleRows="true">
+           
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="7" largeDeviceSize="7" padding="horizontal-medium">
+                <b>{!$Label.c.RebateProductConsidered} {!v.ContractHeader.Type}</b>
+            </lightning:layoutItem> 
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="1" largeDeviceSize="1" padding="horizontal-medium">
+                 <div class="slds-float_right">
+                <b><lightning:formattedNumber value="{!v.ContractHeader.TotalTypeValueLY}" style="decimal" minimumFractionDigits="2"/></b>
+                </div>
+            </lightning:layoutItem> 
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="4" largeDeviceSize="4" padding="horizontal-medium">
+                <div class="slds-float_right">
+                <!--<lightning:input name="input8" value="{!v.ContractHeader.TotalTypeValue}" />-->
+                <b><lightning:formattedNumber value="{!v.ContractHeader.TotalTypeValue}" style="decimal" minimumFractionDigits="2"/></b>
+                </div>
+            </lightning:layoutItem> 
+         
+        </lightning:layout>
+        <lightning:layout multipleRows="true">
+            
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="7" largeDeviceSize="7" padding="horizontal-medium">
+                <b>{!$Label.c.RebateOtherProducts}</b>
+            </lightning:layoutItem>   
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="1" largeDeviceSize="1" padding="horizontal-medium">
+                <div class="slds-float_right">
+                <b><lightning:formattedNumber value="{!v.ContractHeader.TotalOtherValueLY}" style="decimal" minimumFractionDigits="2"/></b>
+                </div>
+            </lightning:layoutItem> 
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="2" largeDeviceSize="2" padding="horizontal-medium">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="2" largeDeviceSize="2" padding="horizontal-medium">
+                <div class="slds-float_right">
+                    <aura:if isTrue="{!v.Editable}">
+                    <ui:inputNumber aura:id="otherValue" value="{!v.ContractHeader.TotalOtherValue}" updateOn="keyup" keyup="{!c.onUpdateOtherValue}"/>
+                        </aura:if>
+                    <!-- <lightning:input name="input8" value="{!v.ContractHeader.TotalOtherValue}" />-->
+                    <aura:if isTrue="{!!v.Editable}">
+                        <b><lightning:formattedNumber value="{!v.ContractHeader.TotalOtherValue}" style="decimal" minimumFractionDigits="2"/></b>
+                    </aura:if>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="7" largeDeviceSize="7" padding="horizontal-medium">
+                <b>{!$Label.c.RebateGrowthRateBilling}</b>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="1" largeDeviceSize="1" padding="horizontal-medium">
+                 <div class="slds-float_right">
+                <b><lightning:formattedNumber value="{!v.ContractHeader.TotalValueLY}" style="decimal" minimumFractionDigits="2"/></b>
+                </div>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="4" largeDeviceSize="4" padding="horizontal-medium">
+                <div class="slds-float_right">
+                    <b><lightning:formattedNumber value="{!v.ContractHeader.TotalValue}" style="decimal" minimumFractionDigits="2"/></b>
+                </div>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        <lightning:layout>
+            <lightning:layoutItem size="12" padding="around-small">
+                <aura:if isTrue="{!v.Editable}">
+                <div class="slds-align_absolute-center">
+                    <lightning:button label="{!$Label.c.REB_Save}" title="Save" onclick="{! c.Save }"/>
+                    <lightning:button label="{!$Label.c.REB_Save_and_Submit}" title="Submit" onclick="{! c.Submit }"/>
+                </div>
+                </aura:if>
+            </lightning:layoutItem>
+            
+        </lightning:layout>    
+        <lightning:layout>
+            <!--  <lightning:layoutItem size="1" padding="horizontal-medium">
+            
+            </lightning:layoutItem> -->
+            
+            <lightning:layoutItem size="5" padding="horizontal-medium">
+                Volume ¹ Volume considerado sempre em Kg / L <br/>
+                Preço ² Preço NET (sem juros e sem impostos)
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="3" padding="horizontal-medium">
+                <!-- <lightning:button label="Back" title="Back" onclick="{! c.Back }"/> -->
+            </lightning:layoutItem>
+            <lightning:layoutItem size="4" padding="horizontal-medium">
+                {!$Label.c.RebateGrowthRate}: <lightning:formattedNumber value="{!v.ContractHeader.GrowthRate}" style="decimal" minimumFractionDigits="2"/>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+      </aura:if>  
+        <lightning:layout>
+            <lightning:layoutItem size="12" padding="horizontal-medium">
+                <div class="slds-align_absolute-center">
+                    <lightning:button label="{!$Label.c.REB_Back}" title="Back" onclick="{! c.Back }"/>
+                </div>
+            </lightning:layoutItem>
+            
+            
+        </lightning:layout>
+        
+    </lightning:card>
+</aura:component>

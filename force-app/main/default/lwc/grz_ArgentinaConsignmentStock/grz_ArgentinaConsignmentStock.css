@@ -1,0 +1,359 @@
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 15px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031; /* High z-index so it is on top of the page */
+  top: 70%;
+  right: 50%; /* or: left: 50%; */
+  margin-top: -..px; /* half of the elements height */
+  margin-right: -..px; /* half of the elements widht */
+}
+
+.infobgcss{
+  background-color: white;
+}
+
+.buttonClass {
+  background-color: #00bdf2;
+  color: #fff;
+  border: none;
+  padding: 6px 0px;
+  width: 100%;
+  font-size: 13px;
+  margin-top: 18px;
+  
+}
+
+.inforightborder {
+  border-right: 2px solid #dddddd;
+  padding-right: 1%;
+}
+
+.infopaddingright{
+  padding-left: 2%;
+}
+
+.mobilepaddingbottom{
+  padding-bottom: 0%;
+}
+  
+.mobilepadding {
+  margin-left: 10%;
+}
+  
+.list-title {
+  font-size: 23px;
+  margin-bottom: 1%;
+}
+.component-block {
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.borderleft {
+border-left: 2px solid #e5e5e5;
+}
+
+.alert-section{
+display:flex;
+}
+.alert-msg{
+font-size: 15px;
+}
+.count-div{
+width:31%;
+}
+.nodatacss {
+margin-top: 2%;
+text-align: center;
+color: red;
+font-size: 20px;
+padding-bottom: 4%;
+padding-top: 4%;
+}
+.table-head {
+background-color: #f8f8f8;
+color: #888;
+}
+
+.order-link {
+color: #f47920;
+text-decoration: none;
+}
+
+.spinner-css {
+margin-top: 2%;
+}
+.submit-btn {
+background-color: #00bdf2;
+color: #fff;
+border: none;
+padding: 6px 25px;
+font-size: 14px;
+margin-top: 18px;
+}
+.table-head-div {
+
+margin-right: 12px;
+margin-left: 12px;
+}
+/*.table-head-width {
+width: 100%;
+}*/
+
+.table-head-css {
+height: 40px;
+/*width: 9%;*/
+}
+.table-data-scroll {
+overflow-x: hidden;
+width: 100%;
+}
+
+.table-body {
+color: black;
+margin-top: 5%;
+font-size: 12px;
+}
+.table-body-css {
+height: 40px;
+/*width: 9%;*/
+}
+/*
+.orderDataClass {
+font-weight: bold;
+}*/
+
+.download-div {
+padding: 2px 12px 8px 12px;
+/*background-color: #f8f8f8;*/
+}
+.dwnld-btn {
+
+font-size: 10px;
+background-color: white;
+color: black;
+}
+.download-icon {
+padding-right: 10px;
+}
+
+
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+  .download-div {
+    background-color: white;
+  }
+  .table-head-width,
+  .table-data-scroll {
+    width: 110%;
+  }
+  .mobilepadding {
+    margin-left: 0%;
+  }
+  .table-head-div {
+    /*overflow-x: auto;*/
+  }  
+}
+
+@media only screen and (max-width: 1023px) {
+
+}
+
+@media only screen and (max-width: 894px) and (min-width: 768px) {
+  .table-head-div {
+    /*overflow-x: auto;*/
+  }
+  .table-head-width,
+  .table-data-scroll {
+    width: 110%;
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+  /*.table-head-width,
+  .table-data-scroll {
+    width: 110%;
+  }*/
+  .table-scroll {
+    margin-top: 3%;
+  }
+  .count-div{
+    font-size: 14px;
+  }
+  .table-head-div {
+    /*overflow-x: auto;*/
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .table-head-div {
+    /*overflow-x: auto;*/
+  }
+  .mobilepaddingbottom{
+      padding-bottom: 2%;
+  }
+  .borderleft {
+    border-left: 0;
+  }
+  .hidePadding {
+    padding: 0px;
+  }
+
+
+  .mobileTitles1:nth-of-type(1):before {
+    content: "Producto";   
+  }
+  .mobileTitles1:nth-of-type(2):before {
+    content: "Lote";
+  }
+  .mobileTitles1:nth-of-type(3):before {
+    content: "Cantidad";
+  }
+  .mobileTitles1:nth-of-type(4):before {
+    content: "Expiry Date";
+  }
+
+
+  .mobileTitles2:nth-of-type(1):before {
+    content: "Producto";   
+  }
+  .mobileTitles2:nth-of-type(2):before {
+    content: "Lote";
+  }
+  .mobileTitles2:nth-of-type(3):before {
+    content: "Cantidad";
+  }
+  .mobileTitles2:nth-of-type(4):before {
+    content: "Available Qty";
+  }
+  .mobileTitles2:nth-of-type(5):before {
+    content: "Expiry Date";
+  }
+  .mobileTitles2:nth-of-type(6):before {
+    content: "UOM";
+  }
+  .mobileTitles2:nth-of-type(7):before {
+    content: "QTY Sold";
+  }
+  .mobileTitles2:nth-of-type(8):before {
+    content: "Net Price";
+  }
+
+
+  .mobileTitles3:nth-of-type(1):before {
+    content: "No of Declaration";   
+  }
+  .mobileTitles3:nth-of-type(2):before {
+    content: "Total Amount";
+  }
+  .mobileTitles3:nth-of-type(3):before {
+    content: "LP Number";
+  }
+  .mobileTitles3:nth-of-type(4):before {
+    content: "Edit Declaration";
+  }
+  .mobileTitles3:nth-of-type(5):before {
+    content: "Delete Declaration";
+  }
+  .mobileTitles3:nth-of-type(6):before {
+    content: "Uploaded File";
+  }
+
+}
+
+@media only screen and (max-width: 650px) {
+.table-scroll {
+  margin-top: 4%;
+}
+.count-div{
+  font-size: 12px;
+}
+.alert-msg{
+  font-size: 10px;
+}
+/*.table-data-scroll {
+  width: 130%;
+}*/
+.table-head-div {
+  /*overflow-x: auto;*/
+}
+}
+
+@media only screen and (max-width: 479px) {
+.inforightborder {
+  border-right: 0px;
+  padding-left: 0%;
+}
+.infopaddingright{
+    padding-left: 0%;
+}
+.mobButtoncss{
+  margin: auto;
+  width: 50%;
+}
+.table-head-div {
+  /*overflow-x: auto;*/
+}
+}
+
+@media only screen and (max-width: 425px) {
+  /*.table-data-scroll {
+    width: 180%;
+  } */ 
+  .table-head-div {
+    /*overflow-x: auto;*/
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .table-head,
+  .table-body {
+    margin-top: 5%;
+    font-size: 12px;
+  }
+  .table-head-div {
+    /*overflow-x: auto;*/
+  }
+  /*.table-data-scroll {
+    width: 190%;
+  }*/
+}
+
+@media only screen and (max-width: 360px) {
+
+}
+
+@media only screen and (max-width: 320px) {
+/*.table-data-scroll {
+    width: 180%;
+}*/
+.table-head-div {
+  /*overflow-x: auto;*/
+}
+
+}
+.redColorClass {
+  --sds-c-input-color-background: red;
+
+}

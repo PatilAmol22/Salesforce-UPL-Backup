@@ -1,0 +1,90 @@
+<template>
+
+    <div if:true={isLoading} class="slds-is-relative">
+        <lightning-spinner alternative-text="Loading..." variant="brand">
+        </lightning-spinner>
+    </div>
+
+    <template if:false={isLoading}>
+
+        <div class="slds-box">
+            
+            <lightning-record-edit-form object-api-name="Account" record-id={recordId} onsuccess={handleSuccess} 
+            onsubmit ={handleSubmit}>
+                <div class="slds-p-left_xx-small onlyheadingcss">
+                    <b>Customer’s business name</b>
+                </div>
+                <div class="onlyaccountname">
+                    <lightning-output-field field-name="Name" variant='label-hidden'></lightning-output-field>
+                </div>
+                
+                <div class="slds-p-around_xx-small onlyheadingcss"><b>Financials</b>
+                    <br/>
+                    Estimate to include crop protection/seed treatment/bio solutions
+                </div>
+
+                <lightning-input-field field-name="Total_available_business__c"> </lightning-input-field>
+                <lightning-input-field field-name="Last_year_UPL_net_sales_UPL_SOW__c"> </lightning-input-field>
+               
+                <lightning-input-field field-name="of_Last_Year_with_Total_Avail_Business__c"> </lightning-input-field>
+                <lightning-input-field field-name="This_year_Target_UPL_net_sales__c"> </lightning-input-field>
+                
+                <lightning-input-field field-name="of_This_Year_with_Total_Avail_Business__c"> </lightning-input-field>
+                <div class="slds-p-around_xx-small onlyheadingcss"><b>Customer priorities</b>
+                    <br/> Fill in below with customer-specific information (not UPL’s)
+                </div>
+                <div class="slds-p-around_xx-small setbackground"><b>Top 3 priorities of the business</b>
+                </div>
+                <lightning-input-field field-name="Top_1_priorities_of_the_business__c"> </lightning-input-field>
+                <lightning-input-field field-name="Top_2_priorities_of_the_business__c"> </lightning-input-field>
+                <lightning-input-field field-name="Top_3_priorities_of_the_business__c"> </lightning-input-field>
+                <div class="slds-p-around_xx-small setbackground"><b>High growth areas/segments of the business</b>
+                </div>
+                <lightning-input-field  field-name="Growth_Area_1_Segment_of_the_Business__c"> </lightning-input-field>
+                <lightning-input-field  field-name="Growth_Area_2_Segment_of_the_Business__c"> </lightning-input-field>
+                <lightning-input-field  field-name="Growth_Area_3_Segment_of_the_Business__c"> </lightning-input-field>
+                <div class="slds-p-around_xx-small setbackground"><b>Points of pain or barriers to growth</b>
+                </div>
+                <lightning-input-field field-name="Point_1_of_pain_or_barriers_to_growth__c"> </lightning-input-field>
+                <lightning-input-field field-name="Point_2_of_pain_or_barriers_to_growth__c"> </lightning-input-field>
+                <lightning-input-field field-name="Point_3_of_pain_or_barriers_to_growth__c"> </lightning-input-field>
+                <div class="slds-p-around_xx-small onlyheadingcss">
+                    <b>Business overview </b>
+                    <br/>Provide high-level overview of the customer’s operations and unique characteristics
+                </div>
+            
+                <lightning-input-field field-name = "Business_s_mission__c"></lightning-input-field>
+                <lightning-input-field field-name = "Key_Services_Provided__c"></lightning-input-field>
+                <lightning-input-field field-name = "Recent_acquisitions_mergers__c"></lightning-input-field>
+                <lightning-input-field field-name = "Number_of_retail_locations_coverage__c"></lightning-input-field>
+                <lightning-input-field field-name = "Distributor_Partners__c"></lightning-input-field>
+                <lightning-input-field field-name = "Manufacturer_priority_if_any__c"></lightning-input-field>
+                <lightning-input-field field-name = "Distinctive_Characteristics__c"></lightning-input-field>
+                <lightning-input-field field-name = "Seasonal_characteristics_if_any__c"></lightning-input-field>
+                
+                <lightning-button variant="brand" type="submit" label="Update record" onclick={handleClick}></lightning-button>
+
+            </lightning-record-edit-form>
+                    <br/>
+                    <br/>
+            <div class="slds-p-around_xx-small onlyheadingcss"><b>Business goals </b>
+                <br/>
+                Fill in common goals for UPL and the customer to develop an action plan that achieves both within target timelines
+            </div>
+                      
+                            <lightning-datatable
+                                key-field="Id"
+                                data={conList}
+                                columns={columns}
+                                onrowselection={navigateToRecordViewPage}>
+                            </lightning-datatable>
+                       
+                        <br/>
+                        <br/>
+                        
+    <lightning-button variant="brand" label="Business Goals" title="Business Goals" onclick={navigateToHome} class="slds-m-left_x-small"></lightning-button>
+    
+    <lightning-button variant="brand" label="View Business Goals" title="View Business Goals" onclick={navigateToGoals} class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </template>
+    </template>

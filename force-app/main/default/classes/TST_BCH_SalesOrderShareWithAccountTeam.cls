@@ -1,0 +1,580 @@
+/* Name : TST_BCH_SalesOrderShareWithAccountTeam
+* Covergae Class : BCH_SalesOrderShareWithAccountTeam
+* Created By: Varun Shrivastava
+* Created Date: 26 Aug 2021
+* Ticket: SCTASK0573152
+*/
+@isTest(seeAllData=False)
+private class TST_BCH_SalesOrderShareWithAccountTeam {
+    @Testsetup
+    static void setupTestData(){
+        
+        Id devRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Distributor').getRecordTypeId();
+        
+        Price_Group_Master__c pg = new Price_Group_Master__c ();
+        pg.PG_Code__c='03';
+        Insert Pg;
+        
+        Trigger_Settings__c ts = new Trigger_Settings__c();
+        ts.isActive__c = true;
+        ts.Name = 'atmTrigger';
+        insert ts;
+        
+        Auto_Number__c auto = new Auto_Number__c();
+        auto.Name='FarmerCode';
+        auto.Sequence__c='11';
+        Insert auto;
+        
+        Sales_Org__c sorg =new Sales_Org__c();
+        sorg.Name='Mexico';
+        sorg.Description__c='Mexico';
+        sorg.Sales_Org_Code__c='5100';
+        Insert sorg;
+        
+        Crop__c crops = new Crop__c();
+        crops.active__c=true;
+        crops.name = 'Apple';
+        crops.SalesOrg__c = sorg.id;
+        crops.CurrencyIsoCode='INR';
+        Insert crops;
+        
+        Crop__c crops2 = new Crop__c();
+        crops2.active__c=true;
+        crops2.name = 'Lemon';
+        crops2.SalesOrg__c = sorg.id;
+        crops2.CurrencyIsoCode='INR';
+        Insert crops2;
+        
+        Crop__c crops3 = new Crop__c();
+        crops3.active__c=true;
+        crops3.name = 'Tomato';
+        crops3.SalesOrg__c = sorg.id;
+        crops3.CurrencyIsoCode='INR';
+        Insert crops3;
+        
+        Crop__c crops4 = new Crop__c();
+        crops4.active__c=true;
+        crops4.name = 'Orange';
+        crops4.SalesOrg__c = sorg.id;
+        crops4.CurrencyIsoCode='INR';
+        Insert crops4;
+        
+        Crop__c crops5 = new Crop__c();
+        crops5.active__c=true;
+        crops5.name = 'Other';
+        crops5.SalesOrg__c = sorg.id;
+        crops5.CurrencyIsoCode='INR';
+        Insert crops5;
+        
+        Crop__c crops6 = new Crop__c();
+        crops6.active__c = true;
+        crops6.name = 'Planta';
+        crops6.SalesOrg__c = sorg.id;
+        crops6.CurrencyIsoCode='INR';
+        Insert crops6;
+        
+        RecordType depot_RecTypeId = [SELECT Id FROM RecordType WHERE Name = 'Depot' and isActive = TRUE LIMIT 1];
+        Depot__c dp_M = new Depot__c ();
+        dp_M.Name = 'UPL Mexico';
+        dp_M.recordtypeId = depot_RecTypeId.id;
+        dp_M.Country__c = 'Mexico';
+        dp_M.Location__c = 'NORTE';
+        dp_M.Depot_Code__c = 'MX00';
+        dp_M.Active__c = true;
+        dp_M.SalesOrg__c = sorg.ID;
+        Insert dp_M;
+        
+        RecordType supplier_RecTypeId = [SELECT Id FROM RecordType WHERE Name = 'Storage Location' and isActive = TRUE LIMIT 1];
+        Depot__c dp = new Depot__c ();
+        dp.Name = 'NORTE';
+        dp.recordtypeId = supplier_RecTypeId.id;
+        dp.Country__c = 'Mexico';
+        dp.Location__c = 'NORTEE';
+        dp.Depot_Code__c = 'MW22';
+        dp.Active__c = true;
+        dp.Depot__c = dp_M.Id;
+        dp.SalesOrg__c = sorg.ID;
+        dp.Segment_Name__c = 'Sales Team';
+        Insert dp;
+        
+        Product2 pro = new Product2();
+        pro.ProductCode = '66700';
+        pro.Product_Code__c='66700';
+        pro.Name='DOST';
+        pro.popular__c = true;
+        pro.Combination_Key__c='RM0065100';
+        Insert Pro;
+        
+        Distribution_Channel__c disbj = new Distribution_Channel__c();
+        disbj.Name = '20';                      
+        disbj.Distribution_Channel_Code__c = '20';  
+        disbj.Description__c='test';
+        Insert disbj;
+        
+        Distribution_Channel__c disbj2 = new Distribution_Channel__c();
+        disbj2.Name = '67';                      
+        disbj2.Distribution_Channel_Code__c = '67';  
+        disbj2.Description__c='test';
+        Insert disbj2;
+        
+        Division__c Divbj2 = new Division__c();
+        Divbj2.Name = '20';         
+        Divbj2.Description__c = null;    
+        Divbj2.Division_Code__c = '20'; 
+        Insert Divbj2;
+        
+        Division__c Divbj = new Division__c();
+        Divbj.Name = '10';         
+        Divbj.Description__c = null;    
+        Divbj.Division_Code__c = '10'; 
+        Insert Divbj;
+        
+        SKU__c sku = new SKU__c();
+        sku.Name='P1';
+        sku.SKU_Code__c='704002';
+        sku.SKU_Pack__c=1.00;
+        sku.SKU_UOM__c='L';
+        sku.Multiple_Of__c=5;
+        sku.Group__c='DOST';
+        sku.Pack_Size__c=10.00;
+        sku.Product_Name__c=pro.Id;
+        sku.Sales_Org__c = sorg.Id;
+        sku.UOM__c='L';
+        sku.Active__c=True;
+        sku.Combination_Key__c='Cooooooo000011111';
+        Insert sku;
+        
+        SKU__c sku2 = new SKU__c();
+        sku2.Name='P2';
+        sku2.SKU_Code__c='704001';
+        sku2.SKU_Pack__c = 1.00;
+        sku2.SKU_UOM__c='L';
+        sku2.Multiple_Of__c=5;
+        sku2.Group__c='P2';
+        sku2.Pack_Size__c=10.00;
+        sku2.Product_Name__c=pro.Id;
+        sku2.Sales_Org__c = sorg.Id;
+        sku2.UOM__c='L';
+        sku2.Active__c=True;
+        sku2.Combination_Key__c='Cooooooo000012111';
+        Insert sku2;
+        
+        PriceBookMaster__c PbMaster = new PriceBookMaster__c();
+        PbMaster.SKUCode__c = sku.id;           
+        PbMaster.DepotCode__c =dp_M.id;         
+        PbMaster.Price__c = 34500;                    
+        PbMaster.PG_CODE__c =Pg.Id;  
+        PbMaster.UOM__c = 'NOS';                          
+        PbMaster.StartDate__c = system.today();
+        PbMaster.EndDate__c = system.today()+1;
+        PbMaster.Active__c = true;                      
+        PbMaster.PerUnit__c = 1;                       
+        PbMaster.Batch__c ='test'; 
+        PbMaster.CurrencyIsoCode='MXN'; 
+        PbMaster.Division__c= Divbj.ID;
+        PbMaster.CompositeKey__c='c1';
+        Insert PbMaster; 
+        
+        PriceBookMaster__c PbMaster2 = new PriceBookMaster__c();
+        PbMaster2.SKUCode__c = sku2.id;           
+        PbMaster2.DepotCode__c =dp_M.id;         
+        PbMaster2.Price__c = 3400;                    
+        PbMaster2.PG_CODE__c =Pg.Id;  
+        PbMaster2.UOM__c = 'NOS';                          
+        PbMaster2.StartDate__c = system.today();
+        PbMaster2.EndDate__c = system.today()+1;
+        PbMaster2.Active__c = true;                      
+        PbMaster2.PerUnit__c = 1;                       
+        PbMaster2.Batch__c ='test'; 
+        PbMaster2.CurrencyIsoCode='MXN'; 
+        PbMaster2.Division__c= Divbj.ID;
+        PbMaster2.CompositeKey__c='c2';
+        Insert PbMaster2; 
+        
+        Order_Type__c ordType =new Order_Type__c();
+        ordType.Name = 'ZORD';              
+        ordType.Description__c = 'Indonesia';    
+        ordType.Order_Type_Code__c = 'ZORD';
+        Insert ordType;
+        
+        Payment_Method__c payment_method = new Payment_Method__c(
+            Name = 'CHEQUE NOMINATIVO',
+            Sales_Org__c = sorg.ID,
+            Payment_Method_Code__c = 'B',
+            Active__c = true, 
+            Combination_Key__c = '5100B' 
+        );
+        Insert payment_method;
+        
+        Payment_Term__c payment_term = new Payment_Term__c(
+            Payment_Term_Code__c = '0004',  
+            Payment_Term__c = 'Contado',  
+            Payterms_Desc__c = 'Contado',
+            Days_to_calc_interest__c = 0, 
+            Sales_Org__c = sorg.ID, 
+            CombinationKey__c = '51000004', 
+            Active__c = true
+        );
+        Insert payment_term;
+        
+        Inco_Term__c Inco_terms = new Inco_Term__c(
+            Name = 'CFR',                                     
+            IncoTerm_Code__c = 'CFR',                          
+            IncoTerm_Desc__c = 'NOSOTROS ENVIAMOS EL PRODUCTO', 
+            Active__c = true,                              
+            Sales_Org__c = sorg.ID               
+        );
+        Insert Inco_terms; 
+        
+        Account acc = new Account();
+        acc.Name = 'Test Account Distributer';
+        acc.Last_Name__c = 'Distributer';
+        acc.PriceGroupCode__c = pg.id;
+        acc.SAP_Code__c = 'SAP996734';
+        acc.RecordTypeId = devRecordTypeId;
+        acc.Mobile__c = '9967341759';
+        acc.Phone = '020256589';
+        acc.Sales_Org__c = sorg.Id;
+        acc.Division__c = Divbj.Id;
+        acc.Distribution_Channel__c = disbj.Id;
+        acc.BillingCity = 'Pune';
+        acc.Order_Type__c = ordType.Id;
+        acc.Depot_Code__c = 'PUN1';
+        Insert acc;
+        
+        Account acc2 = new Account();
+        acc2.Name = 'Test Account Distributerq';
+        acc2.Last_Name__c = 'Distributer2';
+        acc2.PriceGroupCode__c = pg.id;
+        acc2.SAP_Code__c = 'SAP996735';
+        acc2.RecordTypeId = devRecordTypeId;
+        acc2.Mobile__c = '9967341758';
+        acc2.Phone = '020256588';
+        acc2.Sales_Org__c = sorg.Id;
+        acc2.Division__c = Divbj.Id;
+        acc2.Distribution_Channel__c = disbj.Id;
+        acc2.BillingCity = 'Pune';
+        acc2.Order_Type__c = ordType.Id;
+        acc2.Depot_Code__c = 'PUN1';
+        Insert acc2;
+        
+        
+        PbMaster.DistributorCustomerCode__c = acc.Id;
+        Update PbMaster; 
+        
+        Price_Group_Master__c priceGroup = new Price_Group_Master__c(
+            PG_Code__c = '01'
+        );
+        Insert priceGroup;
+        
+        DistributorSalesAreaMapping__c sobj = new DistributorSalesAreaMapping__c(
+            AccountType__c = 'Sold To Party',          
+            Distributor__c = acc.id,       
+            SalesOrg__c = sorg.id,         
+            OrderBlock__c = false,                   
+            DistributionChannel__c = disbj.id, 
+            Division__c = Divbj.id,   
+            PriceGroupMaster__c = priceGroup.id   
+        );
+        Insert sobj;
+        
+        DistributorSalesAreaMapping__c sobj2 = new DistributorSalesAreaMapping__c(
+            AccountType__c = 'Sold To Party',      
+            Distributor__c = acc.id,         
+            SalesOrg__c = sorg.id,         
+            OrderBlock__c = false,                    
+            DistributionChannel__c = disbj.id,  
+            Division__c = Divbj2.id,             
+            PriceGroupMaster__c = priceGroup.id  
+        );
+        Insert sobj2;
+        
+        Contact con = new Contact();
+        con.AccountId = acc.Id;
+        con.LastName = acc.Last_Name__c;
+        Insert con;
+        
+        Contact con1 = new Contact();
+        con1.AccountId = acc2.Id;
+        con1.LastName = 'Second Contact';
+        Insert con1;
+        
+        
+        userrole  usrole = new userrole();
+        usrole.Name = 'Regional/Zonal Managers for Mexico';
+        
+        Profile p = [SELECT Id,name FROM Profile WHERE Name = 'PartnerCommunity Distributor Profile'];
+        User sobj1 = new User();
+        sobj1.Alias = 'zonaa';    
+        sobj1.Crop_Selection__c=true;                                                        
+        sobj1.Email = 'himanshua.mehta@skinternational.com';                             
+        sobj1.ProfileId  = p.Id;                                                     
+        sobj1.Username = 'zonal_aaexe1232@upl122333.com.devbox';                                    
+        sobj1.IsActive = True;  
+        sobj1.LastName='Terriotory Manager';
+        sobj1.CommunityNickname = 'zonalExe1222 Di'; 
+        sobj1.TimeZoneSidKey = 'Asia/Kolkata';
+        sobj1.LocaleSidKey = 'en_IN';                                    
+        sobj1.LanguageLocaleKey = 'en_US';                                             
+        sobj1.ForecastEnabled = false;                                                     
+        sobj1.EmailEncodingKey = 'ISO-8859-1';    
+        sobj1.Show_Inventory__c = false;                                                     
+        sobj1.Show_Credit_Limit__c = false; 
+        sobj1.UserRoleId=usrole.id;
+        sobj1.ContactID=con.Id;
+        Insert sobj1;
+        
+        User user2 = new User();
+        user2.Alias = 'zonaa2';    
+        user2.Crop_Selection__c=true;                                                        
+        user2.Email = 'himanshua.mehta1@skinternational.com';                             
+        user2.ProfileId  = p.Id;                                                     
+        user2.Username = 'zonal_aaexe12322@upl122333.com.uat';                                    
+        user2.IsActive = True;  
+        user2.LastName='Terriotory Manager 2';
+        user2.CommunityNickname = 'zonalExe1222 Di 23'; 
+        user2.TimeZoneSidKey = 'Asia/Kolkata';
+        user2.LocaleSidKey = 'en_IN';                                    
+        user2.LanguageLocaleKey = 'en_US';                                             
+        user2.ForecastEnabled = false;                                                     
+        user2.EmailEncodingKey = 'ISO-8859-1';    
+        user2.Show_Inventory__c = false;                                                     
+        user2.Show_Credit_Limit__c = false; 
+        user2.UserRoleId=usrole.id;
+        user2.ContactID=con1.Id;
+        Insert user2;
+        
+        
+        Sales_Org__c salesOrg  = new Sales_Org__c();
+        salesOrg.Name = 'Mexico';
+        salesOrg.Company_Code__c = '5000';
+        salesOrg.Country_Code__c = 'MX';
+        salesOrg.Sales_Org_Code__c = '5100';
+        Insert salesOrg;
+        
+        TM_Depot_Mapping__c TMDepoMap = new TM_Depot_Mapping__c();
+        TMDepoMap.Depot__c = dp.Id;        // Depot
+        TMDepoMap.Territory_Manager__c = sobj1.id;  // Territory Manager
+        Insert TMDepoMap;
+        
+        Shipping_Location__c shippLoc =new Shipping_Location__c();
+        shippLoc.Location_Name__c ='Same as Billing Address'; 
+        shippLoc.Region__c='Pune';
+        shippLoc.Distributor__c=acc.Id;
+        shippLoc.City__c='Pune';
+        shippLoc.Sold_To_Party_SAP_Code__c = acc.SAP_Code__c;
+        shippLoc.SAP_Code__c='SAP0001';
+        shippLoc.State__c='13';
+        shippLoc.Sales_Org__c = salesOrg.id;
+        Insert shippLoc;
+        
+        Shipping_Location__c shippLoc2 =new Shipping_Location__c();
+        shippLoc2.Location_Name__c ='Mumbai'; 
+        shippLoc2.Region__c='Mumbai';
+        shippLoc2.Distributor__c=acc.Id;
+        shippLoc2.City__c='Mumbai';
+        shippLoc2.SAP_Code__c = acc.SAP_Code__c;
+        shippLoc2.Sold_To_Party_SAP_Code__c = acc.SAP_Code__c;
+        shippLoc2.State__c='14';
+        shippLoc2.Sales_Org__c = salesOrg.id;
+        Insert shippLoc2;
+        
+        SpecialInvoiceDiscount__c spelDis = new SpecialInvoiceDiscount__c();
+        spelDis.Active__c = false;                                             
+        spelDis.Batch__c = 'test';                                                 
+        spelDis.DepotCode__c =dp.Id;                                             
+        spelDis.Price__c = 191;                                                
+        spelDis.DistributorCustomerCode__c = acc.Id;                   
+        spelDis.EndDate__c =System.today()+1;                          
+        spelDis.PerUnit__c = 1.0;                                                   
+        spelDis.PG_Code__c =Pg.Id;                                             
+        spelDis.SKUCode__c = sku.Id;                          
+        spelDis.StartDate__c = system.today();                         
+        spelDis.UOM__c = 'KG';                                                   
+        spelDis.CompositeKey__c = '000100122814-06-2016000000000000710002';         
+        Insert spelDis;
+        
+        Inventory__c invObj = new Inventory__c( );
+        invObj.Stock_Quantity__c = 0;
+        invObj.In_transit_stock_quantity__c = 100;
+        invObj.Batch_Number__c = 'CMUMTX2506'; 
+        invObj.Depot__c = dp_M.Id;    
+        invObj.UOM__c = 'L';                    
+        invObj.Storage_Location__c = 'L1P';  
+        invObj.SKU__c = sku.Id;  
+        invObj.SKU_Depot__c ='sd1';           
+        Insert invObj;
+        
+        Inventory__c invObj4 = new Inventory__c( );
+        invObj4.Stock_Quantity__c = 0;
+        invObj4.In_transit_stock_quantity__c = 100;
+        invObj4.Batch_Number__c = 'CMUMTX2506'; 
+        invObj4.Depot__c = dp_M.Id;    
+        invObj4.UOM__c = 'L';                    
+        invObj4.Storage_Location__c = 'L4P';  
+        invObj4.SKU__c = sku2.Id;  
+        invObj4.SKU_Depot__c ='sd4';           
+        Insert invObj4;
+        
+        Inventory__c invObj2 = new Inventory__c( );
+        invObj2.Stock_Quantity__c = 0;
+        invObj2.In_transit_stock_quantity__c = 100;
+        invObj2.Batch_Number__c = 'CMUMTX2506'; 
+        invObj2.Storage_Location_Depot__c = dp.Id;    
+        invObj2.UOM__c = 'L';                    
+        invObj2.Storage_Location__c = 'L1C';  
+        invObj2.SKU__c = sku.Id;  
+        invObj2.SKU_Depot__c ='sd2';           
+        Insert invObj2;
+        
+        Inventory__c invObj3 = new Inventory__c( );
+        invObj3.Stock_Quantity__c = 0;
+        invObj3.In_transit_stock_quantity__c = 100;
+        invObj3.Batch_Number__c = 'CMUMTX2506'; 
+        invObj3.Storage_Location_Depot__c = dp.Id;    
+        invObj3.UOM__c = 'L';                    
+        invObj3.Storage_Location__c = 'L2C';  
+        invObj3.SKU__c = sku2.Id;  
+        invObj3.SKU_Depot__c ='sd3';           
+        Insert invObj3;
+        
+        PricebookDiscount__c PbDis = new PricebookDiscount__c();
+        PbDis.Batch__c = 'test';                                               
+        PbDis.DepotCode__c = dp.Id;                                  
+        PbDis.DistributorCustomerCode__c = acc.Id;                              
+        PbDis.EndDate__c = System.today()+1;                         
+        PbDis.PerUnit__c = 1.00;                                                 
+        PbDis.PG_Code__c = Pg.Id;                                   
+        PbDis.SKUCode__c = sku.Id;                             
+        PbDis.StartDate__c = system.today();                         
+        PbDis.Active__c = false;                                               
+        PbDis.Price__c = 200.00;                                                 
+        PbDis.UOM__c = 'KG';                                                   
+        PbDis.CompositeKey__c = '01-04-2016BHA103000000000000692001';
+        PbDis.Sales_Org__c = salesOrg.Id;
+        Insert PbDis;
+        
+        Distributor_Depot_Mapping__c dsMap =new Distributor_Depot_Mapping__c();
+        dsMap.Distributor__c = acc.id;
+        dsMap.Depot__c = dp_M.Id;
+        Insert dsMap;
+        
+        SKU_Pack_Size__c spObj = new SKU_Pack_Size__c();
+        spObj.Depot__c = dp.Id;
+        spObj.UOM__c = 'L';
+        spObj.SKU__c = sku.Id;
+        spObj.Pack_Size__c = '5';
+        Insert spObj;
+        
+        Credit_Info__c crdIf = new Credit_Info__c();
+        crdIf.Credit_Limit__c=1000;
+        crdIf.Percentage_Used__c=100.0;
+        crdIf.Allocated_Limit__c=0.0;
+        crdIf.Distributor__c=acc.Id;
+        crdIf.Distributor_Code__c='0001001225';
+        crdIf.Sales_Org__c = salesOrg.id;
+        Insert crdIf;
+        
+        OrderTemplate__c ordTemp =new OrderTemplate__c();
+        ordTemp.DistributorCustomerCode__c=acc.Id;
+        ordTemp.Name='DOST 500.00 ML';
+        Insert ordTemp;
+        
+        OrderTemplateItem__c ordTempItem = new OrderTemplateItem__c();
+        ordTempItem.Name = 'DOST';
+        ordTempItem.OrderTemplate__c=ordTemp.Id;
+        ordTempItem.SKU__c = sku.Id;
+        Insert ordTempItem;
+        
+        State_Tax_Structure__c statetax = new State_Tax_Structure__c();
+        statetax.State_Name__c = 'Maharashtra';
+        statetax.Country__c = 'Indonesia';          
+        statetax.Tax__c = 10;           
+        statetax.State_Code__c = '13';
+        statetax.AdditionalTax__c = 30;
+        statetax.SalesOrg__c = sorg.Id;
+        Insert statetax;
+        
+        Order__c ord = new Order__c();
+        ord.Shipping_Location__c = shippLoc.id;  
+        ord.Bill_To_Party__c = acc.Id;        
+        ord.Order_Date__c = system.today();  
+        ord.Order_Raise_By__c = 'Distributor';            
+        ord.VAT__c = statetax.Tax__c;                            
+        ord.Order_Status__c = 'Draft';                    
+        ord.Additional_Tax__c =statetax.AdditionalTax__c;                        
+        ord.Sales_Org__c =sorg.Id;          
+        ord.Distribution_Channel__c =disbj.Id; 
+        ord.Division__c = Divbj.Id;
+        ord.Remarks_Long__c='test';
+        Insert ord;
+        
+        OrderLineItem__c ordItem = new OrderLineItem__c();
+        ordItem.Item_Status__c = 'test';          
+        ordItem.SKU_Name__c = sku.Id; 
+        ordItem.Item_Number__c = '10';          
+        ordItem.UOM__c = 'L';                   
+        ordItem.No_of_Case__c = 1;            
+        ordItem.Invoice_Discount__c = 0.00;     
+        ordItem.Quantity__c = 100;          
+        ordItem.Special_Discount__c = 0.00;     
+        ordItem.Price__c = 23000;            
+        ordItem.Order__c = ord.Id;    
+        ordItem.Stock_Available__c = false;
+        Insert ordItem; 
+        
+        OrderLineItem__c ordItem2 = new OrderLineItem__c();
+        ordItem2.Item_Status__c = 'test';          
+        ordItem2.SKU_Name__c = sku2.Id; 
+        ordItem2.Item_Number__c = '20';          
+        ordItem2.UOM__c = 'L';                   
+        ordItem2.No_of_Case__c = 1;            
+        ordItem2.Invoice_Discount__c = 0.00;     
+        ordItem2.Quantity__c = 100;          
+        ordItem2.Special_Discount__c = 0.00;     
+        ordItem2.Price__c = 23900;            
+        ordItem2.Order__c = ord.Id;    
+        ordItem2.Stock_Available__c = false;
+        Insert ordItem2; 
+        
+        Sales_Order__c so = new Sales_Order__c();
+        so.Sold_to_Party__c = acc.Id;
+        so.Bill_To_Party__c = acc.Id;
+        so.Order_Date__c = system.today();
+        so.CreatedFrom__c = 'SFDC';
+        so.Depot__c = dp.Id;
+        so.OwnerId = UserInfo.getUserId();
+        so.Order__c = ord.Id;
+        so.Sales_Org_lk__c = sorg.Id;
+        so.Order_Status__c = 'Draft';
+        so.Ship_To_Party__c = shippLoc.Id;
+        Insert so;
+        
+        AccountTeamMember atm = new AccountTeamMember();
+        atm.userID = sobj1.ID;
+        atm.AccountID = acc.ID;
+        insert atm;
+        
+        Sales_Order__Share sh = new Sales_Order__Share();
+        sh.ParentId = so.ID;
+        sh.UserOrGroupId = sobj1.Id;
+        sh.AccessLevel = 'Read';
+        sh.RowCause = 'Manual';
+        insert sh;
+        
+        Sales_Order__Share sh1 = new Sales_Order__Share();
+        sh1.ParentId = so.ID;
+        sh1.UserOrGroupId = user2.Id;
+        sh1.AccessLevel = 'Read';
+        sh1.RowCause = 'Manual';
+        insert sh1;
+    }
+    
+    static testMethod void checkCoverage(){
+        Test.startTest();
+        List<Sales_Order__Share> ss = [Select id,ParentId,Parent.OwnerId,Parent.SalesOrgCode__c, Parent.CreatedByID, UserOrGroupId,AccessLevel, RowCause from Sales_Order__Share where AccessLevel = 'Read' and Parent.SalesOrgCode__c = '5100'];
+        //System.assert(false,'ss:'+ss);
+        Database.executeBatch(new BCH_SalesOrderShareWithAccountTeam(),10);
+        Test.stopTest();
+    }
+}

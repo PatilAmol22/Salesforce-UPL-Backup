@@ -1,0 +1,108 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:handler name='init' value='{!this}' action='{!c.doInit}'/>
+    <aura:attribute name="isIndia" type="boolean" default="false"/>
+    <aura:attribute name="isBrazil" type="boolean" default="false"/>
+    <aura:attribute name="isMexico" type="boolean" default="false"/>
+    <aura:attribute name="isChile" type="boolean" default="false"/>
+    <div class="normal-show">
+        <div class ="normal-show">
+            <div class ="parent-base-img">
+                <div class="parent-footer-padding">
+                    <div class="slds-grid slds-wrap ">
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="slds-p-left_large">
+                                <aura:if isTrue="{!v.isIndia}">
+                                    <c:Grz_Twitter/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isBrazil}">
+                                    <c:Grz_Instagram_Brazil/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isMexico}">
+                                    <c:Grz_Instagram_Mexico/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isChile}">
+                                    <c:grz_Instagram_Chile/>
+                                </aura:if>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12 ">
+                            <div class="slds-p-left_large">
+                                <aura:if isTrue="{!v.isIndia}">
+                                    <c:Grz_Facebook/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isBrazil}">
+                                    <c:Grz_Facebook_Brazil/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isMexico}">
+                                    <c:Grz_Facebook_Mexico/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isChile}">
+                                    <c:Grz_Facebook_Chile/>
+                                </aura:if>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.isChile}">
+                          <div class="slds-col slds-size_4-of-12 ">
+                                <div class="slds-p-left_large">
+                              		<c:Grz_Linkedin_Chile/>
+                                </div>
+                            </div>
+                            <aura:set attribute="else">
+                             	 <div class="slds-col slds-size_4-of-12 ">
+                                        <div class="slds-p-left_large">
+                                            <c:grz_eventsDetails/>
+                                        </div>
+                            	</div>
+                            </aura:set>
+                        </aura:if>
+                       
+                            
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-show">
+            <div class ="wrapper parent-base-img parent-footer-padding">
+                <div class="item">
+                    <aura:if isTrue="{!v.isIndia}">
+                        <c:Grz_Twitter/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isBrazil}">
+                        <!--<c:Grz_Twitter/>-->
+                        <c:Grz_Instagram_Brazil/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isMexico}">
+                        <c:Grz_Instagram_Mexico/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isChile}">
+                        <c:grz_Instagram_Chile/>
+                    </aura:if>
+                </div>
+                <div class="item">
+                    <aura:if isTrue="{!v.isIndia}">
+                        <c:Grz_Facebook/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isBrazil}">
+                        <c:Grz_Facebook_Brazil/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isMexico}">
+                        <c:Grz_Facebook_Mexico/>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isChile}">
+                        <c:Grz_Facebook_Chile/>
+                    </aura:if>
+                </div>
+                <aura:if isTrue="{!v.isChile}">
+                    <!-- Commented by Akhilesh for disabling LinkedIn in Mobile
+                        <div class="item"><c:Grz_Linkedin_Chile/></div>-->
+                    <aura:set attribute="else">
+                        <div class="item"><c:grz_eventsDetails/></div>
+                    </aura:set>
+                </aura:if>
+                
+            </div>
+            <div class="side-shade"></div>
+        </div>
+    </div>
+</aura:component>

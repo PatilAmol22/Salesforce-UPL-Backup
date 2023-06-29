@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Monthly_Expense_email_alert_to_creator</fullName>
+        <description>Monthly Expense Approved email alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>RegionalManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Delta/Monthly_Travel_Expense_Approved_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Monthly_Summary_Report</fullName>
+        <description>Monthly Summary Report</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Indonesia_Travel_Expense_Finance_Team</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Delta/TravelExpenseFinanceEmail</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Checkbox</fullName>
+        <field>SubmittedforApproval__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Status as &apos;Approved&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved_by_NMM</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Approved by NMM</literalValue>
+        <name>Update Status as &apos;Approved by NMM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved_by_NSM</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Approved by NSM</literalValue>
+        <name>Update Status as &apos;Approved by NSM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved_by_RM</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Approved by RM</literalValue>
+        <name>Update Status as &apos;Approved by RM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Open</fullName>
+        <field>Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>Update Status as &apos;Open&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Pending_by_NSM</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Pending by NSM</literalValue>
+        <name>Update Status as &apos;Pending by NSM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Pending_by_RM</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Pending by RM</literalValue>
+        <name>Update Status as &apos;Pending by RM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Rejected_by_CH</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Rejected by CH</literalValue>
+        <name>Update Status as &apos;Rejected by CH&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Rejected_by_NMM</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Rejected by NMM</literalValue>
+        <name>Update Status as &apos;Rejected by NMM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Rejected_by_NSM</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Rejected by NSM</literalValue>
+        <name>Update Status as &apos;Rejected by NSM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Rejected_by_RM</fullName>
+        <description>Delta</description>
+        <field>Status__c</field>
+        <literalValue>Rejected by RM</literalValue>
+        <name>Update Status as &apos;Rejected by RM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Submitted_for_Approval_as_FALSE</fullName>
+        <field>SubmittedforApproval__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Submitted for Approval as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Submitted_for_Approval_as_TRUE</fullName>
+        <field>SubmittedforApproval__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Submitted for Approval as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_submitted_for_approval_as_FALSE_1</fullName>
+        <field>SubmittedforApproval__c</field>
+        <literalValue>0</literalValue>
+        <name>Update submitted for approval as &apos;FALSE&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Indonesia Email Alert to finance team</fullName>
+        <actions>
+            <name>Monthly_Summary_Report</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Monthly_Travel_Expense__c.CH_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <description>Create WF rule for email alert to finance team after approval of CH</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Indonesia Email Alert to finance team and other members</fullName>
+        <actions>
+            <name>Monthly_Expense_email_alert_to_creator</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Monthly_Summary_Report</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Monthly_Travel_Expense__c.CH_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <description>Create WF rule for email alert to finance team after approval of CH</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

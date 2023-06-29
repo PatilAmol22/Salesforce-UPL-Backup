@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+    <lightning:button class="slds-button slds-button--brand" onclick="{!c.gotoURL}">Place Order </lightning:button>
+    </div>
+</aura:component>

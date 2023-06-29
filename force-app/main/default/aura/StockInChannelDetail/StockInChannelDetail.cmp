@@ -1,0 +1,447 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                controller="StockInChannelDetails" access="global" >
+    
+    <aura:attribute name="StockInChannelDetails" type="List"/>
+    <aura:attribute name="liBrandname" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="displayDetails" type="Boolean" default="false"/>
+    <aura:attribute name="FreezeDetails" type="Boolean" default="true"/>
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false"/> <!-- added by Swapnil -->
+    
+    <!-- Notification Library-->
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    
+    <aura:handler name="change" value="{!v.StockInChannelId}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.hideemptystock}" action="{!c.onChangeHideEmptyStock}"/>
+    <!-- component parameters -->
+    <aura:attribute name="StockInChannelId" type="String" default="a5BO0000000MYakMAG"/>
+    <aura:attribute name="enablestock" type="Boolean" />
+    <aura:attribute name="hideemptystock" type="Boolean" />
+    <aura:attribute name="SBusinessUnit" type="String" />
+    <aura:attribute name="SCustomer" type="String" />
+    <aura:attribute name="STerritory" type="String" />
+    <aura:attribute name="SSalesRep" type="String" />
+    <aura:attribute name="currentnotes" type="String" />
+    <aura:attribute name="previousnotes" type="String" />
+    <aura:attribute name="lastnotes" type="String" />
+    <aura:attribute name="year" type="String" />
+    <aura:attribute name="customerId" type="String" />
+    <aura:attribute name="territoryId" type="String" />
+    <!-- ends -->
+    
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="FliterList" type="List"/>
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="startPage" type="Integer"/>
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="TotalPages" type="Integer"/>
+    <aura:attribute name="PageNumber" type="Integer"/>
+    <!-- Attribute Declration For Pagination End-->
+    
+    <!--addded By Swapnil -->
+    <aura:attribute name="SubmittedForApproval" type="Boolean" />
+    <aura:attribute name="ReadyForApproval" type="Boolean" />
+    <aura:attribute name="Status" type="String"/>
+    <!-- -->
+    
+    
+    <!-- Month Attributes -->
+    <aura:attribute name="CurrentMonth" type="string" />
+    <aura:attribute name="PreviousMonth" type="string" />
+    <aura:attribute name="Previous2Month" type="string" />
+    
+    <!-- Spinner -->
+    
+    <aura:if isTrue="{! !v.ShowSpinner }"> <!-- displayDetails -->
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    
+    <br/>
+    <!-- addded by Swapnil -->
+    <!--
+    <aura:if isTrue="{!!v.SubmittedForApproval}">
+    <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+        <lightning:layoutItem   size="6">
+            
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small"  size="2">
+            
+          <lightning:formattedText  value="Submit for Approval " />
+          
+           
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small"  size="1">
+            <lightning:input type="checkbox-button" 
+                             label="Submit for Approval" 
+                             name="input3" 
+                             checked="false" 
+                             disabled="false"
+                             onchange="{!c.SubmitForApproval}"/>
+           
+        </lightning:layoutItem>
+        <lightning:layoutItem   size="3">
+            
+        </lightning:layoutItem>
+    </lightning:layout> 
+    </aura:if>
+    -->
+    <lightning:layout>
+        <lightning:layoutItem size="12">
+    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+            {!$Label.c.SIC_Audit_Hostory}
+        </h3>
+     </lightning:layoutItem>
+    </lightning:layout>
+    <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+        
+        <lightning:layoutItem padding="around-small"  size="12">
+           
+            <c:ApproveRejectComponent customerId="{!v.customerId}"
+                                      SubmittedForApproval="{!v.SubmittedForApproval}"
+                                      ReadyForApproval="{!v.ReadyForApproval}"
+                                      Status="{!v.Status}"
+                                      StockInChannelId="{!v.StockInChannelId}"
+                                      enablestock="{!v.enablestock}"
+                                      FreezeDetails="{!v.FreezeDetails}"/>
+          
+           
+        </lightning:layoutItem>
+       
+    </lightning:layout>
+    
+    <lightning:layout>
+        <lightning:layoutItem size="12">
+    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+            {!$Label.c.SIC_Stock}
+        </h3>
+     </lightning:layoutItem>
+    </lightning:layout>
+    <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+        
+        <lightning:layoutItem padding="around-small"  size="12">
+            <div class="slds-text-color_error slds-align_absolute-center">
+                O volume preenchido para cada produto deve estar na unidade de medida do produto
+            </div>
+        </lightning:layoutItem>
+        
+    </lightning:layout>
+    <!-- end -->
+    
+    
+    
+    <aura:if isTrue="{!v.displayDetails}">
+   <!-- <div class="c-container"> -->
+        <div class="slds-scrollable_x" >
+             <lightning:layout>
+                <lightning:layoutItem size="6">
+                    
+                </lightning:layoutItem>
+                  <lightning:layoutItem padding="around-small" size="2">
+                <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+                    <lightning:layoutItem size="12" class="slds-border_top slds-border_bottom">{!v.CurrentMonth}</lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-border_top slds-border_bottom">{!$Label.c.SIC_Volume}</lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2">
+                <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+                    <lightning:layoutItem size="12" class="slds-border_top slds-border_bottom">{!v.PreviousMonth}</lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-border_top slds-border_bottom">{!$Label.c.SIC_Volume}</lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2">
+                <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+                    <lightning:layoutItem size="12" class="slds-border_top slds-border_bottom">{!v.Previous2Month}</lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="slds-border_top slds-border_bottom">{!$Label.c.SIC_Volume}</lightning:layoutItem>
+                </lightning:layout>
+                 </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem size="12">
+                    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+                         {!$Label.c.SIC_Notes}
+                    </h3>
+                </lightning:layoutItem>
+            </lightning:layout>
+        <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+            <lightning:layoutItem   size="2">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem  size="2">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2" >
+                {!$Label.c.SIC_Notes}
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" size="2">
+                <textarea id="currentnotes" class="textarea uiInput uiInputTextArea uiInput--default uiInput--textarea" updateOn="onchange"  onchange="{!c.updateNotes}" value="{!v.currentnotes}" disabled="{!!v.FreezeDetails}"/>
+                <!--<ui:inputTextArea aura:id="currentnotes" updateOn="keyup" value="{!v.currentnotes}" keyup="{!c.updateNotes}" disabled="{!!v.FreezeDetails}"/> -->
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2">
+                <textarea id="previousnotes" class="textarea uiInput uiInputTextArea uiInput--default uiInput--textarea" updateOn="onchange"  onchange="{!c.updateNotes}" value="{!v.previousnotes}" disabled="{!!v.enablestock}"/>
+                <!--<ui:inputTextArea aura:id="previousnotes" value="{!v.previousnotes}" updateOn="keyup" keyup="{!c.updateNotes}" disabled="{!!v.enablestock}"/> -->
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2">
+                <textarea id="lastnotes" class="textarea uiInput uiInputTextArea uiInput--default uiInput--textarea" updateOn="onchange"  onchange="{!c.updateNotes}" value="{!v.lastnotes}" disabled="{!!v.enablestock}"/>
+                <!--<ui:inputTextArea aura:id="lastnotes" value="{!v.lastnotes}" updateOn="keyup" keyup="{!c.updateNotes}" disabled="{!!v.enablestock}"/> -->
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem size="12">
+                    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+                         {!$Label.c.SIC_Products}
+                    </h3>
+                </lightning:layoutItem>
+            </lightning:layout>
+        <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+            <lightning:layoutItem class="border" padding="around-small" size="2">
+                {!$Label.c.SIC_Product_Group}
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2">
+                {!$Label.c.SIC_Product_SKU}
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="1" >
+                {!$Label.c.SIC_UN}
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="1">
+                
+            </lightning:layoutItem>
+             <lightning:layoutItem padding="around-small" size="6">
+                &nbsp;
+                <aura:if isTrue="{!v.FreezeDetails}">
+                <lightning:button label="{!$Label.c.SIC_Reset_Stock}" title="{!$Label.c.SIC_Reset_Stock}" onclick="{! c.resetStock }"/>
+                <lightning:button label="{!$Label.c.SIC_Copy}" title="{!$Label.c.SIC_Copy}" onclick="{! c.copy }"/>
+                </aura:if>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        <!--
+        <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+            <lightning:layoutItem class="border" padding="slds-p-top_x-small slds-p-bottom_x-small" size="2">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="slds-p-top_x-small slds-p-bottom_x-small" size="2">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="slds-p-top_x-small slds-p-bottom_x-small" size="2" >
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="slds-p-top_x-small slds-p-bottom_x-small" size="6">
+                &nbsp;
+                <aura:if isTrue="{!v.FreezeDetails}">
+                <lightning:button label="{!$Label.c.SIC_Reset_Stock}" title="{!$Label.c.SIC_Reset_Stock}" onclick="{! c.resetStock }"/>
+                <lightning:button label="{!$Label.c.SIC_Copy}" title="{!$Label.c.SIC_Copy}" onclick="{! c.copy }"/>
+                </aura:if>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="slds-p-top_x-small slds-p-bottom_x-small" size="0">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="slds-p-top_x-small slds-p-bottom_x-small" size="0">
+                
+            </lightning:layoutItem>
+            
+        </lightning:layout> -->
+        
+        <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+            
+            
+            <lightning:layoutItem  padding="around-small" size="2">
+                <!-- <ui:inputText /> -->
+                
+                <ui:inputSelect aura:id="selectBrand" change="{!c.onBrandnameChange}">
+                    <ui:inputSelectOption text=""/>
+                    <aura:iteration items="{!v.liBrandname}" var="item">
+                        
+                        <ui:inputSelectOption  text="{!item}"/>
+                        
+                    </aura:iteration>
+                </ui:inputSelect>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem   padding="around-small" size="2">
+                <div>
+                    <ui:inputText aura:id="SKUDescription" updateOn="keyup"   keyup="{!c.handleSearchSKUDescription}"/>
+                </div>    
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" size="1" >
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="1">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="1">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="1">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="1">
+                
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        
+        <aura:iteration items="{!v.PaginationList}" var="item" indexVar="index">
+            <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+                
+                
+                <lightning:layoutItem class="border" padding="around-small" size="2">
+                    {!item.brandName}
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="2">
+                    {!item.productCategory}
+                </lightning:layoutItem>
+                
+                <lightning:layoutItem padding="around-small" size="1" >
+                    {!item.UOM}
+                </lightning:layoutItem>
+                 <lightning:layoutItem padding="around-small" size="1">
+                    <div class="slds-col">
+                        {!$Label.c.SIC_Vol_Distributor}
+                        </div>
+                     <aura:if isTrue="{!!$Browser.isPhone}">
+                     <br/> 
+                     </aura:if>
+                        <div class="slds-col">
+                            {!$Label.c.SIC_Vol_UPL}
+                        </div>
+                     <aura:if isTrue="{!!$Browser.isPhone}">
+                     <br/>
+                     </aura:if>
+                
+                        <div class="slds-col">
+                            {!$Label.c.SIC_Vol_Sales}
+                        </div>
+                    </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="2">
+                    
+                    <div >
+                        <div class="slds-col" >
+                            <lightning:input type="number" label="{!index}" variant="label-hidden" onblur="{!c.UpdateVolumeMonth}" value="{!item.currentMonthVol}" disabled="{!!v.FreezeDetails}" step="0.01"/>   <!--   -->
+                            <!--<input id="{!'currentMonth'+index}"  class="slds-input" data-row-index="{!index}" updateOn="onchange"  onchange="{!c.UpdateVolume}" type="text"  value="{! item.currentMonthVol}"  disabled="{!!v.FreezeDetails}"/> -->
+                            
+                            
+                        </div>
+                    </div>
+                   
+                    <div class="slds-col">
+                        
+                        <lightning:input type="number" label="{!index}" variant="label-hidden"  value="{!item.currentMonthVolUPL}" disabled="true" step="0.01"/>   
+                        <!--<input id="currentMonthcovol"  class="slds-input" type="text"  value="{! item.currentMonthVolUPL}"  disabled="true"/> -->
+                        <!--<ui:inputNumber aura:id="currentMonth1"  disabled="true" value="{! item.currentMonthVolUPL}"/>-->
+                    </div>
+                    <!--<div class="slds-col">
+                        <input id="currentMonthsales"  class="slds-input" type="text"  value="{! item.previousSales}"  disabled="true"/>
+                      <ui:inputNumber aura:id="currentMonth2" value="{! item.previousSales}" disabled="true"/> 
+                    </div> -->
+                    
+                    
+                    
+                </lightning:layoutItem>
+                
+                
+                
+                <lightning:layoutItem padding="around-small" size="2">
+                    <div >
+                        <div class="slds-col">
+                            <lightning:input type="number" label="{!index}" variant="label-hidden" onblur="{!c.UpdateVolumePrevious}" value="{!item.previousMonthVol}" disabled="{!!v.enablestock}" step="0.01" />   
+                           <!-- <input id="{!'previousMonth'+index}" class="slds-input" data-row-index="{!index}" updateOn="onchange"  onchange="{!c.UpdateVolume}" type="text"  value="{!item.previousMonthVol}"  disabled="{!!v.enablestock}"/> -->
+                            
+                           <!-- <ui:inputNumber aura:id="previousMonth" value="{!item.August_Volume__c}" disabled="{!!v.enablestock}"/> -->
+                        </div>
+                        <div class="slds-col">
+                            
+                            <lightning:input type="number" label="{!index}" variant="label-hidden"  value="{!item.previousMonthVolUPL}" disabled="true" step="0.01"/>   
+                            <!--<input id="previousMonthcovol"  class="slds-input" type="text"  value="{!item.previousMonthVolUPL}"  disabled="true"/> -->
+                            <!--<ui:inputNumber aura:id="previousMonth2"  disabled="true" value="{! item.previousMonthVolUPL}"/> -->
+                        </div>
+                        <div class="slds-col">
+                            <lightning:input type="number" variant="label-hidden" value="{! item.previousSales}" disabled="true"/> <!-- formatter="currency"  -->
+                       <!-- <input id="previousMonthsales"  class="slds-input" type="text"  value="{! item.previousSales}"  disabled="true"/> -->
+                      <!--<ui:inputNumber aura:id="currentMonth2" value="{! item.previousSales}" disabled="true"/> -->
+                    </div> 
+                        
+                    </div>
+                    
+                </lightning:layoutItem>
+                
+                <lightning:layoutItem padding="around-small" size="2">
+                    <div >
+                        <div class="slds-col">
+                         <!--<lightning:input type="number" name="{!index}" label="{!index}"  aura:id="{!'previous2Month'+index}" variant="label-hidden" onblur="{!c.UpdateVolume}" value="{!item.previous2MonthVol}" disabled="{!!v.enablestock}" step="0.01"/> --> 
+                         <!-- <input id="{!'previous2Month'+index}"  class="slds-input" data-row-index="{!index}" updateOn="onchange"  onchange="{!c.UpdateVolume}" type="text"  value="{!item.previous2MonthVol}"  disabled="{!!v.enablestock}"/> -->
+                         <lightning:input type="number" label="{!index}" variant="label-hidden" onblur="{!c.UpdateVolumePrevious2}" value="{!item.previous2MonthVol}" disabled="{!!v.enablestock}" step="0.01" />  <!-- step="0.01" -->  
+                            <!--<ui:inputNumber aura:id="previous2Month" value="{!item.July_Volume__c}" disabled="{!!v.enablestock}"/> -->
+                        </div>
+                        <div class="slds-col">
+                            <lightning:input type="number" label="{!index}" variant="label-hidden"  value="{!item.previous2MonthVolUPL}" disabled="true" step="0.01"/>   
+                           <!--<input id="previous2Monthcovol"  class="slds-input" type="text"  value="{!item.previous2MonthVolUPL}"  disabled="true"/>  -->
+                            <!-- <ui:inputNumber class="slds-input" aura:id="previous2Month2"  disabled="true" value="{! item.previous2MonthVolUPL}"/> -->
+                        </div>
+                        <div class="slds-col">
+                        <!--<input id="previous2Monthsales"  class="slds-input" type="text"  value="{! item.previous2Sales}"  disabled="true"/> -->
+                            <lightning:input type="number" variant="label-hidden" value="{! item.previous2Sales}" disabled="true"/> <!-- formatter="currency"  -->
+                      <!--<ui:inputNumber aura:id="currentMonth2" value="{! item.previousSales}" disabled="true"/> -->
+                    </div> 
+                        
+                    </div>
+                    
+                </lightning:layoutItem>
+                
+                
+            </lightning:layout>
+        </aura:iteration> 
+        
+        
+        <br/>
+            
+            <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="2">
+                <div class="slds-float_left slds-p-left_xx-small">
+                <p class="slds-page-header__title">Page {!v.PageNumber} of {!v.TotalPages}</p> 
+                </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="8">
+                <div class="slds-align_absolute-center">  
+        <lightning:buttonGroup >
+            <!-- <div class="slds-page-header" role="banner"> -->
+                          
+                    <lightning:button disabled="{!v.startPage == 0}" variant="brand" aura:id="prevPage" label="{!$Label.c.SIC_Prev}" onclick="{!c.handlePrev}" />            
+              <!--      <lightning:button disabled="{!v.endPage >= v.totalRecords}" aura:id="nextPage" variant="brand" label="{!$Label.c.SIC_Next}" onclick="{!c.handleNext}"/> -->
+            <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="{!$Label.c.SIC_Next}" onclick="{!c.handleNext}"/>
+              <!--  </div> -->
+                <!-- <p class="slds-page-header__title">{!v.RecordStart}-{!v.RecordEnd} of {!v.totalRecords} | Page {!v.PageNumber} of {!v.TotalPages}</p> -->
+          
+        </lightning:buttonGroup>
+            </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="2">
+                
+                </lightning:layoutItem>
+            </lightning:layout>
+           <!-- 
+            <div>
+                <div class="slds-float_left slds-p-left_xx-small">
+                <p class="slds-page-header__title">Page {!v.PageNumber} of {!v.TotalPages}</p> 
+                </div>
+       
+        <div class="slds-align_absolute-center">  
+        <lightning:buttonGroup >
+           
+                          
+                    <lightning:button disabled="{!v.startPage == 0}" variant="brand" aura:id="prevPage" label="Prev" onclick="{!c.handlePrev}" />            
+                    <lightning:button disabled="{!v.endPage >= v.totalRecords}" aura:id="nextPage" variant="brand" label="Next" onclick="{!c.handleNext}"/>
+              
+        </lightning:buttonGroup>
+            </div>
+          </div>  -->
+        
+    </div>
+        </aura:if>
+</aura:component>

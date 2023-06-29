@@ -1,0 +1,22 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="redirectionLink" type="String"/>
+    <div>
+        <!--<p> <lightning:button variant="base" label="Click Here" title="Base action" onclick="{! c.gotoURL }"/> for Changing Community</p>-->
+        <p class="slds-p-around_small" style="font-size: 18px; font-weight: bold;">Please 
+            <a href="{!v.redirectionLink}" title="" onclick="{!c.gotoURL}" target="_blank" style="font-weight: bold; text-decoration: underline;">
+            	Click Here<!--<img src="{!$Resource.Grz_Resourse + '/Grz_Resourse/Images/SelectCountryHover.png'}"/>-->
+            </a>
+            if you are unable to login post multiple attempts
+           
+        </p>
+        <!--Change by Swaranjeet(Grazitti) RITM0555646-->
+        <p style="color: #f4a920"><b>
+            Toll Free Number : 99-204-22-111<br/>
+            Timings : 9AM to 6PM<br/>
+			Working Days : Monday to Friday
+            </b>
+        </p>
+       
+    </div>
+</aura:component>

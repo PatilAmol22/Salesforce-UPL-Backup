@@ -1,0 +1,175 @@
+<!--********************************************************************************************
+* Name			: grz_CollectionInternal.html
+* Description	: LWC component for Internal Users to display Collection Data                              
+* Created Date	: 16/06/2022 
+* Created By	: Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<template>
+    <lightning-quick-action-panel header={labels.collection} >
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner alternative-text="Loading..." variant="brand" style="top:120px;"></lightning-spinner>
+        </div>
+        <div class="modal-height">
+            <template if:true={errorMessage}>
+                <p class="error"> {errorMessage} </p>
+            </template>
+            <br>
+            <template if:true={account}>
+                <div class="filter-div">
+                    <div class="slds-p-left_small year-div">
+                           <lightning-combobox
+                                placeholder={labels.yy}
+                                label={labels.yy}
+                                value={fiscalYear}
+                                options={yearOptions}
+                                onchange={handleYearOption} >
+                            </lightning-combobox>
+                    </div>
+                    <div class="slds-p-left_small month-div">
+                              <lightning-combobox
+                                placeholder={labels.mm}
+                                label={labels.mm}
+                                value={selectedMonth}
+                                dropdown-alignment = "auto"
+                                options={monthOptions}
+                                onchange={handleMonthOption} >
+                            </lightning-combobox>                           
+                    </div>
+                    <!-- for RITM0579566 SA GRZ(Nikhil Verma) 26-06-2023-->
+                    <template if:true={salesArea}>
+                        <div class="slds-p-left_small">
+                            <lightning-combobox
+                                value={salesArea}
+                                label="Sales Area"
+                                placeholder="Sales Area"
+                                options={salesAreaOptions}
+                                onchange={handleSalesAreaOption}>
+                            </lightning-combobox> 
+                        </div>
+                    </template>
+                    <!-- END for RITM0579566 SA GRZ(Nikhil Verma) 26-06-2023-->
+                    <div class="slds-p-left_small slds-m-right_medium">
+                            <button class="statement-btn btn-itr" onclick={getCollectionData}>{labels.getStatement}</button>
+                    </div>
+                </div>
+            </template>
+            <br>
+            <template if:true={collectionData}>
+                <table>
+                    <thead class="componentNotoSansLight table-head">
+                        <tr>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div class="slds-truncate">{labels.x1_15}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div class="slds-truncate">{labels.x16_30}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div class="slds-truncate">{labels.x31_60}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div class="slds-truncate">{labels.x61_90}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div class="slds-truncate">{labels.x91_120}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div class="slds-truncate">{labels.netOverdue}</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <tr class="slds-border_bottom">
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.x1_15} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.x16_30} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.x31_60} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.x61_90} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.x91_120} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.netOverdue} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="slds-m-bottom_small" >
+                    <thead class="componentNotoSansLight table-head">
+                        <tr>
+                            <th class="slds-p-left_small table-head-css1" scope="col">
+                                <div class="slds-truncate">{labels.totalCollectibles}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css1" scope="col">
+                                <div class="slds-truncate">{labels.totalCollection}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css1" scope="col">
+                                <div class="slds-truncate">{labels.forecastedCollection}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css1" scope="col">
+                                <div class="slds-truncate">{labels.nonForecastedCollection}</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <tr class="slds-border_bottom">
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.totalCollectibles} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.totalCollection} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.forecastedCollection} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={collectionData.nonForecastedCollection} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+        <template if:true={showDownloadOption}>
+            <div slot="footer" style="text-align: center;">
+                <a onclick={pdfDownloadClick}>
+                    <lightning-icon icon-name="doctype:pdf" 
+                                    size="medium">
+                    </lightning-icon>
+                </a>
+                <a onclick={xlsDownloadClick} style="margin-left: 3%;">
+                    <lightning-icon icon-name="doctype:excel" 
+                                    size="medium">
+                    </lightning-icon>
+                </a>
+            </div>
+        </template>
+      </lightning-quick-action-panel>
+</template>

@@ -1,0 +1,263 @@
+<aura:component controller ="OrderRequestController" access="global">
+    
+    <aura:attribute name="campaignId" type="string" default=""/>
+    <aura:attribute name="isDataLoad" type="Boolean" default="false"/>
+    <aura:attribute name="structureCampWrap" type="object" />
+    <aura:attribute name="cultureDescLst" type="String[]" access="public"/>
+    <aura:attribute name="days" type="Decimal" default="0" />
+    <aura:attribute name ="isBRL" type="string"/>
+    <aura:attribute name ="userObj" type ="User" access="public"/>
+    <aura:attribute name="mapLineItemJson" type="Map" />
+    <aura:attribute name="structInterestDate" type="date" />   <!--*** Nik ***-->
+    <aura:attribute name="totalValueWithInterest" type="Decimal" default="0"/>
+    <aura:attribute name="OrderRequestControllerJSON" type="OrderRequestController.StructOrderLineItem[]" />
+    <aura:attribute name ="showParentSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="listCampaignGrp" type="string[]" />
+    <aura:attribute name="listCampaignSubgrp" type="string[]" />
+    <aura:attribute name="disableSave" type="Boolean" default="false"/>
+   	<aura:attribute name="disableEdit" type="Boolean" default="false"/>
+   
+    <aura:attribute name="salesOrder" type="Sales_Order__c"
+        					default="{'sobjectType': 'Sales_Order__c'}"/>
+    <aura:method name="saveOrder" action="{!c.saveSalesOrder}" access="public"/>
+    <aura:method name="editOrder" action="{!c.editSalesOrder}" access="public"/>
+    <aura:method name="loadcalculations" action="{!c.doInit}" access="public">
+    <aura:attribute name="orderId" type="String" default=""/>
+    </aura:method>
+   <!--aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+   
+    
+ <aura:if isTrue="{!v.isDataLoad}">
+     
+  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_10-of-12">
+    <span></span>
+  </div>
+  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12" style="background:#32CD32; padding:5px;">
+    <div align="center" id="Group_all_discount" style="text-align:center; font-size:16px; font-weight:bold;">{!v.salesOrder.Total_Group_Discount__c}</div>
+  </div>
+  <div id="loader_23" style="display:none;">
+      <img src="/resource/circle_loader"></img>
+          <input type="text" id="fc" style="width:0px;height:0px;border:0"/>
+  </div>
+<aura:if isTrue="{!v.salesOrder.Id!=undefined}">
+    <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12" style="">
+   	<lightning:button aura:id="calculate" onclick="{!c.doInit}" 
+                                  variant="brand" 
+                                  label="Calculate" 
+                                  iconName="utility:check" 
+                                  iconPosition="left" 
+                                  />
+  </div>-->
+</aura:if>
+
+<div class="slds-scrollable_x" style="margin-bottom:0px;">    
+<div style="margin-bottom:0px;" >
+  
+      <table cellpadding="0" cellspacing="0" id="structTable" class="table slds-table slds-table_cell-buffer slds-table_bordered">
+      <aura:iteration items="{!v.structureCampWrap.listCampaignGroupWrap}" var="campgrpWrap" indexVar="k">  
+		<thead>
+		<tr class="slds-line-height_reset">
+		  <th class="" scope="col" style="padding:0 0 0 2px; margin:0; ">
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap" style="padding:0 0 0 2px; margin:0;">{!campgrpWrap.campaignGroup}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.Group_ID}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.Sub_Group_Name}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.SKU_Name}</div></div>
+      </th>
+      <th class="" scope="col">
+        <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.Brand_Name}</div></div>
+      </th>
+		  <th class="" scope="col" >
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.Culture}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.Unit}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Volume_Structure}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Product_Volume}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Volume_Difference}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Initial_Price}</div></div>
+			</th>
+          <aura:if isTrue="{!v.userObj.Profile.Name=='Brazil Sales District Manager' }">
+            <th class="" scope="col">
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.Cost}</div></div>
+			</th>  
+          </aura:if>    
+		  <th class="" scope="col">
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.Total_Value}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate"><div class="slds-grow slds-cell-wrap">{!$Label.c.Invoice_Date}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Group_Discount}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Initial_Price_R_or_US}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Price_with_Interest}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Final_Unit_Price}</div></div>
+			</th>
+		  <th class="" scope="col">
+              <div class="slds-truncate" ><div class="slds-grow slds-cell-wrap">{!$Label.c.Total_Value_with_Interest}</div></div>
+			</th>
+		</tr>
+	  </thead>
+
+  
+     <tbody>
+      <aura:iteration  items="{!campgrpWrap.campaignSubGroupList}" var="subgrpwrap" indexVar="i">
+         
+      <aura:iteration  items="{!subgrpwrap.priceBooklistObj}" var="priceDetail" indexVar="j">    
+          
+      <tr class="slds-hint-parent campaignSubgroup" id="{!priceDetail.priceBookObj.Id+'-'+priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize}" >
+     
+      <!--{!priceDetail.groupRowspan}-->
+      <aura:if isTrue="{!priceDetail.totalGrpRowspan==1}">
+      <td rowspan="{!campgrpWrap.totalPriceBookSize}" scope="row" data-label="" style="margin:0; padding:0 0 0 2px;">
+          <div class="slds-grow slds-cell-wrap">{!priceDetail.campaignGroupDesc}</div>
+      </td>
+      </aura:if>
+       <!--{!priceDetail.priceitemsize}-->
+       <aura:if isTrue="{!j==0}">
+      <td rowspan="{!priceDetail.priceitemsize}" data-label="" style="padding:0 0 0 6px; margin:0;">
+       <div style="padding:0 0 0 6px; margin:0;">{!priceDetail.campaignGroup}</div>
+      </td> 
+    </aura:if>
+      
+          <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}" style="padding:0 0 0 6px; margin:0;" >
+            <div id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_campaignSubgroup'}"   class="{!priceDetail.campaignGroup+'_'+campgrpWrap.subgroupSize+'_'+priceDetail.priceBookObj.Sub_Group_Required__c+'_required'}" title=""><div class="slds-grow slds-cell-wrap">{!priceDetail.campaignSubgroup}</div></div>
+          </td>
+          <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}" >
+            <div id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_SkuName'}"  class="{!priceDetail.priceBookObj.Anchor__c }"><div class="slds-grow slds-cell-wrap">{!priceDetail.priceBookObj.Sku_Name1__c}</div></div>
+          </td>
+          <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'brand'}" >
+            <div id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_brand'}"  class="{!priceDetail.priceBookObj.Anchor__c }"><div class="slds-grow slds-cell-wrap">{!priceDetail.priceBookObj.SKU__r.Brand_Name__c}</div></div>
+          </td>
+          <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+            <div  class="slds-truncate" title="">
+	 		<select class="slds-select" style="width:125px;" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_culture'}" value="{!priceDetail.salesOrderitem.Culture__r.Culture_Desc__c}">
+                <aura:iteration items="{!v.cultureDescLst}" var="culture">
+                    <aura:if isTrue="{!priceDetail.salesOrderitem.Culture__r.Culture_Desc__c!=culture}">
+                        <option value="{!culture}">{!culture}</option>
+                     <aura:set attribute="else">
+                	<option value="{!priceDetail.salesOrderitem.Culture__r.Culture_Desc__c}" selected="selected">{!priceDetail.salesOrderitem.Culture__r.Culture_Desc__c}</option>     
+            			 </aura:set>
+                   </aura:if>
+                </aura:iteration>
+                
+            </select>
+              </div>
+          </td>
+          <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+            <div id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_uom'}" class="slds-truncate" title="">{!priceDetail.priceBookObj.SKU__r.UOM__c}</div>
+          </td>
+          <aura:if isTrue="{!j==0}">  
+      <td rowspan="{!priceDetail.priceitemsize}" data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+          <div  id="{!priceDetail.campaignGroup+'_'+(i+1)+'_Volume'}" class="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+priceDetail.priceitemsize+'_'+priceDetail.priceBookObj.Sub_Group_Required__c }">{!priceDetail.priceBookObj.Volume__c}</div>
+      </td>
+    </aura:if>
+      <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">  
+        <div class="slds-truncate" title="">
+            <input   type="text" style="margin:0; padding:1px;" class="slds-input productVol" name="quantity" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Product_Volume'}"
+                  onkeyup="{!c.onPressFinalUnitPrice}" value="{!priceDetail.salesOrderitem.Quantity__c}" onchange ="{!c.onChangeProductVol}"/>
+          </div>
+      </td>
+      <aura:if isTrue="{!j==0}">  
+      <td rowspan="{!priceDetail.priceitemsize}" data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+        <div  title="" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_Volume_Difference'}" class="{!priceDetail.priceBookObj.Anchor__c +'volDiff'}">{!priceDetail.salesOrderitem.Volume_Difference__c} </div>      
+      </td>
+    </aura:if>
+        <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+        <aura:if isTrue="{!v.salesOrder.CurrencyIsoCode=='BRL'}">
+        <div style="display:none" class="slds-truncate" title="" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Intial_Price'+'-BRL'}" >{!priceDetail.priceBookObj.Unit_Price_R__c}</div>
+        <ui:outputNumber value="{!priceDetail.priceBookObj.Unit_Price_R__c}" format="#,###,##0.00"/>
+            <aura:set attribute="else">
+            <div style="display:none" class="slds-truncate" title="" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Intial_Price'+'-USD'}">{!priceDetail.priceBookObj.Unit_Price_U__c}</div>    
+        	 <ui:outputNumber value="{!priceDetail.priceBookObj.Unit_Price_U__c}" format="#,###,##0.00"/>
+        </aura:set>
+        </aura:if>
+        </td>
+             <aura:if isTrue="{!v.userObj.Profile.Name=='Brazil Sales District Manager'}">
+          <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+              <aura:if isTrue="{!v.salesOrder.CurrencyIsoCode=='BRL'}">
+              		 <ui:outputNumber value="{!priceDetail.priceBookObj.Minimum_Price_R__c}" format="#,###,##0.00"/>
+                  <aura:set attribute="else">
+                	  <ui:outputNumber value="{!priceDetail.priceBookObj.Minimum_Price_U__c}" format="#,###,##0.00"/>
+                </aura:set>
+              </aura:if>
+          </td> 
+           </aura:if>
+      <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+        <div class="slds-truncate" title="" name="totalValues" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Total_Value'}" >{!priceDetail.salesOrderitem.Total_Value__c}</div>
+      </td>
+      <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+          <div class="slds-truncate" title="" >
+            <input class="slds-input" disabled="disabled" style="width:125px;margin:0; padding:1px;"
+                   id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Invoice_Date'}" 
+                   type="date" value="{!priceDetail.salesOrderitem.DateofFAT__c}" 
+                  
+                   onchange="{!c.onChangeInvoiceDate}" /></div>
+      </td>
+      <aura:if isTrue="{!priceDetail.totalGrpRowspan==1}">
+      <td rowspan="{!campgrpWrap.totalPriceBookSize}" data-label="">
+          <div class="slds-truncate" title=""><output class="{!priceDetail.priceBookObj.Anchor__c+'makeZero'}" name="x" id="{!priceDetail.campaignGroup+'_Group_Discount'}"  value="{!priceDetail.salesOrderitem.Group_Discount__c}"/></div></td>
+        </aura:if>
+      <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+        <div class="slds-truncate" title=""  id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Initial_Price_R'}">{!priceDetail.salesOrderitem.Initial_Price_with_Discount__c}</div>
+      </td>
+      <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+        <div class="slds-truncate" title="" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Price_with_Interest'}">{!priceDetail.salesOrderitem.Price_With_Interest_Structured__c}</div>
+      </td>
+      <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+        <div class="slds-truncate" title="">
+        <input class="slds-input FinalUnitPrice" disabled="disabled" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Final_Unit_Price'}" 
+               type="text"
+               style = "width:65px; margin:0; padding:1px;"
+               onkeyup="{!c.onPressFinalUnitPrice}"
+               value="{!priceDetail.salesOrderitem.UnitValue__c}" 
+               onchange ="{!c.onChangeFinalUnitPrice}"/></div>
+      </td>
+      <td data-label="" class="{!priceDetail.priceBookObj.Anchor__c +'Sku'}">
+        <div class="slds-truncate _Total_Value_with_Interest" title="" id="{!priceDetail.campaignGroup+'_'+(i+1)+'_'+(j+1)+'_'+priceDetail.priceitemsize+'_Total_Value_with_Interest'}"  >{!priceDetail.salesOrderitem.Total_Value_With_Interest_Structured__c}</div>
+      </td>
+     
+    </tr>
+  
+  </aura:iteration> 
+  <tr class="slds-hint-parent">
+      <td colspan="7" align="left" data-label="" style="padding:0 0 0 6px; margin:0;">Total</td>
+      <td align="left" data-label="" id="{!subgrpwrap.campGrp+'_'+(i+1)+'_'+subgrpwrap.priceitemSize}" >
+          <div name="x" id="{!subgrpwrap.campGrp+'_'+(i+1)+'_Total_Product_Volume'}" class="totalProductVolume"></div>
+      </td>
+      <aura:if isTrue="{!v.userObj.Profile.Name=='Brazil Sales District Manager' }">
+      <td></td>
+      </aura:if>
+      <td colspan="2" align="center" data-label="">&nbsp;</td>
+      <td align="left" data-label="" id="{!subgrpwrap.campGrp+'_'+(i+1)+'_'+subgrpwrap.priceitemSize}" ><div id="{!subgrpwrap.campGrp+'_'+(i+1)+'_Total_Value'}" class="totalValue"></div></td>
+      <td align="left" data-label="">&nbsp;</td>
+      <td colspan="5" align="left" data-label="" id="{!subgrpwrap.campGrp+'_'+(i+1)+'_'+subgrpwrap.priceitemSize}"><div id="{!subgrpwrap.campGrp+'_'+(i+1)+'_Total_Value_with_Interest'}" class="totalValuewithInterest"></div></td>
+    </tr>
+</aura:iteration>    
+</tbody>
+</aura:iteration>
+</table>
+</div>
+     </div>   
+</aura:if>     
+</aura:component>

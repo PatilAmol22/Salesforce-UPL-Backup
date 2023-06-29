@@ -1,0 +1,439 @@
+<aura:component controller="StockInChannel" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <!-- Created By Diwansh Sethi IBM-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="year" type="String" />
+    <aura:attribute name="DisplayComponents" type="boolean" default="false"/>
+    <aura:attribute name="EnableLastMonth" type="boolean" default="false"/> 
+    
+    <!-- Notification Library-->
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <aura:attribute type="StockInChannel" name="ostockinchannel" />
+    <aura:attribute type="Territory_Distributor__c" name="salesrep" />
+    
+    <aura:attribute name="zone" type="List" />
+    <aura:attribute name="BU" type="List" />
+    <aura:attribute name="Customers" type="List" />
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="SBusinessUnit" type="String" />
+    <aura:attribute name="SCustomer" type="String" />
+    <aura:attribute name="STerritory" type="String" />
+    <aura:attribute name="SSalesRep" type="String" />
+    <aura:attribute name="NotesId" type="String" />
+    <aura:attribute name="enable" type="Boolean" default="True" />
+    <aura:attribute name="hideempty" type="Boolean" default="false" />
+    <aura:attribute name="activeSections" type="List" default="['A']" />
+    
+    <aura:attribute name="SelectedCustId" type="String" />
+    <aura:attribute name="SelectedTerrId" type="String" />
+    
+    <!-- Attribute added swapnil -->
+    <aura:attribute name="Status" type="String"/>
+    <aura:attribute name="ShowEnabledLastMonth" type="Boolean" default="true"/>
+    <!-- end -->
+    
+    
+    
+    <body class="bgColor slds-scrollable_x" >
+        
+        <lightning:layout >
+            <lightning:layoutItem  size="12">  
+                <div class="slds-page-header">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-has-flexi-truncate slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                    <lightning:icon iconName="standard:visit_templates" size="large"/>
+                                </div>
+                                <div class="slds-media__body">
+                                    <p class="slds-text-heading--label">{!$Label.c.SIC}</p>
+                                    <div style="float:left; display:inline;">
+                                        <div class="slds-text-heading_medium">
+                                            {!$Label.c.SIC_Year} :  <ui:outputText value="{!v.year}" />
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12" style="float:left;">
+                            
+                            <div style="float:right; ">
+                                
+                                <aura:if isTrue="{!v.Status == 'Not Started'}">
+                                    <div class="slds-float_right">
+                                        <div class="slds-p-left_large">
+                                            <lightning:icon iconName="action:info" 
+                                                            size="x-small" 
+                                                            alternativeText="Indicates approval" 
+                                                            title="Not Started"/>
+                                        </div>
+                                        <div class="slds-float_bottom">
+                                            <p class="slds-text-heading--label">{!$Label.c.SIC_Not_Started}</p>
+                                        </div>
+                                        
+                                    </div>  
+                                    
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.Status == 'In Progress'}">
+                                    <div class="slds-float_right">
+                                        <div class="slds-p-left_large">
+                                            <lightning:icon iconName="action:edit" 
+                                                            size="x-small" 
+                                                            alternativeText="Indicates approval" 
+                                                            title="In Progress"/>
+                                        </div>
+                                        <div class="slds-float_bottom">
+                                            <p class="slds-text-heading--label">{!$Label.c.SIC_In_Progress}</p>
+                                        </div>
+                                    </div> 
+                                    
+                                    
+                                </aura:if>
+                                <aura:if isTrue="{!v.Status == 'Submitted for Approval'}">
+                                    <div class="slds-float_right">
+                                        <div class="slds-p-left_xx-large">
+                                            <lightning:icon iconName="action:submit_for_approval" 
+                                                            size="x-small" 
+                                                            alternativeText="Indicates approval" 
+                                                            title="Submitted for Approval"/>
+                                        </div>
+                                        <div class="slds-float_bottom">
+                                            <p class="slds-text-heading--label">{!$Label.c.SIC_Submitted_for_Approval}</p>
+                                        </div>
+                                    </div>  
+                                    
+                                    
+                                </aura:if>
+                                <aura:if isTrue="{!v.Status == 'Approved'}">
+                                    
+                                    <div class="slds-float_right">
+                                        <div class="slds-p-left_medium">
+                                            <lightning:icon iconName="action:approval" 
+                                                            size="x-small" alternativeText="Indicates approval" 
+                                                            title="Approved"/>
+                                        </div>
+                                        <div class="slds-float_bottom">
+                                            <p class="slds-text-heading--label">{!$Label.c.SIC_Approved}</p>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </aura:if>
+                                <aura:if isTrue="{!v.Status == 'Rejected'}">
+                                    <div class="slds-float_right">
+                                        <div class="slds-p-left_medium">
+                                            <lightning:icon iconName="action:reject"  
+                                                            size="x-small" 
+                                                            alternativeText="Indicates approval" 
+                                                            title="Rejected"/>
+                                        </div>
+                                        <div class="slds-float_bottom">
+                                            <p class="slds-text-heading--label">{!$Label.c.SIC_Rejected}</p>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    
+                                </aura:if>
+                                
+                                
+                                
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                
+                
+                <!-- end -->
+                
+                
+                
+                
+                
+            </lightning:layoutItem>
+            
+            
+            
+            
+        </lightning:layout>
+        <lightning:layout>
+            <lightning:layoutItem size="12">
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+                    {!$Label.c.SIC_Search}
+                    
+                </h3>
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        
+        
+        <aura:if isTrue="{!!$Browser.isPhone}">        
+            <br/>
+        </aura:if>
+        <aura:if isTrue="{!$Browser.isPhone}">
+            <lightning:layout>
+                
+                <lightning:layoutItem padding="around_small" size="4">      
+                    <div class="slds-clearfix">
+                        <div class="slds-float_right">
+                            <div class="slds-grid slds-wrap">   
+                                <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.SIC_Year}"></aura:unescapedHtml></label> 
+                                
+                            </div></div></div>              
+                    
+                    
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="8">
+                    <!--    <ui:outputText class="wid" value="{!v.year}" /> -->
+                </lightning:layoutItem>
+            </lightning:layout>
+        </aura:if> 
+        <lightning:layout  multipleRows="true">
+            
+            
+            <lightning:layoutItem flexibility="auto"  size="1" smallDeviceSize="1" largeDeviceSize="1">
+                <aura:if isTrue="{!!$Browser.isPhone}">
+                    
+                </aura:if>
+            </lightning:layoutItem>
+            
+            
+            <lightning:layoutItem flexibility="auto"  size="3" smallDeviceSize="1" largeDeviceSize="1">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.SIC_BU_Ops}"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem flexibility="auto"  size="8" smallDeviceSize="4" largeDeviceSize="3">
+                
+                
+                <div class="slds-form-element__control">
+                    <div class="input-select-width">
+                        
+                        <lightning:select variant="label-hidden" 
+                                          aura:id="intendBU" 
+                                          onchange="{!c.onChangePickValBU}" >
+                            
+                            <option value=""></option>
+                            
+                            <aura:iteration items="{!v.BU}" var="BU1">
+                                <option value="{!BU1.Id}">{!BU1.Name}</option> 
+                                
+                            </aura:iteration> 
+                        </lightning:select>
+                        
+                        <ui:outputText aura:id="intendBUerro" class="error-text slds-hide"  value="Please select BU"/>
+                        <br/>
+                    </div>
+                </div>
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem flexibility="auto"  size="4" smallDeviceSize="1" largeDeviceSize="2">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.SIC_Region}"></aura:unescapedHtml> <span class="error-text"> *</span></label>
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem flexibility="auto"  size="8" smallDeviceSize="4" largeDeviceSize="3">
+                
+                <div class="slds-form-element__control">
+                    <div class="input-select-width">
+                        
+                        <lightning:select variant="label-hidden" aura:id="intend" onchange="{!c.onChangePickValRegion}" >
+                            <option value=""></option>
+                            <aura:iteration items="{!v.zone}" var="level">
+                                <option value="{!level.Id}">{!level.Name}</option> 
+                                
+                            </aura:iteration> 
+                        </lightning:select>      
+                        
+                        
+                    </div>
+                    
+                    
+                    
+                    <ui:outputText aura:id="intenderro" class="error-text slds-hide"  value="Please select region"/>
+                    <br/>
+                </div>
+                
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem flexibility="auto"  size="1" smallDeviceSize="1" largeDeviceSize="2">
+                
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        <lightning:layout  multipleRows="true">
+            <!-- padding="around-small" -->
+            <lightning:layoutItem   size="1" smallDeviceSize="1" largeDeviceSize="1">
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem   size="3" smallDeviceSize="1" largeDeviceSize="1">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.SIC_Sales_Person}"></aura:unescapedHtml> <span class="error-text"> *</span></label>
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem   size="8" smallDeviceSize="4" largeDeviceSize="4">
+                
+                
+                <div class="slds-form-element__control">
+                    <div class="input-select-width">
+                        
+                        <lightning:select variant="label-hidden" aura:id="intendSalesRep" onchange="{!c.onChangePickValSales}" >
+                            <option value=""></option>
+                            <aura:iteration items="{!v.salesrep}" var="level">
+                                <option value="{!level.Id}">{!level.Name}</option> 
+                                
+                            </aura:iteration> 
+                        </lightning:select> 
+                        
+                        
+                    </div>
+                    <ui:outputText aura:id="intendSalesReperro" class="error-text slds-hide"  value="Please select sales Rep"/>
+                    <br/>    
+                </div>
+                
+                
+                
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem   size="4" smallDeviceSize="1" largeDeviceSize="1">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.SIC_Customer}"></aura:unescapedHtml> <span class="error-text"> *</span></label>
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem   size="8" smallDeviceSize="4" largeDeviceSize="4">
+                
+                
+                <div class="slds-form-element__control">
+                    <div class="input-select-width">
+                        
+                        <lightning:select variant="label-hidden" aura:id="intendCustomer" onchange="{!c.onChangePickValCustomer}" >
+                            <option value=""></option>
+                            <aura:iteration items="{!v.Customers}" var="level">
+                                <option value="{!level.Id}">{!level.Name} - {!level.SAP_Code__c} - {!level.BillingCity}</option> 
+                                
+                            </aura:iteration> 
+                        </lightning:select>    
+                        
+                        
+                    </div>
+                    <ui:outputText aura:id="intendCustomererro" class="error-text slds-hide"  value="Please select customer"/>
+                    <br/>    
+                </div>
+                
+                
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem   size="1" smallDeviceSize="1" largeDeviceSize="1">
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        
+        <lightning:layout  multipleRows="true">
+            <!--
+         <lightning:layoutItem   size="1">
+            </lightning:layoutItem> -->
+            
+            <lightning:layoutItem   size="4" smallDeviceSize="2" largeDeviceSize="2">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <label class="slds-form-element__label labelFont">
+                            {!$Label.c.SIC_Hide_Empty_Stock} 
+                        </label>
+                        
+                    </div>
+                </div>
+                
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem   size="8" smallDeviceSize="3" largeDeviceSize="3">
+                
+                <div >  <ui:inputCheckbox aura:id="tcchecked" name="tcchecked" value="{!v.hideempty}"/></div>
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem   size="4" smallDeviceSize="2" largeDeviceSize="2">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <aura:if isTrue="{!v.ShowEnabledLastMonth}">
+                        <label class="slds-form-element__label labelFont">
+                            {!$Label.c.SIC_Enable_Last_Month}  
+                        </label>           
+                        </aura:if>
+                    </div>
+                </div>
+                
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem   size="8" smallDeviceSize="4" largeDeviceSize="4">
+                
+                
+                
+                
+                
+                <div style="float: left; ">  
+                    <aura:if isTrue="{!v.ShowEnabledLastMonth}">
+                    <ui:inputCheckbox aura:id="month" name="month" value="{!v.enable}"  disabled="{!v.EnableLastMonth}"/>
+                    </aura:if>
+                </div>
+                
+            </lightning:layoutItem>
+            <!--
+            <lightning:layoutItem   size="2">
+            </lightning:layoutItem>
+        -->
+        </lightning:layout>
+        
+        
+        <div class="slds-align_absolute-center">
+            <lightning:button label="{!$Label.c.SIC_Search}" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.search}"/>
+        </div>
+        <br/>
+        
+        
+        <!--      </lightning:accordionSection> -->
+        <aura:if isTrue="{!v.DisplayComponents}">
+            <c:StockInChannelDetail aura:id="search" 
+                                    StockInChannelId="{!v.NotesId}" 
+                                    enablestock="{#v.enable}" 
+                                    customerId ="{!v.SelectedCustId}" 
+                                    territoryId="{!v.SelectedTerrId}" 
+                                    hideemptystock ="{!v.hideempty}" 
+                                    Status="{!v.Status}"/>
+        </aura:if>
+     
+        <!--                <c:StockInChannelDetail/> -->
+        
+        
+        <!--</lightning:accordion> -->
+    </body>
+</aura:component>

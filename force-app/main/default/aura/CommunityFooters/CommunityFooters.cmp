@@ -1,0 +1,22 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="CommunityCurrentUserController">
+	<aura:handler name="init" value="this" action="{!c.doInit}"/> 
+    <aura:attribute name="userInfo" type="user"/> 
+    <aura:if isTrue="{!v.userInfo.Country=='Colombia'}">
+   	<c:FooterColombia></c:FooterColombia>
+    </aura:if>
+    <aura:if isTrue="{!v.userInfo.Country=='Spain'}">
+   	<c:FooterIberia></c:FooterIberia>
+    </aura:if>
+    <aura:if isTrue="{!v.userInfo.Country=='Portugal'}">
+   	<c:FooterIberia></c:FooterIberia>
+    </aura:if>
+    <aura:if isTrue="{!v.userInfo.Country=='Poland'}">
+   	<c:FooterPoland></c:FooterPoland>
+    </aura:if>
+    <aura:if isTrue="{!v.userInfo.Country=='Turkey'}">
+   	<c:FooterTurkey></c:FooterTurkey>
+    </aura:if>
+    <aura:if isTrue="{!v.userInfo.Country=='Japan'}">
+   	<c:FooterJapan></c:FooterJapan>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,18 @@
+<template>
+    <!--{strValue}-->
+    <template if:true={isText}>
+        <lightning-input
+            class="slds-cell-wrap"
+            data-id={rid}
+            data-name={objectApiName}
+            name={column}  
+            type={fieldType}  
+            value={strValue}
+            variant="label-hidden"
+            onchange={handleCellChanges}
+            style="margin-left:10px;"
+            maxlength="255">
+        </lightning-input>
+    </template>
+    
+</template>

@@ -1,0 +1,81 @@
+<aura:component access="global">
+    <aura:attribute name="recommendation" type="Object" />
+    <aura:attribute name="rId" type="String"/>
+    <aura:attribute name="indexOfIterationVR" type="Integer"/>
+    
+    <article class="slds-card">
+        <!--<div class="slds-card__body slds-card__body_inner"></div>-->
+        <!--Id{!v.rId}-->
+        <div class="slds-p-bottom_large slds-p-left_large slds-form-element_horizontal" >
+            <lightning:recordViewForm recordId="{!v.recommendation.Id}" objectApiName="Recommendations__c">
+                <div class="slds-box">
+                    
+                    <div class="slds-grid slds-wrap slds-gutters slds-grid_align-space">
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="Name" /> 
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="IfProductBought__c" /> 
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="ResonForNotBuying__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="ReasonOthers__c" /> 
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="NameProductBought__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="DateProductBought__c" /> 
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="RetailerName__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="SelfBoughtOrUsed__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="ProductForm__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="PackColour__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="PackArtWork__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="UsedEntireCropArea__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="UseCropArea__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="SatisfactionLevel__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="If_No_Reason__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="OtherReasonNotUsedEntireCropArea__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="PossiblePurchaseDate__c" />
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning:outputField fieldName="PossibleApplicationDate__c" />
+                        </div>
+                        
+                        <!--<div class="slds-col slds-size_2-of-12">
+                            <lightning:outputField name="Testing Blank" />
+                        </div>
+                        <div class="slds-col slds-size_2-of-12">
+                            <lightning:outputField name="Blank Testing" />
+                        </div>
+						-->
+                    </div>
+                </div>     
+            </lightning:recordViewForm>
+        </div>
+    </article>
+</aura:component>

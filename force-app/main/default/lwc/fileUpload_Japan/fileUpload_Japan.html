@@ -1,0 +1,142 @@
+<template>
+
+    <div class="slds-box slds-theme_default">
+
+
+          <div>
+            <lightning-tabset>
+                <lightning-tab label={label.OGSLabel}>
+
+                     <div class="slds-grid slds-gutters slds-align_absolute-center" style=" margin-bottom:10px;">
+                       
+
+                      <div style="margin:0 auto; text-align:center;">
+                        
+                      </br><h1 style="top:0 auto;"><lightning-icon icon-name="standard:picklist_choice"></lightning-icon> &nbsp; {label.UploadOGS}</h1></br>
+                      <lightning-combobox
+                              name="OperationTypeCombo"
+                              label={label.OperationTypeLabel}
+                              value={operationType}
+                              placeholder="Select operation type"
+                              options={comboboxoptions}
+                              onchange={handleChangeCombobox} ></lightning-combobox>
+                    </br>
+                      </div>  
+                  
+                </div>
+                <div class="slds-grid slds-gutters slds-align_absolute-center" style="border-bottom:1px solid #ccc; margin-bottom:1px;">
+                       
+                        <div style="margin:0 auto; text-align:center;">
+                            <lightning-file-upload accept={acceptedFormats} 
+                                             label={label.AttachOGS} 
+                                             multiple="multiple" 
+                                             onuploadfinished={handleUploadFinishedExDistributorShipmentData}
+                                             record-id={recordIdExDistributorShipmentData}>
+                      </lightning-file-upload>   
+                        </br>
+                        </div>
+                        </div>
+
+                   
+                      <lightning-accordion allow-multiple-sections-open
+                         onsectiontoggle={handleSectionToggle}
+                         active-section-name={activeSections}>
+        <lightning-accordion-section name="Instructions" label={label.InstructionCSV}>
+            <ol style="list-style-type: disc;">
+                <li>{label.Instruction1}</li>
+                <li>{label.Instruction2}</li>
+                <li>{label.Instruction3}</li>
+                <li>{label.Instruction4}</li>
+            </ol>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="File Instructions" label={label.AdditionalInformationOGS}>
+            <ol style="list-style-type: disc;">
+            <li>{label.AdditionalInformation1}</li>
+            <li>{label.AdditionalInformation2}</li>
+            </ol>
+        </lightning-accordion-section>
+        
+
+       
+        <lightning-accordion-section name="C" label={label.SampleTemplateOGS}>
+            <ul class="slds-list_dotted">
+              <li> <a href={OGSInsertURL}>{label.DownloadTemplateOGS}</a></li> 
+              <li> <a href={OGSUpdateURL}>{label.DownloadUpdateCSV}</a>  </li>  
+              <li> <a href={OGSDeleteURL}>{label.DownloadDeleteCSV}</a>  </li>             
+            </ul>
+        </lightning-accordion-section>
+    </lightning-accordion>
+
+
+                </lightning-tab>
+
+                <lightning-tab label={label.DistributorInventoryLabel}>
+                   
+                    <div class="slds-grid slds-gutters slds-align_absolute-center" style="margin-bottom:10px;">
+                       
+                        <div style="margin:0 auto; text-align:center;">
+                        
+                        </br><h1 style="top:0 auto;"><lightning-icon icon-name="standard:picklist_choice"></lightning-icon> &nbsp; {label.UploadDistributorInventory}</h1></br>
+                        <lightning-combobox
+                              name="OperationTypeCombo"
+                              label={label.OperationTypeLabel}
+                              value={operationType}
+                              placeholder="Select operation type"
+                              options={comboboxoptions}
+                              onchange={handleChangeCombobox} ></lightning-combobox>                        
+                        </br>
+                       
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters slds-align_absolute-center" style="border-bottom:1px solid #ccc; margin-bottom:1px;">
+                        <div style="margin:0 auto; text-align:center;">   
+                            <lightning-file-upload accept={acceptedFormats} 
+                            label={label.AttachDistributorInventory}
+                            multiple="multiple" 
+                            onuploadfinished={handleUploadFinishedDistributorInventory}
+                            record-id={recordIdDistributorInventory}>
+                              </lightning-file-upload> 
+                        </br>
+                        </div>
+                        </div>
+                        
+                      <lightning-accordion allow-multiple-sections-open
+                         onsectiontoggle={handleSectionToggle}
+                         active-section-name={activeSections}>
+
+        <lightning-accordion-section name="Instructions" label={label.InstructionCSV}>
+            <ol style="list-style-type: disc;">
+                <li>{label.Instruction1}</li>
+                <li>{label.Instruction2}</li>
+                <li>{label.Instruction3}</li>
+                <li>{label.Instruction4}</li>
+            </ol>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="File Instructions" label={label.AdditionalInformationDI}>
+            <ol style="list-style-type: disc;">
+                <li>{label.AdditionalInformation1}</li>
+                <li>{label.AdditionalInformation2}</li>
+            </ol>
+        </lightning-accordion-section>
+
+        <lightning-accordion-section name="C" label={label.SampleTemplateDI}>
+            <ul class="slds-list_dotted">
+             <li><a href={DIInsertURL}>{label.DownloadTemplateDI}</a></li>  
+             <li><a href={DIUpdateURL}>{label.DownloadUpdateCSV}</a></li>
+             <li><a href={DIDeleteURL}>{label.DownloadDeleteCSV}</a></li>
+            </ul>
+        </lightning-accordion-section>
+    </lightning-accordion>
+
+                </lightning-tab>
+
+              
+            </lightning-tabset>
+        
+    </div>
+
+    </div>
+    
+</template>

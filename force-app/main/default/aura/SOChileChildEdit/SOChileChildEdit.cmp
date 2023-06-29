@@ -1,0 +1,150 @@
+<aura:component access="global" controller="SoChileEditController">
+    <aura:registerEvent name="DeleteRowEvt" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name ="UpdateRows" type="c.UpdateRows"/>
+    <aura:attribute name="orderItem" 
+                    type="OrderChileController.SalesOrderItem" />
+    <aura:attribute name="rowIndex" 
+                    type="String" />
+    <!--Start SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022-->
+    <aura:attribute name="loginCountryObjs" type="Login_Country__c" />
+    <!--End SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022-->
+    <aura:attribute name="ShippingLocMap" type="Map" access="public" default="{}"/>
+    <aura:attribute name="validCodeCounter" type="Integer"/>
+    <aura:attribute name="shippingOptions" type="String[]"/>
+    <aura:attribute name="modalHeader" type="String" default="Products"/> 
+    <aura:attribute name="disableSelect" type="Boolean" default="false" />
+    <aura:attribute name="disableThis" type="Boolean" default="false" />
+    <aura:attribute name="currencyList" type="String" />
+    <aura:attribute name="newSalesOrder" type="Sales_Order__c"
+                    default="{'sobjectType': 'Sales_Order__c',
+                             'Sold_to_Party__c': '',
+                             'Program_Margin_Discount__c': '0',
+                           	 'Purchase_Order_Date__c': '','Purchase_Order_no__c': ''
+                           	}"/>
+    <aura:attribute name="exchangeRate" type="Decimal" default="0.00" />
+        <!--DataTable Component Handler-->  
+    <aura:handler name="dtActionClick" event="ldt:clickedDtAction" action="{!c.tabActionClicked}"/>
+    <!--End Modal-->
+    <aura:method name= "checkItems" action="{!c.validateItem}" access = "public"/>
+    <!--PriceList Modal-->
+    <aura:attribute name="priceDetailList" type="OrderChileController.PriceDetail[]" access="public"/>
+    <aura:attribute name="priceDetailTableColumns" type="List" access="public"/>
+    <aura:attribute name="priceDetailTableConfig" type="Map" access="public"/>
+    <!--End-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div aura:id="lookupmodal" class="slds-modal slds-fade-in-open slds-modal--large slds-hide slds-scrollable_x"  aria-hidden="false" role="dialog">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="{!$Label.c.Close}" onclick="{!c.closePopUp}">
+                        X
+                        <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.modalHeader}</h2>                        
+                </div>
+                <!--###### MODAL BOX BODY Part Start From Here ######-->
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div aura:id="pricedata1" class="slds-scrollable_x">
+                        <ldt:datatableDev title="" aura:id="priceDetailsTable"
+                                          dataRows="{!v.priceDetailList}" header="{!v.priceDetailTableColumns}"
+                                          config="{!v.priceDetailTableConfig}"/>
+                    </div>  
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.closePopUp}" >{!$Label.c.Cancel}</button>
+                </div>
+            </div>
+        </div>
+        <div aura:id="backdrop" class="slds-backdrop slds-backdrop--open slds-hide"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+        
+    <th class="slds-truncate" data-label="{!$Label.c.Product}" >
+        <!--Start-->
+        <div class="slds-form-element ">
+            <div class="slds-form-element__control ">
+                <div class="slds-combobox_container slds-has-inline-listbox">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                            <lightning:input  
+                                          aura:id="normalitemproduct" 
+                                          placeholder="" 
+                                          value="{!v.orderItem.productName}" 
+                                          updateOn="click" 
+                                          disabled="true"/><!-- CR#183 -Export Order Management – Chile- SKI- kalpesh chande -21-06-2023 -->
+                            
+                        </div>
+                        <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right" title="" style="margin-top:-29px; z-index:1000;">
+                            <lightning:buttonIcon aura:id="normalitemsel" value="{!v.rowIndex}" iconName="utility:search" onclick="{!c.openPriceDeatilsPopUp}" class="slds-float_right" size="large" variant="bare" alternativeText="" disabled="{!v.disableSelect}" /><!--disabled="{!v.disableSelect}"-->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End-->
+    </th>
+    <td class="slds-truncate slds-form-element__control" data-label="UOM">
+        <lightning:input disabled="true"  value="{!v.orderItem.UOM}"/>
+    </td>
+    
+    <td class="slds-truncate slds-form-element__control" data-label="{!$Label.c.Quantity}">
+        <!--input type="number" class="slds-input qtyplh" value="{!orderItem.qty}"></input-->
+        <ui:inputNumber aura:id="normalitemqty" 
+                      class="slds-input "
+                      required="true"
+                      placeholder="{!v.orderItem.multipleOf}"
+                      requiredIndicatorClass="{!v.orderItem.itemNo}" 
+                         change="{!c.normalUpdateTableRow}"
+                      value="{!v.orderItem.qty}" 
+                      
+                     />
+        
+    </td>
+    
+    <td class="slds-truncate slds-form-element__control" data-label="{!$Label.c.Maximum_Price}">
+        <lightning:input type="number" aura:id="normalmaxPric"  value="{!v.orderItem.maxPrice}" disabled="true" format="#,###,###.00"/>
+    </td>
+    
+    <td class="slds-truncate slds-form-element__control" data-label="{!$Label.c.Final_Price}">
+        <ui:inputNumber required="true" 
+                        class="slds-input"
+                        aura:id="normalitemunitvalue"
+                        labelClass="{!i}"
+                        value="{!v.orderItem.unitValue}" 
+                        change="{!c.normalUpdateTableRow}"
+                        format="#,###,###.00"
+                        /> 
+    </td>
+    <td class="slds-truncate slds-form-element__control" data-label="{!$Label.c.Net_Sales}">
+        <ui:inputNumber class="slds-input" value="{!v.orderItem.netSales}" disabled="true" format="#,###,###.00"/>
+    </td>
+    <!--<td class="slds-truncate" data-label="{!$Label.c.Net_Price}">
+                                    <ui:inputNumber class="slds-input" value="{!orderItem.netPrice}" disabled="true" format="#,###,###.00"/>
+                                </td>-->	
+    
+   <td class="slds-truncate slds-form-element__control" data-label="{!$Label.c.Shipping_Address}">
+    <lightning:select  required="true" class="label-hidden"
+                    value="{!v.orderItem.deliveryAddress}"
+                    aura:id="shippListOptions"
+                    messageWhenValueMissing="{!$Label.c.Please_Select_shipping_location}"
+                     
+                    >
+        <option value="">-- None --</option>
+        <aura:iteration items="{!v.shippingOptions}" var="level">
+            <ui:inputSelectOption text="{!level}" label="{!level}"/>
+        </aura:iteration>
+    
+        </lightning:select>
+    
+    </td>
+      <!--Start SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022 -->
+    <aura:if isTrue="{!v.loginCountryObjs.Show_Delivery_Date__c}">
+    <td class="slds-truncate slds-form-element__control" data-label="{!$Label.c.Delivery_Date}">
+        <lightning:input aura:id="delDate" type="date" onchange ="{!c.changeDeliveryDate}" value="{!v.orderItem.deliveryDate}" messageWhenValueMissing="Please select date" />
+    </td>
+   </aura:if>
+    <!-- End SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022 -->
+    <td class="slds-truncate slds-form-element__control" data-label="{!$Label.c.Action}">
+        <lightning:buttonIcon  aura:id="normaldeleteBtn"  class="icn" value="{!v.rowIndex}" iconName="utility:delete" onclick="{!c.removeRow}" size="medium" alternativeText="Indicates delete"  />
+    </td>
+</aura:component>

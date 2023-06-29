@@ -1,0 +1,455 @@
+<template>
+    <!-- <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+           <header class="slds-modal__header" style="border: solid 1px black;">
+               <h1><b>Notification</b></h1>
+               </header>
+               <div class="slds-modal__content slds-p-around--medium" style="border: solid 1px black;">
+            <center><h2><b>Community is under maintenance and will be up tentatively by 20/1/2023</b></h2></center>
+        </div>
+        </div>
+    </div> -->
+    <div>
+        <template if:false={isguestUser}>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-large-size_12-of-12">
+                    <c-grz_header-image-cmp bgimg={bgImage} imglabel={headerlabel} customcss='top: 5%;'></c-grz_header-image-cmp>
+                </div>
+            </div>         
+            
+            <div class="slds-p-top_small">
+                <c-grz_bread-crumb labelone='Cases' labeltwo={casenumhash} linkone={navUrl} linktwo=''>
+                </c-grz_bread-crumb>
+            </div>
+        </template>
+        
+        <div>       
+            <div class="slds-grid slds-wrap borderbottom">
+                <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                    <div class="">
+                        <span class="textCls">
+                            <b>Case - {casenumhash}</b>
+                        </span> 
+                    </div>
+                </div>
+                
+                <div if:false={IsCloseButton} class="slds-col slds-x-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                    <template if:true={hideCloseCaseButton}>
+                    <button class="slds-button slds-button_neutral slds-float_right blueBtn" onclick={showCloseCase}>Close Case</button>
+                    </template>
+                        <template if:false = {checkexternaluser}>
+                        <template if:true={checkescalationstatus}>
+                            <button class="slds-button slds-button_neutral slds-float_right orangeBtn" onclick={showescalatedCaseModal}>
+                                Escalate Case
+                            </button>
+                        </template>
+                    </template>
+                    
+                </div>
+    
+                <div if:true={IsCloseButton} class="slds-col slds-x-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                    
+                        <template if:true = {isReopenBtnVisible}>
+                        <template if:true = {isCaseCreatedUser}>
+                            <button class="slds-button slds-button_neutral slds-float_right blueBtn" onclick={showReopenCaseModal}>Reopen Case</button>
+                        </template>
+                    </template>
+                    
+                </div>                 
+            </div>
+            <div class="slds-p-top_x-small noteclass componentNotoSansBold"><b>*Note:- Case can be Reopened twice only. If you are still facing issue kindly log a New Case.</b>
+            </div>
+            <template if:true={openCommentModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeCommentModal}>
+                                <lightning-icon icon-name="utility:close" size="medium"  variant="inverse">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">New Case Comment</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_large" id="modal-content-id-2">
+                            <div if:true={errorMsg}>
+                                <p style="color: red;">{errorMsg}</p>
+                            </div>
+                            <lightning-textarea name="Add Comment" label="Add Comment" value={commentVal} onchange={handleCommentValChange}></lightning-textarea>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral slds-float_right closeModalBtn" onclick={closeCommentModal}>Cancel</button>
+                            <button data-id="SubmitComment" class="slds-button slds-button_neutral slds-float_right submitModalBtn" style="margin-right: 1%;" onclick={addCaseComment}>Submit</button>
+                            <!-- <lightning-button label="Cancel" variant="neutral" onclick={closeCommentModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button label="Done" variant="brand" onclick={addCaseComment}></lightning-button> -->
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+    
+            <template if:true={openEscalateCaseModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeCommentModal}>
+                                <lightning-icon icon-name="utility:close" size="medium"  variant="inverse">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">Escalating Case</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_large" id="modal-content-id-4">
+                            <div if:true={errorMsg}>
+                                <p style="color: red;">{errorMsg}</p>
+                            </div>
+                            <lightning-textarea name="Reason For Escalating Case" label="Add Reason For Escalating Case" value={CommentVal} onchange={handleCommentValChange}></lightning-textarea>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral slds-float_right closeModalBtn" onclick={closeCommentModal}>Cancel</button>
+                            <button data-id="SubmitEscalation" class="slds-button slds-button_neutral slds-float_right submitModalBtn" style="margin-right: 1%;" onclick={addCaseCommentEscalate}>Submit</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+    
+    <!--Case Reopen Modal and Id is modal-content-id-5          -->
+    
+            <template if:true={openReopenCaseModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeCommentModal}>
+                                <lightning-icon icon-name="utility:close" size="medium"  variant="inverse">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-05" class="slds-text-heading_medium slds-hyphenate">Reopning Case</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_large" id="modal-content-id-5">
+                            <div if:true={errorMsg}>
+                                <p style="color: red;">{errorMsg}</p>
+                            </div>
+                            <lightning-textarea name="Reason For Reopning Case" label="Add Reason For Reopning Case" value={CommentVal} onchange={handleCommentValChange}></lightning-textarea>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral slds-float_right closeModalBtn" onclick={closeCommentModal}>Cancel</button>
+                            <button data-id="SubmitReopen" class="slds-button slds-button_neutral slds-float_right submitModalBtn" style="margin-right: 1%;" onclick={addCaseCommentReopen}>Submit</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+    
+            <template if:true={openAttachmentModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true" aria-describedby="modal-content-id-3" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeAttachmentModal}>
+                                <lightning-icon icon-name="utility:close" size="medium"  variant="inverse">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Add Attachments</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                            <div class="slds-p-around_medium lgc-bg">
+                                <!-- <lightning-input type="file"></lightning-input> -->
+                                <lightning-file-upload record-id={urlId} file-field-name="Guest_Record_fileupload__c"
+                                file-field-value={urlId} onuploadfinished={handleUploadFinished} accept={FileAccepted}>
+                                </lightning-file-upload>
+                            </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <!-- <button class="slds-button slds-button_neutral slds-float_right orangeBtn" onclick={addCaseAttachment}>Done</button> -->
+                            <button class="slds-button slds-button_neutral slds-float_right blueBtn" onclick={closeAttachmentModal}>Cancel Upload</button>
+                        </footer>
+                    </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+    
+    <!--Case Close Modal and Id is modal-heading-03 -->
+    
+            <template if:true={openCloseCaseModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeCommentModal}>
+                                <lightning-icon icon-name="utility:close" size="medium"  variant="inverse">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 data-id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Closing Case</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_large" data-id="modal-content-id-3">
+                            <div if:true={errorMsg}>
+                                <p style="color: red;">{errorMsg}</p>
+                            </div>
+                            <lightning-textarea name="Reason For Closing Case" label="Closing Case Reason" value={reasonValue} onchange={handleResonValChange}></lightning-textarea>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral slds-float_right closeModalBtn" onclick={closeCommentModal}>Cancel</button>
+                            <button class="slds-button slds-button_neutral slds-float_right submitModalBtn" data-id="SubmitCloseCase" style="margin-right: 1%;" onclick={addCaseCommentReopen}>Submit</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+    
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-large-size_8-of-12 slds-p-right_large hidePadding hidetabPadding">
+                    <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-border_top
+                    " style="padding: 2%; background-color: white;margin-top: 3%;">
+                                    <div style="font-family: NotoSansLight;" class="borderbottom headingClass">Case Details</div>
+                                    <div class="slds-grid slds-wrap slds-p-top_medium">
+                                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                            <div class="slds-grid slds-wrap slds-p-right_x-small">
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Priority:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                        <span class="caseDataClass">{casepriority}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Status:  </span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{casestatus}</span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Method of Contact:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{caseconmethod}</span>
+                                                    </div>
+                                                </div>
+    
+    
+                                            <!-- Additional For india Case Module    Begins Here  -->
+    
+                                                <template if:true={boolVisiblefortype}>  
+    
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span>Case Type:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class="caseDataClass">{caseType}</span>
+                                                        </div>
+                                                    </div> 
+                                                        
+                                                </template>
+    
+                                                <template if:true={boolVisibleforsubcat}>  
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span>Sub Category:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class="caseDataClass">{subcategorycatesub}</span>
+                                                        </div>
+                                                    </div> 
+                                                </template>
+    
+                                                <template if:true={boolVisibleforcat}>  
+    
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Category:  </span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{catesub}</span>
+                                                    </div>
+                                                </div> 
+                                                    
+                                                </template> 
+    
+                                            <!--    ******        End Here   ******      -->
+    
+                                                <!--<div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Sales Org:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{saleOrg}</span>
+                                                    </div>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_medium hidePadding borderleft divheight">
+                                            <div class="slds-grid slds-wrap">
+    
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Date Created:  </span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{casecreateddate}</span>
+                                                    </div>
+                                                </div>
+    
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Last Modified:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{casemodifieddate}</span>
+                                                    </div>
+                                                </div>
+    
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Created by:  </span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{createdbyname}</span>
+                                                    </div> 
+                                                </div>
+                                                
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Owner:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{caseowner}</span>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-p-right_x-small slds-border_top" style="background-color: white;margin-top: 3%;">
+                                <div style="font-family: NotoSansLight;" class="borderbottom slds-m-top_small slds-m-left_small slds-m-bottom_small headingClass">Description</div>                                    
+                                <div class="slds-grid slds-wrap dataDiv slds-p-left_small slds-p-bottom_small">
+                                    <div class="slds-col slds-x-small-size_4-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                                        <p class="columnClass">Subject:</p><br/>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_8-of-12 slds-medium-size_10-of-12 slds-large-size_10-of-12">
+                                        <b>{casesub}</b><br/>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_4-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-top_small" style="min-height:200px;">
+                                        <p class="columnClass">Description:</p>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_8-of-12 slds-medium-size_10-of-12 slds-large-size_10-of-12 slds-p-top_small" style="min-height:200px;">
+                                        <p><lightning-formatted-text value={casedesc}></lightning-formatted-text></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- <div style="margin-top:2%;">
+                            <button class="slds-button slds-button_neutral blueBtn" style="margin-right: 2%;" onclick={openAttachmentModalMethod}>Add Attachments</button>
+                            <button class="slds-button slds-button_neutral orangeBtn" onclick={openCommentModalMethod}>Add Comments</button>
+                        </div> -->
+    
+                        
+                </div>
+    
+                <div class="slds-col slds-large-size_4-of-12">
+                    <div class="slds-border_right slds-p-bottom_medium slds-border_left slds-border_bottom slds-p-right_small slds-p-left_small slds-border_top" style="background-color: white;margin-top: 6%;">
+                            <div style="font-family: NotoSansLight;padding-bottom: 2%;" class="borderbottom slds-m-top_small slds-m-bottom_small headingClass">Attachments<button class="slds-button slds-button_neutral blueAttachmentBtn slds-float_right" onclick={openAttachmentModalMethod} disabled={disableAttachBtn}>+</button></div>
+                            <div class="fontcolor">Maximum size of a file: 200 MB</div>
+                                <div class="fontcolorPBott"> File types accepted: {FileTypes}</div>
+                            <!-- <div class="slds-grid slds-wrap slds-p-left_x-small slds-p-top_x-small slds-p-bottom_x-small"> -->
+                                <template for:each={publicLinkMapData} for:item="contentdata">
+                                    <div key={contentdata.Id} class="slds-grid slds-wrap slds-p-top_small slds-p-bottom_small slds-p-left_x-small slds-size_full slds-border_right slds-border_left slds-border_bottom slds-p-right_x-small slds-border_top">
+                                        <div class="slds-col slds-x-small-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                            <img src={attImage}></img>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_7-of-12 slds-medium-size_7-of-12 slds-large-size_7-of-12 handleoverflowtext">
+                                            <span><b><a href={contentdata.publicLink} title="Preview File"  style="color:Black;" target="_blank">{contentdata.Filename}</a></b></span>
+                                        </div>
+                                        <!-- <div class="slds-col slds-x-small-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                            <lightning-icon variant="Warning" title="" icon-name="utility:download"  data-value="" onclick={downloadAttachment} size="x-small" class="slds-p-left_small pointer">
+                                            </lightning-icon>
+                                        </div> -->
+                                        <div class="slds-col slds-x-small-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-text-align_center handleoverflowtext">
+                                            <span style="font-size:10px;color:#888888;" class="" title={contentdata.CreatedbyName}>{contentdata.CreatedbyName}</span>
+                                        </div>
+                                    </div>
+                                                                        
+                                    <!-- <div  key={contentdata.Id} class="attachmentCls slds-p-top_medium slds-p-left_x-small slds-size_full slds-border_right slds-border_left slds-border_bottom slds-p-right_x-small slds-border_top">
+                                        <img src={attImage}></img>&nbsp;&nbsp;
+                                        <span><b>{contentdata.FileName}</b></span>
+                                        <span style="font-size:10px;color:#888888;" class="slds-float_right">{contentdata.CreatedBy}</span>
+                                        <lightning-icon variant="Warning" title="" icon-name="utility:download"  data-value="" onclick={downloadAttachment} size="x-small" class="slds-p-left_small pointer">
+                                        </lightning-icon>
+                                    </div> -->
+                                </template>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+            <div>
+            <template if:true={isSpinner}>
+                <div class="">
+                    <lightning-spinner class="" alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+                </div>
+            </template>
+            <div class="slds-p-top_large slds-p-bottom_large componentNotoSansLight headingClass">
+                <span>Comments</span>
+                <button class="slds-button slds-button_neutral orangeCommentBtn slds-float_right" disabled={disableBtn} style="font-size: 10px;" onclick={openCommentModalMethod}>Add Comments</button>
+            </div>
+            <!-- <template if:true={feeditemdata}> -->
+            <template for:each={feeditemdata} for:item="feeddata">   
+                <div key={feeddata.Id} class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-p-right_x-small slds-border_top commentdivcss">
+                    <div class="slds-grid slds-wrap" style="min-height: 70px;">
+                        <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-p-top_medium slds-p-left_small">
+                            <!-- <img class="iconClass" src={feeddata.Icon}/> -->
+                            <lightning-avatar variant="circle" src={feeddata.Icon} fallback-icon-name="standard:user"></lightning-avatar>                                  
+                        </div>
+                        <div class="slds-col slds-x-small-size_10-of-12 slds-medium-size_11-of-12 slds-large-size_11-of-12 slds-p-top_small">
+                            <p style="color: black;"><lightning-formatted-rich-text value={feeddata.CommentBody}></lightning-formatted-rich-text></p>
+                            <p class="slds-p-top_medium slds-p-bottom_small">
+                                <span style="font-size:11px;color:#888888;">Posted By: </span><span style="font-size:11px;color:#F47920;">
+                                    {feeddata.CreatedBy}
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style="font-size:11px;color:#888888;">Posted On: </span>
+                                <span style="font-size:11px;color:#F47920;">
+                                    {feeddata.Date}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </template> 
+        <!-- </template> -->
+        <!-- <template if:false={feeditemdata}>
+            <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-p-right_x-small slds-border_top
+            " style="background-color: white;margin-top: 2%;margin-right: 1%;min-height:40px">
+            <p class="noCmtCls">No Case Comments</p>
+            </div>
+        </template> -->
+            </div>
+                </div>
+    
+    
+    </div>
+        
+    </template>

@@ -1,0 +1,8 @@
+<aura:component implements="force:hasRecordId,force:hasSObjectName,force:lightningQuickAction">
+
+    <!-- Reload order using recordId -->
+    <aura:attribute name="recordId" type="Id" />
+
+    <!--Init Component On Load-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+</aura:component>

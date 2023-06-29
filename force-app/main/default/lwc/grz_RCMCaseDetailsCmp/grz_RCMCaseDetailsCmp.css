@@ -1,0 +1,137 @@
+.fontcolor{
+    color: #696969 !important;
+    font-weight: bold;
+}
+.fontcolorPBott{
+    color: #696969 !important;
+    padding-bottom: 9px;
+    font-weight: bold;
+}
+.textCls{
+    font-weight: bold;
+    color: #000;
+    font-size: 22px;
+}
+
+.borderbottom{
+    padding-bottom: 1%;
+    border-bottom: 1px solid #DDDDDD;
+}
+.blueBtn{
+    border-radius: 0%;
+    background-color:#00BDF2;
+    border-color: #00BDF2;
+    color: #FFFFFF;
+}
+.closeModalBtn{
+    border-radius: 0%;
+    background-color:#00BDF2;
+    border-color: #00BDF2;
+    color: #FFFFFF;
+}
+
+.submitModalBtn{
+    border-radius: 0%;
+    color: black;
+    border-color: #F47920;
+    font-weight: bold;
+    margin-right: 2%;
+}
+
+.blueAttachmentBtn{
+    border-radius: 0%;
+    background-color:#00BDF2;
+    border-color: #00BDF2;
+    color: #FFFFFF;
+}
+
+.orangeCommentBtn{
+    border-radius: 0%;
+    color: black;
+    border-color: #F47920;
+    font-weight: bold;
+}
+.handleoverflowtext{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.noteclass {
+    color: rgb(136, 136, 136);
+ }
+
+.dataDiv{
+    margin-top: 2%;
+}
+.borderleft{
+    border-left: 1px solid #E5E5E5;
+}
+
+.caseDataClass{
+    font-weight: bold;
+}
+.headingClass{
+    font-size:22px;
+    color:#000000;
+}
+.columnClass{
+    color: #888888;
+    font-size: 13px;
+}
+.lgc-bg {
+    background-color: rgb(242, 242, 242);
+}
+.commentdivcss{
+    background-color: white;
+}
+.divheight{
+    min-height: 138px;
+}
+
+@media only screen and (max-width: 1023px) and (min-device-width: 768px){
+    .hidetabPadding{
+        padding: 0px;
+    }
+    .divheight{
+        min-height: 132px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .hidePadding{
+        padding: 0px;
+        padding-right: 7px !important;
+       
+    }
+    .textCls{
+        font-weight: bold;
+        color: #000;
+        font-size: 18px;
+    }
+
+    .commentdivcss{
+        margin-bottom: 4%;
+    }
+
+    .borderleft{
+        border-left: 0px solid #E5E5E5;
+    }
+    .comboboxfloat{
+      float: left;
+      width: 230px;
+    }
+    .divheight{
+        min-height: auto;
+    }
+
+@media screen and (max-width: 470px) {
+    .blueBtn{
+        width : 78%;
+        border-radius: 0%;
+        background-color:#00BDF2;
+        border-color: #00BDF2;
+        color: #FFFFFF;
+    }
+} 
+
+}

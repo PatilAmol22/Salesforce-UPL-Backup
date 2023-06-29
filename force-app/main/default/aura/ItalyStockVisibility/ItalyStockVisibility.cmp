@@ -1,0 +1,493 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" 
+                access="global"
+                controller="ItalyStockVisibilityController">
+    <!--All Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="input_text" type="String" default=""/>
+    <aura:attribute name="input_id" type="String" default=""/>
+    <aura:attribute name="select_productType" type="String" default=""/>
+    <aura:attribute name="search_product_name" type="String" default=""/>
+    <aura:attribute name="search_product_code" type="String" default=""/>
+    <aura:attribute name="isVisible" type="boolean" default="true"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="isSKUOpen" type="boolean" default="false"/>
+    <aura:attribute name="isDownloadExcel" type="Boolean" default="false" />
+    <aura:attribute name="SKUList" type="SKU__c[]" />
+    <aura:attribute name="SKUList_SKUCODE" type="SKU__c" />
+    <aura:attribute name="SKUListItem" type="SKU__c" />
+    <!-- Edit or Save -->
+    <aura:attribute name="editOrSave" type="boolean" default="false"/>
+    <aura:attribute name="inventoryDiscription" type="string" default=""/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/> 
+    <aura:attribute name="checkRecord" type="boolean" default="false"/>
+    <aura:attribute name="No_record" type="String" default="No record found"/>
+    
+    <!-- Radio btn used flaf picklist -->
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Green', 'value': 'Green'},
+                                                        {'label': 'Red', 'value': 'Red'},
+                                                        {'label': 'Yellow', 'value': 'Yellow'}
+                                                        ]"/>
+    <aura:attribute name="value" type="String" default=""/>
+    <!---->
+    
+    
+    <!--Modal List Pagination-->
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/> 
+    <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/>   
+    <aura:attribute name="selectedTabsoft" type="string" default="Name" description="Use for show/hide arraow sign on header based on conditions"/>  
+    <aura:attribute name="page" default="1" type="integer" access="public" description="using for store page Number"/>  
+    <aura:attribute name="pages" default="0" type="integer" access="public" description="using for store All Pages page Number"/>  
+    <aura:attribute name="total" default="0" type="integer" access="public" description="total records count store "/> 
+    
+    <aura:attribute name="search_product" type="String" default=""/>
+    
+    <aura:attribute name="recordId" type="Id" />
+    
+    <aura:attribute name="inventoryQty" type="integer" default="0"/>
+    
+    <lightning:spinner aura:id="mySpinner" size="large" class="slds-hide"/>
+    
+    <div style="padding:10px;background-color:#70859e">
+                <!--div class="slds-page-header__col-title"-->
+                    <div class="slds-media" style="color:white;font-weight: bold;font-size:15px">
+                                <span>{!$Label.c.Stock_Visibility}</span>
+                    </div>
+            <!--/div-->
+     </div>
+    <!-- Search SKU Div -->
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-spinner_container slds-is-fixed">
+                <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+            </div>
+        </aura:if>  
+        
+        
+        <!-- Search Option -->
+        
+        
+        <div class="slds-grid slds-wrap slds-gutters slds-align_absolute-center" style="padding-top:10px; padding-bottom:10px">
+            <form class="slds-form--inline">
+                <!--<div class="slds-form-element slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                    <label class="slds-form-element__label" for="SKU Name">{!$Label.c.SKU_Name}</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputText aura:id="search_product_name" class="slds-input" placeholder="{!$Label.c.Enter_SKU_Name}" value="{!v.search_product_name}" keyup="{!c.isSkuBlank}" updateOn="keyup"/>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                    <label class="slds-form-element__label" for="SKU Code">{!$Label.c.SKU_Code}</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputText aura:id="search_product_code" class="slds-input" placeholder="{!$Label.c.Enter_SKU_code}" value="{!v.search_product_code}" keyup="{!c.isSkuBlank}" updateOn="keyup"/>
+                    </div>
+                </div>-->
+                
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12" style="margin-top:10px;">
+                        <label class="" for="search_product_name">{!$Label.c.SKU_Name}</label>
+                        <div class="">
+                            <ui:inputText aura:id="search_product_name" class="slds-input" placeholder="{!$Label.c.Enter_SKU_Name}" value="{!v.search_product_name}" keyup="{!c.isSkuBlank}" updateOn="keyup"/>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12" style="margin-top:10px;">
+                        <label class="" for="search_product_code">{!$Label.c.SKU_Code}</label>
+                        <div class="">
+                            <ui:inputText aura:id="search_product_code" class="slds-input" placeholder="{!$Label.c.Enter_SKU_code}" value="{!v.search_product_code}" keyup="{!c.isSkuBlank}" updateOn="keyup"/>
+                        </div>
+                    </div>
+                </div>
+                
+               
+                
+               <div class="" style="margin-top:15px; text-align:center;">
+                   
+                   <button class="slds-button slds-button_brand" style="margin-bottom:10px;" type="button" onclick="{!c.onSearch}">{!$Label.c.Search}</button>
+                   <button class="slds-button slds-button_brand" style="margin-bottom:10px;" type="button" onclick="{!c.doInit}">{!$Label.c.Reset}</button>
+                   
+                   <aura:if isTrue="{!v.isVisible}">
+                   <button class="slds-button slds-button_brand" style="margin-bottom:10px;" type="button" onclick="{!c.fileUpload}">{!$Label.c.Upload_Stock_Details}</button>
+                   <!--<button class="slds-button slds-button_brand" style="margin-bottom:10px;" type="button" onclick="{!c.downloadExcelFile}">Download Stock Details</button>-->
+                   </aura:if>
+                   <aura:if isTrue="{!v.isDownloadExcel}">
+                       <iframe style="display:none" aura:id="vfFrame" src="{!'https://upl--upltest.my.salesforce.com/apex/ItalyStockVisibilityDownloadExcel?core.apexpages.request.devconsole=1'}"/>
+                   </aura:if>
+            </div>	
+            </form>
+            
+        </div>
+        
+        <!-- EOF Search SKU Div -->
+        <aura:if isTrue="{!v.isOpen}">
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div style="max-height:90%; max-width:90%" class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.onSearchCloseModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.Upload_Stock_Details}</h2>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div>
+                            <input type="file" class="file" aura:id="file" accept=".csv"/>
+                            <!--ui:button class="slds" label="Upload CSV" click="{!c.uploadCSV}"/-->
+                            <lightning:button variant="neutral" 
+                                              label="{!$Label.c.Upload_CSV}"
+                                              title= "Upload CSV"
+                                              onclick="{!c.uploadCSV }"/>
+                        </div>
+                        
+                        
+                        
+                        <div style="padding:5px;margin-top:20px">
+                            <h1><strong>{!$Label.c.Template}</strong></h1>    
+                            <div>
+                                <div style="border-top:1px solid #1797c0; margin-bottom:4px;"></div>  
+                               
+                                    <p class="slds-breadcrumb__item">
+                                        <a href="/servlet/servlet.FileDownload?file=0150k000000Wtc2" target="_blank" class="link"><ui:outputRichText value="{!$Label.c.Click_here_to_Download_template}"/></a>
+                                    </p>
+                                
+                            </div>
+                        </div>
+                        
+                        <div style="border:1px; padding:5px;margin-top:20px">
+                            
+                        <h1 id="flip2"><strong>Instructions</strong></h1>
+                        
+                        	
+                            <div style="border-top:1px solid #1797c0;margin-bottom:4px;"></div> 
+                            <div>
+                                <p>&#9658; {!$Label.c.File_to_be_uploaded_must_be_in_csv_format_Save_file_in_csv_format}</p>
+                                <p>&#9658; {!$Label.c.Please_follow_the_same_column_sequence_and_column_names_as_given_in_template}</p>
+                                <p>&#9658; {!$Label.c.Once_the_file_is_uploaded_in_the_system_you_will_receive_an_email_notification}</p>
+                            </div>
+                        
+                    </div>
+                    </div>
+                    
+                    
+                    
+                    
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{!c.onSearchCloseModel }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+        </aura:if>
+        
+        <!--Search Option -->
+        
+        <div class="slds-form-element">
+            <div class="slds-form-element__control">
+                <div class="slds-form-element__control" style="width:100%; margin-top:10px;">
+                    <p>{!$Label.c.SKU_per_page}</p>
+                </div>
+                
+                <div class="slds-form-element__control" style="width:200px;; margin-top:10px; margin-bottom:10px">
+                    
+                    <ui:inputSelect aura:id="recordSize"
+                                    label="" 
+                                    class="single slds-select"
+                                    change="{!c.onSelectChange}">
+                        <ui:inputSelectOption text="10" label="10" value="true"/>
+                        <ui:inputSelectOption text="15" label="15"/>
+                        <ui:inputSelectOption text="20" label="20"/>
+                    </ui:inputSelect>      
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+            
+            <div class="slds-scrollable--x" style="margin-bottom:0; border-bottom:0px solid #cce4f8; width: 100%;">
+                <table class="slds-table slds-table_striped">
+                    <thead>
+                        <tr style="border:1px solid #ccc;">   
+                            
+                            <th class="slds-is-sortable" scope="col" style=" padding:15px;"> 
+								<span class="slds-truncate" title="SKU Name"><b>{!$Label.c.SKU_Name}</b></span> 
+                            </th>
+                            <th class="slds-is-sortable" scope="col"> 
+								<span class="slds-truncate" title="SKU Code"><b>{!$Label.c.SKU_Code}</b></span>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">  
+								<aura:if isTrue="{!v.isVisible}">
+                                <span class="slds-truncate slds-align_absolute-center" title="Net Stock"><b>{!$Label.c.Net_Stock}</b></span> 
+								</aura:if>	
+                            </th>
+                            <th class="slds-is-sortable" scope="col"> 
+								<aura:if isTrue="{!v.isVisible}">
+                                <span class="slds-truncate slds-align_absolute-center" title="Inventory Check"><b>{!$Label.c.Inventory_Check}</b></span>  
+								</aura:if>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">  
+								<aura:if isTrue="{!v.isVisible}">
+                                <span class="slds-truncate slds-align_absolute-center" title="Reference Quantity"><b>{!$Label.c.Reference_Quantity}</b></span>
+								</aura:if>	
+                            </th>
+                            <th class="slds-is-sortable" scope="col">  
+								<span class="slds-truncate slds-align_absolute-center" title="Stock Visibility"><b>{!$Label.c.Stock_Visibility}</b></span>  
+							</th>
+                            <th class="slds-is-sortable" scope="col">  
+								<span class="slds-truncate slds-align_absolute-center" title="Description/Comments"><b>{!$Label.c.Description_Comments}</b></span> 
+							</th>
+                            <th class="slds-is-sortable" scope="col">  
+								<aura:if isTrue="{!v.isVisible}">
+                                <span class="slds-truncate" title="Action"><b>{!$Label.c.Action}</b></span>  
+								</aura:if>	
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <aura:iteration items="{!v.SKUList}"
+                                        var="SKUList"
+                                        indexVar="index">  
+                            
+                            <tr class="slds-hint-parent" > 
+                                <th scope="row" data-label="SKU Name">
+								<div class="slds-truncate">
+                                        <ui:outputRichText aura:id="outputRT" value="{!SKUList.SKU_Description__c}"/><!-- value="{!SKUList.SKU_Code__c}"/-->
+                                    </div>
+                                </th> 
+                                
+                                <th scope="row" data-label="SKU Code">
+								<div class="slds-truncate">
+                                        <ui:outputRichText aura:id="outputRT" value="{!SKUList.SKU_Code__c}"/><!-- value="{!SKUList.SKU_Code__c}"/-->
+                                </div>	
+                                </th> 
+                                <th scope="row" data-label="Net Stock">
+								<aura:if isTrue="{!v.isVisible}">
+                                    <div class="slds-truncate">
+                                        <ui:inputText aura:id="outputRT" class="slds-input slds-align_absolute-center dinput" disabled="true" value="{!SKUList.Available_Stock_Italy__c}" />
+                                    </div>
+									</aura:if>
+                                </th> 
+                                <th scope="row" data-label="Inventory Check">
+								<aura:if isTrue="{!v.isVisible}">
+                                    <div class="slds-truncate slds-align_absolute-center">
+                                        <ui:inputCheckbox class="slds-checkbox green-checkbox" disabled="true" aura:id="inventorycheck" value="{!SKUList.Inventory_Dynamic_Check_Italy__c}"/>
+                                    </div>
+                                    </aura:if>
+                                </th>
+                                <th scope="row" data-label="Reference Quantity">
+								<aura:if isTrue="{!v.isVisible}">
+                                    <div class="slds-truncate slds-align_absolute-center">
+                                        <ui:inputText aura:id="inventoryQty" class="slds-input slds-align_absolute-center dinput" disabled="true" value="{!SKUList.Dynamic_Inventory_Qty_Italy__c}" />
+                                        <!--ui:inputCheckbox class="slds" aura:id="outputRT"/--><!-- value="{!SKUList.SKU_Code__c}"/-->
+                                    </div>
+                                    </aura:if>
+                                </th>
+                                <th scope="row" data-label="Stock Visibility">
+								<div class="slds-truncate slds-align_absolute-center">
+                                        <ui:outputRichText class="slds-align_absolute-center" aura:id="outputRT" value="{!SKUList.Inventory_order_Flag_Color_Italy__c}"/>
+                                </div>
+                                </th> 
+                                <th scope="row" data-label="Description/Comments">
+								<div class="slds-truncate">
+                                        <ui:inputTextArea aura:id="inventoryDiscription" disabled="true" value="{!SKUList.Inventory_Description_Italy__c}"/> <!-- value="{!SKUList.SKU_Code__c}"/-->
+                                </div>
+                                </th> 
+                                <th scope="row" data-label="Action">
+									<aura:if isTrue="{!v.isVisible}">
+                                    <div class="slds-truncate">
+                                        <!--aura:if isTrue="{!v.editOrSave==false}"-->
+                                            <lightning:button variant="brand" 
+                                                              label="{!$Label.c.Edit}"
+                                                              title="{!$Label.c.Edit}"
+                                                              value="{!SKUList.Id}"
+                                                              onclick="{!c.onEdit}"/>
+                                        <!--</aura:if>
+                                        <aura:if isTrue="{!v.editOrSave==true}">
+                                            <lightning:button variant="neutral" 
+                                                              label="Save"
+                                                              title="Save"
+                                                              onclick="{!c.onSave}"/>
+                                        </aura:if>-->
+                                    </div>
+									</aura:if>
+                                </th> 
+                                
+                                
+                                
+                                
+                            </tr>
+                        </aura:iteration>  
+                        
+                        <aura:if isTrue="{!v.checkRecord==true}">
+                            <tr>
+                                <td colspan="8"  style="text-align:center !important;">
+                                    {!v.No_record}
+                                </td>
+                            </tr>
+                        </aura:if>                        
+                    </tbody>
+                    
+                       
+                    
+                    
+                </table>
+            </div>
+        </div>
+        <!-- Modal for SKU Line Item -->  
+        
+        <div class="slds-grid slds-wrap">
+        <aura:if isTrue="{!v.isSKUOpen}">
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div style="max-height:90%; max-width:90%" class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.onSearchCloseModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"><b>{!v.SKUListItem.SKU_Description__c} : {!v.SKUListItem.SKU_Code__c}</b> </h2>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_medium slds-scrollable_x" id="modal-content-id-1">
+                        <div>
+                            
+                            <table class="slds-table">
+                                <tr>   
+                                    <th class="slds-is-sortable" scope="col">  
+                                        <span class="slds-truncate" title="{!$Label.c.SKU_Name}"><b>{!$Label.c.SKU_Name}</b></span>  
+                                    </th>
+                                    <td class="slds-is-sortable" scope="col"> 
+                                        <ui:outputRichText aura:id="outputRT" value="{!v.SKUListItem.SKU_Description__c}"/>
+                                    </td>
+                                </tr>
+                           
+                                <tr>   
+                                    <th class="slds-is-sortable" scope="col">  
+                                        <span class="slds-truncate" title="{!$Label.c.SKU_Code}"><b>{!$Label.c.SKU_Code}</b></span>  
+                                    </th>
+                                    <td class="slds-is-sortable" scope="col"> 
+                                        <ui:outputRichText aura:id="outputRT" value="{!v.SKUListItem.SKU_Code__c}"/>
+                                    </td>
+                                </tr>
+                           
+                                <tr>   
+                                    <th class="slds-is-sortable" scope="col">  
+                                        <span class="slds-truncate" title="{!$Label.c.Net_Stock}"><b>{!$Label.c.Net_Stock}</b></span>  
+                                    </th>
+                                    <td class="slds-is-sortable" scope="col">  
+                                        <ui:outputRichText aura:id="outputRT" value="{!v.SKUListItem.Available_Stock_Italy__c}"/>
+                                    </td>
+                                </tr>
+                         
+                                <tr>   
+                                    <th class="slds-is-sortable" scope="col"> 
+                                        <span class="slds-truncate" title="{!$Label.c.Inventory_Check}"><b>{!$Label.c.Inventory_Check}</b></span>  
+                                    </th>
+                                    <td class="slds-is-sortable" scope="col">  
+                                        <!--ui:inputCheckbox class="slds-checkbox" aura:id="inventorycheck" change="{!c.oninventoryCheck}"/-->
+                                        <ui:inputCheckbox aura:id="checkbox" change="{!c.oninventoryCheck}" value="{!v.SKUListItem.Inventory_Dynamic_Check_Italy__c}"/>
+                                    </td>
+                                </tr>
+                                <tr>   
+                                    <th class="slds-is-sortable" scope="col"> 
+                                        <span class="slds-truncate" title="{!$Label.c.Reference_Quantity}"><b>{!$Label.c.Reference_Quantity}</b></span>  
+                                    </th>
+                                    <td class="slds-is-sortable" scope="col">  
+                                        <ui:inputnumber aura:id="inventoryQty1" class="slds-input" blur="{!c.onInventoryQty}" value="{!v.SKUListItem.Dynamic_Inventory_Qty_Italy__c}" format="##0.##" />
+                                    </td>
+                                </tr>
+                           
+                                <tr>   
+                                    <th>  
+                                        <span class="slds-truncate"><b>{!$Label.c.Stock_Visibility}</b></span>  
+                                    </th>
+                                    <td>  
+                                        <lightning:radioGroup name="radioGroupRequired"
+                                                              aura:id="radioFlag1"
+                                                              disabled="true"
+                                                              options="{! v.options }"
+                                                              value="{!v.SKUListItem.Inventory_flag_Italy__c}"
+                                                              type="radio" />
+                                    </td>
+                                    
+                                </tr>
+                                
+                                <tr>   
+                                    <th class="slds-is-sortable" scope="col">  
+                                        <span class="slds-truncate" title="{!$Label.c.Description_Comments}"><b>{!$Label.c.Description_Comments}</b></span>  
+                                    </th>
+                                    <td class="slds-is-sortable slds-text-title--caps" scope="col">  
+                                        <ui:inputTextArea aura:id="inventoryDiscription"
+                                                  class="slds-input"
+                                                  value="{!v.SKUListItem.Inventory_Description_Italy__c}"/>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                    
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        
+                        <lightning:button variant="brand" 
+                                          label="Submit"
+                                          title="Submit"
+                                          onclick="{!c.onSubmitSKUItem}"/>
+                        
+                        <lightning:button variant="brand" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{!c.onSearchCloseModel }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            <!-- EOF Modal for SKU Line Item -->
+            
+            
+        </aura:if>
+            
+        </div>
+        
+        <div class="slds-grid slds-wrap" style="margin-top:10px;">
+  <div class="slds-col slds-size_12-of-12 slds-large-size_2-of-12" style="text-align:center; margin-bottom:7px;">
+    <aura:if isTrue="{!v.checkRecord==false}" >
+        <div class="slds-align_absolute-left"><p>{!$Label.c.Showing} &nbsp;{!v.page} of {!v.pages} &nbsp;{!$Label.c.Page}</p></div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.checkRecord==true}" >
+                    <div class="slds-align_absolute-left">{!$Label.c.Showing} &nbsp; 0 of 1 &nbsp;{!$Label.c.Page}</div>
+                    </aura:if>
+  </div>
+            <div class="slds-col slds-size_1-of-1 slds-large-size_7-of-12"> </div>  
+            
+  <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12" style="text-align:center;">
+     <aura:if isTrue="{!v.checkRecord==false}" >
+                        <lightning:button disabled="{!v.page == 1}" onclick="{!c.gotoFirstPage}" class="slds-button slds-button--neutral" label="{!$Label.c.First}" />  
+                        <lightning:button disabled="{!v.page == 1}" onclick="{!c.previousPage}" class="slds-button slds-button--neutral" iconName="utility:chevronleft" />  
+                        <lightning:button disabled="{!v.page == v.pages}" aura:id="nextbtn" class="slds-button slds-button--neutral" onclick="{!c.nextPage}" iconName="utility:chevronright" iconPosition="right"/>  
+                        <lightning:button disabled="{!v.page == v.pages}" onclick="{!c.gotoLastPage}" class="slds-button slds-button--neutral" label="{!$Label.c.Last}"/>          
+                        </aura:if>
+  </div>
+</div>
+        
+        
+    </div>
+    
+    
+</aura:component>

@@ -1,0 +1,11 @@
+.THIS table{
+    bordered-collapse:collapse;
+}
+.THIS table td{
+    bordered-collapse:collapse;
+    border:0;
+}
+.THIS table th{
+    bordered-collapse:collapse;
+    border:0px solid #ccc;
+}

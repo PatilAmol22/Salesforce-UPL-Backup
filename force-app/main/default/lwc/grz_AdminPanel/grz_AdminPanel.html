@@ -1,0 +1,143 @@
+<template>
+   <div>
+<c-grz_header-image-cmp bgimg={backgroundimage} imglabel="Admin Panel" customcss='top: 9%;'></c-grz_header-image-cmp>
+</div>
+
+<div class="bread-crumb">
+<c-grz_bread-crumb labelone='Admin Panel' linkone=''>
+</c-grz_bread-crumb>
+</div>
+
+
+
+<div class="exampleHolder divstyle slds-p-right_medium slds-p-left_medium slds-p-bottom_large slds-p-top_small ">
+    <div class="slds-grid slds-wrap">
+        <div class="FetchSchemesDiv slds-p-right_small slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-max-small-size_12-of-12">
+            <h5 class="Notosence FetchSchemes">Fetch Schemes:</h5>
+        </div>
+        <div class="cusType slds-p-right_small slds-col slds-large-size_2-of-12 slds-medium-size_6-of-12 slds-small-size_6-of-12 slds-max-small-size_12-of-12">
+            <lightning-combobox
+            placeholder = "Customer Type"
+            value={CustomerType}
+            options={CustomerType}
+            onchange={HandleCustomer} >
+            </lightning-combobox>
+        </div>
+        <div class="sbu slds-p-right_small slds-col slds-large-size_2-of-12 slds-medium-size_6-of-12 slds-small-size_6-of-12 slds-max-small-size_12-of-12">
+            <lightning-combobox
+            placeholder = "SBU"
+            value={Sbu}
+            options={Sbu}
+            onchange={handleSbu} >
+            </lightning-combobox>
+        </div>
+        <div class="zone slds-p-right_small slds-col slds-large-size_2-of-12 slds-medium-size_6-of-12 slds-small-size_6-of-12 slds-max-small-size_12-of-12">
+            <lightning-combobox
+            placeholder = "Zone"
+            value={values}
+            options={values}
+            onchange={handleZone} >
+            </lightning-combobox>
+        </div>
+
+        
+        <div class="sDate slds-p-right_small slds-col slds-large-size_2-of-12 slds-medium-size_6-of-12 slds-small-size_6-of-12 slds-max-small-size_12-of-12">
+            <lightning-input type="date" value={startDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startdateChange}></lightning-input>
+        </div>
+        
+        <div class="eDate slds-p-right_small slds-col slds-large-size_2-of-12 slds-medium-size_6-of-12 slds-small-size_6-of-12 slds-max-small-size_12-of-12">
+            <lightning-input type="date" value={endDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={enddateChange}></lightning-input>
+        </div>
+        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_6-of-12 slds-small-size_6-of-12 slds-max-small-size_12-of-12">
+            <button class="Query-button Notosence" onclick={Query}>Get Record</button>
+        </div>
+    </div>
+    <template if:true={loaded}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    <template if:false={loaded}>
+    <template if:true={cir1}>
+        <div class="Border slds-grid slds-wrap">
+            <div class="newCir slds-p-right_large slds-col slds-large-size_8-of-12 slds-medium-size_12-of-12">
+            <p class="MainCir"><span class="Cir componentNotoSansMedium">Circular Number: </span><span class="cirPart componentNotoSansBold">{cir1}</span></p>
+            <p class="CirChild componentNotoSansMedium">{cir2}</p>
+            
+            </div>
+            <div class="ButtonLeftAlign slds-p-right_small slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-small-size_4-of-12 slds-max-small-size_6-of-12">
+               
+                <div>
+                    <a href={ledgerURL} download="Prices_Statement.pdf" target="_blank"><button class="dwnld-btn componentNotoSansBold"><span class="download-icon"><img class="ImgIcon" src={downloadIcon}/></span><span>Download PDF</span></button></a> 
+                </div>
+            </div>
+            <div class="ButtonLeftAlign slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-small-size_4-of-12 slds-max-small-size_6-of-12">
+                <button class="SendAsEmail-button Notosence" onclick={SendAsEmail}>Send as Email</button>
+            </div>
+        </div>
+    </template>
+    </template>
+    <template if:true={loaded1}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+</div>
+
+
+
+<div class="slds-p-top_x-large">
+    <p class = "componentNotoSansMedium PrevQries slds-p-bottom_small">Previous Queries</p>
+
+    <template if:true={AdminPanelInfo}>
+        <template for:each={AdminPanelInfo} for:item="item">
+
+        <div key={item.Id} class="divstyle slds-p-left_medium slds-m-bottom_small">
+            
+                <div class=" slds-grid slds-wrap">
+                    <div class="BorderTiles slds-p-right_small slds-col slds-large-size_9-of-12 slds-col slds-medium-size_9-of-12 slds-small-size_12-of-12">
+                    <p class="MainCir"><span class="Cir componentNotoSansMedium">Circular Number: </span><span class="cirPart componentNotoSansBold">{item.cir1}</span></p>
+                    <p class="CirChild componentNotoSansMedium">{item.cir2}</p>
+                    
+                    </div>
+                    <div class=" TopPad slds-p-right_medium slds-col slds-large-size_3-of-12 slds-p-left_medium slds-p-top_small slds-p-bottom_small">
+                       <p class="MailDiv componentNotoSansMedium slds-m-bottom_x-small  slds-p-bottom_x-small"><span class="SentOn">Sent On: </span><span class="SentDate">{item.sentDate}</span></p>
+                      
+                       <template if:true={item.sent}>
+                        <span class="EmailLabel componentNotoSansMedium">Email Sent</span>
+                        </template>
+                        <span> <a class="Download"  download="Prices_Statement.pdf" target="_blank"><button data-target-id={item.ContentDocId} onclick={PdfDownloadCustom} class="dwnldLinkBtn componentNotoSansBold">Download PDF</button></a></span>
+                    </div>
+                    
+                </div>
+        </div>
+
+    </template>
+    </template>
+
+   
+</div>
+
+
+
+<lightning-layout-item size="12" padding="around-small">
+    <div class="slds-align_absolute-center">
+    
+    <lightning-button variant="base" label="First" disabled={disableFirst} onclick={handleFirst}
+    class="slds-m-left_x-small"></lightning-button>
+    
+    <lightning-button variant="base" label="Pre" disabled={disableFirst} onclick={handlePrevious}
+    class="slds-m-left_x-small slds-m-right_x-small"></lightning-button>
+    
+    <template for:each={pagelist} for:item="item" for:index="index">
+    <span class="themeborder testcss slds-m-left_xx-small slds-m-right_xx-small slds-p-horizontal_x-small"
+    key={item} data-id={item}>
+    <a class="testcss" onclick={processMe} name={item} data-id={item}>{item}</a>
+    </span>
+    </template>
+    
+    <lightning-button variant="base" label="Next" disabled={disableNext} onclick={handleNext}
+    class="slds-m-left_x-small"></lightning-button>
+    
+    <lightning-button variant="base" label="Last" disabled={disableNext} onclick={handleLast}
+    class="slds-m-left_x-small"></lightning-button>
+    </div>
+    </lightning-layout-item>
+
+</template>

@@ -1,0 +1,166 @@
+.divstyle{
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    opacity: 1;
+    background-color: white;
+}
+
+.borderclr{
+    background-color: #F5F5F5;
+    opacity: 1;
+    border-radius: 50%;
+    width: 47px;
+}
+.hideindesktop{
+    display: none;
+}
+
+.borderleft{
+    border-left: 1px solid #DDDDDD;
+}
+.borderbottom{
+    border-bottom: 1px solid #DDDDDD;
+    opacity: 1;
+}
+
+.statuscls{
+    display: block;
+    min-width: 140px;
+    /* width: 165px; */
+    background-color: #55A723;
+    background-clip: content-box;
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.fontTitleClr{
+    color:#000000;
+    font-size: 16px;
+}
+.fontlableClr{
+    font-size: 13px;
+   color: #666666;
+}
+.fontTextClr{
+    font-size: 13px;
+    color:#FF6D00;
+}
+.handleoverflowtext{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mobilepadsub{
+    padding-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.nodatacss{
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    opacity: 1;
+    background-color: white;
+    padding: 2%;
+}
+@media screen and (max-width: 767px) {
+
+    .anchorCls{
+        font-size: 12px;
+        padding-top: 5%;
+    }
+    .fontTitleClr{
+        font-size: 14px;
+    }
+    .hideindesktop{
+        display: block;
+    }
+
+    .hideinmobile{
+        display: none;
+    }
+    .statuscls{
+        
+        padding-left: 0%;
+        min-width: 30%;
+        font-size: 12px;
+        margin: auto;
+    }
+    .borderleft{
+        border-top: 1px solid #DDDDDD;
+        border-left: 0px solid #DDDDDD;
+        padding-top: 3%;
+    }
+    .mobilecasenopadding{
+        padding: 1%;
+    }
+    .divstyle{
+        padding: 3%;
+    }
+    .mobilepadsub{
+        padding-bottom: 2%;
+        /* white-space: nowrap;
+        width: 100%;
+        overflow: auto;
+        text-overflow: clip; */
+    }
+      .shadoweffect{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+}
+@media screen and (max-width: 350px) {
+    .anchorCls{
+        font-size: 10px;
+        padding-top: 6%;
+    }
+    .iconmobile{
+        height: 44px;
+        width: 36px;
+    }
+    .borderclr{
+        width: 43px;
+    }
+
+}
+@media only screen and (max-width: 1023px) and (min-device-width: 768px){
+    
+    .anchorCls{
+        font-size: 13px;
+        padding-top: 2%;
+    }
+    .divstyle{
+        padding: 3%;
+    }
+    .hideindesktop{
+        display: block;
+    }
+
+    .hideinmobile{
+        display: none;
+    }
+    .borderleft{
+        border-top: 1px solid #DDDDDD;
+        border-left: 0px solid #DDDDDD;
+        padding-top: 2%;
+    }
+    .tabpadding{
+        padding-top: 1%;
+    }
+    .mobilecasenopadding{
+        padding: 1%;
+    }
+    .textalignleft{
+        text-align: left;
+    }
+    .statuscls{
+        padding-left: 1%;
+    }
+
+}
+
+@media screen and (max-width: 1066px) and (min-device-width: 1025px) {
+
+    .borderclr{
+        width: 45px;
+    }
+}

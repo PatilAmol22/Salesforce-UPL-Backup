@@ -1,0 +1,88 @@
+<aura:component controller= "PriceComponentUploadController" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >
+    <!-- Attribute -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="FileName" type="string" />
+    <aura:attribute name="doc" type="string" />
+    <aura:attribute name="ShowSampleTemplate" type="boolean" default="false"/>
+    <aura:attribute name="ShowFileName" type="boolean" default="false"/>
+    <aura:attribute name="ShowOption" type="boolean" default="false"/>
+    <aura:attribute name="User" type="Object" />
+    <aura:attribute name="ShowComponent" type="boolean" default="false"/>
+    <!-- -->
+    
+    <force:recordData recordId="{!$SObjectType.CurrentUser.Id}"
+                      layoutType="FULL"
+                      fields="Profile.Name"
+                      targetFields="{!v.User}" 
+                      recordUpdated="{!c.handleUserUpdated}"/>
+    <aura:if isTrue="{!v.ShowComponent}">
+        <lightning:card>
+            
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto"  size="4">
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="4">
+                    
+                    <lightning:select aura:id="Upload" 
+                                      name="Upload" 
+                                      label="{!$Label.c.Type_of_Upload}" 
+                                      onchange="{! c.onChange }"
+                                      variant = "label-inline"
+                                      > <!-- required="true" -->
+                        <option value="">{!$Label.c.chooseone}</option>
+                        <aura:if isTrue="{!v.ShowOption}">
+                            <option value="SDC">{!$Label.c.Sales_District_Cost}</option>
+                            <option value="MV">{!$Label.c.Market_Variation}</option>
+                        </aura:if>
+                        <option value="DM">{!$Label.c.Discount_Matrix}</option>
+                        <option value="CCF">{!$Label.c.Customer_Conversion_Factor}</option>                                    
+                    </lightning:select>
+                    
+                    <ui:outputText aura:id="ErrorType" class="error-text slds-hide"  value="{!$Label.c.CompleteThisField}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="4"> 
+                    <aura:if isTrue="{!v.ShowSampleTemplate}">
+                        <a href="{!v.doc}" >{!$Label.c.Sample_Template}</a>
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto"  size="4">
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" size="4">
+                    <lightning:input aura:id="fileId" 
+                                     type="file" 
+                                     name="file" 
+                                     multiple="false" 
+                                     onchange="{!c.fileSelected}"/> 
+                    <aura:if isTrue="{!v.ShowFileName}">
+                        <ui:outputText aura:id="filename" value="{!v.FileName}"></ui:outputText>
+                    </aura:if>
+                    <ui:outputText aura:id="ErrorFile" class="error-text slds-hide"  value="{!$Label.c.CompleteThisField}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="4">           
+                    
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto"  size="5" >
+                    
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="2" >
+                    <lightning:button label="{!$Label.c.UploadButton}" 
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.onFileUploaded}"/>   
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="5" >
+                    
+                </lightning:layoutItem>
+            </lightning:layout>
+            
+            
+            
+        </lightning:card>
+    </aura:if>
+</aura:component>

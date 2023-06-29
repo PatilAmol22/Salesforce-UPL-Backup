@@ -1,0 +1,576 @@
+<template>
+    <div style="height:120px;width:100%;background-color:rgb(31, 48, 69);text-align:center;font-size:x-large;color:white;padding-top:10px;">
+        
+    </div>
+    <div style="margin-left:13px;margin-right:13px;">
+    <lightning-accordion allow-multiple-sections-open class="example-accordion slds-grid slds-gutters"
+        active-section-name={activeSections}>
+        <lightning-accordion-section name="Caller Info" label="Caller Info" style="background-color: rgb(250, 246, 246);">
+
+            <lightning-layout multiple-rows style="color:black !important;background-color: white ">
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+                    <template if:true={unRegReqFlag}>
+                        <lightning-combobox name="Caller Type" label="Caller Type" value={callerType} class="validate"
+                            options={callerTypeOptions} onchange={handleCallerDetails} placeholder="--None--" required={unRegReqFlag}>
+                        </lightning-combobox>
+                    </template>
+                    <lightning-combobox name="Contact Origin" label="Contact Origin" value={contactOrigin} class="validate"
+                        options={contactOriginOptions} onchange={handleCallerDetails} placeholder="--None--" required>
+                    </lightning-combobox>
+                </lightning-layout-item>
+                <template if:true={unRegReqFlag}>
+                    <template if:true={callerDetailInfoFlag}>
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                            large-device-size="4">
+                            <lightning-input type="text" label="Caller Name" value={callerName} class="validate"
+                                onchange={handleCallerDetails} required={callerDetailInfoFlag}></lightning-input>
+                            <lightning-input type="text" label="Caller Mobile" value={mobileNum} pattern="[0-9]{10}" message-when-pattern-mismatch="Number should be 10 digits" class="validate"
+                                onchange={handleCallerDetails} required={callerDetailInfoFlag}></lightning-input>
+                        </lightning-layout-item>
+                    </template>
+                </template>
+            </lightning-layout>
+
+        </lightning-accordion-section>
+
+
+        <lightning-accordion-section name="Account" label="Account" style="background-color: rgb(250, 246, 246);">
+
+
+            <div>
+                <lightning-layout style="background-color: white;">
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+
+                        <lightning-combobox name="Record Type" label="Record Type" value={recordType} class="validate"
+                            options={recordTypeOptions} onchange={handleRecordTypeChange} placeholder="--None--"
+                            disabled={disableAccRecType}>
+                        </lightning-combobox>
+
+
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+
+            <template if:true={accountDetailFlag}>
+                <div>
+                    <lightning-layout multiple-rows style="background-color: white;">
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <template if:true={disableAccRecType}>
+                                <lightning-input type="text" label="Person Mobile" value={personMobile} disabled={disableAccRecType}>
+                                </lightning-input>
+                            </template>
+                            <template if:false={disableAccRecType}>
+                                <template if:true={isContactNumberRequired}>
+                                    <lightning-input type="text" label="Person Mobile" value={personMobile} pattern="[0-9]{10}"
+                                    message-when-pattern-mismatch="Number should be 10 digits" class="validate" onchange={handleAccountDetails}
+                                    required>
+                                </lightning-input>
+                                </template>
+                                <template if:false={isContactNumberRequired}>
+                                    <lightning-input type="text" label="Person Mobile" value={personMobile} pattern="[0-9]{10}"
+                                    message-when-pattern-mismatch="Number should be 10 digits" class="validate" onchange={handleAccountDetails}
+                                    >
+                                </lightning-input>
+                                </template>
+                               
+                            </template>
+                            <lightning-input type="text" label="Name" value={custName} onchange={handleAccountDetails} class="validate"
+                                placeholder="Name" required={unRegReqFlag}></lightning-input>
+
+
+                        </lightning-layout-item>
+
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <template if:true={prefLangFlag}>
+                                <lightning-combobox name="Preferred Language" label="Preferred Language" class="validate"
+                                    value={preferredLanguage} options={preferredLanguageOptions}
+                                    onchange={handleAccountDetails} placeholder="--None--" required={prefLangFlag}>
+                                </lightning-combobox>
+                            </template>
+                            <lightning-combobox name="Using smart phone" label="Using smart phone" class="validate"
+                                value={usingSmartPhone} options={optionForSmartphoneOrWhatsapp}
+                                onchange={handleAccountDetails} placeholder="--None--" required={unRegReqFlag}>
+                            </lightning-combobox>
+
+                            <lightning-combobox name="Using Whatsapp" label="Using Whatsapp" value={usingWhatsapp} class="validate"
+                                options={optionForSmartphoneOrWhatsapp} onchange={handleAccountDetails}
+                                placeholder="--None--" required={unRegReqFlag}>
+                            </lightning-combobox>
+
+                        </lightning-layout-item>
+
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+
+                            <lightning-record-edit-form object-api-name="Account" id="village">
+                                <template if:false={unRegReqFlag}>
+                                <lightning-input-field field-name="Village__c" value={village} 
+                                    onchange={handleVillageChange} required={unRegReqFlag}> </lightning-input-field>
+                                    <lightning-input-field field-name="India_state__c" value={state} 
+                                    onchange={handleStateChange} required={unRegReqFlag}> </lightning-input-field>
+                                    <lightning-input-field field-name="Pin_Code__c" value={pincode} 
+                                    onchange={handlePincodeChange} required={unRegReqFlag}> </lightning-input-field>
+                                </template>
+                   
+                                <template if:true={unRegReqFlag}>
+                                    <lightning-input-field field-name="Village__c" value={village} 
+                                        onchange={handleVillageChange} required={unRegReqFlag}> </lightning-input-field>
+                                        <lightning-input-field field-name="India_state__c" value={state} 
+                                        onchange={handleStateChange} > </lightning-input-field>
+                                   
+                                    <lightning-input-field field-name="Pin_Code__c" value={pincode} 
+                                    onchange={handlePincodeChange} > </lightning-input-field>
+                                </template>
+                                <!--<template if:true={akcFlag}>
+                                <lightning-input-field field-name="Distributor_Where_You_Buy_UPL_Products__c" value={distriProduct}
+                                    onchange={handleDistriProductChange}> </lightning-input-field>
+                                <lightning-input-field field-name="Distributor_Name__c" value={distriNameAcc}
+                                    onchange={handleDistriNameAccChange}> </lightning-input-field>
+                                </template>-->
+                                
+                            </lightning-record-edit-form>
+
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </template>
+
+        </lightning-accordion-section>
+
+        <!-- Case Fields-->
+        <lightning-accordion-section name="Case1" label="Case1" style="background-color: rgb(250, 246, 246);">
+
+            <lightning-layout multiple-rows style="background-color: white;">
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+
+                    <lightning-input type="text" label="Record Type" value={rectypeName} disabled=true class="validate">
+                    </lightning-input>
+                    <template if:true={test1}>
+                        <lightning-combobox name="Department" label="Department" value={department1} class="validate"
+                            options={departmentOptions1} onchange={handleDepartmentChanges1} placeholder="--None--"
+                            required>
+                        </lightning-combobox>
+
+                        <lightning-combobox name="Category" label="Category" value={category1} class="validate"
+                            options={categoryOptions1} onchange={handleCategoryChanges1} placeholder="--None--" required
+                            disabled={dField1}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Sub Category" label="Sub Category" value={subCategory1} class="validate"
+                            options={subCategoryOptions1} onchange={handleSubCategoryChanges1} placeholder="--None--"
+                            required disabled={dField2}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Reason For Call" label="Reason For Call" value={reasonForCall1} class="validate"
+                            options={reasonForCallOptions1} onchange={handleReasonForCallChanges1}
+                            placeholder="--None--" required disabled={dField3}>
+                        </lightning-combobox>
+                        <lightning-combobox name="QRC" label="QRC" value={qrc1} options={qrcOptions1} class="validate"
+                            onchange={handleQRCChanges1} placeholder="--None--" required disabled={dField4}>
+                        </lightning-combobox>
+                    </template>
+
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+
+                    <lightning-combobox name="Case Status" label="Case Status" value={caseStatus} class="validate"
+                        options={caseStatusOptions} onchange={handleCaseStatusChanges} placeholder="--None--" required>
+                    </lightning-combobox>
+                    <!--Added by Ishu Mittal for CR-APPS4721-->
+
+                    <lightning-combobox name="Case Issue Type" label="Issue Type - Template" value={caseIssueType} class="validate"
+                    options={caseIssueTypeOption} onchange={handleIssueTypeChanges} placeholder="--None--" >
+                </lightning-combobox>
+  
+                    <lightning-textarea name="Description" label="Description" class="validate" value={description1} onchange={handleDescChange1} required>
+
+                    </lightning-textarea>
+                    <template if:true={orderIdFlag1}>
+                        <lightning-input type="text" label="Order Number" value={ordNum1} onchange={handleOrdNumChange1} pattern="[0-9]{6}-[0-9]{9}$" message-when-pattern-mismatch="Please enter 16 character order number in format XXXXXX-XXXXXXXXX" class="validate"
+                                 required={orderIdFlag1}></lightning-input>
+                    </template>
+                    <template if:true={productListFlag1}>
+                        <lightning-combobox name="Product Name 1" label="Product Name 1" value={prodList11} onchange={handleProdListChange11} options={prodListOptions11} 
+                                 required={productListFlag1}></lightning-combobox>
+                        <lightning-combobox name="Product Name 2" label="Product Name 2" value={prodList12} onchange={handleProdListChange12} options={prodListOptions12} 
+                                 required={productListFlag1}></lightning-combobox>
+                    </template>
+                    <template if:true={stateHeadFlag1}>
+                        <lightning-combobox name="State Head 1" label="State Head" value={stateHead1} onchange={handleStateHeadChange1} options={stateHeadOptions1} 
+                                 required={stateHeadFlag1} class="validate"></lightning-combobox>
+                    </template>
+                    <template if:true={multibrandFlag1}>
+                        <lightning-combobox name="Multi-Brand Name1" label="Multi-Brand Name" value={brandName1} onchange={handleBrandNameChange1} options={brandNameOptions1} 
+                                 required={multibrandFlag1} class="validate"></lightning-combobox>
+                    </template>
+
+
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                large-device-size="4">
+                  <!--RITM0466996-Added by nandhini-To introduce Customer Related To field on Creation page-->
+                   
+                  <lightning-combobox name="customer Related to Status" label="Interaction Related To" value={customerRelatedTo} class="validate"
+                  options={interactionRelatedto} onchange={handlecustomerRelatedChange} placeholder="--None--" required>
+              </lightning-combobox>
+<template if:true={isPurchasedOrder}>
+              <lightning-combobox name="Purchased From " label="Purchased From" value={purchasedFrom} class="validate"
+              options={purchasedRelatedToOptions.values} onchange={handlePurchasedFromChange} placeholder="--None--" >
+          </lightning-combobox>
+          <lightning-input type="text" label="Order id" value={orderID} class="validate"
+          onchange={handleOrderIDDetails} >
+        </lightning-input>
+        <lightning-input type="text" label="Batch Number" value={BatchNumber} class="validate"
+        onchange={handleBatchNumberDetails} >
+        </lightning-input>
+    </template>
+
+                <template if:true={showComplaintSection}>
+                        <lightning-combobox name="Complaint Department" label="Complaint Department" class="validate" value={comDept1}
+                            options={comDeptOptions} onchange={handleComSectionChange} placeholder="--None--" required={showComplaintSection}
+                            disabled={dField9}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Complaint Category" label="Complaint Category" class="validate" value={comCat1}
+                            options={comCatOptions} onchange={handleComSectionChange} placeholder="--None--" required={showComplaintSection}
+                            disabled={dField10}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Complaint Sub category" label="Complaint Sub category" class="validate"
+                            value={comSubCat1} options={comSubCatOptions} onchange={handleComSectionChange}
+                            placeholder="--None--" required={showComplaintSection} disabled={dField11}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Complaint Reason for call" label="Complaint Reason for call" class="validate"
+                            value={comReason1} options={comReasonOptions} onchange={handleComSectionChange}
+                            placeholder="--None--" required={showComplaintSection} disabled={dField12}>
+                        </lightning-combobox>
+
+                    
+                </template>
+            </lightning-layout-item>
+            </lightning-layout>
+        </lightning-accordion-section>
+
+        <!--CheckBox For Product Recommentation-->
+
+        <template if:true={flagForCheckBox1}>
+            <lightning-accordion-section name="Product Recommendation Display1" label="Product Recommendation Display"
+                style="background-color: rgb(250, 246, 246);">
+                <lightning-layout style="background-color: white;">
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+                        <lightning-input type="checkbox" label="Show Product Recommendation"
+                            name="Show Product Recommendation1" onchange={handleCheckBoxChange1}></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-accordion-section>
+        </template>
+
+        <!--Product Recommentation-->
+
+        <template if:true={showProductRecommendation1}>
+            <lightning-accordion-section name="Product Recommendation1" label="Product Recommendation"
+                style="background-color: rgb(250, 246, 246);">
+                <div>
+                    <lightning-layout style="background-color: white;">
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+
+                            <lightning-combobox name="Product Type1" label="Product Type" value={productType1} class="validate"
+                                options={productTypeOptions1} onchange={handleProductChanges1} placeholder="--None--" required={showProductRecommendation1}>
+                            </lightning-combobox>
+
+
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <lightning-layout multiple-rows style="background-color: white;">
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+
+                        <lightning-combobox name="Product 1" label="Product 1" value={product1Val1} class="validate"
+                            options={product1Options1} onchange={handleProductChanges1} placeholder="--None--" required={showProductRecommendation1}
+                            disabled={dField5}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Dose 1" label="Dose 1" class="validate" value={dose1Val1} options={dose1Options1}
+                            onchange={handleProductChanges1} placeholder="--None--" required={showProductRecommendation1} disabled={dField7}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Measure 1" label="Measure 1" class="validate" value={measure1Val1}
+                            options={measure1Options1} onchange={handleProductChanges1} placeholder="--None--" required={showProductRecommendation1}>
+                        </lightning-combobox>
+
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+
+                        <lightning-combobox name="Product 2" label="Product 2" value={product2Val2}
+                            options={product2Options2} onchange={handleProductChanges1} placeholder="--None--"
+                            disabled={dField6}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Dose 2" label="Dose 2" value={dose2Val2} options={dose2Options2}
+                            onchange={handleProductChanges1} placeholder="--None--" disabled={dField8}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Measure 2" label="Measure 2" value={measure2Val2}
+                            options={measure2Options2} onchange={handleProductChanges1} placeholder="--None--">
+                        </lightning-combobox>
+
+                    </lightning-layout-item>
+
+                </lightning-layout>
+
+            </lightning-accordion-section>
+        </template>
+        
+        <template if:false={secondCase}>
+            <lightning-layout style="background-color: white">
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                            large-device-size="4">
+                        <lightning-button variant="brand" label="Add New Case" title="Add New Case" onclick={handleAddNewCase}
+                            class="slds-p-horizontal_small slds-float_left">
+                        </lightning-button>
+    
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+
+
+        <!--Second case-->
+        <template if:true={secondCase}>
+
+        <!-- Case Fields-->
+        <lightning-accordion-section name="Case2" label="Case2" style="background-color: rgb(250, 246, 246);">
+
+            <lightning-layout multiple-rows style="background-color: white;">
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+
+                    <lightning-input type="text" label="Record Type" class="validate" value={rectypeName} disabled=true>
+                    </lightning-input>
+                    <template if:true={test1}>
+                        <lightning-combobox name="Department" label="Department" value={department2} class="validate"
+                            options={departmentOptions1} onchange={handleDepartmentChanges2} placeholder="--None--"
+                            required>
+                        </lightning-combobox>
+
+                        <lightning-combobox name="Category" label="Category" value={category2} class="validate"
+                            options={categoryOptions2} onchange={handleCategoryChanges2} placeholder="--None--" required
+                            disabled={dField21}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Sub Category" label="Sub Category" value={subCategory2} class="validate"
+                            options={subCategoryOptions2} onchange={handleSubCategoryChanges2} placeholder="--None--"
+                            required disabled={dField22}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Reason For Call" label="Reason For Call" value={reasonForCall2} class="validate"
+                            options={reasonForCallOptions2} onchange={handleReasonForCallChanges2}
+                            placeholder="--None--" required disabled={dField23}>
+                        </lightning-combobox>
+                        <lightning-combobox name="QRC" label="QRC" value={qrc2} options={qrcOptions2} class="validate"
+                            onchange={handleQRCChanges2} placeholder="--None--" required disabled={dField24}>
+                        </lightning-combobox>
+                    </template>
+
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+                
+                    <lightning-combobox name="Case Status" label="Case Status" value={caseStatus2} class="validate"
+                        options={caseStatusOptions} onchange={handleCaseStatusChanges2} placeholder="--None--" required>
+                    </lightning-combobox>
+                     <!--Added by Ishu Mittal for CR-APPS4721-->
+                    <lightning-combobox name="Case Issue Type" label="Issue Type - Description" value={caseIssueType1} class="validate"
+                    options={caseIssueTypeOption} onchange={handleIssueTypeChanges1} placeholder="--None--" >
+                </lightning-combobox>
+
+                    <lightning-textarea name="Description" label="Description" class="validate" value={description2}
+                        onchange={handleDescChange2} required>
+                
+                    </lightning-textarea>
+                    <template if:true={orderIdFlag2}>
+                        <lightning-input type="text" label="Order Number" value={ordNum2} onchange={handleOrdNumChange2} pattern="[0-9]{6}-[0-9]{9}$" message-when-pattern-mismatch="Please enter 16 character order number in format XXXXXX-XXXXXXXXX"
+                            class="validate" required={orderIdFlag2}></lightning-input>
+                    </template>
+                    <template if:true={productListFlag2}>
+                        <lightning-combobox name="Product Name 1" label="Product Name 1" value={prodList21} onchange={handleProdListChange21} options={prodListOptions21} 
+                                 required={productListFlag2}></lightning-combobox>
+                        <lightning-combobox name="Product Name 2" label="Product Name 1" value={prodList22} onchange={handleProdListChange22} options={prodListOptions22} 
+                                 required={productListFlag2}></lightning-combobox>
+                    </template>
+                    <template if:true={stateHeadFlag2}>
+                        <lightning-combobox name="State Head 2" label="State Head" value={stateHead2} onchange={handleStateHeadChange2} options={stateHeadOptions2} 
+                                 required={stateHeadFlag2} class="validate"></lightning-combobox>
+                    </template>
+                    <template if:true={multibrandFlag2}>
+                        <lightning-combobox name="Multi-Brand Name2" label="Multi-Brand Name" value={brandName2} onchange={handleBrandNameChange2} options={brandNameOptions2} 
+                                 required={multibrandFlag2} class="validate"></lightning-combobox>
+                    </template>
+
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                large-device-size="4">
+                <!--RITM0466996-Added by nandhini-To introduce Customer Related To field on Creation page-->
+                <lightning-combobox name="customer Related to Status" label="Interaction Related To" value={customerRelatedTo2} class="validate"
+                options={interactionRelatedto2} onchange={handlecustomerRelatedChange2} placeholder="--None--" required>
+                </lightning-combobox>
+                <template if:true={isPurchasedOrder1}>
+                <lightning-combobox name="Purchased From " label="Purchased From" value={purchasedFrom2} class="validate"
+                options={purchasedRelatedToOptions.values} onchange={handlePurchasedFromChange2} placeholder="--None--" >
+            </lightning-combobox>
+            <lightning-input type="text" label="Order id" value={orderID2} class="validate"
+            onchange={handleOrderIDDetails2} >
+          </lightning-input>
+          <lightning-input type="text" label="Batch Number" value={BatchNumber2} class="validate"
+          onchange={handleBatchNumberDetails2} ></lightning-input>
+        </template>
+                <template if:true={showComplaintSection2}>
+                     <lightning-combobox name="Complaint Department" label="Complaint Department" value={comDept2} class="validate"
+                            options={comDeptOptions2} onchange={handleComSectionChange2} placeholder="--None--" required={showComplaintSection2}
+                            disabled={dField9}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Complaint Category" label="Complaint Category" value={comCat2} class="validate"
+                            options={comCatOptions2} onchange={handleComSectionChange2} placeholder="--None--" required={showComplaintSection2}
+                            disabled={dField210}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Complaint Sub category" label="Complaint Sub category" class="validate"
+                            value={comSubCat2} options={comSubCatOptions2} onchange={handleComSectionChange2}
+                            placeholder="--None--" required={showComplaintSection2} disabled={dField211}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Complaint Reason for call" label="Complaint Reason for call" class="validate"
+                            value={comReason2} options={comReasonOptions2} onchange={handleComSectionChange2}
+                            placeholder="--None--" required={showComplaintSection2} disabled={dField212}>
+                        </lightning-combobox>
+
+                    
+                </template>
+            </lightning-layout-item>
+            </lightning-layout>
+        </lightning-accordion-section>
+
+        <!--CheckBox For Product Recommentation-->
+
+        <template if:true={flagForCheckBox2}>
+            <lightning-accordion-section name="Product Recommendation Display1" label="Product Recommendation Display"
+                style="background-color: rgb(250, 246, 246);">
+                <lightning-layout style="background-color: white;">
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+                        <lightning-input type="checkbox" label="Show Product Recommendation"
+                            name="Show Product Recommendation1" onchange={handleCheckBoxChange2}></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-accordion-section>
+        </template>
+
+        <!--Product Recommentation-->
+
+        <template if:true={showProductRecommendation2}>
+            <lightning-accordion-section name="Product Recommendation1" label="Product Recommendation"
+                style="background-color: rgb(250, 246, 246)">
+                <div>
+                    <lightning-layout style="background-color: white;">
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+
+                            <lightning-combobox name="Product Type2" label="Product Type" value={productType2} class="validate"
+                                options={productTypeOptions1} onchange={handleProductChanges2} placeholder="--None--" required={showProductRecommendation2}>
+                            </lightning-combobox>
+
+
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <lightning-layout multiple-rows style="background-color: white;">
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+
+                        <lightning-combobox name="Product 1" label="Product 1" value={product1Val12} class="validate"
+                            options={product1Options2} onchange={handleProductChanges2} placeholder="--None--" required={showProductRecommendation2}
+                            disabled={dField25}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Dose 1" label="Dose 1" class="validate" value={dose1Val12} options={dose1Options2}
+                            onchange={handleProductChanges2} placeholder="--None--" required={showProductRecommendation2} disabled={dField27}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Measure 1" label="Measure 1" class="validate" value={measure1Val12}
+                            options={measure1Options2} onchange={handleProductChanges2} placeholder="--None--" required={showProductRecommendation2}>
+                        </lightning-combobox>
+
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+
+                        <lightning-combobox name="Product 2" label="Product 2" value={product2Val22}
+                            options={product2Options1} onchange={handleProductChanges2} placeholder="--None--"
+                            disabled={dField26}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Dose 2" label="Dose 2" value={dose2Val22} options={dose2Options1}
+                            onchange={handleProductChanges2} placeholder="--None--" disabled={dField28}>
+                        </lightning-combobox>
+                        <lightning-combobox name="Measure 2" label="Measure 2" value={measure2Val22}
+                            options={measure2Options1} onchange={handleProductChanges2} placeholder="--None--">
+                        </lightning-combobox>
+
+                    </lightning-layout-item>
+
+                </lightning-layout>
+
+            </lightning-accordion-section>
+        </template>
+        </template>
+
+        <!--Buttons-->
+
+        <lightning-layout style="background-color: white;">
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="4">
+                    <template if:true={secondCase}>
+                    <lightning-button variant="brand" label="Remove Case 2" title="Remove Case 2" onclick={handleRemoveCase2}
+                        class="slds-p-horizontal_small slds-float_left">
+                    </lightning-button>
+                    </template>
+
+            </lightning-layout-item>
+            
+            <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                        large-device-size="8">
+                    <lightning-button variant="success" label="Save Cases" title="Save Cases" onclick={handleSaveCases}
+                        class="slds-p-horizontal_small slds-float_right">
+                    </lightning-button>
+                    <lightning-button variant="brand" label="Cancel" title="Cancel" onclick={handleCancel}
+                        class="slds-p-horizontal_small slds-float_right">
+                    </lightning-button>
+                    
+
+            </lightning-layout-item>
+
+        </lightning-layout>
+
+
+
+    </lightning-accordion>
+    <div style="height:120px;">
+    </div>
+    </div>
+    <template if:true={showSpinner}>
+
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+
+    </template>
+</template>

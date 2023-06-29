@@ -1,0 +1,24 @@
+.THIS label {
+   font-weight:600;
+}
+.THIS .btnClass{
+   padding: 5px 10px 5px 15px;
+    text-align:center;
+    margin-right:10px;
+    margin-left:22px;
+    
+}
+.THIS .actionClass{
+    width: 100px;
+    text-align: center;
+}
+
+.THIS .netPriceClass{
+    width: 130px;
+     margin-left:10px;
+    
+}
+
+.THIS .finalPriceClass{
+    width: 100px;
+}

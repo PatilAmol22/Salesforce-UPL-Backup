@@ -1,0 +1,42 @@
+<template>
+    <div style = "background:white;padding-left:10px;padding-right:10px;" class="slds-is-relative">
+        <div if:true={showSpinner}>
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+        <div if:false={showSpinner}>
+            <div if:true={processDataF}>
+                <h2 id="element-with-table-label" class="slds-text-heading_medium slds-m-bottom_xx-small">Pending Return Sales Order Approvals</h2>
+                <div class="slds-theme_inverse slds-theme_alert-texture slds-border_top slds-border_right slds-border_bottom slds-border_left" if:false={pendingApproval}>No pending approvals found!</div>
+                <div if:true={pendingApproval}>
+                <lightning-layout>
+                    <lightning-layout-item size="2" class=" slds-theme_inverse slds-theme_alert-texture slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-small"><b>Return Sales Order</b></lightning-layout-item>
+                    <lightning-layout-item size="1" class=" slds-theme_inverse slds-theme_alert-texture slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-small"><b>Status</b></lightning-layout-item>
+                        <lightning-layout-item size="2" class=" slds-theme_inverse slds-theme_alert-texture slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-small"><b>Submitter</b></lightning-layout-item>
+                            <lightning-layout-item size="2" class="  slds-theme_inverse slds-theme_alert-texture slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-small"><b>Comments</b></lightning-layout-item>
+                                <lightning-layout-item size="2" class=" slds-theme_inverse slds-theme_alert-texture slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-small"><b>Current Comments</b></lightning-layout-item>
+                                    <lightning-layout-item size="3" class=" slds-theme_inverse slds-theme_alert-texture slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-small"></lightning-layout-item>
+                </lightning-layout>
+                <template for:each={processDataF} for:item="aa">
+
+                    <lightning-layout key={aa.rsoId}>
+                        <lightning-layout-item size="2" class={aa.theme} padding="horizontal-small"><a href={aa.nav} target="_blank">{aa.rsoName}</a></lightning-layout-item>
+                        <lightning-layout-item size="1" class={aa.theme} padding="horizontal-small">{aa.status}</lightning-layout-item>
+                            <lightning-layout-item size="2" class={aa.theme} padding="horizontal-small">{aa.subName}</lightning-layout-item>
+                                <lightning-layout-item size="2" class={aa.theme} padding="horizontal-small">{aa.comment}</lightning-layout-item>
+                                    <lightning-layout-item size="2" class={aa.theme} padding="horizontal-small">
+                                        <template if:true={aa.disable}>  {aa.newComment}</template>
+                                        <template if:false={aa.disable}><lightning-input variant="label-hidden" type="text" data-target-id={aa.rsoName}  onchange={handleText}></lightning-input></template>
+                                    </lightning-layout-item>
+                                        <lightning-layout-item size="3" class={aa.theme} padding="horizontal-small">
+                                            <template if:true={aa.disable}>    <lightning-button variant="brand-outline" disabled label="Approve" title={aa.rsoName} onclick={handleClick} class="slds-m-left_x-small"></lightning-button><lightning-button variant="destructive-text" label="Reject" disabled title={aa.rsoName} onclick={handleClick} class="slds-m-left_xx-small"></lightning-button></template>
+                                            <template if:false={aa.disable}><lightning-button variant="success"  label="Approve" title={aa.rsoName} onclick={handleClick} class="slds-m-left_x-small"></lightning-button><lightning-button variant="destructive" label="Reject"  title={aa.rsoName} onclick={handleClick} class="slds-m-left_xx-small"></lightning-button></template>
+                                        
+                                        </lightning-layout-item>
+                    </lightning-layout>
+                </template></div>
+            </div>
+        </div>
+        </div>
+</template>

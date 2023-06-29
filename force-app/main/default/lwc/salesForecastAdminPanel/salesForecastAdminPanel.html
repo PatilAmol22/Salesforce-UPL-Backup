@@ -1,0 +1,43 @@
+<template>        
+    <div class="slds" style="background:#fff;">
+      <h1 style="color:#000; font-weight:normal; font-size:18px; padding:10px 3px 3px 3px; margin:5px 0 10px 10px;"
+            class="slds-m-bottom_medium">{label.SalesForecastingAdmin}
+      </h1>
+        <div style="background:#fff; margin:0; padding:10px; border:1px solid #cce4f8;">
+            <lightning-tabset variant="scoped" active-tab-value="one">
+                <lightning-tab onactive={handleOnActivePBM} label={label.PriceBookManagement} value="one">
+                    <c-pb-management></c-pb-management>
+ 
+                </lightning-tab>
+
+
+                <lightning-tab onactive={handleOnActive} label={label.ForecastManagement} value="two">
+                    
+                    <c-sales-forecast></c-sales-forecast>
+                   
+                </lightning-tab>
+
+                <lightning-tab label={label.ForecastSettings} value="three">
+                    
+                
+                <c-sales-forecast-setting></c-sales-forecast-setting>
+
+                </lightning-tab>
+
+
+                <lightning-tab onactive={handleOnActiveBU} label={label.BudgetUpload} value="four">
+                    <c-budget-upload></c-budget-upload>
+                </lightning-tab>
+
+                <lightning-tab onactive={handleOnActivePC} label={label.PrentChildMapping} value="five">
+                    <c-parent-child-sku-mapping></c-parent-child-sku-mapping>
+                </lightning-tab>
+
+                <lightning-tab onactive={handleOnActiveUM} label={label.UpdateMetrics} value="six">
+                    <c-update-sales-agreement-metrics></c-update-sales-agreement-metrics>
+                </lightning-tab>
+
+            </lightning-tabset>
+        </div>
+    </div>
+</template>

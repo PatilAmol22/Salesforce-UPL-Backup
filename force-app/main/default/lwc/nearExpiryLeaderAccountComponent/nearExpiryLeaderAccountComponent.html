@@ -1,0 +1,73 @@
+<template>
+    <br/><br/>
+    <template if:true={isSpinner}>
+        <div class="spinner">
+            <lightning-spinner class="slds-is-fixed" alternative-text="Loading" variant="brand" size="medium"></lightning-spinner>
+        </div>
+    </template>
+    <div class="list-title componentNotoSansMedium"><span>Detalles de la cuenta</span></div> 
+    <template if:false={isSpinner}>
+        <div if:false={checkexternaluser} class="slds-m-bottom_large component-block">
+            <div class="slds-grid slds-wrap slds-p-bottom_medium"> 
+                <div class="Year slds-col slds-x-small-size_12-of-12 slds-small-size_6-of-12 slds-medium-size_4-of-12 slds-large-size_3-of-12 slds-size_6-of-12 slds-p-left_small slds-p-right_small">
+                    <lightning-input name="enter-search"
+                    placeholder={ArSearchLabel} 
+                    value = {searchKeyBar}
+                    type="search"
+                    class="slds-col margin-mob"
+                    onchange = {onChangeSearch}>
+                </lightning-input>
+                </div>
+                <div class="slds-col slds-x-small-size_12-of-12 slds-small-size_4-of-12 slds-medium-size_3-of-12 slds-large-size_2-of-12 slds-size_12-of-12 slds-p-right_small mobButtoncss">
+                    <button class={buttonClass1} disabled={disableButton1} onclick={handleCustomerData}>Obtener registros</button>
+            </div>
+            </div>
+        </div>
+        <div if:true={isSuccessArData} class="slds-grid slds-wrap slds-border_right slds-border_left slds-border_bottom slds-border_top infobgcss slds-m-bottom_medium slds-p-around_medium">
+            <div class = "slds-col slds-x-small-size_12-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 inforightborder">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                        <div class="">Número de cliente:</div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                        <div class="componentNotoSansBold">{CustomerCode}</div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                        <div class="">Nombre:</div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                        <div class="componentNotoSansBold">{CustomerName}</div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                        <div class="">Ejecutivo de Cobranza:</div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                        <div class="componentNotoSansBold">{customerServiceExecutive}</div>
+                    </div>
+                </div>
+            </div>
+            <div class = "slds-col slds-x-small-size_12-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 infopaddingright">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                        <div class="">Ciudad:</div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                        <div class="componentNotoSansBold">{City}</div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <div class="">Zona:</div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <div class="componentNotoSansBold">{customerZone}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div if:false={isSuccessArData}>
+            <div if:true={checkexternaluser}>
+                 <p class="slds-text-align_center nodatacss" style="background-color: white;">{errorMessage}</p>
+            </div>
+        </div>
+
+     </template>
+</template>

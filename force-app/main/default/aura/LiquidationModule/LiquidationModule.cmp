@@ -1,0 +1,260 @@
+<aura:component controller="LiquidationModuleController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <!-- Attribute -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="FileName" type="string" />
+    <aura:attribute name="doc" type="string" />
+    <aura:attribute name="myEnterSearch" type="string" />
+    <aura:attribute name="today" type="Date" />
+     <aura:attribute name="min" type="Date" />
+     <aura:attribute name="max" type="Date" />
+    <aura:attribute name="LiquidationType" type="List" />
+    <aura:attribute name="LiquidationMonth" type="List" />
+    <aura:attribute name="FinancialYear" type="List" />
+    <aura:attribute name="salesSelected" type="Boolean" default="false"/>
+    <aura:attribute name="inventorySelected" type="Boolean" default="false"/>
+    <aura:attribute name="issearching"    type="Boolean" default="false"/>
+    <aura:attribute name="distributorEmpty" type="Boolean" default="false"/>
+    <aura:attribute name="yearInvalid" type="Boolean" default="false"/>
+    <aura:attribute name="monthInvalid" type="Boolean" default="false"/>
+    <aura:attribute name="monthFuture" type="Boolean" default="false"/>
+    <aura:attribute name="dateInvalid" type="Boolean" default="false"/>
+    <aura:attribute name="accounts" type="List" />
+    <aura:attribute name="filterList" type="List" />
+    <aura:attribute name="finyear" type="String" />
+    <aura:attribute name="selectmonth" type="String" />
+    
+    <aura:attribute name="results" type="List" />
+    <aura:attribute name="openDropDown" type="Boolean" default="false" />
+    <aura:attribute name="selectedOption" type="String" />
+    <aura:attribute name="inputValue" type="String" />
+    <aura:attribute name="inputSearchFunction" type="Object" />
+    <!-- ends --> 
+    <body class="bgColor">
+        <ui:outputText aura:id="Success" class="slds-align_absolute-center success-text slds-hide"  value="Update Successful"></ui:outputText>    
+        <ui:outputText aura:id="selectfile" class="slds-align_absolute-center error-text slds-hide"  value="{!$Label.c.SICerrorfile}"></ui:outputText>
+        <br />
+        <br />
+        <div class="slds-tabs_default">
+            <ul class="slds-tabs_default__nav" role="tablist">
+                <li class="slds-tabs_default__item slds-is-active" title="File Upload" role="presentation">
+                    <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">File Upload</a>
+                </li>
+            </ul>
+            <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                <lightning:layout>
+                    <lightning:layoutItem flexibility="auto"  size="1">
+                        &nbsp;
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="2">
+                        
+                        <lightning:select aura:id="liquidationselect" name="liquidationselect" label="Liquidation Type" required="true" onchange="{! c.onSelectchange}">
+                            <option text="Select" value="Select"/>
+                            <aura:iteration items="{!v.LiquidationType}" var="type">
+                                <option text="{!type}" value="{!type}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                        
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="1">
+                        &nbsp; 
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="3">
+                        
+                        
+                        <aura:if isTrue="{!or(v.salesSelected,v.inventorySelected)}">  
+                            <div class="slds-form-element slds-has-error">
+                                <label class="slds-form-element__label" for="combobox-id-21">Distributor</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-combobox_container">
+                                        <div class="{! v.openDropDown ? 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open' : 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click'}"
+                                             aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                                <input type="text" label="Distributor"
+                                                       class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value"
+                                                       id="combobox-id-21" aria-autocomplete="list" aria-controls="listbox-id-11"
+                                                       autoComplete="off" onkeyup="{!c.searchHandler}" role="textbox" placeholder="Search..."
+                                                       value="{!v.inputValue}" required="true"/>
+                                                <aura:if isTrue="{! empty(v.selectedOption)}">
+                                                    <span
+                                                          class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                                        <lightning:icon iconName="utility:search" size="x-small" />
+                                                    </span>
+                                                    <aura:set attribute="else">
+                                                        <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+                                                                title="Clear the text input" onclick="{!c.clearOption}">
+                                                            <lightning:icon iconName="utility:clear" size="x-small" />
+                                                        </button>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+                                            <div id="listbox-id-11" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                                                 role="listbox">
+                                                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                    <aura:iteration items="{!v.results}" var="result">
+                                                        <li role="presentation" class="slds-listbox__item" data-id="{!result.id}"
+                                                            data-value="{!result.value}" onclick="{!c.optionClickHandler}">
+                                                            <div id="{!result.id}"
+                                                                 class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                                                 role="option">
+                                                                <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                                                <span class="slds-media__body">
+                                                                    <span class="slds-truncate" >
+                                                                        <span>{!result.value}</span>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                    </aura:iteration>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.distributorEmpty}">
+                                    <div class="slds-form-element__help">
+                                        Please select a distributor
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <aura:set attribute="else">
+                                <lightning:input
+                                                 aura:id="enter-search"
+                                                 name="Search Accounts"
+                                                 label="Distributor"
+                                                 type="search"
+                                                 value="{!v.myEnterSearch}"
+                                                 disabled="true"
+                                                 />  
+                            </aura:set>
+                        </aura:if> 
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="1">
+                        &nbsp; 
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="2">
+                        <aura:if isTrue="{!v.salesSelected}">  
+                            <lightning:select aura:id="liquidationfinyear" name="liquidationfinyear" label="Financial Year" onchange="{! c.onYearSelectchange}">
+                                <option text="Select" value="Select"/>
+                                <aura:iteration items="{!v.FinancialYear}" var="year">
+                                    <option text="{!year}" value="{!year}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                             <aura:if isTrue="{!v.yearInvalid}">
+                                <div class="slds-form-element__help">
+                                    <span class="error-msg">Please select a valid year</span>
+                                </div>
+                            </aura:if>
+                            <aura:set attribute="else">
+                                <lightning:select name="select" label="Financial Year" disabled="true">
+                                    <option text="Select" value="Select"/>
+                                    <aura:iteration items="{!v.FinancialYear}" var="year">
+                                        <option text="{!year}" value="{!year}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:set>
+                        </aura:if>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="1">
+                        &nbsp; 
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem flexibility="auto"  size="1">
+                        &nbsp; 
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="2">
+                        <aura:if isTrue="{!v.salesSelected}"> 
+                            <lightning:select aura:id="liquidationcurrentMonth" name="liquidationcurrentMonth" label="Month" onchange="{! c.onMonthSelectchange}">
+                                <option text="Select" value="Select"/>
+                                <aura:iteration items="{!v.LiquidationMonth}" var="month">
+                                    <option text="{!month}" value="{!month}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:if isTrue="{!v.monthInvalid}">
+                                <div class="slds-form-element__help">
+                                    <span class="error-msg">Please select a valid Month</span>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.monthFuture}">
+                                <div class="slds-form-element__help">
+                                    <span class="error-msg">Month cannot be in the future</span>
+                                </div>
+                            </aura:if>
+                            <aura:set attribute="else">
+                                <lightning:select name="select" label="Month" disabled="true">
+                                    <option text="Select" value="Select"/>
+                                    <aura:iteration items="{!v.LiquidationMonth}" var="month">
+                                        <option text="{!month}" value="{!month}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:set>
+                        </aura:if>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="1">
+                        &nbsp; 
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="3">
+                        <aura:if isTrue="{!v.inventorySelected}"> 
+                            <lightning:input type="date" aura:id='daterange' name="input2" label="Date" value="{!v.today}" onchange="{! c.onDatechange}" min="{!v.min}" max="{!v.max}"/>
+                            <aura:if isTrue="{!v.dateInvalid}">
+                                <div class="slds-form-element__help">
+                                    <span class="error-msg">Please select a valid Date</span>
+                                </div>
+                            </aura:if>
+                            <aura:set attribute="else">
+                                <lightning:input type="date" name="input2" label="Date" value="{!v.today}" disabled="true"/>
+                            </aura:set>
+                        </aura:if>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="5">
+                        &nbsp;
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem flexibility="auto"  size="2">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="3">
+                        <div class="slds-clearfix slds-p-top_x-large">
+                            <label class="slds-form-element__label slds-float_right"><aura:unescapedHtml value="Attach CSV"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="7">           
+                        <lightning:input aura:id="fileId" type="file" name="file" multiple="false" onchange="{!c.onFileUploaded}"/> 
+                        <ui:outputText aura:id="filename" class="slds-hide" value="{!v.FileName}"></ui:outputText>
+                        
+                    </lightning:layoutItem>
+                </lightning:layout>
+                
+                <br/>
+                <br/>
+                <!-- button-->  
+                <div class="slds-align_absolute-center">
+                    <lightning:button label="{!$Label.c.UploadButton}" 
+                                      variant="brand"
+                                      onclick="{!c.fileSelected}"/>   
+                </div>
+                <br/>
+                <br/> 
+            </div>
+            <lightning:accordion aura:id="accordion" activeSectionName="A">
+                <lightning:accordionSection name="A" label="Instructions for uploading CSV">
+                    <aura:set attribute="body">
+                        <p>&nbsp;&nbsp;=>File to be uploaded must be in CSV format.<br></br>
+                            &nbsp;&nbsp;=>Please follow the same column sequence as given in the template.<br></br>
+                            &nbsp;&nbsp;=>Please select all applicable filters before uploading file.<br></br>
+                            &nbsp;&nbsp;=>Download the template and upload the data.<br></br>
+                            &nbsp;&nbsp;=>Once the file gets uploaded, you will receive an email notification.</p>
+                    </aura:set>
+                </lightning:accordionSection>
+                <lightning:accordionSection name="B" label="CSV file template">
+                    &nbsp;&nbsp;<a href="{!v.doc}" >Liquidation Template</a> 
+                </lightning:accordionSection>
+            </lightning:accordion>
+            <br/><br/>
+        </div>
+        
+        
+        
+    </body>
+</aura:component>

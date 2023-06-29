@@ -1,0 +1,362 @@
+<template>
+      <div>
+      <!-- <img src={backgroundimage} style="height:113px; width: 100%; margin-top: -35px;">
+      <div class="text-section" >
+          <b>{title}</b>
+      </div> -->
+
+<!-- <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+           <header class="slds-modal__header" style="border: solid 1px black;">
+               <h1><b>Notification</b></h1>
+               </header>
+               <div class="slds-modal__content slds-p-around--medium" style="border: solid 1px black;">
+            <center><h2><b>Community is under maintenance and will be up tentatively by 20/1/2023</b></h2></center>
+        </div>
+        </div>
+</div> -->
+    <c-grz_header-image-cmp bgimg={backgroundimage} imglabel={title} customcss='top: 9%;'></c-grz_header-image-cmp>
+      
+      <div>
+        <c-grz_bread-crumb labelone='Sales Order Summary' labeltwo='Order Detail' linkone='/uplpartnerportal/s/salesordershome' linktwo=''>
+        </c-grz_bread-crumb>
+      </div>
+      <template for:each={finaldata} for:item="sales">
+        <div key={sales.Id} class="slds-grid">
+        <img  src={ordericon} class="slds-border_top slds-border_bottom slds-border_left slds-border_right" style="height:25px; width: 25px; 
+    margin-top: 15px; border-radius: 50%;">
+        <div  key={sales.Id} 
+      class="slds-text-title_bold slds-m-top_small slds-m-left_small slds-m-bottom_small componentNotoSansBold odr-size"><b>Order Number:  
+       <template if:true={sales.SAP_Order_Number__c}>
+         <span class="slds-p-left_xx-small">{sales.SAP_Order_Number__c}</span> 
+       </template>
+      <template if:false={sales.SAP_Order_Number__c}>
+         <span class="slds-p-left_xx-small">{salesorderName}</span>  
+      </template>
+        
+      </b>
+        </div>
+      </div>
+      
+      <!--<div  key={sales.Id} style="height: 60px;  background-color: white; font-size: 14px;" class="slds-grid 
+     slds-wrap slds-large-size_12-of-12 slds-border_top slds-m-bottom_x-large slds-border_bottom slds-border_left slds-border_right">
+        <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_2-of-12 slds-large-size_3-of-12 slds-p-top_medium slds-p-left_small slds-border_right">
+          <span class="greycol">Order Type: </span>
+          <template if:false={isbrazil}>
+            <template if:true={sales.Order_Type_lk__r}>
+              <b>{sales.Order_Type_lk__r.Name}</b>
+            </template>
+            <template if:false={sales.Order_Type_lk__r}>
+            
+            </template>
+          </template>
+          <template if:true={isbrazil}>
+           
+              <b>{sales.Type_of_Order__c}</b>
+           
+          </template>
+         
+         
+        </div>
+        <div class="slds-col slds-x-small-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_3-of-12 slds-p-top_medium slds-border_right" style="text-align: center; font-family: NotoSansRegular;">
+        <span class="greycol">Order Date: </span><b>
+          <lightning-formatted-date-time value={sales.CreatedDate} year="numeric" month="long" day="2-digit" class="">
+          </lightning-formatted-date-time>
+          </b>
+        </div>
+        <div class="slds-col slds-x-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-p-top_medium slds-border_right" style="text-align: center;  font-family: NotoSansRegular">
+        <span class="greycol">Current Order Status: </span> <b class="custompill">{sales.Order_Status__c}</b>
+        </div>
+        <template if:true={isbrazil}>
+          <div class="slds-col slds-p-top_medium slds-border_right" style="text-align: center;  font-family: NotoSansRegular">
+            <span class="greycol">Sold To Party: </span> <b>{sales.Sold_to_Party__r.name}</b>
+          </div>
+          <div class="slds-col slds-p-top_medium slds-border_right" style="text-align: center;  font-family: NotoSansRegular">
+            <span class="greycol">City: </span> <b>{sales.Brazil_City__c}</b>
+          </div>
+          <div class="slds-col slds-p-top_medium slds-border_right" style="text-align: center;  font-family: NotoSansRegular">
+            <span class="greycol">Currency: </span> <b>{sales.Currency_Brazil__c}</b>
+          </div>
+        </template>
+       
+        <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_2-of-12 slds-large-size_3-of-12 slds-p-top_medium" style="text-align: center;  font-family: NotoSansRegular">
+        <span class="greycol">Total: </span> <b>{sales.Total_Amount__c}</b>
+        </div>
+      </div>-->
+      <div key={sales.Id} class="cust-info-div shadoweffect">
+       <div class="one-block">
+          <!-- <div class="first-block">
+            <div class="cust-data-text">
+                <div class="lab-btn">totalinvoice:</div>
+            </div>
+            <div class="cust-data cust-data-mobile-1 componentNotoSansBold">
+              <template if:true={totalinvoice}>
+                <div class="lab-btn">{totalinvoice}</div>
+              </template>
+               
+            </div>
+        </div> -->
+        <div class="first-block">
+            <div class="cust-data-text">
+                <div class="lab-btn">Order Date:</div>
+            </div>
+            <div class="cust-data cust-data-mobile-1 componentNotoSansBold">
+                <div ><lightning-formatted-date-time value={sales.CreatedDate} year="numeric" month="long" day="2-digit" class=""></lightning-formatted-date-time></div>
+            </div>
+        </div>
+        <div class="second-block">
+          <div class="cust-data-text">
+            <div class="lab-btn">Current Order Status:</div>
+          </div>
+          <div class="cust-data cust-data-mobile-2 componentNotoSansBold">
+            <div class="lab-btn-green slds-m-right_x-small">{sales.Order_Status__c}</div>
+          </div>
+        </div>
+        </div>
+        <div class="two-block">
+         
+        <div class="third-block">
+          <div class="cust-data-text">
+              <div class="lab-btn">Total<br/>Without Taxes:</div>
+          </div>
+          <div class="cust-data cust-data-mobile-3 componentNotoSansBold">
+              <div class="lab-btn">INR {totalamt}</div>
+          </div>
+      </div>
+     
+      <div class="fourth-block">
+        <div class="cust-data-text">
+          <div class="lab-btn">Total<br/>With Taxes:</div>
+        </div>
+       
+        <div class="cust-data cust-data-mobile-4 componentNotoSansBold">
+          <template if:false={noinvoice}>
+          <div class="lab-btn">INR {totalinvoice}</div>
+          </template>
+          <template if:true={noinvoice}>
+            <div class="lab-btn">INR {totalamt}</div>
+          </template>
+        </div>
+      </div>
+     
+        </div>
+    </div>
+  </template>
+
+
+    <div>
+    <div class="xoverflow slds-border_right slds-m-bottom_x-large slds-border_left slds-border_bottom slds-p-right_large slds-border_top 
+    " style="background-color: white;">
+    <div style="font-size: medium; font-family: NotoSansLight;" class="slds-m-top_small slds-m-left_small slds-m-bottom_small">Products Detail</div>
+      
+    <table class="slds-m-left_small  slds-m-right_small slds-m-bottom_small table-width" >
+      
+                <thead class="componrntNotoSansMedium"  style="background-color: #f8f8f8; color: #888;">
+                  <tr >
+                    <th class=""  style="height: 35px; min-width: 100px" scope="col">
+                      <div class="slds-truncate" title="SKU Code">SKU Code</div>
+                    </th>
+                    <th class=""  scope="col" style="min-width: 60px">
+                      <div class="slds-truncate" title="Product Name">Product Name</div>
+                    </th>                   
+                    <th class=""   scope="col"  style="min-width: 100px">
+                      <div class="slds-truncate" title="Quantity">Quantity</div>
+                    </th>
+                    <th class=""   scope="col"  style="min-width: 100px">
+                      <div class="slds-truncate" title="UOM">UOM</div>
+                    </th>
+                    <th class=""  scope="col" style="min-width: 60px">
+                      <div class="slds-truncate" title="Value">Price (INR)</div>
+                    </th>
+                    <template if:true={isbrazil}>
+                      <th class="" scope="col"  style="min-width: 60px">
+                        <div class="slds-truncate" title="Unit Price">Unit Price</div>
+                      </th>
+                    </template>
+                   
+                    
+                      
+                  </tr>
+                </thead>
+          
+                <tbody>
+             <template for:each={lineitemdata} for:item="lineitem">
+                       
+                        <tr key={lineitem.Id} style="font-family: NotoSansRegular;" class="slds-border_bottom shadoweffect">
+                            <td style="height: 40px" class="table-body-css br-mobile-view">
+                                <div class="valPad valPad1 textoverflowcls" style="color: #F47920;"><template if:true={isScreen}><span class="titleSpan">SKU Code: </span> </template><span class="alignLeft">{lineitem.SKU_Code__c}</span></div>
+                            </td>
+                            <td style="height: 40px" class="table-body-css slds-m-bottom_small br-mobile-view">
+                                <div class="valPad valPad1 textoverflowcls"><template if:true={isScreen}><span class="titleSpan">Product Name: </span> </template><span class="alignLeft">{lineitem.ProductName__c}</span></div>
+                            </td>                              
+                            <td style="height: 40px" scope="col" class="table-body-css br-mobile-view">
+                                <div class="valPad valPad1 textoverflowcls"><template if:true={isScreen}><span class="titleSpan">Quantity: </span> </template><span class="alignLeft">{lineitem.Quantity__c}</span></div>
+                            </td>
+                            <td style="height: 40px" scope="col" class="table-body-css br-mobile-view">
+                                <div class="valPad valPad1 textoverflowcls"><template if:true={isScreen}><span class="titleSpan">UOM: </span> </template><span class="alignLeft">{lineitem.UOM__c}</span></div>
+                            </td>
+                            <td style="height: 40px" scope="col" class="table-body-css br-mobile-view">
+                              <div class="valPad valPad1 textoverflowcls"><template if:true={isScreen}><span class="titleSpan">Price (INR): </span> </template><span class="alignLeft">{lineitem.Value_Number__c}</span></div>
+                            </td>
+                            <template if:true={isbrazil}>
+                              <td style="height: 40px" scope="col" class="table-body-css br-mobile-view">
+                                <div class="valPad valPad1 textoverflowcls"><template if:true={isScreen}><span class="titleSpan">Unit Price: </span> </template><span class="alignLeft">{lineitem.Unit_Price__c}</span></div>
+                              </td>
+                            </template>
+                           
+                        </tr>
+                    
+                </template>
+                
+                </tbody>
+              </table>
+             
+              <div if:true={nodata}>
+                <p class="slds-text-align_center nodatacss" style="background-color: white;">No Products To Display
+                </p>
+              </div>
+             
+              </div>
+             
+              </div>
+              <div if:false={ready} class="slds-is-relative">
+                <lightning-spinner alternative-text="Loading..." variant="brand">
+                </lightning-spinner>
+              </div>
+             
+           <template if:true={showinvoices}>  
+          <div
+            class="xoverflow slds-border_right slds-m-bottom_x-large slds-border_left slds-border_bottom slds-p-right_large slds-border_top"
+            style="background-color: white;">
+            <div style="font-size: medium;  font-family: NotoSansLight;" class="slds-m-top_small slds-m-left_small slds-m-bottom_small">Invoice Details</div>
+        
+         
+            <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small table-width-2">
+          
+              <thead class="componrntNotoSansMedium"  style="background-color: #f8f8f8; color: #888; min-width: 20%;">
+                <tr>
+                 
+                  <th class="" scope="col" style="height: 35px">
+                    <div class="slds-truncate slds-p-left_small" title="Billing Doc Number">Billing Doc Number</div>
+                  </th>
+                  <th class="" scope="col" style="min-width: 123px">
+                    <div class="slds-truncate slds-p-left_small" title="Billing Date">Billing Date</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate slds-p-left_small" title="Total Amount">Total Amount <br/>(INR Including Taxes)</div>
+                  </th>
+                  <th class="" scope="col" style="min-width: 130px">
+                    <div class="slds-truncate slds-p-left_small" title="Action">Action</div>
+                  </th>
+                  <th class="" scope="col">
+                    <div class="slds-truncate slds-p-left_small" title="Acknowledge">Acknowledge</div>
+                  </th>
+                 
+          
+                </tr>
+              </thead>
+              
+              <template if:true={ready}>
+              <tbody>
+                <template if:true = {invoicesarray}>
+
+                
+              <template for:each={invoicesarray} for:item="invoice">
+          
+                  <tr key={invoice.Id} style="font-family: NotoSansRegular; " class="slds-border_bottom shadoweffect">
+                  
+                    <template if:true={invoice.cancelledboolean}>
+                      <td style="height: 40px; min-width: 20%;" class="slds-p-left_small table-body-css br-mobile-view1">
+                        <div class="valPad  textoverflowcls"><template if:true={isScreen}><span class="titleSpan">Billing Doc Number: </span> </template><span class="alignLeft">{invoice.BillingDocNumber} (Cancelled)</span></div>
+                      </td>
+                    </template>
+                    <template if:false={invoice.cancelledboolean}>
+                      <td style="height: 40px; min-width: 20%;" class="slds-p-left_small table-body-css br-mobile-view1">
+                        <div class="valPa textoverflowcls"><template if:true={isScreen}><span class="titleSpan">Billing Doc Number: </span> </template><span class="alignLeft">{invoice.BillingDocNumber}</span></div>
+                      </td>
+                    </template>
+                    
+                    <td style="height: 40px; min-width: 20%;" scope="col" class="slds-p-left_small table-body-css br-mobile-view1">
+                    <div class="valPad textoverflowcls"> 
+                      <template if:true={isScreen}><span class="titleSpan">Billing Date: </span> </template><span class="alignLeft">{invoice.BillingDate}</span>
+                    </div>
+                      
+                    </td>
+                    <td style="height: 40px ; min-width: 20%;" scope="col" class="slds-p-left_small table-body-css br-mobile-view1">
+                      <div class="valPad textoverflowcls"><template if:true={isScreen}><div style="float:left;line-height:initial;" class="titleSpan"><p>Total Amount</p><p>(INR Including Taxes): </p></div><div style="float:right;" class="alignLeft">{invoice.InvoiceTotalValue}</div> </template><template if:false={isScreen}><span class="alignLeft">{invoice.InvoiceTotalValue}</span></template></div>
+                    </td>
+                    <td style="height: 40px ; min-width: 20%;" scope="col" class="slds-p-left_small table-body-css br-mobile-view1">
+                    <div class="valPad textoverflowcls">
+
+                    <template if:true = {invoice.sfrecord}>
+
+                 
+                      <template if:true={invoice.invoicecontentdocid}>
+                        <template if:true={isScreen}><span class="titleSpan">Action: </span> </template><span class="alignLeft"><lightning-icon variant="Warning" title={invoice.invoicecontentdocname} icon-name="utility:download"  data-value={invoice.invoicecontentdocid}
+                          onclick={downloadinvoice} size="x-small" class="slds-p-left_small pointer">
+                        </lightning-icon></span>
+                      </template>
+                      <template if:false={invoice.invoicecontentdocid}>
+                        <template if:true={isScreen}><span class="titleSpan">Action: </span> </template><span class="alignLeft">
+                        <lightning-icon  title="No Download Available" icon-name="utility:download" 
+                           size="x-small" class="slds-p-left_small "
+                         >
+                        </lightning-icon>
+                        </span>
+                      </template>
+                       </template> </div>
+                    </td>
+                    <td style="height: 40px ; min-width: 20%;" scope="col" class="slds-p-left_small table-body-css br-mobile-view1">
+                      <div class="valPad textoverflowcls"> <template if:true={invoice.sfrecord}>
+
+                      <template if:true={invoice.ackcheckbox}>
+                       
+                        <!-- <button value={invoice.BillingDocNumber} onclick={handleAcknowledgment} class="slds-button slds-button_brand slds-button_icon slds-button_icon-border-filled " style="color:white ; pointer-events: none; background-color: green; border-color: grey; min-width: 54%;">
+                          <img src={acked} alt="Save icon" class="slds-p-right_xx-small " />
+                         
+                          Acknowledged
+                        </button> -->
+                        <template if:true={isScreen}><span class="titleSpan">Acknowledge: </span> </template><span class="alignLeft">
+                        <button value={invoice.BillingDocNumber} onclick={handleAcknowledgment}  class="slds-button slds-button_neutral blueBtn" style=" min-width: 41%;">
+                          <img src={acked} alt="Save icon" class="slds-p-right_small " />
+                          
+                          Acknowledged
+                         
+
+                        </button>
+                        
+                       </span>
+                      </template>
+                      <template if:true={isExternal}>
+                      <template if:false={invoice.ackcheckbox}>
+                        
+                        <button value={invoice.BillingDocNumber} onclick={handleAcknowledgment} class="slds-button slds-button_brand slds-button_icon slds-button_icon-border-filled" style="color:rgb(255, 115, 0); background-color: white;  border-color: grey; min-width: 70%;">
+                          <img src={notacked}  class="slds-p-right_small"/>
+                        
+                          Acknowledge
+                        </button>
+                      </template>
+                        </template>
+                         </template>
+                        </div>
+                    </td>
+                   
+          
+                  </tr>
+                </template>
+                </template>
+               
+                
+                </tbody>
+          </template>
+             
+            </table>
+            <div if:true={noinvoice}>
+              <p class="slds-text-align_center nodatacss" style="background-color: white;">No Invoices To Display
+              </p>
+            </div>
+          
+          </div>
+          </template>
+    </div>
+</template>

@@ -1,0 +1,31 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 01-10-2023
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <!--<lightning-quick-action-panel header="Contract Details">
+        <div if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." variant="brand"></lightning-spinner>
+        </div>
+    </lightning-quick-action-panel>-->
+
+    <!-- <lightning-quick-action-panel>  -->
+
+        <div if:true={isLoading} class="demo-only demo-only_viewport slds-m-vertical_small" style="height:6rem;position:relative">
+          
+            <div role="status" class="slds-spinner slds-spinner_medium">
+              <span class="slds-assistive-text">Loading</span>
+              <div class="slds-spinner__dot-a"></div>
+              <div class="slds-spinner__dot-b"></div>
+              <p  style="transform: translate(-32%, -50%) rotate(-90deg);width: 320px;text-align: center;"><b>{loadingmessage}</b></p>
+            </div>
+           
+        </div>
+
+      <lightning-progress-bar class="slds-m-top_small" variant="circular" value={progress}></lightning-progress-bar>
+
+
+</template>

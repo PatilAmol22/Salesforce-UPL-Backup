@@ -1,0 +1,18 @@
+<aura:component access="global"
+                implements="forceCommunity:availableForAllPageTypes,force:appHostable,force:hasRecordId,lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasSObjectName,force:lightningQuickAction">
+    
+    
+    
+    
+    <div class="slds-grid slds-wrap" style="background:#fff; margin-bottom:5px; padding:0; border-radius:5px 5px 0 0;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+            <!-- <span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px; margin-left:10px;">
+                    <lightning:icon iconName="standard:case" style="background:#34b59d;" alternative-text="note" size="medium"/>
+                </span> -->
+            <div class="titleregular" style="float:left; margin:8px; font-size:36px;">
+                <span class="slds-page-header_title" title="">{!$Label.c.Dashboard}
+</span>
+            </div>
+        </div>  
+    </div>    
+</aura:component>

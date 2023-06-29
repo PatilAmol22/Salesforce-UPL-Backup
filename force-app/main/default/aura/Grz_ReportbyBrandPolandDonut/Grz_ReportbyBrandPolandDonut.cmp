@@ -1,0 +1,139 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="Grz_ReportbyBrandPolandDonutController" access="global" >
+    
+    <aura:handler name="MultiSelectComboboxEvent" event="c:MultiSelectComboboxEvent" action="{!c.handleComponentEvent}"/>
+    
+    <aura:attribute name="ChartList" type="object"/>
+    <aura:attribute name="creditList" type="Object"/>
+    <aura:attribute name="SalesOrgPicklist" type="Object"/>
+    <aura:attribute name="response" type="Object"/>
+    <aura:attribute name="MetaMapping" type="Object"/>
+    <aura:attribute name="chartChile" type="Object"/>
+    <aura:attribute name="isInternal" type="boolean" default = "false"/>
+    <aura:attribute name="isChile" type="boolean" default="false"/>
+    <aura:attribute name="cusNumber" type="String"/>
+    <aura:attribute name="chart" type="Object"/>
+    <aura:attribute name="SalesOrgDefaultVal" type="String"/>
+    <aura:attribute name="CreditDetailList" type="List"/>
+    
+    <aura:attribute name="yearOptionRemoveCurrent" type="List"/>
+    <aura:attribute name="yearValue" type="String"/>
+    <aura:attribute name="currentYear" type="String"/>
+    
+    <aura:attribute name="MonthValue" type="String"/>
+    
+    <aura:attribute name="Months" type="List"/>
+    
+    <aura:attribute name="SelectedDisList" type="List"/>
+    
+    <aura:attribute name="SubmitMonths" type="boolean" default = "false"/>
+    
+    <aura:attribute name="showData" type="List"/>
+    <aura:attribute name="showDataNegative" type="List"/>
+    <aura:attribute name="isAutoTimer" type="boolean" default = "true"/>
+    <aura:attribute name="delay" type="Integer" default = "3"/>
+    <aura:attribute name="Utilized" type="string" default = "#FF8833"/>
+    <aura:attribute name="Pending" type="string" default = "#34B845"/>
+    <aura:attribute name="colorset" type="List"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="exceeded" type="Boolean" default="false" />
+    <aura:attribute name="isIndia" type="boolean" default="false"/>
+    <aura:attribute name="isBrazil" type="boolean" default="false"/>
+    <aura:attribute name="isMexico" type="boolean" default="false"/>
+    <aura:attribute name="CreditSummaryLink" type="string" default = "creditdetailpage"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <!--<aura:attribute name="ExcludeEmptyStock" type="Boolean" default= "false"/>-->
+    <aura:attribute name="Message" type="String"/>
+    <aura:attribute name="error" type="Boolean" default="true" />
+    <aura:attribute name="myBool" type="Boolean" default="true"/>     
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}" 
+                  />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="selectedValues" type="List" default="" description="Selected value in Multi Select" />
+    
+    
+    <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small">
+        <div class="slds-grid slds-wrap slds-m-left_small slds-m-right_small slds-m-top_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small">
+            <div class="slds-col slds-size_12-of-12">
+                <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_ReportByBrand}</span>
+            </div>
+        </div>
+        
+        <div style="padding:20px;" class="slds-grid slds-wrap">
+            
+            <div class="slds-col slds-size_3-of-12 slds-p-right_x-small" style="margin-top: -18px;font-weight:600;">
+                <c:MultiSelectCombobox  options="{!v.options}" values="{!v.selectedValues}" multiSelect="true" label="{!$Label.c.Distributor}"/>
+            </div>
+            <div class="slds-col slds-size_3-of-12 slds-p-right_x-small">
+                <lightning:combobox style="margin-top: -19px;font-weight:600;"
+                                    name="Year"
+                                    label="{!$Label.c.Year}"
+                                    placeholder="Select Year" 
+                                    value = "{!v.yearValue }"     
+                                    options= "{!v.yearOptionRemoveCurrent }"
+                                    onchange = "{!c.handleYearChange}">
+                </lightning:combobox>
+            </div>
+            
+            <div class="slds-col slds-size_3-of-12 slds-p-right_x-small">
+                <lightning:combobox style="margin-top: -19px;font-weight:600;"
+                                    name="Quarter"  
+                                    label="{!$Label.c.Quarter}"
+                                    placeholder=" SelectQuarter" 
+                                    value = "{!v.MonthValue }"    
+                                    options="{!v.Months }"
+                                    onchange = "{!c.handleMonthChange}">
+                </lightning:combobox>
+            </div>
+            <!--<div class="slds-col slds-size_3-of-12">
+                <lightning:input type="checkbox" aura:id="toggleButton" label="Exclude Empty Stock" name="toggleButton" checked = "false" onchange="{!c.emptyStocks}"/>
+            </div>-->
+        </div>
+        
+        
+        <aura:if isTrue="{!v.loaded }">
+            <!-- <div class="slds-grid slds-wrap  slds-m-left_small slds-m-right_small">
+                <div class="slds-col slds-size_12-of-12 componentNotoSansBold"> 
+                         <lightning:combobox placeholder="Sales Org" value="{! v.SalesOrgDefaultVal}" options="{! v.SalesOrgPicklist }" onchange="{! c.SelectedVal }"/>
+     </div>
+                    </div>-->
+            <div class="slds-grid slds-wrap slds-m-around_small">
+                <div class="slds-col slds-size_12-of-12"> 
+                    <!-- <div class="componentNotoSansMedium" style="font-size: 13px;">
+                            <p>{!$Label.c.Grz_TotalCreditTaken} :<span class="componentNotoSansBold">&nbsp;{!$Locale.currencyCode}&nbsp;{!v.ChartList}</span></p>
+                        </div>     -->             
+                </div>
+                <!--<div class="slds-col slds-size_6-of-12"> 
+                    <div class="componentNotoSansMedium slds-text-align_right">
+                         <span class="chartCSS slds-p-left_small slds-p-right_xx-small"><b class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!v.ChartList[0].Total}</b></span>
+                    </div>
+                </div>-->
+            </div>
+        </aura:if> 
+        
+        <div style="text-align:center;">
+            <div >    
+                <div style="width:1000px !important; margin: 0 auto;">
+                    <canvas  id="pie-chart" />
+                </div>
+                <aura:if isTrue="{!v.loaded }">
+                    <aura:if isTrue="{!v.error }">   
+                        
+                        
+                        <aura:set attribute="else">
+                            <p class="Errors componentNotoSansBold">{!v.Message}</p>
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:set>
+                </aura:if>
+                
+            </div> 
+        </div>
+    </div>
+</aura:component>

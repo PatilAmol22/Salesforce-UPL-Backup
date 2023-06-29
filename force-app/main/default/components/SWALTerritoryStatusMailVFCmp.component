@@ -1,0 +1,35 @@
+<apex:component controller="SWALTerritoryStatusController" access="global">
+    <apex:attribute type="String" name="usrRegionId" description="Region Id" assignTo="{!regionId}"/>
+    <apex:outputPanel rendered="{!sWALTerritoryStatusList}">
+    <p>
+        Dear Manager,<br/><br/>
+        The status of liquidation for MTD -   <apex:outputText value="{!liqMnth}"></apex:outputText> is as belows-
+    </p>
+        <table style="border: 1px solid black;border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">Territory Name</th>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">Territory Code</th>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">Status</th>
+            </tr>
+            <apex:repeat var="terr" value="{!terrStatusWrapList}">
+                <tr>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.territoryName}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.territoryCode}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.status}</td>
+                </tr>
+            </apex:repeat>
+        </table>
+    <p>
+         <br/>
+    Please refer the below links to view the liquidation data for the completed territories:
+        <br/>
+    <br/>
+    <a href="{!$Label.SWAL_Product_Liquidation_Report}">Product Liquidation</a>
+        <br/><br/>
+    <a href="{!$Label.SWAL_Crop_Liquidation_Report}">Crop Liquidation</a>
+        <br/><br/> 
+        Thanks,<br/>
+        UPL Ltd
+    </p>
+    </apex:outputPanel>
+</apex:component>

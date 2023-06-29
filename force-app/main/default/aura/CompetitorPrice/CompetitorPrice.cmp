@@ -1,0 +1,1198 @@
+<aura:component controller = "CompetitorPriceController" implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction,force:hasRecordId" access="global" >
+    <!-- <ltng:require scripts="{! $Resource.jquery331}" />-->
+    <aura:attribute name="brandMap" type="Map" default="{ Id: '', Name: '' }" />
+    <aura:handler name ="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="showSubmitSpinner" type="Boolean" default="false" />
+    <aura:attribute name="hideSchmImageBox" type="Boolean" default="false" />
+    <aura:attribute name="hideLablImageBox" type="Boolean" default="false" />
+    <aura:attribute name="hidePckImageBox" type="Boolean" default="false" />
+    <aura:attribute name="schFileSize" type="Integer" default="0" />
+    <aura:attribute name="pacFileSize" type="Integer" default="0" />
+    <aura:attribute name="lablFileSize" type="Integer" default="0"/>
+    <aura:attribute name="type12" type="Boolean" default="false"/>
+    <aura:attribute name="type34" type="Boolean" default="false"/>
+    <aura:attribute name="type5" type="Boolean" default="false"/> 
+    <aura:attribute name="brandModal" type="Boolean" default="false"/> 
+    <aura:attribute name="cmpnyModal" type="Boolean" default="false"/>     
+    <aura:attribute name="formulationModal" type="Boolean" default="false"/>     
+    <aura:attribute name="packModal" type="Boolean" default="false"/>  
+    <aura:attribute name="showSubmitBtn" type="Boolean" default="false"/>
+    <aura:attribute name="brndOpt" type="Boolean" default="false"/> <!-- for dynamic option -->
+    <aura:attribute name="cmpnyOpt" type="Boolean" default="false"/>
+    <aura:attribute name="frmltnOpt" type="Boolean" default="false"/>
+    <aura:attribute name="pckOpt" type="Boolean" default="false"/>
+    <aura:attribute name="selectedBrand" type="sObject" default="{}"/>
+    <aura:attribute name="selectedCmpny" type="sObject" default="{}"/>
+    <aura:attribute name="selectedFormulation" type="sObject" default="{}"/>
+    <aura:attribute name="selectedPack" type="sObject" default="{}"/>
+    <aura:attribute name="competitorPriceId" type="String"/>    
+    
+    <aura:attribute name="priceDetailsObj" type="CompetitorPriceController.PriceSchemeDetails[]" />
+    <aura:attribute name="updateClaimObj" type="CompetitorPriceController.UpdateClaim[]" />
+    <aura:attribute name="updateClaimObjUpdated" type="CompetitorPriceController.UpdateClaim[]" />    
+    
+    <aura:attribute name="catgryObj" type="Brand_Category__c[]" default="[]" />
+    <!--<aura:attribute name="brandObj" type="Product_Detail__c[]" default="[]"/>-->
+    <aura:attribute name="brandObj" type="list" default="[]"/>
+    <aura:attribute name="cmpnyObj" type="list" default="[]"/>
+    <aura:attribute name="frmlnObj" type="list" default="[]"/>
+    <!--<aura:attribute name="cmpnyObj" type="Product_Detail__c[]" default="[]"/>-->
+    <aura:attribute name="pckObj" type="Pack_Size__c[]" default="[]"/>
+    <aura:attribute name="frmltnObj" type="Formulation__c" />
+    <aura:attribute name="cropObj" type="Crop__c[]" default="[]"/>
+    <aura:attribute name="pestObj" type="Pest__c[]" default="[]"/>   
+    
+    <aura:attribute name="hiddenBrndId" type="String"/> 
+    <aura:attribute name="hiddenCmpnyId" type="String" />
+    <aura:attribute name="hiddenFrmltnId" type="String"/>
+    <aura:attribute name="cmpId" type="String"/>
+    
+    <aura:attribute name="flagCmp" type="Boolean" default="false"/>
+    
+    <!--Added by vishal-->
+    <!--Added by vishal after patch of Spain and Portugal -->
+    <aura:attribute name="countryName" type="String"/>
+    <aura:attribute name="requiredTrueFalse" type="Boolean"/>
+    
+    <!--This is for Brand -->
+    <aura:attribute name="selectedRecordBrand" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecordsBrand" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWordBrand" type="string"/>
+    <aura:attribute name="MessageBrand" type="String" default=""/>
+    
+    <!--This is for Company -->
+    <aura:attribute name="selectedRecordCompany" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecordsCompany" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWordCompany" type="string"/>
+    <aura:attribute name="MessageCompany" type="String" default=""/>
+    
+    <!--This is for Formulation -->
+    <aura:attribute name="selectedRecordFormulation" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecordsFormulation" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWordFormulation" type="string"/>
+    <aura:attribute name="MessageFormulation" type="String" default=""/>
+    
+    
+    <!--This is for Pack Size -->
+    <aura:attribute name="selectedRecordPackSize" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecordsPackSize" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWordPackSize" type="string"/>
+    <aura:attribute name="MessagePackSize" type="String" default=""/>
+    
+    <!--This is for Crop-->
+    <aura:attribute name="selectedRecordCrop" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecordsCrop" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWordCrop" type="string"/>
+    <aura:attribute name="MessageCrop" type="String" default=""/>
+    
+    
+    <!--This is for Pest-->
+    <aura:attribute name="selectedRecordPest" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecordsPest" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWordPest" type="string"/>
+    <aura:attribute name="MessagePest" type="String" default=""/>    
+    
+    
+    
+    <aura:handler name="oSelectedRecordEventBrand" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEventBrand}"/>
+    <aura:handler name="oSelectedRecordEventCompany" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEventCompany}"/>
+    <aura:handler name="oSelectedRecordEventFormulation" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEventFormulation}"/>
+    <aura:handler name="oSelectedRecordEventPackSize" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEventPackSize}"/>
+    <aura:handler name="oSelectedRecordEventCrop" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEventCrop}"/>
+    <aura:handler name="oSelectedRecordEventPest" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEventPest}"/>
+    
+    
+    
+    
+    <aura:attribute name="frmoptn" type="Boolean" default="false"/>
+    <aura:attribute name="newcmpadd" type="Boolean" default="false"/>
+    <aura:attribute name="newbrndadd" type="Boolean" default="false"/>
+    <aura:attribute name="newfrmadd" type="Boolean" default="false"/>
+    <aura:attribute name="isLock" type="Boolean" default="false"/>
+    <aura:attribute name="newpacksizeadd" type="Boolean" default="false"/>
+    
+    
+    
+    
+    <aura:attribute name="isDisableForBrand" type="Boolean" default="true"/>
+    <aura:attribute name="isDisableForCompany" type="Boolean" default="true"/>
+    <aura:attribute name="isDisableForFormulation" type="Boolean" default="true"/>
+    <aura:attribute name="isDisableForPackSize" type="Boolean" default="true"/>
+    <aura:attribute name="isDisableForCrop" type="Boolean" default="false"/>
+    <aura:attribute name="isDisableForPest" type="Boolean" default="false"/>
+    
+    
+    
+    <aura:handler name="change" value="{!v.schFileSize}" action="{!c.onSchFilesizeChange}"/>
+    <aura:handler name="change" value="{!v.pacFileSize}" action="{!c.onPackFileSizeChange}"/>
+    <aura:handler name="change" value="{!v.lablFileSize}" action="{!c.onlablFileSizeChange}"/>
+    
+    <div class="slds">
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <!-- <c:svgIcon svgPath="/resource/slds090/assets/icons/standard-sprite/svg/symbols.svg#orders" category="standard" size="large" name="orders"/> -->
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-heading--label">{!$Label.c.Create_Competitor}</p>
+                            <div class="slds-grid">
+                                <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">{!$Label.c.Competition_Tracking}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div style="float:right; margin-top:10px;">
+              Auto Response:
+              <span><img src="{!$Resource.like}" style="margin-top:-10px; width:40px; height:38px;"/></span></div> -->
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="slds" style="background:#fff;">
+        
+        <div style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#769ed9; color:#fff; font-weight:bold;">
+                {!$Label.c.PRODUCT_Details}
+            </h3>
+            <div class="slds-grid slds-wrap slds-grid--pull-padded" style="margin:4px;">
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+                    <div class="slds-form-element" style="margin-top:12px;">
+                        <div class="slds-form-element__control">
+                            <lightning:select name="Reporting_Type" required="true" aura:id="Reporting_Type"  label="Reporting Type" onchange="{!c.toggleDetails}" >
+                                <option value="">-{!$Label.c.None}-</option>
+                                <option value="New Company, New Brand">{!$Label.c.New_Company_New_Brand}</option>
+                                <option value="Existing Company, New Brand">{!$Label.c.Existing_Company_New_Brand}</option>
+                                <option value="New Pack size in an Existing Brand">{!$Label.c.New_Pack_size_in_an_Existing_Brand}</option>
+                                <option value="Existing Product Price update">{!$Label.c.Existing_Product_Price_update}</option>
+                                <option value="Update in Label Claim">{!$Label.c.Update_in_Label_Claim}</option>
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+                    <div class="slds-form-element" style="margin-top:12px;">
+                        <div class="slds-form-element__control">
+                            
+                            <!--Added by Vishal-->
+                            <div onmouseleave="{!c.onblurBrand}" aura:id="searchResBrand" class="slds-form-element slds-lookup slds-is-close" data-select="single">  
+                                
+                                <label class="slds-form-element__label" for="lookup-348"> <label style="color:brown">*</label>{!$Label.c.Brand}</label>
+                                <!--This part is for display search bar for lookup-->  
+                                <div class="slds-form-element__control">
+                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                        <!-- This markup is for when an record is selected -->
+                                        
+                                        <div aura:id="lookup-pill-Brand" class="slds-pill-container slds-hide">
+                                            
+                                            <aura:if isTrue="{!v.newbrndadd}">
+                                                <lightning:pill class="pillSize "  label="{!v.selectedRecordBrand.Name}" name="{!v.selectedRecordBrand.Name}" onremove="{!c.clearBrand}">
+                                                </lightning:pill>
+                                                <aura:set attribute="else">
+                                                    <lightning:pill class="pillSize" label="{!v.selectedRecordBrand.Brand__r.Name}" name="{!v.selectedRecordBrand.Brand__r.Name}" onremove="{!c.clearBrand}">
+                                                    </lightning:pill>
+                                                </aura:set> 
+                                            </aura:if> 
+                                        </div>
+                                        
+                                        <div aura:id="lookupFieldBrand" class="slds-show">
+                                            <lightning:icon class="slds-input__icon slds-show" aura:id="brandPill"  size="x-small" alternativeText="search"/>
+                                            <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                <!-- <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>-->
+                                                <span class="slds-assistive-text"></span>
+                                            </span>
+                                            <ui:inputText aura:id="vBrand" disabled="{!v.isDisableForBrand}" click="{!c.onfocusBrand}" updateOn="keyup" keyup="{!c.keyPressControllerBrand}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWordBrand}" placeholder="Search..." />
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <!--This part is for Display typehead lookup result List-->  
+                                <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                    <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerBrand"/>
+                                    <center> {!v.MessageBrand}</center>
+                                    <aura:iteration items="{!v.listOfSearchRecordsBrand}" var="singleRec">
+                                        <c:customLookupResult oRecord="{!singleRec}"/>
+                                    </aura:iteration>
+                                </ul>
+                                
+                            </div>
+                            
+                            
+                            
+                            <!--    <lightning:select  label="Brand" required="true" onchange="{!c.onBrandChange}" aura:id="brand" disabled="true">
+                                <aura:if isTrue="{!v.brndOpt}">
+                                    <option value="{!v.selectedBrand.Id}" selected="true">{!v.selectedBrand.Name}</option>
+                                    <aura:set attribute="else">
+                                        <option value="">Choose one...</option>
+                                    </aura:set>  
+                                </aura:if>
+                                
+                                <aura:iteration items="{!v.brandObj}" var="brnd" >
+                                    <option value="{!brnd.Brand__c}">{!brnd.Brand__r.Name}</option>
+                                </aura:iteration>  
+                            </lightning:select>-->
+                            
+                            
+                            
+                            <div class="slds-text-align_right">
+                                <lightning:button variant="base" aura:id="openBrnd" label="{!$Label.c.New_Brand}" title="Add New Brand" onclick="{!c.openBrandModal}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="clear:both;"></div>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+                    <div class="slds-form-element" style="margin-top:12px;">
+                        <div class="slds-form-element__control">
+                            
+                            <!--added By vishal-->
+                            <div onmouseleave="{!c.onblurCompany}" aura:id="searchResCompany" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+                                <label class="slds-form-element__label" for="lookup-348"> <label style="color:brown">*</label>{!$Label.c.Company}</label> 
+                                <!--This part is for display search bar for lookup-->  
+                                <div class="slds-form-element__control">
+                                    
+                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                        <!-- This markup is for when an record is selected -->
+                                        <div aura:id="lookup-pill-Company" class="slds-pill-container slds-hide">
+                                            
+                                            
+                                            <aura:if isTrue="{!v.newcmpadd}">
+                                                <lightning:pill class="pillSize" label="{!v.selectedRecordCompany.Name}" name="{!v.selectedRecordCompany.Name}" onremove="{!c.clearCompany}">
+                                                </lightning:pill>
+                                                <aura:set attribute="else">
+                                                    <lightning:pill class="pillSize" label="{!v.selectedRecordCompany.Company__r.Name}" name="{!v.selectedRecordCompany.Company__r.Name}" onremove="{!c.clearCompany}">
+                                                    </lightning:pill>
+                                                </aura:set> 
+                                            </aura:if>
+                                            
+                                            
+                                        </div>
+                                        <div aura:id="lookupFieldCompany" class="slds-show">
+                                            <lightning:icon class="slds-input__icon slds-show"  size="x-small" alternativeText="search"/>
+                                            <ui:inputText aura:id="vCompany" disabled="{!v.isDisableForCompany}" click="{!c.onfocusCompany}" updateOn="keyup" keyup="{!c.keyPressControllerCompany}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWordCompany}" placeholder="Search..." />
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <!--This part is for Display typehead lookup result List--> 
+                                <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                    <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerCompany"/>
+                                    <center> {!v.MessageCompany}</center>
+                                    <aura:iteration items="{!v.listOfSearchRecordsCompany}" var="singleRec">
+                                        <c:customLookupResultCompany oRecordCompany="{!singleRec}" />
+                                    </aura:iteration>
+                                </ul>
+                                
+                            </div>
+                            
+                            
+                            
+                            
+                            <!--   <lightning:select name="Company" aura:id="company" required="true" label="Company"  onchange="{!c.onCmpnyChange}"  disabled="true" >
+                                <aura:if isTrue="{!v.cmpnyOpt}">
+                                    <option value="{!v.selectedCmpny.id}">{!v.selectedCmpny.Name}</option>
+                                    <aura:set attribute="else">
+                                        <option value="">Choose one...</option>
+                                    </aura:set> 
+                                </aura:if>
+                                
+                                <aura:iteration items="{!v.cmpnyObj}" var="cmpny" >
+                                    <option  value="{!cmpny.Company__c}" text="{!cmpny.Company__r.Name}" ></option>
+                                </aura:iteration> 
+                            </lightning:select>-->
+                            
+                            
+                            
+                            <div class="slds-text-align_right">    
+                                <lightning:button variant="base" aura:id="openCmpny" label="{!$Label.c.New_Company}" title="Add New Company" onclick="{!c.openCmpnyModal}" />
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+                    <div class="slds-form-element" style="margin-top:12px;">
+                        <div class="slds-form-element__control">
+                            
+                            <!--Added by vishal for Formulation--> 
+                            
+                            <div onmouseleave="{!c.onblurFormulation}" aura:id="searchResFormulation" class="slds-form-element slds-lookup slds-is-close" data-select="single">  
+                                <label class="slds-form-element__label" for="lookup-348"><label style="color:brown">*</label>{!$Label.c.Formulation}</label>
+                                <!--This part is for display search bar for lookup-->  
+                                <div class="slds-form-element__control">
+                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                        <!-- This markup is for when an record is selected -->
+                                        
+                                        <div aura:id="lookup-pill-Formulation" class="slds-pill-container slds-hide">
+                                            
+                                            <aura:if isTrue="{!v.frmoptn}">
+                                                <lightning:pill class="pillSize" label="{!v.selectedRecordFormulation.Name}" name="{!v.selectedRecordFormulation.Name}" onremove="{!c.clearFormulation}">
+                                                </lightning:pill>
+                                                <aura:set attribute="else">
+                                                    <lightning:pill class="pillSize" label="{!v.selectedRecordFormulation.Formulation__r.Name}" name="{!v.selectedRecordFormulation.Formulation__r.Name}" onremove="{!c.clearFormulation}">
+                                                    </lightning:pill>
+                                                </aura:set> 
+                                            </aura:if>
+                                            
+                                        </div>
+                                        
+                                        <div aura:id="lookupFieldFormulation" class="slds-show">
+                                            <lightning:icon class="slds-input__icon slds-show"  size="x-small" alternativeText="search"/>
+                                            <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                <!-- <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>-->
+                                                <span class="slds-assistive-text"></span>
+                                            </span>
+                                            <ui:inputText aura:id="vFormulation" disabled="{!v.isDisableForFormulation}"  click="{!c.onfocusFormulation}" updateOn="keyup" keyup="{!c.keyPressControllerFormulation}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWordFormulation}" placeholder="Search..." />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--This part is for Display typehead lookup result List-->  
+                                <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                    <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerFormulation"/>
+                                    <center> {!v.MessageFormulation}</center>
+                                    <aura:iteration items="{!v.listOfSearchRecordsFormulation}" var="singleRec">
+                                        <c:customLookupResultFormulation oRecord="{!singleRec}"/>
+                                    </aura:iteration>
+                                </ul>
+                                
+                            </div> 
+                            
+                            
+                            <!--End of Formulation--> 
+                            
+                            
+                            <!--  <lightning:select name="Formulation" aura:id="formulation" required="true" label="Formulation" onchange="{!c.onFormulationChange}"   disabled="true" >
+                                <aura:if isTrue="{!v.frmltnOpt}">
+                                    <option value="{!v.selectedFormulation.Id}" text="{!v.selectedFormulation.Name}" selected="true"></option>
+                                    <aura:set attribute="else">
+                                        <option value="">Choose one...</option>
+                                    </aura:set> 
+                                </aura:if>
+                                
+                                <aura:iteration items="{!v.frmlnObj}" var="frmln" >
+                                    <option  value="{!frmln.Formulation__c}" text="{!frmln.Formulation__r.Name}" ></option>
+                                </aura:iteration> 
+                            </lightning:select> -->
+                            
+                            
+                            
+                            <div class="slds-text-align_right">    
+                                <lightning:button variant="base" aura:id="openFrmltn" label="{!$Label.c.New_Formulation}" title="Add New Formulation" onclick="{!c.openFormulationModal}" />
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>  
+            
+            <!-- -->
+            <aura:if isTrue="{!v.type34}">     
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#769ed9; color:#fff; font-weight:bold;">
+                    {!$Label.c.Price_and_Scheme_Details}
+                </h3>
+                <div class="slds-grid slds-wrap slds-grid--pull-padded" style="margin:4px;">
+                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="margin-top:12px;">
+                        
+                        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin:0; padding:0;">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    
+                                    <!--Added by vishal Pack size--> 
+                                    
+                                    <div onmouseleave="{!c.onblurPackSize}" aura:id="searchResPackSize" class="slds-form-element slds-lookup slds-is-close" data-select="single">  
+                                        <label class="slds-form-element__label" for="lookup-348"><label style="color:brown">*</label>{!$Label.c.Pack_Size}</label>
+                                        <!--This part is for display search bar for lookup-->  
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                <!-- This markup is for when an record is selected -->
+                                                
+                                                <div aura:id="lookup-pill-PackSize" class="slds-pill-container slds-hide">
+                                                    
+                                                    <lightning:pill class="pillSize" label="{!v.selectedRecordPackSize.Name}" name="{!v.selectedRecordPackSize.Name}" onremove="{!c.clearPackSize}">
+                                                    </lightning:pill>
+                                                </div>
+                                                
+                                                <div aura:id="lookupFieldPackSize" class="slds-show">
+                                                    <lightning:icon class="slds-input__icon slds-show"  size="x-small" alternativeText="search"/>
+                                                    <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                        <!-- <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>-->
+                                                        <span class="slds-assistive-text"></span>
+                                                    </span>
+                                                    <ui:inputText  aura:id="vPackSize" disabled="{!v.isDisableForPackSize}" click="{!c.onfocusPackSize}" updateOn="keyup" keyup="{!c.keyPressControllerPackSize}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWordPackSize}" placeholder="Search..." />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--This part is for Display typehead lookup result List-->  
+                                        <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                            <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerPackSize"/>
+                                            <center> {!v.MessagePackSize}</center>
+                                            <aura:iteration items="{!v.listOfSearchRecordsPackSize}" var="singleRec">
+                                                <c:customLookupResultPackSize oRecord="{!singleRec}"/>
+                                            </aura:iteration>
+                                        </ul>
+                                        
+                                    </div>  
+                                    
+                                    <!--End of PackSize-->
+                                    
+                                    <!--    <lightning:select name="Pack Size" required="true" aura:id="pack_size" label="Pack Size"  onchange="">
+                                        <aura:if isTrue="{!v.pckOpt}">
+                                            <option value="{!v.selectedPack.Id}" selected="true">{!v.selectedPack.Name}</option>
+                                            <aura:set attribute="else">
+                                                <option value="">Choose one...</option>
+                                            </aura:set>  
+                                        </aura:if>
+                                        
+                                        <aura:iteration items="{!v.pckObj}" var="pck" >
+                                            <option value="{!pck.Id}">{!pck.Name}</option>
+                                        </aura:iteration> 
+                                    </lightning:select>-->
+                                    
+                                    <div class="slds-text-align_right">
+                                        <lightning:button variant="base" label="{!$Label.c.New_pack_Size}" title="Add New PackSize" onclick="{!c.openPackModal}" />
+                                    </div>
+                                       
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <lightning:input type="decimal" required="{!v.requiredTrueFalse}" min="0" label="MRP" aura:id="MRP" name="MRP" onblur="{!c.onMRPPrice}"/>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <lightning:input type="decimal" required="{!v.requiredTrueFalse}" min="0" aura:id="farmer_price" label="{!$Label.c.Farmer_Price}" name="Farmer Price" onblur="{!c.onFarmerPrice}"/>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <lightning:input type="decimal" required="{!v.requiredTrueFalse}" min="0" aura:id="retailer_price" label="{!$Label.c.Retailer_Price_Pack}" name="Retailer Price/Pack" onblur="{!c.onRetailerPrice}"/>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <lightning:input type="decimal" required="{!v.requiredTrueFalse}" min="0" aura:id="distributor_price" label="{!$Label.c.Distributor_Price_NRV_Pack}" name="Distributor Price NRV/Pack" onblur="{!c.onDistributorPrice}"/>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <lightning:input label="{!$Label.c.Schemes}" required="{!v.requiredTrueFalse}" aura:id="schemes"  name="Schemes"/>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <lightning:input label="{!$Label.c.COMMENTS}" aura:id="comments" name="Comments"/>
+                                </div>
+                            </div>  
+                            
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="margin-top:12px;">
+                        
+                        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-top:12px;">
+                            
+                            <!--<aura:if isTrue= "{!v.hideSchmImageBox}"> -->
+                            <div class="slds-form-element">
+                                
+                                <aura:if isTrue="{!v.requiredTrueFalse}">
+                                    <span class="slds-form-element__label" id="file-selector-primary-label"><span class="slds-text-body_small slds-text-color_error">*</span> {!$Label.c.Schemes_Photo}</span>
+                                    <aura:set attribute="else">
+                                        <span class="slds-form-element__label" id="file-selector-primary-label"><span class="slds-text-body_small slds-text-color_error"></span> {!$Label.c.Schemes_Photo}</span>
+                                    </aura:set>
+                                </aura:if>
+                                
+                                
+                                
+                                
+                                
+                                <div class="slds-form-element__control">
+                                    <div class="slds-file-selector slds-file-selector_files">
+                                        <div class="slds-file-selector__dropzone"  >
+                                            <!--<input class="slds-file-selector__input slds-assistive-text" accept="image/png" type="file" id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
+        <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
+          <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+        </label> -->
+                                            
+                                            <c:MultipleFileUpload aura:id="schemePic_id"
+                                                                  hideImageBox="{!v.hideSchmImageBox}"
+                                                                  showLoadingSpinner ="{!v.showSpinner}"
+                                                                  ImgFileSize="{!v.schFileSize}"
+                                                                  />
+                                            <span id="schError" class="slds-text-body_small slds-text-color_error" style="display:none">{!$Label.c.Please_select_at_least_a_file}</span>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- </aura:if> -->
+                            <ui:scrollerWrapper class="scrollerSize">
+                                <div class="slds-form-element">
+                                    
+                                    <aura:if isTrue="{!v.requiredTrueFalse}">
+                                        <span class="slds-form-element__label" id="file-selector-primary-label"><span class="slds-text-body_small slds-text-color_error">*</span> {!$Label.c.Packshots}</span>
+                                        <aura:set attribute="else">
+                                            <span class="slds-form-element__label" id="file-selector-primary-label"><span class="slds-text-body_small slds-text-color_error"></span> {!$Label.c.Packshots}</span>
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                    
+                                    
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-file-selector slds-file-selector_files">
+                                            <div class="slds-file-selector__dropzone">
+                                                <!-- <input class="slds-file-selector__input slds-assistive-text" accept="image/png" type="file" id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
+        <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
+          <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+        </label> -->
+                                                <c:MultipleFileUpload aura:id="packshotPic_id" 
+                                                                      hideImageBox="{!v.hidePckImageBox}"
+                                                                      showLoadingSpinner ="{!v.showSpinner}"
+                                                                      ImgFileSize="{!v.pacFileSize}"/> 
+                                                <span id="pacError" class="slds-text-body_small slds-text-color_error" style="display:none">{!$Label.c.Please_select_at_least_a_file}</span>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <aura:if isTrue="{!v.hideLablImageBox}"> -->
+                                <div class="slds-form-element">
+                                    
+                                    <aura:if isTrue="{!v.requiredTrueFalse}">
+                                        <span class="slds-form-element__label" id="file-selector-primary-label"><span class="slds-text-body_small slds-text-color_error">*</span> {!$Label.c.Labels}</span>
+                                        <aura:set attribute="else">
+                                            <span class="slds-form-element__label" id="file-selector-primary-label"><span class="slds-text-body_small slds-text-color_error"></span> {!$Label.c.Labels}</span>
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                    
+                                    
+                                    
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-file-selector slds-file-selector_files">
+                                            <div class="slds-file-selector__dropzone">
+                                                <!-- <input class="slds-file-selector__input slds-assistive-text" accept="image/png" type="file" id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
+        <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
+          <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+        </label> -->
+                                                
+                                                <c:MultipleFileUpload aura:id="labelPic_id"
+                                                                      hideImageBox="{!v.hideLablImageBox}"
+                                                                      showLoadingSpinner ="{!v.showSpinner}"
+                                                                      ImgFileSize="{!v.lablFileSize}"/> 
+                                                <span id="labError" class="slds-text-body_small slds-text-color_error" style="display:none">{!$Label.c.Please_select_at_least_a_file} </span>     
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- </aura:if> -->
+                            </ui:scrollerWrapper> 
+                        </div>    
+                    </div> 
+                    
+                    <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+                        <lightning:button variant="brand" label="{!$Label.c.Add}" onclick="{!c.newSchemeDetails}" iconName="utility:add" iconPosition="left" />
+                        <lightning:button variant="brand" label="{!$Label.c.Reset}" onclick="{!c.resetSchemeDetails}" iconName="utility:close" iconPosition="left" />
+                    </div>
+                    
+                </div>
+                
+                
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:0; background:#dcedfb;  font-weight:bold;">
+                    <div style="margin-top:5px; padding-right:20px; font-weight:bold;">{!$Label.c.Scheme_Details}</div>
+                </h3>
+                
+                <div class="slds-scrollable_x" width="100%" style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate">{!$Label.c.Packsize}</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate">MRP</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate">{!$Label.c.Farmer_Price}</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate">{!$Label.c.Retailer_Price_Pack}</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate">{!$Label.c.Distributor_Price_NRV_Pack}</div>
+                                </th>
+                                <th class="slds-is-sortable" scope="col">
+                                    <div class="slds-truncate">{!$Label.c.Action}</div>
+                                </th>
+                                <th class="slds-cell-shrink"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.priceDetailsObj}" var="obj" indexVar="i">  
+                                <tr class="slds-hint-parent">
+                                    <th class="slds-truncate" data-label="Packsize">{!obj.pck_nm}</th>
+                                    <td class="slds-truncate" data-label="MRP">{!obj.mrp}</td>
+                                    <td class="slds-truncate" data-label="Farmer Price/Pack">{!obj.frm_price}</td>
+                                    <td class="slds-truncate" data-label="Retailer Price/Pack">{!obj.ret_price}</td>
+                                    <td class="slds-truncate" data-label="Distributor Price NRV/Pack">{!obj.dis_price}</td>
+                                    
+                                    <aura:if isTrue="{!i>0}"> 
+                                        
+                                        <td class="slds-truncate" data-label="ACTION"  ><button class="slds-button" id="{!i}" data-row-index="{!i}" onclick="{!c.removePriceDetails}"><lightning:icon class="icn" iconName="utility:clear" size="small" alternativeText="Indicates Delete" /></button></td>
+                                        <aura:set attribute="else">
+                                            <td></td>
+                                        </aura:set>
+                                        
+                                    </aura:if>  
+                                </tr>
+                            </aura:iteration>    
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </aura:if>
+        </div>   
+        <aura:if isTrue="{!v.type5}">    
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:20px 0 0 0; background:#769ed9; color:#fff;  font-weight:bold;">
+                {!$Label.c.Update_Label_Claim}
+            </h3> 
+            
+            <div class="slds-grid slds-wrap slds-grid--pull-padded" style="margin:4px; padding:0;">
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2"> 
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            
+                            <!--Added by vishal for Crop-->
+                            <div onmouseleave="{!c.onblurCrop}" aura:id="searchResCrop" class="slds-form-element slds-lookup slds-is-close" data-select="single">  
+                                <aura:if isTrue="{!v.requiredTrueFalse}">
+                                    <label class="slds-form-element__label" for="lookup-348"><label style="color:brown">*</label>{!$Label.c.Crop}</label>
+                                    <aura:set attribute="else">
+                                        <label class="slds-form-element__label" for="lookup-348"><label style="color:brown"></label>{!$Label.c.Crop}</label>
+                                    </aura:set>
+                                </aura:if>
+                                <!--This part is for display search bar for lookup-->  
+                                <div class="slds-form-element__control">
+                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                        <!-- This markup is for when an record is selected -->
+                                        
+                                        <div aura:id="lookup-pill-Crop" class="slds-pill-container slds-hide">
+                                            
+                                            <lightning:pill class="pillSize" label="{!v.selectedRecordCrop.Name}" name="{!v.selectedRecordCrop.Name}" onremove="{!c.clearCrop}">
+                                            </lightning:pill>
+                                        </div>
+                                        
+                                        <div aura:id="lookupFieldCrop" class="slds-show">
+                                            <lightning:icon class="slds-input__icon slds-show"  size="x-small" alternativeText="search"/>
+                                            <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                <!-- <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>-->
+                                                <span class="slds-assistive-text"></span>
+                                            </span>
+                                            <ui:inputText  aura:id="vCrop" disabled="{!v.isDisableForCrop}" click="{!c.onfocusCrop}" updateOn="keyup" keyup="{!c.keyPressControllerCrop}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWordCrop}" placeholder="Search..." />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--This part is for Display typehead lookup result List-->  
+                                <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                    <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerCrop"/>
+                                    <center> {!v.MessageCrop}</center>
+                                    <aura:iteration items="{!v.listOfSearchRecordsCrop}" var="singleRec">
+                                        <c:customLookupResultCrop oRecord="{!singleRec}"/>
+                                    </aura:iteration>
+                                </ul>
+                                
+                                
+                                <!--End of Crop By vishal-->
+                                
+                                <!-- <lightning:select name="Crop" required="true" aura:id="crop" label="Crop" onchange="">
+                                <option value="">Choose one...</option>
+                                <aura:iteration items="{!v.cropObj}" var="crp" >
+                                    <option value="{!crp.Id}">{!crp.Name}</option>
+                                </aura:iteration>
+                            </lightning:select>-->
+                            </div>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2"> 
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            
+                            
+                            <!--Added by vishal for Pest-->    
+                            
+                            <div onmouseleave="{!c.onblurPest}" aura:id="searchResPest" class="slds-form-element slds-lookup slds-is-close" data-select="single">  
+                                
+                                <aura:if isTrue="{!v.requiredTrueFalse}">
+                                    <label class="slds-form-element__label" for="lookup-348"><label style="color:brown">*</label>{!$Label.c.Pest}</label>
+                                    <aura:set attribute="else">
+                                        <label class="slds-form-element__label" for="lookup-348"><label style="color:brown"></label>{!$Label.c.Pest}</label>
+                                    </aura:set>
+                                </aura:if>
+                                
+                                
+                                
+                                
+                                
+                                <!--This part is for display search bar for lookup-->  
+                                <div class="slds-form-element__control">
+                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                        <!-- This markup is for when an record is selected -->
+                                        
+                                        <div aura:id="lookup-pill-Pest" class="slds-pill-container slds-hide">
+                                            
+                                            <lightning:pill class="pillSize" label="{!v.selectedRecordPest.Name}" name="{!v.selectedRecordPest.Name}" onremove="{!c.clearPest}">
+                                            </lightning:pill>
+                                        </div>
+                                        
+                                        <div aura:id="lookupFieldPest" class="slds-show">
+                                            <lightning:icon class="slds-input__icon slds-show"  size="x-small" alternativeText="search"/>
+                                            <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                <!-- <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>-->
+                                                <span class="slds-assistive-text"></span>
+                                            </span>
+                                            <ui:inputText  aura:id="vPest" disabled="{!v.isDisableForPest}" click="{!c.onfocusPest}" updateOn="keyup" keyup="{!c.keyPressControllerPest}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWordPest}" placeholder="Search..." />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--This part is for Display typehead lookup result List-->  
+                                <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                    <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerPest"/>
+                                    <center> {!v.MessagePest}</center>
+                                    <aura:iteration items="{!v.listOfSearchRecordsPest}" var="singleRec">
+                                        <c:customLookupResultPest oRecord="{!singleRec}"/>
+                                    </aura:iteration>
+                                </ul>
+                                
+                            </div>
+                            
+                            
+                            <!--End of Pest-->
+                            
+                            <!--   <lightning:select name="Pest" required="true" aura:id="pest" label="Pest" onchange="">
+                                <option value="">Choose one...</option>
+                                <aura:iteration items="{!v.pestObj}" var="pst" >
+                                    <option value="{!pst.Id}">{!pst.Name}</option>
+                                </aura:iteration>
+                            </lightning:select>-->
+                            
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2"> 
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning:input type="number" step="00.01" min="0" required="{!v.requiredTrueFalse}" aura:id="dose" label="{!$Label.c.Dose}" name="Dose"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2"> 
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">      
+                            <lightning:select name="UOM" required="{!v.requiredTrueFalse}" aura:id="uom" label="{!$Label.c.UOM}" >
+                                <option value="">{!$Label.c.Choose_one}</option>
+                                <option value="Gm/acre">{!$Label.c.Gm_acre}</option>
+                                <option value="Ml/acre">{!$Label.c.Ml_acre}</option>
+                                <option value="Gm/kg seed">{!$Label.c.Gm_kg_seed}</option>
+                                <option value="Ml/kg seed">{!$Label.c.Ml_kg_seed}</option>
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>   
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2"> 
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning:input type="number" step="00.01" min="0" required="{!v.requiredTrueFalse}" aura:id="per_acre_cost" label="{!$Label.c.Per_Acre_Cost}" name="Per Acre Cost"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+                <lightning:button variant="brand" label="{!$Label.c.Add}" onclick="{!c.addLabelClaim}" iconName="utility:add" iconPosition="left" />
+                
+            </div>
+            
+            
+            <div class="slds-scrollable_x" width="100%" style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Crop}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Pest}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Dose}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.UOM}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Per_Acre_Cost}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Action}</div>
+                            </th>  
+                            <th class="slds-cell-shrink"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.updateClaimObjUpdated}" var="obj2" indexVar="j">   
+                            <tr class="slds-hint-parent">
+                                <th class="slds-truncate" data-label="Crop">{!obj2.crpNm}</th>
+                                <td class="slds-truncate" data-label="Pest">{!obj2.pstNm}</td>
+                                <td class="slds-truncate" data-label="Dose">{!obj2.dos}</td>
+                                <td class="slds-truncate" data-label="UOM">{!obj2.uom}</td>
+                                <td class="slds-truncate" data-label="Per Acre Cost">{!obj2.acr_cst}</td>
+                                <td class="slds-truncate" data-label="ACTION"></td>
+                            </tr>
+                        </aura:iteration>   
+                        
+                        <aura:iteration items="{!v.updateClaimObj}" var="obj2" indexVar="j">   
+                            <tr class="slds-hint-parent">
+                                <th class="slds-truncate" data-label="Crop">{!obj2.crpNm}</th>
+                                <td class="slds-truncate" data-label="Pest">{!obj2.pstNm}</td>
+                                <td class="slds-truncate" data-label="Dose">{!obj2.dos}</td>
+                                <td class="slds-truncate" data-label="UOM">{!obj2.uom}</td>  
+                                <td class="slds-truncate" data-label="Per Acre Cost">{!obj2.acr_cst}</td>
+                                <td class="slds-truncate" data-label="ACTION"><button class="slds-button" id="{!j}" data-row-index="{!j}" onclick="{!c.removeLabelClaim}"><lightning:icon class="icn" iconName="utility:clear" size="small" alternativeText="Indicates Delete"/></button></td>
+                            </tr>
+                        </aura:iteration>    
+                        
+                    </tbody>
+                </table>
+            </div>
+            
+        </aura:if>    
+        <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+            <aura:if isTrue="{!v.showSubmitBtn}">	
+                <lightning:button variant="brand" label="{!$Label.c.Submit}" iconName="utility:check" iconPosition="left" onclick="{!c.saveDetails}"/>
+                <lightning:button variant="brand" label="{!$Label.c.Cancel}" iconName="utility:close" iconPosition="left" onclick="{!c.cancelCPrice}"/>
+            </aura:if>
+        </div> 
+        
+        <aura:if isTrue="{!v.brandModal}">  
+            <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important; width:65% !important;"-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeBrandModal}">
+                            X
+                            <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium">{!$Label.c.Add_New_Brand}</h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-scrollable--y" width="100%" style="margin-bottom:0;">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                                    <div class="slds-form-element__control" style="margin-right:5px;">
+                                        <ui:inputText class="slds-input" 
+                                                      aura:id="brand_name" 
+                                                      label="Name"
+                                                      required="true" />
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                   <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputText class="slds-input" 
+                                  aura:id="brand_code" 
+                                  label="Brand Code"
+                                  required="true" />   
+                    </div>
+                </div> -->
+                                
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                                    <div class="slds-form-element__control" style="margin-right:5px;">
+                                        
+                                        <lightning:select  label="{!$Label.c.Category}" aura:id="catgry" >
+                                            <option value="">{!$Label.c.Choose_one}</option>
+                                            <aura:iteration items="{!v.catgryObj}" var="cat" >
+                                                <option value="{!cat.Id}" >{!cat.Name}</option>
+                                            </aura:iteration>  
+                                        </lightning:select>
+                                    </div>
+                                </div>  
+                                
+                            </div>
+                            <!--  <div class="slds-grid slds-wrap">
+                
+               </div> --> 
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeBrandModal}" >{!$Label.c.Cancel}</button>
+                        <!--<button aura:id="addAllocation" value="" class="slds-button slds-button- -brand" onclick="{!c.addAllocation}">Save and Close</button>-->
+                        <ui:button aura:id="addItem" disabled="{!v.isDisabled}" class="slds-button slds-button--brand" labelClass="" label="{!$Label.c.Save_and_Close}" press="{!c.addNewBrand}"/>  
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if> 
+        
+        <aura:if isTrue="{!v.cmpnyModal}">  
+            <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important;width:65% !important;"-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeCmpnyModal}">
+                            X
+                            <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium">{!$Label.c.Add_New_Company}</h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-scrollable--y" width="100%" style="margin-bottom:0;">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                                    <div class="slds-form-element__control" style="margin-right:5px;">
+                                        <ui:inputText class="slds-input" 
+                                                      aura:id="cmpny_name" 
+                                                      label="{!$Label.c.Name}"
+                                                      required="true" />
+                                    </div>
+                                </div>
+                                
+                                <!--  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                   <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputText class="slds-input" 
+                                  aura:id="cmpny_code" 
+                                  label="Company Code"
+                                  required="true" />   
+                    </div>
+                </div>  -->
+                                
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                                    <div class="slds-form-element__control" style="margin-right:5px;">
+                                        <ui:inputURL class="slds-input" 
+                                                     aura:id="cmpny_site" 
+                                                     label="{!$Label.c.Web_Site}"
+                                                     />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!-- <div class="slds-grid slds-wrap">
+               
+              </div> --> 
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeCmpnyModal}" >{!$Label.c.Cancel}</button>
+                        <!--<button aura:id="addAllocation" value="" class="slds-button slds-button- -brand" onclick="{!c.addAllocation}">Save and Close</button>-->
+                        <ui:button aura:id="addItem" disabled="{!v.isDisabled}" class="slds-button slds-button--brand" labelClass="" label="{!$Label.c.Save_and_Close}" press="{!c.addNewCmpny}"/>  
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if> 
+        
+        <aura:if isTrue="{!v.formulationModal}">  
+            <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important;width:65% !important;"-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeFormulationModal}">
+                            X
+                            <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium">{!$Label.c.Add_New_Formulation}</h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-scrollable--y" width="100%" style="margin-bottom:0;">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                                    <div class="slds-form-element__control" style="margin-right:5px;">
+                                        <ui:inputText class="slds-input" 
+                                                      aura:id="frmltn_name" 
+                                                      label="{!$Label.c.Name}"
+                                                      required="true" />
+                                    </div>
+                                </div>
+                                
+                                <!--  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                   <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputText class="slds-input" 
+                                  aura:id="frmltn_code" 
+                                  label="Formulation Code"
+                                  required="true" />   
+                    </div>
+                </div> -->
+                            </div>
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                                    <div class="slds-form-element__control" style="margin-right:5px;">
+                                        <ui:inputText class="slds-input" 
+                                                      aura:id="frmltn_brnd"
+                                                      label="{!$Label.c.Brand_Name}"
+                                                      value="Test"
+                                                      required="true" disabled="true" />
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                                    <div class="slds-form-element__control" style="margin-right:5px;">
+                                        <ui:inputText class="slds-input" 
+                                                      aura:id="frmltn_cmpny" 
+                                                      label="{!$Label.c.Company_Name}"
+                                                      value="Test"
+                                                      required="true" disabled="true"/>   
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeFormulationModal}" >{!$Label.c.Cancel}</button>
+                        <!--<button aura:id="addAllocation" value="" class="slds-button slds-button- -brand" onclick="{!c.addAllocation}">Save and Close</button>-->
+                        <ui:button aura:id="addItem" disabled="{!v.isDisabled}" class="slds-button slds-button--brand" labelClass="" label="{!$Label.c.Save_and_Close}" press="{!c.addNewFrmltn}"/>  
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if> 
+        
+        <aura:if isTrue="{!v.packModal}">  
+            <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important;width:65% !important;"-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closePackModal}">
+                            X
+                            <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium">{!$Label.c.Add_New_Pack_Size}</h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-scrollable--y" width="100%" style="margin-bottom:0;">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                                    <div class="slds-form-element__control" style="margin-right:5px;">
+                                        <ui:inputText class="slds-input" 
+                                                      aura:id="pck_name" 
+                                                      label="{!$Label.c.Name}"
+                                                      required="true" />
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                   <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputText class="slds-input" 
+                                  aura:id="pck_code" 
+                                  label="PackSize Code"
+                                  required="true" />   
+                    </div>
+                </div> -->
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closePackModal}" >{!$Label.c.Cancel}</button>
+                        <!--<button aura:id="addAllocation" value="" class="slds-button slds-button- -brand" onclick="{!c.addAllocation}">Save and Close</button>-->
+                        <ui:button aura:id="addItem" disabled="{!v.isDisabled}" class="slds-button slds-button--brand" labelClass="" label="{!$Label.c.Save_and_Close}" press="{!c.addNewPack}"/>  
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>   
+        <aura:if isTrue="{!v.showSpinner}">
+            <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important;width:65% !important;"-->
+                    
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-scrollable--y" width="100%" style="margin-bottom:0;">
+                            
+                            <div class="slds-text-body_small slds-text-color_default" align="center">{!$Label.c.Please_wait} 
+                                <img src="/auraFW/resources/aura/images/spinner.gif" class="spinner-img" alt="Loading"/>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+        <aura:if isTrue="{!v.showSubmitSpinner}">
+            <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important;width:65% !important;"-->
+                    
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div class="slds-scrollable--y" width="100%" style="margin-bottom:0;">
+                            
+                            <div class="slds-text-body_small slds-text-color_default" align="center">{!$Label.c.Please_wait}
+                                <img src="/auraFW/resources/aura/images/spinner.gif" class="spinner-img" alt="Loading"/>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if> 
+    </div>
+    
+
+
+    <div style="margin: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;</div>  <!-- Start GRZ(Dheeraj Sharma) : INC0374606  Date :09-09-2022  --> 
+</aura:component>

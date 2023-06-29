@@ -1,0 +1,194 @@
+<aura:component controller="searchInventory" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <!-- <ltng:require styles="{!$Resource.newselect2+ '/select2-4.0.3/dist/css/select2.min.css'}" />
+	<ltng:require scripts="{!$Resource.jQuery1}" />
+    <ltng:require scripts="{!$Resource.newselect2+ '/select2-4.0.3/dist/js/select2.min.js'}" afterScriptsLoaded="{!c.doInit}" />
+   -->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+  <!--  <aura:handler name="change" value="{!v.selectedLookUpRecord}" action="{!c.getMat}"/>
+    -->
+    <aura:attribute name="DisplayComponents" type="boolean" default="false"/>
+    <aura:attribute name="wh" type="List" default="False"/>
+    <aura:attribute name="brnd" type="List" default="False"/>
+    <aura:attribute name="mat" type="list" default="False"/>    
+    <aura:attribute name="showMat" type="boolean" default="false"/>
+    
+    <aura:attribute name="mates" type="list"/>  
+    <aura:attribute name="warehouse" type="String" />     
+    <aura:attribute name="brName" type="String"/>
+    <aura:attribute name="avail" type="String"/>
+    <aura:attribute name="Id" type="String"/>
+    <aura:attribute name="comment" type="String"/>
+    <aura:attribute name="availDate" type="String"/>
+    <aura:attribute name="SKU" type="String"/>
+    <aura:attribute name="SKUCode" type="String"/>
+    <aura:attribute name="invntId" type="List"/>
+    <aura:attribute name="avails" type="List" />
+    <aura:attribute name="writeaccess" type="Boolean" />
+    
+    <!-- Attribute Declration For Pagination -->
+  <!--  <aura:attribute name="FliterList" type="List"/> -->
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="startPage" type="Integer"/>
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="30"/>
+    <aura:attribute name="TotalPages" type="Integer"/>
+    <aura:attribute name="PageNumber" type="Integer"/>
+    
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false"/>
+    
+     <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:if isTrue="{! v.ShowSpinner }"> <!-- displayDetails -->
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    
+    <body class="bgColor slds-scrollable_x" >
+        <lightning:layout multiplerows="true">
+            
+                <lightning:layoutItem  size="12">
+                <div class="slds-align_absolute-center">
+        
+            <lightning:button label="{!$Label.c.SIC_Search}" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.search}"/>
+                    </div>
+             </lightning:layoutItem>
+		</lightning:layout><br></br>
+		<lightning:layout multipleRows="true">
+            <lightning:layoutItem flexibility="auto"  size="3" smallDeviceSize="1" largeDeviceSize="1">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.Warehouse}"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+             <lightning:layoutItem flexibility="auto"  size="8" smallDeviceSize="4" largeDeviceSize="3">
+                    <div class="slds-form-element__control">
+                            <div class="input-select-width">                                
+                                <lightning:select class="input-select-width labelFont " variant="label-hidden" aura:id="depotCode" onchange="{!c.refresfBrandMat}" >                                   
+                                  <option value="">{!$Label.c.None}</option> 
+                                    <aura:iteration items="{!v.wh}" var="wh1">
+                                        <option value="{!wh1.Id}">{!wh1.Depot_Code__c} - {!wh1.Name}</option>                                         
+                                    </aura:iteration> 
+                                </lightning:select>								                                
+                                <ui:outputText aura:id="depotCodeerro" class="error-text slds-hide"  value="{!$Label.c.Warehouse_Error}"/>
+                            <br/>
+                            </div>
+                     </div>
+                  
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto"  size="3" smallDeviceSize="2" largeDeviceSize="3">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.Brand_Name}"></aura:unescapedHtml> <span class="error-text"> </span></label> 
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+             <lightning:layoutItem flexibility="auto"  size="8" smallDeviceSize="3" largeDeviceSize="3">
+                 
+                
+                
+                 <div class="slds-form-element__control">
+                            <div> 
+
+                            <!--  <c:customLookup objectAPIName="Brand" 
+                              IconName="standard:sku__c" 
+                              selectedRecord="{!v.selectedLookUpRecord}" 
+                              label=""
+                              OrglistOfSearchRecords = "{!v.brnd}"
+                               selectedRecordId="{!v.brand}"
+                              /> 
+                
+                              Selected record : {!v.selectedLookUpRecord.Id} -->
+                                 <div class="input-select-width">
+                              	 <lightning:select class="input-select-width labelFont " variant="label-hidden" aura:id="brand"  onchange="{!c.getMat}">                                   
+                                    <option value="">{!$Label.c.All_Values}</option>                                       
+                                    <aura:iteration items="{!v.brnd}" var="brnd1">
+                                        <option value="{!brnd1.Id}">{!brnd1.Brand_Name__c}</option>                                         
+                                    </aura:iteration> 
+                                </lightning:select> 
+                                </div>
+								<!--	<select style="width:100%" 
+                                    id="brand"
+                                    aura:id="brand"
+                                    onChange="{!c.getMat}"
+                                    class="select2Class"
+                                    selected="brand"
+                                    >
+                               <option value="" ></option>
+                                <aura:iteration items="{!v.brnd}" var="brnd1">
+                                 <option value="{!brnd1.Id}">{!brnd1.Brand_Name__c}</option> 
+                                    </aura:iteration></select> -->            
+								
+                            <br/> 
+                            </div>
+                     </div> 
+                  
+            </lightning:layoutItem>
+		</lightning:layout>
+		<lightning:layout multipleRows="true">
+            <lightning:layoutItem flexibility="auto"  size="3" smallDeviceSize="1" largeDeviceSize="1">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.Materials}"></aura:unescapedHtml> <span class="error-text"> </span></label> 
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+             <lightning:layoutItem flexibility="auto"  size="8" smallDeviceSize="4" largeDeviceSize="3">
+                    <div class="slds-form-element__control">
+                            <div class="input-select-width">                                
+                                <lightning:select class="input-select-width labelFont " variant="label-hidden" aura:id="materials" >                                   
+                                    <option value="">{!$Label.c.All_Values}</option>                                      
+                                    <aura:iteration items="{!v.mat}" var="mat1">
+                                        <option value="{!mat1.Id}">{!mat1.SKU_Code__c} - {!mat1.Name}</option>                                         
+                                    	</aura:iteration> 
+                                </lightning:select>
+                                
+                                <ui:outputText aura:id="materro" class="error-text slds-hide"  value="Please select Material"/>
+                            </div>
+                     </div>
+                  <!-- start here -->
+                 
+                 <!-- <div class="slds-form-element__control">
+                            <div class="input-select-width">                                
+                            <ASTPC:PicklistWidget options="{!v.mates}" aura:id="accountInput"
+                               selectedOptions="" showSearchBox="true"/>
+                                
+                            </div>
+                     </div> -->
+                 
+           <!-- code added by Swapnil -->      
+         
+ 
+  
+           <!-- end -->      
+                 
+            </lightning:layoutItem>
+            </lightning:layout>
+			<lightning:layout multipleRows="true">
+            <lightning:layoutItem  size="12">
+                <div class="slds-align_absolute-center">
+        <!--      </lightning:accordionSection> -->
+        
+            <lightning:button label="{!$Label.c.SIC_Search}" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.search}"/>
+                    </div>
+             </lightning:layoutItem>
+        </lightning:layout><br/>
+      
+        <aura:if isTrue="{!v.DisplayComponents}">
+            <c:InventoryDetails  aura:id="search" displayDetails="{!v.DisplayComponents}" warehouse="{!v.warehouse}" SKUCode="{!SKUCode}" ShowSpinner="{!v.ShowSpinner}" invntId="{!v.invntId}" brName="{!v.brName}" writeaccess="{!v.writeaccess}"  avails ="{!v.avails}" comment="{!v.comment}" availDate ="{!v.availDate}" Id="{!v.Id}"/> 
+        </aura:if>
+    </body>
+</aura:component>

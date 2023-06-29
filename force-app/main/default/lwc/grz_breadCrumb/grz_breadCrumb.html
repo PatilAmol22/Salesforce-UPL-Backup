@@ -1,0 +1,24 @@
+<template>
+    <nav role="navigation" class="crumbClass" aria-label="Breadcrumbs">
+        <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+          <li class="slds-breadcrumb__item">
+            <!--Template if added by Akhilesh for portal wise menu redirection-->
+            <template if:false={isStdPortal}>
+              <a href="/uplpartnerportal/s/"><img src={homeImg} class="imageClass"/>&nbsp;&nbsp;{labels.home}</a>
+            </template>
+            <template if:true={isStdPortal}>
+              <a href="/uplpartnerportalstd/s/"><img src={homeImg} class="imageClass"/>&nbsp;&nbsp;{labels.home}</a>
+            </template>
+          </li>
+          <li class="slds-breadcrumb__item">
+            <a href={linkone} data-id="oneClass">{labelone}</a>
+          </li>
+          <li class="slds-breadcrumb__item" data-id="twoCls">
+            <a href={linktwo} data-id="twoClass">{labeltwo}</a>
+          </li>
+          <li class="slds-breadcrumb__item" data-id="threeCls">
+            <a href={linkthree} data-id="threeClass">{labelthree}</a>
+          </li>
+        </ol>
+      </nav>
+</template>

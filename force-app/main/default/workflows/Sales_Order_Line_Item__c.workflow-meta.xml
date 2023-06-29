@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Approval_Flag</fullName>
+        <field>Approval_Flag__c</field>
+        <formula>IF(Sale_Order__r.BrazilSalesOrderApproved__c &lt;&gt; TRUE,
+IF(ISPICKVAL(Sale_Order__r.Type_of_Order__c,&apos;ORDEM FILHA&apos;),0,
+IF(Budget_Value_Margin__c &lt; 0,5,
+IF(OR(ISPICKVAL( Sale_Order__r.Type_of_Order__c , &apos;BONIFICAÇÃO&apos;),
+Sale_Order__r.Punctuality_Discount__c &gt; 0,
+Sale_Order__r.PaymentMethod__r.Payment_Method_Code__c = &apos;W&apos; ),
+3,
+IF(AND(SPFlag__c == &apos;1&apos;,SDMFlag__c == &apos;1&apos;,SOMFlag__c == &apos;1&apos;,SDFlag__c == &apos;1&apos;,REH_Flag__c == &apos;1&apos;), 0,
+IF(AND(SPFlag__c == &apos;0&apos;,SDMFlag__c == &apos;1&apos;,SOMFlag__c == &apos;1&apos;,SDFlag__c == &apos;1&apos;,REH_Flag__c == &apos;1&apos;), 1,
+IF(AND(SPFlag__c == &apos;0&apos;,SDMFlag__c == &apos;0&apos;,SOMFlag__c == &apos;1&apos;,SDFlag__c == &apos;1&apos;,REH_Flag__c == &apos;1&apos;), 2,
+IF(AND(SPFlag__c == &apos;0&apos;,SDMFlag__c == &apos;0&apos;,SOMFlag__c == &apos;0&apos;,SDFlag__c == &apos;1&apos;,REH_Flag__c == &apos;1&apos;), 3,
+4))))))),0)</formula>
+        <name>Update Approval Flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Flag_Barter</fullName>
+        <field>Approval_Flag_Barter__c</field>
+        <formula>IF(Sale_Order__r.BrazilSalesOrderApproved__c &lt;&gt; TRUE,
+IF(ISPICKVAL(Sale_Order__r.Type_of_Order__c,&apos;ORDEM FILHA&apos;),0,
+IF(Budget_Value_Margin__c &lt; 0,5,
+IF(OR(ISPICKVAL( Sale_Order__r.Type_of_Order__c , &apos;BONIFICAÇÃO&apos;),
+Sale_Order__r.Punctuality_Discount__c &gt; 0),
+3,
+IF(AND(SPFlagB__c == &apos;1&apos;,SDMFlagB__c == &apos;1&apos;,SOMFlagB__c == &apos;1&apos;,SDFlagB__c == &apos;1&apos;,REHFlagB__c == &apos;1&apos;), 0,
+IF(AND(SPFlagB__c == &apos;0&apos;,SDMFlagB__c == &apos;1&apos;,SOMFlagB__c == &apos;1&apos;,SDFlagB__c == &apos;1&apos;,REHFlagB__c == &apos;1&apos;), 1,
+IF(AND(SPFlagB__c == &apos;0&apos;,SDMFlagB__c == &apos;0&apos;,SOMFlagB__c == &apos;1&apos;,SDFlagB__c == &apos;1&apos;,REHFlagB__c == &apos;1&apos;), 2,
+IF(AND(SPFlagB__c == &apos;0&apos;,SDMFlagB__c == &apos;0&apos;,SOMFlagB__c == &apos;0&apos;,SDFlagB__c == &apos;1&apos;,REHFlagB__c == &apos;1&apos;), 3,
+4))))))),0)</formula>
+        <name>Update Approval Flag Barter</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Key</fullName>
+        <field>Order_Item_Key__c</field>
+        <formula>Sale_Order__r.Name &amp; TEXT(Item_Number__c)</formula>
+        <name>Update Key</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sap_Order_with_Item_Key</fullName>
+        <field>SAP_Order_Number_Item_Number_Key__c</field>
+        <formula>Sale_Order__r.SAP_Order_Number__c &amp; Text(Item_Number__c)</formula>
+        <name>Update Sap Order with Item Key</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Total_Freight</fullName>
+        <field>TotalFreight__c</field>
+        <formula>FreightAmount__c</formula>
+        <name>Update Total Freight</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Total_Freight_Without_Interest</fullName>
+        <description>Divya: 13-07-2020: Added for SCTASK0216506</description>
+        <field>Total_Freight_Without_Interest__c</field>
+        <formula>Freight_Amount_Without_Interest__c</formula>
+        <name>Update Total Freight Without Interest</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Total_Ledger_Cost</fullName>
+        <field>TotalLedgerCost__c</field>
+        <formula>LedgerCostCalculated__c</formula>
+        <name>Update Total Ledger Cost</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Total_Punctuality</fullName>
+        <field>TotalPunctuality__c</field>
+        <formula>PunctualityDiscountCalculated__c</formula>
+        <name>Update Total Punctuality</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Total_Punctuality_Without_Interes</fullName>
+        <description>Divya: 13-07-2020: Added for SCTASK0216506</description>
+        <field>Total_Punctuality_Without_Interest__c</field>
+        <formula>Punctuality_Discount_WI_Calculated__c</formula>
+        <name>Update Total Punctuality Without Interes</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Total_Replacement_Cost</fullName>
+        <field>TotalReplacementCost__c</field>
+        <formula>ReplacementCostCalculated__c</formula>
+        <name>Update Total Replacement Cost</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Total_Tax</fullName>
+        <field>TotalTax__c</field>
+        <formula>TaxAmount__c</formula>
+        <name>Update Total Tax</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Total_Tax_Without_Interest</fullName>
+        <description>Divya: 13-07-2020: Added for SCTASK0216506</description>
+        <field>Total_Tax_Without_Interest__c</field>
+        <formula>Tax_Amount_Without_Interest__c</formula>
+        <name>Update Total Tax Without Interest</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Auto-update Sales Order Line Item Fields</fullName>
+        <actions>
+            <name>Update_Total_Freight</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Total_Freight_Without_Interest</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Total_Ledger_Cost</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Total_Punctuality</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Total_Punctuality_Without_Interes</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Total_Replacement_Cost</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Total_Tax</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Total_Tax_Without_Interest</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5191</value>
+        </criteriaItems>
+        <description>Used for Brazil</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Approval Flag Barter Of Brazil</fullName>
+        <actions>
+            <name>Update_Approval_Flag_Barter</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5191</value>
+        </criteriaItems>
+        <description>Used for Brazil</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Approval Flag Of Brazil</fullName>
+        <actions>
+            <name>Update_Approval_Flag</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5191</value>
+        </criteriaItems>
+        <description>Used for Brazil</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update SO Item Unique Key</fullName>
+        <actions>
+            <name>Update_Key</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>OR (ISCHANGED( Item_Number__c ), ISNEW())</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>to update sap order and key</fullName>
+        <actions>
+            <name>Update_Sap_Order_with_Item_Key</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Sales_Order_Line_Item__c.SAPOrderNumberItemNumberKey__c</field>
+            <operation>notEqual</operation>
+            <value>Not Generated</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SAP_Order_Number__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

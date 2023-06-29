@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT" description="Event to apply Changes" >
+    <aura:attribute name="indexVar" type="Integer" description="Used For Index " />
+    <aura:attribute name="payList" type="List" description="Used For storing val list" />
+    <aura:attribute name="toDelList" type="List" description="Used For storing del list" />
+    
+    
+</aura:event>

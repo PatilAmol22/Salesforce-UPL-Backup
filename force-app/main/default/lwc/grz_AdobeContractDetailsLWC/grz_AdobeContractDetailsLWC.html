@@ -1,0 +1,630 @@
+<!--
+   @description       : 
+   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+   @group             : 
+   @last modified on  : 02-15-2023
+   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+   -->
+   <template>
+    <lightning-quick-action-panel>
+       <div if:true={isLoading} class="slds-is-relative">
+          <lightning-spinner alternative-text="Loading..." variant="brand" style="top:60px;"></lightning-spinner>
+       </div>
+       <div class="modal-height">
+         <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_12-of-12 markeeClass">
+               {markee}
+            </div>
+             <div class="headerClass slds-col slds-size_6-of-12">
+                APPLICATION FORM
+             </div>
+             <div class="slds-col slds-text-align_right slds-size_6-of-12 deletebtn customerPhotoSection">
+                <lightning-file-upload
+                   label={ProfilePhotoLabel}
+                   name="profilePhoto"
+                   accept={acceptedFormats}
+                   record-id={recordId}
+                   onuploadfinished={handleUploadFinished}
+                   disabled={profilePhotoDisabled}
+                   data-id="profilePhotoId"
+                   >
+                </lightning-file-upload>
+                <lightning-button-icon disabled={isprofilePhotoDelete} icon-name="utility:delete" name="profilePhotoDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_large photoDel" title="Delete"></lightning-button-icon>
+             </div>
+          </div>
+          <!--Section 1-->
+          <div class="slds-grid slds-wrap slds-m-top_large" data-id="Contact_Details__c">
+             <div style="margin-top: 2%;" class="borderClass slds-col slds-size_12-of-12">
+                <p><b>Name &amp; Address of the Proprietor Firm/ Partnership Firm/Company/Trust/society/others</b> : {companyName}</p>
+                <p>{companyAddress}</p>
+                <p><b>Email</b> : {emailVal}</p>
+                <p><b>Phone</b> : {phoneVal}</p>
+             </div>
+             <!-- <div style="margin-top: 5%;" class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                <div class="slds-grid slds-wrap">
+                    <div class="heightClass borderClass slds-col slds-size_6-of-12">
+                        <p><b>Personal Details : </b></p>
+                        <p><b>Name of the Authorized person : </b><lightning-input type="text"></lightning-input></p>
+                        <br/>
+                        <p><b>Date of Birth : </b></p><lightning-input type="date"></lightning-input>
+                    </div>
+                    <div class="heightClass borderClass slds-col slds-size_3-of-12">
+                        <p><b>No of Children <br/>Male / Female :</b><lightning-input type="text"></lightning-input></p>
+                    </div>
+                    <div class="heightClass borderClass slds-col slds-size_3-of-12">
+                        <p><b>Age</b><lightning-input type="number"></lightning-input></p>
+                    </div>
+                </div>
+                
+                </div> -->
+             <br/>
+          </div>
+          <!--Section 2-->
+          <div class="borderClass slds-m-top_large" data-id="Name_of_Proprietor_Partner_Director__c">
+             <c-grz_create-Dynamic-Table-Onboarding object-api-name="On_Boarding_Partner__c" field-names="Name,Address__c,PAN__c,Adhaar__c,Relationship__c,Profit_Sharing_Ratio__c" 
+                query={queryPartners} columns={columnsPartners} record-id={recordId} ondeletedrecords={handleDeleteRecords}>
+             </c-grz_create-Dynamic-Table-Onboarding>
+          </div>
+          <!--Section 3-->
+          <div  data-id="Other_Information__c slds-m-top_large">
+             <br/>
+             <p><b>Other Information (Mandatory Information to be provided along with validated and clear copies of documents)</b></p>
+             <div>
+                <!--Year of Establishment-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput">
+                      a. Year of Establishment
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox" value={yearOfEstablishmentCheck} name="yearOfEstablishmentCheck" data-id="yearOfEstablishmentCheck" onchange={handlecheckboxchange}></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile ">
+                      <lightning-input type="text" disabled={yearOfEstablishmentCheckNot} onchange={handleinputchange} name="yearOfEstablishmentName" value={yearOfEstablishmentName} maxlength="4" minlength="4"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn ">
+                      <lightning-file-upload
+                         name="yearOfEstablishmentFile"
+                         disabled={yearOfEstablishmentFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={isyearOfEstablishmentFileDelete} icon-name="utility:delete" name="yearOfEstablishmentFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                </div>
+                <!-- GST NUmber-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput">
+                      b. GST Number
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox"  name="gstNumberCheck" checked disabled></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 phonewrap" data-id="wrapOnPhoneGST" >
+                      <p>{gstNumber}</p>
+                      <!--<lightning-input type="text" value={gstNumber} disabled></lightning-input>-->
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn ">
+                      <lightning-file-upload
+                      label="Upload GST Copy"
+                         name="gstNumberFile"
+                         disabled={gstNumberFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={isgstNumberFileDelete} icon-name="utility:delete" name="gstNumberFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                </div>
+                <!--GST Number-->
+                <!--Shop & Establishment Act. License No.-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput">
+                      c. Shop &amp; Establishment Act. License No.
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox" value={shopEstablishmentCheck} name="shopEstablishmentCheck" data-id="shopEstablishmentCheck" onchange={handlecheckboxchange}></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile">
+                      <lightning-input type="text" disabled={shopEstablishmentCheckNot} onchange={handleinputchange} name="shopEstablishmentName" value={shopEstablishmentName} maxlength="255"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn ">
+                      <lightning-file-upload
+                      label="Upload SHOP ACT LICENSE Copy"
+                         name="shopEstablishmentFile"
+                         disabled={shopEstablishmentFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={isshopEstablishmentFileDelete} icon-name="utility:delete" name="shopEstablishmentFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                </div>
+                <!--Pesticides/Insecticides License No.-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput" data-id="wrapOnPhone">
+                      d. Pesticides/ Insecticides License No.
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox" name="pesticideCheck" checked disabled></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile">
+                      <lightning-input type="text" disabled={pesticideCheckNot} onchange={handleinputchange} name="pesticideName" value={pesticideName} maxlength="255"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn">
+                      <lightning-file-upload
+                      label="Upload PESTICIDE LICENSE Copy"
+                         name="pesticideFile"
+                         disabled={pesticideFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={ispesticideFileDelete} icon-name="utility:delete" name="pesticideFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                      <p>Valid till date</p>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile">
+                      <lightning-input type="date" disabled={pesticideCheckNot} name="validTillDatePesticide" value={validTillDatePesticide} onchange={handleinputchange}></lightning-input>
+                   </div>
+                </div>
+                <!--Fertilizer License No.-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput">
+                      e. Fertilizer License No.
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox" value={fertilizerCheck} name="fertilizerCheck" onchange={handlecheckboxchange} data-id="fertilizerCheck"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile">
+                      <lightning-input type="text" disabled={fertilizerCheckNot} onchange={handleinputchange} name="fertilizerName" value={fertilizerName} maxlength="255"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn ">
+                      <lightning-file-upload
+                         name="fertilizerFile"
+                         disabled={fertilizerFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={isfertilizerFileDelete} icon-name="utility:delete" name="fertilizerFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                      <p>Valid till date</p>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile">
+                      <lightning-input type="date" disabled={fertilizerCheckNot} name="validTillDateFertilizer" value={validTillDateFertilizer} onchange={handleinputchange}></lightning-input>
+                   </div>
+                </div>
+                <!--Seeds License No.-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput">
+                      f. Seeds License No.
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox" value={seedsLicenseCheck} name="seedsLicenseCheck" onchange={handlecheckboxchange} data-id="seedsLicenseCheck"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile">
+                      <lightning-input type="text" disabled={seedsLicenseCheckNot} onchange={handleinputchange} name="seedsLicenseName" value={seedsLicenseName}></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn ">
+                      <lightning-file-upload
+                         name="seedsLicenseFile"
+                         disabled={seedsLicenseFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={isseedsLicenseFileDelete} icon-name="utility:delete" name="seedsLicenseFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                      <p>Valid till date</p>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile">
+                      <lightning-input type="date" disabled={seedsLicenseCheckNot} name="validTillDateSeed" value={validTillDateSeed} onchange={handleinputchange}></lightning-input>
+                   </div>
+                </div>
+                <!--Income Tax No. (PAN)-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput">
+                      g. Income Tax No. (PAN)
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox" name="incomeTaxCheck" checked disabled></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                      <p>{panNumber}</p>
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn ">
+                      <lightning-file-upload
+                      label="Upload PAN COPY (All PAN copies)"
+                         name="incomeTaxFile"
+                         disabled={incomeTaxFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={isincomeTaxFileDelete} icon-name="utility:delete" name="incomeTaxFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                      <!--<template if:true={incomeTaxFileDisabled}>
+                         <lightning-pill label="With remove handler" data-id="test id" name="Test Name" onremove={handleDeleteFile}></lightning-pill>
+                         </template>-->
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                </div>
+                <!--DPN Details-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput">
+                      h. DPN
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox" value={DPNCheck} name="DPNCheck" onchange={handlecheckboxchange} data-id="DPNCheck"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn ">
+                      <lightning-file-upload
+                      label="Upload DPN Copy"
+                         name="DPNFile"
+                         disabled={DPNFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={isDPNFileDelete} icon-name="utility:delete" name="DPNFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                </div>
+                <!--Bank Details – Account Number and IFSC Code-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 ipadInput">
+                      i. Bank Details – Bank Name
+                   </div>
+                   <div class="slds-col slds-size_1-of-12 ipadInput">
+                      <lightning-input type="checkbox" name="bankCheck" checked disabled></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile">
+                      <lightning-combobox type="text" value={bankName} name="bankName" onchange={handleinputchange} maxlength="255" options={options}></lightning-combobox>
+                   </div>
+                   <div class="slds-col slds-size_4-of-12 deletebtn ">
+                      <lightning-file-upload
+                      label="Upload Chq,bank statement,chq annex"
+                         name="bankFile"
+                         disabled={bankFileDisabled}
+                         accept={acceptedFormats}
+                         record-id={recordId}
+                         onuploadfinished={handleUploadFinished}
+                         multiple
+                         ></lightning-file-upload>
+                      <lightning-button-icon disabled={isbankFileDelete} icon-name="utility:delete" name="bankFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                </div>
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                   <div class="slds-col slds-size_2-of-12 slds-p-left_small ipadInput">
+                      Account Number
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile ipadInput">
+                      <lightning-input type="text" value={bankName2} name="bankName2" onchange={handleinputchange} maxlength="255"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_3-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                </div>
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center; ">
+                   <div class="slds-col slds-size_2-of-12 slds-p-left_small ipadInput">
+                      IFSC Code
+                   </div>
+                   <div class="slds-col slds-size_1-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 upForMobile ipadInput">
+                      <lightning-input type="text" value={bankName3} name="bankName3" onchange={handleinputchange}  maxlength="11" minlength="11"></lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_3-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                   <div class="slds-col slds-size_2-of-12">
+                   </div>
+                </div>
+
+                <!--Adhaar Information-->
+                <div class="slds-grid slds-wrap slds-p-bottom_small" style="align-items: center;">
+                  <div class="slds-col slds-size_2-of-12 ipadInput">
+                     j. Adhaar
+                  </div>
+                  <div class="slds-col slds-size_1-of-12 ipadInput">
+                     <lightning-input type="checkbox" name="adhaarCheck" checked disabled></lightning-input>
+                  </div>
+                  <div class="slds-col slds-size_4-of-12 deletebtn ">
+                     <lightning-file-upload
+                     label="Upload Adhaar copy"
+                        name="adhaarFile"
+                        disabled={adhaarFileDisabled}
+                        accept={acceptedFormats}
+                        record-id={recordId}
+                        onuploadfinished={handleUploadFinished}
+                        ></lightning-file-upload>
+                     <lightning-button-icon disabled={isadhaarFileDelete} icon-name="utility:delete" name="adhaarFileDel" onclick={handleDeleteFile} alternative-text="Delete" size="small" class="slds-m-left_xx-small slds-p-top_small ipadResponsive" title="Delete"></lightning-button-icon>
+                  </div>
+                  <div class="slds-col slds-size_3-of-12">
+                  </div>
+                  <div class="slds-col slds-size_2-of-12">
+                  </div>
+               </div>
+             </div>
+          </div>
+          <!--Section 4-->
+          <div class=" slds-grid slds-wrap borderClass slds-m-top_large" data-id="Turnover__c">
+             <br/>
+             <div class="slds-col slds-size_12-of-12">
+                <p><b>PARTICULARS OF THE BUSINESS FOR LAST 4 YEARS : TOTAL BUSINESS FOR LAST 3 YEARS</b></p>
+                <c-grz_create-Dynamic-Table-Onboarding object-api-name="Particulars_of_the_Business__c" field-names="Name,No_of_Years_in_Business__c,Year_1__c,Year_2__c,Year_3__c,Year_4__c" 
+                   query={queryParticulars} columns={columnsParticulars} record-id={recordId} ondeletedrecords={handleDeleteRecords}>
+                </c-grz_create-Dynamic-Table-Onboarding>
+             </div>
+             <div class="slds-col slds-size_12-of-12" style="padding-right: 4%;">
+                <div class="slds-grid slds-wrap">
+                   <div class="slds-col slds-size_2-of-12 centerClass" style="padding-top: 2%;font-weight: bold;">
+                      Total
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass">
+                      <lightning-input type="number" step=".01" value={totalInput1} onchange={handleinputchange} name="totalInput1" maxlength="18">
+                      </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass">
+                      <lightning-input type="number" step=".01" value={totalInput2} onchange={handleinputchange} name="totalInput2" maxlength="18">
+                      </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass totalInputMobile">
+                      <lightning-input type="number" step=".01" value={totalInput3} onchange={handleinputchange} name="totalInput3" maxlength="18">
+                      </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass totalInput1 ">
+                      <lightning-input type="number" step=".01" value={totalInput4} onchange={handleinputchange} name="totalInput4" maxlength="18">
+                      </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass totalInputMobile1">
+                      <lightning-input type="number" step=".01" value={totalInput5} onchange={handleinputchange} name="totalInput5" maxlength="18">
+                      </lightning-input>
+                   </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                   <div class="slds-col slds-size_2-of-12 centerClass" style="padding-top: 2%;font-weight: bold;">
+                      Ratio of Cash V/s Credit Purchases
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass">
+                      <lightning-input type="number" step=".01" value={ratioInput1} onchange={handleinputchange} name="ratioInput1" maxlength="18">
+                      </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass">
+                      <lightning-input type="number" step=".01" value={ratioInput2} onchange={handleinputchange} name="ratioInput2" maxlength="18">
+                      </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass totalInputMobile">
+                      <lightning-input type="number" step=".01" value={ratioInput3} onchange={handleinputchange} name="ratioInput3" maxlength="18">
+                      </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass totalInput1">
+                      <lightning-input type="number" step=".01" value={ratioInput4} onchange={handleinputchange} name="ratioInput4" maxlength="18">
+                      </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_2-of-12 centerClass totalInputClass totalInputMobile1">
+                      <lightning-input type="number" step=".01" value={ratioInput5} onchange={handleinputchange} name="ratioInput5" maxlength="18">
+                      </lightning-input>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <!--Section 5-->
+          <div class="borderClass slds-m-top_large" data-id="Business_Details__c">
+             <br/>
+             <p><b>Details of other business :</b></p>
+             <c-grz_create-Dynamic-Table-Onboarding object-api-name="On_Boarding_Other_Business__c" field-names="Name,Status__c,Capital_Invested__c,Shares_of_his_Profit__c,Nature_of_its_business__c" 
+                query={queryOtherBusiness} columns={columnsOtherBusiness} record-id={recordId} ondeletedrecords={handleDeleteRecords}>
+             </c-grz_create-Dynamic-Table-Onboarding>
+          </div>
+          <!--Section 6-->
+          <div class="borderClass slds-m-top_large" data-id="Legal_Details__c">
+             <br/>
+             <p><b>Legal cases in past / present</b></p>
+             <c-grz_create-Dynamic-Table-Onboarding object-api-name="On_Boarding_Legal_Cases__c" field-names="Type__c,Case_No_Date__c,Complaint_Plaintiff__c,Accused_Defendants__c,Remarks__c" 
+                query={queryLegalCases} columns={columnsLegalCases} record-id={recordId} ondeletedrecords={handleDeleteRecords}>
+             </c-grz_create-Dynamic-Table-Onboarding>
+          </div>
+          <!--Section 7-->
+          <!-- <br/>
+             <div>
+             <p><b>Security deposit- decleration from 1st collection 25000/-</b></p>
+                 <div class="slds-grid slds-wrap borderClass">
+                     <div class="slds-col slds-size_6-of-12">
+                         1. AMOUNT OF DEPOSIT FOR AF/FC/VC
+                     </div>
+                     <div class="slds-col slds-size_6-of-12">
+                         <lightning-input type="text"></lightning-input>
+                          <lightning-input type="text" label="(Rupees"></lightning-input> Only)
+                     </div>
+                     <div class="slds-col slds-size_12-of-12">
+                     </div>
+                     <div class="slds-col slds-size_6-of-12">
+                         2. AMOUNT PAID BY
+                     </div>
+                     <div class="slds-col slds-size_6-of-12">
+                         <p><b>DEMAND DRAFT</b></p>
+                         <lightning-input type="text" label="NO."></lightning-input><lightning-input type="date" label="DATED"></lightning-input>
+                         <lightning-input type="text" label="DRAWN ON"></lightning-input>
+                     </div>
+                 </div>
+             </div> -->
+          <!--PERSONAL GUARANTEE-->
+          <div data-id="Personal_Guarantee__c" class="slds-m-top_large">
+             <br/>
+             <br/>
+             <div class="headerClass"  style="text-align: center;">
+                PERSONAL GUARANTEE
+             </div>
+             <div class="borderClass">
+                In consideration of {salesOrgCompanyName} a Company incorporated under the companies Act 1956, having its registered office at {registeredAddress},  hereafter called “the seller” to
+                M/s {companyName} having {companyAddress} office  		
+                here after called “The purchaser” of Insecticides/ Fertilizers/ Seeds; I, {companyFirstName} the owner/proprietor/Managing Partner/Authorized Person/ responsible manager of the purchaser do hereby undertake and guarantee personally and From out of my personal assets, the due and punctual payment to the lender of all and every sum payable by the purchaser. Which shall include principal, Interest and overdue interest payments I further agree to pay the seller all other  sums  which  may  from  time  to  time  become  due  under  the  said M/s {companyName} arrangement. However, the total of my liability under this guarantee shall in no case exceed Rs. 
+                <template if:false={checkDevice}><input class="greyBorder" type="number" step=".01" value={personalGuaranteeInput1} onchange={handleinputchange} name="personalGuaranteeInput1" maxlength="18"></input></template>
+                <template if:true={checkDevice}><input class="greyBorder" data-id="blankText" value={personalGuaranteeInput1} onchange={handleinputchange}  name="personalGuaranteeInput1" maxlength="18" ></input></template> along with interest and overdue interest as per company policy.<br/><br/>
+                I, further hereby agree and confirm that<br/>
+                1.	This guarantee shall be continuing irrevocable guarantee.<br/>
+                2.	This guarantee is in addition to and without prejudice to any other security from whomsoever, enjoyed by the Seller in respect of the obligations of the under mentioned M/s {companyName}.<br/>
+                3.	The seller shall enjoy a lien on the securities entrusted to him by me, in respect of the obligations of the guarantee.<br/>
+                4.	The Seller shall be at liberty to proceed against me in the first instance, without proceeding against M/s. {companyName}<br/>
+                It is further clarified that the expressions “Seller” shall deemed to include their respective successors and assigns, unless the context otherwise requires.<br/>
+             </div>
+          </div>
+          <!--Declaration of Relation-->
+          <div data-id="Relationship_Declaration__c" class="slds-m-top_large">
+             <br/>
+             <br/>
+             <div class="headerClass" style="text-align: center;">
+                <u>Declaration of Relation</u>
+             </div>
+             <br/>
+             <div class="borderClass">
+                <div>
+                   To,<br/>
+                   {salesOrgCompanyName},<br/>
+                   <!-- <input class="sldsborder" type="text"></input>,<br/>
+                      <input class="greyBorder" type="text"></input>,<br/> -->
+                   <br/>
+                   Dear Sirs / Madam,<br/>
+                   <br/>
+                </div>
+                <div style="display:flex;align-items: center;">
+                   <lightning-input type="checkbox" name="relativeWorkingCheck" data-id="relativeWorkingCheck" value={relativeWorkingCheck} onchange={handlecheckboxchange}></lightning-input>
+                   Check if any relative are working with {salesOrgCompanyName}, or its group companies directly or indirectly. 
+                </div>
+                <template if:true={relativeWorkingCheck}>
+                   <br/>                
+                   <div>
+                      I / We hereby declare that MR./Mrs./Miss <input class="greyBorder" type="text" value={relationInput1} onchange={handleinputchange} name="relationInput1" maxlength="255"></input> working with {salesOrgCompanyName}  as <input class="greyBorder" type="text" value={relationInput2} onchange={handleinputchange} name="relationInput2" maxlength="255"></input> , Head quartered at <input class="greyBorder" type="text" value={relationInput3} onchange={handleinputchange} name="relationInput3" maxlength="255"></input> &amp; department<input class="greyBorder" type="text" value={relationInput4} onchange={handleinputchange} name="relationInput4" maxlength="255"></input> is my / our relative.
+                      <br/><br/> 
+                      <p>My / our relation with him / her is of <input class="greyBorder" type="text" value={relationInput5} onchange={handleinputchange} name="relationInput5" maxlength="255"></input>.</p>
+                   </div>
+                </template>
+             </div>
+          </div>
+          <!--Declaration of E-Sign-->
+          <div data-id="Signing_Authority__c" class="slds-m-top_large">
+             <br/>
+             <br/>
+             <div class="headerClass"  style="text-align: center;">
+                <u>Declaration of Signing Authority</u>
+             </div>
+             <br/>
+             <div class="borderClass">
+                To,<br/>
+                {salesOrgCompanyName},<br/>
+                <!-- <input class="sldsborder" type="text"></input>,<br/>
+                   <input class="greyBorder" type="text"></input>,<br/> -->
+                <br/>
+                Dear Sirs / Madam,<br/>
+                <br/>
+                I / We hereby authorize the below given person to sign following documents from time to time on our behalf. We further confirm that I/we shall remain binding on the contents of the documents signed by the authorized person all the time without any reservation or demur.
+                <br/>Documents Details:
+                <br/>(a)	Balance Confirmation
+                <br/>(b)	Stock / Invoice Confirmation
+                <br/>(c)	Any other official documents.
+                <br/>
+                <div>
+                   <c-grz_create-Dynamic-Table-Onboarding object-api-name="On_Boarding_Annexure_3__c" field-names="Name,Relationship__c,Age__c,Specimen_Signature__c" 
+                      query={queryAnnexure3} columns={columnsAnnexure3} record-id={recordId} ondeletedrecords={handleDeleteRecords}>
+                   </c-grz_create-Dynamic-Table-Onboarding>
+                </div>
+             </div>
+          </div>
+          <!--DEALERSHIP AGREEMENT-->
+          <!--<br/>
+             <br/>-->
+          <div  data-id="Dealership_Agreement__c" class="slds-m-top_large">
+             <br/>
+             <br/>
+             <div class="headerClass" style="text-align: center;">
+                <u>DEALERSHIP AGREEMENT</u>
+             </div>
+             <br/>
+             <div class="borderClass">
+                <div style="padding:1%">
+                   This agreement entered at {companyCity} on this day ……………… date ……………… of month ……………… of    year ……………… between {salesOrgCompanyName}  a company incorporated under the companies Act,1956 having its registered office at {registeredAddress} and Corporate Office at {corporateAddress} (herein after called “The company “), which term shall include its successors, executors, administrators and permitted assigns 
+                </div>
+                <br/>
+                And<br/><br/>
+                <div>
+                   M/s {companyName}, having its office at {companyAddress} Herein after called “The Dealer “which term shall include its Proprietor/partners/Directors, successors, executors, administrators and permitted assigns.
+                </div>
+                <br/>
+                <div>
+                   Whereas the Dealer approached the company requesting for dealership in the company's products on a non-exclusive basis and the company has agreed to do so on the following terms and conditions:
+                   <br/><br/><b>NOW THIS AGREEMENT WITHNESSETH AS FOLLOWS:</b>
+                   <br/> 1.	The Dealer agrees that his application for dealership and the business plan agreed from time to time would be deemed to form of this agreement and are annexed to this agreement.
+                   <br/> 2.	The Dealer undertakes to clear all the invoices raised by the company within agreed number of days and in all cases not beyond the due date as mentioned in the invoice.
+                   <br/> 3.	The dealer undertakes to pay the interest at the rate as per company policy, as applicable., if he fails to make payments within the stipulated period agreed upon.
+                   <br/> 4.	The Dealer undertakes to comply with provision of the Insecticides Act,1968 /Seeds Act/ Fertilizers Control Order too including storage and to comply with the provisions of all other applicable status including local laws as may be required for carrying out sales in the state/area of operation.
+                   <br/> 5.	The dealer undertakes to hold the terms of this contract as strictly and confidential and undertakes not to divulge any information, including but not limited to price, Dealer promotional schemes, Terms &amp; condition , incentive discounts , sales strategies and such other confidential information to any outsider/ third party. This stipulation shall remain in force throughout the tenure of this agreement and for 3 years beyond expiry/termination of this agreement.
+                   <br/> 6.	The dealer undertake to provide the company all information required including statistics, agro climatic conditions, business forecasts and such other relevant information as may be required from time to time.
+                   <br/> 7.	The dealer undertakes to provide personal and/or third party security by way of bank Guarantor, Security Deposits, fixed deposits, fixed assets towards the credit being extended as and when demanded by the company. In case of third party security,
+                   <br/> 8.	The dealer undertakes to deposit original title deeds of unencumbered Fixed Assets with a memorandum of deposit of title deeds signed by the legal owners of the fixed assets.
+                   <br/> 8.1	These title deeds will remain in the custody of the company and will be returned to the dealer only after entire outstanding of the dealer is cleared and in the event of termination of the Dealership agreement.
+                   <br/> 8.2	The dealer confirms that the security by deposit of title deeds shall be enforceable by the company if in the company's opinion. The Dealer is in persistent breach of its payment obligations under this agreement. The dealer here by specifically waives the right to receive notice for enforceability of security to realize the dues of the company.
+                   <br/> 8.3	The Dealer further conforms that upon the company requiring modification or additional security through the deposit of title deeds of fixed assets not presently covered, the dealer shall upon such demand, forthwith effect full compliance.
+                   <br/> 8.4	The dealer undertakes to assign his debts in favour of the company by separate deal of assignment in case the payment of the outstanding is not made within the due date. However, such assignment shall not absolve the dealer of his liability towards the Company till the entire outstanding dues is cleared.
+                   <br/> 9.	It is agreed that goods will be dispatched through the company transport contractor. In case, the dealer requires the foods to be dispatched through a transporter of his/its choice, but other than company's transporter. The difference between the company contract rates &amp; the rate charged by the dealer's chosen transporter will be borne by the dealer.
+                   <br/> 10.	The company shall endeavour to dispatch material as per requirements of the dealer.
+                   <br/> 11.	However, in case of any difference in the product/quantities supplied by the company, it shall be still presumed that the quantities supplied to the dealer are accepted, unless the dealer expressly intimates in writing his intension not to accept such delivery. Such intimation shall be made on LR/DC to the company branches office within a period of 7 days from receipt of supplies.
+                   <br/> 12.	The supplies made to the dealer will be on principal basis and the goods once sold will not be taken back by the company for any reason whatsoever.
+                   <br/>13.	The dealer undertakes to inform any changes in the constitution and/or name and style of the firm/company/society and any change materially affecting the operation of his/its business.
+                   <br/> 14.	The dealer acknowledges that considering the nature of the company's products that are liable to potential statutory action under the insecticides Act of potential claims under consumer Forums. The Dealer expressly confirms that it shall adopt a co- ordinate stance with the Company before such judicial authorities or forum.
+                   <br/> 15.	Where as the dealer requests the company to provide the following:
+                   <br/> a)	To supply Agro Chemicals, Seeds manufactured/produced and marketed by the company as per the order placed by the dealers either orally or in writing.
+                   <br/> b)	Such supplies shall be unaffected subject to availability of stocks from time to time.
+                   <br/> c)	The Company shall inform the dealer the non-availability of stock including the likely date of dispatch either orally or in writing.
+                   <br/> d)	That the company shall provide the dealer invoices, statement of accounts and such other information periodically and as and when required.
+                   <br/> e)	The company shall endeavor to generate demand for its products to the best of the ability and resources.
+                   <br/> 16.	In case of any breach of any of the terms and conditions as mentioned above by the dealer, the Company reserves the right to take appropriate legal action including termination of dealership agreements.
+                   <br/>17.	Both parties need to give 3 days notice in writing to terminate this agreement during its validity.
+                   <br/> 18.	The agreement is subject to courts at Mumbai, India. 
+                   <br/><br/>
+                   In witness whereof both the parties have set their hands this day and month herein above mention.
+                </div>
+             </div>
+             <br/>
+          </div>
+       </div>
+       <div style="display:flex;" class="slds-m-top_x-large">
+          <lightning-button variant="brand" label="Save as Draft" title="Save as Draft" onclick={handleSave}  class="slds-align_absolute-center"></lightning-button>
+          <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmit}  class="slds-align_absolute-center"></lightning-button>
+       </div>
+       <br/>
+    </lightning-quick-action-panel>
+ </template>

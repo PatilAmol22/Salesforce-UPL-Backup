@@ -1,0 +1,286 @@
+.banner-div {
+    margin: -35px -12px 0 -12px;
+    position: relative;
+  }
+ 
+
+  .bread-crumb {
+    margin-left: 0%;
+  }
+
+
+
+.divstyle{
+  border: 1px solid #E5E5E5;
+  border-radius: 4px;
+  opacity: 1;
+  background-color: white;
+}
+
+
+
+.Query-button {
+background-color: #00bdf2;
+color: #fff;
+border: none;
+padding: 5px 0px;
+font-size: 15px;
+margin-top: 19px;
+width: 100%;
+}
+
+.SendAsEmail-button{
+  background-color: #00bdf2;
+  color: #fff;
+  border: none;
+  padding: 7px 0px;
+  font-size: 15px;
+  width :100%;
+}
+
+.Notosence{
+font-family: 'NotoSansBold';
+}
+
+.NotosenseLight{
+  font-family: 'NotoSans';
+}
+
+.FetchSchemes{
+padding-top:10px;
+font-size: 30px;
+}
+
+.FetchSchemesDiv{
+margin: auto;
+}
+
+.Border{
+  border-top: 1px solid #DDDDDD;
+  margin-top: 23px;
+  padding-top: 21px;
+
+}
+
+.BorderTiles{
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-right: 1px solid #DDDDDD;
+}
+
+.Cir{
+font-size: 18px;
+color: #888888;
+}
+
+.cirPart{
+  font-size: 18px;
+color: #FF8833;
+}
+
+.CirChild{
+  font-size: 13px;
+}
+
+.dwnld-btn {
+  border: 2px solid rgb(255 136 51);
+  padding: 6px 0px;
+  background-color: white;
+  color: black;
+  font-size: 14px;
+  width: 100%;
+}
+
+.PrevQries{
+  font-size: 26px;
+  color: #000000;
+}
+
+.SentOn{
+  font-size: 13px;
+  color: #000000;
+}
+
+.SentDate{
+  font-size: 13px;
+  color: #FF8833;
+}
+
+.MailDiv{
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.EmailLabel{
+  color: white;
+  background: #34B845;
+  font-size: 10px;
+  width: 64px;
+  height: 22px;
+  text-align: center;
+  padding: 3px;
+}
+
+.Download{
+    color: #FF8833;
+    padding-left: 10px;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+.dwnldLinkBtn{
+  border: 2px solid rgb(255 136 51);
+  /* padding: 7px 40px; */
+  background-color: #fff;
+  color: #000;
+  padding: 0px 4px;
+  font-size: 10px;
+}
+
+.exampleHolder{
+  position: relative;
+}
+
+.ImgIcon{
+  padding-right: 5px;
+  width: 22px;
+}
+
+.MainCir{
+  padding-bottom:10px;
+}
+
+.TopPad{
+  padding-top:15px;
+  padding-left:13px !important;
+}
+
+.ButtonLeftAlign{
+  padding-top:10px;
+}
+
+
+
+@media only screen and (max-width: 1023px) {
+  
+  .TopPad{
+    padding-left:0px;
+  }
+  .forceVisualMessageQueue{
+    width: 50%;
+    margin: 0px auto;
+  }
+  .newCir{
+    padding-bottom: 10px;
+    padding-right: 0px !important;
+  }
+  .sbu{
+    padding-right: 0px !important;
+  }
+  
+  .sDate{
+    padding-right: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .TopPad{
+    padding-left: 0px !important;
+  }
+
+  .FetchSchemes{
+    font-size: 22px;
+  }
+
+  .PrevQries{
+    font-size: 22px;
+}
+
+.Cir
+{
+  font-size: 18px;
+}
+  
+.cirPart
+{
+    font-size: 18px;
+}
+.sbu{
+  padding-right: 0px !important;
+}
+
+.sDate{
+  padding-right: 0px !important;
+}
+}
+
+@media only screen and (max-width: 480px) {
+
+.dwnld-btn{
+  margin-right: 11px;
+}
+
+.TopPad{
+  padding-left: 0px !important;
+}
+.FetchSchemes{
+  padding-top:10px;
+  font-size: 18px;
+}
+
+
+  .PrevQries{
+      font-size: 18px;
+      color: #000000;
+  }
+  
+  .Cir{
+    font-size: 15px;
+    }
+    
+    .cirPart{
+      font-size: 15px;
+    }
+    
+    .CirChild{
+      font-size: 13px;
+    }
+
+    
+
+    .ButtonLeftAlign{
+      text-align: left;
+    }
+
+  .FetchSchemes{
+    padding-right: 0px !important;
+  }
+
+  .cusType{
+    padding-right: 0px !important;
+  }
+
+  .sbu{
+    padding-right: 0px !important;
+  }
+
+  .zone{
+    padding-right: 0px !important;
+  }
+
+  .sDate{
+    padding-right: 0px !important;
+  }
+
+  .eDate{
+    padding-right: 0px !important;
+  }
+
+  @media only screen and (max-width: 330px){
+    .SendAsEmail-button{
+      font-size: 13px;
+    }
+    .dwnld-btn {
+      font-size: 13px;
+    }
+  }
+}

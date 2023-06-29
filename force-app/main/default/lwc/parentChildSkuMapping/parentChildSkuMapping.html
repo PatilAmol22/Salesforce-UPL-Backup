@@ -1,0 +1,111 @@
+<template>
+    <div class="slds-theme_default">
+        
+        <div class="slds-scrollable_x">
+            <template if:true={showSpinner}>
+                <div class="slds-p-around_x-large" >
+                    <lightning-spinner alternative-text={label.PleaseWait} size="medium" ></lightning-spinner>
+                </div>
+            </template>
+            
+            <table aria-multiselectable="true"
+                class="slds-table slds-table_bordered slds-table_col-bordered slds-table_fixed-layout slds-table_resizable-cols"
+                role="grid" aria-label={label.PrentChildMapping} style="border: 1px solid">
+                <thead>
+                    <tr aria-selected="false" class="slds-hint-parent">
+                        <th colspan="2" style="text-align:center; padding:5px; background:rgb(220, 237, 251); color:black; font-weight:700; font-size:16px;">{label.ChildSKU}</th>
+                        <th style="background:rgb(220, 237, 251);"></th>
+                        <th colspan="2" style="text-align:center; padding:5px; background:rgb(220, 237, 251); color:black; font-weight:700; font-size:16px;">{label.ParentSKU}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr aria-selected="false" class="slds-hint-parent">
+                        <td scope="row" colspan="2">
+                            <div >
+                                <c-lookupcmp placeholder={label.SearchSKU} iconname='standard:product' multiselect=false sobject='Product2'
+                                        fieldname='Name' filter={productChildFilter} displayfield={serarchField} onselected={handleChildSelected}
+                                        singleselectedrec={productName} onremove={handleRemoveChild} cmpwidth='long'
+                                        ></c-lookupcmp>
+                            </div>
+                        </td>
+
+                        <td scope="row" >
+                           
+                                <lightning-radio-group name="radioGroup"
+                                    label={label.SearchFields}
+                                    options={options}
+                                    value={value}
+                                    type="radio"
+                                    onchange={handleRadioChange} >
+                                </lightning-radio-group>    
+                            
+                        </td>
+                        <td scope="row" colspan="2">
+                            <div style="width: 100%;">
+                                <div style="width: 50%; float: left;">
+                                    <lightning-input type="file" data-my-id="file_id" label="Upload File" multiple="false" accept=".csv, .CSV" onchange={handleFileChange} disabled={disableUpload}></lightning-input>
+                                    <template if:true={fileName}>
+                                        <span style="color: #3085c9;font-weight: bold;">{fileName} &nbsp;&nbsp; <lightning-button onclick={clearSelectedFile} disabled={disableUpload} variant="base" title="Remove" icon-name="utility:close" class="slds-m-left_x-small"></lightning-button></span>
+                                    </template>                
+                                                    
+                                </div>
+                                <div style="margin-left: 70%;">
+                                    <lightning-button style="position: absolute;margin-top: 6%;" onclick={downloadCSV} variant="brand" label="Download" title="Download action" icon-name="utility:download" icon-position="center" class="slds-m-left_x-small"></lightning-button> 
+                                </div>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <template if:true={isSKUList}>
+                        <template for:each={skuList} for:item="sku" for:index="index">
+                            <tr aria-selected="false" class="slds-hint-parent" key={sku.prodId}>
+                                <td scope="row" colspan="2">
+                                    <div class="slds-truncate" title="">
+                                        {sku.prodName}-{sku.prodCode}
+                                    </div>
+                                </td>
+                                
+                                <td scope="row" style="text-align:center;">
+                                    <div class="slds-truncate" title="">
+                                        <lightning-icon icon-name="utility:forward" alternative-text="forward" title="forward" size="x-small" style="font-size:14px;">
+                                        </lightning-icon>
+                                    </div>
+                                </td>
+
+                                <td scope="row" colspan="2">
+                                    <div class="slds-form-element__control">
+                                        <c-lookupcmp placeholder={label.SearchSKU} iconname='standard:product' multiselect=false sobject='Product2'
+                                        fieldname='Name' filter={product_filter} displayfield={serarchField} onselected={handleProductSelected}
+                                        singleselectedrec={sku.prodNameParent} onremove={handleRemoveProduct} cmpwidth='long'
+                                        disable={disableProduct} data-target-id={index} id={sku.prodId}></c-lookupcmp>
+                                        
+                                    </div>
+                                </td>                       
+                            </tr>
+                        </template>    
+                    </template>
+                    <template if:false={isSKUList}>
+                        <tr aria-selected="false" class="slds-hint-parent">
+                            
+                            <td colspan="5"><div class="slds-truncate" title="" style="text-align:center;"><b>{label.NoRecordsFound}</b></div></td>
+                                                        
+                        </tr> 
+                    </template>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="slds-grid slds-wrap slds-gutters">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="margin:0 auto; text-align:center; padding:10px 0;">
+                <lightning-button variant="brand" label={label.Savemapping} title={label.Savemapping} onclick={handleSaveMapping} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button variant="brand" label={label.Cancel} title={label.Cancel} onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+
+    </div>
+
+</template>

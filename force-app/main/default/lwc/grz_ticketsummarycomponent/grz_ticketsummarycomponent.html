@@ -1,0 +1,240 @@
+<template>
+    <!-- ******************** For India Community ********************-->
+    <template if:false={isBr}>
+        <div>
+            <div class="slds-p-bottom_medium">
+                <div class="slds-grid slds-wrap slds-p-left_xxx-small fontTitleClr" style="border-radius: 3px; border: 1px solid #e5e5e5; background-color: white; padding: 3px;">
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_5-of-12">
+                        <span class="" style="font-size: 15px;"><span class="componentNotoSansBold">From Date: </span>{fiscalYearStartDate}</span>
+                    </div>
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_7-of-12">
+                        <span class="" style="font-size: 15px;"><span class="componentNotoSansBold">To Date: </span>{fiscalYearEndDate}</span>
+                    </div>
+                </div>
+            </div>
+            <template for:each={TicketData} for:item="item" for:index="index">
+                <div  key={item.Id}  class="slds-p-bottom_small">        
+                    <div class="slds-grid slds-wrap slds-p-left_small slds-p-top_small slds-p-bottom_small divstyle shadoweffect">
+                        <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_2-of-12 slds-large-size_1-of-12 borderclr">
+                            <img data-id="tab-1" src={orderIcon} alt="Order Summary" class="slds-p-left_x-small slds-p-top_x-small slds-p-bottom_x-small iconmobile">
+                        </div>
+    
+                        <div class="slds-col slds-x-small-size_10-of-12 slds-medium-size_10-of-12 slds-large-size_11-of-12 slds-p-left_small">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_8-of-12 mobilepadsub">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-bottom_small">
+                                            <div class="slds-p-top_xxx-small fontTitleClr handleoverflowtext" title={item.Subject}>
+                                                <a onclick={nnavigateToRecordView}  href={detailPageLink} title={item.Subject} class="fontTitleClr" data-id={item.Id} target="_blank">  
+                                                    {item.Subject}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_7-of-12 slds-large-size_7-of-12 mobilepadsub">
+                                            <span class="fontlableClr">Issue Type: </span>
+                                            <span class="fontTextClr" title={item.Type}> {item.Type} </span>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12 mobilepadsub">
+                                            <span class="fontlableClr">Owner: </span>
+                                            <span class="fontTextClr" title={item.AssignTo}> {item.AssignTo} </span></span>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_12-of-12 hideindesktop mobilepadsub tabpadding">  
+                                            <div class="slds-p-bottom_xx-small">
+                                                <span class="fontlableClr">Created Date: </span>
+                                                <span class="fontTextClr">{item.CreatedDate}</span>
+                                            </div>                                                   
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <!-- <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_7-of-12 slds-large-size_7-of-12 mobilepadsub">
+                                    <span class="fontlableClr">Issue Type:</span>
+                                    <span class="fontTextClr"> {item.Type} </span>
+    
+                                </div>
+                                
+                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12 mobilepadsub">
+                                    <span class="fontlableClr">Owner:</span>
+                                    <span class="fontTextClr"> {item.AssignTo} </span></span>
+                                </div>
+    
+                                <div class="slds-col slds-x-small-size_12-of-12 hideindesktop mobilepadsub">  
+                                    <div class="slds-p-bottom_xx-small">
+                                        <span class="fontlableClr">Created Date: </span>
+                                        <span class="fontTextClr">{item.CreatedDate}</span>
+                                    </div>                                                   
+                                </div> -->
+    
+                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 borderleft hideinmobile">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_small slds-p-bottom_xx-small mobilecasenopadding">
+                                            <span class="fontlableClr">Case Number: </span>
+                                            <span class="fontTextClr">
+                                                <a onclick={nnavigateToRecordView} href={detailPageLink} class="" title="View Case Detail" data-id={item.Id} target="_blank">
+                                                    {item.CaseNumber}
+                                                </a>                           
+                                            </span>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_small slds-p-bottom_xx-small hideinmobile">  
+                                            <div class="borderbottom slds-p-bottom_xx-small">
+                                                <span class="fontlableClr">Created Date: </span>
+                                                <span class="fontTextClr">{item.CreatedDate}</span>
+                                            </div>                                                   
+                                        </div>
+                                        <div class="slds-p-left_small slds-p-bottom_xx-small slds-p-top_xx-small slds-text-align_center">             
+                                            <div class="statuscls">
+                                                <span class="slds-text-align_right slds-p-around_xxx-small">{item.Status}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                </div>
+    
+                            </div>
+                                
+                        </div>
+    
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 borderleft hideindesktop">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_7-of-12 slds-large-size_12-of-12 slds-text-align_center slds-p-left_small slds-p-bottom_xx-small mobilecasenopadding textalignleft">
+                                    <span class="fontlableClr">Case Number: </span>
+                                    <span class="fontTextClr">
+                                        <a onclick={nnavigateToRecordView} class="" title="View Case Detail" data-id={item.Id} target="_self">
+                                            {item.CaseNumber}
+                                        </a>                           
+                                    </span>
+                                </div>
+                                <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_small slds-p-bottom_xx-small hideinmobile">  
+                                    <div class="borderbottom slds-p-bottom_xx-small">
+                                        <span class="fontlableClr">Created Date: </span>
+                                        <span class="fontTextClr">{item.CreatedDate}</span>
+                                    </div>                                                   
+                                </div>
+                                <div class="slds-p-left_small slds-p-bottom_xx-small slds-p-top_xx-small slds-text-align_center statuscls">             
+                                    
+                                    <span class="slds-p-around_xxx-small">{item.Status}</span>
+                        
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div if:true={nodata}>
+                <p class="slds-text-align_center nodatacss">No Tickets Data to Display</p>
+            </div>
+        </div>
+    </template>
+    <!-- ******************** For Brazil Community ********************-->
+    <template if:true={isBr}>
+        <div>
+            <template for:each={TicketData} for:item="item" for:index="index">
+                <div  key={item.Id}  class="slds-p-bottom_small">  
+                    <!--GRZ(Swaranjeet) : APPS-947 PO & Delivery Date :30-08-2022-->      
+                    <div class="slds-grid slds-wrap slds-p-left_small slds-p-top_small slds-p-bottom_small divstyle shadoweffect">
+                        <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_2-of-12 slds-large-size_1-of-12 borderclr">
+                            <img data-id="tab-1" src={orderIcon} alt="Order Summary" class="slds-p-left_x-small slds-p-top_x-small slds-p-bottom_x-small iconmobile">
+                        </div>
+                        <div class="slds-col slds-x-small-size_10-of-12 slds-medium-size_10-of-12 slds-large-size_11-of-12 slds-p-left_small">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_8-of-12 mobilepadsub">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-bottom_small">
+                                            <div class="slds-p-top_xxx-small fontTitleClr handleoverflowtext" title={item.Subject}>
+                                                <a onclick={nnavigateToRecordView}  href={detailPageLink} title={item.Subject} class="fontTitleClr" data-id={item.Id} target="_blank">  
+                                                    {item.Subject}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 mobilepadsub">
+                                            <!--<span class="fontlableClr">Tipo de Atendimento: </span>-->
+                                            <span class="fontlableClr">{CaseType}: </span>
+                                            <span class="fontTextClr" title={item.Type}> {item.Type} </span>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 mobilepadsub">
+                                            <span class="fontlableClr">{CaseOwner}: </span>
+                                            <span class="fontTextClr" title={item.AssignTo}> {item.AssignTo} </span></span>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_12-of-12 hideindesktop mobilepadsub tabpadding">  
+                                            <div class="slds-p-bottom_xx-small">
+                                                <span class="fontlableClr">{CreateDate}: </span>
+                                                <span class="fontTextClr">{item.CreatedDate}</span>
+                                            </div>                                                   
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <!-- <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_7-of-12 slds-large-size_7-of-12 mobilepadsub">
+                                    <span class="fontlableClr">Issue Type:</span>
+                                    <span class="fontTextClr"> {item.Type} </span>
+    
+                                </div>
+                                
+                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12 mobilepadsub">
+                                    <span class="fontlableClr">Owner:</span>
+                                    <span class="fontTextClr"> {item.AssignTo} </span></span>
+                                </div>
+    
+                                <div class="slds-col slds-x-small-size_12-of-12 hideindesktop mobilepadsub">  
+                                    <div class="slds-p-bottom_xx-small">
+                                        <span class="fontlableClr">Created Date: </span>
+                                        <span class="fontTextClr">{item.CreatedDate}</span>
+                                    </div>                                                   
+                                </div> -->
+    
+                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 borderleft hideinmobile">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_small slds-p-bottom_xx-small mobilecasenopadding">
+                                            <span class="fontlableClr">{CaseNumber}: </span>
+                                            <span class="fontTextClr">
+                                                <a onclick={nnavigateToRecordView} href={detailPageLink} class=""  data-id={item.Id} target="_blank">
+                                                    {item.CaseNumber}
+                                                </a>                           
+                                            </span>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_small slds-p-bottom_xx-small hideinmobile">  
+                                            <div class="borderbottom slds-p-bottom_xx-small">
+                                                <span class="fontlableClr">{CreateDate}: </span>
+                                                <span class="fontTextClr">{item.CreatedDate}</span>
+                                            </div>                                                   
+                                        </div>
+                                        <div class="slds-p-left_small slds-p-bottom_xx-small slds-p-top_xx-small slds-text-align_center">             
+                                            <div class="statuscls">
+                                                <span class="slds-text-align_right slds-p-around_xxx-small">{item.Status}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 borderleft hideindesktop">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_7-of-12 slds-large-size_12-of-12 slds-text-align_center slds-p-left_small slds-p-bottom_xx-small mobilecasenopadding textalignleft">
+                                    <span class="fontlableClr">{CaseNumber}: </span>
+                                    <span class="fontTextClr">
+                                        <a onclick={nnavigateToRecordView} href={detailPageLink} class=""  data-id={item.Id} target="_self">
+                                            {item.CaseNumber}
+                                        </a>                           
+                                    </span>
+                                </div>
+                                <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_small slds-p-bottom_xx-small hideinmobile">  
+                                    <div class="borderbottom slds-p-bottom_xx-small">
+                                        <span class="fontlableClr">{CreateDate}: </span>
+                                        <span class="fontTextClr">{item.CreatedDate}</span>
+                                    </div>                                                   
+                                </div>
+                                <div class="slds-p-left_small slds-p-bottom_xx-small slds-p-top_xx-small slds-text-align_center statuscls">             
+                                    <span class="slds-p-around_xxx-small">{item.Status}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div if:true={nodata}>
+                <p class="slds-text-align_center nodatacss">{NoData}</p>
+            </div>
+        </div>
+    </template>
+</template>

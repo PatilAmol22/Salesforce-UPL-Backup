@@ -1,0 +1,136 @@
+.THIS {
+    font-family:myfontregular; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+}
+.THIS .testMar {
+    margin-bottom:60px;
+}
+@font-face {
+    font-family:myfontregular; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+    src: url(/resource/myfontregular) 
+}
+@font-face {
+    font-family:myfontlight; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+    src: url(/resource/myfontlight) 
+}
+.THIS label {
+    font-family:myfontregular;
+    font-weight:normal;
+    font-size:12px; color:#000;
+}
+.THIS .titleregular {
+    font-family:myfontlight;
+    font-weight:normal;
+    font-size:36px; color:#000;
+}
+.THIS .slds-box {
+    font-family:myfontregular;
+    font-weight:normal!important;
+    font-size:12px;
+    color:#000;
+}
+.THIS .slds-button_success, .THIS .slds-button--success {
+    background:#fff; text-transform:uppercase; 
+    padding-left:25px; padding-right:25px;
+    color:#ff7701; border:1px solid #ff7701; 
+    border-radius:0;
+}
+.THIS .slds-button_success:hover, .THIS .slds-button--success:hover {
+    background:#fff; text-transform:uppercase;
+    color:#ff7701; border-radius:0;
+}
+.THIS.hideLabel label{
+    display:none;
+    font-weight:normal;
+    font-size:12px;
+}
+.THIS .orange {
+/* background-image: url("/resource/1607681640000/orangeback?") !important;  */
+}
+
+.THIS .slds-page-header_title{
+    font-family:myfontlight; 
+    font-size:36px; color:#000;
+}
+
+.THIS .orange2 {
+ /*background-image: url("/resource/1607353497000/bg1?") !important;*/
+    /* background-image: url("https://us-test.upl-ltd.com/product_type/leafs/yIYVj9dsdzzKjFff6rxPUR58rYsrdyGXOvxlfjGl.png"); */
+ padding-top:20px;   
+ padding:10px;
+ background-repeat: no-repeat;
+ height:150px;
+ text-align: center;
+ line-height: 120px;
+ margin:0 auto;
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+.THIS .brddesk{
+   border-bottom:1px solid #ccc;
+   margin:10px; width:48%;
+   margin-bottom:30px;     
+}
+}
+
+
+@media only screen and (max-width: 768px) {
+.THIS .brddesk{
+   border-bottom:0px solid #ccc;
+   margin:0;     
+}    
+.THIS .brdbtm {
+        border-bottom:1px solid #ccc;
+        padding-bottom:15px;
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+}
+
+
+
+/* ****************Product Details css **************************** */
+.THIS .lab{
+    
+    color: #28a44a;
+    font-size: 22px !important;
+}
+
+.THIS .pdf {
+    float:left; margin-left:-50px;
+        }
+.THIS .btmbrd
+{
+border-bottom:1px solid #ccc; margin-top: 10px;
+}
+
+.THIS .img {
+    max-width: 100%; 
+     height: auto;
+}
+
+.THIS .bgimg{
+    padding:40px;
+    
+}
+
+@media only screen and (max-width: 768px) {
+   .THIS .pdf {
+    float:left; margin-left:0px;
+        }
+    
+ .THIS .btmbrd
+{
+border-bottom:0px solid #ccc; margin-top: 0px;
+}
+   
+.THIS .img {
+    max-width: 30px; 
+    /* height: auto; */
+}
+}

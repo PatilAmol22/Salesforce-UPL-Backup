@@ -1,0 +1,108 @@
+<template>
+    <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+    
+    <template if:true={isModalOpen}>
+        
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <template if:true={showSpinner}>
+                <div class="exampleHolder">
+                    <lightning-spinner alternative-text={label.PleaseWait} size="medium" ></lightning-spinner>
+                </div>
+            </template>
+            <div class="slds-modal__container">
+                
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={label.Close} onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text={label.Close}
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">{label.Close}</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{label.UploadLiquidation}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <template if:false={isPoland}>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
+                                <lightning-input type="text" label={label.SalesDistrict} value={salesDistName} placeholder={label.SalesDistrict} disabled required></lightning-input>
+                            </div>
+                       
+                        
+
+                        <!-- <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                            <lightning-input type="text" label={label.Distributor} value={distributorName} placeholder={label.Distributor} disabled required></lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+                            <lightning-input type="text" label={label.SalesOrgCode} value={salesOrgCode} placeholder={label.SalesOrgCode} disabled required></lightning-input>
+                        </div> -->
+
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                            <lightning-input type="text" label={label.Year} value={year} placeholder={label.Year} disabled required></lightning-input>
+                        </div>
+                        
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12" >
+                                <lightning-input type="text" label={label.Month} value={month} placeholder={label.Month} disabled required></lightning-input>
+                            </div>
+                        </template>
+                        <template if:true={isPoland}>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                                <lightning-input type="text" label={label.Year} value={year} placeholder={label.Year} disabled required></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12" >
+                                <lightning-input type="text" label={label.Quarter} value={polish_quarter_val} placeholder={label.Quarter} disabled required></lightning-input>
+                            </div>
+                        </template>
+                        
+                    </div>
+
+                    <template if:true={hideUpload}>
+                        <div class="slds-grid slds-wrap slds-gutters" >
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12"></div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                                <div class="slds-p-around_medium lgc-bg">
+                                    <lightning-input type="file" data-my-id="file_id" label={label.Attachment} onchange={handleFileChange} accept=".csv, .CSV" required message-when-value-missing={label.Pleaseuploadfile}></lightning-input>
+                                    <span>{fileName}</span>
+                                </div>
+                                
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top: 40px;">
+                                <lightning-button variant="brand" label={label.Upload} title={label.Upload} onclick={handleSubmitClick} disabled={disableUpload} icon-name="utility:upload" class="slds-m-left_x-small"></lightning-button>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12"></div>
+                        </div>
+                    </template>
+
+                    <div class="slds-grid slds-wrap slds-gutters" style="border-top: 1px solid #ccc;margin-top: 10px;">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top: 10px;"> 
+                            {label.Instructions} :-
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_10-of-12" style="margin-top: 10px;">
+                            <ol style="list-style-type: disc;">
+                                <li>{label.MustBeCSV}</li>
+                                <li>{label.DecimalNotAllowed}</li>
+                                <li>{label.ColumnSequense}</li>
+                                <li>{label.MonthAsStandardAbbreviation}</li>
+                                <li>{label.DoNotIncludeEmptyRows}</li>
+                                <li> <a href={templateLink}> {label.DownloadTemplate}</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                   
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title={label.Cancel}>{label.Cancel}</button>
+                    <!-- <button class="slds-button slds-button_brand" onclick={closeModal} title="OK">OK</button> -->
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    
+</template>

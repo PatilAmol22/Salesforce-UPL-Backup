@@ -1,0 +1,162 @@
+<aura:component access="global" controller="PolandOrderSearchController" 
+ implements="lightning:actionOverride,lightning:isUrlAddressable,force:appHostable,force:hasRecordId,flexipage:availableForAllPageTypes,force:hasSObjectName,force:lightningQuickAction">
+
+ <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+ <aura:attribute name="orderList" type="PolandOrderSearchController.OrderWrapper[]"/>
+ <aura:attribute name="PageNumber" type="integer" default="1"/>
+ <aura:attribute name="TotalPages" type="integer" default="0"/>
+ <aura:attribute name="TotalRecords" type="integer" default="0"/>
+ <aura:attribute name="RecordStart" type="integer" default="0"/>
+ <aura:attribute name="RecordEnd" type="integer" default="0"/>
+ <aura:attribute name="selectedPBRecord" type="sObject" default="{}"/>
+ <aura:attribute name="showSpinner" type="boolean" default="false"/>
+ <aura:attribute name="defaultPageSize" type="integer" default="10"/>
+
+
+ <aura:if isTrue="{!v.showSpinner}">
+        <div class="slds-spinner_container slds-is-fixed">
+            <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+        </div> 
+ </aura:if>
+
+ <div class="slds-grid slds-wrap" style="background:#ededed; padding:10px; border-radius:5px 5px 0 0;">
+        
+        
+    <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+        
+        <span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px;">
+            <lightning:icon iconName="standard:product_item" alternative-text="product_item" size="medium"/>
+        </span>
+        
+        <h1 style="float:left; margin:8px; font-size:22px;">
+            <span class="slds-page-header_title" title="Opportunity Product">{!$Label.c.Sales_Order_Line_Item_Search}</span>
+        </h1>
+    </div>  
+</div>
+
+<div class="slds-box slds-theme_default">
+
+<div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+    
+        <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12" >
+            <span ></span>
+            <c:DynamicLookup aura:id="skuId" label="{!$Label.c.SKU}" objectAPIName="SKU__c" IconName="standard:catalog" selectedRecord="{!v.selectedPBRecord}" displayField="SKU_Description__c" displayFieldSecond="SKU_Code__c" queryFields=" , SKU_Code__c, SKU_Description__c" Filter=" AND Sales_Org_Code__c ='2941' AND Active__c = True" />
+        </div>
+    
+       <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+            <lightning:input type="date" aura:id="strt_date" name="strt_date" label="{!$Label.c.Start_Date}" />
+        </div>
+      
+      <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+            <lightning:input type="date" aura:id="end_date" name="end_date" label="{!$Label.c.End_Date}" />
+        </div>
+</div>
+    
+    <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+        <div class="slds-large-size_12-of-12" style="border-bottom:1px solid #ccc;">&nbsp;</div>
+    </div>
+     
+    
+ <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12"></div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <lightning:button label="{!$Label.c.Search}" iconName="utility:search" iconPosition="right" variant="brand" onclick="{!c.searchOrders}" />
+            <lightning:button label="{!$Label.c.Reset}" iconName="utility:close" iconPosition="right" variant="brand" onclick="{!c.resetData}"/>
+            <lightning:button label="{!$Label.c.Download_as_Excel}" iconName="utility:download" iconPosition="right" variant="brand"  onclick="{!c.downloadCSV}"/>
+        </div>        
+    </div>  
+    
+    
+    <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+        <div class="slds-col slds-large-size_1-of-12" style="margin-top:25px; font-weight:600;">{!$Label.c.Show}</div>
+        <div class="slds-col slds-large-size_1-of-12" style="margin-left:-50px;">
+            <lightning:select aura:id="pageSize" name="pageSize"  onchange="{!c.onSelectChange}">
+                <option value="{!v.defaultPageSize}">{!v.defaultPageSize}</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>    
+            </lightning:select>
+        </div>
+        <div class="slds-col slds-large-size_1-of-12" style="margin-top:25px; font-weight:600;">{!$Label.c.entries}</div>
+    </div>
+    
+    
+    <div style="border:1px solid #ccc; margin-top:10px;" class="slds-scrollable_x">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="{!$Label.c.Sales_Order_Number}">{!$Label.c.Sales_Order_Number}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="{!$Label.c.SAP_Order_Number}">{!$Label.c.SAP_Order_Number}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="{!$Label.c.SKU_Code}">{!$Label.c.SKU_Code}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="{!$Label.c.SKU_Description}">{!$Label.c.SKU_Description}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="{!$Label.c.Date_of_Approval}">{!$Label.c.Date_of_Approval}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="{!$Label.c.Ordered_Qty}">{!$Label.c.Ordered_Qty}</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:if isTrue="{!v.orderList.length != 0}">
+                    <aura:iteration items="{!v.orderList}" var="ord"> 
+                        <tr class="slds-hint-parent">
+                            <th data-label="Opportunity Name" scope="row">
+                                <div class="slds-truncate" title="">{!ord.Sale_Order__r.Name}</div>
+                            </th>
+                            <td data-label="Account Name">
+                                <div class="slds-truncate" title="">{!ord.Sale_Order__r.SAP_Order_Number__c}</div>
+                            </td>
+                            <td data-label="Close Date">
+                                <div class="slds-truncate" title="">{!ord.SKU_Code__c}</div>
+                            </td>
+                            <td data-label="Close Date">
+                                <div class="slds-truncate" title="">{!ord.SKU_Description__c}</div>
+                            </td>
+                            <td data-label="Account Name">
+                                <div class="slds-truncate" title="">{!ord.Sale_Order__r.Order_Approval_Date__c}</div>
+                            </td>
+                            <td data-label="Close Date">
+                                <div class="slds-truncate" title="">{!ord.Quantity__c }</div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                <aura:set attribute="else">
+                        <tr class="slds-hint-parent">    
+                            <td></td>
+                            <td></td>
+                            <td><div class="slds-truncate"><b>{!$Label.c.No_Records_Found}</b></div></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+               </aura:set>
+              </aura:if>  
+            </tbody>
+        </table>
+    </div> 
+    
+    
+        <div class="slds-clearfix" style="margin-top:10px;">
+            <div class="slds-page-header" role="banner">
+                <div class="slds-float_right">            
+                    <lightning:button disabled="{!v.PageNumber == 1}" variant="brand" aura:id="prevPage" label="{!$Label.c.Previous}" onclick="{!c.handlePrev}" />            
+                    <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="{!$Label.c.Next}" onclick="{!c.handleNext}"/>
+                </div>
+                    <p class="slds-page-header" style="font-weight:600;">{!v.RecordStart} - {!v.RecordEnd} &nbsp;{!$Label.c.of} &nbsp;{!v.TotalRecords} | {!$Label.c.Page} &nbsp;{!v.PageNumber} &nbsp;{!$Label.c.of} &nbsp;{!v.TotalPages}</p>
+            </div>
+        </div>
+    
+</div>
+
+</aura:component>

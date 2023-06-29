@@ -1,0 +1,430 @@
+<!--********************************************************************************************
+* Name			    : Grz_ColombiaAR.html
+* Description	    : LWC component to show AR data via SAP Integration
+* Apex Controller	: Grz_ColombiaControllerAR 
+* Created By	    : RITM0537888 Nikhil Verma (Grazitti) 12-04-2023
+* **********************************************************************************************-->
+<template>
+     <template if:true={isSpinner}>
+        <div class="">
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <template if:true={isProgressBar}>
+        <div class="slds-m-top_xx-large">
+            <div>
+                <lightning-progress-bar size="medium" value={progress} variant="circular"></lightning-progress-bar>
+            </div>
+            <div class="slds-text-align--center slds-text-title" style="color:rgb(244 121 32); font-size: 15px;">
+                {processStatus}
+            </div>
+        </div>
+    </template>
+    <div class=" slds-m-bottom_large slds-m-top_x-large component-block-contract">
+        <div class="slds-grid slds-wrap ">
+            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_8-of-12 slds-p-left_x-small slds-p-right_x-small">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="contract-class componentNotoSansBold">
+                            Fecha del documento:
+                        </div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-left_small slds-p-right_small mobile-font-date">
+                        <lightning-input  placeholder="Fecha de inicio" label="Fecha de inicio" type="date" value={documentStartDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startDateChange}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-left_small slds-p-right_small mobile-font-date">
+                        <lightning-input  placeholder="Fecha final" label="Fecha final" type="date" value={documentEndDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={endDateChange}></lightning-input>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-left_x-small slds-p-right_x-small">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12 slds-p-right_small s-btn-div">
+                        <button class="search-btn-contract componentNotoSansBold" onclick={handleARSearch}>Obtener el estado</button>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12 slds-p-left_small c-btn-div">                                            
+                        <button class="cancel-btn-contract componentNotoSansBold" onclick={handleARCancel}>Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+     <template if:true={showBlock}>
+        <div if:false={isLoading}>
+            <template if:false={isMobile}>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                    <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-border_top " style="padding: 1.5%; background-color: white;margin-top: 2%;">
+                        <div class="slds-grid slds-wrap data-font-size componentNotoSansMedium">
+                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                            <span>Total vencida:  </span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                            <span class="">
+                                                <lightning-formatted-number value={totalOverdue} minimum-fraction-digits="0"></lightning-formatted-number>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                            <span>Total no Vencido:  </span>
+                                        </div> 
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                            <span class=""><lightning-formatted-number value={notYetDue} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_medium hidePadding borderleft">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                            <span>Vencimento 0-30 dias:  </span>
+                                        </div> 
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                            <span class=""><lightning-formatted-number value={upto_0_30} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                        </div> 
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                            <span>Vencimento 31-60 dias:  </span>
+                                        </div> 
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                            <span class=""><lightning-formatted-number value={upto_31_60} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                            <span>Vencimento 61-90 dias:  </span>
+                                        </div> 
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                            <span class=""><lightning-formatted-number value={upto_61_90} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                            <span>Vencimiento +91 dias:  </span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                            <span class=""><lightning-formatted-number value={after_91} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!--For Mobile view Starts-->
+        <template if:true={isMobile}>
+            <article class="slds-card">
+               <div class="slds-col slds-size_12-of-12  slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                  <div class="slds-card-half">
+                     <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                        <div class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                           <b>Total vencida :</b>
+                        </div>
+                        <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                           <b>{totalOverdue}</b>
+                        </div>
+
+                     </div>
+                  </div>
+                  <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                     <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                        <b>Total no Vencido :</b>
+                     </div>
+                     <div class="slds-col slds-float_left slds-size_6-of-12">
+                        <b> {notYetDue}</b>
+                     </div>
+
+                  </div>
+                  <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                     <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                        <b>Vencimento 0-30 dias :</b>
+                     </div>
+                     <div class="slds-col slds-float_left slds-size_6-of-12">
+                        <b> {upto_0_30}</b>
+                     </div>
+
+                  </div>
+                  <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                     <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                        <b>Vencimento 31-60 dias :</b>
+                     </div>
+                     <div class="slds-col slds-float_left slds-size_6-of-12">
+                        <b> {upto_31_60}</b>
+                     </div>
+
+                  </div>
+                  <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                     <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                        <b>Vencimento 61-90 dias :</b>
+                     </div>
+                     <div class="slds-col slds-float_left slds-size_6-of-12">
+                        <b> {upto_61_90}</b>
+                     </div>
+
+                  </div>
+                  <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                     <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                        <b>Vencimiento +91 dias :</b>
+                     </div>
+                     <div class="slds-col slds-float_left slds-size_6-of-12">
+                        <b>{after_91}</b>
+                     </div>
+                  </div>
+                </div>
+            </article>
+        </template>
+             <div class=" slds-m-bottom_large component-block">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <div class="search-box">
+                            <lightning-input name="enter-search"
+                                                placeholder="Buscar doc. número" 
+                                                value = {searchKeyBar}
+                                                type="search"
+                                                class="slds-col slds-m-left_small slds-m-right_small margin-mob"
+                                                onchange = {onChangeSearch}>
+                            </lightning-input>
+                       </div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+                        <div class="slds-m-left_small slds-m-right_small">
+                            <lightning-input  placeholder="Vencimento início" label = "Vencimento início" type="date" value={dueDateStart}  onchange={getDueDateStart}></lightning-input>                        
+                         </div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+                        <div class="slds-m-left_small slds-m-right_small">
+                            <lightning-input  placeholder="Vencimento final" label = "Vencimento final" type="date" value={dueDateEnd}  onchange={getDueDateEnd}></lightning-input>                        
+                         </div>
+                    </div>
+                </div>
+                <div if:true={isDataNull} class="alert-section cust-data slds-p-top_small slds-p-bottom_small slds-p-left_xxx-small">
+                    <div class="componentNotoSansBold count-div"><nobr>{recordCount} registros</nobr></div>
+                </div>
+                <div if:true={isDataNull} class=""> 
+                    <template if:false={isMobile}>
+                    <div class="table-head-div">
+                        <div class={overdueTableScroll}>
+                            <table class="slds-m-bottom_small">
+                                <thead class="table-head">
+                                    <tr style="background-color: #f7f7f7;" class="fixed-header-row1">
+                                        <th class="slds-p-left_small cell-height-bal display-flex align-items-center" scope="col" onclick ={sortDocDate} style="cursor:pointer;">
+                                            <div class="slds-truncate">Doc. Fecha</div>
+                                        </th>
+                                        <th class="slds-p-left_small cell-height-bal" scope="col">
+                                            <div class="display-flex align-items-center">
+                                                <div class="slds-truncate">Doc. Número</div>
+                                            </div>
+                                        </th>
+                                        <th class="slds-p-left_small cell-height-bal " scope="col">
+                                            <div class="slds-truncate">Doc. Tipo</div>
+                                        </th>
+                                        <th class="slds-p-left_small cell-height-bal " scope="col">
+                                            <div class="slds-truncate">Doc. Descripción</div>
+                                        </th>
+                                        <th class="slds-p-left_small cell-height-bal " scope="col" style="text-align: right;">
+                                            <div class="display-flex align-items-center">
+                                              <div class="slds-truncate">Valor de la factura</div>    
+                                         </div>
+                                        </th>
+                                        <th class="slds-p-left_small cell-height-bal" scope="col" style="text-align: center;">
+                                            <div class="display-flex align-items-center">                                     
+                                                 <div class="slds-truncate">Plazo de pago</div>
+                                            </div>
+                                        </th>
+                                        <th class="slds-p-left_small cell-height-bal" scope="col">
+                                            <div class="display-flex align-items-center">
+                                               <div class="slds-truncate">Fecha de vencimiento</div>
+                                        </div>
+                                        </th>
+                                        <th class="slds-p-left_small cell-height-bal" scope="col">
+                                            <div class="display-flex align-items-center">
+                                              <div class="slds-truncate">Atrasada</div>
+                                            </div>   
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={tempRecords} for:item="item">
+                                        <tr key={item.Id} class="slds-border_top table-body-data">
+                                            <td class="slds-p-left_small cell-height" scope="col">
+                                                <div class="slds-truncate">
+                                                    <lightning-formatted-date-time value={item.DocDate}></lightning-formatted-date-time>
+                                                </div>
+                                            </td>
+                                            <td class="slds-p-left_small cell-height" scope="col">
+                                                <div class="slds-truncate">{item.DocNo}</div>
+                                            </td>
+                                            <td class="slds-p-left_small cell-height" scope="col">
+                                                <div class="slds-truncate">{item.DocType}</div>
+                                            </td>
+                                            <td class="slds-p-left_small cell-height" scope="col">
+                                                <div class="slds-truncate">{item.docDes}</div>
+                                            </td>
+                                            <td class="slds-p-left_small cell-height" scope="col" style="text-align: right;">
+                                                <lightning-formatted-number value={item.decimalAmt} minimum-fraction-digits="0"></lightning-formatted-number>
+                                            </td> 
+                                            <td class="slds-p-left_small cell-height" scope="col" style="text-align: center;">
+                                                <div class="slds-truncate">{item.DsctDays1}</div>
+                                            </td>
+                                            <td class="slds-p-left_small cell-height" scope="col">
+                                                <div class="slds-truncate">
+                                                    <lightning-formatted-date-time value={item.DueDate}></lightning-formatted-date-time>
+                                                </div>
+                                            </td>
+                                            <td class="slds-p-left_small cell-height" scope="col">
+                                                <template if:true={item.overDued}>
+                                                    <div class="slds-truncate">
+                                                        <img src={dislike} height="40" width="40">
+                                                    </div>
+                                                </template>
+                                                <template if:false={item.overDued}>
+                                                    <div class="slds-truncate">
+                                                        <img src={like} height="40" width="40">
+                                                    </div> 
+                                                </template>
+                                            </td>                
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </template>
+                <!--For Mobile Starts Here-->
+                <template if:true={isMobile}>
+                   <template for:each={tempRecords} for:item="item">
+                       <div key={item.Id} data-id={item.Id}>
+                          <article class="slds-card">
+                             <div class="slds-col slds-size_12-of-12  slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <div class="slds-card-half">
+                                   <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                      <div
+                                         class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                                         <b>Doc. Fecha</b>
+                                      </div>
+                                      <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                                       <lightning-formatted-date-time value={item.DocDate}></lightning-formatted-date-time>
+                                      </div>
+     
+                                   </div>
+                                </div>
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                   <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                      <b>Doc. Número</b>
+                                   </div>
+                                   <div class="slds-col slds-float_left slds-size_6-of-12">
+                                      <b> {item.DocNo}</b>
+                                   </div>
+     
+                                </div>
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                   <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                      <b>Doc. Tipo</b>
+                                   </div>
+                                   <div class="slds-col slds-float_left slds-size_6-of-12">
+                                      <b> {item.DocType}</b>
+                                   </div>
+     
+                                </div>
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                   <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                      <b>Doc. Descripción</b>
+                                   </div>
+                                   <div class="slds-col slds-float_left slds-size_6-of-12">
+                                      <b>{item.docDes}</b>
+                                   </div>
+     
+                                </div>
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                   <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                      <b>Valor de la factura</b>
+                                   </div>
+                                   <div class="slds-col slds-float_left slds-size_6-of-12">
+                                       <lightning-formatted-number value={item.decimalAmt} minimum-fraction-digits="0"></lightning-formatted-number>
+                                   </div>
+     
+                                </div>
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                   <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                      <b>Plazo de pago</b>
+                                   </div>
+                                   <div class="slds-col slds-float_left slds-size_6-of-12">
+                                      <b> {item.DsctDays1}</b>
+                                   </div>
+     
+                                </div>
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                   <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                      <b>Fecha de vencimiento</b>
+                                   </div>
+                                   <div class="slds-col slds-float_left slds-size_6-of-12">
+                                       <lightning-formatted-date-time value={item.DueDate}></lightning-formatted-date-time>
+                                   </div>
+     
+                                </div>
+
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                   <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                      <b>Atrasada</b>
+                                   </div>
+                                   <div class="slds-col slds-float_left slds-size_6-of-12">
+                                       <template if:true={item.overDued}>
+                                           <div class="slds-truncate">
+                                               <img src={dislike} height="40" width="40">
+                                           </div>
+                                       </template>
+                                       <template if:false={item.overDued}>
+                                           <div class="slds-truncate">
+                                               <img src={like} height="40" width="40">
+                                           </div> 
+                                       </template>
+                                   </div>
+     
+                                </div>
+     
+                             </div>
+     
+                          </article>
+                       </div>
+     
+                    </template>
+               </template>
+               <!--For Mobile Starts Here-->
+               
+                </div>
+                <div if:true={nodata}>
+                    <template if:true={isSuccess}>
+                        <p class="slds-text-align_center nodatacss">{message}</p>
+                    </template>
+                </div>
+                <!--Updated Logic GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+                <div if:false={isSuccess}>
+                    <p class="slds-text-align_center nodatacss">Não há dados disponíveis</p>
+               </div>
+            </div>
+        </div>
+    </template>
+    <div if:true={isLoading} class="slds-is-relative">
+         <lightning-spinner alternative-text="Loading..." variant="brand" class="spinner-css"></lightning-spinner>
+    </div>
+ </template>

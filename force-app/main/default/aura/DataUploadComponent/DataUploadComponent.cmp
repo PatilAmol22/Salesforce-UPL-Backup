@@ -1,0 +1,80 @@
+<aura:component controller="DataUploadController" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="FileName" type="string" />
+    <aura:attribute name="doc" type="string" />
+    <aura:attribute name="doc1" type="string" />
+    <aura:attribute name="UploadType" type="List" />
+    
+    <body class="bgColor">
+        <ui:outputText aura:id="Success" class="slds-align_absolute-center success-text slds-hide"  value="Update Successful"></ui:outputText>    
+        <ui:outputText aura:id="selectfile" class="slds-align_absolute-center error-text slds-hide"  value="{!$Label.c.SICerrorfile}"></ui:outputText>
+        <br />
+        <br />
+        <div class="slds-tabs_default">
+            <ul class="slds-tabs_default__nav" role="tablist">
+                <li class="slds-tabs_default__item slds-is-active" title="File Upload" role="presentation">
+                    <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">File Upload</a>
+                </li>
+            </ul>
+            <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                <lightning:layout>
+                    <lightning:layoutItem flexibility="auto"  size="4">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="5">
+                        <lightning:select aura:id="uploadselect" name="uploadselect" label="Upload Type" required="true" onchange="{! c.onSelectchange}">
+                            <option text="Select" value="Select"/>
+                            <aura:iteration items="{!v.UploadType}" var="type">
+                                <option text="{!type}" value="{!type}"/>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="3">
+                    </lightning:layoutItem>
+                </lightning:layout>      
+                <lightning:layout>
+                    <lightning:layoutItem flexibility="auto"  size="2">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="3">
+                        <div class="slds-clearfix slds-p-top_x-large">
+                            <label class="slds-form-element__label slds-float_right"><aura:unescapedHtml value="Attach CSV"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="7">           
+                        <lightning:input aura:id="fileId" type="file" name="file" multiple="false" onchange="{!c.onFileUploaded}"/> 
+                        <ui:outputText aura:id="filename" class="slds-hide" value="{!v.FileName}"></ui:outputText>
+                        
+                    </lightning:layoutItem>
+                </lightning:layout>
+                
+                <br/>
+                <br/>
+                <!-- button-->  
+                <div class="slds-align_absolute-center">
+                    <lightning:button label="{!$Label.c.UploadButton}" 
+                                      variant="brand"
+                                      onclick="{!c.fileSelected}"/>    
+                </div>
+                <br/>
+                <br/> 
+            </div>
+            <lightning:accordion aura:id="accordion" activeSectionName="A">
+                <lightning:accordionSection name="A" label="Instructions for uploading CSV">
+                    <aura:set attribute="body">
+                        <p>&nbsp;&nbsp;=>File to be uploaded must be in CSV format.<br></br>
+                            &nbsp;&nbsp;=>Please follow the same column sequence as given in the template.<br></br>
+                            &nbsp;&nbsp;=>Download the template and upload the data.<br></br>
+                            &nbsp;&nbsp;=>Once the file gets uploaded, you will receive an email notification.</p>
+                    </aura:set>
+                </lightning:accordionSection>
+                <lightning:accordionSection name="B" label="CSV file template">
+                    &nbsp;&nbsp;<a href="{!v.doc}" >Price Book Template</a> <br/>
+                    &nbsp;&nbsp;<a href="{!v.doc1}" >Distributor-SKU Template</a> 
+                </lightning:accordionSection>
+            </lightning:accordion>
+            <br/><br/>
+        </div>
+        
+        
+        
+    </body>
+</aura:component>

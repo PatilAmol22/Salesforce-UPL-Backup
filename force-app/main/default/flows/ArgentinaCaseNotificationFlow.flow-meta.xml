@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>this action triggers a batch apex to send email notification to Argentina users when case is not being attended for past 7 days</description>
+        <name>schedule_ArgentinaCaseNotificationScheduler</name>
+        <label>schedule ArgentinaCaseNotificationScheduler</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <actionName>ArgentinaCaseNotificationScheduler</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <description>This flow is used to schedule a email to Argentina users when case is not being attended for last 7 days</description>
+    <environments>Default</environments>
+    <interviewLabel>ArgentinaCaseNotificationFlow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ArgentinaCaseNotificationFlow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>schedule_ArgentinaCaseNotificationScheduler</targetReference>
+        </connector>
+        <object>Case</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2023-05-17</startDate>
+            <startTime>10:30:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

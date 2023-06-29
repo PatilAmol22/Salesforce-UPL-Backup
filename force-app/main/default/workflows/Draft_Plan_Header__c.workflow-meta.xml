@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>NAM_Email_Alert_on_Draft_Plan_Approval</fullName>
+        <description>NAM Email Alert on Draft Plan Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NAM_Sales/NAM_Draft_Plan_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>NAM_Email_Alert_on_Draft_Plan_Rejection</fullName>
+        <description>NAM Email Alert on Draft Plan Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>NAM_Sales/NAM_Draft_Plan_Rejected</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Draft_Plan_Status_As_Approved</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Draft Plan Status As Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Draft_Plan_Status_As_Draft</fullName>
+        <field>Status__c</field>
+        <literalValue>Draft</literalValue>
+        <name>Update Draft Plan Status As Draft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Draft_Plan_Status_As_Rejected</fullName>
+        <field>Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Draft Plan Status As Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Draft_Plan_Status_As_Submitted</fullName>
+        <field>Status__c</field>
+        <literalValue>Submitted</literalValue>
+        <name>Update Draft Plan Status As Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

@@ -1,0 +1,44 @@
+<apex:component controller="SendIndiaSwalEventDataToManagerContrll" access="global">
+    <style type="text/css">
+table, tr, td {
+  border: 2px solid black;
+ 
+}
+</style>
+    <apex:attribute name="managerId" type="Id" description="Id of the Manger" assignTo="{!UsermanagerId}"/> 
+    <table Style=" border: 2px solid black;border-collapse: collapse;">
+        <tr Style=" border: 2px solid black;border-collapse: collapse;">
+           
+            <td style="font-size:15px;font-weight:bold; border: 2px solid black;border-collapse: collapse; text-align: center;">Start Date</td>
+            <td style="font-size:15px;font-weight:bold; border: 2px solid black;border-collapse: collapse; text-align: center;">End Date</td>
+            
+            <td style="font-size:15px;font-weight:bold; border: 2px solid black;border-collapse: collapse; text-align: center;">Meeting Purpose</td>
+                        <td style="font-size:15px;font-weight:bold; border: 2px solid black;border-collapse: collapse; text-align: center;">Meeting Notes</td>
+                 <td style="font-size:15px;font-weight:bold; border: 2px solid black;border-collapse: collapse; text-align: center;">Activity Status</td>
+        
+            <td style="font-size:15px;font-weight:bold; border: 2px solid black;border-collapse: collapse; text-align: center;">Owner Name</td>
+            <td style="font-size:15px;font-weight:bold; border: 2px solid black;border-collapse: collapse; text-align: center;">Owner UGDN</td>
+           <td style="font-size:15px;font-weight:bold; border: 2px solid black;border-collapse: collapse; text-align: center;">Approval Status</td>
+    
+        </tr>
+        <apex:repeat value="{!EventData}" var="o" >
+        <tr Style=" border: 2px solid black;border-collapse: collapse;">
+           
+            <td Style=" border: 2px solid black;border-collapse: collapse;">{!o.StartDateTime}</td> 
+          
+            <td Style=" border: 2px solid black;border-collapse: collapse;">{!o.EndDateTime}</td> 
+            <td Style=" border: 2px solid black;border-collapse: collapse;">{!o.Meeting_Purpose__c}</td> 
+             <td Style=" border: 2px solid black;border-collapse: collapse;">{!o.Meeting_Notes__c}</td>
+             <td Style=" border: 2px solid black;border-collapse: collapse;">{!o.Activity_Status__c}</td>
+           
+            
+            <td Style=" border: 2px solid black;border-collapse: collapse;">{!o.Owner.Name}</td>
+            <td Style=" border: 2px solid black;border-collapse: collapse;">{!o.Createdby.UGDN_Number__c}</td> 
+           
+           
+            <td Style=" border: 2px solid black;border-collapse: collapse;">{!o.Others__c}</td>
+                      
+        </tr>
+        </apex:repeat>       
+    </table>
+</apex:component>

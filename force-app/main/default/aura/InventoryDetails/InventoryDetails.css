@@ -1,0 +1,157 @@
+.THIS {
+}
+
+.THIS slds-form-element > label{
+    display: none;
+}
+
+.THIS .slds-m-right_xxx-small{
+    display: none;
+}
+
+.THIS .slds-form-element__label{
+    padding-top: 0;
+}
+
+
+@media screen and (min-width: 1100px){
+.THIS .input-select-width{
+    width: 400px
+}
+    
+.THIS .alignRight{ 
+    text-align: left;
+        
+}
+}
+/*@media screen and (min-width: 1100px){
+.THIS .input-select-width{
+    width: 200px;
+}
+}*/ 
+@media screen and (max-width: 450px){
+    
+    /*.THIS .widthCSS{
+        width: 100% !important;
+    }
+    
+    .THIS .slds-input{
+        width: 100% !important;
+        font-size: 4px;
+        line-height: 2px;
+        border-radius: 0rem;
+        box-sizing: border-box;
+        padding: unset;
+        text-align: center;
+        width:300px
+    }
+    
+    .THIS .slds-form-element__label{
+        padding-right: 6px;
+    }
+    
+    .THIS .wid{
+        font-size: 4px;
+    }
+    
+    .THIS .uiOutputText{
+       font-size: 4px; 
+    }
+    
+    .THIS .slds-button{
+        
+        line-height: 1.5rem;
+        width: 3.5rem;
+        font-weight: 100;
+    }
+    
+.THIS .input-select-width{
+    width: 300px;
+        font-size: 4px;
+}
+    
+  
+	.THIS .slds-p-around_small {
+        font-size: 4px;
+    }
+	.THIS .slds-form-element__label{
+        font-size: 4px;
+    }
+	.THIS .uiInput--default select{
+        font-size: 4px;
+    }
+    .THIS .error-text {
+   		color:red;
+   		font:1px;
+	}
+    */
+}
+/*
+@media screen and (max-width: 450px){
+    
+    .THIS .slds-input{
+        width: 100% !important;
+        font-size: 10px;
+        line-height: 0px;
+        border-radius: 0rem;
+        box-sizing: border-box;
+        padding: unset;
+        text-align: right;
+    }
+    
+    .THIS .slds-form-element__label{
+        padding-right: 15px;
+    }
+    
+    .THIS .wid{
+        font-size: 15px;
+    }
+    
+    .THIS .uiOutputText{
+       font-size: 4px; 
+    }
+    
+    .THIS .slds-button{
+        
+        line-height: 1.5rem;
+        font-weight: 100;
+    }
+    
+.THIS .input-select-width{
+    width: 200px;
+        font-size: 10px;
+}
+    
+  
+    .THIS .slds-p-around_small {
+        font-size: 10px;
+    }
+    .THIS .slds-form-element__label{
+        font-size: 10px;
+    }
+    .THIS .uiInput--default select{
+        font-size: 10px;
+    }
+} */
+.THIS.bgColor{background-color:white!important;}
+
+.THIS.slds-accordion__summary-action{color:red!important;}
+
+.THIS.slds-accordion__summary-action{
+    color:red!important;
+}
+.THIS .test{
+    background: #679AE3;
+    font-size: 16px;
+    border-radius: 25px;
+}
+.THIS .error-text {
+   color:red;
+   font:10px;
+}
+.THIS .slds-hide {
+   display: none;
+}
+.THIS .wid{
+    font-size:20px;  
+}

@@ -1,0 +1,294 @@
+<template>
+    <div>
+        <template if:false={isguestUser}>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-large-size_12-of-12">
+                    <c-grz_header-image-cmp bgimg={bgImage} imglabel={headerlabel} customcss='top: 5%;'></c-grz_header-image-cmp>
+                </div>
+            </div>         
+            
+            <div class="slds-p-top_small">
+                <c-grz_bread-crumb labelone='Atendimento' labeltwo={casenumhash} linkone='/uplpartnerportal/s/casehome' linktwo=''>
+                </c-grz_bread-crumb>
+            </div>
+        </template>
+        
+        <div>       
+            <div class="slds-grid slds-wrap borderbottom">
+                <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                    <div class="">
+                        <span class="textCls">
+                            <b>Atendimento - {casenumhash}</b>
+                        </span> 
+                    </div>
+                </div>
+                
+                <div if:false={IsCloseButton} class="slds-col slds-x-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                    
+                    <button class="slds-button slds-button_neutral slds-float_right blueBtn" onclick={showCloseCase}>Encerrar Atendimento</button>
+                     <!-- <template if:false = {checkexternaluser}>
+                        <template if:true={checkescalationstatus}>
+                            <button class="slds-button slds-button_neutral slds-float_right orangeBtn" onclick={showescalatedCase}>
+                                Escalar Ticket
+                            </button>
+                        </template>
+                     </template> -->
+                    
+                       
+                </div>                 
+            </div>
+
+            <template if:true={openCommentModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeCommentModal}>
+                                <lightning-icon icon-name="utility:close" size="medium"  variant="inverse">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Fechar</span>
+                            </button>
+                            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Novo Comentário</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_large" id="modal-content-id-2">
+                            <div if:true={errorMsg}>
+                                <p style="color: red;">{errorMsg}</p>
+                            </div>
+                            <lightning-textarea name="Adicionar Comentário" label="Adicionar Comentário" value={commentVal} onchange={handleCommentValChange}></lightning-textarea>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral slds-float_right orangeBtn cmt-btn" onclick={closeCommentModal}>Cancelar</button>
+                            <button class="slds-button slds-button_neutral slds-float_right blueBtn cmt-btn" style="margin-right: 1%;" onclick={addCaseComment}>Enviar</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+            <template if:true={openAttachmentModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true" aria-describedby="modal-content-id-3" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeAttachmentModal}>
+                                <lightning-icon icon-name="utility:close" size="medium"  variant="inverse">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Fechar</span>
+                            </button>
+                            <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Adicionar Anexos</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                            <div class="slds-p-around_medium lgc-bg">
+                                <lightning-file-upload record-id={urlId} file-field-name="Guest_Record_fileupload__c"
+                                file-field-value={urlId} onuploadfinished={handleUploadFinished} multiple>
+                                </lightning-file-upload>
+                            </div>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral slds-float_right blueBtn cls-sign" onclick={closeAttachmentModal}>Cancelar Upload</button>
+                        </footer>
+                    </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+            <template if:true={openCloseCaseModal}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-03" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeCommentModal}>
+                                <lightning-icon icon-name="utility:close" size="medium"  variant="inverse">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Fechar</span>
+                            </button>
+                            <h2 data-id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Encerrar o Antedimento</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_large" data-id="modal-content-id-3">
+                            <div if:true={errorMsg}>
+                                <p style="color: red;">{errorMsg}</p>
+                            </div>
+                            <lightning-textarea name="Motivo do Encerramento" label="Motivo do Encerramento" value={reasonValue} onchange={handleResonValChange}></lightning-textarea>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral slds-float_right orangeBtn cmt-btn" onclick={closeCommentModal}>Cancelar</button>
+                            <button class="slds-button slds-button_neutral slds-float_right blueBtn cmt-btn" style="margin-right: 1%;" onclick={handleCloseCase}>Enviar</button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-large-size_8-of-12 slds-p-right_large hidePadding hidetabPadding">
+                    <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-border_top" style="padding: 2%; background-color: white;margin-top: 3%;">
+                                    <div style="font-family: NotoSansLight;" class="borderbottom headingClass">Detalhes do Atendimento</div>
+                                    <div class="slds-grid slds-wrap slds-p-top_medium slds-p-bottom_x-small">
+                                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Prioridade:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                        <span class="caseDataClass">{casepriority}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Status:  </span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{casestatus}</span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Criado Por:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{createdbyname}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Tipo do Atendimento:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{caseType}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_medium hidePadding borderleft">
+                                            <div class="slds-grid slds-wrap">
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Forma de Contato:  </span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{caseconmethod}</span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Data de Criação:  </span>
+                                                    </div> 
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{casecreateddate}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Última Atualização:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{casemodifieddate}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span>Analista:  </span>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                        <span class="caseDataClass">{caseowner}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-p-right_x-small slds-border_top" style="background-color: white;margin-top: 3%;">
+                                <div style="font-family: NotoSansLight;" class="borderbottom slds-m-top_small slds-m-left_small slds-m-bottom_small headingClass">Descrição</div>                                    
+                                <div class="slds-grid slds-wrap dataDiv slds-p-left_small slds-p-bottom_small">
+                                    <div class="slds-col slds-x-small-size_4-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                                        <p class="columnClass">Assunto:</p><br/>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_8-of-12 slds-medium-size_10-of-12 slds-large-size_10-of-12">
+                                        <b>{casesub}</b><br/>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_4-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-top_small" style="min-height:200px;">
+                                        <p class="columnClass">Descrição:</p>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_8-of-12 slds-medium-size_10-of-12 slds-large-size_10-of-12 slds-p-top_small" style="min-height:200px;">
+                                        <p><lightning-formatted-text value={casedesc}></lightning-formatted-text></p>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+
+                <div class="slds-col slds-large-size_4-of-12">
+                    <div class="slds-border_right slds-p-bottom_medium slds-border_left slds-border_bottom slds-p-right_small slds-p-left_small slds-border_top" style="background-color: white;margin-top: 6%;">
+                        <div style="font-family: NotoSansLight;padding-bottom: 2%;" class="borderbottom slds-m-top_small slds-m-bottom_small headingClass">
+                            Anexos
+                            <template if:false={disableAttachBtn}>
+                                <button class="slds-button slds-button_neutral blueBtn slds-float_right plus-sign" onclick={openAttachmentModalMethod} disabled={disableAttachBtn}>+</button>
+                            </template>
+                        </div>
+                        <div class="fontcolor">Tamanho máximo do arquivo: 20 MB</div>    
+                        <template for:each={publicLinkMapData} for:item="contentdata">
+                                <div key={contentdata.Id} class="slds-grid slds-wrap slds-p-top_small slds-p-bottom_small slds-p-left_x-small slds-size_full slds-border_right slds-border_left slds-border_bottom slds-p-right_x-small slds-border_top">
+                                    <div class="slds-col slds-x-small-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                        <img src={attImage}></img>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_7-of-12 slds-medium-size_7-of-12 slds-large-size_7-of-12 handleoverflowtext">
+                                        <span><b><a href={contentdata.publicLink} title="Arquivo de visualização"  style="color:Black;" target="_blank">{contentdata.Filename}</a></b></span>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-text-align_center handleoverflowtext">
+                                        <span style="font-size:10px;color:#888888;" class="" title={contentdata.CreatedbyName}>{contentdata.CreatedbyName}</span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            <div>
+            <template if:true={isSpinner}>
+                <div class="">
+                    <lightning-spinner class="" alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+                </div>
+            </template>
+            <div class="slds-p-top_large slds-p-bottom_large componentNotoSansLight headingClass">
+                <span>Comentários</span>
+                <template if:false={disableBtn}>
+                    <button class="slds-button slds-button_neutral orangeCommentBtn slds-float_right" disabled={disableBtn} style="font-size: 10px;" onclick={openCommentModalMethod}>Novo Comentários</button>
+                </template>
+            </div>
+            <template for:each={feeditemdata} for:item="feeddata">   
+                <div key={feeddata.Id} class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-p-right_x-small slds-border_top commentdivcss">
+                    <div class="slds-grid slds-wrap" style="min-height: 70px;">
+                        <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-p-top_medium slds-p-left_small">
+                            <lightning-avatar variant="circle" src={feeddata.Icon} fallback-icon-name="standard:user"></lightning-avatar>                                  
+                        </div>
+                        <div class="slds-col slds-x-small-size_10-of-12 slds-medium-size_11-of-12 slds-large-size_11-of-12 slds-p-top_small">
+                            <p style="color: black;"><lightning-formatted-rich-text value={feeddata.CommentBody}></lightning-formatted-rich-text></p>
+                            <p class="slds-p-top_medium slds-p-bottom_small">
+                                <span style="font-size:11px;color:#888888;">Postado Por: </span><span style="font-size:11px;color:#F47920;">
+                                    {feeddata.CreatedBy}
+                                </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style="font-size:11px;color:#888888;">Postado Em: </span>
+                                <span style="font-size:11px;color:#F47920;">
+                                    {feeddata.Date}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    </div>
+                </template> 
+            </div>
+        </div>
+    </div>
+</template>

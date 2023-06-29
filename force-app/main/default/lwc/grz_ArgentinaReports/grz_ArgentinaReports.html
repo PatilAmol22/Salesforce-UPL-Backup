@@ -1,0 +1,252 @@
+<template>
+    <template if:true={isSpinner}>
+        <div class="spinner">
+            <lightning-spinner class="slds-is-fixed" alternative-text="Loading" variant="brand" size="medium">
+            </lightning-spinner>
+        </div>
+    </template>
+    <div class="list-title componentNotoSansMedium"><span>{Headertitle}</span></div>
+    <template if:false={isSpinner}>
+        <div if:false={isExternal} class="slds-m-bottom_large component-block">
+            <div class="slds-grid slds-wrap slds-p-bottom_medium">
+                <div
+                    class="Year slds-col slds-x-small-size_12-of-12 slds-small-size_6-of-12 slds-medium-size_4-of-12 slds-large-size_3-of-12 slds-size_6-of-12 slds-p-left_small slds-p-right_small">
+
+                    <lightning-input name="enter-search" placeholder={ArSearchLabel} value={searchKeyBar} type="search"
+                        class="slds-col margin-mob" onchange={onChangeSearch}>
+                    </lightning-input>
+                </div>
+                <div
+                    class="slds-col slds-x-small-size_12-of-12 slds-small-size_4-of-12 slds-medium-size_3-of-12 slds-large-size_2-of-12 slds-size_12-of-12 slds-p-right_small mobButtoncss">
+                    <button class={buttonClass1} disabled={disableButton1} onclick={handleCustomerData}>Obtener
+                        registros</button>
+                </div>
+            </div>
+        </div>
+        <div if:false={isExternal}>
+            <div if:true={isSuccessArData}
+                class="slds-grid slds-wrap slds-border_right slds-border_left slds-border_bottom slds-border_top infobgcss slds-m-bottom_medium slds-p-around_medium">
+                <div
+                    class="slds-col slds-x-small-size_12-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 inforightborder">
+                    <div class="slds-grid slds-wrap">
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                            <div class="">Número de cliente:</div>
+                        </div>
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                            <div class="componentNotoSansBold">{CustomerCode}</div>
+                        </div>
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                            <div class="">Nombre:</div>
+                        </div>
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                            <div class="componentNotoSansBold">{CustomerName}</div>
+                        </div>
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                            <div class="">Ejecutivo de Cobranza:</div>
+                        </div>
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                            <div class="componentNotoSansBold">{customerServiceExecutive}</div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="slds-col slds-x-small-size_12-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 infopaddingright">
+                    <div class="slds-grid slds-wrap">
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                            <div class="">Ciudad:</div>
+                        </div>
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 mobilepaddingbottom">
+                            <div class="componentNotoSansBold">{City}</div>
+                        </div>
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="">Zona:</div>
+                        </div>
+                        <div
+                            class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="componentNotoSansBold">{customerZone}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div if:true={isSuccessArData} class="slds-m-bottom_large component-block">
+            <div if:true={isLoading} class="slds-is-relative">
+                <lightning-spinner alternative-text="Loading..." variant="brand" class="spinner-css slds-is-fixed">
+                </lightning-spinner>
+            </div>
+            <div class="slds-grid slds-wrap slds-p-bottom_medium">           
+                <div class="Year slds-col slds-x-small-size_12-of-12  slds-small-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_2-of-12 slds-size_3-of-12 slds-p-left_small slds-p-right_small">
+                    <lightning-combobox
+                                            label="Año"
+                                            placeholder = "Year"
+                                            value={yearType}
+                                            options={YearOptions}
+                                            onchange={handleYearOption} >
+                                        </lightning-combobox>
+                </div>
+                <div class="slds-col slds-x-small-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_2-of-12 slds-size_3-of-12 slds-p-left_small slds-p-right_small">
+                    <span>                  
+                        <lightning-input label="Fecha de inicio"  type="date" value={startDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startdateChange}></lightning-input>
+                    </span>
+                </div>
+                <div class="slds-col slds-x-small-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_2-of-12 slds-size_3-of-12 slds-p-left_small slds-p-right_small">
+                    <span>
+                        <lightning-input label="Fecha final"  type="date" value={endDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={enddateChange}></lightning-input>
+                    </span>
+                </div>
+                <div style="max-width:30%;" class="slds-col slds-x-small-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_2-of-12 slds-size_3-of-12 slds-p-left_small slds-p-right_small slds-p-top_xx-small mobButtoncss">
+                        <button class={buttonClass} disabled={disableButton} onclick={handleButtonClick}>Aplicar</button>
+                </div>
+            </div>
+            <div>
+                <i>**El usuario debe seleccionar un rango de fechas entre 3 meses.</i>
+            </div>
+        </div>
+
+        <div if:true={isSuccessArData} class="">
+            <div if:true={isDataNull} class="slds-m-bottom_large component-block">
+                <div class="list-title1 componentNotoSansMedium"><span> Comprobantes</span></div>
+                <div class="desktop-overflow mobile-overflow">
+                    <table>
+                        <thead class="componentNotoSansLight">
+                            <tr>
+                                <th>
+                                    Fecha del documento
+                                </th>
+                                <th>
+                                    Número de documento
+                                </th>
+                                <th>
+                                    Importe del documento
+                                </th>
+                                <th style="min-width: 6rem;">
+                                    Moneda
+                                </th>
+                                <th>
+                                    Fecha de vencimiento
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={ledgerRecords} for:item="arPayload">
+                                <tr key={arPayload.Id} class="slds-border_bottom bgcolormobile">
+                                    <th class="table-body-css tabledatacss mx-mobile-view mobile-header argentina-report-header-top">
+                                        <div class="textoverflowcls">{arPayload.PostDate}</div>
+                                    </th>
+
+                                    <td class="tabledatacss mx-mobile-view argentina-report-header">
+                                        <div class="textoverflowcls">{arPayload.AccountingDocNumber}</div>
+                                    </td>
+                                    <td class="tabledatacss mx-mobile-view argentina-report-header">
+                                        <div class="textoverflowcls">{arPayload.AmountInDocCurrency}</div>
+                                    </td>
+                                    <td class="tabledatacss mx-mobile-view argentina-report-header">
+                                        <div class="textoverflowcls">{arPayload.DocCurrency}</div>
+                                    </td>
+                                    <td class="tabledatacss mx-mobile-view argentina-report-header">
+                                        <div class="textoverflowcls">{arPayload.NetDueDate}</div>
+                                    </td>
+
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div if:true={nodata}>
+                <div class="list-title1 componentNotoSansMedium"><span> Comprobantes</span></div>
+                <div if:true={checkexternaluser}>
+                    <p class="slds-text-align_center nodatacss" style="background-color: white;">{errorMessage}</p>
+                </div>
+                <div if:false={checkexternaluser}>
+                    <p class="slds-text-align_center nodatacss" style="background-color: white;">{errorMessage}</p>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div if:true={isSuccessArData} class="">
+            <div if:true={isDataNull1} class="slds-m-bottom_large component-block">
+                <div class="list-title1 componentNotoSansMedium"><span>Pagos</span></div>
+                <div class="desktop-overflow mobile-overflow">
+                    <table>
+                        <thead class="componentNotoSansLight">
+                            <tr>
+                                <th>
+                                    Fecha del documento
+                                </th>
+                                <th>
+                                    N° de recibo interno
+                                </th>
+                                <th>
+                                    Importe del documento
+                                </th>
+
+                                <th style="min-width: 6rem;">
+                                    Moneda
+                                </th>
+                                <th>
+                                    Tasa de cambio
+                                </th>
+                                <th>
+                                    Descargar documento
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={ledgerRecords1} for:item="arPayload1">
+                                <tr key={arPayload1.Id} class="slds-border_bottom bgcolormobile">
+                                    <th class="table-body-css tabledatacss mx-mobile-view mobile-header argentina-report-header-top">
+                                        <div class="textoverflowcls">{arPayload1.PostDate}</div>
+                                    </th>
+
+                                    <td class="tabledatacss mx-mobile-view argentina-report-header1">
+                                        <div class="textoverflowcls">{arPayload1.InvoiceReference}</div>
+                                    </td>
+                                    <td class="tabledatacss mx-mobile-view argentina-report-header1">
+                                        <div class="textoverflowcls">{arPayload1.AmountInDocCurrency}</div>
+                                    </td>
+                                    <td class="tabledatacss mx-mobile-view argentina-report-header1">
+                                        <div class="textoverflowcls">{arPayload1.DocCurrency}</div>
+                                    </td>
+                                    <td class="tabledatacss mx-mobile-view argentina-report-header1">
+                                        <div class="textoverflowcls">{arPayload1.ExchangeRate}</div>
+                                    </td>
+
+                                    <td data-label="Download" class="tabledatacss mx-mobile-view hide-Tile">
+                                        <a class="textoverflowcls" onclick={handleDownloadClick} data-id={arPayload1.Assignment} data-name={arPayload1.DocTypeShortForm}>     <lightning-icon icon-name="doctype:pdf" alternative-text="PDF" title="Download assignment PDF"></lightning-icon>
+                                        </a>
+                                      </td>
+
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div if:true={nodata1}>
+                <div class="list-title1 componentNotoSansMedium"><span>Pagos</span></div>
+                <div if:true={checkexternaluser}>
+                    <p class="slds-text-align_center nodatacss" style="background-color: white;">{errorMessage}</p>
+                </div>
+                <div if:false={checkexternaluser}>
+                    <p class="slds-text-align_center nodatacss" style="background-color: white;">{errorMessage}</p>
+                </div>
+            </div>
+        </div>
+        <template if:false={nodata1}>
+        <div if:false={isSuccess}>
+            <p class="slds-text-align_center nodatacss">Error en SAP</p>
+        </div>
+    </template>
+    </template>
+</template>

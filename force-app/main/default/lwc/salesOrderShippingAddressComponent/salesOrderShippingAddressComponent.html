@@ -1,0 +1,74 @@
+<template>
+    <div class={divclass}>
+        <div class={textclass} style="padding:10px; font-weight:bold; font-size: medium;" >{label.Shipment_Details}</div>
+
+        <div class="margin_top">
+        <ul style="display: flex; width:100%">
+            <li class="li-items">
+                <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Storage_Location_Uk}</label>
+                <div>{storageLocation}</div></li>
+            <li class="li-items">
+                <template if:true={incotermlist}>
+                    <label class="slds-form-element__label" for="text-input-id-1"  style="font-weight:bold;"><span class="slds-required">*</span>{label.Inco_Terms_UK}</label>
+                    <lightning-combobox
+                        variant="label-hidden"
+                        label={label.Inco_Terms_UK}
+                        value={incovalue}
+                        placeholder="Select Inco Term"
+                        options={incotermlist}
+                        onchange={handleChange}
+                        message-when-value-missing="Please complete this required field"
+                        data-type="incoterm"
+                        onfocus={iscomboclick}
+                        class="shipclass"
+                        disabled={isdisabledtrue}
+                        required>
+                    </lightning-combobox>
+                </template>
+            </li>
+            <li class="li-items">
+                <template if:true={shippingloclist}>
+                    <label class="slds-form-element__label" for="text-input-id-1"  style="font-weight:bold;"><span class="slds-required">*</span>{label.Ship_To_Party_Uk}</label>
+                    <lightning-combobox
+                        required={required}
+                        class="shipclass"
+                        name="progress"
+                        variant="label-hidden"
+                        label={label.Ship_To_Party_Uk}
+                        value={shipdetailvalue}
+                        placeholder="Select Ship to Party"
+                        options={shippingloclist}
+                        onchange={handleChange}
+                        data-type="shiptoparty"
+                        onfocus={iscomboclick}
+                        disabled={isdisabledtrue}
+                        message-when-value-missing="Please complete this required field"
+                        >
+                    </lightning-combobox>
+                </template>
+            </li>
+            <li class="li-items">
+                <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Shipping_Address_UK}</label>
+                <div><template if:true={shippingfulldata.House_Number__c}><lightning-formatted-text value={shippingfulldata.House_Number__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.Billing_Street_1__c}><lightning-formatted-text value={shippingfulldata.Billing_Street_1__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.Billing_Street_2__c}><lightning-formatted-text value={shippingfulldata.Billing_Street_2__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.Billing_Street_3__c}><lightning-formatted-text value={shippingfulldata.Billing_Street_3__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.Billing_Street_4__c}><lightning-formatted-text value={shippingfulldata.Billing_Street_4__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.Billing_Street_5__c}><lightning-formatted-text value={shippingfulldata.Billing_Street_5__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.Billing_Street_6__c}><lightning-formatted-text value={shippingfulldata.Billing_Street_6__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.City__c}><lightning-formatted-text value={shippingfulldata.City__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.State__c}><lightning-formatted-text value={shippingfulldata.State__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.Pincode__c}><lightning-formatted-text value={shippingfulldata.Pincode__c}></lightning-formatted-text></template></div>
+                <div><template if:true={shippingfulldata.Country__c}><lightning-formatted-text value={shippingfulldata.Country__c}></lightning-formatted-text></template></div>
+            </li>
+        </ul>
+
+        <ul style="display: flex; width:100%">
+            <li class="li-items">
+                <label class="slds-form-element__label" for="text-input-id-1" style="display:flex"><p  style="font-weight:bold;">{label.Remark_Uk}</p> <p class="slds-p-left_xx-small">({label.characters_UK})</p></label>
+                <lightning-textarea type="text" disabled={isdisabledtrue} data-type="remark" value={remarkvalue} variant="label-hidden" label="Remarks" placeholder="Type Here..." maxlength="128" onchange={handleChange}></lightning-textarea>
+            </li>
+        </ul>
+    </div>
+    </div>
+</template>

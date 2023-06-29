@@ -1,0 +1,31 @@
+.THIS .mse {
+    background:#ecebea;
+}
+.THIS .fsize {
+    font-size:18px;
+}
+.THIS .icn svg{
+    fill: #fb8c8c;  
+}
+/*.THIS .action {
+    width: 10%;
+}*/
+
+.THIS .qtyplh::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+.THIS .btnHide{
+    display: none;
+}
+.THIS .slds-spinner_container {  
+    z-index: 10000;
+    position: fixed;   
+}
+.THIS .error{
+    background:Pink
+}
+.THIS .required{
+    color:rgb(194, 57, 52)
+}

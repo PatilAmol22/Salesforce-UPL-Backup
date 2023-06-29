@@ -1,0 +1,24 @@
+<template>
+    <lightning-quick-action-panel style="height:800px" header="PriceBooks">
+    <template if:true={isdata}>
+    <div>
+
+        <lightning-datatable
+            key-field="Id"
+            data={tableData}
+            columns={Columns}
+             default-sort-direction={defaultSortDirection}
+            sorted-by={sortBy}
+            sorted-direction={sortDirection}
+            onsort={doSorting}
+
+              hide-checkbox-column >
+        </lightning-datatable>
+    </div>
+    </template>
+    <template if:false={isdata}>
+        <div style="font-size:bold; font-size:14px;">No Data Avaiable</div>
+    </template>
+</lightning-quick-action-panel>
+
+</template>

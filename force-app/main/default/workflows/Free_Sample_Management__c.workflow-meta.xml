@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Approval_Alert_if_FSP_is_Approved</fullName>
+        <description>Approval Alert if FSP is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <field>Sales_Assistant__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Japan_Email_Template/Free_Sample_Mgmt_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_SMR_is_Approved</fullName>
+        <description>Approval Alert if SMR is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>Office_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>Sales_Assistant__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Swal_Sample_Material_Requisition/Approved_Email_Template_SWAL</template>
+    </alerts>
+    <alerts>
+        <fullName>Creation_Alert_if_FSP_is_created</fullName>
+        <description>Creation Alert if FSP is created</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Sales_Assistant__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Japan_Email_Template/Free_Sample_Mgmt_Record_Creation</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Notification_to_Applicant_if_Administrator_Update_record</fullName>
+        <description>Email Notification to Applicant if Administrator Update record</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Japan_Email_Template/Japan_Email_Template_For_Applicant</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_FSP_is_Rejected</fullName>
+        <description>Rejection Alert if FSP is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Japan_Email_Template/Free_Sample_Mgmt_Rejection</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_SMR_is_Rejected</fullName>
+        <description>Rejection Alert if SMR is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Swal_Sample_Material_Requisition/Rejected_Email_Template_for_SWAL</template>
+    </alerts>
+    <alerts>
+        <fullName>SMR_email_alert_for_Commercial_Ho</fullName>
+        <description>SMR email alert for Commercial Ho</description>
+        <protected>false</protected>
+        <recipients>
+            <field>HO_Commercial_Email_ID__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Swal_Sample_Material_Requisition/Commercial_HO_Person_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>SMR_email_alert_for_Depot_Person</fullName>
+        <description>SMR email alert for Depot Person</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Depot_Person_Email_ID__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Swal_Sample_Material_Requisition/Depot_Person_Email_Template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Set_Approved_by_OM_as_true</fullName>
+        <field>Approved_by_Office_Manager__c</field>
+        <literalValue>1</literalValue>
+        <name>Set Approved by OM as true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Approved_by_OM</fullName>
+        <field>Approved_by_Office_Manager__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Approved by OM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Need_Marketing_HO_Approval</fullName>
+        <field>Need_Marketing_HO_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Need Marketing HO Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_RM_Notifiction_12Hrs</fullName>
+        <field>RMNotification12HrsChecked__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck RM Notifiction 12Hrs</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_RM_Notifiction_18Hrs</fullName>
+        <field>RMNotification18HrsChecked__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck RM Notifiction 18Hrs</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_1_Approval_Date_time_blank</fullName>
+        <field>X1st_Approval_Date_Time__c</field>
+        <name>Update 1 Approval Date time blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_1st_Approval_Date_Time</fullName>
+        <field>X1st_Approval_Date_Time__c</field>
+        <formula>NOW()</formula>
+        <name>Update 1st Approval Date Time</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_2_Approval_Date_Time</fullName>
+        <field>X2nd_Approval_Date_Time__c</field>
+        <formula>NOW()</formula>
+        <name>Update 2 Approval Date Time</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_2_Approval_Date_Time_blank</fullName>
+        <field>X2nd_Approval_Date_Time__c</field>
+        <name>Update 2 Approval Date Time blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_3_Approval_Date_Time</fullName>
+        <field>X3rd_Approval_Date_Time__c</field>
+        <formula>NOW()</formula>
+        <name>Update 3 Approval Date Time</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_3_Approval_Date_Time_blank</fullName>
+        <field>X3rd_Approval_Date_Time__c</field>
+        <name>Update 3 Approval Date Time blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_submission_Date_Time</fullName>
+        <field>Approval_Submission_Date_Time__c</field>
+        <formula>NOW()</formula>
+        <name>Update Approval submission Date Time</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_submission_Date_as_Blank</fullName>
+        <field>Approval_Submission_Date_Time__c</field>
+        <name>Update Approval submission Date as Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Auto_Approval_1_as_false</fullName>
+        <field>Auto_Approved_1__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Auto Approval 1 as false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Auto_Approval_2_as_false</fullName>
+        <field>Auto_Approved_2__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Auto Approval 2 as false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Record_Type</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Post_Free_Sample_Management</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Record Type</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Status as &apos;Approved&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Draft</fullName>
+        <field>Status__c</field>
+        <literalValue>Draft</literalValue>
+        <name>Update Status as &apos;Draft&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Pending_From_Depot</fullName>
+        <field>Status__c</field>
+        <literalValue>Pending from Depot</literalValue>
+        <name>Update Status as &apos;Pending From Depot&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Rejected</fullName>
+        <field>Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Status as &apos;Rejected&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_Pending_Approval_1</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending for Approval 1</literalValue>
+        <name>Update Sub Status Pending Approval 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_Pending_Approval_2</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending for Approval 2</literalValue>
+        <name>Update Sub Status Pending Approval 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_Blank</fullName>
+        <field>Sub_Status__c</field>
+        <name>Update Sub Status as Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_Closed</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Closed</literalValue>
+        <name>Update Sub Status as &apos;Closed&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_For_PO_Number</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>for PO Number</literalValue>
+        <name>Update Sub Status as For PO Number</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_Pending_Approval_2</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending for Approval 2</literalValue>
+        <name>Update Sub Status as Pending Approval 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_Pending_Approval_3</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending for Approval 3</literalValue>
+        <name>Update Sub Status as Pending Approval 3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_Rejected</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Sub Status as &apos;Rejected&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_pending_at_HO</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending for Approval 3</literalValue>
+        <name>Update Sub Status as&apos; pending at HO&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_as_Pending</fullName>
+        <field>Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Update status as &apos;Pending&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_sub_status_as_Pending_Approval_1</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending for Approval 1</literalValue>
+        <name>Update sub status as Pending Approval 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

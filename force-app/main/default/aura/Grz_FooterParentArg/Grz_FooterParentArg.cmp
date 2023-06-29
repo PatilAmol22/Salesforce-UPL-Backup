@@ -1,0 +1,47 @@
+<!--
+* Name                : Grz_FooterParentArg                                                      
+* Description         : created new Footer Social Media Component as per feedback given by Argentina Team
+* Created Date        : 20-09-2022                                                                        
+* Project/JIRA        : APPS-1757                                                                        
+* Created By          : Sumit Kumar (Grazitti)                                                                        
+* Last Modified By    : Sumit Kumar (Grazitti) 20-09-2022                                                                       
+-->
+
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:handler name='init' value='{!this}' action='{!c.doInit}'/>
+    <aura:attribute name="isArgentina" type="boolean" default="false"/>
+    <diV>
+        <div class ="parent-base-img parent-footer-padding">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-large-size_2-of-3 slds-medium-size_2-of-3 slds-small-size_2-of-3 slds-x-small-size_3-of-3  slds-p-bottom_small slds-p-left_small">
+                    <c:Grz_Twitter_Argentina/>
+                </div>
+                <div class="slds-col slds-large-size_1-of-3 slds-medium-size_1-of-3 slds-small-size_1-of-3 slds-x-small-size_3-of-3" style="margin: auto;">
+                    <div class="slds-grid slds-wrap slds-text-align_center" style="padding-left:15px;">
+                        <div class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-x-small-size_6-of-12  slds-p-bottom_medium">
+                           <div class="slds-grid slds-wrap">
+                               <div class=" slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12 slds-x-small-size_6-of-12  slds-p-bottom_medium">
+                                    <div ><a href="https://www.facebook.com/uplargentina/?fref=ts" target="_blank"><img src="{!$Resource.grz_carousel+'/grz_carousel/grz_carousel/iconsFb2.png'}" alt="Facebook" class ="imgsheight fb1" style="border-radius:50%;padding:2%;" /></a></div>
+                                </div>
+                                <div class=" slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12 slds-x-small-size_6-of-12  slds-p-bottom_medium">
+                                    <div ><a href="https://www.youtube.com/channel/UC-t_kHL5S-6yKJAIOrOv0oA" target="_blank"><img src="{!$Resource.grz_carousel+'/grz_carousel/grz_carousel/iconsYoutube2.png'}" alt="YouTube" class ="imgsheight youtube1" style="border-radius:50%;padding:2%;" /></a></div>
+                                </div>  
+                            </div>
+                        </div>																						
+                        <div class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-x-small-size_6-of-12">
+                            <div class="slds-grid slds-wrap">
+                               <div class=" slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12 slds-x-small-size_6-of-12  slds-p-bottom_medium">
+
+                                <span><a href="https://www.instagram.com/uplargentina/" target="_blank"><img src="{!$Resource.grz_carousel+'/grz_carousel/grz_carousel/iconsInstagram2.png'}"  alt="Instagram" class ="imgsheight insta1" style="border-radius:50% padding:2%;" /></a></span>
+                                </div>
+									<div class=" slds-col slds-large-size_6-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12 slds-x-small-size_6-of-12  slds-p-bottom_medium">
+                                   <span><a href="https://www.upl-ltd.com/ar" target="_blank"><img src="{!$Resource.grz_carousel+'/grz_carousel/grz_carousel/homeIcon1.jpg'}"  alt="home" class ="imgsheight home1" style="border-radius:50%;padding:4%;" /></a></span>
+                                </div>
+                                </div>
+                        </div>
+                    </div>           
+                </div>
+            </div>
+        </div>
+    </diV>
+</aura:component>

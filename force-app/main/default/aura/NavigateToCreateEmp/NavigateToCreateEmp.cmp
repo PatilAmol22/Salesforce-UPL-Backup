@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader"
+                access="global">
+    <aura:attribute name="pageReference" type="Object"/>
+    <aura:attribute name="recordId" type="Id" description="ID of the record."/>
+    <aura:attribute name="accountRecord" type="Object"/>
+    <lightning:navigation aura:id="navService"/>
+    <aura:handler name="change" value="{!v.accountRecord}" action="{!c.AccountChange}"/>
+    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" fields="Name,State__pc" targetFields="{!v.accountRecord}"/>
+    
+</aura:component>

@@ -1,0 +1,64 @@
+.THIS .base-clr{
+    background-color:white;
+}
+.THIS .head-title{
+    font-size:22px;
+    color:#000000;
+}
+.THIS .frame-border{
+    border:1px solid #DDDDDD;
+}
+.THIS .frame-width{
+    width:100%;
+    height:367px;
+}
+.THIS .comp-height{
+    height: 473px;
+}
+@media only screen and (max-width: 1024px) {
+    .THIS .comp-height{
+        height: 345px;
+    }
+    .THIS .frame-width{
+        width:100%;
+        height:272px;
+    } 
+    .THIS .head-title{
+        font-size: 13px;
+        padding-bottom: 8px;
+    }
+    .THIS .frame-top-pad{
+        padding-top: 10px;
+    }
+    .THIS .frame-border{
+        padding: 8px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .THIS .comp-height{
+        height: 299px;
+    }
+    .THIS .frame-width{
+        width:100%;
+        height:226px;
+    } 
+    .THIS .head-title{
+        font-size: 13px;
+        padding-bottom: 8px;
+    }
+    .THIS .frame-top-pad{
+        padding-top: 10px;
+    }
+    .THIS .frame-border{
+        padding: 8px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .THIS .comp-height{
+        height: 299px;
+    }
+    .THIS .frame-width{
+        width:100%;
+        height:226px;
+    }
+}

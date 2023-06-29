@@ -1,0 +1,356 @@
+<aura:component controller="DraftPlanRegionEntryClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<!--<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="filterdata" type="object"/>
+    <aura:attribute name="FilterList" type="List"/>
+    <aura:attribute name="ChangeList" type="List"/>
+    <aura:attribute name="PList" type="List"/>
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="startPage" type="Integer"/>
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer" default="0"/>
+    <aura:attribute name="pageSize" type="Integer" />
+    <aura:attribute name="TotalPages" type="Integer"/>
+    <aura:attribute name="PageNumber" type="Integer"/>
+    <!-- Attribute Declration For Pagination End-->
+    <!-- Attribute Section -->
+    <aura:attribute name="showLast" type="boolean" default="true"/>
+    <aura:attribute name="lastSavedBy" type="String"/>
+    <aura:attribute name="lastSaveddate" type="String"/>
+    <aura:attribute name="freezeInput" type="boolean" default="false"/>
+    <aura:attribute name="curYear" type="String" />
+    <aura:attribute name="PrevYear" type="String" />
+    <aura:attribute name="LastPrevYear" type="String" />
+    <aura:attribute name="datList" type="List" />
+    <aura:attribute name="currStart" type="date" />
+    <aura:attribute name="currEnd" type="date" />
+    <aura:attribute name="saleOrg" type="String" />
+	<aura:attribute name="yearEditAccess" type="boolean" default="true"/>
+    <aura:attribute name="firstYear" type="Integer"/>
+    <aura:attribute name="secondYear" type="Integer"/>
+    <aura:attribute name="mktYear" type="String" default = "first"/>
+    <aura:attribute name="divList" type="List"/>
+    <aura:attribute name="custDiv" type="String"/>
+    <aura:attribute name="custDivCode" type="String"/>
+    <!-- Attribute Section -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<lightning:notificationsLibrary aura:id="notifLib"/>
+   <lightning:card>
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small" class="custom-background-blue" size="12">
+                <b>Draft Entry</b>
+            </lightning:layoutItem>            
+        </lightning:layout>
+        <lightning:layout>
+            <lightning:layoutItem padding="around-small" size="12">
+                <aura:if isTrue="{!v.showLast}">
+                    Last Saved on {!v.lastSaveddate} by {!v.lastSavedBy}
+                </aura:if>     
+            </lightning:layoutItem>
+        </lightning:layout>
+    
+    <lightning:layout multipleRows="true">
+            <lightning:layoutItem  padding="around-small" size="12" mediumDeviceSize="2">
+                <div>
+                    <ui:inputText label="Search by Category" class="BorderTextField" aura:id="selectMaterial" updateOn="keyup"   keyup="{!c.onMaterialChange}"/>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem   padding="around-small" size="12" mediumDeviceSize="2">
+                <div>
+                    <ui:inputText label="Search by Product" class="BorderTextField" aura:id="selectProduct" updateOn="keyup"   keyup="{!c.onProductChange}"/>
+                </div>    
+            </lightning:layoutItem>
+        <lightning:layoutItem   padding="around-small" size="1" mediumDeviceSize="4">
+                <ui:inputSelect aura:id="div" label="Division" change="{!c.changeDivision}">
+        <aura:iteration items="{!v.divList}" var="divc">
+             <ui:inputSelectOption text="{!divc.divId}" label="{!divc.divName}"/> 
+                                </aura:iteration> </ui:inputSelect> 
+            </lightning:layoutItem>
+
+            <lightning:layoutItem padding="around-small" size="12" mediumDeviceSize="4">
+                <ui:inputSelect aura:id="select" label="Marketing Year" change="{! c.onChange }">
+                    <ui:inputSelectOption value="true" text="first" label="{!v.firstYear}" />
+                    <ui:inputSelectOption text="second" label="{!v.secondYear}" />
+                </ui:inputSelect>
+            </lightning:layoutItem>
+        </lightning:layout>
+       <div class="BorderAllSides">
+           <lightning:layout>
+            
+            
+            <lightning:layoutItem class="left-align  custom-background-DarkGray" size="12">
+                <b class="slds-align_absolute-center">
+                    {!v.curYear} &nbsp; Mkt Year
+                </b>
+            </lightning:layoutItem>
+            
+            
+        </lightning:layout>
+            <lightning:layout class="custom-background-DarkGray" multipleRows="true">
+                <lightning:layoutItem class="left-align" size="6" mediumDeviceSize="7">
+                    <lightning:layout class="custom-background-DarkGray" multipleRows="true">
+                        <lightning:layoutItem class="left-align" size="12" mediumDeviceSize="4">
+                            <b >
+                                Product Category
+                            </b>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="left-align" size="12" mediumDeviceSize="4">
+                            <b > 
+                                Products
+                            </b> 
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="left-align" size="12" mediumDeviceSize="2">
+                            <b > 
+                                UOM
+                            </b> 
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="left-align" size="12" mediumDeviceSize="2">
+                            <b >
+                                Region
+                            </b>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="left-align" size="6" mediumDeviceSize="5">
+                    <lightning:layout class="custom-background-DarkGray" multipleRows="true"> 
+                        <lightning:layoutItem class="right-align " size="12" mediumDeviceSize="2">
+                            <b >
+                               {!v.LastPrevYear} <br></br>EDI(Qty) 
+                            </b>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="right-align " size="12" mediumDeviceSize="2">
+                            <b >
+                               {!v.PrevYear} <br></br>Invoice(Qty) 
+                            </b>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="right-align " size="12" mediumDeviceSize="3">
+                            <b >
+                               &nbsp;Actuals for {!v.curYear}
+                            </b>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="right-align " size="12" mediumDeviceSize="2">
+                            <b>
+                                Draft Qty
+                            </b>
+                        </lightning:layoutItem>
+                        
+                    </lightning:layout>
+                </lightning:layoutItem>
+            </lightning:layout>
+            
+            <aura:iteration items="{!v.PaginationList}"  var="item" indexVar="index">  
+                <lightning:layout class="custom-background-LighterGray" multipleRows="true">
+                    <lightning:layoutItem class="left-align custom-background-LighterGray " size="6" mediumDeviceSize="7">
+                        <lightning:layout class="custom-background-LighterGray " multipleRows="true">
+                            <lightning:layoutItem class="left-align custom-background-LighterGray " size="12" mediumDeviceSize="4">
+                                <b >
+                                    {!item.Category}
+                                </b>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class="left-align custom-background-LighterGray " size="12" mediumDeviceSize="4">
+                                <b >
+                                   {!item.SkuName}
+                                </b>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class="left-align custom-background-LighterGray " size="12" mediumDeviceSize="2">
+                                <b >
+                                   {!item.skuUOM}
+                                </b>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class="left-align custom-background-LighterGray " size="12" mediumDeviceSize="2">
+                                <b >
+                                    {!item.RegionName}
+                                </b>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="left-align custom-background-LighterGray " size="6" mediumDeviceSize="5">
+                        <lightning:layout class="custom-background-LighterGray" multipleRows="true">
+                            <lightning:layoutItem class="right-align custom-background-LighterGray " size="12" mediumDeviceSize="2">
+                                <b >
+                                    {!item.ediLLy}
+                                </b>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class="right-align custom-background-LighterGray " size="12" mediumDeviceSize="2">
+                                <b >
+                                    {!item.ediLastyear}
+                                </b>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class="right-align custom-background-LighterGray " size="12" mediumDeviceSize="3">
+                                <b>
+                                    {!item.Invoice}
+                                </b>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem class=" custom-background-LighterGray " size="12" mediumDeviceSize="2">
+                                <b>
+                                   
+                                <lightning:input type="number" label="{!index}" class="right-text-align"  variant="label-hidden" onchange="{!c.addChange}" value="{!item.draft}"  disabled="{!v.freezeInput}" step=".01"/>  
+                                        
+
+                                </b>
+                            </lightning:layoutItem>
+                           
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                </lightning:layout>
+               
+            </aura:iteration>
+       </div>
+       <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="4" mediumDeviceSize="2">
+                <div class="slds-float_left slds-p-left_xx-small">
+                    <p><b>Page {!v.PageNumber} of {!v.TotalPages}</b></p> 
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="6" mediumDeviceSize="8">
+                <div class="slds-align_absolute-center">  
+                    <lightning:buttonGroup >
+                        <lightning:button disabled="{!if(or(v.startPage == 0,v.totalRecords==0),true,false)}" variant="brand" aura:id="prevPage" label="Previous" onclick="{!c.handlePrev}" />            
+                        <lightning:button disabled="{!if(or(v.PageNumber == v.TotalPages,v.totalRecords==0),true,false)}" aura:id="nextPage" variant="brand" label="Next" onclick="{!c.handleNext}"/>
+                        &nbsp;
+                        <lightning:button  variant="brand" label="Save" onclick="{!c.Save}"/> &nbsp;
+                        <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{! c.Cancel }" />
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2" mediumDeviceSize="2">
+                <!--<aura:if isTrue="{!v.PageNumber == v.TotalPages}">
+                        <lightning:button aura:id="saveTarget" variant="brand" label="Save" onclick="{!c.saveTargetTotal}"/>
+                    </aura:if>-->
+            </lightning:layoutItem>
+        </lightning:layout>
+   </lightning:card>
+       <!-- <lightning:layout>
+            
+            
+            <lightning:layoutItem class="left-align  custom-background-lightGrayHead" size="10">
+                <b class="slds-align_absolute-center">
+                    {!v.curYear} &nbsp; Mkt Year
+                </b>
+            </lightning:layoutItem>
+            
+            
+        </lightning:layout>
+        <lightning:layout>
+            <lightning:layoutItem class="left-align  custom-background-lightGrayHead" size="2">
+                <b>
+                    Product Category
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="left-align  custom-background-lightGrayHead" size="2">
+                <b>
+                    Product Name
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="left-align  custom-background-lightGrayHead" size="1">
+                <b>
+                    Region
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1" 
+                                  >
+                <b>
+                 {!v.LastPrevYear}      EDI Qty 
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                    {!v.PrevYear}      EDI Qty  &nbsp; 
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                    Actuals for {!v.curYear}
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                    Draft Qty
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                    &nbsp;
+                </b>
+            </lightning:layoutItem>
+            </lightning:layout>
+            <aura:iteration items="{!v.PaginationList}" var="item" indexVar="index">
+                <lightning:layout>
+            <lightning:layoutItem class="left-align  custom-background-lightGrayHead" size="2">
+                <b>
+                    {!item.Category}
+                </b>
+            </lightning:layoutItem>
+                      
+                
+            <lightning:layoutItem class="left-align  custom-background-lightGrayHead" size="2">
+                <b>
+                    {!item.SkuName}
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="left-align  custom-background-lightGrayHead" size="1">
+                <b>
+                    {!item.RegionName}
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                    <lightning:formattedNumber value="{!item.ediLLy}" label="" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                    <lightning:formattedNumber value="{!item.ediLastyear}" label="" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+            &nbsp;     </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                <lightning:formattedNumber value="{!item.Invoice}" label="" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+
+ &nbsp; </b>
+            </lightning:layoutItem>
+                    <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                <lightning:input type="number" label="{!index}" class="right-text-align"  variant="label-hidden" onchange="{!c.addChange}" value="{!item.draft}"  disabled="{!!v.freezeInput}" step=".01"/>  
+
+&nbsp;  </b>
+            </lightning:layoutItem>
+                    <lightning:layoutItem class="right-align custom-background-lightGrayHead" size="1">
+                <b>
+                    &nbsp;
+                </b>
+            </lightning:layoutItem>
+                </lightning:layout>
+            </aura:iteration>-->
+        <!--<lightning:layout>
+            <lightning:layout >
+                <lightning:layoutItem class="custom-background-lightGrayHead" size="10"/>
+            </lightning:layout>
+            
+            <div class="slds-align_absolute-center">
+                <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="6">
+                <div class="slds-float_left slds-p-left_xx-small">
+                <p class="slds-page-header__title">Page {!v.PageNumber} of {!v.TotalPages}</p> 
+                </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="6">
+                <div class="slds-align_absolute-center">  
+        <lightning:buttonGroup >
+            <lightning:button disabled="{!v.startPage == 0}" variant="brand" aura:id="prevPage" label="{!$Label.c.SIC_Prev}" onclick="{!c.handlePrev}" />            
+               <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="{!$Label.c.SIC_Next}" onclick="{!c.handleNext}"/>
+              </lightning:buttonGroup>
+            </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="2">
+                
+                </lightning:layoutItem>
+            </lightning:layout>
+                <lightning:layoutItem padding="around-small">                    
+                    <lightning:button variant="brand" label="Save" title="Save" onclick="{! c.Save }" />
+                    <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{! c.Cancel }" />
+                    </lightning:layoutItem>
+            </div>
+        </lightning:layout> -->
+    
+</aura:component>

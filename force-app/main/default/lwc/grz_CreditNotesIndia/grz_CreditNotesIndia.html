@@ -1,0 +1,196 @@
+<!-- RITM0575970 Grz(Nikhil Verma) 21-06-2023-->
+<template>
+    <div>
+        <c-grz_header-image-cmp bgimg={backgroundimage} imglabel="Credit Notes" customcss='top: 9%;'></c-grz_header-image-cmp>
+    </div>
+    <div class="bread-crumb">
+        <c-grz_bread-crumb labelone="Credit Notes" linkone=''>
+        </c-grz_bread-crumb>
+    </div>
+    <template if:true={isSpinner}>
+                <div class="">
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </div>
+    </template>
+    <template if:true={errorMessage}>
+        <p class="error"> {errorMessage} </p>
+    </template>
+    <br>
+    <!-- Body Section -->
+    <div class="tab-div">
+        <div class="slds-grid slds-wrap divheightaccount">
+            <div class="slds-col slds-size_12-of-12">
+                    <!-- Customer Data Div -->
+                    <div class="cust-info-div">
+                        <div class="first-block">
+                            <div class="cust-data-text">
+                                <div class="lab-btn">Customer No:</div>
+                            </div>
+                            <div class="cust-data cust-data-mobile-1 componentNotoSansBold">
+                                <div class="lab-btn">{CustomerCode}</div>
+                            </div>
+                        </div>
+                        <div class="second-block">
+                            <div class="cust-data-text">
+                                    <div class="lab-btn">Customer Name:</div>
+                            </div>
+                            <div class="cust-data cust-data-mobile-2 componentNotoSansBold">
+                                <div class="lab-btn">{CustomerName}</div>
+                            </div>
+                        </div>
+                        <div class="third-block">
+                            <div class="cust-data-text">
+                                <div class="lab-btn">City:</div>
+                            </div>
+                            <div class="cust-data cust-data-mobile-3 componentNotoSansBold">
+                                <div class="lab-btn">{City}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ledger Statement Table Div -->
+                    <div class="table-comp-div">
+                        <!--Filter Section-->
+                        <div class="filter-div">
+                            <div class="filter-icon-div">
+                                <img src={filterIcon}/>
+                            </div>
+                             <div class="slds-p-left_small year-div">
+                                    <lightning-combobox
+                                        value={salesArea}
+                                        placeholder="Sales Area"
+                                        options={SalesAreaOptions}
+                                        onchange={handleSalesAreaOption}>
+                                </lightning-combobox> 
+                            </div>
+                            <div class="slds-p-left_small year-div">
+                                    <lightning-combobox
+                                        placeholder="Year"
+                                        value={ledgerYearType}
+                                        options={LedgerYearOptions}
+                                        onchange={handleLedgerYearOption} >
+                                    </lightning-combobox> 
+                            </div>
+                            <div class="slds-p-left_small quarter-div">
+                                    <lightning-combobox
+                                        placeholder="Quarter"
+                                        value={quaterType}
+                                        options={QuaterOptions}
+                                        onchange={handleQuaterOption} >
+                                </lightning-combobox>                            
+                            </div>
+                            <div class="slds-p-left_small slds-m-right_medium mobile-ledger-statement-btn">
+                                <!--For India-->
+                                    <button class="ledger-statement-btn componentNotoSansBold" onclick={handleGetLedgerClick}>Get Statement</button>
+                            </div>
+                        </div>
+                        <!-- Ledger Table Headings -->
+                        <template if:true={showLedgerTable}>
+                            <div class="table-head-div">
+                                <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small ledger-table-head-width">
+                                    <thead class="componentNotoSansLight table-head">
+                                        <tr style="background-color: #f7f7f7;">
+                                            <th class="slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Post Date">Post Date</div>
+                                            </th>
+                                            <th class="slds-p-left_small head-element-special1" scope="col">
+                                                    <div class="slds-truncate" title="Doc Type">Doc Type</div>
+                                            </th>
+                                            <th class="slds-p-left_small head-element-combine" scope="col">
+                                                <div style="display: flex; justify-content:space-between">
+                                                        <div class="slds-truncate merge-table1" title="Doc No. Particulars" >Doc No. Particulars</div>
+                                                        <div class="slds-truncate merge-table2" title="Ref/Chq Number" ><span>Ref/Chq Number</span></div>
+                                                </div>
+                                            </th>
+                                            <th class="slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Debit Amt">Debit Amt (INR)</div>
+                                            </th>
+                                            <th class="slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Credit Amt">Credit Amt (INR)</div>
+                                            </th>
+                                            <th class="slds-p-right_small slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Running Balance">Running Balance (INR)</div>
+                                            </th>
+                                            
+                                             <template if:true={doctyperecordcheck}>
+                                                <th class="slds-p-right_small slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Action">Action</div>
+                                                </th>
+                                            </template>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class={ledgerTableScroll}>
+                                    <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small">
+                                        <tbody class="mobile-table-font">
+                                            <template for:each={ledgerData} for:item="ledger">
+                                                <tr key={ledger.Id} class="slds-border_top table-body-data shadoweffect">
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                       
+                                                          <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Post Date:</span>  </template><span class="alignLeft">{ledger.PostDate}</span></div>
+                                                    </td>
+                                                    <td class="slds-p-left_small table-element-special1" scope="col">
+                                                       
+                                                          <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Doc Type:</span>  </template><span class="alignLeft">{ledger.DocType}</span></div>
+                                                    </td>
+                                                    <td class="slds-p-left_small table-element-combine" scope="col">
+                                                        <div class="flexsideclass">
+                                                             <div class="valPad textoverflowcls slds-truncate merge-table1"><template if:true={isScreen}><span>Doc No. Particulars:</span>  </template><span class="alignLeft">{ledger.AccountingDocNumber}</span></div>
+                                                             <div class="valPad textoverflowcls slds-truncate merge-table2"><template if:true={isScreen}><span>Ref/Chq Number:</span>  </template><span  class="alignLeft content1">{ledger.ReferebceChqNumber}</span><span class="absolutealignLeft content2 slds-p-left_x-small">{ledger.DocumentHeaderText}</span></div>
+                                                        </div> 
+                                                    </td> 
+                                                    
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                       
+                                                          <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Debit Amt (INR):</span>  </template><span class="alignLeft">{ledger.Debit}</span></div>
+                                                    </td> 
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                       
+                                                          <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Credit Amt (INR):</span>  </template><span class="alignLeft">{ledger.Credit}</span></div>
+                                                    </td> 
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                       
+                                                          <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Running Balance (INR):</span>  </template><span class="alignLeft">{ledger.RunningBalance}</span></div>
+                                                    </td>                                                      
+                                                      <template if:true={ledger.Doctyperecordcheck}>
+                                                        <td class="slds-p-left_small table-element" scope="col">
+                                                            <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Action:</span>  </template><span class="alignLeft"><lightning-icon variant="Warning"  icon-name="utility:download"  data-value={ledger.ContentDocid}
+                                                                onclick={downloaddocument} size="x-small" class="pointer"> </lightning-icon></span></div>
+                                                        </td> 
+                                                    </template>                      
+                                                </tr>
+                                                <tr key={ledger.Id} style="color: black;" class="shadoweffect">
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td>
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td>
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate">{ledger.SGTXT}</div>
+                                                    </td>
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td> 
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td> 
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                        </template>
+                    </div>
+                    <template if:true={ledgerNoRecordError}>
+                        <div class="error-div">    
+                            <div class="no-record-error"> No Record Found</div>
+                        </div>
+                    </template>                        
+            </div>
+        </div>       
+    </div>
+</template>

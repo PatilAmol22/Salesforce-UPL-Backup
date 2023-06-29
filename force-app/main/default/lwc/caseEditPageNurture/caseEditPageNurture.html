@@ -1,0 +1,36 @@
+<template>
+    <lightning-card>
+        <lightning-record-edit-form
+        record-id={recordId}
+        object-api-name="Case"
+        onsubmit={handleSave}
+        >
+        
+        <lightning-accordion allow-multiple-sections-open class="example-accordion slds-grid slds-gutters"
+            active-section-name={activeSections}>
+            <template for:each={fields_per_section} for:item="accordion_item" for:index="index">
+                <lightning-accordion-section key={accordion_item.label} name={accordion_item.label}
+                    label={accordion_item.label} style="background-color: rgb(250, 246, 246);">
+                    <lightning-layout multiple-rows style="color:black !important;background-color: white ">
+                        <template for:each={accordion_item.fields} for:item="fieldFromSubsection">
+                            <lightning-layout-item
+                                key={fieldFromSubsection}
+                                padding="around-small"
+                                size="12"
+                                small-device-size="6"
+                                medium-device-size="6"
+                                large-device-size="6">
+                                <lightning-input-field id={fieldFromSubsection} field-name={fieldFromSubsection} onchange={handleChangeFieldSet}>
+                                </lightning-input-field>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-accordion-section>
+            </template>
+            
+        </lightning-accordion>
+        <lightning-button type="submit" variant="brand" label="Save" title="Save" class="slds-m-right_medium" style="float: right;margin: 10px 10px 10px 10px;">
+        </lightning-button>
+        </lightning-record-edit-form>
+    </lightning-card>
+</template>

@@ -1,0 +1,362 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,force:hasRecordId"
+                controller="SettlementRequisitionController"
+                access="global">
+
+    <!-- Event handler for closing Modal-->
+    <aura:handler name="stlEvent" event="c:CallSettlementEvent" action="{!c.handleCloseEvent}" includeFacets="true" />
+    
+    <aura:attribute name="activityType" type="String" />
+    
+    <!--Init Component On Load-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--End-->
+    
+    <!-- Reload record using recordId -->
+    <aura:attribute name="recordId" type="Id" />
+    <!--End-->
+
+    <aura:attribute name="header" type="String" default="New Activity"/>  
+    <aura:attribute name="recordNo" type="String"/>  
+    <aura:attribute name="search" type="String"/>  
+    <aura:attribute name="mtd" type="String"/>  
+    <aura:attribute name="last_SearchText" type="String" access="private" />
+
+    <aura:attribute name="activityList" type="Activity_Plan__c[]" access="public"/>  
+    
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>  
+    <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/>   
+    <aura:attribute name="selectedTabsoft" type="string" default="Name" description="Use for show/hide arraow sign on header based on conditions"/>  
+    <aura:attribute name="page" default="1" type="integer" access="public" description="using for store page Number"/>  
+    <aura:attribute name="pages" default="0" type="integer" access="public" description="using for store All Pages page Number"/>  
+    <aura:attribute name="total" default="0" type="integer" access="public" description="total records count store "/> 
+    
+    <!--<aura:handler name="change" value="{!v.total}" action="{!c.handleTotalChange}"/>-->
+    <!--<aura:attribute name="end" default="0" type="integer" access="public" description="using for store page Number"/>  
+    <aura:attribute name="start" default="0" type="integer" access="public" description="using for store page Number"/>  -->
+    <!--<aura:attribute name="pagedResult" type="MarketingRequisitionController.PagedResult[]" access="public"/>-->
+    
+    <!-- CSS Modal Adjustment -->    
+    <aura:attribute name="cssStyle" type="String" />
+    <style>{!v.cssStyle}</style>
+    <!-- End --> 
+    
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="isOpenView" type="boolean" default="false"/>
+    <aura:attribute name="isOpenDelete" type="boolean" default="false"/>
+
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <div class="slds-spinner_container slds-is-fixed">
+        <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+        </div>
+    </aura:if>    
+    
+    <!--Modal Popup for Create New -->
+      <div class="slds-m-around--xx-large">    
+  <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+    <aura:if isTrue="{!v.isOpen}">
+      
+   <!--###### MODAL BOX Start From Here ######--> 
+      <div role="dialog" tabindex="-1" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-fade-in-open slds-modal--large">
+        <div aura:id="entryModalContainer" class="slds-modal__container" >
+          <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width:80rem !important; width:99% !important;"-->
+          <div class="slds-modal__header">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+            X
+            <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">{!v.header}</h2> <!--Add Settlement  #TST000000000001-->
+          </div>
+          <!--###### MODAL BOX BODY Part Start From Here ######-->
+          <div class="slds-modal__content slds-p-around--medium">
+              <ui:scrollerWrapper class="scrollerSize">
+				<c:SettlementEntry aura:id="childCmp" recordId="{!v.recordId}"/>
+              </ui:scrollerWrapper>
+          </div>
+          <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}" >Cancel</button>
+            <!--<button class="slds-button slds-button- -brand" onclick="{!c.likenClose}">Save and Close</button>-->
+            <ui:button disabled="{!v.isDisabled}" class="slds-button slds-button--brand" labelClass="" label="Save and Close" press="{!c.likenClose}"/>      
+          </div>
+        </div>
+      </div>
+      <div class="slds-backdrop slds-backdrop--open"></div>
+      <!--###### MODAL BOX Part END Here ######-->
+ </aura:if>
+  </div>
+    <!--Modal Popup for View --> 
+   <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+    <aura:if isTrue="{!v.isOpenView}">
+      
+   <!--###### MODAL BOX Start From Here ######--> 
+      <div role="dialog" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-fade-in-open slds-modal--large"> <!--  style="margin-top:120px;"-->
+        <div class="slds-modal__container" >
+          <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width:80rem !important; width:99% !important;"-->
+          <div class="slds-modal__header">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeViewModal}">
+            X
+            <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">Activity&nbsp;#{!v.recordNo}</h2> <!--#TST000000000003-->
+          </div>
+          <!--###### MODAL BOX BODY Part Start From Here ######-->
+          <div class="slds-modal__content slds-p-around--medium invisible-scrollbar">
+              <iframe src="{!'https://upl.lightning.force.com/apex/DeltaSettlementView?id='+ v.recordId }" width="100%" height="425px" frameBorder="0"/>
+          </div>
+          <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button--neutral" onclick="{!c.closeViewModal}" >Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="slds-backdrop slds-backdrop--open"></div>
+      <!--###### MODAL BOX Part END Here ######-->
+ </aura:if>       
+
+    <div class="slds-page-header" style="margin-top:-40px;">
+        <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <lightning:icon iconName="standard:orders" size="large"/>
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-heading--label"></p>
+                        <div class="slds-grid">
+                            <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle" style="margin-top:10px;">Settlement Entry</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<div class="slds" style="background:#fff; padding:0; margin:0;">
+<div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--2-of-3" style="margin-bottom:10px;">
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input aura:id="search" type="text" 
+                       label="" name="" value="{!v.search}" 
+                       onchange="{!c.search}" placeholder="Enter space after text to search" />
+      
+      <!--<lightning:helptext content="Search Activity No, Activity, Time, Activity Cost and Liquidation Cost only" iconName="utility:info" class="popover"/>  -->
+  </div>
+  </div>
+</div>
+    
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+<div class="slds-form-element" style="margin-top:18px;">
+<div class="slds-form-element__control">
+	<ui:inputSelect aura:id="mtdOptions"  label="" class="slds-input" change="{!c.onSelectChange}" value="{v.mtd}"/>
+</div>
+</div>
+</div>  
+
+</div>    
+
+    <!-- Pagination -->
+    
+<div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-bottom:10px;">
+  <div class="slds-form-element">
+  <div class="slds-form-element__control" style="width:20%; margin-top:10px;">
+      <ui:inputSelect aura:id="recordSize" label="" class="slds-input" change="{!c.doInit}">
+          <ui:inputSelectOption text="10" label="10" value="true"/>
+          <ui:inputSelectOption text="25" label="25"/>
+          <ui:inputSelectOption text="50" label="50"/>
+          <ui:inputSelectOption text="100" label="100"/>
+      </ui:inputSelect>      
+  </div>
+  </div>
+</div>
+    
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+<div class="slds-form-element" style="margin-top:18px;">
+<div class="slds-form-element__control">
+    <!--<div class="slds-align_absolute-center">{!v.start} - {!v.end} of {!v.total}</div>-->
+    <div class="slds-align_absolute-center">{!v.page} of {!v.pages}</div>
+</div>
+</div>
+</div> 
+    
+    
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+<div class="slds-form-element" style="margin-top:10px;">
+<div class="slds-form-element__control">
+    <div class="slds-text-align--right">
+        <!--<a href="" class="paddright">First</a> <a href="" class="paddright">Previous</a> <a href="" class="paddright">Next</a> <a href="">Last</a>-->
+        <lightning:button disabled="{!v.page == 1}" onclick="{!c.gotoFirstPage}" class="slds-button slds-button--neutral" label="FIRST"/>  
+        <lightning:button disabled="{!v.page == 1}" onclick="{!c.previousPage}" class="slds-button slds-button--neutral" label="PREVIOUS"/>  
+        <lightning:button disabled="{!v.page == v.pages}" aura:id="nextbtn" class="slds-button slds-button--neutral" onclick="{!c.nextPage}" label="NEXT"/>  
+        <lightning:button disabled="{!v.page == v.pages}" onclick="{!c.gotoLastPage}" class="slds-button slds-button--neutral" label="LAST"/>          
+    </div>
+</div>
+</div>
+</div> 
+
+</div>
+    
+    <!--Pagination -->    
+    
+<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:0px; background:#769ed9; color:#fff; font-weight:bold;">
+  <div style="text-align:left; margin-top:5px; padding-right:20px; font-weight:bold;">Settlement Details</div>
+</h3>
+<div class="slds-scrollable--x" style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+	<table width="100%" class="slds-table slds-table--bordered"><!--Table must be responsive-->  
+                <thead>  
+                    <tr class="slds-text-heading--label ">            
+                        <th class="slds-is-sortable slds-text-title--caps" scope="col" onclick="{!c.sortActivityNo}">  
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">  
+                                <span class="slds-assistive-text">Sort</span>  
+                                <span class="slds-truncate" title="ACTIVITY NO">ACTIVITY NO</span>   
+                                <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'Name') }">   
+                                    <div class="slds-icon_container">  
+                                        <lightning:icon iconName="utility:arrowdown" size="xx-small" alternativeText="sort arraw down"/>  
+                                    </div>  
+                                </aura:if>   
+                                <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'Name') }">   
+                                    <div class="slds-icon_container">  
+                                        <lightning:icon iconName="utility:arrowup" size="xx-small" alternativeText="sort arraw up"/>  
+                                    </div>  
+                                </aura:if>              
+                            </a>  
+                        </th>  
+                        <!--Added by Nandhini CR:APPS-5426-->
+                        <th class="slds-is-sortable slds-text-title--caps" scope="col">
+                        <div class="slds-truncate">Requisition NO</div>
+                        </th>
+                        <th class="slds-is-sortable slds-text-title--caps" scope="col" >  <!-- onclick="{!c.sortActivityType}" -->
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">  
+                                <span class="slds-assistive-text">Sort</span>  
+                                <span class="slds-truncate" title="ACTIVITY TYPE">
+                                    <ui:inputSelect class="slds-input" 
+                                                    aura:id="activityTypeOptions" 
+                                                    value="" 
+                                                    change="{!c.sortActivityType}"
+                                                    required="true" 
+                                                    disabled="false"/>  
+                                </span>   
+                                <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'Activity_Type__c') }">   
+                                    <div class="slds-icon_container">  
+                                        <lightning:icon iconName="utility:arrowdown" size="xx-small" alternativeText="sort arraw down"/>  
+                                    </div>  
+                                </aura:if>   
+                                <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft =='Activity_Type__c') }">  
+                                    <div class="slds-icon_container">  
+                                        <lightning:icon iconName="utility:arrowup" size="xx-small"                                                                         alternativeText="sort arraw up"/>  
+                                    </div></aura:if>              
+                            </a>  
+                        </th>            
+                        <th class="slds-is-sortable slds-text-title--caps" scope="col" onclick="{!c.sortDescription}">  
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">  
+                                <span class="slds-assistive-text">Sort</span>  
+                                <span class="slds-truncate" title="DESCRIPTION">DESCRIPTION</span>   
+                                <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'Description__c') }">  
+                                    <div class="slds-icon_container">  
+                                        <lightning:icon iconName="utility:arrowdown" size="xx-small" alternativeText="sort arraw down"/>  
+                                    </div>  
+                                </aura:if>   
+                                <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'Description__c') }">  
+                                    <div class="slds-icon_container">  
+                                        <lightning:icon iconName="utility:arrowup" size="xx-small" alternativeText="sort arraw up"/>  
+                                    </div>  
+                                </aura:if>              
+                            </a>  
+                        </th>    
+                        <th class="slds-is-sortable slds-text-title--caps" scope="col" onclick="{!c.sortValueToSettle}">  
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">  
+                                <span class="slds-assistive-text">Sort</span>  
+                                <span class="slds-truncate" title="VALUE TO SETTLE">VALUE TO SETTLE</span>   
+                                <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'Activity_Cost__c') }">  
+                                    <div class="slds-icon_container">  
+                                        <lightning:icon iconName="utility:arrowdown" size="xx-small" alternativeText="sort arraw down"/>  
+                                    </div>  
+                                </aura:if>   
+                                <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'Activity_Cost__c') }">  
+                                    <div class="slds-icon_container">  
+                                        <lightning:icon iconName="utility:arrowup" size="xx-small" alternativeText="sort arraw up"/>  
+                                    </div>  
+                                </aura:if>              
+                            </a>  
+                        </th>    
+                      <th class="slds-is-sortable slds-text-title--caps" scope="col">
+                        <div class="slds-truncate">RM</div>
+                      </th>
+                      <th class="slds-is-sortable slds-text-title--caps" scope="col">
+                        <div class="slds-truncate slds-text-title--caps">MM</div>
+                      </th>
+                        <!--Added by Nandhini CR:APPS-5426-->
+                      <th class="slds-is-sortable slds-text-title--caps" scope="col">
+                        <div class="slds-truncate slds-text-title--caps">{!$Label.c.MH_Level}</div>
+                      </th>
+                      <th class="slds-is-sortable slds-text-title--caps" scope="col">
+                        <div class="slds-truncate">ACTION</div>
+                      </th>
+                      <th class="slds-cell-shrink"></th>
+                    </tr>   
+                </thead>  
+                <tbody>  
+                    <aura:iteration items="{!v.activityList}" var="step" indexVar="i">  
+                        <tr class="slds-hint-parent">  
+                            <td class="slds-truncate" data-label="ACTIVITY NO">
+                                <!--<a href="{! '#/sObject/' + account.Id + '/view'}">{!account.Name}</a>-->
+                                <!--<a href="{! '#/sObject/' + step.Id + '/view'}"><ui:outputText value="{!step.Settlement_Number__c}"/></a>-->
+                            <a href="{! '/lightning/r/Activity_Plan__c/' + step.Id + '/view'}"><ui:outputText value="{!step.Name}"/></a> <!--INCTASK0133460 Indonesia Cr added Marketing requisition Number -->
+                            </td>
+                            <!--Added by Nandhini CR:APPS-5426-->
+                            <td class="slds-truncate" data-label="Marketing requisition No">
+                                <!--<ui:outputText value="{!step.Marketing_Requisition__r.Name}"/>-->
+                                 <a href="{! '/lightning/r/Activity_Plan__c/' + step.Marketing_Requisition__c + '/view'}"><ui:outputText value="{!step.Marketing_Requisition__r.Name}"/></a>
+                            </td>
+                            <td class="slds-truncate" data-label="ACTIVITY TYPE">
+                                <ui:outputText value="{!step.Activity_Type__c}"/>
+                            </td>  
+                            <td class="slds-truncate" data-label="DESCRIPTION">
+                                <ui:outputText value="{!step.Description__c}"/>
+                            </td>  
+                            <td class="slds-truncate" data-label="VALUE TO SETTLE">
+                                <ui:outputCurrency value="{!step.Activity_Cost__c}"/>
+                            </td> 
+                           
+                              <td class="slds-truncate" data-label="RM">
+                                  <div style="float:left; display:inline; width:40px;">
+                                      <!--<ui:outputRichText aura:id="outputRT" value="{!step.MM_Status__c}"/>-->
+                                      <ui:outputRichText aura:id="outputRT" value="{!step.RM_Settlement_Staus_icon__c}"/>
+                                  </div>
+                              </td>
+                              <td class="slds-truncate" data-label="MM">
+                                  <div style="float:left; display:inline; width:40px;">
+                                      <!--<ui:outputRichText aura:id="outputRT" value="{!step.RM_Approval_image__c}"/>-->
+                                      <ui:outputRichText aura:id="outputRT" value="{!step.MM_Settlement_Status_icon__c}"/> 
+                                  </div>              
+                              </td>
+                            <!--Added by Nandhini CR:APPS-5426-->
+                             <td class="slds-truncate" data-label="MH">
+                                  <div style="float:left; display:inline; width:40px;">
+                                      <!--<ui:outputRichText aura:id="outputRT" value="{!step.RM_Approval_image__c}"/>-->
+                                      <ui:outputRichText aura:id="outputRT" value="{!step.MH_Settlement_Staus_icon__c}"/> 
+                                  </div>              
+                              </td>
+                            <!--modified by Nandhini CR:APPS-5426-->
+                              <td class="slds-truncate" data-label="ACTION">
+                                  <lightning:buttonIcon value="{!step.Id}" iconName="utility:add" 
+                                                        variant="bare" size="large" alternativeText="Add" 
+                                                        onclick="{!c.editRecord}" name="{!step.Name}"
+                                                        disabled="{!step.Settlement_Disable__c}"/>
+                                   <!--disabled="{! and(or(step.MH_Settlement_Status__c == 'Approved',step.MH_Settlement_Status__c == null), step.RM_Settlement_Status__c == 'Approved', step.MM_Settlement_Status__c == 'Approved') }"-->
+                                  <!-- disabled="{! and(step.MM_Approval_Status__c == 'Approved', step.RM_Approval_Status__c == 'Approved') }"  -->
+                                  <lightning:buttonIcon value="{!step.Id}" iconName="utility:preview" 
+                                                        variant="bare" size="large" alternativeText="Preview" 
+                                                        disabled="false" onclick="{!c.viewRecord}" name="{!step.Name}"/>
+                              </td>                            
+                        </tr>  
+                    </aura:iteration>  
+                </tbody>   
+            </table> 
+</div>
+
+</div>
+</aura:component>

@@ -1,0 +1,235 @@
+<aura:component controller="Grz_CaseCreateController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    <aura:attribute name="loaded" type="Boolean"  default="false" />
+    <aura:attribute name="fieldList" type="List"/>
+     <aura:attribute name="fieldTypeShow" type="String"/>
+    
+    <aura:attribute name="casesTypes" type="String"/>
+    <!--<aura:attribute name="caseAttribute" type="Case" default="{'sobjetType': 'Case','Subject': '','Description': '','Contact':'','Order_Sales_Number_SFDC__c': '','ContactPhone': '','ContactEmail':'', Crop_pick__c:'', Case_Type__c:''}"/>-->
+    <aura:attribute name="caseAttribute" type="Case" default="{'sobjectType': 'Case','Subject': '','Description': ''}"/>
+    <aura:attribute name="filetype" type="List"/>
+    <aura:attribute name="multiple" type="Boolean" default="true" />
+    
+    <aura:attribute name="disabled" type="Boolean" default="true" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="errormessage" type="String" />
+    <aura:attribute name="errorsubject" type="String" />
+    <aura:attribute name="erroraccount" type="String" />
+    <aura:attribute name="errorDescription" type="String" />
+    <aura:attribute name="errorcasetype" type="String" />
+    <aura:attribute name="documents" type="object[]"/>
+    <aura:attribute name="contentDocumentId" type="String[]" />
+    <aura:attribute name="breadLabel" type="String" default="Create a Case" />
+    <aura:attribute name="initWrapper" type="object" />
+    <aura:attribute Name="selItem2" type="object"  access="public" />
+    <aura:attribute Name="accRelatedUser" type="object"  access="public" />
+    <div class="">
+        <aura:if isTrue="{! v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+            
+            <aura:set attribute="else">
+                
+                
+                <c:grz_headerImageCmp bgimg="{!$Resource.Grz_Resourse + '/Grz_Resourse/Images/Carousel.jpg'}" imglabel="Cases" customcss="top: 5%;"/>
+                <div class="slds-p-top_medium">
+                    <c:grz_breadCrumb labelone='Cases' labeltwo="{!v.breadLabel}" linkone='casehome' linktwo=''/>
+                </div>
+                
+                <div class="headingCSS componentNotoSansBold">Create Case</div>
+                <div class="slds-form-element maindiv">
+                    <div class="slds-grid slds-grid_vertical slds-m-around_large divcss">
+                        <p class="errorcolor">{!v.errormessage}</p>
+                        <div class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-m-top_x-small slds-p-top_small">
+                            <div class="slds-grid slds-wrap">
+                                <div class=" slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-x-small-size_12-of-12 slds-p-top_small textCSS componentNotoSansMedium">
+                                    <span class="errorcolor">*</span> Subject:
+                                </div>
+                                
+                                <div class="slds-col slds-large-size_10-of-12 slds-medium-size_9-of-12 slds-x-small-size_12-of-12 slds-m-top_x-small">
+                                    <!-- <p class="errorcolor">{!v.errorsubject}</p>-->
+                                    
+                                    <ui:inputText required="true" aura:id="caseTitle" class="slds-input slds-p-left_small inputboxCSS componentNotoSansLight" value="{!v.caseAttribute.Subject}" placeholder="Enter a suitable subject line for the case..." />
+                                    <!--<lightning:input required="true" aura:id="caseTitle"  value="{!v.caseAttribute.Subject}" class="bccolor" placeholder="Enter a suitable subject line for the case..." />-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-p-top_medium">
+                            <div class="slds-grid slds-wrap">
+                                <div class=" slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-x-small-size_12-of-12 slds-p-top_small textCSS componentNotoSansMedium" >
+                                    <span class="errorcolor">*</span> Description:
+                                </div>
+                                <div class="slds-col slds-large-size_10-of-12 slds-medium-size_9-of-12 slds-x-small-size_12-of-12 slds-m-top_x-small">
+                                    <!--<lightning:textarea placeholder="Please add relevant description..." value="{!v.caseAttribute.Description}" class="inputboxCSS componentNotoSansLight"/> -->                          
+                                    
+                                    <ui:inputTextArea required="true" aura:id="comments" class="inputboxCSS componentNotoSansLight" placeholder="Please add relevant description..." value="{!v.caseAttribute.Description}" rows="5"/> 
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.initWrapper.IsInternalUser}">
+                            <div class="slds-grid slds-wrap slds-p-top_small">
+                                <div class=" slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-x-small-size_12-of-12 slds-p-top_small textCSS componentNotoSansMedium" >
+                                    <span class="errorcolor">*</span> Account:
+                                </div>
+                                <!--<div class="slds-col slds-large-size_-of-12 slds-medium-size_10-of-12 slds-small-size_12-of-12 slds-m-top_x-small slds-p-left_medium addDetailStyle">
+                                    <ui:inputText required="true" aura:id="caseTitle" class="slds-input slds-p-left_small inputboxCSS componentNotoSansLight" value="{!v.caseAttribute.Order_Sales_Number_SFDC__c}" placeholder="Order Id (If applicable)" />
+                                </div>-->
+                                <div class="slds-col slds-large-size_4-of-12 slds-x-small-size_12-of-12 slds-medium-size_9-of-12 slds-p-top_x-small">
+                                    
+                                    <c:Grz_AccountLookupComponent objectName="Account"
+                                                                  field_API_text="Name"
+                                                                  field_API_val="Id"
+                                                                  limit="4"
+                                                                  field_API_search="Name"
+                                                                  lookupIcon="standard:account" 
+                                                                  selItem="{!v.selItem2}" 
+                                                                  accountRelatedUser = "{!v.accRelatedUser}"
+                                                                  placeholder="Search Accounts..."
+                                                                  />  
+                                    
+                                    <!--<aura:if isTrue="{! not(empty(v.selItem2)) }"> 
+                                        <br />
+                                        This is Parent Lightning component <br />
+                                        Item Selected : <br />
+                                        ID - {#v.selItem2.val} <br /> 
+                                        Text - {#v.selItem2.text}<br />
+                                        Object - {#v.selItem2.objName}
+                                    </aura:if>--> 
+                                </div>
+                            </div>
+                        </aura:if>   
+                        <div class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-m-top_x-small slds-p-top-small">
+                            <div class="slds-grid slds-wrap">
+                                
+                                <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class=" slds-col slds-large-size_4-of-12 slds-medium-size_3-of-12 slds-x-small-size_12-of-12 slds-p-top_large textCSS componentNotoSansMedium" >
+                                            <span class="errorcolor">*</span> Case Type:
+                                        </div>
+                                        <div class="slds-col slds-large-size_8-of-12 slds-medium-size_9-of-12 slds-x-small-size_12-of-12">
+                                            
+                                            <lightning:select aura:id="caseTypePicklist" name="selectItem" label="" onchange="{! c.onChange }">
+                                                <option value="">--None--</option>
+                                                <aura:iteration items="{!v.fieldList}" var="i" >
+                                                    <option text="{!i}" value="{!i}" />
+                                                </aura:iteration>
+                                            </lightning:select>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-col slds-large-size_6-of-12 slds-p-left_medium slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-m-top_x-small slds-p-top-small hidepaddingleft">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class=" slds-col slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-p-top_medium slds-x-small-size_12-of-12  textCSS componentNotoSansMedium" >
+                                            Contact Name:
+                                        </div>
+                                        <aura:if isTrue="{!v.initWrapper.IsInternalUser}">
+                                            <div class="slds-col slds-large-size_9-of-12 slds-medium-size_9-of-12 slds-p-top_small slds-x-small-size_12-of-12">
+                                                <ui:inputText aura:id="caseTitle" class="slds-input slds-p-left_small inputboxCSS componentNotoSansLight" value="{!v.accRelatedUser[0].Name}" disabled="true" />
+                                                <!-- <lightning:input  required="true" aura:id="caseTitle"  value="{!v.accRelatedUser[0].Name}" disabled="true" />-->
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-col slds-large-size_9-of-12 slds-medium-size_9-of-12  slds-p-top_small slds-x-small-size_12-of-12">
+                                                    <ui:inputText aura:id="caseTitle" class="slds-input slds-p-left_small inputboxCSS componentNotoSansLight" value="{!v.initWrapper.Name}" disabled="true" />
+                                                    <!--<lightning:input  required="true" aura:id="caseTitle"  value="{!v.accRelatedUser[0].Name}" disabled="true" />-->
+                                                </div>
+                                            </aura:set>
+                                        </aura:if>                                 
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-m-top_x-small slds-p-top-small">
+                            <div class="slds-grid slds-wrap">
+                                <div class=" slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-x-small-size_12-of-12 slds-m-top_x-small slds-p-top-small" >
+                                    <div class="slds-grid slds-wrap">
+                                        <div class=" slds-col slds-large-size_4-of-12 slds-medium-size_3-of-12 slds-x-small-size_12-of-12 slds-p-top_small textCSS componentNotoSansMedium">
+                                            Contact Number: 
+                                        </div>
+                                        <aura:if isTrue="{!v.initWrapper.IsInternalUser}">
+                                            <div class="slds-col slds-large-size_8-of-12 slds-medium-size_9-of-12 slds-x-small-size_12-of-12 slds-m-top_x-small">
+                                                <ui:inputText aura:id="caseTitle" class="slds-input slds-p-left_small inputboxCSS componentNotoSansLight" value="{!v.accRelatedUser[0].MobilePhone}" disabled="true"/>
+                                                <!-- <lightning:input aura:id="caseTitle" value="{!v.accRelatedUser.MobilePhone}" disabled="true" />-->
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-col slds-large-size_8-of-12 slds-medium-size_9-of-12 slds-x-small-size_12-of-12 slds-m-top_x-small">
+                                                    <ui:inputText aura:id="caseTitle" class="slds-input slds-p-left_small inputboxCSS componentNotoSansLight" value="{!v.initWrapper.MobilePhone}" disabled="true"/>
+                                                    <!--<lightning:input  aura:id="caseTitle"  value="{!v.initWrapper.MobilePhone}" disabled="true" />-->
+                                                </div>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                                
+                                <div class=" slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-x-small-size_12-of-12 slds-m-top_x-small slds-p-top-small" >
+                                    <div class="slds-grid slds-wrap">
+                                        <div class=" slds-col slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-x-small-size_12-of-12 slds-p-left_medium slds-p-top_small textCSS componentNotoSansMedium hidepaddingleft">
+                                            Email:
+                                        </div>
+                                        <aura:if isTrue="{!v.initWrapper.IsInternalUser}">
+                                            <div class="slds-col slds-large-size_9-of-12 slds-medium-size_9-of-12 slds-p-left_small slds-x-small-size_12-of-12 slds-p-top_x-small hidepaddingleft">
+                                                <ui:inputText required="true" aura:id="caseTitle" class="slds-input slds-p-left_small inputboxCSS componentNotoSansLight" value="{!v.accRelatedUser[0].Email}" disabled="true"/>
+                                                <!-- <lightning:input  required="true" aura:id="caseTitle"   value="{!v.accRelatedUser[0].Email}" disabled="true" />-->
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-col slds-large-size_9-of-12 slds-medium-size_9-of-12 slds-p-left_small slds-x-small-size_12-of-12 slds-p-top_x-small hidepaddingleft">
+                                                    <ui:inputText required="true" aura:id="caseTitle" class="slds-input slds-p-left_small inputboxCSS componentNotoSansLight" value="{!v.initWrapper.Email}" disabled="true"/>
+                                                    <!-- <lightning:input  required="true" aura:id="caseTitle"   value="{!v.accRelatedUser[0].Email}" disabled="true" />-->
+                                                </div>
+                                            </aura:set>
+                                        </aura:if>  
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                            </div>
+                        </div>
+                        <div class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-m-top_x-small slds-p-top-small">
+                            <div class="slds-grid">
+                                <div class=" slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-small-size_4-of-12 slds-p-top_large textCSS componentNotoSansMedium">
+                                    Add Attachment:
+                                </div>
+                                <div class="slds-col bccolor slds-m-top_medium slds-large-size_10-of-12 slds-medium-size_9-of-12 slds-small-size_6-of-12 orient">
+                                    <!--<lightning:input name="file1" type="file" multiple="true" accept="image/png, .zip" onchange="{! c.handleFilesChange }" class="inputboxCSS "/>-->
+                                    <div class="slds-grid slds-wrap">
+                                        <img src="{!$Resource.Grz_Resourse + '/Grz_Resourse/Images/downloadimg.png'}" class="slds-m-top_small slds-m-left_small slds-m-right_small"></img>
+                                        <lightning:fileUpload multiple="false"
+                                                              variant="label-hidden"
+                                                              recordId="{!v.recordId}"
+                                                              accept="{!v.filetype}"
+                                                              onuploadfinished="{!c.handleUploadFinished}" class="slds-m-bottom_small"/>
+                                    </div>
+                                    <span class="fontcolor">Maximum size of a file: 200 MB</span>
+                                    <div class="fontcolor">File types accepted by your organisation: {!v.fieldTypeShow}</div>
+                                    <aura:iteration items="{!v.documents}" var="document">
+                                        <li>
+                                            <a class="image-name"  id='{!document.documentId}'>{!document.Name}</a><!-- <a class="close-icon" onclick="{!c.deleteFile}" id='{!document.documentId}'>x</a>-->
+                                        </li>
+                                    </aura:iteration>  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_6-of-12 slds-p-top-small">
+                            <div class="slds-grid slds-m-top_small slds-p-bottom_large">
+                                <div class=" slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-small-size_6-of-12 orient">
+                                </div>
+                                <div class="slds-col slds-large-size_10-of-12 slds-medium-size_9-of-12 slds-small-size_6-of-12 orient">
+                                    <button id="casebtn" class="slds-button slds-button_neutral  slds-m-top_medium slds-m-right_x-small saveBtn" onclick="{!c.createCaseData}">Create Case</button>
+                                    <button class="slds-button slds-button_text-destructive slds-m-top_medium  cancelCSS" onclick="{!c.Cancel}">CANCEL</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+    
+</aura:component>

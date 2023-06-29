@@ -1,0 +1,140 @@
+<!--
+   Component Name: ResponsiveCard LWC
+   Author: Vaishnavi Ahirrao
+   Discription: Generic component for Mobile Card UI. Alternavtive for Lightning-datatable and Custom Table UI on mobile device. 
+   Created Date: 25th April 2023
+-->
+
+<template>
+   <!-- added by Vaishnavi for Mobile application  ** START*** -->
+   <template for:each={records} for:item="item">
+     <div key={item.Id} data-id={item.Id} onclick={showDetails} >
+        <article class="slds-card">
+           <div class="slds-col slds-size_12-of-12  slds-medium-size_12-of-12 slds-large-size_12-of-12">
+             
+              <template iterator:data={item.data}>
+               <div key={data.value.label}>
+                  <div if:true={data.first}>
+                     <div class="slds-card-half">
+                        <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                           <div
+                              class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                              <b>{data.value.label}</b>
+                           </div>
+                           <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                              <div if:true={data.value.isCurrency}>
+                                 <b><lightning-formatted-number value={data.value.value} format-style="currency" currency-code={data.value.currencyCode} currency-display-as="code" minimum-fraction-digits="0" maximum-fraction-digits="0"></lightning-formatted-number></b>
+                              </div>
+                              <div if:false={data.value.isCurrency}>
+                                 <div if:true={data.value.isDate}>
+                                    <b><lightning-formatted-date-time value={data.value.value}></lightning-formatted-date-time></b>
+                                 </div>
+                                    <!--Vencida related change ends for chile-->
+                                 <div if:false={data.value.isDate}> 
+                                    <div if:true={data.value.isIcon}>
+                                       <lightning-icon icon-name={data.value.iconName} data-id={data.value.docId} data-action-name={data.value.name} onclick={handleClick} size="small" class="iconclr">
+                                       </lightning-icon>
+                                    </div>
+                                    <div if:false={data.value.isIcon}>
+                                       <b>{data.value.value}</b> 
+                                    </div>                                   
+                                                                             
+                                 </div>
+
+                              </div>
+                             
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+                  <div if:false={data.first}>
+                     <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                        <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                           <b>{data.value.label}</b>
+                        </div>
+                        <div class="slds-col slds-float_left slds-size_6-of-12">
+                           <div if:true={data.value.isCurrency}>
+                              <b><lightning-formatted-number value={data.value.value} format-style="currency" currency-code={data.value.currencyCode} currency-display-as={data.value.currencyDisplayAs} minimum-fraction-digits="0" maximum-fraction-digits="0"></lightning-formatted-number></b>
+                           </div>
+                           
+                           <div if:false={data.value.isCurrency}>
+                              <div if:true={data.value.isButton}>
+                                 <b><lightning-button variant="base" data-id={item.Id} data-action-name={data.value.name} label={data.value.label} title={data.value.label} onclick={handleClick} class="slds-m-left_x-small"></lightning-button></b>
+                              </div>
+                              <div if:true={data.value.isNumber}>
+                                 <b><lightning-formatted-number value={data.value.value} minimum-fraction-digits={data.value.fractionDigit} maximum-fraction-digits={data.value.fractionDigit}></lightning-formatted-number></b>
+                              </div>
+                              <div if:false={data.value.isNumber}>
+                                 <!--Added by akhilesh to handle Chile currency-->
+                                 <div if:true={data.value.isChileCurrency}>
+                                    <b><lightning-formatted-number value={data.value.value}></lightning-formatted-number></b>
+                                 </div>
+                                 <div if:false={data.value.isChileCurrency}>
+                                    <!-- Added by Akhilesh Vencida related change starts for chile-->
+                                    <div if:true={data.value.isExpiredImg}>
+                                       <template if:true={data.value.value}>                                          
+                                          <div style="fill: red;height: 30px;width: 25px;">
+                                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" >
+                                              <path d="M51.4 42.5l-22.9-37c-1.2-2-3.8-2-5 0L.6 42.5C-.8 44.8.6 48 3.1 48h45.8c2.5 0 4-3.2 2.5-5.5zM26 40c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3zm3-9c0 .6-.4 1-1 1h-4c-.6 0-1-.4-1-1V18c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v13z">
+                                              </path></svg>
+                                          </div> 
+                                      </template>
+                                      <template if:false={data.value.value}>
+                                          <!-- <lightning-icon icon-name="utility:warning" title="warning" style="fill : #FF0000;"></lightning-icon> -->
+                                          <div style="fill: limegreen;height: 30px;width: 25px;">
+                                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" >
+                                              <path d="M51.4 42.5l-22.9-37c-1.2-2-3.8-2-5 0L.6 42.5C-.8 44.8.6 48 3.1 48h45.8c2.5 0 4-3.2 2.5-5.5zM26 40c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3zm3-9c0 .6-.4 1-1 1h-4c-.6 0-1-.4-1-1V18c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v13z">
+                                              </path></svg>
+                                          </div> 
+                                      </template>
+                                    </div>
+                                    <div if:false={data.value.isExpiredImg}>
+                                       <div if:true={data.value.isDate}>
+                                          <b><lightning-formatted-date-time value={data.value.value}></lightning-formatted-date-time></b>
+                                       </div>
+                                    <!--Vencida related change ends for chile-->
+                                       <div if:false={data.value.isDate}>
+                                          <div if:true={data.value.isIcon}>
+                                             <lightning-icon icon-name={data.value.iconName} data-id={data.value.docId} data-action-name={data.value.name} onclick={handleClick} size="small" class="iconclr">
+                                             </lightning-icon>
+                                          </div>
+                                          <div if:false={data.value.isIcon}>
+                                             <b>{data.value.value}</b>                                      
+                                          </div>
+                                          
+                                       </div>
+                                    </div>
+                                 </div>
+                                
+                              </div>
+                              
+                             <!-- <div if:true={data.value.isDate}>
+                                 <lightning-formatted-date-time value={data.value.value}></lightning-formatted-date-time>
+                              </div>-->
+
+                              <!--For Nombre field in Chile Account Receivable-->
+                              <div if:true={data.value.isCustomerCode}>
+                                 <b>{customerCode} - {customerName} - {city}</b>
+                              </div>
+               
+                           </div>
+                          
+                        </div>
+                     </div>
+
+                  </div>
+
+
+               </div>
+            </template>
+              
+
+           </div>
+
+        </article>
+     </div>
+
+  </template>
+  <!-- added by Vaishnavi for Mobile application  ** END *** -->
+</template>

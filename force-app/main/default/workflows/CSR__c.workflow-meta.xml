@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Alert_on_Approval</fullName>
+        <description>Alert on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Alert_on_Rejection</fullName>
+        <description>Alert on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Approval</fullName>
+        <description>Email Alert on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Approval_1</fullName>
+        <description>Email Alert on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Approval_2</fullName>
+        <description>Email Alert on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Rejection</fullName>
+        <description>Email Alert on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Rejection_1</fullName>
+        <description>Email Alert on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Rejection_2</fullName>
+        <description>Email Alert on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Farokh_Hilloo</fullName>
+        <description>Email Alert to Farokh Hilloo</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Alert_to_Farokh_Hilloo</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Farokh_Hilloo_1</fullName>
+        <description>Email Alert to Farokh Hilloo</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Alert_to_Farokh_Hilloo</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Level_1_Users</fullName>
+        <description>Email Alert to Level 1 Users</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20002653@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20002673@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Alert_to_Previous_Level_Users</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Level_1_Users_1</fullName>
+        <description>Email Alert to Level 1 Users</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>blair@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mark@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Alert_to_Previous_Level_Users</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Level_1_Users_at_step2</fullName>
+        <description>Email Alert to Level 1 Users</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20002659@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20002735@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20006774@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Alert_to_Previous_Level_Users</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Level_2_Users</fullName>
+        <description>Email Alert to Level 2 Users</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20002702@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20004935@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Alert_to_Previous_Level_Users</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Level_2_Users_1</fullName>
+        <description>Email Alert to Level 2 Users</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20002702@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20004935@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Alert_to_Previous_Level_Users</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Level_3_Users</fullName>
+        <description>Email Alert to Level 3 Users</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Alert_to_Previous_Level_Users</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Notification_to_Brian_Cardin_Kent_Raker</fullName>
+        <description>Email Notification to Brian Cardin &amp; Kent Raker</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_Case_Approval_Request_1</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Notification_to_Myles_Robinson_Brian_Cardin</fullName>
+        <description>Email Notification to Myles Robinson &amp; Brian Cardin</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_Case_Approval_Request_1</template>
+    </alerts>
+    <alerts>
+        <fullName>Escalation_after_24_hrs_to_Vicente_Gongora</fullName>
+        <description>Escalation after 24 hrs to Vicente Gongora</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Escalation_after_24_hrs</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_to_Kent_Raker_Brian_Cardin</fullName>
+        <description>Notification to Kent Raker &amp; Brian Cardin</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20002663@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20003457@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Approval_Request</template>
+    </alerts>
+    <alerts>
+        <fullName>US_CSR_Approval_Notification_to_Kent_Raker_Brian_Cardin</fullName>
+        <description>US CSR Approval Notification to Kent Raker &amp; Brian Cardin</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>brian@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kent@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uniview_US/US_CSR_Approval_Notification</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>CSR_Status_Approved_Closed_1</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Approved &amp; Closed</literalValue>
+        <name>CSR Status Approved &amp; Closed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CSR_Status_Approved_at_Level_1</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Approved at Level 1</literalValue>
+        <name>CSR Status Approved at Level 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CSR_Status_Approved_at_Level_2</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Approved at Level 2</literalValue>
+        <name>CSR Status Approved at Level 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CSR_Status_Approved_at_Level_3</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Approved at Level 3</literalValue>
+        <name>CSR Status Approved at Level 3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CSR_Status_Approved_at_Level_4</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Approved at Level 4</literalValue>
+        <name>CSR Status Approved at Level 4</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_24_Escalation_TRUE</fullName>
+        <field>X24_Escalation__c</field>
+        <literalValue>1</literalValue>
+        <name>Update 24 Escalation as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_24_Escalation_as_FALSE</fullName>
+        <field>X24_Escalation__c</field>
+        <literalValue>0</literalValue>
+        <name>Update 24 Escalation as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_24_Escalation_as_FALSE_1</fullName>
+        <field>X24_Escalation__c</field>
+        <literalValue>0</literalValue>
+        <name>Update 24 Escalation as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_24_Escalation_as_TRUE</fullName>
+        <field>X24_Escalation__c</field>
+        <literalValue>1</literalValue>
+        <name>Update 24 Escalation as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_24_Escalation_as_TRUE_1</fullName>
+        <field>X24_Escalation__c</field>
+        <literalValue>1</literalValue>
+        <name>Update 24 Escalation as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_24_Escalation_as_TRUE_2</fullName>
+        <field>X24_Escalation__c</field>
+        <literalValue>1</literalValue>
+        <name>Update 24 Escalation as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Submitted_Date</fullName>
+        <field>Approval_Submitted_Date__c</field>
+        <formula>Now()</formula>
+        <name>Update Approval Submitted Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_CSR_Status_as_Pending</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Pending for Approval</literalValue>
+        <name>Update CSR Status as Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_CSR_Status_as_Rejected_Level_2</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Rejected at Level 2</literalValue>
+        <name>Update CSR Status as Rejected-Level 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_CSR_Status_as_Rejected_at_Level_1</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Rejected at Level 1</literalValue>
+        <name>Update CSR Status as Rejected at Level 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_CSR_Status_as_Rejected_at_Level_3</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Rejected at Level 3</literalValue>
+        <name>Update CSR Status as Rejected at Level 3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_CSR_Status_as_Rejected_at_Level_4</fullName>
+        <field>CSR_Status__c</field>
+        <literalValue>Rejected at Level 4</literalValue>
+        <name>Update CSR Status as Rejected at Level 4</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalate_to_Level_4_as_False_1</fullName>
+        <field>EscalatetoLevel4__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalate to Level 4 as False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalate_to_Level_4_as_False_2</fullName>
+        <field>EscalatetoLevel4__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalate to Level 4 as False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalate_to_Level_4_as_False_3</fullName>
+        <field>EscalatetoLevel4__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalate to Level 4 as False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalate_to_Level_4_as_False_4</fullName>
+        <field>EscalatetoLevel4__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalate to Level 4 as False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalate_to_Level_4_as_TRUE</fullName>
+        <field>EscalatetoLevel4__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Escalate to Level 4 as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_2_as_TRUE</fullName>
+        <field>Escalation_to_Level_2__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Escalation to Level 2 as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_2_as_TRUE_1</fullName>
+        <field>Escalation_to_Level_2__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Escalation to Level 2 as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_3_AS_FALSE_4</fullName>
+        <field>Escalation_to_Level_3__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalation to Level 3 AS FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_3_as_FALSE</fullName>
+        <field>Escalation_to_Level_3__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalation to Level 3 as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_3_as_FALSE_1</fullName>
+        <field>Escalation_to_Level_3__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalation to Level 3 as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_3_as_FALSE_2</fullName>
+        <field>Escalation_to_Level_3__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalation to Level 3 as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_3_as_FALSE_3</fullName>
+        <field>Escalation_to_Level_3__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Escalation to Level 3 as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_3_as_TRUE</fullName>
+        <field>Escalation_to_Level_3__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Escalation to Level 3 as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Escalation_to_Level_3_as_TRUE_1</fullName>
+        <field>Escalation_to_Level_3__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Escalation to Level 3 as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Level_3_as_FALSE</fullName>
+        <field>Level_3__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Level 3 as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Level_3_as_True</fullName>
+        <field>Level_3__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Level 3 as True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Level_4_FALSE</fullName>
+        <field>Level4__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Level 4 FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Level_4_FALSE_1</fullName>
+        <field>Level4__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Level 4 FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Level_4_as_TRUE</fullName>
+        <field>Level4__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Level 4 as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Outside_CSR_Level_3_Esc_Date</fullName>
+        <field>Outside_CSR_Level_3_Escalation_Date__c</field>
+        <formula>Now()</formula>
+        <name>Update Outside CSR Level 3 Esc Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Outside_CSR_Level_3_Esc_Date_1</fullName>
+        <field>Outside_CSR_Level_3_Escalation_Date__c</field>
+        <formula>Now()</formula>
+        <name>Update Outside CSR Level 3 Esc Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Standard_CSR_Level_2_Esc_Date</fullName>
+        <field>Standard_CSR_Level_2_Escalation_Date__c</field>
+        <formula>Now()</formula>
+        <name>Update Standard CSR Level 2 Esc Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Standard_CSR_Level_2_Esc_Date_1</fullName>
+        <field>Standard_CSR_Level_2_Escalation_Date__c</field>
+        <formula>Now()</formula>
+        <name>Update Standard CSR Level 2 Esc Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Standard_CSR_Level_2_Esc_FALSE_1</fullName>
+        <field>Standard_CSR_Level_2_Escalation__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Standard CSR Level 2 Esc as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Standard_CSR_Level_2_Esc_True_1</fullName>
+        <field>Standard_CSR_Level_2_Escalation__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Standard CSR Level 2 Esc as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Standard_CSR_Level_2_Esc_as_FALSE</fullName>
+        <field>Standard_CSR_Level_2_Escalation__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Standard CSR Level 2 Esc as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Standard_CSR_Level_2_Esc_as_TRUE</fullName>
+        <field>Standard_CSR_Level_2_Escalation__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Standard CSR Level 2 Esc as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>US CSR Escalation after 24 hrs to Level 1</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>CSR__c.X24_Escalation__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CSR__c.CSR_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending for Approval</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Update_Escalation_to_Level_2_as_TRUE</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Standard_CSR_Level_2_Esc_Date_1</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Standard_CSR_Level_2_Esc_as_TRUE</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>CSR__c.Approval_Submitted_Date__c</offsetFromField>
+            <timeLength>24</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>US CSR Escalation after 24 hrs to Level 2</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>CSR__c.Standard_CSR_Level_2_Escalation__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CSR__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Escalation_after_24_hrs_to_Vicente_Gongora</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>CSR__c.Standard_CSR_Level_2_Escalation_Date__c</offsetFromField>
+            <timeLength>24</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>US CSR Escalation after 24 hrs to Level 3</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>CSR__c.Escalation_to_Level_3__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CSR__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Outside of Program Funds</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Update_Escalate_to_Level_4_as_TRUE</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Escalation_to_Level_3_AS_FALSE_4</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Level_3_as_True</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Outside_CSR_Level_3_Esc_Date_1</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>CSR__c.Outside_CSR_Level_3_Escalation_Date__c</offsetFromField>
+            <timeLength>24</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>US CSR Escalation after 24 hrs to Level 4</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>CSR__c.EscalatetoLevel4__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CSR__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Outside of Program Funds</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Update_Level_3_as_FALSE</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Level_4_as_TRUE</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>CSR__c.Outside_CSR_Level_3_Escalation_Date__c</offsetFromField>
+            <timeLength>24</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>US CSR Notification if Division is AG Sales</fullName>
+        <actions>
+            <name>Email_Notification_to_Brian_Cardin_Kent_Raker</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
+        <criteriaItems>
+            <field>CSR__c.CSR_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending for Approval</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CSR__c.X24_Escalation__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CSR__c.UPIDivision__c</field>
+            <operation>equals</operation>
+            <value>AG</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>US CSR Notification if Division is Canada Sales</fullName>
+        <actions>
+            <name>Email_Notification_to_Myles_Robinson_Brian_Cardin</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
+        <criteriaItems>
+            <field>CSR__c.CSR_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending for Approval</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CSR__c.X24_Escalation__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CSR__c.UPIDivision__c</field>
+            <operation>equals</operation>
+            <value>Canada</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Approved_Stock_return_Item_email_alert</fullName>
+        <description>Approved Stock return Item email alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Stock_Return/Approved_stock_return</template>
+    </alerts>
+    <alerts>
+        <fullName>Stock_Return_Item_Rejected_email_Alert</fullName>
+        <description>Stock Return Item Rejected email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Stock_Return/StockReturn_Rejected_by_RM</template>
+    </alerts>
+    <alerts>
+        <fullName>stock_Return_rejected_By_SBU</fullName>
+        <description>stock Return rejected By SBU</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Stock_Return/StockReturn_Rejected_by_SBU_Head</template>
+    </alerts>
+    <alerts>
+        <fullName>stock_Return_rejected_By_ZH</fullName>
+        <description>stock Return rejected By ZH</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Stock_Return/StockReturn_Rejected_by_ZH</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Approved_By_RM</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved By Regional Manager</literalValue>
+        <name>Approved By RM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_SBU</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved By SBU Head</literalValue>
+        <name>Approved By SBU</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_ZH</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved By Zonal Head</literalValue>
+        <name>Approved By ZH</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Rejected_By_RM</fullName>
+        <field>Status__c</field>
+        <literalValue>Rejected By Regional Manager</literalValue>
+        <name>Rejected By RM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Rejected_By_SBU</fullName>
+        <field>Status__c</field>
+        <literalValue>Rejected By SBU Head</literalValue>
+        <name>Rejected By SBU</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Rejected_By_ZH</fullName>
+        <field>Status__c</field>
+        <literalValue>Rejected By Zonal Head</literalValue>
+        <name>Rejected By ZH</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

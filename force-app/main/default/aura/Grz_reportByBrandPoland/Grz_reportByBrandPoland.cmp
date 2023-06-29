@@ -1,0 +1,12 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <div class="slds-grid slds-wrap">
+    	<div class="slds-col slds-size_1-of-1" style="border: 1px solid blue;">
+        	<c:Grz_ReportbyBrandPolandDonut/>
+    	</div>
+        <div class="slds-col slds-size_1-of-1" style="border: 1px solid blue; padding-bottom: 5%; background-color: white;">
+            <c:grz_reportByBrandTable/>
+        </div>
+    </div>
+ 
+</aura:component>

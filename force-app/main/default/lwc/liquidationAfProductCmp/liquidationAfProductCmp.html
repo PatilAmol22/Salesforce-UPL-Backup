@@ -1,0 +1,196 @@
+<template>
+    <div style="height: 605px;">
+        <template if:true={showProductTable}>
+            <div class="slds-grid slds-wrap" style="width:100%;padding: 5px;">
+                <!--Search component to search any value within Product Liquidation Table-->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                    <lightning-input type="text" placeholder="Search Here..." value={searchKey} onchange={handleSearch}></lightning-input>
+                </div>
+
+                <!--Buttons for Product Liquidation Table-->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+                    <template  if:true={isShowSubmit}>
+                        <div class="slds-float_right">
+                            <lightning-button variant="brand" label="Submit" title="Submit Product Liquidation" onclick={handleSubmitClick} class="slds-m-left_x-small" disabled={isDisbEditnAppBtn}></lightning-button>
+                        </div>
+                    </template>
+                    <template  if:true={isShowCropBreakup}>
+                        <div class="slds-float_right">
+                            <lightning-button variant="brand" label="Crop wise Breakup" title="Show Crop wise Breakup" onclick={handleCropClick} class="slds-m-left_x-small"></lightning-button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={isShowProdError}>
+            <div class="textcolor">
+            Opening Inventory needs to be updated for some products.
+            </div>
+        </template>
+
+        <!--Show and Hide Spinner for product table-->
+        <template if:false={hideProdSpinner}>
+            <div class="exampleHolder">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        
+
+        <!--Product Liquidation Table starts here-->
+        <template if:true={showProductTable}>
+            <div class="tableFixHead">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Material Group</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Brand Name</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Opening Inventory</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>MTD Sales</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Total Available Stock</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Distributors Inventory</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Retailers Inventory</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Total Market Inventory</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Product Budget</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>{liquidationYTD}</span> 
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>{liquidationPerYTD}</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={productTableFilteredData} for:item="prodData">
+                            <tr key={prodData.prodCode} class="slds-hint-parent">
+                                <td>
+                                    <div>
+                                        {prodData.prodCode}
+                                    </div>
+                                </td>
+                                <td>
+                                    <template if:true={prodData.isDisableOI}>
+                                        <div >
+                                            {prodData.prodName}
+                                        </div>
+                                        </template>
+                                        <template if:false={prodData.isDisableOI}>
+                                            <div class="textcolor">
+                                                {prodData.prodName}
+                                            </div>
+                                        </template>
+                                </td>
+                                <td>
+                                    <div>
+                                        <lightning-input type="number" name = "openInv" label={prodData.index} variant="label-hidden" value={prodData.openInv} onchange={handleCellChange} onblur={handleCellBlur}
+                                        message-when-value-missing ="Cannot be blank" disabled={prodData.isDisableOI} required formatter="decimal" step="0.01" min="0.00" message-when-range-underflow="Cannot be negative"></lightning-input>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <lightning-input type="number" name = "ytdSale" label={prodData.index} variant="label-hidden" value={prodData.ytdSale} readonly formatter="decimal" step="0.01"></lightning-input>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <lightning-input type="number" name = "tAvbStck" label={prodData.index} variant="label-hidden" value={prodData.tAvbStck} readonly formatter="decimal" step="0.01"></lightning-input>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <lightning-input type="number" name = "distInv" label={prodData.index} variant="label-hidden" value={prodData.distInv} onchange={handleCellChange} onblur={handleCellBlur} 
+                                        message-when-value-missing="Cannot be blank" disabled={isDisableInv} required formatter="decimal" step="0.01" min="0.00" message-when-range-underflow="Cannot be negative"></lightning-input>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <lightning-input type="number" name = "retInv" label={prodData.index} variant="label-hidden" value={prodData.retInv} onchange={handleCellChange} onblur={handleCellBlur} 
+                                        message-when-value-missing="Cannot be blank" disabled={isDisableInv} required formatter="decimal" step="0.01" min="0.00" message-when-range-underflow="Cannot be negative"></lightning-input>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <lightning-input type="number" name = "totMrkInv" label={prodData.index} variant="label-hidden" value={prodData.totMrkInv} readonly formatter="decimal" step="0.01"></lightning-input>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.prodBud}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <lightning-input type="number" name = "liqYTD" label={prodData.index} variant="label-hidden" value={prodData.liqYTD} readonly formatter="decimal" step="0.01"></lightning-input>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <lightning-input type="number" name = "liqYTDPer" label={prodData.index} variant="label-hidden" value={prodData.liqYTDPer} readonly formatter="percent" step="0.01"></lightning-input>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <div><span>{footerMessage}</span></div>
+            </div>
+        </template>
+
+        <!--Show Error on Load-->
+        <template if:false={showProductTable}>
+            <lightning-card>
+                <div>
+                    <span>
+                        {errMessage}
+                    </span>
+                </div>
+            </lightning-card>
+        </template>
+        <!--Product Liquidation Table ends here-->
+
+        <!--Confirmation Modal for Product Liquidation Submission-->
+        <template if:true={isSubModalOpen}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal header-->
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Warning</h1>
+                    </div>
+                    <!-- Modal body-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>{label.productSubmissionLabel}</p>
+                        <p>Click Yes to proceed or else click No.</p>
+                    </div>
+                    <!-- Modal footer-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" aria-label="No" onclick={closeSubModal}>No</button>
+                        <button class="slds-button slds-button_brand" onclick={submitProdLiquidation}>Yes</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <!--Custom Error message component-->
+        <c-liquidation-custom-error-cmp show-error-modal={isShowErrorPopup} error-title={errorTitle} error-messsage={errorMessage} oncloseerrormsg={closeErrorPopup}></c-liquidation-custom-error-cmp>
+    </div>
+</template>

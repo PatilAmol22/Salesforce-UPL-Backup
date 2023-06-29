@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Insert_Sales_Agreement_Product_Schedule</name>
+        <label>Insert Sales Agreement Product Schedule</label>
+        <locationX>50</locationX>
+        <locationY>314</locationY>
+        <actionName>Insert_Sales_Agreement_Product_Schedule</actionName>
+        <actionType>dataProcessingEngineAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>if_Insert_SAPS_Completed_Succesfully</name>
+        <label>if Insert SAPS Completed Succesfully</label>
+        <locationX>182</locationX>
+        <locationY>194</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_SAPS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.BatchJobDefinition</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0ma0K000000000BQAQ</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Success</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Insert_Sales_Agreement_Product_Schedule</targetReference>
+            </connector>
+            <label>Update SAPS</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Update Sales Agreement Product Schedule {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Sales Agreement Product Schedule</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>if_Insert_SAPS_Completed_Succesfully</targetReference>
+        </connector>
+        <object>BatchJobStatusChangedEvent</object>
+        <triggerType>PlatformEvent</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,374 @@
+<apex:component controller="GlobalEmailTemplate" access="global" language="en">
+    <apex:attribute type="id" name="recipient_id" assignTo="{!recipientId}" description="Recipient" />
+    <apex:attribute type="id" name="relatedTo_id" assignTo="{!relatedToId}" description="RelatedTo" />
+    
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+
+    <style>
+
+      body{
+
+        font-family: calibri;
+      }
+
+    </style>
+    
+  </head>
+    
+    
+    <tbody>
+
+      <tr>
+      <td align="center">
+        <table class="col-600" width="1000" border="0" align="center" cellpadding="10" cellspacing="0" style="border:1px solid #dbd9d9; line-height: 25px;">
+             <tbody>
+                <tr>
+                  <td align="left" style="line-height: 0px;">
+                      <img style="display:block; line-height:0px; font-size:0px; border:0px;" src="https://upl.my.salesforce.com/servlet/servlet.ImageServer?id=0150K000009suFW&oid=00D280000013Zui" height="68" width="85" alt="logo"/> 
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    
+<b>{!$Label.Dear_Sir},</b><br/>
+
+
+<b>{!$Label.Approval_required_for} {!relatedTo.name}</b>
+
+
+                  </td>
+                </tr>
+
+      <tr>
+      <td align="left">
+
+        <p><b>{!$Label.Sales_Order_Details}:</b></p>
+        <table class="col-600" width="600" border="1" align="left" cellpadding="0" cellspacing="0" style="text-align: left; padding: 0px;">
+        <tbody>
+
+
+  <tr>
+    <th>{!$Label.Sales_Order_Number}</th>
+    <td>{!relatedTo.name}</td>
+  </tr>
+  <tr>
+    <th>{!$Label.Distributor_Name}</th>
+    <td>{!relatedTo.Sold_to_Party__r.Name}</td>
+  </tr>
+  <tr>
+    <th>{!$Label.Shipping_Location}</th>
+    <td>{!relatedTo.Ship_To_Party__r.Location_Name__c}</td>
+  </tr>
+  
+  <!-- //CR#172 -GLobal CCO-SKI- Prashant Kumbhar - 02/02/2023 -->
+         
+  <apex:outputPanel rendered="{!IF(relatedTo.SalesOrgCode__c=='5100',true,false)}" layout="none">
+   <tr>  
+    <th  >{!$Label.Total_Order_Value}</th>
+   
+     <td>
+      USD {!ROUND(relatedTo.Order_Value_USD__c,2)} 
+       </td>
+   </tr>    
+   </apex:outputPanel>
+          
+                   
+   <apex:outputPanel rendered="{!IF(AND((relatedTo.SalesOrgCode__c=='5191'),(relatedTo.CurrencyIsoCode=='USD')),true,false)}" layout="none">
+
+    <tr>
+       <th>{!$Label.Total_Order_Value}</th>
+    <td>USD {!relatedTo.TotalValueWithoutInterest__c}</td>
+   </tr>
+   </apex:outputPanel>
+   
+   <apex:outputPanel rendered="{!IF(AND((relatedTo.SalesOrgCode__c=='5191'),(relatedTo.CurrencyIsoCode=='BRL')),true,false)}" layout="none">
+
+    <tr>
+       <th>{!$Label.Total_Order_Value}</th>
+        
+        
+    <apex:variable value="{!0}" var="ExchangeRate" />
+    
+              <apex:repeat var="s1" value="{!relatedTo.Sales_Order_Line_Item__r}">
+                 <apex:variable value="{!(s1.ExchangeRate__r.ExchangeRate__c)}" var="ExchangeRate" />           
+              </apex:repeat>
+        <td> USD  
+             <apex:outputText value="{0, number, 00.00}" >
+                 <apex:param value="{!((relatedTo.TotalValueWithoutInterest__c)/(ExchangeRate))}" />
+             </apex:outputText>
+              </td>
+      
+             
+   </tr>
+
+    </apex:outputPanel>
+     <!-- //CR#172 -GLobal CCO-SKI- Prashant Kumbhar -  02/02/2023-->
+        
+    <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5661'),(relatedTo.SalesOrgCode__c=='5631'),(relatedTo.SalesOrgCode__c=='5711'),(relatedTo.SalesOrgCode__c=='5712')),true,false)}" layout="none">
+
+    <tr>
+       <th>{!$Label.Total_Order_Value}</th>
+    <td>USD {!ROUND(relatedTo.Total_Amount__c,2)}</td>
+   </tr>
+   </apex:outputPanel>
+   
+   
+        
+     
+  <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5100'),(relatedTo.SalesOrgCode__c=='5631'),(relatedTo.SalesOrgCode__c=='5711'),(relatedTo.SalesOrgCode__c=='5712'),(relatedTo.SalesOrgCode__c=='5661')),true,false)}" layout="none">
+  <tr>
+    <th>{!$Label.Overall_Margin}</th>
+	<apex:variable value="{!0}" var="SKUNetPrice" />
+                <apex:variable value="{!0}" var="contribution" />
+                <apex:variable value="{!0}" var="CMFlag" />
+ 
+              <apex:repeat var="s1" value="{!relatedTo.Sales_Order_Line_Item__r}">
+                 <apex:variable value="{!(contribution)+s1.Contribution__c}" var="contribution" />
+                 <apex:variable value="{!(SKUNetPrice)+s1.SKU_Net_Price__c}" var="SKUNetPrice" />
+                 <apex:variable value="{!IF(CMFlag==1,1,IF(OR(s1.Margin_Block_Level_1__c,s1.Margin_Block_Level_2__c,s1.Margin_Block_Level_3__c),1,0))}" var="CMFlag" />
+              </apex:repeat>
+    <td  style="{!IF(CMFlag == 1,'background-color:#FFEBCD','font-weight: bold')}"> 
+             <apex:outputText value="{0, number, 00.00}" >
+                 <apex:param value="{!((contribution)/(SKUNetPrice))*100}" />
+             </apex:outputText>&nbsp;%
+              </td>
+        </tr>  
+     </apex:outputPanel>
+      <apex:outputPanel rendered="{!IF(relatedTo.SalesOrgCode__c=='5191',true,false)}" layout="none">
+       <tr>
+         <th>{!$Label.Overall_Margin}</th>
+        <td style="{!IF(OR((relatedTo.Sent_for_Latam_Director_Approval__c),(relatedTo.Sent_for_CCO__c)), 'background-color:#FFEBCD','')}">{!round(relatedTo.Total_Overall_Margin__c,2)}&nbsp;%</td> 
+           </tr> 
+      </apex:outputPanel>
+  
+   <apex:outputPanel rendered="{!IF(relatedTo.SalesOrgCode__c=='5100',true,false)}" layout="none">
+  <tr>
+      <th>{!$Label.Payment_Method}</th>
+    <td>{!relatedTo.Payment_Method_Mexico__c}</td>
+  </tr>       
+    </apex:outputPanel>
+  <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5191'),(relatedTo.SalesOrgCode__c=='5631'),(relatedTo.SalesOrgCode__c=='5711'),(relatedTo.SalesOrgCode__c=='5712'),(relatedTo.SalesOrgCode__c=='5661')),true,false)}" layout="none">
+  <tr>
+      <th>{!$Label.Payment_Method}</th>
+    <td>{!relatedTo.PaymentMethod__r.Description__c}</td>
+  </tr>       
+  </apex:outputPanel>
+
+          <apex:outputPanel rendered="{!IF((relatedTo.Payment_Term_Days__c!=null && relatedTo.Payment_Term_Days__c>180 && relatedTo.SalesOrgCode__c=='5100' ),true,false)}" layout="none">
+           <tr>
+          <th>{!$Label.Payment_Term}</th>
+      <td bgcolor="BlanchedAlmond">{!relatedTo.Payment_Term_Mexico__c}
+          </td>
+         </tr>
+           
+         </apex:outputPanel>
+         
+      <apex:outputPanel rendered="{!IF(((relatedTo.SalesOrgCode__c=='5100')&& (relatedTo.Payment_Term_Days__c==null || relatedTo.Payment_Term_Days__c<=180 || ISBLANK(relatedTo.Payment_Term_Days__c))),true,false)}" layout="none">     
+         <tr>
+          <th>{!$Label.Payment_Term}</th>
+          
+          <td> {!relatedTo.Payment_Term_Mexico__c} </td>
+        </tr>
+          </apex:outputPanel>
+  
+     
+                 
+     <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5631'),(relatedTo.SalesOrgCode__c=='5711'),(relatedTo.SalesOrgCode__c=='5712'),(relatedTo.SalesOrgCode__c=='5661')) && (relatedTo.Payment_Term_Days__c!=null && relatedTo.Payment_Term_Days__c>180 ),true,false)}" layout="none">
+  <tr>
+     <th>{!$Label.Payment_Term}</th>
+	
+       <td bgcolor="BlanchedAlmond">{!relatedTo.Payment_Term__r.Payment_Term__c}</td>
+   </tr>
+     </apex:outputPanel> 
+    
+     <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5631'),(relatedTo.SalesOrgCode__c=='5711'),(relatedTo.SalesOrgCode__c=='5712'),(relatedTo.SalesOrgCode__c=='5661')) && ((relatedTo.Payment_Term_Days__c==null || relatedTo.Payment_Term_Days__c<=180 || ISBLANK(relatedTo.Payment_Term_Days__c))),true,false)}" layout="none">     
+      <tr>
+     <th>{!$Label.Payment_Term}</th>
+	      
+        <td> {!relatedTo.Payment_Term__r.Payment_Term__c} </td>
+         </tr>   
+      </apex:outputPanel>
+        
+ 
+            
+            <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5191')) && (relatedTo.Payment_Term_Days__c!=null && relatedTo.Payment_Term_Days__c>180 ),true,false)}" layout="none">
+  <tr>
+     <th>{!$Label.Payment_Term}</th>
+	
+       <td bgcolor="BlanchedAlmond">{!relatedTo.Payment_Term__r.Payterms_Desc__c}</td>
+   </tr>
+     </apex:outputPanel> 
+    
+     <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5191')) && ((relatedTo.Payment_Term_Days__c==null || relatedTo.Payment_Term_Days__c<=180 || ISBLANK(relatedTo.Payment_Term_Days__c))),true,false)}" layout="none">     
+      <tr>
+     <th>{!$Label.Payment_Term}</th>
+	      
+        <td> {!relatedTo.Payment_Term__r.Payterms_Desc__c} </td>
+         </tr>   
+      </apex:outputPanel>
+
+            
+               
+  <apex:outputPanel rendered="{!IF(relatedTo.SalesOrgCode__c!='5191',true,false)}" layout="none"> 
+  <tr>  
+    <th>{!$Label.Inco_Term}</th>
+    <td>{!relatedTo.Inco_Term_Mexico__c}</td>
+  </tr>
+   </apex:outputPanel>
+            
+   <apex:outputPanel rendered="{!IF(relatedTo.SalesOrgCode__c=='5191',true,false)}" layout="none"> 
+  <tr>  
+    <th>{!$Label.Inco_Term}</th>
+    <td>{!relatedTo.Inco_Term__r.Name}</td>
+  </tr>
+   </apex:outputPanel>    
+           
+            
+            
+   
+     <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5100'),(relatedTo.SalesOrgCode__c=='5661')),true,false)}" layout="none">   
+     
+  <tr>
+     <th>{!$Label.Remarks}</th>
+    <td>{!relatedTo.Remarks_Long__c}</td>
+  </tr>
+     </apex:outputPanel>
+  
+     <apex:outputPanel rendered="{!IF(OR((relatedTo.SalesOrgCode__c=='5191'),(relatedTo.SalesOrgCode__c=='5631'),(relatedTo.SalesOrgCode__c=='5711'),(relatedTo.SalesOrgCode__c=='5712')),true,false)}" layout="none">
+   <tr>
+     <th>{!$Label.Remarks}</th>
+    <td>{!relatedTo.Remarks__c}</td>
+  </tr>
+  
+    </apex:outputPanel>
+
+  <tr>
+    <th>{!$Label.Last_Approver_Comment}</th>
+    <td><c:ApprovalCommentComp relatedToId="{!relatedTo.id}"/></td>
+  </tr>
+</tbody>
+
+</table>
+</td>
+</tr>
+
+
+
+<tr>
+      <td align="left">
+
+        <p><b>{!$Label.Line}:</b></p>
+        <table width="900" border="1" align="left" cellpadding="0" cellspacing="0" style="text-align: left; overflow-x: scroll;width:900px; text-align: center;">
+             <tbody>
+
+
+  <tr style="background: #039be5; color:#fff;">
+    <th>{!$Label.MG_Desc}</th>
+    <th>{!$Label.Brand_Name}</th>
+    <th>{!$Label.SKU_Code}</th>
+    <th>{!$Label.SKU_Description}</th>
+    <th>{!$Label.Base_UOM}</th>
+    <th>{!$Label.Base_UOM_Qty}</th>
+    <th>{!$Label.Currency}</th>
+    <th>{!$Label.Net_Price}</th>
+    <th>{!$Label.PLN_Price}</th>
+    <th>{!$Label.Contribution_Margin}</th>
+      
+      <apex:outputPanel rendered="{!IF(relatedTo.SalesOrgCode__c!='5661',true,false)}" layout="none">
+    <th>Promotion/Free goods/Bonification</th>
+          </apex:outputPanel>
+    <th>Near Expiry/Exception SKU</th>
+
+    <apex:repeat var="s" value="{!relatedTo.Sales_Order_Line_Item__r}">
+                    
+            <apex:outputText > 
+    <tr>
+      <td>{!s.SKU_Name__r.Product_Name__r.MG_Desc__c}</td>
+      <td>{!s.SKU_Name__r.Brand_Name__c}</td>
+      <td> <apex:outputText value="{!VALUE(s.SKU_Name__r.SKU_Code__c)}" /></td>
+      <td>{!s.SKU_Name__r.SKU_Description__c}</td>
+      <td>{!s.Base_UOM__c}</td>
+      <td>{!ROUND(s.Converted_Qty__c,2)}</td>
+      <td>USD</td>
+      <td>{!ROUND(s.Converted_Net_Price_USD__c,2)}</td>
+      <td>{!s.PLN_Value_USD__c}</td>
+      <td  style="{!IF(OR((s.Margin_Block_Level_1__c),(s.Margin_Block_Level_2__c),(s.Margin_Block_Level_3__c)), 'background-color:#FFEBCD','')}">
+                     <apex:outputText value="{0, number, 00.00}" >
+                    <apex:param value="{!s.Contribution_Margin__c}" />
+                     </apex:outputText>&nbsp;%</td>
+        <apex:outputPanel rendered="{!IF(relatedTo.SalesOrgCode__c!='5661',true,false)}" layout="none">
+      <td  style="{!IF(s.Type_of_Sale__c='Promotion', 'background-color:#FFEBCD','')}">
+                      {!IF(s.Type_of_Sale__c=='Promotion','YES','')}</td>
+        </apex:outputPanel>
+                      
+      <td  style="{!IF(s.Blanket_SKU_Status__c && TODAY ()>= s.Blanket_SKU_Start_Date__c && TODAY () <=s.Blanket_SKU_End_Date__c, 'background-color:#FFEBCD','')}">
+                      {!IF(s.Blanket_SKU_Status__c && TODAY()>= s.Blanket_SKU_Start_Date__c && TODAY() <=s.Blanket_SKU_End_Date__c,'YES','')}
+                      
+      </td>
+
+
+    </tr>
+	 </apex:outputText>     
+     </apex:repeat>
+                 </tr>
+</tbody>
+
+</table>
+</td>
+</tr>
+
+<tr>
+  <td>
+  <apex:outputText >
+    <p><b>{!$Label.Note}</b> {!$Label.For_currency_conversion_to_USD_in_this_approval_email_it_considers_the_S}</p>
+   </apex:outputText>
+  </td>
+</tr>
+
+<tr>
+  <td>
+<apex:repeat var="att" value="{!RelatedTo.Attachments}">  
+<a href= "https://upl.my.salesforce.com/servlet/servlet.FileDownload?file={!att.ID}">{!$Label.Download_Attachment}</a>
+ </apex:repeat><br/>
+</td>
+</tr>
+
+<tr>
+  <td>
+<a href="https://upl.my.salesforce.com/{!RelatedTo.ID}" >{!$Label.click_here}</a> {!$Label.for_details}
+</td>
+</tr>
+
+<tr>
+  <td>
+{!$Label.You_can_click_here_to_approve_or_reject_this_request_or_you_can_confirm_or_reje}
+</td>
+</tr>
+
+<tr>
+  <td>
+<b>{!$Label.Thanks}<br/>
+{!$Label.UPL_Team}</b>
+</td>
+</tr>
+
+
+
+
+              </tbody>
+            </table>
+            </td>
+
+             </tr>
+
+
+
+
+</tbody>
+</html>
+    
+  </apex:component>

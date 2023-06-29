@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_Alert_for_Sales_Agreement_Approved</fullName>
+        <ccEmails>priyanka.nalawade@skinternational.com</ccEmails>
+        <ccEmails>nilam.bangar@skinternational.com</ccEmails>
+        <description>Email Alert for Sales Agreement Approved.</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sintonia@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Brazil_Sales_Agreement_Approval_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_for_Sales_Agreement_Rejected</fullName>
+        <ccEmails>priyanka.nalawade@skinternational.com</ccEmails>
+        <ccEmails>nilam.bangar@skinternational.com</ccEmails>
+        <description>Email Alert for Sales Agreement Rejected.</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sintonia@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Brazil_Sales_Agreement_Rejection_Email_Template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Approved_By_Country_Head</fullName>
+        <description>Added by Shashank D. Shinde</description>
+        <field>Approval_Comments__c</field>
+        <literalValue>Approved By Country Head</literalValue>
+        <name>Approved By Country Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Change_to_Submitted_to_Reporting_Manager</fullName>
+        <description>Approval Comments Changed to Submitted to Reporting Manager.
+Added by Shashank D. Shinde.</description>
+        <field>Approval_Comments__c</field>
+        <literalValue>Submitted to Reporting Manager</literalValue>
+        <name>Change to Submitted to Reporting Manager</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Rejected_By_Regional_Manager</fullName>
+        <description>Added by Shashank D. Shinde</description>
+        <field>Approval_Comments__c</field>
+        <literalValue>Rejected by Regional Manager</literalValue>
+        <name>Rejected By Regional Manager</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Rejected_By_Reporting_Manager</fullName>
+        <description>Added by Shashank D. Shinde</description>
+        <field>Approval_Comments__c</field>
+        <literalValue>Rejected by Reporting Manager</literalValue>
+        <name>Rejected By Reporting Manager</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Submited_to_Regional_Manager</fullName>
+        <description>Added by Shashank D. Shinde</description>
+        <field>Approval_Comments__c</field>
+        <literalValue>Submitted to Regional Manager</literalValue>
+        <name>Submited to Regional Manager</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Submitted_as_Country_Head</fullName>
+        <description>Added by Shashank D. Shinde</description>
+        <field>Approval_Comments__c</field>
+        <literalValue>Submitted to Country Head</literalValue>
+        <name>Submitted as Country Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_SA_Status_as_Approved</fullName>
+        <field>SA_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update SA Status as Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_SA_Status_as_Draft</fullName>
+        <description>Update SA Status as  Draft for Sales Agreement</description>
+        <field>SA_Status__c</field>
+        <literalValue>Draft</literalValue>
+        <name>Update SA Status as Draft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_SA_Status_as_Pending</fullName>
+        <field>SA_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Update SA Status as Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_SA_status_as_Rejected</fullName>
+        <field>SA_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update SA status as Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved</fullName>
+        <field>Status</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Status as Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Draft</fullName>
+        <field>Status</field>
+        <literalValue>Draft</literalValue>
+        <name>Update Status as Draft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Pending</fullName>
+        <field>Status</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Status as Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_to_Pending</fullName>
+        <field>Status</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Status to Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_as_Rejected</fullName>
+        <field>Status</field>
+        <literalValue>Rejected by Country Head</literalValue>
+        <name>Update status as Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

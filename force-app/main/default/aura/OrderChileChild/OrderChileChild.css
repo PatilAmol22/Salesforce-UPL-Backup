@@ -1,0 +1,4 @@
+.THIS.modifTailleListe { margin-bottom: 10px;}
+.THIS .label-hidden > label {
+    display: none;
+}

@@ -1,0 +1,49 @@
+.THIS .parent-base-img{
+/* background-image : url('/uplpartnerportal/resource/1639648946000/Grz_Resourse/Grz_Resourse/Images/FooterBackgroundImage.png');*/
+    background-color: #FF8833;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0px -12px;
+}
+
+.THIS .parent-footer-padding {
+        padding: 20px 5% 0px 0%;
+}
+
+.THIS .imgsheight {
+      height: 25%;
+      width: 25%
+}
+
+.THIS .fb1:hover {
+    background-color: #4267b2;
+    border-radius: 50%;
+}
+
+
+
+.THIS .youtube1:hover {
+    background-color: #ff0000;
+    border-radius: 50%;
+}
+
+.THIS .insta1:hover {
+    background-color: #8a3ab9;
+    border-radius: 50%;
+}
+
+.THIS .home1:hover {
+    background-color: #1da1f2;
+    border-radius: 50%;
+}
+
+@media only screen and (max-width: 767px){
+    .THIS .parent-footer-padding {
+        padding: 20px 5% 0px 0%;
+    } 
+    
+    .THIS .imgsheight {
+      height: 25%;
+      width: 25%;
+	}
+}

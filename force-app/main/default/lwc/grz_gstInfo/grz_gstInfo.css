@@ -1,0 +1,257 @@
+.table-head {
+    color: #888888;
+    font-size: 12px;
+}
+
+.customCSS{
+    padding-right: 15%;
+    padding-left: 15%;  
+}
+
+.table-body-data {
+    color: #000000;
+}
+.head-element,
+.table-element {
+  height: 40px;
+  width: 10%;
+}
+.table-data-scroll {
+    width: 100%;
+    height: 495px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .table-data-scroll::-webkit-scrollbar {
+    width: 0;
+  }
+  .download-div {
+    margin: 17px 0 17px 0px;
+  }
+  .dwnld-btn {
+    border: 2px solid rgb(255 136 51);
+    padding: 7px 17px;
+    background-color: white;
+    color: black;
+  }
+  .download-icon {
+    padding-right: 10px;
+  }
+  .headingCls{
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+}
+.table-head-div{
+  background-color: white;
+  margin-top:2%;
+  border: 1px solid #dad4d4;
+}
+.table-head-div-total{
+  background-color: white;
+  border: 1px solid #dad4d4;
+}
+.blueBtn{
+  border-radius: 0%;
+  background-color:#00BDF2;
+  border-color: #00BDF2;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+.imageCls{
+  margin-top: 26%;
+  height: 24px;
+  padding-left: 73%;
+}
+.btnDiv{
+  padding-left: 1.5%;
+}
+.borderleft{
+  border-left: 1px solid #DDDDDD;
+}
+.borderbottom{
+  border-bottom: 1px solid #DDDDDD;
+  opacity: 1;
+}
+.totalClass{
+  padding-top: 3%;
+}
+.finalTopClass{
+  background-color: white;
+  margin-top:2%;
+  border: 1px solid #dad4d4;
+}
+.leftClass{
+  padding-left: 1%;
+}
+/* @media (min-width: 360px) and (max-width: 767px) {
+  .leftClass{
+    padding-left: 3%;
+  }
+} */
+.orangeClr{
+  color:#F47920;
+}
+.blackClr{
+  color: black;
+}
+.greyClr{
+  color: #888888;
+}
+ span{
+  font-size: 11px;
+} 
+.headClass{
+  min-height: 45px;
+}
+.totalClassNew{
+  font-size: large;
+  font-weight: bold;
+  color: black;
+  margin-top: 2%;
+  margin-bottom: .5%;
+}
+.secondClass{
+  padding-top: 7%;
+}
+.firstClass{
+  padding-top: 4%;
+}
+@media (min-width: 320px) and (max-width: 767px) {
+  .leftClass{
+    padding-left: 3%;
+  }
+   .shadoweffect{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .imageCls{
+    height: 24px;
+    margin-left: -14px;
+    margin-top: 28px;
+    width: 19px;
+    padding-left: 0;
+  }
+  .endDateClass{
+    margin-left: 24%;
+  }
+  .startDateClass{
+    margin-left: 17%;
+  }
+ .paddingClass{
+   padding-bottom:1%;
+ }
+ .secondClass{
+  padding-top: 0;
+}
+.firstClass{
+  padding-top: 0;
+}
+.removeMargin{
+  margin-left:0 !important;
+}
+.customCSS{
+  padding-left: 1%;
+  padding-right: 0%;
+}
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .endDateClass{
+    width:auto;
+  } 
+  .startDateClass{
+    width:auto;
+  }
+  .imageCls{
+    width: 13%;
+    width: 44%;
+    padding-left: 0;
+    margin-left: 60%;
+    margin-top: 44%;
+  }
+  .leftClass{
+    margin-top: 0%;
+    padding-left: 3px;
+    padding-right: 2px;
+    padding-top: 3%;
+    margin-bottom: -5%;
+
+  }
+  .rightBorder{
+    border-right: 1px solid #ddd;
+  }
+  .borderleft{
+    border-left: 0px;
+  }
+  .secondClass{
+    padding-top: 0;
+  }
+  .firstClass{
+    padding-top: 0;
+  }
+}
+.mobiledivshow{
+  display :none;
+}
+@media screen and (max-width: 450px) {
+  .mobiledivshow{
+    display :block;
+  }
+  .desktopdivshow{
+    display :none;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) and (orientation : landscape){
+  .leftClass{
+    padding-left: 2%;
+  }
+  .endDateClass{
+    margin-left: 1%;
+  }
+  .startDateClass{
+    margin-left: 5%;
+  }
+  .btnDiv{
+    margin-top: .25%;
+  }
+  .imageCls{
+    margin-left: 24px;
+  }
+}
+@media (min-width: 1024px) and (orientation : portrait){
+  .imageCls{
+    margin-top: 30%;
+  }
+}
+@media (width: 750px) and (orientation : portrait){
+  .endDateClass{
+    margin-left: 1%;
+  }
+  .startDateClass{
+    margin-left: 0%;
+  }
+  .imageCls{
+    margin-left: 24px;
+  }
+}
+@media (min-width: 320px) and (max-width: 359px) and (orientation : portrait){
+  .imageCls{
+    margin-top: -20px;
+  }
+}
+@media (min-width: 320px) and (max-width: 767px) and (orientation : landscape){
+  .imageCls{
+    margin-left: 0px;
+  }
+  .endDateClass{
+    margin-left: 6%;
+  }
+}
+@media (min-width: 540px) and (max-width: 767px) and (orientation : portrait){
+  .endDateClass{
+    margin-left: 6%;
+  }
+  .startDateClass{
+    margin-left: 0%;
+  }
+}

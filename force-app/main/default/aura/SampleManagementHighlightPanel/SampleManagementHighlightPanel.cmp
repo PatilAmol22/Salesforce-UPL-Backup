@@ -1,0 +1,12 @@
+<aura:component implements="force:appHostable,lightning:hasPageReference,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global" >
+	 <aura:attribute name="recordId" type="string" ></aura:attribute>
+     <aura:attribute name="pageReference" type="object" access="global"></aura:attribute>
+    <aura:handler name="change"  value="{!v.pageReference}" action="{!c.handlePageChange}" />
+      <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+     <lightning:card iconName="standard:case" title="Sample Requisition">
+        <aura:set attribute="actions">
+            <lightning:button label="Edit" onclick="{!c.redirectSamplematerial}"/>
+        </aura:set>
+    </lightning:card>
+    <lightning:navigation aura:id="navigationService" />
+</aura:component>

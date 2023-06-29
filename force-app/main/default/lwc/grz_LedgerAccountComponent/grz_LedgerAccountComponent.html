@@ -1,0 +1,790 @@
+<template>
+<!-- Banner Section -->
+<!-- <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+           <header class="slds-modal__header" style="border: solid 1px black;">
+               <h1><b>Notification</b></h1>
+               </header>
+               <div class="slds-modal__content slds-p-around--medium" style="border: solid 1px black;">
+            <center><h2><b>Community is under maintenance and will be up tentatively by 20/1/2023</b></h2></center>
+        </div>
+        </div>
+</div> -->
+<div>
+    <c-grz_header-image-cmp bgimg={backgroundimage} imglabel={Headlabel.detailsLabel} customcss='top: 9%;'></c-grz_header-image-cmp>
+</div>
+<div class="bread-crumb">
+    <c-grz_bread-crumb labelone={Headlabel.detailsLabel} linkone=''>
+    </c-grz_bread-crumb>
+</div>
+<template if:true={isSpinner}>
+            <div class="">
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+</template>
+<template if:true={errorMessage}>
+    <p class="error"> {errorMessage} </p>
+</template>
+<br>
+<!-- Body Section -->
+<div class="tab-div">
+    <!--Tab Switching-->
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-x-small-size_10-of-12 slds-large-size_12-of-12" style="width: 100%;">
+            <!--For India-->
+            
+                <lightning-tabset>
+                    <lightning-tab label= "Ledger Statement" value="LedgerStatement" onactive={handleLedgerActive}>
+                    </lightning-tab> 
+                    <lightning-tab label= "Account Statement" value="AccountStatement" onactive={handleAccountActive}>
+                    </lightning-tab> 
+                    <lightning-tab label= "Outstanding Summary" value="OutstandingSummary" onactive={handleOutstandingActive}>
+                    </lightning-tab>
+                </lightning-tabset>
+                
+                <!--For Mexico-->
+                
+        </div>
+    </div>
+    <div class="slds-grid slds-wrap divheightaccount">
+        <div class="slds-col slds-size_12-of-12">
+            <!-- For Ledger Statment -->
+            <template if:true={displayLedgerStatement}>
+                <!-- Customer Data Div -->
+                <div class="cust-info-div">
+                    <div class="first-block">
+                        <div class="cust-data-text">
+                            
+                                <div class="lab-btn">Customer No:</div>
+                                
+                                
+                            <!--<div class="mobile-cust-text">Plant:</div>-->
+                        </div>
+                        <div class="cust-data cust-data-mobile-1 componentNotoSansBold">
+                            <div class="lab-btn">{CustomerCode}</div>
+                            <!--<div>{SalesOffice}</div>-->
+                        </div>
+                    </div>
+                    <div class="second-block">
+                        <div class="cust-data-text">
+                            
+                                <div class="lab-btn">Customer Name:</div>
+                                
+                                
+                            <!--<div class="mobile-cust-text">G/L A/C. Number:</div>-->
+                        </div>
+                        <div class="cust-data cust-data-mobile-2 componentNotoSansBold">
+                            <div class="lab-btn">{CustomerName}</div>
+                            <!--<div>{GlAccountNumber}</div>-->
+                        </div>
+                    </div>
+                    <div class="third-block">
+                        <div class="cust-data-text">
+                            
+                                <div class="lab-btn">City:</div>
+                                
+                                
+                            <!--<div>G/L A/C. Name:</div>-->
+                        </div>
+                        <div class="cust-data cust-data-mobile-3 componentNotoSansBold">
+                            <div class="lab-btn">{City}</div>
+                            <!--<div>{CustomerName}</div>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- Ledger Statement Table Div -->
+                <div class="table-comp-div">
+                    <!--Filter Section-->
+                    <div class="filter-div">
+                        <div class="filter-icon-div">
+                            <img src={filterIcon}/>
+                        </div>
+                         <div class="slds-p-left_small year-div">
+                                <lightning-combobox
+                                    value={salesArea}
+                                    placeholder="Sales Area"
+                                    options={SalesAreaOptions}
+                                    onchange={handleSalesAreaOption}>
+                            </lightning-combobox> 
+                        </div>
+                        <div class="slds-p-left_small year-div">
+                                <lightning-combobox
+                                    placeholder="Year"
+                                    value={ledgerYearType}
+                                    options={LedgerYearOptions}
+                                    onchange={handleLedgerYearOption} >
+                                </lightning-combobox> 
+                        </div>
+                        <div class="slds-p-left_small quarter-div">
+                                <lightning-combobox
+                                    placeholder="Quarter"
+                                    value={quaterType}
+                                    options={QuaterOptions}
+                                    onchange={handleQuaterOption} >
+                            </lightning-combobox>                            
+                        </div>
+                        <div class="slds-p-left_small slds-m-right_medium mobile-ledger-statement-btn">
+                            <!--For India-->
+                                <button class="ledger-statement-btn componentNotoSansBold" onclick={handleGetLedgerClick}>Get Statement</button>
+                        </div>
+                    </div>
+                    <!-- Ledger Table Headings -->
+                    <template if:true={showLedgerTable}>
+                        <div class="table-head-div">
+                            <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small ledger-table-head-width">
+                                <thead class="componentNotoSansLight table-head">
+                                    <tr style="background-color: #f7f7f7;">
+                                        <th class="slds-p-left_small head-element" scope="col">
+                                                <div class="slds-truncate" title="Post Date">Post Date</div>
+                                        </th>
+                                        <th class="slds-p-left_small head-element-special1" scope="col">
+                                                <div class="slds-truncate" title="Doc Type">Doc Type</div>
+                                        </th>
+                                        <th class="slds-p-left_small head-element-combine" scope="col">
+                                            <div style="display: flex; justify-content:space-between">
+                                                    <div class="slds-truncate merge-table1" title="Doc No. Particulars" >Doc No. Particulars</div>
+                                                    <div class="slds-truncate merge-table2" title="Ref/Chq Number" ><span>Ref/Chq Number</span></div>
+                                            </div>
+                                        </th>
+                                        <th class="slds-p-left_small head-element" scope="col">
+                                                <div class="slds-truncate" title="Debit Amt">Debit Amt (INR)</div>
+                                        </th>
+                                        <th class="slds-p-left_small head-element" scope="col">
+                                                <div class="slds-truncate" title="Credit Amt">Credit Amt (INR)</div>
+                                        </th>
+                                        <th class="slds-p-right_small slds-p-left_small head-element" scope="col">
+                                                <div class="slds-truncate" title="Running Balance">Running Balance (INR)</div>
+                                        </th>
+                                        
+                                         <template if:true={doctyperecordcheck}>
+                                            <th class="slds-p-right_small slds-p-left_small head-element" scope="col">
+                                                <div class="slds-truncate" title="Action">Action</div>
+                                            </th>
+                                        </template>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="open-bal-div">
+                                    <div class="bf-text">By Opening Balance b/f</div>
+                                <div class="bf-data">
+                                    <template if:true={openingPositiveBalance}>
+                                        {openingBal}
+                                    </template>
+                                </div>
+                                <div class="bf-data2">
+                                    <template if:true={openingNegativeBalance}>
+                                        {openingBal}
+                                    </template>
+                                </div>
+                            </div>
+                            <div class={ledgerTableScroll}>
+                                <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small">
+                                    <tbody class="mobile-table-font">
+                                        <template for:each={ledgerData} for:item="ledger">
+                                            <tr key={ledger.Id} class="slds-border_top table-body-data shadoweffect">
+                                                <td class="slds-p-left_small table-element" scope="col">
+                                                   
+                                                      <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Post Date:</span>  </template><span class="alignLeft">{ledger.PostDate}</span></div>
+                                                </td>
+                                                <td class="slds-p-left_small table-element-special1" scope="col">
+                                                   
+                                                      <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Doc Type:</span>  </template><span class="alignLeft">{ledger.DocType}</span></div>
+                                                </td>
+                                                <td class="slds-p-left_small table-element-combine" scope="col">
+                                                    <div class="flexsideclass">
+                                                         <div class="valPad textoverflowcls slds-truncate merge-table1"><template if:true={isScreen}><span>Doc No. Particulars:</span>  </template><span class="alignLeft">{ledger.AccountingDocNumber}</span></div>
+                                                         <div class="valPad textoverflowcls slds-truncate merge-table2"><template if:true={isScreen}><span>Ref/Chq Number:</span>  </template><span  class="alignLeft content1">{ledger.ReferebceChqNumber}</span><span class="absolutealignLeft content2 slds-p-left_x-small">{ledger.DocumentHeaderText}</span></div>
+                                                        <!-- <div class="slds-truncate merge-table1" >{ledger.AccountingDocNumber}</div>
+                                                        <div class="slds-truncate merge-table2" ><span>{ledger.ReferebceChqNumber}</span><span class="slds-p-left_x-small">{ledger.DocumentHeaderText}</span></div> -->
+                                                    </div> 
+                                                </td> 
+                                                
+                                                <td class="slds-p-left_small table-element" scope="col">
+                                                   
+                                                      <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Debit Amt (INR):</span>  </template><span class="alignLeft">{ledger.Debit}</span></div>
+                                                </td> 
+                                                <td class="slds-p-left_small table-element" scope="col">
+                                                   
+                                                      <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Credit Amt (INR):</span>  </template><span class="alignLeft">{ledger.Credit}</span></div>
+                                                </td> 
+                                                <td class="slds-p-left_small table-element" scope="col">
+                                                   
+                                                      <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Running Balance (INR):</span>  </template><span class="alignLeft">{ledger.RunningBalance}</span></div>
+                                                </td>   
+                                                                 <!--Change by grazitti 1Nov22 for credit note functionality-->
+                                               
+                                                  <template if:true={ledger.Doctyperecordcheck}>
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                        <!--Change by grazitti 12Dec22 for Invoice Download functionality by Swaranjeet-->
+                                                        <div class="valPad textoverflowcls"><template if:true={isScreen}><span>Action:</span>  </template><span class="alignLeft"><lightning-icon variant="Warning"  icon-name="utility:download"  data-value={ledger.ContentDocid}
+                                                            onclick={downloaddocument} size="x-small" class="pointer"> </lightning-icon></span></div>
+                                                    </td> 
+                                                </template>                      
+                                            </tr>
+                                            <tr key={ledger.Id} style="color: black;" class="shadoweffect">
+                                                <td class="slds-p-left_small" scope="col">
+                                                    <div class="slds-truncate"></div>
+                                                </td>
+                                                <td class="slds-p-left_small" scope="col">
+                                                    <div class="slds-truncate"></div>
+                                                </td>
+                                                <td class="slds-p-left_small" scope="col">
+                                                    <div class="slds-truncate">{ledger.SGTXT}</div>
+                                                </td>
+                                                <td class="slds-p-left_small" scope="col">
+                                                    <div class="slds-truncate"></div>
+                                                </td> 
+                                                <td class="slds-p-left_small" scope="col">
+                                                    <div class="slds-truncate"></div>
+                                                </td> 
+                                                <td class="slds-p-left_small" scope="col">
+                                                    <div class="slds-truncate"></div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="close-bal-div">
+                                    <div class="cf-text">To Balance c/f</div>
+                                <div class="cf-data">
+                                    <template if:true={closingNegativeBalance}>
+                                        {closingBal}
+                                    </template>
+                                </div>
+                                <div class="cf-data2">
+                                    <template if:true={closingPositiveBalance}>
+                                        {closingBal}
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="customer-total-div componentNotoSansRegular">
+                                <div class="customer-total-text">Customer Total</div>
+                                <div class="customer-total-debit">INR {totalDebit}</div>
+                                <div class="customer-total-credit">INR {totalCredit}</div>
+                            </div>
+                            <div class="download-div">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-size_12-of-12 slds-m-bottom_medium">
+                                        <span class="componentNotoSansBold slds-m-right_medium">
+                                    <a href={ledgerURL}  download="Ledger_Statement.pdf" target="_blank" onclick={ledPDF}><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span>Download PDF</span></button></a> 
+                                </span>
+                            </div>
+                            <div class="slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-size_12-of-12">
+                                <span class="componentNotoSansBold">
+                                    <a href={ledgerURLXls}  download="Ledger_Statement.xls" target="_blank" onclick={ledPDF}><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span>Download XLS</span></button></a> 
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                    <template if:true={ledgerNoRecordError}>
+                        <div class="error-div">    
+                            <div class="no-record-error"> No Record Found</div>
+                        </div>
+                    </template>
+                    <!--Doc Type Description-->
+                    <template if:false={displayOutstandingSummary}>
+                        <template if:true={showLedgerTable}>
+                            <div class="doc-types-div">
+                                <p class="doc-desc componentNotoSansLight">Doc Type Description</p>
+                                <div class="main-doc-value-div">
+                                    <div class="doc-value-left-div">
+                                        <div class="single-doc-block-left">
+                                            <template for:each={ledgerDocType} for:item="item">
+                                                <p key={item.Id} class="doc-row">
+                                                    <span class="componentNotoSansBold doc-space">{item.shortForm}</span><span class="text-left-m">{item.fullForm}</span>
+                                                </p>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    
+            </template>
+            <!-- For Account Statment -->
+            <template if:true={displayAccountStatement}>
+                <div class="acc-statement-div">
+                    <div class="acc-filter-div">
+                        <div class="acc-doc-filter slds-p-left_small">
+                            <div onmouseleave={onblurclick} data-id="searchRes" class="searchRes slds-form-element slds-lookup slds-is-close">
+                                <label class="slds-text-heading_small">{label}</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                        <div data-id="lookup-pill" class="">
+                                            <div id="lookupField" class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-size_3-of-3 slds-p-bottom_xxx-small" >
+                                                
+                                                <div onkeyup={keyPressController}>
+                                                    <lightning-input
+                                                        name="enter-search"
+                                                        type="search"
+                                                        placeholder="Search Account Doc Type..."
+                                                        value={SearchKeyWord}
+                                                        class="" 
+                                                        onfocus={onfocusclick}
+                                                    ></lightning-input>
+                                                </div>
+                                                <!--<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                                    <lightning-icon icon-name="utility:search" size="x-small" alternative-text="icon"></lightning-icon>
+                                                </span>-->
+                                            </div>
+                                            <lightning-pill data-id="defaultValue1" class ="all-pill" label="All" name="All">                            
+                                                <!--<lightning-icon icon-name="standard:account" variant="circle" size="x-small" alternative-text="icon"></lightning-icon>-->
+                                            </lightning-pill> 
+
+                                            <template for:each={lstSelectedRecords} for:item="item"	for:index="index">
+                                                <span key={item.index}>
+                                                    <lightning-pill class="" label={item.label} name={item.value} onremove={clear}>                            
+                                                        <!--<lightning-icon icon-name="standard:account" variant="circle" size="x-small" alternative-text="icon"></lightning-icon>-->
+                                                    </lightning-pill>
+                                                </span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                    <lightning-spinner class="slds-hide" variant="brand" size="small" data-id="mySpinner" alternative-text="spining"></lightning-spinner>
+                                    <!-- <center> {Message}</center> -->
+                                    <template for:each={listOfSearchRecords} for:item="singleRec" for:index="index">
+                                        <li key ={singleRec.value} role="presentation" class="slds-listbox__item" data-value={singleRec.value} data-label={singleRec.label}
+                                                onclick={selectRecord}>
+                                            <span class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                <span class="slds-media__figure">
+                                                    <span class="slds-icon_container" title="Description of icon when needed">
+                                                        <lightning-icon icon-name="standard:account" variant="circle" size="small" alternative-text="icon"></lightning-icon>
+                                                    </span>
+                                                </span>    
+                                                <span class="slds-media__body">  
+                                                    <span class="dropdownclass slds-listbox__option-text slds-listbox__option-text_entity" style="font-size: 14px;">{singleRec.label}</span>
+                                                </span>
+                                            </span>
+                                        </li>
+                                    </template>
+                                </ul>                                   
+                            </div>
+                        </div>
+                        <div class="acc-date-filter slds-p-right_small">
+                            <div class="acc-year-div">
+                                <lightning-combobox
+                                    placeholder = "Year"
+                                    value={yearType}
+                                    options={YearOptions}
+                                    onchange={handleYearOption} >
+                                </lightning-combobox>
+                            </div>
+                            <div class="acc-year-div">
+                              <lightning-combobox
+                                    value={salesArea}
+                                    placeholder="Sales Area"
+                                    options={SalesAreaOptions}
+                                    onchange={handleSalesAreaOption}>
+                            </lightning-combobox> 
+                            </div>
+                            
+                        </div>
+                        </div>
+                         <div class="acc-filter-div slds-p-bottom_large">
+                        <div class="date-date-filter slds-p-left_small">
+                         <div class="acc-start-date">
+                                <span>                  
+                                    <lightning-input  type="date" value={startDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startdateChange}></lightning-input>
+                                </span>
+                            </div>
+                            <div class="acc-end-date">
+                                <span>
+                                    <lightning-input  type="date" value={endDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={enddateChange}></lightning-input>
+                                </span>                           
+                            </div>  
+                        </div>
+                        <div class="acc-st-div">
+                            <div class="acc-statement-filter">
+                                <lightning-combobox
+                                    value={statementType}
+                                    placeholder="Statement Type"
+                                    options={StatementOptions}
+                                    onchange={handleStatementOption}>
+                                </lightning-combobox>
+                                <template if:true={accError}>
+                                    <div style="padding-left: 5px; color: red;">* Select Statement Type</div>
+                                </template>
+                            </div>
+                            <div class="acc-st-btn">
+                                <button class="ledger-statement-btn componentNotoSansBold" onclick={handleGetStatementClick}>Get Statement</button>
+                            </div>
+                        </div>
+                         </div>
+                    
+                    <!--Account Table Section-->
+                    <template if:true={showAccountStatementTable}>
+                        <div class="acc-table-head-div">
+                            <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small acc-table-head-width">
+                                <thead class="componentNotoSansLight table-head">
+                                    <tr style="background-color: #f7f7f7;">
+                                        <th class="slds-p-left_small acc-head-element" scope="col">
+                                            <div class="slds-truncate" title="Date">Date</div>
+                                        </th>
+                                        <th class="slds-p-left_small acc-head-element" scope="col">
+                                            <div class="slds-truncate" title="Doc Number">Doc Number</div>
+                                        </th>
+                                        <th class="slds-p-left_small acc-head-element" scope="col">
+                                            <div class="slds-truncate" title="Doc Type">Doc Type</div>
+                                        </th>
+                                        <template if:true={isCredit}>
+                                            <th class="slds-p-left_small acc-head-element" scope="col">
+                                                <div class="slds-truncate" title="Credit">Credit (INR)</div>
+                                            </th>
+                                        </template>
+                                        <template if:true={isDebit}>
+                                            <th class="slds-p-left_small acc-head-element" scope="col">
+                                                <div class="slds-truncate" title="Debit">Debit (INR)</div>
+                                            </th>
+                                        </template>
+                                        
+                                         <template if:true={doctyperecordcheck}>
+                                            <th class="slds-p-left_small acc-head-element" scope="col">
+                                                <div class="slds-truncate" title="Action">Action</div>
+                                            </th>
+                                        </template>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class={accTableScroll}>
+                                <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small">
+                                    <tbody class="acc-table-data-font">
+                                        <template for:each={AccStatementData} for:item="item">
+                                            <tr key={item.Id} class="slds-border_bottom slds-border_top table-body-data shadoweffect">
+                                                <td class="onlyaddpadding slds-p-left_small acc-table-element acc-mobile-view" scope="col">
+                                                    <div class="slds-truncate textoverflowcls">{item.PostDate}</div>
+                                                </td>
+                                                <td class="onlyaddpadding slds-p-left_small acc-table-element acc-mobile-view" scope="col">
+                                                    <div class="slds-truncate textoverflowcls">{item.AccountingDocNumber}</div>
+                                                </td>
+                                                <td class="onlyaddpadding slds-p-left_small acc-table-element acc-mobile-view" scope="col">
+                                                    <div class="slds-truncate textoverflowcls">{item.DocType}</div>
+                                                </td>
+                                                <template if:true={isCredit}>
+                                                    <td class="onlyaddpadding slds-p-left_small acc-table-element acc-mobile-view" scope="col">
+                                                        <div class="slds-truncate textoverflowcls">{item.Credit}</div>
+                                                    </td>
+                                                </template>
+                                                <template if:true={isDebit}>
+                                                    <td class="onlyaddpadding slds-p-left_small acc-table-element acc-mobile-view" scope="col">
+                                                        <div class="slds-truncate textoverflowcls">{item.Debit}</div>
+                                                    </td> 
+                                                </template>  
+                                                <!--Change by grazitti 1Nov22 for credit note functionality-->  
+                                               
+                                                  <template if:true={item.Doctyperecordcheck}>
+                                                    <td class="onlyaddpadding slds-p-left_small acc-table-element acc-mobile-view" scope="col">
+                                                        <!--Change by grazitti 12Dec22 for Invoice Download functionality by Swaranjeet-->
+                                                        <div class="slds-truncate textoverflowcls"><lightning-icon variant="Warning"  icon-name="utility:download"  data-value={item.ContentDocid}
+                                                            onclick={downloaddocument} size="x-small" class="pointer"> </lightning-icon></div>
+                                                    </td> 
+                                                </template>  
+                                               
+                                      
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="acc-total-div componentNotoSansRegular">
+                                <template if:true={isCredit}>
+                                    <template if:true={isDebit}>
+                                        <div class="acc-total-text">Total</div>
+                                        <div class="acc-total-credit">INR {accTotalCredit}</div>
+                                        <div class="acc-total-debit">INR {accTotalDebit}</div>
+                                    </template>
+                                </template>
+                                <template if:true={isCredit}>
+                                    <template if:false={isDebit}>
+                                        <div style="width:75%; margin-left: 12px;">Total</div>
+                                        <div style="width:25%">INR {accTotalCredit}</div>
+                                    </template>
+                                </template>
+                                <template if:true={isDebit}>
+                                    <template if:false={isCredit}>
+                                        <div style="width:75%; margin-left: 12px;">Total</div>
+                                        <div style="width:25%">INR {accTotalDebit}</div>
+                                    </template>   
+                            </template>
+                            </div>
+                            <div class="download-div">
+                                <span class="componentNotoSansBold">
+                                    <a href={accStatementURL} download="Account_Statement.pdf" target="_blank" onclick={accPDF}><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span>Download PDF</span></button></a>                                  
+                                </span>&nbsp;&nbsp;
+                                <span class="componentNotoSansBold">
+                                    <a href={accStatementExcelURL} download="Account_Statement.xls" target="_blank" onclick={accPDF}><button
+                                            class="dwnld-btn"><span class="download-icon"><img src={downloadIcon} /></span><span>Download
+                                                XLS</span></button></a>
+                                            </span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <template if:true={accNoRecordError}>
+                    <div class="error-div">    
+                        <div class="no-record-error"> No Record Found</div>
+                    </div>
+            </template>
+                <!--Doc Type Description Filtered-->
+                <template if:false={displayOutstandingSummary}>
+                    <template if:true={showAccountStatementTable}>
+                        <div class="doc-types-div">
+                            <p class="doc-desc componentNotoSansLight">Doc Type Description</p>
+                            <div class="main-doc-value-div">
+                                <div class="doc-value-left-div">
+                                    <div class="single-doc-block-left">
+                                        <template for:each={accDocType} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.shortForm}</span><span class="text-left-m">{item.fullForm}</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:false={showAccountStatementTable}>
+                        <div class="doc-types-div">
+                            <p class="doc-desc componentNotoSansLight">Doc Type Description</p>
+                            <div class="main-doc-value-div">
+                                <div class="doc-value-left-div">
+                                    <div class="single-doc-block-left">
+                                        <template for:each={docCol1} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                    <div class="single-doc-block-left">
+                                        <template for:each={docCol2} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div> 
+                                </div>
+                                <div class="doc-value-right-div">
+                                    <div class="single-doc-block-right">
+                                        <template for:each={docCol3} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                    <div class="single-doc-block-right">
+                                        <template for:each={docCol4} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </template>
+            <!--Outstanding Summary-->
+            <template if:true={displayOutstandingSummary}>
+                <div class="table-comp-div">
+                 <div class="acc-st-div slds-p-left_small">
+                    <div class="acc-statement-filter">
+                        <lightning-combobox
+                            value={salesArea}
+                            placeholder="Sales Area"
+                            options={SalesAreaOptions}
+                            onchange={handleSalesAreaOption}>
+                        </lightning-combobox>
+                        <template if:true={accError}>
+                            <div style="padding-left: 5px; color: red;">* Select Sales Area</div>
+                        </template>
+                    </div>
+                    <div class="acc-st-btn incenter">
+                        <button class="ledger-statement-btn componentNotoSansBold" onclick={handleGetSummaryClick}>Get Summary</button>
+                    </div>
+                </div> 
+            
+                <div class="out-statement-div table-head-div">
+                    <!--Table Section Aashima-->
+                    <template if:true={showOutstandingDataTable}>
+                        <table class="slds-m-bottom_small" >
+                            <thead class="componentNotoSansLight table-head">
+                                <tr>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.X0_30}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.X31_60}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.X61_75}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.X76_90}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.Greater90}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.totalOutstanding}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.unadjustedReceipts}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.unadjustedCredits}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element" scope="col">
+                                        <div>{labels.netOutstanding}</div>
+                                    </th>
+                                    <th class="slds-p-left_small out-head-element slds-p-right_small" scope="col">
+                                        <div>{labels.currencyKey}</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="acc-table-data-font">
+                                <tr class="slds-border_bottom slds-m-left_small slds-m-right_small slds-border_top table-body-data shadoweffect">
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.bucket1} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.bucket2} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.bucket3} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.bucket4} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.greater90} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.totalOutstanding} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.unadjustedReceipts} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.unadjustedCredits} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-formatted-number value={outstandingData.netOutstanding} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="onlyaddpadding slds-p-left_small out-table-element out-mobile-view slds-p-right_small" scope="col">
+                                        <div class="textoverflowcls">{outstandingData.currencyKey}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </template>
+                
+                <template if:true={showOutstandingDataTable}>
+                <div class="download-div">
+                    <span class="componentNotoSansBold">
+                        <a href={outstandingSummaryPdfURL} download="Outstanding_Summary.pdf" target="_blank" onclick={accPDF}><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span>Download PDF</span></button></a>                                  
+                    </span>&nbsp;&nbsp;
+                    <span class="componentNotoSansBold">
+                        <a href={outstandingSummaryExcelURL} download="Outstanding_Summary.xls" target="_blank" onclick={accPDF}><button
+                                class="dwnld-btn"><span class="download-icon"><img src={downloadIcon} /></span><span>Download
+                                    XLS</span></button></a>
+                     </span>
+                </div>
+                </template>
+                </div>
+                <template if:true={outNoRecordError}>
+                    <div class="error-div">    
+                        <div class="no-record-error"> No Record Found</div>
+                    </div>
+                
+            </template>
+        </div>
+                <!--Doc Type Description Filtered-->
+                <template if:false={displayOutstandingSummary}>
+                    <template if:true={showAccountStatementTable}>
+                        <div class="doc-types-div">
+                            <p class="doc-desc componentNotoSansLight">Doc Type Description</p>
+                            <div class="main-doc-value-div">
+                                <div class="doc-value-left-div">
+                                    <div class="single-doc-block-left">
+                                        <template for:each={accDocType} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.shortForm}</span><span class="text-left-m">{item.fullForm}</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:false={showAccountStatementTable}>
+                        <div class="doc-types-div">
+                            <p class="doc-desc componentNotoSansLight">Doc Type Description</p>
+                            <div class="main-doc-value-div">
+                                <div class="doc-value-left-div">
+                                    <div class="single-doc-block-left">
+                                        <template for:each={docCol1} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                    <div class="single-doc-block-left">
+                                        <template for:each={docCol2} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div> 
+                                </div>
+                                <div class="doc-value-right-div">
+                                    <div class="single-doc-block-right">
+                                        <template for:each={docCol3} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                    <div class="single-doc-block-right">
+                                        <template for:each={docCol4} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+                
+            </template>
+        </div>
+    </div>       
+</div>
+</template>

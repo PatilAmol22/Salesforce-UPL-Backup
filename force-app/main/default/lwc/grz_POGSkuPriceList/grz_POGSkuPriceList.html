@@ -1,0 +1,112 @@
+<template>
+
+    <div if:true={isDisplayScreen} class="slds-grid slds-wrap headingCss">
+        <div class="slds-col slds-size_12-of-12">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_12-of-12 slds-p-top_xx-small slds-p-bottom_xx-small" style="text-align: center;">
+                    <lightning-button variant="success" label={UploadButton} title={UploadButton} onclick={handleUploadCSVOI} class="slds-var-m-right_x-small"></lightning-button>
+                </div>
+
+                <div class="slds-col slds-size_2-of-12">
+                    
+                </div>
+
+                <div class="slds-col slds-size_6-of-12">
+                    <h1 style="float:left; margin-top: 27px;">
+                        <span class="slds-page-header__title" title="SKU Price">{SKUPriceList}</span>
+                    </h1>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    <p style="font-weight:700; margin-bottom:5px;">{Year}</p>
+                            <lightning-combobox style="margin-top: -19px;"
+                            name={Year}
+                            value={selectedyearvalue} 
+                            placeholder={Select_Year} 
+                            options={yearOption} onchange={handleChangeYear}>
+                            </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    
+                </div>
+            </div>
+            
+        </div>
+        <div class="slds-col slds-size_2-of-12 slds-p-top_small">
+
+        </div>
+
+        <div class="slds-col slds-size_8-of-12 slds-p-top_small">
+            <div class="slds-scrollable_x slds-scrollable_y tableCss">
+                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_col-bordered slds-table_resizable-cols table_fixed" role="grid">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col" class="th_fixed" style="height: 45px; text-align: center;">
+                                <div class="slds-truncate slds-cell-wrap" style="" title={SKU_Code}>{SKU_Code}</div>
+                            </th>
+                            <th scope="col" class="th_fixed" style="height: 45px; text-align: center;">
+                                <div class="slds-truncate slds-cell-wrap" style="margin-left: 16px;" title={SKUPrice}>{SKUPrice}</div>
+                            </th>
+                            <th scope="col" class="th_fixed" style="height: 45px; text-align: center;">
+                                <div class="slds-truncate slds-cell-wrap" style="margin-left: 16px;" title={Year}>{Year}</div>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={data} for:item="dt">
+                            <tr key={dt.Id} class="slds-hint-parent tr_fixed">
+
+                                <th data-id="Name" scope="col" style="text-align: center;">
+                                    <div class="slds-cell-wrap" style="">{dt.skuCode}</div>
+                                </th>
+                                <th data-id="FirstName"  scope="col" style="text-align: center;">
+                                    <div class="slds-cell-wrap" style="margin-left:10px;">{dt.skuPrice}</div>
+                                </th>
+                                <th scope="col" style="text-align: center;">
+                                    <div class="slds-cell-wrap" style="margin-left:10px;">{dt.year}</div>
+                                </th>
+
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="slds-col slds-size_2-of-12 slds-p-top_small">
+
+        </div>
+        
+    </div>
+
+    <div if:false={isDisplayScreen}>
+        <lightning-card>
+            <b><p style="text-align:center">{NoAccessForScreen}</p></b>
+        </lightning-card>
+    </div>
+
+    <div if:true={isDisplayScreen}>
+        <div if:false={isDatafound}>
+            <lightning-card>
+                    <b><p style="text-align:center">{NoDataFound}</p></b>
+            </lightning-card>    
+        </div>
+    </div>
+
+
+    
+    <template if:true={spinner} class="demo-only" style="height:6rem;position:absolute;left: 600px;top: 149px;">
+        <div class="slds-spinner_container">
+          <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+            <span class="slds-assistive-text">{labels.loading}</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+          </div>
+        </div>
+    </template>
+    
+    <div if:true={openModelOI}>
+        <c-grz_sku-Price-Upload-Poland  onclosemodel={handleCloseModelOI} onuploadfile={refreshLiquidation}></c-grz_sku-Price-Upload-Poland>
+    </div>
+
+</template>

@@ -1,0 +1,157 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                controller="SICApproveReject"
+                access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="customerId" type="String" />
+    <aura:attribute name="SubmittedForApproval" type="Boolean" default="false"/>
+    <aura:attribute name="ReadyForApproval" type="Boolean" default="false"/>
+    <aura:attribute name="Status" type="String"/>
+    <aura:attribute name="isRegionalManager" type="Boolean" default="false"/>
+    <aura:attribute name="StockInChannelId" type="String"/>
+    <aura:attribute name="LiApprovalHistory" type="List" />
+    <aura:attribute name="enablestock" type="Boolean" />
+    <aura:attribute name="FreezeDetails" type="Boolean" default="true"/>
+    
+    <aura:if isTrue="{!v.ReadyForApproval}">
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small"  size="5">
+            </lightning:layoutItem>
+            
+           
+            <lightning:layoutItem padding="around-small"  size="7">
+                <lightning:button label="{!$Label.c.SIC_Submit_for_Approval}" 
+                                  title="{!$Label.c.SIC_Submit_for_Approval}" 
+                                  onclick="{! c.SubmitForApproval }"/>
+                <!--
+                <lightning:input type="checkbox-button" 
+                                 label="Submit for Approval" 
+                                 name="input3" 
+                                 checked="false" 
+                                 disabled="false"
+                                 onchange="{!c.SubmitForApproval}"/>
+                 -->
+                
+            </lightning:layoutItem>
+            
+        </lightning:layout> 
+    </aura:if>
+    
+    <aura:if isTrue="{!v.SubmittedForApproval}">
+        
+        
+        
+    </aura:if> 
+    
+    <aura:if isTrue="{!v.LiApprovalHistory.length > 0}">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_striped slds-table_col-bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Date">{!$Label.c.SIC_date_and_Time}</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Status">Status</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="User">{!$Label.c.SIC_User}</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Comments">{!$Label.c.SIC_Comments}</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.LiApprovalHistory}" var="a">
+                    <tr class="slds-hint-parent">
+                        <td data-label="Date">
+                            <div class="slds-truncate" title="">
+                                <lightning:formattedDateTime value="{!a.CreatedDate}" year="numeric" 
+                                                             day="2-digit" month="long" 
+                                                             hour="2-digit" minute="2-digit" timeZone="{!$Locale.timezone}"/>
+                                
+                            </div>
+                        </td>
+                        <td data-label="Status">
+                            <aura:if isTrue="{!a.Status__c == 'Submitted for Approval'}">
+                                <div class="slds-truncate" title="">{!$Label.c.SIC_Submitted_for_Approval}</div>
+                            </aura:if>
+                            <aura:if isTrue="{!a.Status__c == 'Approved'}">
+                                <div class="slds-truncate" title="">{!$Label.c.SIC_Approved}</div>
+                            </aura:if>
+                            <aura:if isTrue="{!a.Status__c == 'Rejected'}">
+                                <div class="slds-truncate" title="">{!$Label.c.SIC_Rejected}</div>
+                            </aura:if>
+                           
+                            
+                        </td>
+                        <td data-label="User">
+                            <div class="slds-truncate" title="">{!a.CreatedBy.Name}</div>
+                        </td>
+                        <td data-label="Comments">
+                            <div class="slds-truncate" title="">{!a.Comments__c}</div>
+                        </td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </aura:if>
+    
+    <lightning:layout >
+        
+        <lightning:layoutItem padding="around-small"  size="4">     
+            <aura:if isTrue="{!v.SubmittedForApproval}">
+                <aura:if isTrue="{!v.isRegionalManager}">
+                    
+                    
+                    <div class="slds-m-around_xx-small">
+                        <lightning:button variant="brand"
+                                          label="{!$Label.c.SIC_Approve_Reject}"
+                                          title="{!$Label.c.SIC_Approve_Reject}"
+                                          onclick="{! c.openModel }" />
+                        <!--Use aura:if tag to display/hide popup based on isModalOpen value-->  
+                        <aura:if isTrue="{!v.isModalOpen}">
+                            
+                            <!-- Modal/Popup Box starts here-->
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <!-- Modal/Popup Box Header Starts here-->
+                                    <header class="slds-modal__header">
+                                        <lightning:buttonIcon iconName="utility:close"
+                                                              onclick="{! c.closeModel }"
+                                                              alternativeText="close"
+                                                              variant="bare-inverse"
+                                                              class="slds-modal__close"/>
+                                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.SIC_Approval_Box}</h2>
+                                    </header>
+                                    <!--Modal/Popup Box Body Starts here-->
+                                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                        <p> 
+                                            <lightning:textarea aura:id="input1" name="input" label="{!$Label.c.SIC_Enter_Comments}" />
+                                            
+                                        </p>
+                                    </div>
+                                    <!--Modal/Popup Box Footer Starts here-->
+                                    <footer class="slds-modal__footer">
+                                        <lightning:button variant="neutral"
+                                                          label="{!$Label.c.SIC_Approve}"
+                                                          title="{!$Label.c.SIC_Approve}"
+                                                          onclick="{! c.Approve }"/>
+                                        <lightning:button variant="brand"
+                                                          label="{!$Label.c.SIC_Reject}"
+                                                          title="{!$Label.c.SIC_Reject}"
+                                                          onclick="{!c.Reject}"/>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </aura:if>
+                    </div>
+                </aura:if>
+            </aura:if> 
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+</aura:component>

@@ -1,0 +1,219 @@
+<template>
+    <div style="margin: 5px;" >
+    <template if:true={showSpinner}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <div class="slds-grid slds-gutters " style="display: flex; margin-bottom: 20px;" >
+        <div class="slds-col slds-size_6-of-12 " >
+            <div class="showButton" data-exp="expand">
+                <button type="submit" 
+                class="slds-button slds-button_brand buttonStyle" style="background-color: #59474D;"
+                 onclick={onExpand}><img src={showWhite} style="padding-right: 5px; font-size:12px"></img>Expand All</button>
+                </div>
+                <div class="hideButton" data-cola="colapse">
+                <button type="submit"  style="background-color: #59474D;"
+                class="slds-button slds-button_brand buttonStyle"
+                 onclick={onCollapse}><img src={hideWhite} style="padding-right: 5px; font-size:12px"></img>Collapse All</button>
+                </div>
+        </div>
+        
+        <div class="slds-col slds-size_6-of-12 " style="" >
+            <div class="slds-grid slds-gutters " style="display: flex; float: right; margin-right:20px" >
+                <!-- <div class="slds-col slds-size_1-of-2" style=""> -->
+            <span class="" style="
+            padding-top: 2%; ">
+                <h2 style="font-weight:bolder; white-space: nowrap;" class="fontClass">Items Per Page</h2>
+            </span> &nbsp;&nbsp;
+            <span class="" style="">
+                <lightning-combobox name="progress" variant="label-hidden" label="" value={recordDisply}
+                    style="" placeholder="" options={optionss} onchange={onRecordPage}>
+                </lightning-combobox>
+            </span>
+        </div> 
+        <!-- <div class="slds-col slds-size_1-of-2">
+           
+            </div>
+            </div> -->
+        </div>
+    </div>
+
+
+
+<template if:true={childwrapper}>
+<template for:each={childwrapper} for:item="row" for:index="i">
+<ul key={mydataq}  style="color:#59474D" class="Ul_class slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered">
+ 
+ 
+    <li class="slds-border_left li-items slds-align_absolute-center specialButton"><div class="style_div"> <button class="slds-button slds-button--icon show " data-show={row.stkReq.Id} data-sar="showallrow"
+        data-id={row.stkReq.Id} onclick={ShowbuttonClick}>
+        <img src={showbutton} style="max-width:20px; max-height:20px; margin-left:5px;"
+            class="expand" />
+    </button>
+    <button class="slds-button slds-button--icon hiddee"  data-sah="hideallrow"  data-hide={row.stkReq.Id} data-id={row.stkReq.Id}  onclick={ShowbuttonClick}  >
+    <img src={hidebutton} 
+        style="max-width:20px; max-height:20px; margin-left:-1px;"
+        class="collapse" />
+</button> </div></li>
+
+
+
+    <li class="slds-border_left li-items3"><div class="style_div"><div class="mainheadingHeight" ><b>{Depot_UK}</b></div><span class="style_spane slds-align_absolute-center">{row.stkReq.Depot__r.Depot_Code__c}</span></div></li>
+    <li class="slds-border_left  li-items3"><div class="style_div"><div class="mainheadingHeight" ><b>{Product_SKU_UK}</b></div><span class="style_spane slds-align_absolute-center" style="word-break: break-all;">{row.stkReq.SKU__r.SKU_Description__c}</span></div></li>
+    <li class="slds-border_left li-items3"><div class="style_div"><div class="mainheadingHeight" ><b>{SKU_Code_UK}</b></div><span class="style_spane slds-align_absolute-center" style="word-break: break-all;">{row.stkReq.SKU__r.SKU_Code__c}</span></div></li>
+    <li class="slds-border_left li-items3"><div class="style_div"><div class="mainheadingHeight" ><b>{UOM_UK}</b></div><span class="style_spane slds-align_absolute-center">{row.stkReq.UOM__c}</span></b></div></li>
+    <li class="slds-border_left li-items3" ><div class="style_div"><div class="mainheadingHeight" ><b>{Physical_Stock_UK}</b></div><span class="style_spane slds-align_absolute-center">{row.stkReq.Unrestricted_Stock__c}</span></div></li>
+    <li class="slds-border_left li-items3" ><div class="style_div"><div class="mainheadingHeight" ><b>{Incoming_PO_UK}</b></div><span class="style_spane slds-align_absolute-center">{row.stkReq.Purchase_Order_Stock__c}</span></div></li>
+    <li class="slds-border_left li-items3" ><div class="style_div"><div class="mainheadingHeight" ><b>{Stock_In_Transit_UK}</b></div><span class="style_spane slds-align_absolute-center">{row.stkReq.Stock_In_Transit__c}</span></div></li>
+    <li class="slds-border_left li-items3" ><div class="style_div "><div class="mainheadingHeight" ><b>{Outgoing_Reservation_UK}</b></div><span class="style_spane slds-align_absolute-center">{row.stkReq.Outgoing_Reservations__c}</span></div></li>
+    <!-- <li class="slds-border_left li-items3" ><div class="style_div"><div class="mainheadingHeight" ><b>{Unrestriced_Order_UK}</b></div><span class="style_spane slds-align_absolute-center">{row.unapproved}</span></div></li> -->
+    <li class="slds-border_left li-items3" ><div class="style_div"><div class="mainheadingHeight" ><b>{Net_Stock_UK}</b></div><span class="style_spane slds-align_absolute-center">{row.netTotal}</span></div></li>
+
+   
+
+
+    
+        <!-- <li class="slds-border_left li-items slds-align_absolute-center specialButtonMobile"><div class="style_div"> <button class="slds-button slds-button--icon show " data-show={row.stkReq.Id} data-sar="showallrow"
+            data-id={row.stkReq.Id} onclick={ShowbuttonClick}>
+            <img src={showbutton} style="max-width:20px; max-height:20px; margin-left:5px;"
+                class="expand" />
+        </button>
+        <button class="slds-button slds-button--icon hiddee"  data-sah="hideallrow"  data-hide={row.stkReq.Id} data-id={row.stkReq.Id}  onclick={ShowbuttonClick}  >
+        <img src={hidebutton} 
+            style="max-width:20px; max-height:20px; margin-left:-1px;"
+            class="collapse" />
+    </button> </div></li>
+
+    <li class="slds-border_left li-items slds-align_absolute-center specialButtonMobile"></li> -->
+
+    
+</ul>
+<div key={mydata} class=" slds-align_absolute-center specialButtonMobile" style=padding-bottom:5px><div class="style_div insideDiv" style="background-color:#F5F5EE">
+     <button class="slds-button slds-button--icon show " data-showwer={row.stkReq.Id} data-sar="showallrow"
+    data-id={row.stkReq.Id} onclick={ShowbuttonClick}>
+    <img src={showbutton} style="max-width:20px; max-height:20px; margin-left:5px;"
+        class="expand" /><span class="slds-p-left_x-small" style="color:#59474D"><h2>Show Details</h2></span>
+</button>
+<button class="slds-button slds-button--icon hiddee"  data-sah="hideallrow" 
+ data-hider={row.stkReq.Id} data-id={row.stkReq.Id}  onclick={ShowbuttonClick}  >
+<img src={hidebutton} 
+    style="max-width:20px; max-height:20px; margin-left:-1px;"
+    class="collapse" /><span class="slds-p-left_x-small" style="color:#59474D"><h2>Hide Details</h2></span>
+</button> </div></div>
+
+
+<template if:true={row.isData}>
+
+    
+<!-- Storage Location -->
+<div  key={mydataq} class="hiddee tempDiv" data-typee="childData" data-child={row.stkReq.Id} style="background-color:#F5F5EE;" >
+<div  key={mydataq}  style="background-color:#F5F5EE; display:grid; width:100%">
+    
+    <div class="hiddee" data-typee="childData" data-child={row.stkReq.Id}>
+<div  key={mydataq}   style="display:flex; min-height:40px; width:100%" data-calstore={row.stkReq.Id}> 
+    <div class="helperdiv slds-border_bottom slds-table_bordered hiddee" data-heightstore={row.stkReq.Id} data-typee="childData" data-child={row.stkReq.Id}>
+<div key={mydataq} data-typee="childData"  class="hiddee  childli" style="" data-child={row.stkReq.Id}><div class="style_div "><b>{Storage_Location_Uk}</b></div></div></div> 
+<ul  key={mydataq} data-typee="childData"   class="childUI  hiddee  slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered" data-child={row.stkReq.Id} >
+<template for:each={row.SLocation} for:item="row1"  >
+<li key={row1} class="slds-border_left li-items"><div class="style_div" style="width:100%; height:100%;"><span class="style_spane">{row1}</span></div></li>
+</template>
+</ul>
+</div>
+</div>
+<!-- Product/SKU -->
+<div class="hiddee" data-typee="childData" data-child={row.stkReq.Id}>
+<div  key={mydataq} style="display:flex; min-height:40px;  width:100%"  data-calprod={row.stkReq.Id}> 
+    <div class="helperdiv slds-border_bottom slds-table_bordered hiddee" data-heightprod={row.stkReq.Id} data-typee="childData" data-child={row.stkReq.Id} style="">
+<div key={mydataq} data-typee="childData"  class="hiddee  childli" data-child={row.stkReq.Id}><div class="style_div "><b>{Product_SKU_UK}</b></div></div></div>
+<ul  key={mydataq} data-typee="childData"  class="childUI hiddee  slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered" data-child={row.stkReq.Id}>
+
+<template for:each={row.PSku} for:item="row2" >
+<li key={row1} class="slds-border_left li-items" ><div class="style_div" style="width:100%; height:100%;"><span class="style_spane">{row2}</span></div></li>
+</template>
+</ul>
+</div>
+</div>
+
+
+
+<!-- Unrestriced Inventory Quantity -->
+<div class="hiddee" data-typee="childData" data-child={row.stkReq.Id}>
+<div  key={mydataq} style="display:flex; min-height:40px; width:100%" data-calunres={row.stkReq.Id} >
+<div class="helperdiv slds-border_bottom slds-table_bordered hiddee" data-heightunres={row.stkReq.Id} data-typee="childData" data-child={row.stkReq.Id}>
+<div key={mydataq} data-typee="childData"  class="hiddee   childli" style="" data-child={row.stkReq.Id}><div class="style_div "><b>{Unrestricted_Inventory_UK}</b></div></div></div>
+<ul  key={mydataq} data-typee="childData"  class="childUI hiddee  slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered" data-child={row.stkReq.Id}>
+<template for:each={row.UnrestrictInvent} for:item="row3" >
+<li key={row1} class="slds-border_left li-items"><div class="style_div" style="width:100%; height:100%;"><span class="style_spane">{row3}</span></div></li>
+</template>
+</ul>
+</div>
+</div>
+
+<!-- Batch Number -->
+<div class="hiddee" data-typee="childData" data-child={row.stkReq.Id}>
+<div  key={mydataq} style="display:flex; min-height:40px; width:100%" data-calbatch={row.stkReq.Id}>
+<div class="helperdiv slds-border_bottom slds-table_bordered hiddee" data-heightbatch={row.stkReq.Id} data-typee="childData" data-child={row.stkReq.Id}>
+    <div key={mydataq} data-typee="childData"  class="hiddee  childli" style="" data-child={row.stkReq.Id}><div class="style_div "><b>{Batch_Number_UK}</b></div></div></div>
+<ul  key={mydataq}  data-typee="childData" class="childUI hiddee  slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered" data-child={row.stkReq.Id}>
+<template for:each={row.BNumber} for:item="row4" >
+<li key={row1} class="slds-border_left li-items"><div class="style_div" style="width:100%; height:100%;"><span class="style_spane">{row4}</span></div></li>
+</template>
+</ul>
+</div>
+</div>
+
+<!-- Production Date -->
+<div class="hiddee" data-typee="childData" data-child={row.stkReq.Id}>
+<div  key={mydataq} style="display:flex; min-height:40px; width:100%" data-calpdate={row.stkReq.Id}>
+<div class="helperdiv slds-border_bottom slds-table_bordered hiddee" data-heightpdate={row.stkReq.Id} data-typee="childData" data-child={row.stkReq.Id}>
+    <div key={mydataq} data-typee="childData"  class="hiddee   childli" style="" data-child={row.stkReq.Id}><div class="style_div "><b>{Production_Date_UK}</b></div></div></div>
+<ul  key={mydataq}  data-typee="childData" class="childUI hiddee  slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered" data-child={row.stkReq.Id}>
+<template for:each={row.PDate} for:item="row5" >
+<li key={row1} class="slds-border_left li-items"><div class="style_div" style="width:100%; height:100%;"><span class="style_spane">{row5}</span></div></li>
+</template>
+</ul>
+</div>
+</div>
+
+<!-- Expiry Date -->
+<div class="hiddee" data-typee="childData" data-child={row.stkReq.Id}>
+<div  key={mydataq} style="display:flex; min-height:40px; width:100%" data-caledate={row.stkReq.Id}>
+<div class="helperdiv slds-border_bottom slds-table_bordered hiddee" data-heightedate={row.stkReq.Id} data-typee="childData" data-child={row.stkReq.Id}>
+    <div key={mydataq} data-typee="childData"  class="hiddee  childli" style="" data-child={row.stkReq.Id}><div class="style_div "><b>{Expiry_Date_UK}</b></div></div></div>
+<ul  key={mydataq} data-typee="childData"  class="childUI hiddee  slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered" data-child={row.stkReq.Id}>
+<template for:each={row.EDate} for:item="row6" >
+<li key={row1} class="slds-border_left li-items"><div class="style_div" style="width:100%; height:100%;"><span class="style_spane">{row6}</span></div></li>
+</template>
+</ul>
+</div>
+</div>
+
+</div>
+</div>
+</template>
+
+
+<template if:false={row.isData}>
+    <ul  key={mydataq} data-typee="childData"  class="hiddee slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered" data-child={row.stkReq.Id} >
+        <li class="slds-border_left childli" style="background-color:#59474D"><div class="style_div "><b>Data Not Found</b></div></li>
+        <li key={row1} class="slds-border_left li-items"><div class="style_div"><span class="style_spane">No Data</span></div></li>
+        </ul>
+</template>
+
+</template>
+</template>
+<footer >
+    <button type="submit" disabled={lastButton}
+     class="slds-button slds-button_brand slds-var-m-top_medium slds-float_right" onclick={OnClickLast}>Last</button>
+     <button type="submit" disabled={nextButton} style="margin-right: 3px;"
+     class="slds-button slds-button_brand slds-var-m-top_medium slds-float_right" onclick={OnClickNext}>Next</button>
+     <button type="submit" disabled={prevButton} style="margin-right: 3px;"
+     class="slds-button slds-button_brand slds-var-m-top_medium slds-float_right" onclick={OnClickPrevious}>Previous</button>
+    <button type="submit" disabled={firstButton}
+     class="slds-button slds-button_brand slds-var-m-top_medium slds-float_right" onclick={onClickFirst}>First</button>
+
+     
+</footer>
+</div>
+</template>

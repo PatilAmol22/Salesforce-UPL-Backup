@@ -1,0 +1,9 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="CurrentUserInfo">
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>
+<aura:attribute name="userInfo" type="Contact"/>    
+<body style="background:#f5f5f5;">
+<div class="slds-scrollable_x" width="100%" style="margin-bottom:0;margin-top: 0;">
+    <center><b>{!$Label.c.Welcome}&nbsp;&nbsp;{!v.userInfo.Account.Name}</b></center>
+</div>
+</body>
+</aura:component>

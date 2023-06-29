@@ -1,0 +1,51 @@
+<aura:component controller="NoticeController" implements="force:appHostable,forceCommunity:availableForAllPageTypes" access="GLOBAL" >
+    
+    
+    <aura:attribute name="imgursl" type="String" access="public"/>
+    <aura:attribute name="title" type="String" access="public"/>
+    <aura:attribute name="description" type="String" access="public"/>
+    <aura:attribute name="Ids" type="String" access="public"/>
+    <aura:attribute name="returnNewsList" type="List" access="public "/> 
+    <aura:attribute name="urlAddress" type="String" access="public"/> 
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    
+    <div class="slds-grid slds-wrap" style="background:#fff; margin-bottom:5px; padding:0; border-radius:5px 5px 0 0;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+            <!-- <span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px; margin-left:10px;">
+                    <lightning:icon iconName="standard:lead_list" alternative-text="note" size="medium"/>
+                </span> -->
+            <div class="titleregular" style="float:left; margin:8px; font-size:36px; font-weight:normal;">
+                <span class="slds-page-header_title" title="Account Ledger">{!$Label.c.News}</span>
+            </div>
+        </div>  
+    </div>     
+    
+    <div class="slds-scrollable_none" style="margin:0; padding:0;height:880px; overflow-y:auto;">   	
+        <div class="slds-grid slds-wrap slds-gutters">
+            
+            
+            <aura:iteration items="{!v.returnNewsList}" var="item">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                    <span><img src="{!'data:image/png;base64,'+item.imgObj}"/></span>
+                    <h3 style="font-size:18px;">{!item.title}</h3>
+                    
+                    <p>
+                        <br/>
+                        <lightning:formattedRichText value="{!item.descriptionforNews}"/>
+                    </p>
+                    <br/>
+                    
+                </div>
+            </aura:iteration>
+            
+        </div>
+        <!--<div onclick="{!c.Download_file}">Download file</div>-->
+        <lightning:formattedUrl 
+                                value="{!v.urlAddress}"
+                                label="{!$Label.c.view_all_News}"
+                                target="_self" />
+    </div>    
+</aura:component>

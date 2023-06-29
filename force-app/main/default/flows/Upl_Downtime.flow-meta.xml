@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <interviewLabel>Upl_Downtime {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Upl_Downtime</label>
+    <processType>Flow</processType>
+    <screens>
+        <name>UPL_Message</name>
+        <label>UPL Message</label>
+        <locationX>374</locationX>
+        <locationY>90</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayMessage</name>
+            <fieldText>&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;Salesforce System will be down for next 64 hours.&lt;/B&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;Downtime Reason:&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;Splitting the existing UPL R3 System in to 2 parts one for India business and other for International business (Project FISSION)&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;-----------------------------------------------------------------&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;Downtime Window (64 Hours)&lt;/B&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;From: 19-May-2017 (Friday), 22:00 hrs. IST&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;To:   22-May-2017 (Monday), 14:00 hrs. IST&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;--------------------------------------------------------------&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;Contact UPL IT team for more details&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>UPL_Message</startElementReference>
+    <status>Active</status>
+</Flow>

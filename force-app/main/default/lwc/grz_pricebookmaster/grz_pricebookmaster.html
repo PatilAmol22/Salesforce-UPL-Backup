@@ -1,0 +1,198 @@
+<template>
+    <div class="slds-is-relative">
+    <div if:true={isLoading} class="">
+            <lightning-spinner alternative-text="Loading..." variant="brand"></lightning-spinner>
+        </div>
+  <lightning-quick-action-panel header={label.ItalyLabel}>
+    <div class="slds-grid  setbackground slds-wrap tablepadding newoverflowclass">
+     <table class="slds-m-left_small slds-m-right_small slds-m-bottom_small" >
+        <thead class="componentNotoSansMedium newcolorclass">
+            <tr class="fixed-header-row1">
+             <th class="newheightclass newwidth" scope="col">
+                    <div class="slds-truncate" title="SKUCode">SKUDesc</div>
+                </th>
+              <th class="newheightclass newminwidth" scope="col">
+                    <div class="slds-truncate" title="SKUCode">SKUCode</div>
+                </th>
+              <!-- <th class="" scope="col" style="height: 40px; min-width: 110px;">
+                    <div class="slds-truncate" title="SalesOrgCode">SalesOrgCode</div>
+                </th>
+                <th class="" scope="col" style="height: 40px; min-width: 130px;">
+                    <div class="slds-truncate" title="DistributionChannel">DistributionChannel</div>
+                </th>
+                <th class="" scope="col" style="height: 40px;  min-width: 90px;">
+                    <div class="slds-truncate" title="Division">Division</div>
+                </th> -->
+                <th class="newheightclass newwidth" scope="col">
+                    <div class="slds-truncate" title="SoldToPartyCode">SoldToParty</div>
+                </th>
+                  <th class="newheightclass newwidth" scope="col">
+                    <div class="slds-truncate" title="SoldToPartyCode">SoldToPartyCode</div>
+                </th>
+              
+                <!-- <th class="" scope="col" style="height: 40px; min-width: 130px;">
+                    <div class="slds-truncate" title="Currencypricebook">Currencypricebook</div>
+                </th> -->
+                 <th class="newheightclass newminwidth" scope="col">
+                    <div class="slds-truncate" title="UOM">UOM</div>
+                </th>
+                <th class="newheightclass newminwidth1" scope="col">
+                    <div class="slds-truncate" title="MaterialPrice">MaterialPrice</div>
+                </th>
+                <th class="newheightclass newwidth" scope="col">
+                    <div class="slds-truncate" title="EstimatedFinalPrice">EstimatedFinalPrice</div>
+                </th>
+                <th class="newheightclass newminwidth1" scope="col">
+                    <div class="slds-truncate" title="AccrualDiscount">AccrualDiscount</div>
+                </th>
+                <th class="newheightclass newminwidth" scope="col">
+                    <div class="slds-truncate" title="ValidFrom">ValidFrom</div>
+                </th>
+                 <th class="newheightclass newminwidth" scope="col">
+                    <div class="slds-truncate" title="Validto">Validto</div>
+                </th>
+                <!-- <th class="" scope="col" style="height: 40px;  min-width: 90px;">
+                    <div class="slds-truncate" title="Batch">Batch</div>
+                </th>
+                  <th class="" scope="col" style="height: 40px; min-width: 150px;">
+                    <div class="slds-truncate" title="DepotStorageLocation">DepotStorageLocation</div>
+                </th> -->
+              
+                  <!-- <th class="" scope="col" style="height: 40px; min-width: 110px;">
+                    <div class="slds-truncate" title="OrderTypeItaly">OrderTypeItaly</div>
+                </th> -->
+                 <th class="newheightclass" scope="col" style="min-width: 100px;">
+                     <div class="slds-grid slds-wrap">
+
+                    <div class="slds-truncate slds-col" title="Action">Edit</div>
+                    <div class="slds-truncate slds-col" title="Action">Save</div>
+                     </div>
+                </th>
+                <th class="newheightclass" scope="col" style="min-width: 50px;">
+                    <div class="slds-truncate" title="Action">Delete</div>
+                </th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+   
+            <template for:each={testdetails} for:item="porder">
+
+                <tr key={porder.Id}  style="font-family: NotoSansRegular;" class="fixed-header-row2 slds-border_bottom bgcolormobile selectedRow">
+                <td class="slds-p-left_small newheightclass">
+                    <div class="">{porder.SKUName}</div>  
+                </td>
+               <td class="slds-p-left_small newheightclass">
+                    <div class="">{porder.SKUCode}</div>  
+                </td>
+                <!--<td style="height: 40px" class="slds-p-left_small">
+                    <div class="centertext">{porder.SalesOrgCode}</div>  
+                </td>
+                 <td style="height: 40px" class="slds-p-left_small">
+                    <div class="centertext">{porder.DistributionChannel}</div>  
+                    </td>
+                <td style="height: 40px" class="slds-p-left_small">
+                    <div class="">{porder.Division}</div>  
+                </td> -->
+                <template if:true={porder.SoldToPartyName}>
+                <td class="slds-p-left_small newheightclass">
+                    <div class="">{porder.SoldToPartyName}</div>  
+                </td>
+                </template>
+                 <template if:false={porder.SoldToPartyName}>
+                <td class="slds-p-left_small newheightclass">
+                    <div class="">Nil</div>  
+                </td>
+                </template>
+                <template if:true={porder.SoldToPartyCode}>
+                <td class="slds-p-left_small newheightclass">
+                    <div class="">{porder.SoldToPartyCode}</div>  
+                </td>
+                </template>
+                 <template if:false={porder.SoldToPartyCode}>
+                <td class="slds-p-left_small newheightclass">
+                    <div class="">Nil</div>  
+                </td>
+                </template>
+                
+                <!-- <td style="height: 40px" class="slds-p-left_small">
+                    <div class="centertext">{porder.Currencypricebook}</div>  
+                    </td> -->
+                <td class="slds-p-left_small newheightclass">
+                <div class="">{porder.UOM}</div>  
+                </td>
+                  <td class="slds-p-left_small newheightclass">
+                      
+                     <lightning-input id={porder.Ids} data-id={porder.Ids} class="slds-cell-wrap newmarginclass" 
+                                     value={porder.MaterialPrice} disabled={currentedit}
+                                     variant="label-hidden" maxlength="8"  onkeyup={handleCellChanges} onkeypress={handleCellChanges} onchange={handleMethod}
+                                     >
+                    </lightning-input>
+                    <!-- <div class="centertext">{porder.MaterialPrice}</div>  -->
+                </td>
+                  <td class="slds-p-left_small newheightclass">
+                    <div class="centertext">{porder.EstimatedFinalPrice}</div>  
+                </td>
+                <td class="slds-p-left_small newheightclass">
+                    <div class="centertext">{porder.AccrualDiscount}</div>  
+                </td>
+                <td class="slds-p-left_small newheightclass">
+                    <div class="">{porder.ValidFrom}</div>  
+                </td>
+                 <td class="slds-p-left_small newheightclass">
+                    <div class="">{porder.Validto}</div>  
+                    </td>
+                
+                 <!-- <template if:true={porder.Batch}>
+                <td style="height: 40px" class="slds-p-left_small">
+                    <div class="">{porder.Batch}</div>  
+                </td>
+                </template>
+                 <template if:false={porder.Batch}>
+                <td style="height: 40px" class="slds-p-left_small">
+                    <div class="">Nil</div>  
+                </td>
+                </template>
+                <td style="height: 40px" class="slds-p-left_small">
+                    <div class="">{porder.DepotStorageLocation}</div>  
+                    </td> -->
+              
+                <!-- <template if:true={porder.OrderTypeItaly}>
+                <td style="height: 40px" class="slds-p-left_small">
+                    <div class="">{porder.OrderTypeItaly}</div>  
+                </td>
+                </template>
+                 <template if:false={porder.OrderTypeItaly}>
+                <td style="height: 40px" class="slds-p-left_small">
+                    <div class="">Nil</div>  
+                </td>
+                </template> -->
+               
+                
+                 <td class="slds-p-left_small newheightclass">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col">
+                        <lightning-button-icon icon-name="utility:edit"  alternative-text="Edit" title="Edit" data-id={porder.Ids} onclick={handleEditAction}></lightning-button-icon>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-button-icon icon-name="utility:save"  alternative-text="Save" title="Save" data-id={porder.Ids} onclick={handleSaveAction}></lightning-button-icon>
+                    </div>   
+                </div>
+                 </td>
+                 <td class="slds-p-left_small newheightclass">
+                 <lightning-button-icon icon-name="utility:delete"  alternative-text="Delete" title="Delete" data-id={porder.Ids} onclick={handleDeleteAction}></lightning-button-icon>
+                 </td>
+                </tr>
+            </template>
+
+        </tbody>
+    </table>
+
+    </div>
+
+        
+  </lightning-quick-action-panel>
+    </div>
+        
+    </template>

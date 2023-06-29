@@ -1,0 +1,1406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Approval_confirmation</fullName>
+        <description>Approval confirmation</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Onboarding_Approval_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Approved_Email_Alert</fullName>
+        <description>Approved Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Germany_Email_Template/Account_Approved_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_To_Onboarding_Central_Admin</fullName>
+        <description>Email Alert To Onboarding Central Admin</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Customer_Onboarding_Emails/Account_Onboarding_Approval_Request</template>
+    </alerts>
+    <alerts>
+        <fullName>Error_message_email_alert_to_Onboarding_Central_Admin</fullName>
+        <description>Error message email alert to Onboarding Central Admin</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <recipients>
+            <recipient>20000017@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20006501@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20008138@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Account_Onboarding_Error_Message</template>
+    </alerts>
+    <alerts>
+        <fullName>Onboarding_account_rejection_alert</fullName>
+        <description>Onboarding account rejection alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Customer_Onboarding_Emails/Account_Onboarding_Rejection_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Onboarding_account_rejection_alert_Central_admin_to_tm_RM</fullName>
+        <description>Onboarding account rejection alert-Central admin to tm &amp; RM</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Customer_Onboarding_Emails/Account_Onboarding_Rejection_Template_for_Central_Admin</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejected_Email_Alert</fullName>
+        <description>Rejected Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Germany_Email_Template/Account_Rejected_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_confirmation</fullName>
+        <description>Rejection confirmation</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Onboarding_Rejection_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>SAP_number_email_Alert_To_Onboarding_Central_Admin</fullName>
+        <description>SAP number email Alert To Onboarding Central Admin</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Account_Onboarding_Error_Message</template>
+    </alerts>
+    <alerts>
+        <fullName>Update_ZCE_abt_Email_ALert</fullName>
+        <description>Update ZCE abt Email ALert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ZonalCommercialExecutive__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Address_update_info</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Approve_Check_for_Zonal_Head</fullName>
+        <field>ApprovedbyZonalHead__c</field>
+        <literalValue>1</literalValue>
+        <name>Approve Check for Zonal Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_Check_for_Zonal_Commercial</fullName>
+        <field>ApprovedbyZonalCommercialExecutive__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved Check for Zonal Commercial</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_Check_for_Zonal_Head</fullName>
+        <field>ApprovedbyZonalCommercialExecutive__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved Check for Zonal Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_Check_of_Regional_Manger</fullName>
+        <field>ApprovedbyRegionalManager__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved Check of Regional Manger</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Farmer_Creation_on_Update</fullName>
+        <field>Neebal_Integration_Status__pc</field>
+        <literalValue>Ready for Creation</literalValue>
+        <name>Farmer Creation on Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Recall_Field_Status</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Draft</literalValue>
+        <name>Recall Field Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_checkbox_false</fullName>
+        <field>Modification_approved_by_GBS__c</field>
+        <literalValue>0</literalValue>
+        <name>Set checkbox false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_checkbox_true</fullName>
+        <field>Modification_approved_by_GBS__c</field>
+        <literalValue>1</literalValue>
+        <name>Set checkbox true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Regional_Manger_Check</fullName>
+        <field>ApprovedbyRegionalManager__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Regional Manger Check</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Zonal_Commercial</fullName>
+        <field>ApprovedbyZonalCommercialExecutive__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Zonal Commercial</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Zonal_Head</fullName>
+        <field>ApprovedbyZonalHead__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Zonal Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Asst_Phone</fullName>
+        <field>PersonAssistantPhone</field>
+        <formula>RIGHT( PersonContact.MobilePhone ,10)</formula>
+        <name>Update Account Asst Phone</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Crop_Code_Temp</fullName>
+        <field>Crop_Code_Temp__c</field>
+        <formula>Crop_Codes__pc</formula>
+        <name>Update Account Crop Code Temp</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Neebal_Int_Status_Create</fullName>
+        <field>Neebal_Integration_Status__pc</field>
+        <literalValue>Ready for Creation</literalValue>
+        <name>Update Account-Neebal Int Status-Create</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Neebal_Int_Status_Update</fullName>
+        <field>Neebal_Integration_Status__pc</field>
+        <literalValue>Ready for Updation</literalValue>
+        <name>Update Account-Neebal Int Status-Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_RT_Farmer</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Farmer</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Account RT-Farmer</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_RT_MarginalFarmer</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>Marginal_Farmer</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Account RT-MarginalFarmer</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_RT_PreRegistered</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>PreRegistered_Farmer</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Account RT-PreRegistered</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_RT_SWAL_Farmer</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>SWAL_Farmer</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Account RT-SWAL Farmer</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_RT_SWAL_PreRegistered</fullName>
+        <field>RecordTypeId</field>
+        <lookupValue>SWAL_PreRegistered_Farmer</lookupValue>
+        <lookupValueType>RecordType</lookupValueType>
+        <name>Update Account RT-SWAL PreRegistered</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Apporval_Status</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Apporval Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Status</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Submitted for Approval</literalValue>
+        <name>Update Approval Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Status_Draft_on_Recall</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Draft</literalValue>
+        <name>Update Approval Status - Draft on Recall</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Status_as_Pending</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Approval Status as Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Status_as_Rejected</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Approval Status as Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Status_for_Zonal_Head</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Approved by Zonal Head</literalValue>
+        <name>Update Approval Status for Zonal Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Status_rejection</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Approval Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Sub_Status2</fullName>
+        <field>ApprovalSubStatus__c</field>
+        <literalValue>Approved by Zonal Head</literalValue>
+        <name>Update Approval Sub-Status2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Sub_Status3</fullName>
+        <field>ApprovalSubStatus__c</field>
+        <literalValue>Approved by SBU Head</literalValue>
+        <name>Update Approval Sub-Status3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Sub_Status4</fullName>
+        <field>ApprovalSubStatus__c</field>
+        <name>Update Approval Sub-Status to None</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_status_for_Zonal</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Approved by Zonal Commercial Executive</literalValue>
+        <name>Update Approval status for Zonal</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Billing_Street</fullName>
+        <field>BillingStreet</field>
+        <formula>CASE(Account_Type__c ,
+&apos;Bill To Party&apos;, Billing_Street_3__c,
+&apos;Sold To Party&apos;, Billing_Street_1__c,
+&apos;Ship To Party&apos;,Billing_Street_3__c,
+&apos;Group&apos;,Billing_Street_1__c,
+NULL
+)</formula>
+        <name>Update Billing Street</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Birthday</fullName>
+        <field>PersonBirthdate</field>
+        <formula>TODAY()- (Age__pc*365)</formula>
+        <name>Update Birthday</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Mobile_Code</fullName>
+        <field>PersonMobilePhone</field>
+        <formula>Village__pr.Tehsil__r.District__r.State__r.Country_Code__c +RIGHT(PersonMobilePhone,10)</formula>
+        <name>Update Mobile Code</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Modification_Checkbox</fullName>
+        <field>Modification_Rejected__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Modification Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Registered_By</fullName>
+        <field>Registration_By__pc</field>
+        <formula>$User.FirstName + &quot; &quot; +  $User.LastName</formula>
+        <name>Update Registered By</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Registered_By_Division</fullName>
+        <field>Registered_by_Division__pc</field>
+        <formula>$User.Division</formula>
+        <name>Update Registered By - Division</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Registered_By_Emp_Code</fullName>
+        <field>Registered_by_Emp_Code__pc</field>
+        <formula>$User.EmployeeNumber</formula>
+        <name>Update Registered By - Emp Code</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Registered_DateTime</fullName>
+        <field>Registered_DateTime__pc</field>
+        <formula>NOW()</formula>
+        <name>Update Registered DateTime</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_SWAL_unique_key</fullName>
+        <field>SWAL_Unique_Key__c</field>
+        <formula>IF(AND (BEGINS(PersonMobilePhone, &apos;91&apos;), LEN(PersonMobilePhone)&gt;10,NOT(CONTAINS(PersonMobilePhone,&apos;-&apos;)) ), MID(PersonMobilePhone, 3, 10) , LEFT(PersonMobilePhone,10))</formula>
+        <name>Update SWAL unique key</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Status as Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Pending</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Status as Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Rejected</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Status as Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Territory_Code</fullName>
+        <field>Territory_Code__c</field>
+        <formula>Territory_Distributor__r.TerritoryCode__c</formula>
+        <name>Update Territory Code</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Unique_Checkbox</fullName>
+        <field>Unique__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Unique Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Unique_Key2</fullName>
+        <field>Unique_Key_2__pc</field>
+        <formula>IF(AND (BEGINS(PersonMobilePhone, &apos;91&apos;), LEN(PersonMobilePhone)&gt;10,NOT(CONTAINS(PersonMobilePhone,&apos;-&apos;)) ), MID(PersonMobilePhone, 3, 10) , LEFT(PersonMobilePhone,10))</formula>
+        <name>Update Unique Key2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Unique_Key_2</fullName>
+        <field>Unique_Key__pc</field>
+        <formula>IF(AND (BEGINS(PersonMobilePhone, &apos;91&apos;), LEN(PersonMobilePhone)&gt;10,NOT(CONTAINS(PersonMobilePhone,&apos;-&apos;)) ), MID(PersonMobilePhone, 3, 10) , LEFT(PersonMobilePhone,10))</formula>
+        <name>Update Unique Key 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Unique_key_2_forGrower</fullName>
+        <field>Unique_Key_2__pc</field>
+        <formula>SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE(Phone, &quot;(&quot;, &quot;&quot;), &quot;)&quot;, &quot;&quot;), &quot; &quot;, &quot;&quot;), &quot;-&quot;, &quot;&quot;)</formula>
+        <name>Update Unique key 2 for Grower</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_final_Approval_Date</fullName>
+        <field>Final_Approval_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Update final Approval Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_of_Approval_Status_Field</fullName>
+        <field>ApprovalStatus__c</field>
+        <literalValue>Approved by Regional  Manager</literalValue>
+        <name>Update status of Approval Status Field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Village_Pin_Code</fullName>
+        <field>Village_Pin_Code__pc</field>
+        <formula>Village__pr.Postal_Code__c</formula>
+        <name>Village Pin Code</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Village_Pin_Code_Manual_empty</fullName>
+        <field>Village_Pin_Code_Manual__pc</field>
+        <name>Village Pin Code Manual empty</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Account Onboarding Rejection alert by Central Admin</fullName>
+        <actions>
+            <name>Onboarding_account_rejection_alert_Central_admin_to_tm_RM</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.ApprovalStatus__c</field>
+            <operation>equals</operation>
+            <value>Rejected by Central Admin</value>
+        </criteriaItems>
+        <description>created by pallavi for Account Onboarding</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Billing Street Update for France Customer</fullName>
+        <actions>
+            <name>Update_Billing_Street</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.Sales_Org_Country__c</field>
+            <operation>equals</operation>
+            <value>France</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Sales_Org_Code__c</field>
+            <operation>equals</operation>
+            <value>2710</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Influencer</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>France Farmer</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update About Address change</fullName>
+        <actions>
+            <name>Update_ZCE_abt_Email_ALert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>And( RecordTypeId  = &apos;01228000000p8v5&apos;, ( ISCHANGED( Mobile__c ) ||  ISCHANGED( BillingCity )  ||  ISCHANGED(  BillingPostalCode )  || ISCHANGED(  BillingCountry ) || ISCHANGED( Email__c ) || ISCHANGED(  Phone )))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account - Neebal Integration Status - Create</fullName>
+        <actions>
+            <name>Update_Account_Neebal_Int_Status_Create</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(  NOT( $Profile.Name = &quot;Neebal Integration User&quot;),  TEXT( Decision_Maker__pc )=&quot;Yes&quot;,  NOT(ISBLANK( Village__pc )),  ISNEW() )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account - Neebal Integration Status - Update</fullName>
+        <actions>
+            <name>Update_Account_Neebal_Int_Status_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(  NOT( $Profile.Name = &quot;Neebal Integration User&quot;) ,  NOT( ISBLANK( Neebal_Farmer_Id__c ) ),  TEXT( Decision_Maker__pc )=&quot;Yes&quot;, NOT(ISBLANK( Village__pc )), OR(   ISCHANGED( FirstName ),   ISCHANGED( MiddleName ),   ISCHANGED( LastName ),   ISCHANGED( PersonMobilePhone ),   ISCHANGED( Village__pc ),   ISCHANGED( Owned_Land_in_Acer__pc )  ) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account - Neebal Integration Status - Update%28Ready for Creation%29</fullName>
+        <actions>
+            <name>Farmer_Creation_on_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Updates Neebal Integration Status to Ready for Creation on Update if the Neebal farmer Id is Blank.</description>
+        <formula>AND(  NOT( $Profile.Name = &quot;Neebal Integration User&quot;) ,  ISBLANK( Neebal_Farmer_Id__c ),  TEXT( Decision_Maker__pc )=&quot;Yes&quot;, NOT(ISBLANK( Village__pc )), OR(  ISCHANGED( Decision_Maker__pc ) , ISCHANGED( FirstName ),  ISCHANGED( MiddleName ),  ISCHANGED( LastName ),  ISCHANGED( PersonMobilePhone ),  ISCHANGED( Village__pc ),  ISCHANGED( Owned_Land_in_Acer__pc )  )  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account Asst Number</fullName>
+        <actions>
+            <name>Update_Account_Asst_Phone</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( PersonMobilePhone )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account Crop Code Temp</fullName>
+        <actions>
+            <name>Update_Account_Crop_Code_Temp</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( Crop_Codes__pc )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account RT-Farmer</fullName>
+        <actions>
+            <name>Update_Account_RT_Farmer</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>3 AND(1 OR 2)</booleanFilter>
+        <criteriaItems>
+            <field>Account.Fruit_Vegetable_Acerage__pc</field>
+            <operation>equals</operation>
+            <value>1 or Above</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Other_Acerage__pc</field>
+            <operation>equals</operation>
+            <value>3 or Above</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>SWAL Farmer,SWAL PreRegistered Farmer,Onboarding account,Lead Customer,Neo Fog</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account RT-MarginalFarmer</fullName>
+        <actions>
+            <name>Update_Account_RT_MarginalFarmer</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>6 AND (((1 and 2) or (1 and 3) or (2 and 4)) AND 5)</booleanFilter>
+        <criteriaItems>
+            <field>Account.Fruit_Vegetable_Acerage__pc</field>
+            <operation>equals</operation>
+            <value>Less than 1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Other_Acerage__pc</field>
+            <operation>equals</operation>
+            <value>Less than 3</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Other_Acerage__pc</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Fruit_Vegetable_Acerage__pc</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Decision_Maker__pc</field>
+            <operation>equals</operation>
+            <value>Yes</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>SWAL Farmer,SWAL PreRegistered Farmer,Entity,Onboarding account,Lead Customer,Neo Fog</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account RT-PreRegistered</fullName>
+        <actions>
+            <name>Update_Account_RT_PreRegistered</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>5 AND ((1 OR 2) AND 3 AND 4)</booleanFilter>
+        <criteriaItems>
+            <field>Account.Decision_Maker__pc</field>
+            <operation>equals</operation>
+            <value>No</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Decision_Maker__pc</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Distributor,Neo Fog,Prospect Iberia,Lead Customer</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>UPI Canada Division,UPI Aquatics Division,UPI AG Division,US Labs,AKC Retailer,SWAL Retailer,Retailer,Prospect,Group,Influencer,Ship To,France Farmer,Grower (Business),Grower,Customer On-Boarding,Customer On-Boardings</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>SWAL Farmer,SWAL PreRegistered Farmer,Entity,Hannaford Farm,F3/C3/Sales Team,UnRegistered Farmer/Retailer,Onboarding account,Europe Farmer Account,Europe Retailer Account,Pandoforce Farmer,Un-Register Consumer,Register Consumer</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account RT-SWAL Farmer</fullName>
+        <actions>
+            <name>Update_Account_RT_SWAL_Farmer</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>3 AND(1 OR 2)</booleanFilter>
+        <criteriaItems>
+            <field>Account.Fruit_Vegetable_Acerage__pc</field>
+            <operation>equals</operation>
+            <value>1 or Above</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Other_Acerage__pc</field>
+            <operation>equals</operation>
+            <value>2 and above</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SWAL Farmer,SWAL PreRegistered Farmer,Onboarding account,Lead Customer</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account RT-SWAL PreRegistered</fullName>
+        <actions>
+            <name>Update_Account_RT_SWAL_PreRegistered</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>5 AND ((1 OR 2) AND 3 AND 4)</booleanFilter>
+        <criteriaItems>
+            <field>Account.Decision_Maker__pc</field>
+            <operation>equals</operation>
+            <value>No</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Decision_Maker__pc</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Distributor,Entity,Prospect Iberia,Lead Customer</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>UPI Canada Division,UPI Aquatics Division,UPI AG Division,US Labs,AKC Retailer,SWAL Retailer,Retailer,Prospect,Group,Influencer,Ship To,France Farmer,Grower (Business),Grower,Neo Fog</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SWAL Farmer,SWAL PreRegistered Farmer,Grower (Business),Grower</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Birthday</fullName>
+        <actions>
+            <name>Update_Birthday</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>ISCHANGED( Age__pc )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Mobile Code</fullName>
+        <actions>
+            <name>Update_Mobile_Code</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(  OR(   ISCHANGED( Village__pc ),   ISCHANGED( PersonMobilePhone ),   ISNEW()  ),  LEN(PersonMobilePhone)=10,  NOT(ISBLANK(Village__pc)) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Registration Fields</fullName>
+        <actions>
+            <name>Update_Registered_By</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Registered_By_Division</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Registered_By_Emp_Code</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Registered_DateTime</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_By__pc</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <description>Update Registered Date and Registered by</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update SWAL unique key</fullName>
+        <actions>
+            <name>Update_SWAL_unique_key</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(
+OR( ISCHANGED( PersonMobilePhone ), ISCHANGED( Village__pc ), ISNEW() ),
+OR(RecordType.Name == &apos;SWAL Farmer&apos;,
+RecordType.Name == &apos;SWAL PreRegistered Farmer&apos;)
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Territory Code</fullName>
+        <actions>
+            <name>Update_Territory_Code</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>Not(ISBLANK( Territory_Distributor__c))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Unique Key</fullName>
+        <actions>
+            <name>Update_Unique_Key_2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(OR(  ISCHANGED( PersonMobilePhone ),  ISCHANGED( Village__pc ),  ISNEW()  ), RecordTypeId != &apos;01228000000p8v5&apos;, RecordTypeId != &apos;01228000001How9&apos;, RecordTypeId != &apos;01228000001HowA&apos;, RecordTypeId != &apos;0120K000001HuOX&apos;, RecordTypeId != &apos;012280000001NBR&apos;, RecordTypeId != &apos;0120K000001HtSZ&apos;, RecordTypeId != &apos;0120K000000wSIx&apos;, RecordType.DeveloperName != &apos;Influencer&apos;, RecordType.Name != &apos;SWAL Farmer&apos;, RecordType.Name != &apos;SWAL PreRegistered Farmer&apos;, RecordType.Name != &apos;SWAL Retailer&apos;, RecordType.DeveloperName != &apos;Group&apos;, RecordType.DeveloperName != &apos;Entity&apos;, RecordType.DeveloperName != &apos;Grower_Business&apos;, RecordType.DeveloperName != &apos;Grower&apos;, RecordType.DeveloperName != &apos;Prospect_Iberia&apos;,  RecordType.DeveloperName != &apos;Lead_Customer&apos;, RecordType.DeveloperName != &apos;Ship_To&apos;,  RecordType.DeveloperName != &apos;Hannaford_Farm&apos;, RecordType.DeveloperName != &apos;Onboarding_account&apos;, RecordType.DeveloperName != &apos;Neo_Fog&apos;, RecordType.DeveloperName != &apos;F3_C3_Sales_Team&apos;, RecordType.DeveloperName != &apos;Europe_Farmer_Account&apos;, RecordType.DeveloperName != &apos;Europe_Retailer_Account&apos;, RecordType.DeveloperName != &apos;UnRegistered_Farmer_Retailer&apos; , RecordType.DeveloperName != &apos;Un_Register_Consumer&apos; , RecordType.DeveloperName != &apos;Register_Consumer&apos; , RecordType.DeveloperName != &apos;Customer_On_Boarding_Type&apos;, RecordType.DeveloperName != &apos;Customer_On_Boarding&apos; )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Unique Key2</fullName>
+        <actions>
+            <name>Update_Unique_Checkbox</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Unique_Key2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(OR( ISCHANGED( PersonMobilePhone ), ISCHANGED( Village__pc ), ISNEW() ),  RecordType.DeveloperName != &apos;Distributor&apos;,  RecordType.DeveloperName != &apos;US_Distributor&apos;,  RecordType.DeveloperName != &apos;US_Labs&apos;,  RecordType.DeveloperName != &apos;Lead_Customer&apos;, RecordType.DeveloperName != &apos;AKC_Retailer&apos;,  RecordType.DeveloperName != &apos;SWAL_Retailer&apos;,  RecordType.DeveloperName != &apos;Retailer&apos;,  RecordType.DeveloperName != &apos;Europe_Farmer_Account&apos;, RecordType.DeveloperName != &apos;Europe_Retailer_Account&apos;, RecordType.DeveloperName != &apos;Grower_Business&apos;, RecordType.DeveloperName != &apos;Grower&apos;, RecordType.DeveloperName != &apos;Business_Account&apos;, RecordType.DeveloperName != &apos;Prospect&apos;, RecordType.DeveloperName != &apos;Influencer&apos;, RecordType.DeveloperName != &apos;Neo_Fog&apos;, RecordType.DeveloperName != &apos;Group&apos;, RecordType.Name != &apos;SWAL Farmer&apos;, RecordType.Name != &apos;SWAL PreRegistered Farmer&apos;, RecordType.DeveloperName != &apos;Entity&apos;, RecordType.DeveloperName != &apos;Prospect_Iberia&apos;, RecordType.DeveloperName != &apos;Ship_To&apos;, RecordType.DeveloperName != &apos;Hannaford_Farm&apos;, RecordType.DeveloperName != &apos;F3_C3_Sales_Team&apos;, RecordType.DeveloperName != &apos;Onboarding_account&apos;, RecordType.DeveloperName != &apos;UnRegistered_Farmer_Retailer&apos;, RecordType.DeveloperName != &apos;Customer_On_Boarding_Type&apos;, RecordType.DeveloperName != &apos;Customer_On_Boarding&apos;, RecordType.DeveloperName != &apos;Register_Consumer&apos;, RecordType.DeveloperName != &apos;Un_Register_Consumer&apos;  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Unique key for Grower</fullName>
+        <actions>
+            <name>Update_Unique_key_2_forGrower</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( OR( ISCHANGED( PersonMobilePhone ), ISCHANGED( Village__pc ), ISNEW() ), RecordType.Name == &apos;Grower&apos; )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Village Pin Code</fullName>
+        <actions>
+            <name>Village_Pin_Code</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SWAL Farmer,SWAL PreRegistered Farmer,Farmer,PreRegistered Farmer</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Village Pin Code Manual empty</fullName>
+        <actions>
+            <name>Village_Pin_Code_Manual_empty</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( OR(RecordType.Name = &apos;SWAL Farmer&apos;,RecordType.Name = &apos;SWAL PreRegistered Farmer&apos;,RecordType.Name = &apos;Farmer&apos;,RecordType.Name = &apos;PreRegistered Farmer&apos;), OR(NOT(ISBLANK( Village__pr.Postal_Code__c )),ISBLANK( Village__pc )) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS</fullName>
+        <actions>
+            <name>Welcome_SMS</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2 AND 4</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Preferred_Language__pc</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.SMS_Voice_Msg_Call_Consent__pc</field>
+            <operation>equals</operation>
+            <value>Yes</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS - Bengali</fullName>
+        <actions>
+            <name>Welcome_SMS_Bengali</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.State_Language__pc</field>
+            <operation>equals</operation>
+            <value>Bengali</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS - Gujarati</fullName>
+        <actions>
+            <name>Welcome_SMS_Gujarati</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.State_Language__pc</field>
+            <operation>equals</operation>
+            <value>Gujarati</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS - Hindi</fullName>
+        <actions>
+            <name>Welcome_SMS_Hindi</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.State_Language__pc</field>
+            <operation>equals</operation>
+            <value>Hindi</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS - Kannada</fullName>
+        <actions>
+            <name>Welcome_SMS_Kannada</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.State_Language__pc</field>
+            <operation>equals</operation>
+            <value>Kannada</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS - Marathi</fullName>
+        <actions>
+            <name>Welcome_SMS_Marathi</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.State_Language__pc</field>
+            <operation>equals</operation>
+            <value>Marathi</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS - Punjabi</fullName>
+        <actions>
+            <name>Welcome_SMS_Punjabi</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.State_Language__pc</field>
+            <operation>equals</operation>
+            <value>Punjabi</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS - Tamil</fullName>
+        <actions>
+            <name>Welcome_SMS_Tamil</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 3) AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.State_Language__pc</field>
+            <operation>equals</operation>
+            <value>Tamil</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Welcome SMS - Telugu</fullName>
+        <actions>
+            <name>Welcome_SMS_Telugu</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>contains</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>contains</operation>
+            <value>Partially Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.State_Language__pc</field>
+            <operation>equals</operation>
+            <value>Telugu</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>update registered by</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Account.Registration_Status__pc</field>
+            <operation>equals</operation>
+            <value>Fully Registered</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.Registration_By__pc</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <tasks>
+        <fullName>New_Farmer_Registration_Hindi</fullName>
+        <assignedTo>sadmin@upl.com</assignedTo>
+        <assignedToType>user</assignedToType>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>New Farmer Registration</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS</fullName>
+        <assignedToType>owner</assignedToType>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS_Bengali</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>SMS-Notification-Account-29bb</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS Bengali</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS_Gujarati</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>SMS-Notification-Account-02b2</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS Gujarati</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS_Hindi</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>SMS-Notification-Account-cffd</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS Hindi</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS_Kannada</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>SMS-Notification-Account-c4be</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS Kannada</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS_Marathi</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>SMS-Notification-Account-8e83</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS Marathi</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS_Punjabi</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>SMS-Notification-Account-d896</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS Punjabi</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS_Tamil</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>SMS-Notification-Account-b851</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS Tamil</subject>
+    </tasks>
+    <tasks>
+        <fullName>Welcome_SMS_Telugu</fullName>
+        <assignedToType>owner</assignedToType>
+        <description>SMS-Notification-Account-3bc0</description>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Welcome SMS Telugu</subject>
+    </tasks>
+</Workflow>

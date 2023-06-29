@@ -1,0 +1,25 @@
+<aura:component controller="NoteController" implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="notesList" type="List" />
+    <aura:if isTrue="{!not(empty(v.notesList))}">
+        <aura:iteration items="{!v.notesList}" var="item" indexVar="index">
+            <lightning:card>
+                <div id="{!index}">
+                    <aura:if isTrue="{!item.isEdit}">
+                        Created Date : {!item.strCreatedDate} <br/>
+                        Title : {!item.strTitle} <br/>
+                        {!item.strNotes}
+                        <aura:set attribute="else">
+                            <lightning:textarea name="notes" label="Notes" value="{!item.strNotes}" />
+                            <lightning:button  label="Cancel" onclick="{!c.cancel}" class="slds-m-left_x-small"></lightning:button>
+                            <!-- <lightning:button  label="Save" variant="brand"  onclick="{!c.save}" class="slds-m-left_x-small"></lightning:button>-->
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </lightning:card>
+        </aura:iteration>
+        <aura:set attribute="else">
+            No notes.
+        </aura:set>
+    </aura:if>
+</aura:component>

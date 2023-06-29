@@ -1,0 +1,11 @@
+.THIS.fsize {
+    font-size:18px;
+}
+.THIS .icn svg {
+ fill: #ff0000;  
+}
+.THIS .icn1 svg {
+ fill: #13c605;  
+}
+.THIS .container { margin:150px auto; max-width:640px;}
+.THIS pre { overflow-x: scroll}

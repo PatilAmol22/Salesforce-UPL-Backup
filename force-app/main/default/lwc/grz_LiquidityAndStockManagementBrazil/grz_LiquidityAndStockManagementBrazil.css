@@ -1,0 +1,401 @@
+.list-title {
+  font-size: 23px;
+  padding-bottom: 50px;
+}
+.alert-msg{
+  font-size: 12px;
+  color: red;
+  font-weight: bold;
+}
+.component-block {
+  background-color: white;
+  min-height: 425px;
+  border: 1px solid #ddd;
+}
+.agile-btn-sp {
+  float: right;
+}
+.forcenter{
+  text-align: center;
+}
+.agile-btn {
+  background-color: #00bdf2;
+  color: #fff;
+  border: none;
+  padding: 5px 25px;
+  font-size: 14px;
+}
+.filter-section {
+  display: flex;
+  justify-content: space-between;
+}
+.left-filter {
+  display: flex;
+  justify-content: space-between;
+}
+.right-filter {
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
+}
+.page-filter {
+  width: 19%;
+}
+
+.date-filter {
+  width: 76%;
+  display: flex;
+  justify-content: space-between;
+}
+.date-width {
+  width: 50%;
+}
+.type-filter {
+  width: 22%;
+}
+.search-filter {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+.search-box {
+  width: 100%;
+  position: relative;
+}
+.close-icon {
+  position: absolute;
+  top: 43%;
+  right: 2%;
+}
+.search-btn {
+  width: 20%;
+}
+.mrg-tp {
+  margin-top: 24px;
+}
+.nodatacss {
+  margin-top: 10%;
+}
+.table-head {
+  background-color: #f8f8f8;
+  color: #888;
+}
+.table-head-css {
+  height: 40px;
+}
+.table-body {
+  color: black;
+}
+.table-body-css {
+  height: 40px;
+}
+.order-link {
+  color: #f47920;
+  text-decoration: none;
+}
+.table-scroll {
+  overflow-x: auto;
+  margin-top: 2%;
+}
+/*.table-scroll::-webkit-scrollbar {
+  width: 0;
+}*/
+.spinner-css {
+  margin-top: 10%;
+}
+.table-width-scroll {
+  width: 100%;
+}
+.download-div {
+  padding: 13px 0 13px 12px;
+  background-color: #f8f8f8;
+}
+.dwnld-btn {
+  border: 2px solid #f83;
+  padding: 2px 10px;
+  font-size: 10px;
+  background-color: white;
+  color: black;
+}
+.download-icon {
+  padding-right: 10px;
+}
+.lower-filter-div{
+  display:flex;
+}
+.parent-filter{
+  width:40%;
+}
+
+@media only screen and (max-width: 1024px) {
+  .table-width-scroll {
+    width: 130%;
+  }
+
+  .search-box {
+    width: 80%;
+  }
+  .search-btn {
+    width: 20%;
+  }
+  .mrg-tp {
+    margin-top: 25px;
+  }
+  .close-icon {
+    top: 44%;
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+  .mob-padding{
+    padding-right:12px;
+  }
+  .search-box {
+    width: 100%;
+  }
+  .parent-filter{
+    width:48%;
+  }
+  .search-btn {
+    width: 50px;
+  }
+  .btn-mob {
+    float: right;
+  }
+  .filter-section {
+    display: block;
+  }
+  .left-filter {
+    width: 100%;
+  }
+  .right-filter {
+    width: 100%;
+    margin-left: 12px;
+    padding-right: 12px;
+  }
+  .pad-l{
+    padding-left:0;
+  }
+  .table-scroll {
+    margin-top: 3%;
+  }
+  .list-title {
+    padding-bottom: 45px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .table-width-scroll {
+    width: 100%;
+  }
+   .download-div {
+    text-align: center;
+  }
+  
+  .parent-filter{
+    width:100%;
+    padding-right: 12px;
+  }
+   .shadoweffect{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+    .textoverflowcls {
+       line-height: 30px;
+       padding-right: 2%;
+       max-width: none;
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+     }
+  .forcenter{
+    text-align: null;
+  }
+     .table-body-css {
+       height: 30px;
+     }
+   
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+    
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+    
+        tr {
+          border-bottom: 0px;
+          border: 1px solid #ccc;
+          margin-bottom: 10px;
+        }
+    
+        td {
+          /* Behave  like a "row" */
+          /* border: none;
+        		border-bottom: 1px solid #eee;  */
+          position: relative;
+          padding-left: 50%;
+        }
+    
+        td:before {
+          /* Now like a table header */
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 6px;
+          left: 6px;
+          width: 33%;
+          padding-right: 10px;
+          white-space: nowrap;
+        }
+    
+        .br-mobile-view:nth-of-type(1):before {
+          content: "Expirado:";
+        }
+    
+        .br-mobile-view:nth-of-type(2):before {
+          content: "Data do Relatório:";
+        }
+    
+        .br-mobile-view:nth-of-type(3):before {
+          content: "Armazém:";
+        }
+    
+        .br-mobile-view:nth-of-type(4):before {
+          content: "Nota Venda UPL:";
+        }
+    
+        .br-mobile-view:nth-of-type(5):before {
+          content: "Cliente CNPJ:";
+        }
+        .br-mobile-view:nth-of-type(6):before {
+          content: "Cliente:";
+        }
+    
+        .br-mobile-view:nth-of-type(7):before {
+          content: "Nome do Produto:";
+        }
+    
+        .br-mobile-view:nth-of-type(8):before {
+          content: "Lote:";
+        }
+    
+        .br-mobile-view:nth-of-type(9):before {
+          content: "Data Validade Lote:";
+        }
+    
+        .br-mobile-view:nth-of-type(10):before {
+          content: "Qtde Saldo Atual:";
+        }
+        .br-mobile-view:nth-of-type(11):before {
+          content: "Valor Saldo Atual (BRL):";
+        }
+        .br-mobile-view:nth-of-type(12):before {
+          content: "Dias Remanescentes AG:";
+        }
+}
+@media only screen and (max-width: 650px) {
+  .table-width-scroll {
+    width: 99%;
+  }
+  .table-scroll {
+    margin-top: 4%;
+  }
+  .lower-filter-div{
+    display:block;
+  }
+  .page-filter {
+    width: 100%;
+    padding-right: 24px;
+  }
+  
+}
+
+@media only screen and (max-width: 548px) {
+  .table-width-scroll {
+    width: 96%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .table-width-scroll {
+    width: 95%;
+  }
+  .left-filter,
+  .right-filter {
+    display: block;
+    padding-right: 0;
+    margin-left: 0;
+  }
+  .page-filter {
+    width: 100%;
+    padding-right: 24px;
+  }
+  .search-box {
+    width: 100%;
+  }
+  .search-filter {
+    width: 100%;
+    margin-left: 0%;
+    padding-right: 0%;
+  }
+  .mrg-tp {
+    margin-top: 25px;
+  }
+  .type-filter,
+  .date-filter {
+    width: 100%;
+    margin-left: 12px;
+    padding-right: 12px;
+  }
+  .close-icon {
+    top: 27%;
+  }
+  .agile-btn {
+    padding: 3px 20px;
+    font-size: 12px;
+  }
+  .list-title {
+    font-size: 18px;
+    padding-bottom: 35px;
+  }
+ 
+}
+@media only screen and (max-width: 375px) {
+  .table-width-scroll {
+    width: 94%;
+  }
+  .table-head,
+  .table-body {
+    font-size: 12px;
+  }
+  .filter-section {
+    font-size: 13px;
+  }
+  .list-title {
+    font-size: 15px;
+    padding-bottom: 32px;
+  }
+  
+}
+@media only screen and (max-width: 320px) {
+  .list-title {
+    font-size: 13px;
+  }
+  
+}
+@media only screen and (max-width: 319px) {
+  .date-filter {
+    display: block;
+  }
+  .date-width {
+    padding-left: 0;
+    width: 100%;
+  }
+  
+}

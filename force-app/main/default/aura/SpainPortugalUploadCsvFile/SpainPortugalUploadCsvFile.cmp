@@ -1,0 +1,115 @@
+<aura:component controller="SpainPortugalUploadCsvFileController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="AccounType" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- create 2 aura handler with waiting and donewaiting events--> 
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    
+  <!--create a component attributs -->
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <!--Selection--> 
+       
+        
+        <div style="padding:10px;background-color:#44AFD4">
+                <!--div class="slds-page-header__col-title"-->
+                    <div class="slds-media" style="color:white;font-weight: bold;font-size:15px">
+                                <span>{!$Label.c.Spain_and_Portugal_Mass_Upload}</span>
+                    </div>
+            <!--/div-->
+     </div>
+        
+        <div class="row" style="margin-top:15px;margin-bottom:15px;font-weight: bold" >
+           <!-- <b><p class="title">Spain Portugal Account CSV File Upload</p></b> -->
+            <ui:inputSelect label="{!$Label.c.Select_CSV_File}" class="dynamic" aura:id="InputSelectDynamic" change="{!c.onChange}" />
+        </div>
+        
+        
+        
+        <!--loading spinner start... style=Brand Medium (blue dots)-->
+ <aura:if isTrue="{!v.Spinner}">
+    <div aura:id="spinnerId" class="slds-spinner_container">
+       <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+         <span class="slds-assistive-text">Loading</span>
+         <div class="slds-spinner__dot-a"></div>
+         <div class="slds-spinner__dot-b"></div>
+       </div>
+    </div>
+ </aura:if>
+  <!-- Loading spinner end-->   
+        
+        
+        <!--Upload CSV button-->
+        <div>
+            
+            <input type="file" style="color: blue" class="file" aura:id="file" accept=".csv" messageWhenTypeMismatch="Please upload supported file types" />
+            <!--ui:button class="slds" label="Upload CSV" click="{!c.uploadCSV}"/-->
+            <lightning:button variant="brand" 
+                              label="{!$Label.c.Upload_CSV}"
+                              title= "Upload CSV"
+                              onclick="{!c.uploadCSV }"/>
+        </div>
+        
+        <!--Sample template-->
+        
+        <aura:if isTrue="{!v.AccounType=='Insert Prospect Account'}">
+            
+            <div style="padding:5px;margin-top:20px">
+                <h1><strong>{!$Label.c.Prospect_Creation_template}</strong></h1>    
+                <div>
+                    <div style="border-top:1px solid #1797c0; margin-bottom:4px;"></div>  
+                    
+                    <p class="slds-breadcrumb__item">
+                        <a href="/servlet/servlet.FileDownload?file=0150K00000Ad8ho" target="_blank" class="link"><ui:outputRichText value="{!$Label.c.Click_here_to_Download_template}"/></a>
+                    </p>
+                    
+                </div>
+            </div>
+        </aura:if> 
+        <aura:if isTrue="{!v.AccounType=='Update Customer Segmentation'}">
+            
+            <div style="padding:5px;margin-top:20px">
+            <h1><strong>{!$Label.c.Update_Customer_Segmentation_Template}</strong></h1>    
+            <div>
+                <div style="border-top:1px solid #1797c0; margin-bottom:4px;"></div>  
+                
+                <p class="slds-breadcrumb__item">
+                    <a href="/servlet/servlet.FileDownload?file=0150K00000Ad8hp" target="_blank" class="link"><ui:outputRichText value="{!$Label.c.Click_here_to_Download_template}"/></a>
+                </p>
+                
+            </div>
+        </div>
+        </aura:if> 
+        <aura:if isTrue="{!v.AccounType=='Insert Farmer Account'}">
+            
+            <div style="padding:5px;margin-top:20px">
+            <h1><strong>{!$Label.c.Farmer_Creation_template}</strong></h1>    
+            <div>
+                <div style="border-top:1px solid #1797c0; margin-bottom:4px;"></div>  
+                
+                <p class="slds-breadcrumb__item">
+                    <a href="/servlet/servlet.FileDownload?file=0150K00000Ad8hn" target="_blank" class="link"><ui:outputRichText value="{!$Label.c.Click_here_to_Download_template}"/></a>
+                </p>
+                
+            </div>
+        </div>
+        </aura:if> 
+        
+        
+        <div style="border:1px; padding:5px;margin-top:20px">
+            
+            <h1 id="flip2"><strong>{!$Label.c.Instructions_For_Uploading_File}</strong></h1>
+            
+            
+            <div style="border-top:1px solid #1797c0;margin-bottom:4px;"></div> 
+            <div>
+                <p>&#9658; {!$Label.c.File_to_be_uploaded_must_be_in_csv_format_Save_file_in_csv_format}</p>
+                <p>&#9658; {!$Label.c.Please_follow_the_same_column_sequence_and_column_names_as_given_in_template}</p>
+                <p>&#9658; {!$Label.c.Once_the_file_is_uploaded_in_the_system_you_will_receive_an_email_notification}</p>
+            </div>
+            
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,128 @@
+<template>
+    <div class="slds-grid slds-wrap" style="width:100%;padding: 5px;">
+        <!--Search component to search any value within Crop Liquidation Table-->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <lightning-input type="text" placeholder="Search Here..." value={searchKey} onchange={handleSearch}></lightning-input>
+        </div>
+
+        <!--Buttons for Crop Liquidation Table Submit-->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+            <template  if:true={isShowSubmit}>
+                <div class="slds-float_right">
+                    <lightning-button variant="brand" label="Submit" title="Submit  Liquidation" onclick={handleSubmitClick} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </template>
+            <div class="slds-float_right">
+                <lightning-button variant="neutral" label="Back" title="Back" onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+            <template  if:true={isShowApproval}>
+                <div class="slds-float_right">
+                    <lightning-button variant="success" label="Approve" onclick={handleApprovalClick} class="slds-m-left_x-small" disabled={isDisbAppBtn}></lightning-button>
+                    <lightning-button variant="brand" label="Edit and Approve" onclick={handleEditApprovalClick} class="slds-m-left_x-small" disabled={isDisbEditnAppBtn}></lightning-button>
+                    <lightning-button variant="destructive" label="Reject" onclick={handleRejectClick} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </template>
+
+        </div>
+    </div>                    
+                
+    <!--Show and Hide Spinner for crop table-->
+    <template if:false={hideCropSpinner}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+    <!--Crop Liquidation Table starts here-->
+    <template if:true={hideCropSpinner}>
+        <div class="tableFixHead">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <div><span>Material Group</span></div>
+                            
+                        </th>
+                        <th scope="col">
+                            <div><span>Brand Name</span></div>
+                        </th>
+                        <th scope="col">
+                            <span>{liqYTDColName}</span>
+                        </th>
+                        
+                        <!--Itrating over crop name-->
+                        <template for:each={cropNameData} for:item="cropName">
+                            <th key={cropName} scope="col">
+                                <div><span>{cropName}</span></div>
+                            </th>
+                        </template>   
+                        <th scope="col">
+                            <div><span>Total</span></div>
+                        </th>
+                        <th scope="col">
+                            <span>Balance</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={cropLiqTableFilteredData} for:item="crpRowData">
+                        <tr key={crpRowData.liqId}>
+                            <td>{crpRowData.prdCode}</td>
+                            <td>{crpRowData.prdName}</td>
+                            <td>{crpRowData.prdYTD}</td>
+                            
+                            <template for:each={crpRowData.crpLidList} for:item="crpliq">
+                                <td key={crpliq.prdCode}>
+                                    <lightning-input type="number" name ={crpliq.crpName} label={crpliq.crpIndex} variant="label-hidden" value={crpliq.curLiqValue} onchange={handleCellChange} onblur={handleCellBlur}
+                                        message-when-value-missing ="Cannot be blank" disabled={isDisableCrpField} required formatter="decimal" step="0.01"  min="0.00" message-when-range-underflow="Cannot be negative"></lightning-input>
+                                </td>
+                            </template>
+                            <td>
+                                {crpRowData.crpLiqTotal}
+                            </td>
+                            <td>{crpRowData.balanceValue}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div><span>{footerMessage}</span></div>
+        </div>
+    </template>      
+    
+    <!--Custom Error message component-->
+    <c-liquidation-custom-error-cmp show-error-modal={isShowErrorPopup} error-title={errorTitle} error-messsage={errorMessage} oncloseerrormsg={closeErrorPopup}></c-liquidation-custom-error-cmp>
+
+    <!--Confirmation Modal for Crop Liquidation Submission-->
+    <template if:true={isSubModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal header-->
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Warning</h1>
+                </div>
+                <!-- Modal body-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>{label.CropwiseSubmissionLabel}</p>
+                    <br></br>
+                    <template if:true={isShowRemarks}>
+                        <div>
+                            <lightning-textarea name="appEditRemarks" required value="" label="Remarks: " onblur={handleRemarkChange}></lightning-textarea>
+                        </div>
+                    </template>
+                    <p>Click Yes to proceed or else click No.</p>
+                </div>
+                <!-- Modal footer-->
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="No" onclick={closeSubModal}>No</button>
+                    <button class="slds-button slds-button_brand" onclick={submitCropLiquidation}>Yes</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <!--Approval and Reject popup component-->
+    <c-liquidation-approve-reject-cmp show-app-modal={isShowAppPopup} show-rej-modal={isShowRejPopup} terr-code={territorycode} fisyear={fiscalyear} liq-month={liqmonth}
+    oncloseapppopup={closeAppPopup} oncloserejpopup={closeRejPopup} onfromapprej={showprodTable}></c-liquidation-approve-reject-cmp>
+
+</template>

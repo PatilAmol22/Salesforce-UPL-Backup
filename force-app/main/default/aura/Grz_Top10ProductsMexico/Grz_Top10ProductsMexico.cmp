@@ -1,0 +1,19 @@
+<aura:component controller="Grz_Top10ProductMxController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+	
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}" afterScriptsLoaded="{!c.loadPieChart}"/>
+	<div class="mainCSS">    
+        <div class="slds-grid slds-wrap slds-p-left_small slds-p-right_small" style="background-color: white;">
+            <div class="slds-col slds-size_12-of-12 slds-p-top_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small">
+                <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_TopProductReport}</span>
+            </div>
+            <div class="slds-col slds-small-size_12-of-12 slds-medium-size_1-of-12 slds-large-size_2-of-12 slds-p-bottom_small">
+            </div>
+            <div class="slds-col slds-small-size_12-of-12 slds-medium-size_10-of-12 slds-large-size_8-of-12 slds-p-bottom_small">
+                <canvas id="doughnut-chart-products" width="280" height="230"></canvas>
+            </div>
+            <div class="slds-col slds-small-size_12-of-12 slds-medium-size_1-of-12 slds-large-size_2-of-12 slds-p-bottom_small">
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

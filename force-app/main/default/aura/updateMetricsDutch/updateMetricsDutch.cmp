@@ -1,0 +1,12 @@
+<aura:component controller="DCH_SalesAgreementController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="showSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="recordId" type="Id" />
+
+    <!--Init Component On Load-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--End-->
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" alternativeText="Loading" size="large" />
+    </aura:if>
+</aura:component>

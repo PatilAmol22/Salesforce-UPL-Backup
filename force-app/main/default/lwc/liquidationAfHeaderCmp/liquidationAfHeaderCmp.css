@@ -1,0 +1,12 @@
+.panel-header{
+    background-color: rgb(28 127 212);
+    font-family: calibri;
+    font-size: 17px;
+    padding: 5px;
+    border-radius: 0;
+}
+
+.headerMessage{
+    color: white;
+    padding-top: 9px;
+}

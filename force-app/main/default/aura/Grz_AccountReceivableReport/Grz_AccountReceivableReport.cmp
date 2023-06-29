@@ -1,0 +1,61 @@
+<!--********************************************************************************************
+* Name			    : Grz_AccountReceivableReport.cmp
+* Description	    : Aura component to display AR data as Pie Graph
+* Apex Controller	: Grz_AccountReceivableReportController 
+* LastModefied Date	: 28/07/2022 
+* Created By	    : Nikhil Verma (Grazitti)
+* **********************************************************************************************--><aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global" controller="Grz_AccountReceivableReportController">
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="nodatafound" type="Boolean" default="false" />
+    <aura:attribute name="isParentBr" type="Boolean" default="false" />
+    <aura:attribute name="distributorValuep" type="String" default="All" />
+    <aura:attribute name="customerCode" type="String" />
+    <aura:attribute name="sapUserId" type="String" />
+    <aura:attribute name="companyCode" type="String" />
+    <aura:attribute name="subGroupValue" type="String" default=""/>
+    <!--Updated Logic GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+    <aura:attribute name="isMainParent" type="Boolean" default="false" />
+    <aura:attribute name="subGroupOptionsBr" type="List" />
+
+    <aura:attribute name="distributorOptionsBr" type="List" />
+    <aura:attribute name="Message" type="String" />
+    <aura:attribute name="error" type="Boolean" default="true" />
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}"
+        afterScriptsLoaded="{!c.scriptsLoaded}" />
+    <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small">
+        <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small">
+            <div class="slds-col slds-size_12-of-12 filter-div">
+                <div class="textCSS componentNotoSansLight">Valor NF por Prazo de Pagamento</div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.loaded }">
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:set>
+        </aura:if>
+        <aura:if isTrue="{!v.isParentBr}">
+            <div class="parent-filter slds-p-left_small slds-p-right_small">
+                <lightning:combobox label="Cliente" value="{!v.distributorValuep}" placeholder="Cliente"
+                    options="{!v.distributorOptionsBr}" onchange="{!c.handleDistributor}" />
+            </div>
+        </aura:if>
+        <!--Updated on 04Aug22 as this filter is not required right now, Logic GRZ(Nikhil Verma) : APPS-1394-->
+        <!--<aura:if isTrue="{!v.isMainParent}">
+            <div class="parent-filter slds-p-left_small slds-p-right_small">
+                <lightning:combobox label="Sub-Grupo" value="{!v.subGroupValue}" placeholder="Sub-Grupo"
+                    options="{!v.subGroupOptionsBr}" onchange="{!c.handleSubGroup}" />
+            </div>
+        </aura:if>-->
+        <div>
+            <!--GRZ(Swaranjeet) : APPS-947 PO & Delivery Date :30-08-2022-->
+            <div class="qwe">
+                <canvas class="canCSS slds-align_absolute-center" id="ARpie-charts" width="300" height="300" />
+            </div>
+            <aura:if isTrue="{!v.nodatafound }">
+                <p class="Errors componentNotoSansBold">{!v.Message}</p>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

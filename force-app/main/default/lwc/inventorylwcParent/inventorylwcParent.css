@@ -1,0 +1,281 @@
+.abc{
+font-size:large;
+}
+.rowColorBlue{
+background-color:#59474D;
+
+}
+.iconClass{
+height:50px;
+width:50px;
+background-color: #e9af67;
+}
+.rowColorWhite{
+background-color:white;
+
+}
+.fontColorBlue{
+color:white;
+}
+.fontColorWhite{
+color:#59474D;
+}
+.slds-template_default{
+padding:0px !important;
+}
+.strong-text {
+font-weight: bold;
+}
+.slds-radio{
+display:inline-block ;
+}
+.lightning-radiogroup_radiogroup{
+color:#59474D;
+}
+.radioCustom{
+width: auto;
+height: auto;
+margin-right: 5px;
+position: relative;
+}
+
+.iconClass{
+height:50px;
+width:50px;
+}
+.headingClass{
+font: normal normal normal 16px/20px Salesforce Sans;
+}
+
+@media only screen and (max-width: 490px) {
+    .textFont{
+        display:block;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+.iconClass{
+    height:40px;
+    width:40px;
+}
+.headingClass{
+    font: normal normal normal 14px/18px Salesforce Sans;
+}
+.Ul_class {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+width:100%;
+}
+.salesOrgInput{
+    float:right;
+}
+
+.li-items{
+width:100%;
+border-radius: 0 !important;
+margin-left: 0 !important;
+margin-right: 0 !important;
+flex: 1;
+/* border: 0.01px solid lightgrey */
+}
+.style_div{
+display: table;
+}
+.lappyInput{
+    float:left;
+    }
+    .lappyCheck{
+    float:left;
+    }
+    .lappyRadio{
+    float:right;
+    margin-top: -5px;
+    }
+    .marginClass{
+        margin:5px;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .iconClass{
+        height:40px;
+        width:40px;
+    }
+    .headingClass{
+        font: normal normal normal 16px/20px Salesforce Sans;
+    }
+    .Ul_class {
+        width:100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    }
+    .salesOrgInput{
+        float:right;
+    }
+    
+    .li-items{
+    width:100%;
+    border-radius: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    flex: 1;
+    /* border: 0.01px solid lightgrey */
+    }
+    .style_div{
+    display: table;
+    }
+    .lappyInput{
+        float:left;
+        }
+        .lappyCheck{
+        float:left;
+        }
+        .lappyRadio{
+        float:right;
+        margin-top: -5px;
+        }
+        .marginClass{
+            margin:5px;
+        }
+}
+
+@media only screen and (min-width: 768px) {
+    .iconClass{
+        height:40px;
+        width:40px;
+    }
+.headingClass{
+    font: normal normal normal 16px/20px Salesforce Sans;
+}
+.Ul_class {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    }
+    .salesOrgInput{
+        float:none;
+    }
+    .li-items{
+        width:100%;
+        border-radius: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        flex: 1;
+        /* border: 0.01px solid lightgrey */
+        }
+        .style_div{
+        display: table;
+        }
+        .lappyInput{
+            float:left;
+            }
+            .lappyCheck{
+            float:left;
+            }
+            .lappyRadio{
+            float:none;
+            margin-top: -5px;
+            }
+            .marginClass{
+                margin:0px;
+            }
+}
+@media only screen and (min-width: 992px) {
+    .iconClass{
+        height:50px;
+        width:50px;
+    }
+    .headingClass{
+        font: normal normal normal 16px/20px Salesforce Sans;
+    }
+    .Ul_class{
+        display: flex;
+        width:100%;
+    
+        }
+        .salesOrgInput{
+            float:none;
+        }
+        .lappyInput{
+            float:right;
+            }
+            .lappyCheck{
+                width:100%;
+                text-align: right;
+            }
+            .divlappycheck{
+                
+            }
+            .lappyRadio{
+            float:right;
+            margin-top: -5px;
+            }
+            .style_div{
+            padding:10px;
+            height:100%;
+            
+            }
+                .li-items{
+                
+                    border-radius: 0 ;
+                    margin-left: 0 ;
+                    margin-right: 0 ;
+                    flex: 1;
+                    color:#59474D;
+                
+                    }
+                   
+                    .style_spane{
+                        padding:5px; 
+                    }
+                    .marginClass{
+                        margin:0px;
+                    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .iconClass{
+        height:50px;
+        width:50px;
+    }
+.headingClass{
+    font: normal normal normal 20px/24px Salesforce Sans;
+}
+.Ul_class{
+    display: flex;
+    width:100%;
+
+    }
+.salesOrgInput{
+    float:none;
+}
+.lappyInput{
+    float:right;
+    }
+    .lappyCheck{
+        width:100%;
+        text-align: center;
+    }
+    .lappyRadio{
+    float:right;
+    margin-top: 0px;
+    }
+    .style_div{
+    padding:10px;
+    height:100%;
+    
+    }
+        .li-items{
+        
+            border-radius: 0 ;
+            margin-left: 0 ;
+            margin-right: 0 ;
+            flex: 1;
+            color:#59474D;
+        
+            }
+           
+            .style_spane{
+                padding:5px; 
+            }
+}

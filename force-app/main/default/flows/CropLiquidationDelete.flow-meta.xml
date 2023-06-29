@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>apexSelection</name>
+            <value>
+                <stringValue>Delete Crop Liquidation Records</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Delete Crop Liquidations</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>CropLiquidationDeleteInvocable</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>unlockedProductLiquidations</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue>Liquidation2__c</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>unlockedProductLiquidations</name>
+            <value>
+                <elementReference>myVariable_current</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>50.0</apiVersion>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Product Liquidation Unlocked</label>
+        </rules>
+    </decisions>
+    <description>This PB will run when Liquidation records is deleted for any territory (AF and SWAL), this will call an invokable method CropLiquidationDeleteInvocable - which will batch delete the Crop Liquidation records</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>OR(
+
+AND(
+ISCHANGED([Liquidation2__c].submitted_Trade_SWAL__c )  = true,
+PRIORVALUE([Liquidation2__c].submitted_Trade_SWAL__c) = true,
+[Liquidation2__c].Sales_Org_Code__c = &apos;1210&apos;),
+
+AND(
+ISCHANGED([Liquidation2__c].submitted_Trade__c )  = true,
+PRIORVALUE([Liquidation2__c].submitted_Trade__c) = true,
+[Liquidation2__c].Sales_Org_Code__c = &apos;1000&apos;)
+
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+
+AND(
+ISCHANGED({!myVariable_current.submitted_Trade_SWAL__c} )  = true,
+PRIORVALUE({!myVariable_current.submitted_Trade_SWAL__c}) = true,
+{!myVariable_current.Sales_Org_Code__c} = &apos;1210&apos;),
+
+AND(
+ISCHANGED({!myVariable_current.submitted_trade__c} )  = true,
+PRIORVALUE({!myVariable_current.submitted_trade__c}) = true,
+{!myVariable_current.Sales_Org_Code__c} = &apos;1000&apos;)
+
+)</expression>
+    </formulas>
+    <interviewLabel>CropLiquidationDelete-4_InterviewLabel</interviewLabel>
+    <label>CropLiquidationDelete</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Liquidation2__c</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <startElementReference>myDecision</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Liquidation2__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Liquidation2__c</objectType>
+    </variables>
+</Flow>

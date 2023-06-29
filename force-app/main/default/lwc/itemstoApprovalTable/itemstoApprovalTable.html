@@ -1,0 +1,140 @@
+<template>
+
+    <div  if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+
+    <div if:true={showtable}>
+        <div style="background:white; padding:10px;">
+<span style="font-weight:bold; font-size:16px;">{Items_To_Approve}</span>
+        
+        <div if:true={isLoaded} class="slds-is-relative">
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+        <template if:true={errorApex}>
+            <div class="slds-m-around_medium slds-text-color_error">
+                {errorApex} <br>
+            </div>
+        </template>
+        <template if:true={errorJavascript}>
+            <div class="slds-m-around_medium slds-text-color_error">
+                {errorJavascript} <br>
+            </div>
+        </template>
+        <template if:true={ishomepage}>
+        <template for:each={mainData} for:item="acc">
+      
+        <div class="slds-grid slds-wrap" key={c} style="padding:10px;">
+            <div class="slds-col slds-size_10-of-12">
+                <div class="slds-grid slds-wrap" key={c} >
+            <div class="slds-col slds-size_10-of-12">
+              <span><a href={acc.processinstanceURL}>{acc.__Name}</a></span>
+            </div>
+            <div class="slds-col slds-size_6-of-12" style="font-size:12px;">
+              <span>{acc.objName} <template  if:true={acc.Approval_Reason__c}> - {acc.Approval_Reason__c}</template> </span>
+            </div>
+            <div class="slds-col slds-size_1-of-12" style="font-size:12px;"></div>
+            
+            <div class="slds-col slds-size_5-of-12" style="font-size:12px;">
+                <span>{Submitted_By} {acc.__Submitter}</span>
+              </div>
+</div>
+
+</div> 
+<div class="slds-col slds-size_2-of-12">
+    <div class="slds-p-around_small lgc-bg">
+        <lightning-button-menu alternative-text="Show menu" class="btnclass"  data-idd={acc.WorkItemId} variant="border-filled" onselect={handleOnselect}>
+            <lightning-menu-item value={approvelabel} label={approvelabel}></lightning-menu-item>
+            <lightning-menu-item value={rejectlabel} label={rejectlabel}></lightning-menu-item>
+            <lightning-menu-item value={reassignlabel}  label={reassignlabel}></lightning-menu-item>
+        </lightning-button-menu>
+    </div>
+  </div>
+
+
+          </div>
+        </template>
+        <div>
+ <center>
+    <lightning-button variant="base" label={viewAll} title="Looks like a link" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+</center>
+            
+        </div>
+    </template>
+    
+        <div class='slds-p-top_small'>
+            <lightning-datatable
+                key-field="id"
+                data={dataList}
+                show-row-number-column
+                row-number-offset={rowOffset}
+                hide-checkbox-column
+                columns={columns}
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+           
+        </div>
+      
+        
+           </div>
+        </div>
+    <div if:false={showtable} style="background:white; padding:10px;">
+        <div style="font-weight:bold; font-size:16px;">
+            Items_To_Approve
+
+        </div>
+        <span slot="modalHeader">
+           {noApproval}
+        </span>
+    </div>
+   <!-- modal start -->      
+   <template if:true={isShowModal}>
+<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+<div class="slds-modal__container">
+<!-- modal header start -->
+  <header class="slds-modal__header">
+     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+        <lightning-icon icon-name="utility:close"
+           alternative-text="close"
+           variant="inverse"
+           size="small" ></lightning-icon>
+        <span class="slds-assistive-text">Close</span>
+     </button>
+     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{currentAction} Action</h2>
+  </header>
+
+  <!-- modal body start -->
+  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+    <span slot="modalBody">
+
+        <template if:true={actionReassignValue}>
+            <div class="slds-p-bottom--x-small">
+               <c-lookup-container-approval
+                       onselectionchange={handleSelectionChange}
+               ></c-lookup-container-approval> 
+             </div>
+        </template>
+            <div>
+                <lightning-textarea name="comment" label="Comments" value={commentVal}
+                                    onchange={handleComment}></lightning-textarea>
+             </div>
+        </span>   
+  </div>
+
+  <!-- modal footer start-->
+  <footer class="slds-modal__footer">
+    <button class="slds-button slds-button_neutral" onclick={actionClick}>{currentAction} </button>
+     <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+  </footer>
+
+</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+<!-- modal end -->
+
+
+
+</template>

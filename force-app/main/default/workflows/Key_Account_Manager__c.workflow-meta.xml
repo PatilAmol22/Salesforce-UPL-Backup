@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Unique_Employee</fullName>
+        <description>used to update UGDN number of Employee</description>
+        <field>UniqueEmployee__c</field>
+        <formula>Brazil_User__r.UGDN_Number__c</formula>
+        <name>Update Unique Employee</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Brazil Unique Employee for Key Account</fullName>
+        <actions>
+            <name>Update_Unique_Employee</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Use to update Unique Employee field to avoid duplicate entry of employee</description>
+        <formula>TRUE</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

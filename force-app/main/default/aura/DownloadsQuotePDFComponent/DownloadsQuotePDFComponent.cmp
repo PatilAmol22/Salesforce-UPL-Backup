@@ -1,0 +1,17 @@
+<!--This component is used in calling from Quick Action button Download PDF when Status is Approved -->
+<!--Component Name :- DownloadsQuotePDFComponent
+Created On: 03.02.2020
+* Author: Vishal pawar (vishal.pawar@skinternational.com)
+* Description:calling from Action button (Custom Button ) of Quote for downloading PDF
+-->
+
+<aura:component controller="DownLoadPDFQuoteController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="recordId" type="string" description="The  id of the Quote or Quote light" default="{!v.recordId}" />
+     <aura:attribute name="isDownloaded" type="Boolean" default ="false"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+
+
+</aura:component>

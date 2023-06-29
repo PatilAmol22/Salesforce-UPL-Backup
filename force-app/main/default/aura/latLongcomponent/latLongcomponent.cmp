@@ -1,0 +1,22 @@
+<aura:component  implements="force:appHostable,lightning:availableForFlowScreens,force:lightningQuickAction,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="surveyrecordId" type="String" access="global" />
+    <aura:attribute name="lat" type="String" access="global" />
+    <aura:attribute name="long" type="String" access="global" />
+    <aura:attribute name="survey" type="Object" access="global"/>
+    <aura:attribute name="surveyFields" type="Object" access="global"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    
+  <!--  <force:recordData aura:id="forceRecord"
+    recordId="{!v.surveyrecordId}" 
+    layoutType="FULL"
+    targetRecord="{!v.survey}"
+    targetFields="{!v.surveyFields}"
+    targetError="{!v.error}"
+    mode="EDIT"
+    recordUpdated="{!c.recordUpdated}" /> -->
+    <!--<P>lat :{!v.lat}</P>
+    <P>long :{!v.long}</P> -->
+   <!-- <lightning:flow aura:id="flowData" /> -->
+
+   
+</aura:component>

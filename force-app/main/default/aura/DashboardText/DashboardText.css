@@ -1,0 +1,60 @@
+.THIS {
+    font-family:myfontregular; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+}
+@font-face {
+    font-family:myfontregular; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+    src: url(/resource/myfontregular);
+}
+@font-face {
+    font-family:myfontlight; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+    src: url(/resource/myfontlight);
+}
+.THIS label {
+    font-family:myfontregular;
+    font-weight:normal;
+    font-size:12px; color:#000;
+}
+.THIS .titleregular {
+    font-family:myfontlight;
+    font-weight:normal;
+    font-size:36px; color:#000;
+}
+.THIS .slds-box {
+    font-family:myfontregular;
+    font-weight:normal!important;
+    font-size:12px;
+    color:#000;
+}
+.THIS .slds-button_success, .THIS .slds-button--success {
+    background:#fff; text-transform:uppercase; 
+    padding-left:25px; padding-right:25px;
+    color:#ff7701; border:1px solid #ff7701; 
+    border-radius:0;
+}
+.THIS .slds-button_success:hover, .THIS .slds-button--success:hover {
+    background:#fff; text-transform:uppercase;
+    color:#ff7701; border-radius:0;
+}
+.THIS.hideLabel label{
+    display:none;
+    font-weight:normal;
+    font-size:12px;
+}
+.THIS .slds-item a {
+    font-family:myfontlight;
+    font-weight:normal;
+    font-size:16px; color:#000;
+}
+.THIS .slds-item a:hover {
+    font-family:myfontlight;
+    font-weight:normal;
+    font-size:16px; color:#ff7701;
+}
+.THIS th .slds-truncate {color:#ff7701; font-weight:normal;}
+.THIS td .slds-truncate {font-family:myfontlight; color:#000; font-weight:normal;}

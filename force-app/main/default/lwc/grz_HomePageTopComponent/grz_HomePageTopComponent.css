@@ -1,0 +1,17 @@
+.maindivcls{
+    position: relative;
+    margin: -35px -12px 0px;
+}
+
+.tilepositioncls{
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+    transform: translate(0%, 50%);
+}
+.terms-desc{
+    text-align: center;
+    padding: 10px 0;
+}
+@media only screen and (max-width: 768px) {
+}

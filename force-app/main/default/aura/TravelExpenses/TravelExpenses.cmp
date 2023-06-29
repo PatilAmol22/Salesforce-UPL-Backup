@@ -1,0 +1,1066 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction,force:hasRecordId" 
+                controller="TravelExpensesController"
+                access="global">
+    
+    
+    <!--Init Component On Load-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--End-->
+    
+    <!--Init Component On Load-->
+    <aura:attribute name="selectedMTE" type="String" /><!--UPL-2-I386: Modified by:Ankita Saxena Changes in Travel request  for Indonesia-->
+    <aura:attribute name="delete_header" type="String" default="Travel Expense Report"/> 
+    <aura:attribute name="month_header" type="String" default="Travel Expense Report"/> 
+    <aura:attribute name="day_header" type="String" default="Travel Expense Report"/>
+    <aura:attribute name="todayDate" type="Date" access="public" />
+    <aura:attribute name="month" type="Boolean" default="true"/>
+    <aura:attribute name="TravelExpensesList" type="Expense_Item__c[]" access="public" />
+    <aura:attribute name="TravelExpenseMonthList" type="Monthly_Travel_Expense__c[]" />
+    <aura:attribute name="TravelExpenseDayList" type="Expense_Item__c[]" />
+    <aura:attribute name="TravelExpenseDayListEdit" type="Expense_Item__c[]" />
+    <aura:attribute name="MonthList" type="String[]"  />
+    <aura:attribute name="search" type="String"/>  
+    <aura:attribute name="mtd" type="String"/> 
+    <aura:attribute name="yr" type="String"/>
+    <aura:attribute name="last_SearchText" type="String" access="private" />
+    <aura:attribute name="recordId" type="Id" />
+    
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>  
+    <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/>   
+    <aura:attribute name="selectedTabsoft" type="string" default="Name" description="Use for show/hide arraow sign on header based on conditions"/>  
+    <aura:attribute name="page" default="1" type="integer" access="public" description="using for store page Number"/>  
+    <aura:attribute name="pages" default="0" type="integer" access="public" description="using for store All Pages page Number"/>  
+    <aura:attribute name="total" default="0" type="integer" access="public" description="total records count store "/> 
+    
+    <aura:attribute name="total_amount" type="Decimal" default="0.0"/>
+    
+    <!--End -->
+    <!-- Enter values from form --> 
+    <aura:attribute name="travelexpense" type="Expense_Item__c"
+                    default="{'sobjectType': 'Expense_Item__c',
+                             'Date__c': '',
+                             'Item__c': '',
+                             'Amount__c': '',
+                             'Purpose__c': '',
+                             'Location__c':'',
+                             'Remarks__c':''}"/>
+    
+    <aura:attribute name="travelexpense_new" type="Expense_Item__c"
+                    default="{'sobjectType': 'Expense_Item__c',
+                             'Date__c': '',
+                             'Item__c': '',
+                             'Amount__c': '',
+                             'Purpose__c': '',
+                             'Location__c':'',
+                             'Remarks__c':''}"/>
+    
+    <!-- Int type number -->    
+    <aura:attribute name="amount" type="integer" default="0"/>
+    <aura:attribute name="totAmount" type="Decimal" default="0.0"/>
+    <!-- End -->
+    
+    <!-- Int type number -->    
+    <aura:attribute name="rowIndex" type="String"/>
+    
+    <!-- End -->
+    
+    <!--Removing Item from iteraion list -->
+    <aura:handler name="RemoveItemEvent" event="c:RemoveItemEvent" action="{!c.removeDeletedRow}"/> 
+    
+    <!-- End -->
+    
+    <aura:attribute name="allocationList" type="List" access="public"/>
+    <aura:attribute name="itemList" type="List" access="public"/>
+    <aura:attribute name="liquidationList" type="List" access="public"/>
+    
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="isOpenMonth" type="boolean" default="false"/>
+    <aura:attribute name="isOpenError" type="boolean" default="false"/>
+    <aura:attribute name="isEditOpenMonth" type="boolean" default="false"/>
+    <aura:attribute name="isExistingDayOpen" type="boolean" default="false"/>
+    <aura:attribute name="isOpenDelete" type="boolean" default="false"/>
+    <aura:attribute name="isOpenDeleteDay" type="boolean" default="false"/>
+    <aura:attribute name="isNSM" type="boolean" default="true"/>
+    <aura:attribute name="isNMM" type="boolean" default="true"/>
+    <aura:attribute name="isRM" type="boolean" default="true"/>
+    <aura:attribute name="isAddNEw" type="boolean" default="false"/>
+    
+    <!--Modal Popup for Create New -->
+    <div class="slds-m-around--xx-large">    
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+        <aura:if isTrue="{!v.isOpen}">
+            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-fade-in-open" style="margin-top:120px;"> <!--  style="margin-top:120px;"-->
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">
+                            New Activity
+                        </h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        
+                        <div class="slds">
+                            <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0 0 10px 0; border:0px solid #cce4f8;">
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        
+                                        <!-- For todays date -->
+                                        <!--<div class="slds-form-element__control">
+                                            <ui:inputDate aura:id="date" 
+                                                          label="Select a date"
+                                                          displayDatePicker="true" 
+                                                          value="{!v.todayDate}"/>
+                                        </div>-->
+                                        <div class="slds-form-element__control">
+                                            
+                                            <ui:inputDate class="slds-input" 
+                                                          aura:id="dateId" 
+                                                          format="dd/MM/yyyy" 
+                                                          label="Date"
+                                                          displayDatePicker="true" 
+                                                          value="{!v.travelexpense.Date__c}" 
+                                                          required="true" 
+                                                          disabled="false" />             
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <ui:inputSelect class="slds-input" 
+                                                            label="Items" 
+                                                            aura:id="items" 
+                                                            value="{!v.travelexpense.Item__c}" 
+                                                            change="{!c.onPicklistChange}"
+                                                            required="true" 
+                                                            disabled="false"
+                                                            />     
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning:input type="text" label="No Of Farmers Invited" name="date" required="true"/>-->
+                                            <ui:inputNumber class="slds-input" 
+                                                            aura:id="amount" 
+                                                            label="Amount" 
+                                                            format="##.00"
+                                                            blur="{!c.onChange}"
+                                                            value="{!v.travelexpense.Amount__c}"
+                                                            required="true" />
+                                            <!--input type="number" aura:id="amount"
+                                                   name="Amount" 
+                                                   label="Amount"
+                                                   min="0"
+                                                   class="slds-input"
+                                                   required="true"
+                                                   labelClass="slds-form-element__label"
+                                                   value="{!v.travelexpense.Amount__c}"/>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                                            <ui:inputText class="slds-input" 
+                                                          aura:id="purpose" 
+                                                          label="Purpose" 
+                                                          value="{!v.travelexpense.Purpose__c}" 
+                                                          required="true" />         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                                            <ui:inputText class="slds-input" 
+                                                          aura:id="location" 
+                                                          label="Location" 
+                                                          value="{!v.travelexpense.Location__c}" 
+                                                          
+                                                          required="true" />         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                                            <ui:inputText class="slds-input" 
+                                                          aura:id="remark" 
+                                                          label="Remark" 
+                                                          value="{!v.travelexpense.Remarks__c}" 
+                                                          
+                                                          required="true" />         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display:none;">
+                                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="margin-top:12px;">
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                                                <ui:inputText class="slds-input" 
+                                                              aura:id="monthId" 
+                                                              value="{!v.travelexpense.Month__c}"  />         
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-horizontal--small slds-size--1-of-1" style="margin-top:30px;">
+                                    
+                                    <div class="slds-form-element" >
+                                        <div style="float:right;">
+                                            
+                                            
+                                            <div class="slds-form-element__control"  >
+                                                
+                                                <button class="slds-button slds-button--brand" onclick="{!c.onAdd}">
+                                                    Add Items
+                                                </button>
+                                            </div >
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>           
+                        
+                        <div style="clear:both"></div>              
+                        
+                        <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:10px; background:#769ed9; color:#fff; font-weight:bold;">
+                            <div style="float:left; display:inline; margin-top:5px; padding-right:20px; font-weight:bold;">
+                                New Travel Expense</div>
+                            <div style="float:right;">
+                                
+                            </div> 
+                            <div style="clear:both;"></div>
+                        </h3>               
+                        
+                        
+                        <div class="slds-scrollable_x" width="100%" style="margin-bottom:0;">
+                            <table width="100%" class="slds-table slds-table--bordered">
+                                <thead>
+                                    <tr class="slds-text-heading--label">
+                                        
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>Date</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>Items</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>Amount</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>Purpose</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>Location</b></div>
+                                        </th>   
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>Remark</b></div>
+                                        </th>
+                                        <th class="slds-cell-shrink"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Iteration of expense list item -->   
+                                    <!--    <p class=".slds-theme_success"> -->
+                                    <aura:iteration items="{!v.TravelExpensesList}" var="TravelExpensesList" indexVar="index" > 
+                                        <c:TravelExpenseItem TravelExpenses="{!TravelExpensesList}" rowIndex="{!index}"></c:TravelExpenseItem>
+                                    </aura:iteration> 
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#fff;"> 
+                            <div class="slds-box slds-box_small slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px; margin-right:0px;">
+                                TOTAL : <ui:outputNumber aura:id="totalAmount"
+                                                         value="{!v.totAmount}" 
+                                                         format="#,###,##0.00"/>
+                                
+                            </div>
+                        </div>
+                        
+                        <div style="clear:both;"></div>
+                        <div class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#fff;"> 
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}" >Cancel</button>
+                        
+                        <button class="slds-button slds-button--brand" onclick="{!c.saveAndClose}">Save and Close</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    </div>
+    
+    <!--Modal Popup for opening existing day record (Existing Travel Expense Record) -->
+    <div class="slds-m-around--xx-large">    
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+        <aura:if isTrue="{!v.isExistingDayOpen}">
+            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-fade-in-open" style="margin-top:120px;"> <!--  style="margin-top:120px;"-->
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">{!v.day_header}
+                        </h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        
+                        <div class="slds">
+                            <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0 0 10px 0; border:0px solid #cce4f8;">
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            
+                                            <ui:inputDate class="slds-input" 
+                                                          aura:id="dateId" 
+                                                          format="dd/MM/yyyy" 
+                                                          label="Date"
+                                                          displayDatePicker="true" 
+                                                          value="{!v.travelexpense.Date__c}" 
+                                                          required="true" 
+                                                          disabled="true" />             
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <ui:inputSelect class="slds-input" 
+                                                            label="Items" 
+                                                            aura:id="items" 
+                                                            value="{!v.travelexpense.Item__c}" 
+                                                            change="{!c.onPicklistChange}"
+                                                            required="true" 
+                                                            disabled="false"
+                                                            />     
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning:input type="text" label="No Of Farmers Invited" name="date" required="true"/>-->
+                                            <ui:inputNumber class="slds-input" 
+                                                            aura:id="amount" 
+                                                            label="Amount" 
+                                                            format="##.00"
+                                                            blur="{!c.onChange}"
+                                                            value="{!v.travelexpense.Amount__c}"
+                                                            required="true"/>            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                                            <ui:inputText class="slds-input" 
+                                                          aura:id="purpose" 
+                                                          label="Purpose" 
+                                                          value="{!v.travelexpense.Purpose__c}" 
+                                                          required="true" />         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                                            <ui:inputText class="slds-input" 
+                                                          aura:id="location" 
+                                                          label="Location" 
+                                                          value="{!v.travelexpense.Location__c}" 
+                                                          required="true" />         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                                            <ui:inputText class="slds-input" 
+                                                          aura:id="remark" 
+                                                          label="Remark" 
+                                                          value="{!v.travelexpense.Remarks__c}" 
+                                                          required="true" />         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display:none;">
+                                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="margin-top:12px;">
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                                                <ui:inputText class="slds-input" 
+                                                              aura:id="monthId" 
+                                                              value="{!v.travelexpense.Month__c}"  />         
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>           
+                        
+                        
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}" >Cancel</button>
+                        
+                        <button class="slds-button slds-button--brand" onclick="{!c.saveAndCloseExistDay}">Save and Close</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    </div>
+    
+    
+    <!--Modal Popup for delet Month Record -->
+    <div class="slds-m-around--xx-large">    
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpenMonth boolean attribute] -->   
+        <aura:if isTrue="{!v.isOpenDelete}">
+            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-fade-in-open" style="margin-top:80px;margin-left:350px;margin-right:350px;"> <!--  style="margin-top:120px;"-->
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeDeleteModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">
+                            {!v.delete_header}
+                        </h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <!--<h2 class="slds-align_absolute-center"><strong><span id="DeleteActivityId">#{!v.recordNo}</span></strong></h2>-->
+                        <h4 class="slds-align_absolute-center">Are you sure you want to delete this month record?</h4>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeDeleteModel}" >Cancel</button>
+                        <button class="slds-button slds-button--brand" onclick="{!c.clickDelete}" >Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    </div>
+    
+    <!--Modal Popup for delete Day Record -->
+    <div class="slds-m-around--xx-large">    
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpenMonth boolean attribute] -->   
+        <aura:if isTrue="{!v.isOpenDeleteDay}">
+            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-fade-in-open" style="margin-top:80px;margin-left:350px;margin-right:350px;"> <!--  style="margin-top:120px;"-->
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeDeleteDayModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">
+                            {!v.delete_header}
+                        </h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <!--<h2 class="slds-align_absolute-center"><strong><span id="DeleteActivityId">#{!v.recordNo}</span></strong></h2>-->
+                        <h4 class="slds-align_absolute-center">Are you sure you want to delete this month record?</h4>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeDeleteDayModel}" >Cancel</button>
+                        <button class="slds-button slds-button--brand" onclick="{!c.clickDeleteDay}" >Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    </div>    
+    
+    <!--Modal Popup for Error on inserting expens item -->
+    <div class="slds-m-around--xx-large">    
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpenMonth boolean attribute] -->   
+        <aura:if isTrue="{!v.isOpenError}">
+            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-fade-in-open" style="margin-top:80px;margin-left:350px;margin-right:350px;"> <!--  style="margin-top:120px;"-->
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.clickError}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">
+                            Error
+                        </h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <!--<h2 class="slds-align_absolute-center"><strong><span id="DeleteActivityId">#{!v.recordNo}</span></strong></h2>-->
+                        <h4 class="slds-align_absolute-center">Travel expenses for this is already submitted for approval. Please RECALL approval process to delete the records.</h4>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        
+                        <button class="slds-button slds-button--brand" onclick="{!c.clickError}" >Okay</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    </div>    
+    
+    
+    <!--Modal Popup for View Monthly Expense Travel -->
+    <div class="slds-m-around--xx-large">    
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpenMonth boolean attribute] -->   
+        <aura:if isTrue="{!v.isOpenMonth}">
+            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-modal--large slds-fade-in-open"  style="margin-top:120px;"> <!--  style="margin-top:120px;"-->
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeMTEModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">
+                            {!v.month_header}
+                        </h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        
+                       	<div class="slds-modal__content slds-p-around--medium" >
+                            <iframe src="{! '/apex/TravelExpensesView?id='+ v.recordId}"  width="100%" height="250px" frameBorder="0" />
+                            
+                        </div>
+                      
+                    </div>
+                    <div class="slds-modal__footer">
+                        <div class="slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px;margin-top:0px; ">
+                            <button class="slds-button slds-button--neutral" onclick="{!c.closeMTEModel}">Close</button>
+                        </div>
+                        <!--UPL-2-I386: Modified by:Ankita Saxena Changes in Travel request  for Indonesia-->
+                        <div class="slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px;margin-top:0px; ">
+                            <button class="slds-button slds-button--neutral" onclick="{!c.viewSummary}">Summary Report</button>
+                        </div>
+						<!--End:UPL-2-I386: Modified by:Ankita Saxena Changes in Travel request  for Indonesia-->
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    </div>
+    
+    <!--Modal Popup for Edit Day Record -->
+    <div class="slds-m-around--xx-large">    
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpenMonth boolean attribute] -->   
+        <aura:if isTrue="{!v.isEditOpenMonth}">
+            
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div role="dialog" aura:id="Modalbox" aria-labelledby="header99" class="slds-modal slds-fade-in-open" style="margin-top:120px;"> <!--  style="margin-top:120px;"-->
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeEditMTEModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium" style="font-weight:bold;">
+                            {!v.month_header}
+                        </h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        
+                        
+                        
+                        <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:10px; background:#769ed9; color:#fff; font-weight:bold;">
+                            <div style="float:left; display:inline; margin-top:5px; padding-right:20px; font-weight:bold;">
+                                EXPENSES SUMMARY LIST</div>
+                            <div style="clear:both;"></div>
+                        </h3>               
+                        
+                        
+                        <div class="slds-scrollable_x" width="100%" style="margin-bottom:0;">
+                            <table width="100%" class="slds-table slds-table--bordered">
+                                <thead>
+                                    <tr class="slds-text-heading--label">                                        
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>BILL NO</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>DATE</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>DESCRIPTION</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>PURPOSE</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>LOCATION</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>REMARKS</b></div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>AMOUNT</b></div>
+                                        </th>   
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"></div>
+                                        </th>
+                                        
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"><b>ACTION</b></div>
+                                        </th>
+                                        <th class="slds-cell-shrink"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.TravelExpenseDayListEdit}" var="TravelExpenseDayListEdit" indexVar="index">  
+                                        <tr class="slds-hint-parent">  
+                                            
+                                            <td class="slds-truncate" data-label="BILL NO">
+                                                <ui:outputText value="{!TravelExpenseDayListEdit.Name}"/>
+                                            </td>
+                                            
+                                            <td class="slds-truncate" data-label="DATE">
+                                                <ui:outputText value="{!TravelExpenseDayListEdit.Date__c}"/>
+                                            </td>  
+                                            <td class="slds-truncate" data-label="DESCRIPTION" >
+                                                <ui:outputText value="{!TravelExpenseDayListEdit.Item__c}"/>
+                                            </td>
+                                            
+                                            <td class="slds-truncate" data-label="PURPOSE">
+                                                <ui:outputText value="{!TravelExpenseDayListEdit.Purpose__c}"/>
+                                            </td> 
+                                            <td class="slds-truncate" data-label="LOCATION">
+                                                <ui:outputText value="{!TravelExpenseDayListEdit.Location__c}"/>
+                                            </td> 
+                                            <td class="slds-truncate" data-label="REMARKS">
+                                                <ui:outputText value="{!TravelExpenseDayListEdit.Remarks__c}"/>
+                                                <!--<ui:outputText value="{!TravelExpenseDayListEdit.Comment__c}"/>-->
+                                            </td> 
+                                            <td class="slds-truncate" data-label="AMOUNT">
+                                                <ui:outputCurrency value="{!TravelExpenseDayListEdit.Amount__c}"/>
+                                            </td> 
+                                            
+                                            <td class="slds-truncate" data-label="">
+                                                <!-- value="{!TravelExpenseDayListEdit.Id}"-->
+                                                <lightning:buttonIcon value="{!TravelExpenseDayListEdit.Id}"
+                                                                      iconName="utility:edit" 
+                                                                      variant="bare"
+                                                                      size="large"
+                                                                      alternativeText="Edit" 
+                                                                      onclick="{!c.editPerMTERecord}"
+                                                                      name="{!TravelExpenseDayListEdit.Name}"/>
+                                                <!--onclick="{!c.editMTERecord}"-->
+                                                <!--name="{!TravelExpenseMonthList.Name}"-->
+                                            </td>
+                                            <td class="slds-truncate" data-label="">
+                                                <lightning:buttonIcon value="{!TravelExpenseDayListEdit.Id}"
+                                                                      iconName="utility:delete" 
+                                                                      size="large"
+                                                                      variant="bare"
+                                                                      alternativeText="Delete" 
+                                                                      onclick="{!c.openDeleteDayModel}" 
+                                                                      name="{!TravelExpenseDayListEdit.Name}"/>
+                                                <!--onclick="{!c.openDeleteModal}"
+name="{!TravelExpenseMonthList.Name}"-->
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>                          
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#fff;"> 
+                            <div class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#fff;"> 
+                                <div class="slds-box slds-box_small slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px; margin-top:10px; margin-right:0px;">
+                                    TOTAL : <ui:outputCurrency value="{!v.total_amount}"/>  
+                                </div>
+                            </div>
+                            <div class="slds-section-title--divider slds-float_right slds-p-horizontal--small slds-size--1-of-1" style="background:#fff;"> 
+                                <div class="slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px;margin-top:0px; ">
+                                    <button class="slds-button slds-button--neutral" onclick="{!c.closeEditMTEModel}" >Close</button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    </div>
+    
+    
+    
+    <div class="slds-page-header" style="margin-top:-40px;">
+        <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <lightning:icon iconName="standard:orders" size="large"/>
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-heading--label"></p>
+                        <div class="slds-grid">
+                            <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle" style="margin-top:10px;">Travel Expenses</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds" style="background:#fff; padding:0; margin:0;">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3" style="margin-bottom:10px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:input type="text" 
+                                         label=""
+                                         name=""
+                                         value="{!v.search}" 
+                                         onchange="{!c.search}"
+                                         placeholder="Enter space after text to search" />
+                        <lightning:helptext content="Search Month and Total only" iconName="utility:info" class="popover"/>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3" style="margin-bottom:10px;">  
+                <div class="slds-form-element" style="margin-top:18px;">
+                    <div class="slds-form-element__control">
+                        <ui:inputSelect aura:id="mtdOptions"
+                                        label=""
+                                        class="slds-input"
+                                        change="{!c.onSelectChange}"
+                                        value="{v.mtd}"/>
+                    </div>
+                </div>
+            </div>  
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3" style="margin-bottom:10px;">  
+                <div class="slds-form-element" style="margin-top:18px;">
+                    <div class="slds-form-element__control">
+                        <ui:inputSelect aura:id="yrOptions"
+                                        label=""
+                                        class="slds-input"
+                                        change="{!c.onSelectYearChange}"
+                                        value="{v.yr}"/>
+                    </div>
+                </div>
+            </div> 
+        </div>    
+        <!-- Pagination -->
+        
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-bottom:10px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control" style="width:20%; margin-top:10px;">
+                        <ui:inputSelect aura:id="recordSize"
+                                        label="" 
+                                        class="slds-input"
+                                        change="{!c.onSelectChange}">
+                            <ui:inputSelectOption text="10" label="10" value="true"/>
+                            <ui:inputSelectOption text="25" label="25"/>
+                            <ui:inputSelectOption text="50" label="50"/>
+                            <ui:inputSelectOption text="100" label="100"/>
+                        </ui:inputSelect>      
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:18px;">
+                    <div class="slds-form-element__control">
+                        <!--<div class="slds-align_absolute-center">{!v.start} - {!v.end} of {!v.total}</div>-->
+                        <div class="slds-align_absolute-center">{!v.page} of {!v.pages}</div>
+                    </div>
+                </div>
+            </div> 
+            
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:10px;">
+                    <div class="slds-form-element__control">
+                        <div class="slds-text-align--right">
+                            <!--<a href="" class="paddright">First</a> <a href="" class="paddright">Previous</a> <a href="" class="paddright">Next</a> <a href="">Last</a>-->
+                            <lightning:button disabled="{!v.page == 1}" onclick="{!c.gotoFirstPage}" class="slds-button slds-button--neutral" label="FIRST"/>  
+                            <lightning:button disabled="{!v.page == 1}" onclick="{!c.previousPage}" class="slds-button slds-button--neutral" label="PREVIOUS"/>  
+                            <lightning:button disabled="{!v.page == v.pages}" aura:id="nextbtn" class="slds-button slds-button--neutral" onclick="{!c.nextPage}" label="NEXT"/>  
+                            <lightning:button disabled="{!v.page == v.pages}" onclick="{!c.gotoLastPage}" class="slds-button slds-button--neutral" label="LAST"/>          
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+        </div>
+        
+        <!--Pagination -->
+      
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:0px; background:#769ed9; color:#fff; font-weight:bold;">
+                <div style="float:left; display:inline; margin-top:5px; padding-right:20px; font-weight:bold;">Travel Expenses Report</div>
+                <div style="float:right;">
+                    <aura:if isTrue="{!v.isAddNEw}">
+                        <button class="slds-button slds-button--icon-x-small" title= "Create New" onclick="{!c.openModel}">
+                            <lightning:icon class="icn1" iconName="utility:add" size="small" alternativeText="Create New"/>
+                        </button> 
+                    </aura:if>
+                </div>
+                <div style="clear:both"></div>
+            </h3>
+            <div class="slds-scrollable--x" style="margin-bottom:0; border-bottom:0px solid #cce4f8; width: 100%; padding: 0px 0px 0px 5px">
+                <table class="slds-table slds-table--bordered">
+                    <thead>
+                        <tr class="slds-text-heading--label">   
+                            <!--UPL-2-I386: Modified by:Ankita Saxena Changes in Travel request  for Indonesia-->
+                            <th class="slds-is-sortable slds-text-title--caps" scope="col" onclick="{!c.sortMonth}">  
+                                <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">  
+                                    <span class="slds-assistive-text">Sort</span>  
+                                    <span class="slds-truncate" title="Month"><b>Month</b></span>   
+                                    <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'Month') }">   
+                                        <div class="slds-icon_container">  
+                                            <lightning:icon iconName="utility:arrowdown" size="xx-small" alternativeText="sort arraw down"/>  
+                                        </div>  
+                                    </aura:if>   
+                                    <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'Month') }">   
+                                        <div class="slds-icon_container">  
+                                            <lightning:icon iconName="utility:arrowup" size="xx-small" alternativeText="sort arraw up"/>  
+                                        </div>  
+                                    </aura:if>              
+                                </a>  
+                            </th>
+ 
+                            <th class="slds-is-sortable slds-text-title--caps" scope="col" onclick="{!c.sortCreatedBy}">  
+                                <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">  
+                                    <span class="slds-assistive-text">Sort</span>  
+                                    <span class="slds-truncate" title="Created By"><b>Created By</b></span>   
+                                    <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'CreatedBy') }">   
+                                        <div class="slds-icon_container">  
+                                            <lightning:icon iconName="utility:arrowdown" size="xx-small" alternativeText="sort arraw down"/>  
+                                        </div>  
+                                    </aura:if>   
+                                    <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'CreatedBy') }">   
+                                        <div class="slds-icon_container">  
+                                            <lightning:icon iconName="utility:arrowup" size="xx-small" alternativeText="sort arraw up"/>  
+                                        </div>  
+                                    </aura:if>              
+                                </a>  
+                            </th>
+                           <!--END:UPL-2-I386: Modified by:Ankita Saxena Changes in Travel request  for Indonesia-->
+                            <aura:if isTrue="{!v.isRM}">
+                            <th scope="col">
+                                <div class="slds-truncate"  title="RM"><b>RM</b></div>
+                            </th>
+                            </aura:if>
+                            <aura:if isTrue="{!v.isNSM}">   
+                                <th scope="col">
+                                    <div class="slds-truncate" title="NSM"><b>NSM</b></div>
+                                </th>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!v.isNMM}">  
+                                <th scope="col">
+                                    <div class="slds-truncate" title="NMM"><b>NMM</b></div>
+                                </th>
+                            </aura:if> 
+                            <th scope="col">
+                                <div class="slds-truncate" title="CH"><b>CH</b></div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="TOTAL"><b>TOTAL</b></div>
+                            </th>
+                            
+                            <th scope="col">
+                                <div class="slds-truncate"></div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate"></div>
+                            </th>
+                            
+                            <th scope="col">
+                                <div class="slds-truncate" title="Action"><b>ACTION</b></div>
+                            </th>
+                            <th class="slds-cell-shrink"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.TravelExpenseMonthList}"
+                                        var="TravelExpenseMonthList"
+                                        indexVar="index">  
+                            
+                            <tr class="slds-hint-parent"> 
+                                <th scope="row" data-label="MONTH">
+                                    <div class="slds-truncate">
+                                        <!--<a href="{! '#/sObject/' + TravelExpenseMonthList.Id + '/view'}"><ui:outputText value="{!TravelExpenseMonthList.Month__c}"/></a>-->
+                                        <a href="{! '/lightning/r/Monthly_Travel_Expense__c/' + TravelExpenseMonthList.Id + '/view'}"><ui:outputText value="{!TravelExpenseMonthList.Month__c}"/></a>
+                                    </div>
+                                </th>                               
+                                
+                                <th scope="row" data-label="Created By">
+                                    <div class="slds-truncate">
+                                        <ui:outputRichText aura:id="outputRT" 
+                                                           value="{!TravelExpenseMonthList.CreatedBy.Name}"/>
+                                    </div>
+                                </th>
+                                
+                                <aura:if isTrue="{!v.isRM}">
+                                <td data-label="RM">
+                                    <div class="slds-truncate">
+                                        <ui:outputRichText aura:id="outputRT" 
+                                                           value="{!TravelExpenseMonthList.RM__c}"/>
+                                    </div>
+                                </td>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isNSM}">  
+                                <td class="slds-truncate" data-label="NSM">
+                                    
+                                        <div class="slds-truncate">
+                                            <ui:outputRichText aura:id="outputRT"
+                                                               value="{!TravelExpenseMonthList.NSM__c}"/>
+                                        </div>   
+                                    
+                                </td>
+                                </aura:if>
+                                <aura:if isTrue="{!v.isNMM}"> 
+                                <td class="slds-truncate" data-label="NMM">
+                                    
+                                        <div class="slds-truncate">
+                                            <ui:outputRichText aura:id="outputRT"
+                                                               value="{!TravelExpenseMonthList.NMM__c}"/>
+                                        </div> 
+                                    
+                                </td>
+                                </aura:if>
+                                <td class="slds-truncate" data-label="CH">
+                                    
+                                    <div class="slds-truncate">
+                                        <ui:outputRichText aura:id="outputRT"
+                                                           value="{!TravelExpenseMonthList.CH__c}"/>
+                                    </div>              
+                                </td>
+                                
+                                <td class="slds-truncate" data-label="TOTAL">
+                                    <div class="slds-truncate">
+                                        <!--UPL-2-I386: Modified by:Ankita Saxena Changes in Travel request  for Indonesia-->
+                                        <aura:if isTrue="{!($Locale.currencyCode=='IDR')}">
+                                                <ui:outputCurrency value="{!TravelExpenseMonthList.TotalAmount__c}" currencyCode="Rp." format="¤#,##0;" />
+                                            <aura:set attribute="else">
+                                                <ui:outputCurrency value="{!TravelExpenseMonthList.TotalAmount__c}" />
+                                            </aura:set>
+                                        </aura:if>
+                                        <!--End:UPL-2-I386: Modified by:Ankita Saxena Changes in Travel request  for Indonesia-->
+                                    </div>
+                                </td>  
+                                <td class="slds-truncate" data-label="">
+                                    <div class="slds-truncate">
+                                        <lightning:buttonIcon value="{!TravelExpenseMonthList.Id}"
+                                                              iconName="utility:edit" 
+                                                              variant="bare"
+                                                              size="large"
+                                                              alternativeText="Edit" 
+                                                              disabled="{! and(TravelExpenseMonthList.Status__c == 'Approved')}"
+                                                              onclick="{!c.editMTERecord}" 
+                                                              name="{!TravelExpenseMonthList.Name}"/>
+                                    </div>
+                                </td>
+                                <td class="slds-truncate" data-label="">
+                                    <div class="slds-truncate">  
+                                        <lightning:buttonIcon value="{!TravelExpenseMonthList.Id}"
+                                                              iconName="utility:delete" 
+                                                              size="large"
+                                                              variant="bare"
+                                                              alternativeText="Delete" 
+                                                              disabled="{! and(TravelExpenseMonthList.Status__c == 'Approved') }"
+                                                              onclick="{!c.openDeleteModel}"
+                                                              name="{!TravelExpenseMonthList.Name}"/>
+                                    </div>
+                                    
+                                </td>
+                                <td class="slds-truncate" data-label="ACTION">
+                                    <div class="slds-truncate">  
+                                        <lightning:buttonIcon value="{!TravelExpenseMonthList.Id}" 
+                                                              iconName="utility:preview" 
+                                                              variant="bare"
+                                                              size="large" 
+                                                              alternativeText="View Expense" 
+                                                              disabled="false"
+                                                              onclick="{!c.viewMTEModel}"/>
+                                    </div>
+                                </td>                            
+                            </tr>
+                        </aura:iteration>                          
+                    </tbody>
+                    
+                </table>
+            </div>
+    </div>
+    <!--- new itenm -->
+    
+</aura:component>

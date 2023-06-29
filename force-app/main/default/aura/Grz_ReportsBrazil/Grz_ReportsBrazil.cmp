@@ -1,0 +1,200 @@
+<!--********************************************************************************************
+* Name			    : Grz_ReportBrazil.cmp
+* Description	    : Parent Aura component that containg Reports for Brazil Community 
+* Apex Controller	: Grz_ReportControllerBrazil 
+* LastModefied Date	: 30/08/2022 
+* Created By	    : Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="Grz_ReportControllerBrazil" >
+    <aura:attribute name="fiscalyearStartDate" type="String"/>
+    <aura:attribute name="fiscalyearEndDate" type="String"/>
+    <aura:attribute name="startDatep" type="String"/>
+    <aura:attribute name="endDatep" type="String"/>
+    <aura:attribute name="pagenumber" type="Decimal" default="1"/>
+    <aura:attribute name="ed" type="String"/>
+    <aura:attribute name="sd" type="String"/>
+    <aura:attribute name="todayDate" type="String"/>
+    <aura:attribute name="distributorValuep" type="String" default="All"/>
+    <aura:attribute name="distributorOptionsBr" type="List"/>
+    <aura:attribute name="isParentBr" type="Boolean" default="false" />
+    <aura:attribute name="isMainUser" type="Boolean" default="false" />
+    <aura:attribute name="isFinanceUser" type="Boolean" default="false" />
+    <aura:attribute name="isSupplyUser" type="Boolean" default="false" />
+     <aura:attribute name="isOperationUser" type="Boolean" default="false" />
+    <aura:attribute name="isMarketingUser" type="Boolean" default="false" />
+    <aura:attribute name="showFilter" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+    <aura:attribute name="subGroupValue" type="String" default="" />
+    <aura:attribute name="isMainParent" type="Boolean" default="false" />
+    <aura:attribute name="subGroupOptionsBr" type="List" />
+    
+    <div class=" slds-grid slds-wrap custommcss">
+        <div class="slds-col slds-grow-none slds-p-right_medium paddingclass">
+            <lightning:icon iconName="standard:dashboard"/>
+        </div>
+        <div class="slds-col  slds-x-small-size_10-of-12 slds-medium-size_11-of-12 slds-large-size_11-of-12">
+            <div class="slds-p-top_xxx-small head-font"> 
+                <b>Relatórios e Painéis</b>
+            </div>
+        </div>
+        <!--*Start** Updated below block as per requirement GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+        <aura:if isTrue="{!v.showFilter}">
+            <aura:if isTrue="{!v.isMainParent }">
+                <div class="slds-col slds-size_12-of-12">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-p-left_small slds-p-right_small  slds-large-size_6-of-12 slds-x-small-size_6-of-12 slds-medium-size_6-of-12">
+                            <lightning:input  placeholder="Data de Faturamento - Início" label="Data de Faturamento - Início" type="date" value="{!v.startDatep}" min="{!v.fiscalyearStartDate}" max="{!v.fiscalyearEndDate}" onchange="{!c.startDateChange}"/>
+                        </div>
+                        <div class="slds-col slds-p-left_small slds-p-right_small  slds-large-size_6-of-12 slds-x-small-size_6-of-12 slds-medium-size_6-of-12">
+                            <lightning:input  placeholder="Data de Faturamento - Final" label="Data de Faturamento - Final" type="date" value="{!v.endDatep}" min="{!v.fiscalyearStartDate}" max="{!v.fiscalyearEndDate}" onchange="{!c.endDateChange}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_12-of-12">
+                    <div class="slds-grid slds-wrap "> 
+                        <aura:if isTrue="{!v.isParentBr }">
+                            <div class="slds-col slds-p-left_small slds-p-right_small  slds-large-size_6-of-12 slds-x-small-size_12-of-12 slds-medium-size_12-of-12">
+                                <lightning:combobox 
+                                                    label ="Cliente" 
+                                                    value="{!v.distributorValuep}" 
+                                                    placeholder="Cliente" 
+                                                    options="{!v.distributorOptionsBr}"
+                                                    onchange="{!c.handleDistributor}"/> 
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.isMainParent }">
+                            <div class="slds-col slds-p-left_small slds-p-right_small  slds-large-size_6-of-12 slds-x-small-size_12-of-12 slds-medium-size_12-of-12">
+                                <lightning:combobox 
+                                                    label ="Sub-Grupo" 
+                                                    value="{!v.subGroupValue}" 
+                                                    placeholder="Sub-Grupo" 
+                                                    options="{!v.subGroupOptionsBr}"
+                                                    onchange="{!c.handleSubGroup}"/> 
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+                <aura:set attribute="else">
+                    <div class="report-filter">
+                        <div class = "r-date-filter">
+                            <div class="mobile-font-date date-width pad-l">
+                                <lightning:input  placeholder="Data de Faturamento - Início" label="Data de Faturamento - Início" type="date" value="{!v.startDatep}" min="{!v.fiscalyearStartDate}" max="{!v.fiscalyearEndDate}" onchange="{!c.startDateChange}"/>
+                            </div>
+                            <div class="slds-p-left_small mobile-font-date date-width">
+                                <lightning:input  placeholder="Data de Faturamento - Final" label="Data de Faturamento - Final" type="date" value="{!v.endDatep}" min="{!v.fiscalyearStartDate}" max="{!v.fiscalyearEndDate}" onchange="{!c.endDateChange}"/>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.isParentBr }">
+                            <div class="parent-filter slds-p-left_small">
+                                <lightning:combobox 
+                                                    label ="Cliente" 
+                                                    value="{!v.distributorValuep}" 
+                                                    placeholder="Cliente" 
+                                                    options="{!v.distributorOptionsBr}"
+                                                    onchange="{!c.handleDistributor}"/> 
+                            </div>
+                        </aura:if>
+                    </div>
+                </aura:set>
+            </aura:if>
+        </aura:if>
+        <!-- End*** GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+    </div>
+    <aura:if isTrue="{!v.isMainUser}">
+        <div class="main-div-graph">
+            <div class="invoice-div">
+                <c:Grz_InvoiceReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}" subGroupValue="{!v.subGroupValue}"/><!--GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+            </div>
+        </div>
+        <!-- Added for Line Item report GRZ(Nikhil Verma) : APPS-1394 -->
+        <div class="main-div-graph">
+            <div class="invoice-div">
+                <c:Grz_LineItemsReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}" subGroupValue="{!v.subGroupValue}"/>
+            </div>
+        </div>
+
+        <div class="AR-div">
+            <c:Grz_AccountReceivableReport/>
+        </div>
+        <div class="Stock-div" style="margin-top: 3%;">
+            <c:Grz_StockPie/>
+        </div>
+        <div class="graph-div" style="margin-top: 3%;">
+            <c:Grz_OrderHistoryBarGraph/> 
+        </div>
+    </aura:if>
+
+     <aura:if isTrue="{!v.isOperationUser}">
+        <div class="main-div-graph">
+            <div class="invoice-div">
+                <c:Grz_LineItemsReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}" subGroupValue="{!v.subGroupValue}"/>
+            </div>
+        </div>
+        
+        <div class="Stock-div" style="margin-top: 3%;">
+            <c:Grz_StockPie/>
+        </div>
+        <div class="graph-div" style="margin-top: 3%;">
+            <c:Grz_OrderHistoryBarGraph/> 
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.isFinanceUser}">
+        <div class="main-div-graph">
+            <div class="invoice-div">
+                <c:Grz_InvoiceReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}" subGroupValue="{!v.subGroupValue}"/><!--GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+            </div>
+        </div>
+        <div class="main-div-report" style="display: block;">
+                <c:Grz_AccountReceivableReport/>
+        </div>
+        <div class="graph-div">
+            <c:Grz_OrderHistoryBarGraph/> 
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.isSupplyUser}">
+            <!--Added for Line Item report RITM0461621 GRZ(Dheeraj Sharma) 28-11-2022-->
+        <div class="main-div-graph">
+            <div class="invoice-div">
+                <c:Grz_LineItemsReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}" subGroupValue="{!v.subGroupValue}"/>
+            </div>
+        </div>
+        <div class="graph-div" style="margin-top: 3%;">
+            <div>
+                <c:Grz_OrderHistoryBarGraph/>
+            </div>
+             <div style="margin-top: 3%;">
+                <c:Grz_StockPie/>
+             </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.isMarketingUser}">
+        <!--Added for Line Item report RITM0461621 GRZ(Dheeraj Sharma) 28-11-2022-->
+        <div class="main-div-graph">
+            <div class="invoice-div">
+                <c:Grz_LineItemsReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}" subGroupValue="{!v.subGroupValue}"/>
+            </div>
+        </div>
+        <div class="graph-div" style="margin-top: 3%;">
+            <c:Grz_OrderHistoryBarGraph/> 
+        </div>
+    </aura:if>
+
+     <!--<div class="main-case-div">
+        <div class="casetype-div">
+            <c:Grz_CaseTypeReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}"/>
+        </div>
+        <div class="casestatus-div">
+            <c:Grz_CaseStatusReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}"/>
+        </div>
+    </div>
+    <div class="main-product-div">
+        <div class="productcategory-div">
+            <c:Grz_ProductCategoryReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}"/>
+        </div>
+        <div class="invoicebrand-div">
+            <c:Grz_InvoiceBrandReportBrazil startDate="{!v.startDatep}" endDate="{!v.endDatep}" distributorValue="{!v.distributorValuep}"/>
+        </div>
+    </div>-->
+</aura:component>

@@ -1,0 +1,762 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,force:hasRecordId" 
+                controller="MarketingRequisitionController"
+                access="global">
+    
+    <!--Init Component On Load-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--End-->      
+
+    <!-- Reload record using recordId -->
+    <aura:attribute name="recordId" type="Id" />
+    <!--End-->
+
+    <aura:attribute name="selectedItem" type="String" />
+    
+    <aura:attribute name="apObj" type="Activity_Plan__c"
+                    default="{'sobjectType': 'Activity_Plan__c',
+                             'Activity_Type__c': '',
+                             'Crop__c': '',
+							 'Crop_txt__c': '',                              
+                             'Location__c': '',
+                             'No_of_farmer_invited__c': '0',
+                             'No_of_R1_invited__c': '0'
+                             }"/>
+    
+    <aura:handler name="change" value="{!v.selectedItem}" action="{!c.handleItemChange}"/>
+    
+    <aura:attribute name="isValid" type="Boolean" default="true"/>
+    <aura:attribute name="isDisabled" type="Boolean" default="false"/>
+    
+    <aura:attribute name="totalAllocation" type="Decimal" default="0.00" />
+    <aura:attribute name="totalItem" type="Decimal" default="0.00" />
+    <aura:attribute name="totalLiquidation" type="Decimal" default="0.00" />
+    
+    <aura:attribute name="currency" type="String" default="IDR "/>  
+    
+    <aura:attribute name="formFields" type="MarketingRequisitionController.RequisitionForm" access="public"/>
+    <aura:attribute name="allocationList" type="MarketingRequisitionController.Allocation[]" access="public"/>
+    <aura:attribute name="itemList" type="MarketingRequisitionController.Item[]" access="public"/>
+    <aura:attribute name="liquidationList" type="MarketingRequisitionController.Liquidation[]" access="public"/>
+    
+    <!--Lookup Object Attributes-->
+    <aura:attribute Name="selectCR" type="object" access="public" /> <!--For Crops --> 
+    <aura:attribute Name="selectPG" type="object" access="public"/> <!--For Product Group --> 
+    <aura:attribute Name="selectDI" type="object" access="public" /> <!--For Distributor --> 
+    <aura:attribute Name="selectR1" type="object" access="public" /> <!--For R1 --> 
+    <aura:attribute Name="selectPG2" type="object" access="public" /> <!--For Product Group --> 
+    <!-- End -->
+    
+    <!-- Method to invoke a call to child component method -->
+    <aura:method name="saveForm" action="{!c.saveFormData}" description="Call Save Method">  
+        <!--<aura:attribute name="param1" type="String" default="parameter 1"/> -->
+    </aura:method>
+    
+    <aura:method name="getRecordData" action="{!c.getRecordData}" description="Read Form Data">  
+        <aura:attribute name="param1" type="String" default=""/>
+        <aura:attribute name="param2" type="Boolean" default="false"/>
+    </aura:method>
+    <!-- End -->
+    
+    <!-- Component Event to invoke parent component method -->
+    <aura:registerEvent name="mktEvent" type="c:CallMarketEvent"/>
+    <!-- End -->
+    
+    <aura:attribute name="cssStyle" type="String" />
+    <style>{!v.cssStyle}</style>  
+    
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    
+    <aura:attribute name="isOpenAllocation" type="boolean" default="false"/>
+    <aura:attribute name="isOpenItem" type="boolean" default="false"/>
+    <aura:attribute name="isOpenLiquidation" type="boolean" default="false"/>
+    
+    <div class="slds">
+	<aura:if isTrue="{!v.showSpinner}">
+		<div class="slds-spinner_container slds-is-fixed">
+			<lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+		</div>
+	</aura:if> 
+        
+    <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0 0 10px 0; border:0px solid #cce4f8;">
+    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+    <div class="slds-form-element" style="margin-top:12px;">
+    <div class="slds-form-element__control">
+        <ui:inputSelect class="slds-input" 
+                        label="Activity" 
+                        aura:id="activityTypeOptions" 
+                        value="{!v.apObj.Activity_Type__c}" 
+                        required="true" 
+                        disabled="{!v.isDisabled}"/>     
+    </div>
+    </div>
+    </div>
+      
+    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="margin-top:12px;">
+      <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          <!--<ui:inputText class="slds-input" 
+                        aura:id="crop" 
+                        label="Crop" 
+                        value="{!v.apObj.Crop__c}" 
+                        required="true"
+                        disabled="false" />-->
+          
+          <aura:if isTrue="{!v.isDisabled}"> <!-- value="{!v.apObj.Crop__r.Name}" -->
+              <ui:inputText class="slds-input" 
+                            aura:id="crop" 
+                            label="Crop" 
+                            value="{!v.apObj.Crop_txt__c}" 
+                            required="true"
+                            disabled="{!v.isDisabled}" />
+              <aura:set attribute="else">
+                  <ui:inputText class="slds-input" 
+                                aura:id="cropLookup" 
+                                label="Crop" 
+                                value="{!v.apObj.Crop_txt__c}" 
+                                required="true"/>   
+                  
+                  <!--<label class="uiLabel-left form-element__label uiLabel" for="1254:0" data-aura-rendered-by="1272:0" data-aura-class="uiLabel">
+                      <span class="" data-aura-rendered-by="1273:0">Crop</span>
+                      <!- -render facet: 1275:0- -><span class="required " data-aura-rendered-by="1255:0">*</span>
+                  </label>   
+               
+                  <c:Lookup objectName="Crop__c"
+                            aura:id="cropLookup"
+                            field_API_text="Name"
+                            field_API_val="Id"
+                            limit="5"
+                            field_API_search="Name"
+                            lookupIcon="standard:flow" 
+                            selItem="{!v.selectCR}" 
+                            placeholder="Enter space after text to search"
+                            field_API_AND=" AND Sales_Org_Code__c = '6451'"
+                            />-->
+              </aura:set>
+          </aura:if> 
+      </div>
+      </div>
+    </div>
+        
+       <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+      <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          <ui:inputText class="slds-input" 
+                        aura:id="location" 
+                        label="Location" 
+                        value="{!v.apObj.Location__c}" 
+                        required="{!v.isDisabled}"
+                        disabled="{!v.isDisabled}" />      
+      </div>
+      </div>
+    </div>
+        
+    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+      <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          <ui:inputNumber class="slds-input" 
+                        aura:id="farmersInvited" 
+                        label="No Of Farmers Invited" 
+                        value="{!v.apObj.No_of_farmer_invited__c}"
+                        change="{!c.restrictNegativeValue}"  
+                        required="true"
+                        disabled="{!v.isDisabled}" />            
+      </div>
+      </div>
+    </div>
+        
+	<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+      <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          <ui:inputNumber class="slds-input" 
+                        aura:id="r1Invited" 
+                        label="No Of R1 Invited" 
+                        value="{!v.apObj.No_of_R1_invited__c}"
+                        change="{!c.restrictNegativeValue}"
+                        required="true"
+                        disabled="{!v.isDisabled}" />         
+      </div>
+      </div>
+    </div>
+        
+      <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+      <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          <ui:inputDate class="slds-input" 
+                        aura:id="startDate" 
+                        format="dd/MM/yyyy" 
+                        label="Start Date"
+                        displayDatePicker="true" 
+                        value="{!v.apObj.Start_Date__c}" 
+                        change="{!c.onDateChangeStartDate}" 
+                        required="true" 
+                        disabled="{!v.isDisabled}" />             
+      </div>
+      </div>
+    </div>
+        
+	<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+      <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          
+          <ui:inputDate class="slds-input" 
+                        aura:id="endDate" 
+                        format="dd/MM/yyyy" 
+                        label="End Date"
+                        displayDatePicker="true" 
+                        value="{!v.apObj.End_Date__c}" 
+                        change="{!c.onDateChangeEndDate}" 
+                        required="true" 
+                        disabled="{!v.isDisabled}" />              
+      </div>
+      </div>
+    </div>
+        
+	<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+      <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          <ui:inputSelect class="slds-input" 
+                          label="Time" 
+                          aura:id="timeOptions" 
+                          value="{!v.apObj.Time__c}" 
+                          required="true" 
+                          disabled="{!v.isDisabled}"/> 
+      </div>
+      </div>
+    </div>
+        
+        
+    </div>
+    </div>           
+                  
+    <div style="clear:both"></div>              
+                  
+    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:10px; background:#769ed9; color:#fff; font-weight:bold;">
+  <div style="float:left; display:inline; margin-top:5px; padding-right:20px; font-weight:bold;">
+ALLOCATION</div>
+  <div style="float:right;">
+      <!--<button class="slds-button slds-button- -icon-x-small" onclick="{!c.openModel1}">
+      <lightning:icon class="icn1" iconName="utility:add" size="small" alternativeText="Create New"/>
+      </button>-->
+      <lightning:buttonIcon iconName="utility:add" variant="bare-inverse" size="large" alternativeText="Add" disabled="{!v.isDisabled}" onclick="{!c.openAllocationModal}"/>
+      </div>
+    <div style="clear:both"></div>
+  </h3>
+    
+  <aura:if isTrue="{!v.isOpenAllocation}">  
+  <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+   <!--###### MODAL BOX Start From Here ######  style=" max-width: 70rem !important;width:55% !important;"--> 
+      <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+        <div class="slds-modal__container">
+          <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+          <div class="slds-modal__header">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeAllocationModal}">
+            X
+            <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="header99" class="slds-text-heading--medium">Add Allocation</h2>
+          </div>
+          <!--###### MODAL BOX BODY Part Start From Here ######-->
+          <div class="slds-modal__content slds-p-around--medium" style="height:50%"> <!--style="max-height: 70rem !important; height:40% !important;"-->
+            <div class="slds-scrollable--x" width="100%" style="margin-bottom:0;height: 100%" >
+            <div class="slds-form slds-form_stacked">
+              <div class="slds-form-element">
+                  <label class="uiLabel-left form-element__label uiLabel" for="1254:0" data-aura-rendered-by="1272:0" data-aura-class="uiLabel">
+                      <span class="" data-aura-rendered-by="1273:0">Product Group</span>
+                      <!--render facet: 1275:0--><span class="required " data-aura-rendered-by="1255:0">*</span>
+                  </label><!--Product2-->
+                  <c:Lookup objectName="SKU__c" 
+                            aura:id="pgLookup"
+                            field_API_text="BrandDescription__c"
+                            field_API_val="Id"
+                            limit="10"
+                            field_API_search="BrandDescription__c"
+                            lookupIcon="standard:product" 
+                            selItem="{!v.selectPG}" 
+                            placeholder="Enter space after text to search"
+                            field_API_AND=" AND (Sales_Org_Code__c = '6451' OR Sales_Org_Code__c = '6410')"
+                            add_css=""
+                            /> <!-- position:relative; z-index:5; -->
+              </div>
+              <div class="slds-form-element">
+                  <ui:inputNumber aura:id="allocationPercent" 
+                                  class="slds-input"  
+                                  label="(%)"
+                                  required="true" 
+                                  value="" 
+                                  format="##.00"
+                                  maxlength="3"
+                                  blur="{!c.restrictNegativeValue}"
+                                  change="{!c.checkValidPercent}"                                  
+                                  disabled="{!v.isDisabled}" />
+              </div>
+
+            </div>
+            </div>
+
+          </div>
+          <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button--neutral" onclick="{!c.closeAllocationModal}" >Cancel</button>
+            <!--<button aura:id="addAllocation" value="" class="slds-button slds-button- -brand" onclick="{!c.addAllocation}">Save and Close</button>-->
+            <ui:button aura:id="addAllocation" disabled="{!v.isDisabled}" class="slds-button slds-button--brand" labelClass="" label="Save and Close" press="{!c.addAllocation}"/>  
+          </div>
+        </div>
+      </div>
+      <div class="slds-backdrop slds-backdrop--open"></div>
+      <!--###### MODAL BOX Part END Here ######-->
+	</aura:if> 
+    
+    <div class="slds-scrollable_x" width="100%" style="margin-bottom:0;">
+    <table width="100%" class="slds-table slds-table--bordered">
+      <thead>
+        <tr class="slds-text-heading--label">
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">PRODUCT GROUP</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">(%)</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">ACTION</div>
+          </th>
+          <th class="slds-cell-shrink"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <aura:iteration items="{!v.allocationList}" var="step" indexVar="i">
+            <tr class="slds-hint-parent">
+                <th class="slds-truncate" scope="row" data-label="PRODUCT GROUP">
+                    <a href="javascript:void(0);"><ui:outputText value="{!step.productGroupName}"/></a>
+                </th>
+                <th class="slds-truncate" data-label="(%)">
+                    <ui:outputNumber value="{!step.allocationPercent}" format="##.00"/>
+                </th>
+                <td class="slds-truncate" data-label="ACTION">
+                    <lightning:buttonIcon value="{!i}" iconName="utility:edit" variant="bare" size="large" alternativeText="Edit" disabled="{!v.isDisabled}" onclick="{!c.editAllocation}"/>
+                    <lightning:buttonIcon value="{!i}" iconName="utility:delete" variant="bare" size="large" alternativeText="Delete" disabled="{!v.isDisabled}" onclick="{!c.removeAllocation}"/>
+                </td>
+            </tr>
+        </aura:iteration>
+          
+      </tbody>
+    </table>
+    </div>
+    <div class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#fff;"> 
+    <div class="slds-box slds-box_small slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px; margin-right:0px;">
+       Total&nbsp;<ui:outputNumber value="{!v.totalAllocation}" format="#,###,##0.00"/>&nbsp;%
+    </div>
+    </div>
+                  
+    <div style="clear:both;"></div>          
+                  
+      <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:px; background:#769ed9; color:#fff; font-weight:bold;">
+      <div style="float:left; display:inline; margin-top:5px; padding-right:20px; font-weight:bold;">ITEMS &amp; ACCOMMODATION</div>
+      <div style="float:right;">
+          <!--<button class="slds-button slds-button- -icon-x-small">
+          <lightning:icon class="icn1" iconName="utility:add" size="small" alternativeText="Create New"/>
+          </button> -->
+          <lightning:buttonIcon iconName="utility:add" variant="bare-inverse" size="large" alternativeText="Add" disabled="{!v.isDisabled}" onclick="{!c.openItemModal}"/>
+          </div>
+        <div style="clear:both;"></div>
+        </h3>          
+    
+	<aura:if isTrue="{!v.isOpenItem}">  
+  <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+   <!--###### MODAL BOX Start From Here ######--> 
+      <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+        <div class="slds-modal__container">
+          <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important;width:65% !important;"-->
+          <div class="slds-modal__header">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeItemModal}">
+            X
+            <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="header99" class="slds-text-heading--medium">Add Item</h2>
+          </div>
+          <!--###### MODAL BOX BODY Part Start From Here ######-->
+          <div class="slds-modal__content slds-p-around--medium">
+            <div class="slds-scrollable--y" width="100%" style="margin-bottom:0;">
+                <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                    <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputSelect class="slds-input" 
+                                    aura:id="itemOptions" 
+                                    label="Item"
+                                    value="{!v.selectedItem}"
+                                    required="true" 
+                                    disabled="{!v.isDisabled}"/>
+                    </div></div>
+                        
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                   <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputText class="slds-input" 
+                                  aura:id="otheritem" 
+                                  label="Other Item"
+                                  value="" 
+                                  required="false"
+                                  disabled="true" />   
+                    </div></div>
+                     
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">                       
+                    <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputText class="slds-input" 
+                                  label="Description"
+                                  aura:id="description" 
+                                  value="" 
+                                  required="false"
+                                  disabled="{!v.isDisabled}" /> 
+                    </div></div>
+
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">  
+                    <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputNumber aura:id="nou" 
+                                    class="slds-input" 
+                                    label="No. Of Unit"
+                                    required="true" 
+                                    value="" 
+                                    format="##.00"
+                                    labelClass="{!i}"
+                                    blur="{!c.restrictNegativeValue}"
+                                    change="{!c.calculateItemSubtotal}"
+                                    disabled="{!v.isDisabled}" /> 
+                    </div></div>
+                    
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+                    <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputNumber aura:id="cpu" 
+                                    class="slds-input"  
+                                    label="Cost Per Unit"
+                                    required="true" 
+                                    value="" 
+                                    format="##.00"
+                                    labelClass="{!i}"
+                                    blur="{!c.restrictNegativeValue}"
+                                    change="{!c.calculateItemSubtotal}"
+                                    disabled="{!v.isDisabled}" />  
+                    </div></div>
+                    
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">  
+                    <div class="slds-form-element__control" style="margin-right:5px;">
+                    <ui:inputNumber aura:id="subtotal" 
+                                    label="Subtotal"
+                                    class="slds-input"  
+                                    value="" 
+                                    format="##.00"
+                                    disabled="true"/>
+                    </div></div>
+            </div>
+              </div>
+          </div>
+          <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button--neutral" onclick="{!c.closeItemModal}" >Cancel</button>
+            <!--<button aura:id="addAllocation" value="" class="slds-button slds-button- -brand" onclick="{!c.addAllocation}">Save and Close</button>-->
+            <ui:button aura:id="addItem" disabled="{!v.isDisabled}" class="slds-button slds-button--brand" labelClass="" label="Save and Close" press="{!c.addItem}"/>  
+          </div>
+        </div>
+      </div>
+      <div class="slds-backdrop slds-backdrop--open"></div>
+      <!--###### MODAL BOX Part END Here ######-->
+	</aura:if> 
+    
+    <div class="slds-scrollable_x" width="100%" style="margin-bottom:0;">
+    <table width="100%" class="slds-table slds-table--bordered">
+      <thead>
+        <tr class="slds-text-heading--label">
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">ITEMS</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">OTHER ITEM</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">DESCRIPTION</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">NO OF UNIT</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">COST PER UNIT</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">SUBTOTAL</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">ACTION</div>
+          </th>
+          <th class="slds-cell-shrink"></th>
+        </tr>
+      </thead>
+      <tbody>
+          
+        <aura:iteration items="{!v.itemList}" var="step" indexVar="i">
+        <tr class="slds-hint-parent">
+          <th class="slds-truncate" scope="row" data-label="ITEMS">
+              <a href="javascript:void(0);"><ui:outputText value="{!step.item}"/></a>
+          </th>
+          <th class="slds-truncate" data-label="OTHER ITEM">
+              <ui:outputText value="{!step.otherItem}"/>
+          </th>
+          <td class="slds-truncate" data-label="DESCRIPTION">
+              <ui:outputText value="{!step.description}"/>
+          </td>
+          <td class="slds-truncate" data-label="NO OF UNIT">
+              <ui:outputNumber value="{!step.nou}" format="##.00"/>
+          </td>
+          <td class="slds-truncate" data-label="COST PER UNIT">
+              <ui:outputNumber value="{!step.cpu}" format="##.00"/>
+          </td>
+          <td class="slds-truncate" data-label="SUBTOTAL">
+              <ui:outputNumber value="{!step.subtotal}" format="##.00"/>
+          </td>
+          <td class="slds-truncate" data-label="ACTION">
+              <lightning:buttonIcon value="{!i}" iconName="utility:edit" variant="bare" size="large" alternativeText="Edit" disabled="{!v.isDisabled}" onclick="{!c.editItem}"/>
+              <lightning:buttonIcon value="{!i}" iconName="utility:delete" variant="bare" size="large" alternativeText="Delete" disabled="{!v.isDisabled}" onclick="{!c.removeItem}"/>              
+          </td>
+        </tr>        
+        </aura:iteration>
+          
+      </tbody>
+    </table>
+    </div>
+    <div class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#fff;"> 
+    <div class="slds-box slds-box_small slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px; margin-right:0px;">Total&nbsp;
+        <ui:outputText value="{!v.currency}" />
+        <ui:outputNumber value="{!v.totalItem}" format="#,###,##0.00"/>
+    </div>
+    </div>
+    
+    <div style="clear:both"></div>
+                  
+                 
+    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:px; background:#769ed9; color:#fff; font-weight:bold;">
+      <div style="float:left; display:inline; margin-top:5px; padding-right:20px; font-weight:bold;">LIQUIDATION PLAN</div>
+      <div style="float:right;">
+          <lightning:buttonIcon iconName="utility:add" variant="bare-inverse" size="large" alternativeText="Add" disabled="{!v.isDisabled}" onclick="{!c.openLiquidationModal}"/>
+          </div>
+        <div style="clear:both;"></div>
+        </h3>              
+
+	<aura:if isTrue="{!v.isOpenLiquidation}">  
+  <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+   <!--###### MODAL BOX Start From Here ######--> 
+      <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+        <div class="slds-modal__container">
+          <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important;width:65% !important;"-->
+          <div class="slds-modal__header">
+            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeLiquidationModal}">
+            X
+            <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="header99" class="slds-text-heading--medium">Add Liquidation</h2>
+          </div>
+          <!--###### MODAL BOX BODY Part Start From Here ######-->
+          <div class="slds-modal__content slds-p-around--medium">
+<!--              <div class="slds-grid slds-wrap">
+  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="background:#f00;">
+    <span>1</span>
+  </div>
+  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12"  style="background:#f00;">
+    <span>2</span>
+  </div>
+</div> -->
+            <div class="slds-scrollable_y" width="100%" style="margin-bottom:0;">
+			<div class="slds-grid slds-wrap">
+		  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+              <div class="slds-form-element__control" style="margin-right:5px;">
+		  <label class="uiLabel-left form-element__label uiLabel" for="1254:0" data-aura-rendered-by="1272:0" data-aura-class="uiLabel">
+			  <span class="" data-aura-rendered-by="1273:0">Distributor</span>
+			  <!--render facet: 1275:0--><span class="required " data-aura-rendered-by="1255:0">*</span>
+		  </label>                    
+			<c:Lookup objectName="Account"
+					  aura:id="distributorLookup"
+					  field_API_text="Name"
+					  field_API_val="Id"
+					  limit="10"
+					  field_API_search="Name"
+					  lookupIcon="standard:person_account" 
+					  selItem="{!v.selectDI}" 
+					  placeholder="Enter space after text to search"
+					  field_API_AND=" AND Recordtype.Name = 'Distributor' AND (Sales_Org_Code__c = '6451' OR Sales_Org_Code__c = '6410')"/> 
+		  </div>
+          </div>
+                
+		  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+              <div class="slds-form-element__control" style="margin-right:5px;">
+		  <label class="uiLabel-left form-element__label uiLabel" for="1254:0" data-aura-rendered-by="1272:0" data-aura-class="uiLabel">
+			  <span class="" data-aura-rendered-by="1273:0">R1</span>
+			  <!--render facet: 1275:0--><span class="required " data-aura-rendered-by="1255:0">*</span>
+		  </label>                    
+			<c:Lookup objectName="Account"
+					  aura:id="retailerLookup"
+					  field_API_text="Name"
+					  field_API_val="Id"
+					  limit="10"
+					  field_API_search="Name"
+					  lookupIcon="standard:client" 
+					  selItem="{!v.selectR1}" 
+					  placeholder="Enter space after text to search"
+					  field_API_AND=" AND Sales_Org_Code__c = '6410' AND Recordtype.Name = 'Retailer'"/>  
+              </div></div>
+
+		  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+              <div class="slds-form-element__control" style="margin-right:5px;">
+		  <label class="uiLabel-left form-element__label uiLabel" for="1254:0" data-aura-rendered-by="1272:0" data-aura-class="uiLabel">
+			  <span class="" data-aura-rendered-by="1273:0">Product</span>
+			  <!--render facet: 1275:0--><span class="required " data-aura-rendered-by="1255:0">*</span>
+		  </label>                    
+			<c:Lookup objectName="SKU__c"
+					  aura:id="pgLookup2"
+					  field_API_text="BrandDescription__c"
+					  field_API_val="Id"
+					  limit="10"
+					  field_API_search="BrandDescription__c"
+					  lookupIcon="standard:product" 
+					  selItem="{!v.selectPG2}" 
+					  placeholder="Enter space after text to search"
+					  field_API_AND=" AND (Sales_Org_Code__c = '6451' OR Sales_Org_Code__c = '6410')"/>
+              </div></div>
+                
+		  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+              <div class="slds-form-element__control" style="margin-right:5px;">             
+			<ui:inputNumber aura:id="stock" 
+							label="R1 Stock (Kg/Ltr)"
+							class="slds-input"  
+							required="true" 
+							value="" 
+							format="##.00"
+							blur="{!c.restrictNegativeValue}"
+							disabled="{!v.isDisabled}" /> 
+              </div></div>
+
+
+		  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+              <div class="slds-form-element__control" style="margin-right:5px;">
+			<ui:inputNumber aura:id="qty" 
+							label="Liquidation Qty (Kg/Ltr)"
+							class="slds-input"  
+							required="true" 
+							value="" 
+							format="##.00"
+							blur="{!c.restrictNegativeValue}"
+							change="{!c.calculateLiquidationSubtotal}"
+							disabled="{!v.isDisabled}" />
+              </div></div>
+              
+		  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+              <div class="slds-form-element__control" style="margin-right:5px;">
+			<ui:inputNumber aura:id="price" 
+							label="Price (Distributor)"
+							class="slds-input"  
+							required="true" 
+							value="" 
+							format="##.00"
+							blur="{!c.restrictNegativeValue}"
+							change="{!c.calculateLiquidationSubtotal}"
+							disabled="{!v.isDisabled}" />
+              </div></div>
+
+		  <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" style="margin-top:12px;">
+              <div class="slds-form-element__control" style="margin-right:5px;">
+					<ui:inputNumber aura:id="subtotal2" 
+									 label="Subtotal"
+									 class="slds-input"  
+									 value="" 
+									 format="##.00"
+									 disabled="true"/>
+              </div></div>
+                </div>
+            </div>
+
+          </div>
+          <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button--neutral" onclick="{!c.closeLiquidationModal}" >Cancel</button>
+            <!--<button aura:id="addAllocation" value="" class="slds-button slds-button- -brand" onclick="{!c.addAllocation}">Save and Close</button>-->
+            <ui:button aura:id="addLiquidation" disabled="{!v.isDisabled}" class="slds-button slds-button--brand" labelClass="" label="Save and Close" press="{!c.addLiquidation}"/>  
+          </div>
+        </div>
+      </div>
+      <div class="slds-backdrop slds-backdrop--open"></div>
+      <!--###### MODAL BOX Part END Here ######-->
+	</aura:if> 
+    
+    <div class="slds-scrollable_x" width="100%" style="margin-bottom:0;">
+    <table width="100%" class="slds-table slds-table--bordered">
+      <thead>
+        <tr class="slds-text-heading--label">
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">DISTRIBUTOR</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">R1</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">PRODUCT</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">R1 STOCK (KG/LTR)</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">LIQUIDATION QTY (KG/LTR)</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">PRICE (DISTRIBUTOR)</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">SUBTOTAL</div>
+          </th>
+          <th class="slds-is-sortable" scope="col">
+            <div class="slds-truncate">ACTION</div>
+          </th>
+          <th class="slds-cell-shrink"></th>
+        </tr>
+      </thead>
+      <tbody>
+          
+        <aura:iteration items="{!v.liquidationList}" var="step" indexVar="i">
+        <tr class="slds-hint-parent">
+          <th class="slds-truncate" scope="row" data-label="DISTRIBUTOR">
+              <a href="javascript:void(0);">
+                  <ui:outputText value="{!step.distributorName}"/>
+              </a>
+          </th>
+          <th class="slds-truncate" data-label="R1">
+              <a href="javascript:void(0);">
+                  <ui:outputText value="{!step.retailerName}"/> 
+              </a>
+          </th>
+          <td class="slds-truncate" data-label="PRODUCT">
+              <a href="javascript:void(0);">
+                  <ui:outputText value="{!step.productGroupName}"/>
+              </a>
+          </td>
+          <td class="slds-truncate" data-label="R1 STOCK (KG/LTR)">
+            <ui:outputNumber value="{!step.stock}" format="##.00"/>          
+          </td>
+          <td class="slds-truncate" data-label="LIQUIDATION QTY (KG/LTR)">
+            <ui:outputNumber value="{!step.qty}" format="##.00"/>          
+          </td>
+          <td class="slds-truncate" data-label="PRICE (DISTRIBUTOR)	">
+            <ui:outputNumber value="{!step.price}" format="##.00"/>          
+          </td>
+          <td class="slds-truncate" data-label="SUB TOTAL">
+            <ui:outputNumber value="{!step.subtotal}" format="##.00"/>          
+          </td>
+          <td class="slds-truncate" data-label="ACTION">
+              <lightning:buttonIcon value="{!i}" iconName="utility:edit" variant="bare" size="large" alternativeText="Edit" disabled="{!v.isDisabled}" onclick="{!c.editLiquidation}"/>
+              <lightning:buttonIcon value="{!i}" iconName="utility:delete" variant="bare" size="large" alternativeText="Delete" disabled="{!v.isDisabled}" onclick="{!c.removeLiquidation}"/>                            
+          </td>
+        </tr>
+        </aura:iteration>    
+
+      </tbody>
+    </table>
+    </div>
+    <div class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#fff;"> 
+    <div class="slds-box slds-box_small slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px; margin-right:0px;">Total&nbsp;
+        <ui:outputText value="{!v.currency}" />
+        <ui:outputNumber value="{!v.totalLiquidation}" format="#,###,##0.00"/>
+    </div>
+    </div>
+</aura:component>

@@ -1,0 +1,366 @@
+<template>
+    <c-grz_header-image-cmp bgimg={backgroundimage} imglabel='Pedido de venta - Detalles' customcss='top: 9%;'></c-grz_header-image-cmp>
+    <div class="bread-crumb-cls">
+        <c-grz_bread-crumb labelone='Pedidos de venta' labeltwo='Pedido de venta - Detalles' linkone={navUrl} linktwo=''>
+        </c-grz_bread-crumb>
+    </div>
+    <div class="slds-grid" style="margin-top:-1%">
+        <img  src={ordericon} class="order-icon">
+        <div class="slds-text-title_bold slds-m-top_small slds-m-left_small slds-m-bottom_small componentNotoSansBold odr-size">Pedido de venta :  
+            <span class="slds-p-left_xx-small">{SFDCOrderNo}</span> 
+        </div>
+    </div>
+    <template if:true={isSpinner}>
+        <div class="">
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <!-- Order Details New View-->
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+            <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-border_top " style="padding: 1.5%; background-color: white;margin-top: 2%;">
+                <div class="borderbottom headingClass componentNotoSansBold detail-size">Detalles del pedido</div>
+                <div class="slds-grid slds-wrap slds-p-top_medium slds-p-bottom_x-small data-font-size componentNotoSansMedium">
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Nr. Pedido:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{SFDCOrderNo}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>PO Número:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                    <span class="">{poNumber}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>PO Fecha:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{poDate}</span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Orden interna de SAP:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{SAPOrderNo}</span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Documento PO:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                        <lightning-icon icon-name="doctype:pdf" 
+                                                        onclick = {downldPOFile}
+                                                        size="small" 
+                                                        class="iconclr">
+                                        </lightning-icon>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_medium hidePadding borderleft">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Valor Total:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class=""><lightning-formatted-number value={orderTotal} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Moneda:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                    <span class="">{crncy}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Cliente:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{soldToParty}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Ciudad:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{city}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>CTC:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{repName}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Added By Akhilesh for Mobile-->
+    <template if:true={isMobile}>
+        <div style="font-size: medium;" class="slds-m-top_small slds-m-left_small slds-m-bottom_small componentNotoSansBold">Produtos</div>
+        <template if:true={lineitemdata}>
+            <c-responsive-card table-data={lineitemdata} columns={lineitemColumn} onbuttonclick={handleDeliveryClick} country="Chile" ></c-responsive-card>
+        </template>
+        <div if:true={nodata}>
+            <p class="slds-text-align_center nodatacss">No hay productos para mostrar</p>
+        </div>
+    </template>
+    <!-- Product Table -->
+    <template if:false={isMobile}>
+    <div class="product-table-scroll">
+        <div class="product-table-width slds-border_right slds-m-bottom_x-large slds-border_left slds-border_bottom slds-p-right_large slds-border_top">
+            <div style="font-size: medium;" class="slds-m-top_small slds-m-left_small slds-m-bottom_small componentNotoSansBold">Produtos</div>
+            <table class="slds-m-left_small  slds-m-right_small slds-m-bottom_small" >
+                <thead class="p-table-head componentNotoSansLight">
+                    <tr>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Entrega">Entrega</div>
+                        </th>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Código del producto">Código del producto</div>
+                        </th>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Nombre del producto">Nombre del producto</div>
+                        </th>                   
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Estado de entrega">Estado de entrega</div>
+                        </th>                   
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col" style="text-align: center;">
+                            <div class="slds-truncate" title="Cantidad">Cantidad</div>
+                        </th>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="UM">UM</div>
+                        </th>
+                        <th class="slds-p-left_x-small slds-p-right_small p-table-head-css" scope="col" style="text-align: right;">
+                            <div class="slds-truncate" title="Preço Unitário">Precio unitario</div>
+                        </th>
+                        <th class="slds-p-left_x-small slds-p-right_small p-table-head-css" scope="col" style="text-align:right;">
+                            <div class="slds-truncate" title="Valor">Valor</div>
+                        </th>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col" style="text-align:center;">
+                            <div class="slds-truncate" title="DESPACHO PDF">DESPACHO PDF</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="p-table-body">
+                    <template for:each={lineitemdata} for:item="lineitem">
+                        <tr key={lineitem.Id} class="slds-border_bottom componentNotoSansRegular">
+                            <td class="slds-p-left_small table-body-css" scope="col">
+                                <!--<a data-value={Sorder.Id} onclick={handleViewClick}
+                                    class="order-link">View</a>-->
+                                    <a data-value={lineitem.Id} onclick={handleViewClick} class="order-link">
+                                        <lightning-icon icon-name="action:following" 
+                                                        title="Estado de entrega"
+                                                        size="xx-small" 
+                                                        class="iconcls">
+                                        </lightning-icon>
+                                    </a> 
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css">
+                                <div>{lineitem.skuCode}</div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div>{lineitem.productName}</div>
+                            </td>  
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div>{lineitem.deliveryStatus}</div>
+                            </td>                             
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col" style="text-align: center;">
+                                <div><lightning-formatted-number value={lineitem.quantity} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div>{lineitem.uom}</div>
+                            </td>
+                            <td class="slds-p-left_x-small slds-p-right_small p-table-body-css" scope="col" style="text-align: right;">
+                                <div><lightning-formatted-number value={lineitem.unitPrice} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                            </td>
+                            <td class="slds-p-left_x-small  slds-p-right_small p-table-body-css" scope="col" style="text-align:right;">
+                                <div><lightning-formatted-number value={lineitem.totalValue} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                            </td>
+                            <td class="slds-p-left_small p-table-body-css" scope="col" style="text-align:center;">
+                                <a data-value={lineitem.Id} onclick={handleDeliveryClick}>
+                                    <lightning-icon icon-name="doctype:pdf" 
+                                                    title="Despacho"
+                                                    size="small" >
+                                    </lightning-icon>
+                                </a> 
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div if:true={nodata}>
+                <p class="slds-text-align_center nodatacss">No hay productos para mostrar</p>
+            </div>
+        </div>
+    </div>
+    </template>
+    <!-- Invoice Table -->
+    <template if:true={isMobile}>
+        <div style="font-size: medium;" class="componentNotoSansBold slds-m-top_small slds-m-left_small slds-m-bottom_small">Facturas</div>
+        <!--<template if:true={invoicesarray}>-->
+            <c-responsive-card table-data={invoicesarray} columns={invoicesarrayColumn} onshow={handleOrderDetail} onbuttonclick={handleInvoiceClick} country="Chile" ></c-responsive-card>
+       <!--</template>--> 
+        <div if:true={noinvoice}>
+            <p class="slds-text-align_center nodatacss" style="background-color: white;">No hay factura para mostrar</p>
+        </div>
+    </template>
+    <!-- Product Table -->
+    <template if:false={isMobile}>
+        <div class="invoice-table-scroll">
+            <div class="invoice-table-width slds-border_right slds-m-bottom_x-large slds-border_left slds-border_bottom slds-p-right_large slds-border_top">
+                <div style="font-size: medium;" class="componentNotoSansBold slds-m-top_small slds-m-left_small slds-m-bottom_small">Facturas</div>
+                    <table class="slds-m-left_small slds-m-right_small slds-m-bottom_small">
+                        <thead class="i-table-head componentNotoSansLight">
+                            <tr>
+                                <th class="slds-p-left_x-small i-table-head-css" scope="col">
+                                    <div class="slds-truncate" title="Folio">Folio</div>
+                                </th>
+                                <th class="slds-p-left_x-small i-table-head-css" scope="col">
+                                    <div class="slds-truncate" title="Nota Fiscal">Número de entrega</div>
+                                </th>
+                                <th class="slds-p-left_x-small i-table-head-css" scope="col">
+                                    <div class="slds-truncate" title="Data de Emissão">Fecha de emisión</div>
+                                </th>
+                                <th class="slds-p-left_x-small slds-p-right_small i-table-head-css" scope="col" style="text-align:right;" >
+                                    <div class="slds-truncate" title="Valor Total">Valor Total</div>
+                                </th>
+                                <th class="slds-p-left_x-small i-table-head-css" scope="col" style="text-align:center;">
+                                    <div class="slds-truncate" title="FACTURA PDF">FACTURA PDF</div>
+                                </th>
+                            </tr>
+                        </thead>
+                            <tbody class="i-table-body">
+                                <template if:true = {invoicesarray}>
+                                    <template for:each={invoicesarray} for:item="invoice">
+                                        <tr key={invoice.ivId} class="slds-border_bottom componentNotoSansRegular">
+                                        <td class="slds-p-left_x-small i-table-body-css" scope="col">
+                                            <a data-value={invoice.ivId} onclick={handleOrderDetail} href={detailPageLink} style="color: #F47920;" target="_blank">{invoice.billingDocNumber}</a>
+                                        </td>
+                                        <td class="slds-p-left_x-small i-table-body-css" scope="col">
+                                            <div>{invoice.deliveryNumber}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small i-table-body-css" scope="col">
+                                            <div> {invoice.billingDate}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small slds-p-right_small i-table-body-css" scope="col" style="text-align:right;">
+                                            <div><lightning-formatted-number value={invoice.totalAmount} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                                        </td>
+                                        <td class="slds-p-left_small i-table-body-css" scope="col" style="text-align:center;">
+                                            <a data-value={invoice.ivId} onclick={handleInvoiceClick}>
+                                                <lightning-icon icon-name="doctype:pdf" 
+                                                                title="Facturas"
+                                                                size="small" >
+                                                </lightning-icon>
+                                            </a> 
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                        </tbody>
+                        
+                </table>
+                <div if:true={noinvoice}>
+                    <p class="slds-text-align_center nodatacss" style="background-color: white;">No hay factura para mostrar</p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" style="color: black;">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="Cerca"
+                            variant="inverse"
+                            size="small" >
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Cerca</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Estado de entrega</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <template if:false={noInfo}>
+                         <!--GRZ(Nikhil Verma) APPS-1893 modified on 05-09-2022-->
+                        <div class="statusClass">
+                            <template for:each={lineItems} for:item="line">
+                                <div key={line} class="border-btm">
+                                    <div class="slds-m-bottom_x-small"><span class="delivery-head componentNotoSansBold">Producto:</span><span class="delivery-details">{line.productName}</span></div>
+                                    <div class="slds-m-bottom_x-small"><span class="delivery-head componentNotoSansBold">Cantidad Entregada:</span><span class="delivery-details">{line.deliveredQuantity}</span></div>
+                                    <div class="slds-m-bottom_x-small"><span class="delivery-head componentNotoSansBold">Estado de entrega:</span><span class="delivery-details">{line.status}</span></div>
+                                    <div class="slds-m-bottom_x-small"><span class="delivery-head componentNotoSansBold">Entrega estimada:</span><span class="delivery-details">{line.estimatedAt}</span></div>
+                                    <div class="slds-m-bottom_x-small"><span class="delivery-head componentNotoSansBold">Llegado a:</span><span class="delivery-details">{line.arrivedAt}</span></div>
+                                    <template if:true={line.imageURL}>
+                                        <div class="slds-m-bottom_x-small">
+                                            <span class="delivery-head componentNotoSansBold">Doc de Entrega:</span>
+                                            <a class="order-link delivery-details" href={line.imageURL} target="_blank">
+                                                Vista
+                                            </a>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <template if:true={noInfo}>
+                        <div class="no-delivery">
+                            No hay información disponible.
+                        </div>
+                    </template>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <!--<footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button>
+                </footer>-->
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

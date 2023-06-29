@@ -1,0 +1,227 @@
+<template>   
+
+    <div class="slds" style="background:#fff;">
+
+        <template if:true={showSpinner}>
+            <div class="exampleHolder">
+                <lightning-spinner alternative-text={label.PleaseWait} size="medium" ></lightning-spinner>
+            </div>
+        </template>
+
+            <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:0px solid #cce4f8;">
+        
+                <div style="clear:both;"></div>
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1"
+                    style="margin:0; background:#dcedfb; font-weight:bold;">
+                    {label.Period}
+                </h3>
+
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin:10px 0 10px 0;">
+                    <div class="slds-form-element" style="margin-top:12px;">
+                        <div class="slds-form-element__control">
+                            <lightning-combobox
+                            name="progress"
+                            label={label.Year}
+                            value={yearVal}
+                            placeholder={label.SelectYear}
+                            options={options}
+                            onchange={handleYearChange} 
+                            required="true"></lightning-combobox>
+                        </div>
+                    </div>
+                </div>  
+            
+            </div>    
+    
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1"
+                style="margin:0; background:#dcedfb; font-weight:bold;">
+                {yearVal} {label.Detail}
+            </h3>
+        <div class="slds-scrollable_x" style="margin-bottom:0;">
+            <table width="100%" class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                <tr class="slds-text-heading--label">
+                    <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate">{label.Month}</div>
+                    </th>
+                    <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate" style="text-align:center;">{label.GenerateSalesForecast}</div>
+                    </th>
+                
+                    <th class="slds-is-sortable" scope="col">
+                    <div class="slds-truncate" style="text-align:center;">{label.DownloadEntireForecast}</div>
+                    </th> 
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="text-align:center;">{label.MonitorForecast}</div>
+                    </th>            
+                
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="text-align:center;">{label.DeleteForecast}</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.January}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="01" disabled={isJanDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isJanDisable} label={label.ClickHere} title={label.ClickHere}  onclick={downloadSFCSV} class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isJanDisable} label={label.ClickHere} title={label.ClickHere}  data-monthname="January" class="slds-m-left_x-small" onclick={handleCallComponent}></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="01" disabled={isJanDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF}  class="slds-m-left_x-small"></lightning-button></td>
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.Febuary}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="02" disabled={isFebDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small" ></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isFebDisable} label={label.ClickHere} title={label.ClickHere} onclick={downloadSFCSV}  class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isFebDisable} label={label.ClickHere} title={label.ClickHere} data-monthname="February" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="02" disabled={isFebDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF}  class="slds-m-left_x-small"></lightning-button></td>
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.March}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="03" disabled={isMarDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isMarDisable} label={label.ClickHere} title={label.ClickHere}  onclick={downloadSFCSV} class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isMarDisable} label={label.ClickHere} title={label.ClickHere}   data-monthname="March" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="03" disabled={isMarDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF} class="slds-m-left_x-small"></lightning-button></td> 
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.April}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="04" disabled={isAprDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isAprDisable} label={label.ClickHere} title={label.ClickHere}  onclick={downloadSFCSV} class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isAprDisable} label={label.ClickHere} title={label.ClickHere}  data-monthname="April" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="04" disabled={isAprDisable} label={label.ClickHere} title={label.ClickHere}  onclick={confirmDeleteSF} class="slds-m-left_x-small"></lightning-button></td> 
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.May}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="05" disabled={isMayDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isMayDisable} label={label.ClickHere} title={label.ClickHere}  onclick={downloadSFCSV} class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isMayDisable} label={label.ClickHere} title={label.ClickHere} data-monthname="May" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="05" disabled={isMayDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF} class="slds-m-left_x-small"></lightning-button></td>
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.June}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="06" disabled={isJunDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isJunDisable} label={label.ClickHere} title={label.ClickHere} onclick={downloadSFCSV}  class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isJunDisable} label={label.ClickHere} title={label.ClickHere}  data-monthname="June" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="06" disabled={isJunDisable} label={label.ClickHere} title={label.ClickHere}  onclick={confirmDeleteSF} class="slds-m-left_x-small"></lightning-button></td>
+                </tr>
+                
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.July}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="07" disabled={isJulDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isJulDisable} label={label.ClickHere} title={label.ClickHere}  onclick={downloadSFCSV} class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isJulDisable} label={label.ClickHere} title={label.ClickHere}  data-monthname="July" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="07" disabled={isJulDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF}  class="slds-m-left_x-small"></lightning-button></td>
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.August}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="08" disabled={isAugDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isAugDisable} label={label.ClickHere} title={label.ClickHere} onclick={downloadSFCSV}  class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isAugDisable} label={label.ClickHere} title={label.ClickHere}  data-monthname="August" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="08" disabled={isAugDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF} class="slds-m-left_x-small"></lightning-button></td>
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.September}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="09" disabled={isSepDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isSepDisable} label={label.ClickHere} title={label.ClickHere} onclick={downloadSFCSV}  class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isSepDisable} label={label.ClickHere} title={label.ClickHere}  data-monthname="September" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="09" disabled={isSepDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF} class="slds-m-left_x-small"></lightning-button></td>
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.October}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="10" disabled={isOctDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isOctDisable} label={label.ClickHere} title={label.ClickHere} onclick={downloadSFCSV}  class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isOctDisable} label={label.ClickHere} title={label.ClickHere}  data-monthname="October" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="10" disabled={isOctDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF}  class="slds-m-left_x-small"></lightning-button></td>
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.November}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="11" disabled={isNovDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isNovDisable} label={label.ClickHere} title={label.ClickHere} onclick={downloadSFCSV}  class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isNovDisable} label={label.ClickHere} title={label.ClickHere}  data-monthname="November" onclick={handleCallComponent}  class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="11" disabled={isNovDisable} label={label.ClickHere} title={label.ClickHere} onclick={confirmDeleteSF} class="slds-m-left_x-small"></lightning-button></td> 
+                </tr>
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{label.December}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;"><lightning-button variant="base" value="12" disabled={isDecDisable} label={label.ClickHere} title={label.ClickHere} onclick={handleSFGClick}  class="slds-m-left_x-small"></lightning-button></td>              
+                    
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" disabled={isDecDisable} label={label.ClickHere} title={label.ClickHere} onclick={downloadSFCSV}  class="slds-m-left_x-small"></lightning-button></td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;"><lightning-button variant="base" disabled={isDecDisable} label={label.ClickHere} title={label.ClickHere}   data-monthname="December" onclick={handleCallComponent} class="slds-m-left_x-small"></lightning-button></td> 
+                    <td class="slds-truncate" data-label="" style="text-align:center;"><lightning-button variant="base" value="12" disabled={isDecDisable} label={label.ClickHere} title={label.ClickHere}  onclick={confirmDeleteSF} class="slds-m-left_x-small"></lightning-button></td> 
+                </tr>
+                </tbody>
+            </table>
+         </div>
+    </div>
+
+    <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={label.Close} onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text={label.Close}
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">{label.Close}</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{label.Alert}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p><b>{label.WanCreateSalesForecast} ?</b></p>
+                  
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title={label.Cancel}>{label.Cancel}</button>
+                    <button class="slds-button slds-button_brand" onclick={createSF} title={label.Ok}>{label.Ok}</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!--Use template if:true to display/hide popup based on isDeleteOpen value--> 
+    <template if:true={isDeleteOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={label.Close} onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text={label.Close}
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">{label.Close}</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">{label.Alert}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p><b>{label.WanDeleteSalesForecast} ?</b></p>
+                  
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title={label.Cancel}>{label.Cancel}</button>
+                    <button class="slds-button slds-button_brand" onclick={deleteSF} title={label.Ok}>{label.Ok}</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

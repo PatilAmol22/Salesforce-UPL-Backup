@@ -1,0 +1,629 @@
+<template>
+    <div class="slds-box slds-theme_default" style="margin-bottom:10px;">
+        <template if:true={showSpinner}>
+            <div class="exampleHolder">
+                <lightning-spinner alternative-text={label.PleaseWait} size="medium" variant="brand"></lightning-spinner>
+            </div>
+        </template>
+        <div class="slds-page-header" style="padding:0 0 0 10px;">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-action-account" title="">
+                                <lightning-icon icon-name="standard:customer_portal_users" title={label.Customer_Details} size="medium"> </lightning-icon> 
+                            <span class="slds-assistive-text">{label.Customer_Details}</span>
+                            </span>
+                        </div>
+                        
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate" title={label.Customer_Details} style="margin-top:12px;">{label.Customer_Details}</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <lightning-tabset variant="scoped">
+            <lightning-tab label={label.Customer_Details}>
+
+                <!-- <div style="background: rgb(0 156 219); color:#fff; font-size:15px; font-weight:600; padding:10px; margin:10px 0; width:100%;">
+                    <h4>CUSTOMER DETAILS</h4>
+                </div> -->
+
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Customer_Code} name="custCode" value={tabDetails.accountSAPCode} required="true" disabled="true"></lightning-input>
+                    </div>
+                    <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label="CUSTOMER NAME" value="" required="true"></lightning-input>
+                    </div> -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.CNPJ_CPF} name="cnpjCPF" value={tabDetails.cnpjCPF} onblur={handleChange} disabled="true"></lightning-input>
+                    </div>
+            
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Contact} name="contact" value={tabDetails.contact} required="true" onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="email" label={label.Email} name="email" value={tabDetails.email} onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Cost_Center} name="costCentr" value={tabDetails.costCenter} onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+            
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-textarea label={label.Address} name="address" value={tabDetails.address} onblur={handleChange} disabled={isDisable}></lightning-textarea>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Postal_Code} name="postCode" value={tabDetails.postCode} onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.State} name="state" value={tabDetails.state} onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+            
+                    <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Branch} name="branch" value={tabDetails.branch} onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div> -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Farm} name="farm" value={tabDetails.farm} onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Suburb} name="suburb" value={tabDetails.suburb} onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.City} name="city" value={tabDetails.city} onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="tel" label={label.Phone_Number} name="phone" value={tabDetails.phoneNumber} onblur={handleChange} pattern="[0-9]{10}$" disabled={isDisable}></lightning-input>
+                    </div>
+                    <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label="Requestor's Name" name="requester" value={tabDetails.requestersName} disabled="true" ></lightning-input>
+                    </div> -->
+
+                </div>
+            </lightning-tab>
+
+            <lightning-tab label={label.Commercial_Workflow_Approval}>
+
+                <!-- <div style="background: rgb(0 156 219); color:#fff; font-size:15px; font-weight:600; padding:10px; margin:10px 0; width:100%;">
+                    <h4>COMMERCIAL WORKFLOW APPROVAL</h4>
+                </div> -->
+
+                <div class="slds-grid slds-gutters slds-wrap">
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Sales_District_Manager} value={tabDetails.salesDistMangr} disabled="true" ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Sales_Office_Manager} value={tabDetails.salesOfficeMngr} disabled="true" ></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Sales_Director} value={tabDetails.salesDirector} disabled="true" ></lightning-input>
+                    </div>
+            
+                </div>
+            </lightning-tab>
+
+            <!-- <lightning-tab label={label.Return_Details}>
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" label={label.Return_Details} name="returnDetails" value={tabDetails.returnDetails} required="true" onblur={handleChange} disabled={isDisable}></lightning-input>
+                    </div>
+                </div>
+            </lightning-tab> -->
+
+            <lightning-tab label={label.Quality_Assessment}>
+
+                <!-- <div style="background: rgb(0 156 219); color:#fff; font-size:15px; font-weight:600; padding:10px; margin:10px 0; width:100%;">
+                    <h4>QUALITY ASSESSMENT</h4>
+                </div> -->
+                
+                <div class="slds-grid slds-gutters slds-wrap">
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="number" min="0" step="0.01" label={label.Return_Amount} name="returnAmt" value={tabDetails.returnAmount} required="true" onblur={handleChange} disabled="true"></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                    
+                        <lightning-combobox class="slds-form-element__label slds-no-flex"
+                            label={label.Proceed_With_Return} name="pwr" value={tabDetails.proceedWithRtrn} options={pwrOptions} onchange={handleChange} disabled={tabDetails.qualityFlag}> 
+                        </lightning-combobox>
+
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        
+                        <lightning-combobox class="slds-form-element__label slds-no-flex"
+                            label={label.Necessary_TI} name="nti" value={tabDetails.necessaryTechInspectn} options={ntiOptions} onchange={handleChange} disabled={tabDetails.qualityFlag}> 
+                        </lightning-combobox>
+            
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                            <lightning-input type="date" label={label.Inspection_Date} name="inspectionDt" value={tabDetails.inspectionDate} onchange={handleChange} disabled={tabDetails.qualityFlag}></lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                            <lightning-input type="number" min="0" step="0.01" label={label.Cost_QA} name="costQA" value={tabDetails.costQA} onblur={handleChange} disabled={tabDetails.isQualityEdit}></lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                            <lightning-textarea label={label.Contention} name="contention" max-length="1000" value={tabDetails.contention} onblur={handleChange} disabled={tabDetails.isQualityEdit}></lightning-textarea>
+                        </div>
+
+                        <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-form-element__label slds-no-flex">
+                            <lightning-input type="text" max-length="1000" max-length="1000" label={label.Contention} name="contention" value={tabDetails.contention} onblur={handleChange} disabled={tabDetails.isQualityEdit}></lightning-input>
+                        </div> -->
+
+                </div>
+            </lightning-tab>
+
+            <lightning-tab label={label.Logistics}>
+
+                <!-- <div style="background: rgb(0 156 219); color:#fff; font-size:15px; font-weight:600; padding:10px; margin:10px 0; width:100%;">
+                    <h4>LOGISTICS</h4>
+                </div> -->
+                
+                <div class="slds-grid slds-gutters slds-wrap">
+                
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="date" label={label.Estimated_Collection_Date} name="ecd" value={tabDetails.estimatedCollectionDate} disabled="true" ></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <!-- <lightning-input type="email" label={label.Logistics_Operator_Email} name="loe" value={tabDetails.logisticOperatorMail} required="true" onblur={handleChange} disabled={isDisable}></lightning-input> -->
+                        <template if:true={isEmail}>
+                            <c-multi-Select-Combobox-Lwc label={label.Logistics_Operator_Email} name="loe" disabled={tabDetails.isLOEEdit}
+                                options={emailOptions}  multiselect="true" selectedvalues={selectedEmail} isnone={isNone}
+                                onselect={handleEmailSelect} placeholder={Select_an_Email}></c-multi-Select-Combobox-Lwc>
+                        </template>   
+                        <template if:false={isEmail}>
+                            <lightning-input type="text" name="loe" value={tabDetails.logisticOperatorMail} label={label.Logistics_Operator_Email}  disabled="true"></lightning-input>
+                        </template> 
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="date" label={label.Actual_Collection_Date} name="acd" value={tabDetails.actualCollectionDate}  onchange={handleChange} disabled={tabDetails.isACDEdit}></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="date" label={label.Date_of_Submission_To_Logistics_Partner} name="dstlp" value={tabDetails.dateOfSubToLogisticPartner} disabled="true" ></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="date" label={label.Closing_Date} name="closingDt" value={tabDetails.closingDate} required="true" onchange={handleChange} disabled={tabDetails.isCDEdit}></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex" style="padding-top: 25px;">
+                        <lightning-input type="checkbox" label={label.Send_to_Material_Assessment} name="sendToMA" checked={tabDetails.sendToMaterial} onchange={handleChange} disabled={tabDetails.isCDEdit}></lightning-input>
+                    </div>
+
+                </div>
+                    
+            </lightning-tab>
+
+            <lightning-tab label={label.Customer_Service}>
+
+                <!-- <div style="background: rgb(0 156 219); color:#fff; font-size:15px; font-weight:600; padding:10px; margin:10px 0; width:100%;">
+                    <h4>CUSTOMER SERVICE</h4>
+                </div> -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_12-of-12 slds-form-element__label slds-no-flex" style="text-align: right;">
+                    <lightning-button variant="brand" icon-name="utility:add" title={label.Add} label={label.New_Entry} onclick={openModal} class="slds-m-right_x-small" disabled={tabDetails.isCSEdit}></lightning-button>  <!--  //Nik.. --> 
+                </div>
+                
+                <div class="slds-grid slds-gutters slds-wrap slds-scrollable">
+                                        
+                    <table class="slds-table slds-table_bordered slds-max-medium-table_stacked" aria-labelledby="element-with-table-label other-element-with-table-label" style="border:1px solid rgb(229, 229, 229);">
+                        <thead>
+                            <tr class="slds-hint-parent">
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title="" style="width: 115px;"><strong>{label.Invoice}</strong></div>
+                                </th>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title="" style="width: 115px;"><strong>{label.Billing_Doc}</strong></div>
+                                </th>
+            
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title="" style="width: 110px;"><strong>{label.Invoice_Date}</strong></div>
+                                </th>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title=""><strong>{label.Inco_Terms}</strong></div>
+                                </th>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title=""><strong>{label.Inco_Term_2}</strong></div>
+                                </th>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title=""><strong>{label.Full_Return}</strong></div>
+                                </th>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title=""><strong>{label.Return_Sub_Type}</strong></div>
+                                </th>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title="" style="width: 75px;"><strong>{label.Deposit}</strong></div>
+                                </th>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title=""><strong>{label.Deposit_Flag}</strong></div>
+                                </th>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title=""><strong>{label.Document_Type}</strong></div>
+                                </th>
+
+                                <template if:true={isRefusalNo}>
+                                    <th data-label="" scope="row">
+                                        <div class="slds-truncate" title="" style="width: 150px;"><strong>{label.Product}</strong></div>
+                                    </th>
+
+                                    <th data-label="" scope="row">
+                                        <div class="slds-truncate" title="" style="width: 75px;"><strong>{label.Quantity}</strong></div>
+                                    </th>
+
+                                    <th data-label="" scope="row">
+                                        <div class="slds-truncate" title=""><strong>{label.Quantity_Flag}</strong></div>
+                                    </th>
+
+                                    <th data-label="" scope="row">
+                                        <div class="slds-truncate" title=""><strong>{label.Billing_DOC_Item_Number}</strong></div>
+                                    </th>
+                
+                                    <th data-label="" scope="row">
+                                        <div class="slds-truncate" title=""><strong>{label.Customer_Invoice}</strong></div>
+                                    </th>
+
+                                    <th data-label="" scope="row">
+                                        <div class="slds-truncate" title=""><strong>{label.Customer_Invoice_Date}</strong></div>
+                                    </th>
+                                </template>
+
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title="" style="width: 110px;"><strong>{label.SAP_Order_Number}</strong></div>
+                                </th>
+            
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title="" style="text-align: center;"><strong>{label.Action}</strong></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template if:true={isCustomerServList}>
+                                <template for:each={customerServiceList} for:item="custSer" for:index="i">
+                                    <tr class="slds-hint-parent" key={custSer.srNo}>
+
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.invoiceName} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+                    
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.billingDoc} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+                    
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="date" value={custSer.invoiceDate} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+                    
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.incoTerm} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.incoTerm2} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+                                        
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="checkbox" checked={custSer.fullReturn} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.returnTypeName} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.depositName} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.depositFlag} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.docTypeName} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+
+                                        <template if:true={isRefusalNo}>
+                                            <td data-label="">
+                                                <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                    <lightning-input  type="text" value={custSer.productName} disabled="true"></lightning-input>
+                                                </div>
+                                            </td>
+
+                                            <td data-label="">
+                                                <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                    <lightning-input  type="text" value={custSer.quantity} disabled="true"></lightning-input>
+                                                </div>
+                                            </td>
+
+                                            <td data-label="">
+                                                <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                    <lightning-input  type="text" value={custSer.quantityFlag} disabled="true"></lightning-input>
+                                                </div>
+                                            </td>
+
+                                            <td data-label="">
+                                                <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                    <lightning-input  type="text" value={custSer.billingDocNum} disabled="true"></lightning-input>
+                                                </div>
+                                            </td>
+
+                                            <td data-label="">
+                                                <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                    <lightning-input  type="text" value={custSer.custInvoice} disabled="true"></lightning-input>
+                                                </div>
+                                            </td>
+
+                                            <td data-label="">
+                                                <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                    <lightning-input  type="date" value={custSer.custInvoiceDt} disabled="true"></lightning-input>
+                                                </div>
+                                            </td> 
+                                        </template>                                   
+                    
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input  type="text" value={custSer.sapNo} disabled="true"></lightning-input>
+                                            </div>
+                                        </td> 
+                                        <td data-label="">
+                                            <div class="slds-truncate" title=""><!-- //Nik.. -->
+                                                <template if:true={tabDetails.isCSEdit}>
+                                                    <lightning-button variant="brand" name={i} value={tabDetails.recId} onclick={editProduct} title={label.Edit} icon-name="utility:edit" disabled="true" class="slds-m-right_x-small"></lightning-button>&nbsp;
+                                                    <lightning-button variant="destructive" name={i} value={custSer.recId} onclick={deleteCustService} title={label.Delete} icon-name="utility:delete" disabled="true" class="slds-m-right_x-small"></lightning-button>  
+                                                </template>
+                                                <template if:false={tabDetails.isCSEdit}>
+                                                    <lightning-button variant="brand" name={i} value={tabDetails.recId} onclick={editProduct} title={label.Edit} icon-name="utility:edit" disabled={custSer.disableAction} class="slds-m-right_x-small"></lightning-button>&nbsp;
+                                                    <lightning-button variant="destructive" name={i} value={custSer.recId} onclick={deleteCustService} title={label.Delete} icon-name="utility:delete" disabled={custSer.disableAction} class="slds-m-right_x-small"></lightning-button>
+                                                </template>
+                                            </div>
+                                        </td> 
+                                        
+                                    </tr>
+                                </template>
+                            </template>
+                            <template if:false={isCustomerServList}>
+                                <tr class="slds-hint-parent">
+                                    <td colspan={colspanCount}><div class="slds-truncate" title="" style="text-align:center;"><b>{label.NoRecordsFound}</b></div></td>                         
+                                </tr> 
+                            </template>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </lightning-tab>
+
+           <!--  <lightning-tab label={label.SAP_Order_Number}>
+                
+                <div class="slds-grid slds-gutters slds-wrap">
+
+                    
+
+                    <table class="slds-table slds-table_bordered slds-max-medium-table_stacked" aria-labelledby="element-with-table-label other-element-with-table-label" style="border:1px solid rgb(229, 229, 229);">
+                        <thead>
+                            <tr class="slds-hint-parent">
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title=""><strong>{label.SAP_Order_Number}</strong></div>
+                                </th>
+            
+                               
+            
+                                <th data-label="" scope="row">
+                                    <div class="slds-truncate" title=""><strong>{label.Action}</strong></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template if:true={isSAPOrderList}>
+                                <template for:each={sapOrderList} for:item="sapOrdr" for:index="i">
+                                    <tr class="slds-hint-parent" key={sapOrdr.srNo}>
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="" style="margin-top: -15px;">
+                                                <lightning-input type="text" value={sapOrdr.orderNumber} disabled="true"></lightning-input>
+                                            </div>
+                                        </td>
+
+                                       
+
+                                        <td data-label="">
+                                            <div class="slds-truncate" title="">
+                                                <lightning-button variant="destructive" disabled={isDisable} name={i} value={sapOrdr.recId} onclick={deleteSAPOrdr} icon-name="utility:delete" title={label.Delete} class="slds-m-right_x-small"></lightning-button>  
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                            <template if:false={isSAPOrderList}>
+                                <tr class="slds-hint-parent">
+                                    <td colspan="5"><div class="slds-truncate" title="" style="text-align:center;"><b>{label.NoRecordsFound}</b></div></td>                         
+                                </tr> 
+                            </template>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </lightning-tab> -->
+
+
+        </lightning-tabset>
+        <div style="clear: both;"></div>
+
+        <!-- modal start -->  
+        <template if:true={showModal}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-modal_large slds-fade-in-open" style="margin:0 auto; width:80%;">
+                <template if:true={showSpinner}>
+                    <div class="exampleHolder">
+                        <lightning-spinner alternative-text={label.PleaseWait} size="small" variant="brand"></lightning-spinner>
+                    </div>
+                </template>
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={label.Close} onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close"
+                            alternative-text={label.Close}
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">{label.Close}</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{label.New_Entry}</h2>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div style="background: rgb(0 156 219); color:#fff; font-size:12px; font-weight:600; padding:10px; margin:10px 0; width:100%;">
+                                <h4>{label.Invoice}</h4>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex" >
+                                <template if:true={showInvoice}>
+                                    <span style="color:red;">*&nbsp;</span>
+                                    <c-multi-Select-Combobox-Lwc label={label.Invoice} 
+                                        options={invoiceOptions}  selectedvalue={selectedInvoice} 
+                                        onselect={handleInvoiceSelect} placeholder={label.Select_Invoice}></c-multi-Select-Combobox-Lwc>
+                                </template>
+                                <template if:false={showInvoice}>
+                                    <lightning-input type="text" name="invc" value={custServObj.invoice} label={label.Invoice} required="true" disabled="true"></lightning-input>
+                                </template>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex" >
+                                <lightning-input type="text"  name="sapBillDoc" label={label.Billing_Doc} value={custServObj.billingDoc} disabled="true"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                <lightning-input type="date" name="invcDate" label={label.Invoice_Date} value={custServObj.invoiceDate} disabled="true"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                <lightning-input type="text" name="incoTerm" label={label.Inco_Terms} value={custServObj.incoTerm} disabled="true"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                <lightning-input type="text" name="incoTerm2" label={label.Inco_Term_2} value={custServObj.incoTerm2} disabled="true"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                <lightning-input type="text" name="retrnSubTp" value={custServObj.returnTypeName} label={label.Return_Sub_Type} disabled="true"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                <lightning-input type="text" name="deposit" value={custServObj.depositName} label={label.Deposit}  disabled="true"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                <lightning-input type="text" name="depositFlag" value={custServObj.depositFlag} label={label.Deposit_Flag}  disabled="true"></lightning-input>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                <lightning-combobox
+                                    label={label.Document_Type} name="docTyp" value={custServObj.docType} options={orderTypOption} required="true" onchange={handleCSChange}> 
+                                </lightning-combobox>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                            </div>
+                            <template if:true={isRefusalNo}>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex" style="padding-top: 25px;">
+                                    <template if:true={helpText}>
+                                        <lightning-input type="checkbox" name="fullRetrn" checked={custServObj.fullReturn} label={label.Full_Return} field-level-help={label.HelpText_Content} disabled="true"></lightning-input>
+                                    </template>
+                                    <template if:false={helpText}>
+                                        <lightning-input type="checkbox" name="fullRetrn" checked={custServObj.fullReturn} label={label.Full_Return} onchange={validateFullReturn} class="flReturn" disabled={disableFR}></lightning-input>
+                                    </template>
+                                </div>
+                            
+                                <div style="background: rgb(0 156 219); color:#fff; font-size:12px; font-weight:600; padding:10px; margin:10px 0; width:100%;">
+                                    <h4>{label.Product_Details}</h4>
+                                </div>
+
+                                <template if:false={isFullReturn}>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                        <template if:true={showProduct}>
+                                            <c-multi-Select-Combobox-Lwc label={label.Product}
+                                                options={productOptions}  selectedvalue={selectedProduct}
+                                                onselect={handleProductSelect} placeholder={label.Select_Product}></c-multi-Select-Combobox-Lwc>
+                                        </template>
+                                        <template if:false={showProduct}>
+                                            <lightning-input type="text" name="prodct" value={custServObj.productName} label={label.Product}  disabled="true"></lightning-input>
+                                        </template>
+                                    </div>
+
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                        <lightning-input type="number" min="0" step="0.01" name="quantity" value={custServObj.quantity} label={label.Quantity} onblur={validateQuantity}></lightning-input>
+                                    </div>
+
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                        <lightning-input type="text" name="quantityFlag" value={custServObj.quantityFlag} label={label.Quantity_Flag}  disabled="true"></lightning-input>
+                                    </div>
+
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                        <lightning-input type="text" name="bdin" value={custServObj.billingDocNum} label={label.Billing_DOC_Item_Number}  disabled="true"></lightning-input>
+                                    </div>
+                                </template>
+
+                                <template if:true={isCustInvoice}>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                        <lightning-input type="text" name="custInvc" value={custServObj.custInvoice} label={label.Customer_Invoice} onblur={handleCSChange} required="true"></lightning-input>
+                                    </div>
+                                </template>
+                                
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-form-element__label slds-no-flex">
+                                    <lightning-input type="date" name="custInvcDt" value={custServObj.custInvoiceDt} label={label.Customer_Invoice_Date} onchange={handleCSChange} required="true"></lightning-input>
+                                </div> 
+                            </template>
+                        </div>
+                    </div>
+                
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick={addCustomerService}>{label.Save}</button>
+                        <button class="slds-button slds-button_destructive" onclick={closeModal}>{label.Cancel}</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </div>
+</template>

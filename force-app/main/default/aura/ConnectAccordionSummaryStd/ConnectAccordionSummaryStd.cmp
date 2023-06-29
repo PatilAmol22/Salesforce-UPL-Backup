@@ -1,0 +1,251 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" 
+                controller="ConnectAccSummaryController" access="GLOBAL">
+    
+    <!--<aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>-->
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+    <aura:attribute name="dollarTYPE" type="string" default="$"/>
+    
+    
+    
+    <aura:attribute name="activeSections" type="List" default="[]" />
+    <aura:attribute name="activeSectionsMessage" type="String" default="" />
+    <aura:attribute name="ctryNameflag" type="Boolean" default="true" />
+    
+    
+    <aura:attribute name="creditInfoList" type="List" access="public"/>
+    <aura:attribute name="AccountStatementList" type="List" access="public"/>
+    <aura:attribute name="outstandingAgeingList" type="List" access="public"/>
+    <aura:attribute name="collectionList" type="List" access="public"/>
+    <aura:attribute name="currencyCode" type="String" access="public"/>
+      <aura:attribute name="currencyCode1" type="String" access="public"/>
+      <aura:attribute name="currencyCode2" type="String" access="public"/>
+      <aura:attribute name="currencyCode3" type="String" access="public"/>
+    <aura:attribute name="onDate" type="String" access="public"/>
+    <aura:attribute name="onDate1" type="String" access="public"/>
+    <aura:attribute name="onDate2" type="String" access="public"/>
+    <aura:attribute name="onDate3" type="String" access="public"/>
+    
+    
+    <!--<aura:attribute name="onDate4" type="String" access="public"/> -->
+    <aura:attribute name="overdueAmt" type="Integer" access="public"/>  
+    <aura:attribute name="closingBal" type="String" access="public"/> 
+    <aura:attribute name="urlAddress" type="String" access="public"/> 
+    
+    
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="mycolumns1" type="List"/>
+    <aura:attribute name="mycolumns2" type="List"/>
+    <aura:attribute name="mycolumns3" type="List"/>
+    <aura:attribute name="mycolumns4" type="List"/>
+    
+    
+    
+    
+    
+    <aura:attribute name="showDetailCreditInfo" type="Boolean" default ="false" />
+    <aura:attribute name="showDetailAccStateInfo" type="Boolean" default ="false" />
+    <aura:attribute name="showDetailOutStandAgeInfo" type="Boolean" default ="false" />
+    <aura:attribute name="showDetailPaymentDeatilsInfo" type="Boolean" default ="false" />
+    <aura:attribute name="showDetailOutstandinginfo" type="Boolean" default ="false" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <!--loading spinner start-->
+    <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    
+    <div class="slds-grid slds-wrap" style="background:#fff; margin-bottom:5px; padding:0; border-radius:5px 5px 0 0;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+            <!--<span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px; margin-left:10px;">
+                    <lightning:icon iconName="standard:lead_list" style="background:#48c3cc;" alternative-text="note" size="medium"/>
+                </span>-->
+             <aura:if isTrue="{!v.showDetailCreditInfo}">
+            <div class="titleregular" style="float:left; display:inline; margin:17px 0 10px 1px; font-size:36px; font-weight:normal;">
+                <span class="slds-page-header_title" title="Account Ledger">{!$Label.c.My_Account_Summary}</span>
+            </div>
+            </aura:if>
+            
+        </div>  
+    </div>
+    
+    
+    <div class="container-fuild" style="border:1px solid #eaeaea;" >
+        
+        
+        <aura:if isTrue="{!v.showDetailCreditInfo}">
+            
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col" style="background:#eaeaea;">
+                    <p class="titleregulartable" style="padding:6px; margin:7px;">{!$Label.c.Credit_Information_as_on}  &nbsp;<lightning:formattedDateTime value="{!v.onDate}" year="numeric" month="numeric" day="numeric"/>&nbsp; {!$Label.c.In}&nbsp; {!v.currencyCode1} </p>
+                </div>
+            </div> 
+            <!-- /.card-header -->
+            <div class="slds-scrollable_x" style="margin:0; padding:0;">
+                <aura:if isTrue="{!$Browser.formFactor=='DESKTOP'}">
+                    <lightning:datatable data="{! v.creditInfoList }"
+                    columns="{! v.mycolumns }"
+                    keyField="id"
+                    wrapTextMaxLines="3"
+                    hideCheckboxColumn="true"/>
+                </aura:if>
+                <aura:if isTrue="{!$Browser.formFactor!='DESKTOP'}">
+                   <c:responsiveCard tableData="{! v.creditInfoList }" columns="{! v.mycolumns }"></c:responsiveCard>
+                </aura:if>
+
+              
+                
+                
+            </div>
+            <br/>
+            
+            <div align="center">
+                <div style="display:inline; margin:25px 10px 0 0; cursor:pointer" onclick="{!c.openPDF}">
+                    <lightning:icon iconName="doctype:pdf" alternativeText="PDF file" title="PDF" />
+                    <!--<lightning:icon iconName="utility:download" size="x-large"  class="icon" alternativeText="download" title="Download as PDF"/>-->
+                    <!--<a href="https://upltest-upl.cs57.force.com/Distributor/apex/AccountSummaryReport"></a>-->
+                </div>
+                <div style="display:inline; margin:25px 10px 0 0; cursor:pointer" onclick="{!c.openExcel}">
+                    <lightning:icon iconName="doctype:excel" alternativeText="Excel file" title="Excel" />
+                    <!--<lightning:icon iconName="utility:download" size="x-large"  class="icon" alternativeText="download" title="Download as Excel"/>-->
+                    <!--<a href="https://upltest-upl.cs57.force.com/Distributor/apex/AccountSummaryReport"></a>-->
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col">
+                    <p class="titleregulartable" style="padding:6px; margin:7px;">{!$Label.c.Account_Balance_as_on} &nbsp;
+                        <aura:if isTrue="{!v.ctryNameflag}">
+                            <lightning:formattedDateTime value="{!v.onDate2}" year="numeric" month="numeric" day="numeric"/>
+                        </aura:if>
+                         : <lightning:formattedNumber  value="{!v.closingBal}" style="currency" />  </p>
+                </div>
+            </div> 
+            
+             </aura:if>
+
+             <aura:if isTrue="{!v.showDetailOutstandinginfo}">
+             <div class="slds-grid slds-wrap">
+                <div class="slds-col">
+                    <p class="titleregulartable" style="padding:6px; margin:7px;">{!$Label.c.Outstanding_As_On} &nbsp;
+                        
+                            <lightning:formattedDateTime value="{!v.onDate2}" year="numeric" month="numeric" day="numeric"/>
+                         : <lightning:formattedNumber  value="{!v.closingBal}" style="currency" />  </p>
+                </div>
+            </div> 
+            </aura:if>
+            
+            <br/>
+            
+       
+        
+        <br/>
+        
+        <aura:if isTrue="{!v.showDetailAccStateInfo}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col" style="background:#eaeaea;">
+                    <p class="titleregulartable" style="padding:6px; margin:7px;">{!$Label.c.Account_Statement_as_on} &nbsp; <lightning:formattedDateTime value="{!v.onDate1}" year="numeric" month="numeric" day="numeric"/>&nbsp; {!$Label.c.In}&nbsp; {!v.currencyCode2}</p>
+                </div>
+            </div> 
+            
+            <!-- /.card-header -->
+            <div class="slds-scrollable_x" style="margin:0; padding:0;">
+                <aura:if isTrue="{!$Browser.formFactor=='DESKTOP'}">
+                    <lightning:datatable data="{! v.AccountStatementList }"
+                    columns="{! v.mycolumns1}"
+                    keyField="id"
+                     wrapTextMaxLines="3"
+                    hideCheckboxColumn="true"/>
+                </aura:if>
+              
+                                    
+                 <aura:if isTrue="{!$Browser.formFactor!='DESKTOP'}">
+                   <c:responsiveCard tableData="{! v.AccountStatementList }" columns="{! v.mycolumns1}"></c:responsiveCard>
+                </aura:if>
+                
+            </div>
+            <br/>
+
+            <div align="center">
+                <div style="display:inline; margin:25px 10px 0 0; cursor:pointer" onclick="{!c.openPDFAS}">
+                    <lightning:icon iconName="doctype:pdf" alternativeText="PDF file" title="PDF" />
+                    <!--<lightning:icon iconName="utility:download" size="x-large"  class="icon" alternativeText="download" title="Download as PDF"/>-->
+                    <!--<a href="https://upltest-upl.cs57.force.com/Distributor/apex/AccountSummaryReport"></a>-->
+                </div>
+                <div style="display:inline; margin:25px 10px 0 0; cursor:pointer" onclick="{!c.openExcelAS}">
+                    <lightning:icon iconName="doctype:excel" alternativeText="Excel file" title="Excel" />
+                    <!--<lightning:icon iconName="utility:download" size="x-large"  class="icon" alternativeText="download" title="Download as Excel"/>-->
+                    <!--<a href="https://upltest-upl.cs57.force.com/Distributor/apex/AccountSummaryReport"></a>-->
+                </div>
+            </div>
+        </aura:if>
+        
+        <br/> 
+        
+        
+        <aura:if isTrue="{!v.showDetailOutStandAgeInfo}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col" style="background:#eaeaea;">
+                    <p class="titleregulartable" style="padding:6px; margin:7px;">
+                        {!$Label.c.Outstanding_Ageing_as_on} &nbsp; <lightning:formattedDateTime value="{!v.onDate2}" year="numeric" month="numeric" day="numeric"/> in {!v.currencyCode3}</p>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="slds-scrollable_x" style="margin:0; padding:0;">
+                <aura:if isTrue="{!$Browser.formFactor=='DESKTOP'}">
+                    <lightning:datatable data="{! v.outstandingAgeingList }"
+                    columns="{! v.mycolumns2}"
+                    keyField="id"
+                    wrapTextMaxLines="3"
+                    hideCheckboxColumn="true"/>
+                </aura:if>
+                <aura:if isTrue="{!$Browser.formFactor!='DESKTOP'}">
+                    <c:responsiveCard tableData="{! v.outstandingAgeingList }" columns="{! v.mycolumns2}"></c:responsiveCard>
+
+                </aura:if>
+               
+            </div>  
+        </aura:if>
+        
+        <br/>   
+        
+        <aura:if isTrue="{!v.showDetailPaymentDeatilsInfo}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col" style="background:#eaeaea;">
+                    <p class="titleregulartable" style="padding:6px; margin:7px;">
+                        {!$Label.c.Payment_Detail_as_on} &nbsp; <lightning:formattedDateTime value="{!v.onDate3}"/> in {!v.currencyCode}</p>
+                </div>
+            </div>      
+            
+            
+            <div class="slds-scrollable_x" style="margin:0; padding:0;">
+                <aura:if isTrue="{!$Browser.formFactor=='DESKTOP'}">
+                     <lightning:datatable data="{! v.collectionList }"
+                                     columns="{! v.mycolumns3}"
+                                     keyField="id"
+                                     hideCheckboxColumn="true"/>
+                <br/>
+                <lightning:datatable data="{! v.collectionList }"
+                                     columns="{! v.mycolumns4}"
+                                     keyField="id"
+                                     hideCheckboxColumn="true"/>
+                </aura:if>
+                <aura:if isTrue="{!$Browser.formFactor!='DESKTOP'}">
+                    <c:responsiveCard tableData="{! v.collectionList }" columns="{! v.mycolumns3}"></c:responsiveCard>
+                    <br/>
+                    <c:responsiveCard tableData="{! v.collectionList }" columns="{! v.mycolumns4}"></c:responsiveCard>
+                </aura:if>
+               
+            </div> 
+        </aura:if>
+    </div>
+</aura:component>

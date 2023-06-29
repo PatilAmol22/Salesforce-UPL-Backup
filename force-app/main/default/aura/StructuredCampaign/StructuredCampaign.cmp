@@ -1,0 +1,1120 @@
+<aura:component controller="StructuredCampaign_Controller" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction,force:hasRecordId"
+                access="global" >  
+    
+  <ltng:require styles="{!join(',', $Resource.datatable + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css',
+                           $Resource.datatable + '/DataTables-1.10.16/extensions/RowGroup/css/rowGroup.foundation.min.css')}" 
+       scripts="{!join(',', 
+                $Resource.jquery224 , 
+                $Resource.datatable + '/DataTables-1.10.16/media/js/jquery.dataTables.min.js' ,
+                $Resource.datatable + '/DataTables-1.10.16/extensions/RowGroup/js/dataTables.rowGroup.min.js')
+                }" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    
+    <aura:handler name="init" action="{!c.doInit}"  value="{!this}"/>
+    <!--<aura:handler name="change" value="{!v.myDate}" action="{!c.handleValidfromValueChange}"/>
+    <aura:handler name="change" value="{!v.myDate1}" action="{!c.handleExpiryValueChange}"/>
+    -->
+    <aura:attribute name="mainUrl" type="String" />  
+    <aura:attribute name="PriceBookDivisionName" type="String" />   
+    <aura:attribute name="PriceBook" type="Price_Book__c" default="{'sobjectType':'Price_Book__c',
+                                                                   'Name':'',
+                                                                   'Currency__c':''}" /> 
+   <!-- <aura:attribute name="myDate" type="Date" />
+    <aura:attribute name="myDate1" type="Date" />
+    <aura:attribute name="rowIndex" type="Integer"/> -->
+    
+    <aura:attribute name="salesdtCount" type="Integer"/> 
+    <!--Account Modal Attributes-->   
+     <!--
+added by nikhil : on-22-3-2019
+-->
+<aura:attribute name="Price_Book_For_Campaign" type="Boolean" access="global" default="false"/>
+    <aura:attribute name="Price_Book_For_Kit" type="Boolean" access="global" default="false"/> <!--for structure to current comp calling-->
+<aura:attribute name="priceBookType" type="String" default=""/>
+<!--
+added by nikhil : on-22-3-2019
+EOC
+-->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="accountList" type="Account[]" access="public"/>
+    <aura:attribute name="accountColumns" type="List" access="public"/>
+    <aura:attribute name="accountTableConfig" type="Map"  access="public"/>
+    
+    <aura:handler name="dtActionClick"  event="ldt:clickedDtAction"  action="{!c.tabActionClicked}"/>
+    
+    <!--End Modal Attributes-->
+    <aura:attribute name="hide1" type="boolean" default="false"/>
+    <!--<aura:attribute name="hide2" type="boolean" default="true"/>
+    <aura:attribute name="hide3" type="boolean" default="true"/> 
+    <aura:attribute name="hide4" type="boolean" default="false"/>
+    <aura:attribute name="hide5" type="boolean" default="false"/>-->
+    <aura:attribute name="hide6" type="boolean" default="true"/>
+    <!--<aura:attribute name="hide7" type="boolean" default="true"/>-->
+    <aura:attribute name="hide8" type="boolean" default="false"/>
+    <aura:attribute name="hideDeleteBtn" type="boolean" default="true"/>
+    
+    <!--<aura:attribute name="isMaterialReq" type="boolean" default="false"/>
+    <aura:attribute name="isProfileUser" type="boolean" default="false"/>
+    <aura:attribute name="disablelkp" type="boolean" default="false"/>    
+    <aura:attribute name="isBothCurrency" type="boolean" default="false"/>-->
+    <aura:attribute name="isEdit" type="boolean" default="false"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <!--<aura:attribute name="isOpen2" type="boolean" default="false"/>
+    <aura:attribute name="isOpen3" type="boolean" default="false"/>
+    <aura:attribute name="isErrors" type="boolean" default="false"/>
+    <aura:attribute name="isSKuErrors" type="boolean" default="false"/>-->
+    <aura:attribute name="showErrOnDiv" type="boolean" default="false"/>
+    <!--<aura:attribute name="isSkuDuplicate" type="boolean" default="false"/>
+    <aura:attribute name="falseDate" type="boolean" default="true"/>
+    <aura:attribute name="falseDate1" type="boolean" default="true"/>-->
+    <aura:attribute name="showduplicateErr" type="boolean" default="false"/>
+    <aura:attribute name="isbtndisable" type="boolean" default="false"/>
+    <aura:attribute name="isSavebtnHide" type="boolean" default="false"/>
+    <!--<aura:attribute name="isClone" type="boolean" default="false"/>-->
+   
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    
+    <!-- ADDED BY KETAN -->
+    <aura:attribute name="data" type="StructuredCampaign_Controller.ProductSku[]"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="sortedBy" type="String" />
+	<aura:attribute name="sortedDirection" type="Boolean" default="true" />
+    
+    <aura:attribute name="today" type="Date"/>
+    <aura:attribute name="bltDate" type="Date"/>
+    <aura:attribute name="frmDate" type="Date" />
+    <aura:attribute name="toDate" type="Date" />
+    <aura:attribute name="blockDate" type="Date" />
+    <aura:attribute name="intrDate" type="Date" />
+    <aura:attribute name="rowIndex" type="Integer"/>
+    <aura:attribute name="rowIndexSD" type="Integer"/>
+    
+    <aura:attribute name="hide9" type="boolean" default="false"/>
+    <aura:attribute name="hide10" type="boolean" default="false"/>
+    <aura:attribute name="hide11" type="boolean" default="false"/>
+    <aura:attribute name="hide12" type="boolean" default="false"/>
+    <aura:attribute name="hide13" type="boolean" default="false"/>
+    <aura:attribute name="hide14" type="boolean" default="false"/>
+    <aura:attribute name="hide15" type="boolean" default="false"/>
+    <aura:attribute name="hide16" type="boolean" default="false"/>
+    <aura:attribute name="isOpenSD" type="boolean" default="false"/>
+    
+    <aura:attribute name="inApprovalFlag" type="boolean" default="false"/>
+    <aura:attribute name="pb_for_campaign" type="boolean" default="false" />
+    <aura:attribute name="simulator_upload" type="boolean"/>
+    <aura:attribute name="mgr_discount" type="String" default="" />
+    <aura:attribute name="campaignType" type="String" default=""/>
+    <aura:attribute name="groupIndex" type="Integer" default="-1"/>
+    <aura:attribute name="groupName" type="Integer"/>
+    <aura:attribute name="Lastgroup" type="String"/>
+    <aura:attribute name="fname" type="String"/>
+    <aura:attribute name="active_deactive" type="String" default="{!$Label.c.Deactivate}"/>
+    
+    <aura:attribute name="materialDetails" type="StructuredCampaign_Controller.ProductSku[]"/>
+    <aura:attribute name="priceBookDetails" type="StructuredCampaign_Controller.PriceBook"/>
+    <aura:attribute name="approvalHistory" type="StructuredCampaign_Controller.ApprovalHistory[]"/>
+    <aura:attribute name="paymentTermsWrapper" type="StructuredCampaign_Controller.PaymentTerms[]"/>
+    <aura:attribute name="paymentTermsToDelete" type="StructuredCampaign_Controller.PaymentTerms[]"/>
+    <aura:attribute name="groupWrapperList" type="StructuredCampaign_Controller.GroupWrapper[]"/>
+	<aura:attribute name="salesdtarr" type="StructuredCampaign_Controller.wrapperForSalesDistrict[]" access="public"/>
+    
+    <aura:attribute name="paymentTerms" type="Payment_Term__c[]" default="[]" />
+    <aura:attribute name="paymentSet" type="Set" default="[]"/>
+    <aura:attribute name="groupSet" type="Set"/>
+    <aura:attribute name="groupSetinMaterial" type="Set" default="[]"/>
+    <aura:attribute name="skuDescription" type="Map" default="{}"/>
+    <aura:attribute name="uniqueSKU" type="Set" default="[]"/>
+    <aura:attribute name="groupObj" type="Campaign_Group__c" default="{'sobjectType':'Campaign_Group__c',
+                                                                   'Name_of_the_group__c':'',
+                                                                   'Campaign__c':'',
+                                                                   'Group_Discount__c':0,
+                                                                   'Limited_volume__c':false,
+                                                                   'Do_not_generate_group_discount__c':true,  
+                                                                   'Will_you_have_a_sub_product_group__c':'No',
+                                                                   'Required_sub_group_Qty__c':0}" />
+    
+    <!-- ADDED BY KETAN -->
+    <!--added for kit-->
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'Normal Pricebook', 'value': 'Normal Pricebook'},
+    {'label': 'Price Book For Campaign', 'value': 'Price Book For Campaign'},
+    {'label': 'Price Book For Kit', 'value': 'Price Book For Kit'}
+    ]"/>
+    <aura:attribute name="value" type="String" default="Normal Pricebook"/>
+    <aura:attribute name="radioDsbld" type="boolean" default="false"/>
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-spinner_container slds-is-fixed">
+                <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+            </div>
+        </aura:if>  
+    
+        <aura:if isTrue="{!v.isOpenSD}">     
+            <!--###### MODAL BOX Start From Here ######--> 
+            <div aura:id="lookupmodal" class="slds-modal slds-fade-in-open slds-modal--large"  aria-hidden="false" role="dialog">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse"
+                                title="Close" onclick="{!c.closeModel}">
+                            X
+                            <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.modalHeader}</h2>                        
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div aura:id="accountdata" style="display:all;">
+                            <ldt:datatableDev title="{!$Label.c.Region}" aura:id="accountTable"
+                                              dataRows="{!v.accountList}" header="{!v.accountColumns}"
+                                              config="{!v.accountTableConfig}"/>
+                        </div>   
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" 
+                                onclick="{!c.closeModel}" >{!$Label.c.Cancel}</button>
+                    </div>
+                </div>
+            </div>
+            <div aura:id="backdrop" class="slds-backdrop slds-backdrop--open tog"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+        
+        <div class="slds">
+            <div class="slds-page-header">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-heading--label">{!$Label.c.Price_Book} </p>
+                                <div class="slds-grid">
+                                    <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">
+                                        {!$Label.c.Price_List_Request}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+<!-- commented checkbox code pricebook for campaign -->
+            <!--<div class="slds-p-horizontal-small slds-size-1-of-1 slds-medium-size-1-of-2 slds-large-size-1-of-4" style="margin-top:12px;">  -->
+         <!--<fieldset class="slds-form-element">         
+          <div class="slds-form-element__control">
+           <label class="slds-form-element__label"><span style="color:red">* </span>{!$Label.c.Price_Book_For_Campaign}</label>   
+            <label class="slds-radio">
+             <lightning:input aura:id="radio1" type="radio" label="Normal Pricebook" name="options" value="Simple" onchange="{!c.onRadioSelect}" />   
+            </label>
+            <label class="slds-radio">
+             <lightning:input aura:id="radio2" type="radio" label="{!$Label.c.Price_Book_For_Campaign}" name="options" value="Price Book For Campaign" onchange="{!c.onRadioSelect}" />  
+            </label>
+              <label class="slds-radio">
+             <lightning:input aura:id="radio2" type="radio" label="Price Book For Kit" name="options" value="Price Book For Kit" onchange="{!c.onRadioSelect}" />  
+            </label>
+          </div>  
+         </fieldset>-->
+        <!--</div> -->
+            <!-- commented checkbox code pricebook for campaign -->
+            <!-- added radio buttons and added new method in js controller onRadioSelect -->
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" style="margin-top:12px;">  
+         <!--<fieldset class="slds-form-element">         
+          <div class="slds-form-element__control">
+           <label class="slds-form-element__label"><span style="color:red">* </span>Price book Type</label>   
+            <label class="slds-radio">
+             <lightning:input aura:id="radi1" type="radio" label="Normal pricebook" name="options" value="Normal pricebook" onchange="{!c.onRadioSelect}" />   
+            </label>
+            <label class="slds-radio">
+             <lightning:input aura:id="radi2" type="radio" label="{!$Label.c.Price_Book_For_Campaign}" name="options" value="Price Book For Campaign" onchange="{!c.onRadioSelect}" />  
+            </label>
+              <label class="slds-radio">
+             <lightning:input aura:id="radi3" type="radio" label="Price Book For Kit" name="options" value="Price Book For Kit" onchange="{!c.onRadioSelect}" />  
+            </label>
+          </div>  
+         </fieldset>-->
+                <lightning:radioGroup name="Price book Type"
+                                      aura:id="checkbox-id-01"
+                          label="Price book Type"
+                          options="{! v.options }"
+                          value="{! v.value }"
+                          type="radio"
+                          disabled="{!v.radioDsbld}"
+                                      onchange="{!c.onRadioSelect}"/>
+        </div> 
+            <!-- added radio buttons and added new method in js controller onRadioSelect -->
+       <aura:if isTrue="{!v.hide1}">
+        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" style="margin-top:12px;">  
+         <fieldset class="slds-form-element">         
+          <div class="slds-form-element__control">
+           <label class="slds-form-element__label"><span style="color:red">* </span>{!$Label.c.Campaign_Type}</label>   
+            <label class="slds-radio">
+             <lightning:input aura:id="radio1" type="radio" label="{!$Label.c.Simple_Campaign}" name="options" value="Simple" onchange="{!c.onRadioChange}" />   
+            </label>
+            <label class="slds-radio">
+             <lightning:input aura:id="radio2" type="radio" label="{!$Label.c.Structured_Campaign}" name="options" value="Structured" onchange="{!c.onRadioChange}"/>  
+            </label>      
+          </div>  
+         </fieldset>
+        </div> 
+        </aura:if> 
+            
+            <aura:if isTrue="{!v.isEdit}">
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" >
+            <div class="slds-form-element" style="margin-top:12px;">
+                <label class="slds-form-element__label" for="checkbox-id-02"><span style="color:red">* </span>{!$Label.c.IsActive}</label>
+                <div class="slds-form-element__control">
+                  <span class="slds-checkbox slds-checkbox_standalone">
+                    <lightning:input type="checkbox" aura:id="checkbox-id-02" name="label" value="{!v.priceBookDetails.isActive}"  disabled="true" />
+                    
+                  </span>
+                </div>
+            </div>
+        </div>
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" >
+                    <div class="slds-form-element" style="margin-top:12px;" >
+                        <div class="slds-form-element__control">
+               <lightning:input type="text" 
+                                aura:id="pb_status" name="label"
+                                label="Status"
+                                value="{!v.priceBookDetails.status}"
+                                disabled="true" />
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            
+         <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" >
+          <div class="slds-form-element">
+          
+        </div>
+        </div>   
+         
+       
+            <aura:if isTrue="{!v.hide6}"><div style="clear:both;"></div>
+            <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px 0 5px 0; padding:0px 0 5px 0; border-bottom:5px solid #015ba7; clear:both;"> 
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+                 {!$Label.c.Campaign_Details}
+            </h3>
+             
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning:input type="text" aura:id="pb_name" required="true"
+                                          label="{!$Label.c.Campaign_Name}"
+                                          value="{!v.PriceBook.Name}"
+                                          messageWhenValueMissing="{!$Label.c.You_must_enter_a_name}"/>
+                        </div>
+                    </div>
+            </div>
+                
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" >
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">
+                        
+                       <lightning:input type="date" aura:id="validfrmId" 
+                                      label="{!$Label.c.Valid_From}"  required="true" 
+                                      value="{!v.frmDate}"
+                                      onblur="{!c.validateDate}"
+                                      onchange="{!c.validateDate}"
+                                      min="{!v.today}"
+                                      messageWhenValueMissing="{!$Label.c.Current_Date_validate}"  
+                                        />
+                        <aura:if isTrue="{!v.hide9}">
+                            <span style="color:red">{!$Label.c.Current_Date_validate}</span>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>    
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        
+                        <lightning:input type="date" aura:id="expiryId"
+                                      label="{!$Label.c.Expiry_Date}"  
+                                      required="true" 
+                                      value="{!v.toDate}"
+                                      onblur="{!c.validateDate2}"
+                                      min="{!v.today}"
+                                      messageWhenValueMissing="{!$Label.c.Current_Date_validate}"  
+                                      />
+                      <aura:if isTrue="{!v.hide10}">
+                            <span style="color:red">{!$Label.c.PD_ExpiryError}</span>
+                      </aura:if>                
+                    </div>
+                </div>
+            </div>
+                
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        
+                        <lightning:input type="date" aura:id="blockDateId"
+                                      label="{!$Label.c.Sales_Order_Block_Date}"  
+                                      required="true" 
+                                      value="{!v.blockDate}"
+                                      onblur="{!c.validateDate4}"
+                                      min="{!v.today}"
+                                      messageWhenValueMissing="{!$Label.c.Current_Date_validate}"  
+                                      />
+                   <aura:if isTrue="{!v.hide15}">
+                            <span style="color:red">{!$Label.c.PB_Block_Date_error}</span>
+                   </aura:if>
+                    </div>
+                </div>
+            </div>
+                
+                
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">                  
+                    <lightning:input aura:id="int_rate_R" type="text" name="int_rate_R" label="{!$Label.c.Interest_Rate_R}"
+                         value="{!v.PriceBook.Interest_Rate_R__c}" required="true"
+                         pattern="[0-9]|[0-9]{2}|[0-9],[0-9]|[0-9],[0-9]{2}|[0-9]{2},[0-9]|[0-9]{2},[0-9]{2}"
+                         messageWhenPatternMismatch="{!$Label.c.Please_enter_a_valid_percentage_value}"
+                         onchange="{!c.handleInvalidChars}"
+					/>
+                     
+  					</div>    
+                    
+                </div>
+            </div>
+                
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">                  
+                    <lightning:input aura:id="int_rate_U" type="text" name="int_rate_U" label="{!$Label.c.Interest_Rate_U}" 
+                              		 value="{!v.PriceBook.Interest_Rate_U__c}" required="true"
+                                     pattern="[0-9]|[0-9]{2}|[0-9],[0-9]|[0-9],[0-9]{2}|[0-9]{2},[0-9]|[0-9]{2},[0-9]{2}"
+                         			 messageWhenPatternMismatch="{!$Label.c.Please_enter_a_valid_percentage_value}"            
+                                     onchange="{!c.handleInvalidChars}"
+                                     />
+  					</div>    
+                    
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">                  
+                    <lightning:input aura:id="intr_dt" type="Date" name="number" label="{!$Label.c.Interest_Date}" 
+                             value="{!v.intrDate}" required="true" onblur="{!c.validateDate3}"
+                                     min="{!v.today}"
+                                      messageWhenValueMissing="{!$Label.c.Current_Date_validate}"  
+                                      />
+                     <aura:if isTrue="{!v.hide11}">
+                        <span style="color:red">{!$Label.c.Current_Date_validate}</span>
+                     </aura:if>  
+  					</div>    
+                    
+                </div>
+            </div>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                    <div class="slds-form-element" style="margin-top:12px;">
+                        <div class="slds-form-element__control">                  
+                            <lightning:input type="text" aura:id="mgr_discount" name="mgr_discount"
+                                             label="{!$Label.c.Manager_Discount}" value="{!v.mgr_discount}"
+                                             pattern="[0-9]|[0-9]{2}|[0-9],[0-9]|[0-9],[0-9]{2}|[0-9]{2},[0-9]|[0-9]{2},[0-9]{2}"
+                         					 messageWhenPatternMismatch="{!$Label.c.Please_enter_a_valid_percentage_value}"            
+                                             onchange="{!c.handleInvalidChars}"
+                                             />
+                        </div>    <!--   [0-9] | [0-9][0-9] | [0-9],[0-9] | [0-9],[0-9][0-9] | [0-9][0-9],[0-9][0-9]-->
+                        
+                    </div>
+                </div>
+                
+        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">  
+         <fieldset class="slds-form-element">         
+          <div class="slds-form-element__control">
+           <label class="slds-form-element__label">{!$Label.c.Simulator_Upload}</label>   
+            <label class="slds-radio">
+             <lightning:input aura:id="simulator1" type="radio" label="{!$Label.c.Yes}" name="simmulatorOptions" value="Yes" onchange="{!c.handleSimRadio}" />   
+            </label>
+            <label class="slds-radio">
+             <lightning:input aura:id="simulator2" type="radio" label="{!$Label.c.No}" name="simmulatorOptions" value="No" onchange="{!c.handleSimRadio}" checked="true"/>  
+            </label>      
+          </div>  
+         </fieldset>
+        </div>
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">             
+                </div>
+            	</div>
+
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1"
+                style="margin-top:10px; background:#dcedfb; font-weight:bold;">
+                <table>
+                    <tr>
+                        <th> 
+                            <div style="float:left; display:inline; margin-top:5px; padding-right:20px; font-weight:bold;">
+                                {!$Label.c.Sales_District_List}
+                            </div>
+                        </th>
+                        <aura:if isTrue="{!v.showErrOnDiv}"> 
+                            <th>
+                                <div  class="SK">
+                                   {!$Label.c.Provide_values_for_Blank_Sales_District_Master}
+                                </div>
+                            </th>
+                        </aura:if>
+                        <aura:if isTrue="{!v.showduplicateErr}">
+                            <th>
+                                <div  class="SK">
+                                    {!$Label.c.Duplicate_Sales_District_entries_found_for_current_Price_List}
+                                </div>
+                            </th>
+                        </aura:if>
+                        <th>
+                            <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small"  
+                                    onclick="{!c.addSalesDist}" style="float:right;" disabled="{!v.isEdit}">
+                                <lightning:buttonIcon iconName="utility:add" variant="bare" size="large" 
+                                                      alternativeText="" iconClass="dark"/>
+                                
+                            </button>
+                        </th>
+                    </tr>    
+                </table>
+            </h3>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <table>
+                            <tr>
+                                <td>{!$Label.c.Sales_District_Master}</td>
+                                <td style="padding-left:10px;">{!$Label.c.Action}</td>
+                            </tr>   
+                            <aura:iteration items="{!v.salesdtarr}" var="sal" indexVar="i"> 
+                                <tr>
+                                    <td>
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-combobox_container slds-has-inline-listbox">
+                                                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                                                            
+                                                            <div class="disabled">
+                                                                <ui:inputText aura:id="sdtNameforSales"  
+                                                                              value="{!sal.Name}"
+                                                                              class="slds-input slds-combobox__input"
+                                                                              disabled="true"
+                                                                              required="true"
+                                                                              />
+                                                                <div class="hiddenTextbox">
+                                                                    <ui:inputText aura:id="Id1" value=""/>
+                                                                    <ui:inputText aura:id="sdtId" 
+                                                                                  value="{!sal.Sales_District1__c}"/> 
+                                                                    
+                                                                    <ui:inputText aura:id="SDCode" 
+                                                                                  value="{!sal.RegionCode__c}"/> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                       
+                                                        <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right" title="" style="margin-top:-29px; z-index:1000;">
+                                                            <lightning:buttonIcon aura:id="sldtUtil"
+                                                                                  value="{!i}"
+                                                                                  iconName="utility:search"
+                                                                                  onclick="{!c.openSDModel}"
+                                                                                  class="slds-float_right"
+                                                                                  size="large"
+                                                                                  variant="bare"
+                                                                                  alternativeText=""
+                                                                                  />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                   
+                                    <td data-label="DELETE" class="slds-cell-wrap">
+                                       
+                                            <div class="slds-truncate" style="margin-left:10px;">
+                                                <lightning:buttonIcon aura:id="lkpdisable"
+                                                                      class="icn" 
+                                                                      value="{!i}"
+                                                                      iconName="utility:delete" 
+                                                                      onclick="{!c.handleRemoveSalesDist}" 
+                                                                      size="Large" 
+                                                                      alternativeText=""
+                                                                      />
+                                            </div>
+                                    </td>
+                                </tr>
+                                <br/>
+                            </aura:iteration>
+                        </table>
+                    </div> 
+                </div>
+            </div>
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">             
+                </div>
+            	</div>
+                
+        </div>
+                
+        <lightning:tabset aura:id="tabs" selectedTabId="one">
+        <lightning:tab label="{!$Label.c.Group}" id="one">
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:-15px 0 0 0; background:#dcedfb; font-weight:bold;">{!$label.c.Product_Groups}</h3>  
+            <div style="margin:5px 0 5px 5px">
+                   <lightning:button variant="brand" 
+                                      label="{!$Label.c.Group}" 
+                                      iconName="utility:add"
+                                      iconPosition="left" 
+                                      onclick="{!c.openModel}"
+                                     disabled="{!v.isEdit}"/>
+                
+    <div>
+    <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+    <aura:if isTrue="{!v.isOpen}">
+        
+        <!--###### MODAL BOX Start From Here ######--> 
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-modal--large slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+                        X
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header99" class="slds-text-heading--medium">{!$Label.c.Group_Settings}</h2>
+                </div>
+                <!--###### MODAL BOX BODY Part Start From Here ######-->
+                <div class="slds-modal__content slds-p-around--medium">
+                    
+                    <div class="slds-grid slds-wrap">
+                      <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+                        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-bottom:10px;">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <!--<label class="slds-form-element__label" for="grp_Name">Group Name</label>-->
+                                    <lightning:input type="text" 
+                                                     aura:id="grp_Name"
+                                                     name="grp_Name"
+                                                     value="{!v.groupObj.Name_of_the_group__c}"
+                                                     label="{!$Label.c.Group_Name}"  required="true"
+                                                     maxlength="3" pattern="[0-9]{3}|[0-9]{2}|[0-9]"
+                                                     messageWhenPatternMismatch="{!$Label.c.Only_3_Digit_Numbers_allowed}"
+													 onchange="{!c.handleInvalidChars}"
+                                                     />
+                                </div>
+                            </div>
+                        </div>
+                     <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-bottom:10px;">    
+                     <div class="slds-form-element"> 
+                        <label class="slds-form-element__label" for="grp_Desc">{!$Label.c.Group_Description}</label>
+                         <div class="slds-form-element__control">
+                             <lightning:textarea aura:id="grp_Desc" value="{!v.groupObj.Group_Description__c}" class="slds-textarea" >
+                             </lightning:textarea>
+                         </div>
+                    </div> 
+                     </div>
+                     <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-bottom:10px;">    
+                     <div class="slds-form-element">
+                      
+                        <div class="slds-checkbox">
+                          <!--<input type="checkbox" name="options" id="checkbox-6" value="checkbox-6" />-->
+                          <lightning:input type="checkbox" label="{!$Label.c.No_Discount}" aura:id="dicount_given" checked="{!v.groupObj.Do_not_generate_group_discount__c}" onchange="{!c.handleGroupDiscountCheck}" />
+                          <!--<label class="slds-checkbox__label" for="checkbox-6">
+                            <span class="slds-checkbox_faux"></span>
+                            <span class="slds-form-element__label">No Discount</span>
+                          </label>-->
+                            <aura:if isTrue="{!v.hide13}">
+                            <lightning:input type="text" label="{!$Label.c.Discount}" aura:id="grp_discount"
+                                             name="grp_discount"
+                                             class="slds-input" 
+                                             value="{!v.groupObj.Group_Discount__c}"
+                                             pattern="[0-9]|[0-9]{2}|[0-9],[0-9]|[0-9],[0-9]{2}|[0-9]{2},[0-9]{2}"
+                                    		 messageWhenPatternMismatch="{!$Label.c.Please_enter_a_valid_percentage_value}"
+                                             onchange="{!c.handleInvalidChars}"
+                                             />                           
+                            </aura:if>
+                            </div>
+                          
+                      
+                    </div>
+                   </div>
+                   <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-bottom:10px;">           
+                   <fieldset class="slds-form-element">
+                      <legend class="slds-form-element__legend slds-form-element__label">{!$Label.c.Limited_Volume}?</legend>
+                      <div class="slds-form-element__control">
+                        <span class="slds-radio">
+                          <lightning:input aura:id="ltd_vol_yes" type="radio" label="{!$Label.c.Yes}" name="ltd_vol_options" value="Yes" onchange="{!c.handleLtdVol}" />
+                         <!-- <label class="slds-radio__label" for="radio-3">
+                            <span class="slds-radio_faux"></span>
+                            <span class="slds-form-element__label">Yes</span>
+                          </label>-->
+                        </span>
+                        <span class="slds-radio">
+                          <lightning:input aura:id="ltd_vol_no" type="radio" label="{!$Label.c.No}" name="ltd_vol_options" value="No" onchange="{!c.handleLtdVol}" checked="{! if(v.groupIndex==-1,true,false)}"/>
+                          <!--<label class="slds-radio__label" for="radio-4">
+                            <span class="slds-radio_faux"></span>
+                            <span class="slds-form-element__label">No</span>
+                          </label>-->
+                        </span>
+                      </div>
+                    </fieldset>
+                          </div>
+                   </div>
+                        
+                   <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:24px 0 0 0; background:#dcedfb; font-weight:bold;">
+                         {!$Label.c.Sub_Group}
+                    </h3>
+                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-bottom:10px;">    
+                      <fieldset class="slds-form-element">
+                      <legend class="slds-form-element__legend slds-form-element__label">{!$Label.c.Will_it_have_sub_group_of_products}?</legend>
+                      <div class="slds-form-element__control">
+                        <span class="slds-radio">
+                          <lightning:input aura:id="sub_grp_req_yes" type="radio" label="{!$Label.c.Yes}" name="sub_grp_options" value="Yes" onchange="{!c.handleSubGrpRequired}"/>
+                          <!--<input type="radio" id="radio-5" name="options" value="radio-5" />
+                          <label class="slds-radio__label" for="radio-5">
+                            <span class="slds-radio_faux"></span>
+                            <span class="slds-form-element__label">Yes</span>
+                          </label>-->
+                        </span>
+                        <span class="slds-radio">
+                          <lightning:input aura:id="sub_grp_req_no" type="radio" label="{!$Label.c.No}" name="sub_grp_options" value="No" onchange="{!c.handleSubGrpRequired}" checked="{! if(v.groupIndex==-1,true,false)}"/>
+                           <!--<input type="radio" id="radio-6" name="options" value="radio-6" />
+                          <label class="slds-radio__label" for="radio-6">
+                            <span class="slds-radio_faux"></span>
+                            <span class="slds-form-element__label">No</span>
+                          </label>-->
+                        </span>
+                      </div>
+                    </fieldset>
+                       </div> 
+                     
+                       <aura:if isTrue="{!v.hide14}">
+                   <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-top:15px;">    
+                     <div class="slds-form-element">
+                      <div class="slds-form-element__control">
+                        <div class="slds-checkbox">
+                         <!-- <input type="checkbox" name="options" id="checkbox-6" value="checkbox-6" />-->
+                          <span class="slds-form-element__label">{!$Label.c.Quantity_of_sub_groups_required}</span>
+                          <lightning:input type="number" name="sub_grp_qty" aura:id="sub_grp_qty" value="{!v.groupObj.Required_sub_group_Qty__c}" min="0" onchange="{!c.handleInvalidChars}"/>  
+                          <label class="slds-checkbox__label" for="sub_grp_qty-6">
+                          </label>                          
+                        </div>
+                      </div>
+                    </div>
+                   </div>
+                   </aura:if>
+                   </div>
+                  </div>
+
+              
+  </div>
+  <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+   <div class="slds-modal__footer">
+       <button class="slds-button slds-button--brand" onclick="{!c.handleSaveGrp}">{!$Label.c.Save}</button>
+       <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}" >{!$Label.c.Cancel}</button>      
+   </div>
+   </div>
+   </div>
+   <div class="slds-backdrop slds-backdrop--open"></div>
+      <!--###### MODAL BOX Part END Here ######-->
+ </aura:if>
+</div>   
+ </div>
+ <table class="slds-table slds-table_cell-buffer slds-table_bordered" id="groupTable">
+    <thead>
+    <tr class="slds-line-height_reset">
+    <th class="" scope="col">
+    <div class="slds-truncate" title="Group">{!$Label.c.Group}</div>
+    </th>
+    <th class="" scope="col">
+    <div class="slds-truncate" title="Discount">{!$Label.c.Discount}</div>
+    </th>
+    <th class="" scope="col">
+    <div class="slds-truncate" title="Limited Volume">{!$Label.c.Limited_Volume}</div>
+    </th>
+    <th class="" scope="col">
+    <div class="slds-truncate" title="Sub Group">{!$Label.c.Sub_Group}</div>
+    </th>
+    <th class="" scope="col">
+    <div class="slds-truncate" title="Required Sub groups">{!$Label.c.Required_Sub_groups}</div>
+    </th>
+    <th class="" scope="col">
+    <div class="slds-truncate" title="Action">{!$Label.c.Action}</div>
+    </th>
+    </tr>
+    </thead>
+    <tbody>
+        <aura:iteration items="{!v.groupWrapperList}" var="grp" indexVar="i">
+        
+    <tr class="slds-hint-parent">
+    <td data-label="Group" scope="row">
+    <div class="slds-truncate" title=""><a href="javascript:void(0);" tabindex="-1">{!grp.grp_name}</a></div>
+    </td>
+    <td data-label="Discount">
+    <div class="slds-truncate" >{!grp.discount}</div>
+    </td>
+    <td data-label="Limited Volume">
+        <aura:if isTrue="{!grp.limited_vol=='Yes'}">
+            <div class="slds-truncate">{!$Label.c.Yes}</div>
+            <aura:set attribute="else">
+                <div class="slds-truncate">{!$Label.c.No}</div>
+            </aura:set>
+        </aura:if>
+    </td>
+    <td data-label="Sub Group">
+        <aura:if isTrue="{!grp.subgrp_required=='Yes'}">
+            <div class="slds-truncate">{!$Label.c.Yes}</div>
+            <aura:set attribute="else">
+                <div class="slds-truncate">{!$Label.c.No}</div>
+            </aura:set>
+        </aura:if>        
+    </td>
+    <td data-label="Required Subgroups">
+    <div class="slds-truncate">{!grp.subgrp_qty_required}</div>
+    </td>
+    <td data-label="Action">
+    <div class="slds-truncate">
+       <lightning:button variant="brand"
+                         label="{!$Label.c.Edit}" 
+                         iconName="utility:edit" 
+                         iconPosition="left" 
+                         onclick="{!c.handleEditGroup}"   
+                         value="{!i}"
+                         disabled="{!v.isEdit}"
+                         />
+      <lightning:button variant="brand"
+                        label="{!$Label.c.Delete}" 
+                        iconName="utility:delete" 
+                        iconPosition="left" 
+                        onclick="{!c.handleDeleteGrp}"   
+                        value="{!i}" 
+                        disabled="{!v.isEdit}"
+                        />
+    </div>
+    </td>
+    </tr>
+    <!--<tr class="slds-hint-parent">
+    <th data-label="Group" scope="row">
+    <div class="slds-truncate" title=""><a href="javascript:void(0);" tabindex="-1">002</a></div>
+    </th>
+    <td data-label="Discount">
+    <div class="slds-truncate" title="10">20</div>
+    </td>
+    <td data-label="Limited Volume">
+    <div class="slds-truncate" title="No">No</div>
+    </td>
+    <td data-label="Sub Group">
+    <div class="slds-truncate" title="Yes">Yes</div>
+    </td>
+    <td data-label="Required Subgroups">
+    <div class="slds-truncate" title="1">2</div>
+    </td>
+    <td data-label="Action">
+    <div class="slds-truncate">
+    <lightning:button variant="brand"
+                                          label="Edit" 
+                                          iconName="utility:edit" 
+                                          iconPosition="left" 
+                                          onclick=""   
+                                          />
+      <lightning:button variant="brand"
+                                          label="Delete" 
+                                          iconName="utility:delete" 
+                                          iconPosition="left" 
+                                          onclick=""   
+                                          />
+    </div>
+    </td>
+    </tr> -->
+    </aura:iteration>
+    </tbody>
+    </table> 
+    
+
+
+
+<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:15px 0 0 0; border-top:5px solid #015ba7; background:#dcedfb; font-weight:bold;">
+<div class="slds-grid slds-wrap slds-grid--pull-padded" style="margin:0; padding:0; clear:both;"> 
+<div class="slds-form-element" style="margin:4px 5px 0 5px">
+  <div class="slds-form-element__control">
+               <input class ="slds-input" accept=".csv" type="file" id="file" aura:id="csvFile" fileName="{!v.fname}"/>
+    <!--<div class="slds-file-selector slds-file-selector_files" style="background:#fff; border:2px dotted #fff;">
+      <div class="slds-file-selector__dropzone">
+          <input class="slds-file-selector__input slds-assistive-text" accept=".csv" type="file" id="file" aura:id="csvFile" fileName="{!v.fname}" />
+
+          <label class="slds-file-selector__body" for="file" id="file-selector-secondary-label">            
+          <span class="slds-file-selector__text slds-medium-show">Upload File</span>
+        </label>          
+      	</div> 
+        
+    </div>-->
+  </div>
+</div>
+
+	<!--<lightning:button variant="brand" label="Import" 
+                                  iconName="utility:download"
+                                  iconPosition="left" 
+                                  onclick="{!c.handleImport}" />
+	-->
+    <lightning:button variant="brand" aura:id="imprtbtn"
+                                      label="{!$Label.c.Import}" 
+                                      iconName="utility:download"
+                                      iconPosition="left" 
+                                      onclick="{!c.handleImport}" 
+                      				  disabled="{!v.isEdit}"
+                      /> 
+	</div>
+	  </h3>
+
+     <div>    
+  <div class="slds-m-around_medium" style="overflow: auto;overflow-y: hidden;">
+    <table id="csvTable" class="slds-table slds-table_bordered slds-table_cell-buffer" cellspacing="0" width="100%" >
+        <thead>
+        <tr>
+       <!-- <th>
+        CN
+        </th> -->
+        <th>
+        {!$Label.c.Material_Code}
+        </th>
+        <th>
+        {!$Label.c.Material_Description}
+        </th>
+        <th>
+        {!$Label.c.Volume}
+        </th>
+        <th>
+        {!$Label.c.UNIT_PRICE_BRL}
+        </th>
+        <th>
+        {!$Label.c.UNIT_PRICE_USD}
+        </th>
+        <th>
+        {!$Label.c.SKU_Cost} BRL
+        </th>
+        <th>
+        {!$Label.c.SKU_Cost} USD
+        </th>
+        <th>
+        {!$Label.c.Future_Sales_Price} BRL
+        </th>
+        <th>
+        {!$Label.c.Future_Sales_Price} USD
+        </th>
+        <th>
+        {!$Label.c.Equivalence}
+        </th>
+        <th>
+        {!$Label.c.Multiplication_Factor}
+        </th>
+        <th>
+        {!$Label.c.Group}
+        </th>
+        <th>
+        {!$Label.c.Sub_Group}
+        </th>
+        <th>
+        {!$Label.c.Anchor}
+        </th>
+        <th>
+        {!$Label.c.Required_Sub_groups}
+        </th>
+        </tr>
+        </thead>
+        <tbody>
+       
+        </tbody>
+        </table>
+        </div> 
+        </div>
+            
+        </lightning:tab>
+        <lightning:tab label="{!$Label.c.Payment_Terms}" id="tbTwo" onactive="{!c.getPaymentTerms}">
+                <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:-16px 0 5px 0; padding:0px 0 5px 0; border-bottom:5px solid #015ba7; clear:both;">
+                    <div class="slds-grid slds-grid_vertical" style="margin-left:10px;">
+                    <div class="slds-col">
+                    <div class="slds-float_left">
+                        <div class="slds-form-element" style="margin-top:12px;">
+                            <div class="slds-form-element__control">                  
+                            <lightning:input aura:id="pay_date" type="Date" name="number" label="{!$Label.c.Fixed_Date}" value="" min="{!v.today}"/>
+                            <aura:if isTrue="{!v.hide16}">
+                                <span style="color:red">{!$Label.c.Current_Date_validate}</span>
+                            </aura:if>
+                            </div>    
+                        </div>
+                    </div>
+                        <div class="slds-float_left" style="margin:35px 0 0 5px;">
+                            <lightning:button aura:id="pay_dateBtn" variant="brand" label="{!$Label.c.Add}" iconName="utility:add" iconPosition="left" 
+                                     onclick="{!c.handlePaymntDateAdd}"
+                                     disabled="{!v.inApprovalFlag}"        
+                             />
+                        </div>
+                        
+                    </div>
+                    <div class="slds-col">
+                        <div class="slds-float_left">
+                            <div class="slds-form-element" style="margin-top:12px;">
+                            <div class="slds-form-element__control">
+                                
+                                <lightning:select  aura:id="pay_term" label="{!$Label.c.Number_of_Days}" onchange="">
+                                    <option value="">{!$Label.c.None}</option>
+                                    <aura:iteration items="{!v.paymentTerms}" var="term" >
+                                        <option  value="{!term.Id}">{!term.Payterms_Desc__c}</option>
+                                    </aura:iteration>
+                                 </lightning:select>
+                                
+                            </div>
+                            </div>
+                        </div> 
+                       <div class="slds-float_left" style="margin:36px 0 0 5px;">
+                        
+                            <lightning:button aura:id="pay_termBtn" variant="brand" label="{!$Label.c.Add}" iconName="utility:add"  iconPosition="left" 
+                                       onclick="{!c.handlePaymntTermAdd}"
+                                       disabled="{!v.inApprovalFlag}"        />
+                         
+                      </div>
+                   </div>
+                  </div>		
+                </div>
+
+                <div class="slds-scrollable_x" style="margin-bottom:0px;">
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:0; background:#dcedfb; font-weight:bold;">
+                        {!$Label.c.Payment_Terms}
+                </h3>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <tbody>
+                       <aura:iteration items="{!v.paymentTermsWrapper}" var="pay" indexVar="i"> 
+                        <tr class="slds-hint-parent">
+                            <th data-label="Group" scope="row" width="15%">
+                              <div  class="slds-truncate" title="">{!pay.pt_name}</div>
+                            </th>
+                            <td data-label="Action">
+                             <aura:if isTrue="{!v.hideDeleteBtn}">   
+                              <div class="slds-truncate" >
+                                <lightning:button aura:id="payDelBtn" value="{!i}" variant="brand" name="{!pay.id}" label="Delete" iconName="utility:delete" iconPosition="left" 
+                                    onclick="{!c.deletePaymntTrm}"  />
+                             </div>
+                            </aura:if>
+                            </td>
+                        </tr>
+                       </aura:iteration>
+                        
+                    </tbody>
+                </table>
+             </div>
+           </lightning:tab>
+            
+<lightning:tab label="{!$Label.c.Approval_History}" id="three">
+<div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:-16px 0 5px 0; padding:0px 0 5px 0;"> 
+<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+<thead>
+<tr class="slds-line-height_reset">
+<th class="" scope="col">
+    {!$Label.c.Date}
+</th>
+<th class="" scope="col">
+  {!$Label.c.Name}
+</th>
+<th class="" scope="col">
+  {!$Label.c.USER}
+</th>
+<th class="" scope="col">
+   {!$Label.c.Status}
+</th>
+<th class="" scope="col">
+ {!$Label.c.Note} 
+</th>
+</tr>
+</thead>
+<tbody>
+<aura:iteration items="{!v.approvalHistory}" var="appr"> 
+                                    <tr >
+                                        <td>{!appr.date_tm}</td>
+                                        <td>{!appr.name}</td>
+                                        <td>{!appr.user}</td>
+                                        <td>{!appr.cur_status}</td>
+                                        <td>{!appr.comment}</td>
+                                       
+                                    </tr>
+                                </aura:iteration> 
+</tbody>
+</table>
+</div>
+</lightning:tab>
+</lightning:tabset>
+</aura:if>
+            
+            <div class="slds-align_absolute-center slds-p-top_small" style="margin-bottom:10px;">
+                
+            <aura:if isTrue="{!v.isSavebtnHide}">
+                    <lightning:button variant="brand"
+                                      label="{!$Label.c.Save}" 
+                                      iconName="utility:save" 
+                                      iconPosition="left" 
+                                      onclick="{!c.handlePriceBookSave}"   
+                                      />
+                    <lightning:button variant="brand"                                      
+                                      label="{!$Label.c.Submit_For_Approval}" 
+                                      iconName="utility:approval" 
+                                      iconPosition="left" 
+                                      onclick="{!c.handleSaveAndSubmit}" 
+                                      disabled=""
+                                      />
+               		<lightning:button variant="brand" 
+                                      label="{!$Label.c.Cancel}" 
+                                      iconName="utility:close"
+                                      iconPosition="left" 
+                                      onclick="{!c.gotoListview}"
+                                      />
+                    
+                    
+                    <lightning:button variant="brand"
+                                      label="{!v.active_deactive}" 
+                                      iconName="utility:clear" 
+                                      iconPosition="left" 
+                                      onclick=""
+                                      disabled="true"
+                                      />
+                </aura:if>
+                
+                <aura:if isTrue="{!v.isbtndisable}">
+                  
+                    <lightning:button aura:id="updateBtn"
+                                      variant="brand" 
+                                      label="{!$Label.c.Update}" 
+                                      iconName="utility:check"
+                                      iconPosition="left" 
+                                      onclick="{!c.handlePriceBookUpdate}"
+                                      />
+                   
+                    <lightning:button aura:id="approvalBtnId"
+                                      variant="brand"
+                                      label="{!$Label.c.Submit_For_Approval}" 
+                                      iconName="utility:approval" 
+                                      iconPosition="left" 
+                                      onclick="{!c.submitApproval}" 
+                                      disabled="{!v.inApprovalFlag}"
+                                      />
+               		<lightning:button variant="brand" 
+                                      label="{!$Label.c.Cancel}" 
+                                      iconName="utility:close"
+                                      iconPosition="left" 
+                                      onclick="{!c.gotoListview}"
+                                      />
+                    
+                    <lightning:button aura:id="deactivate_btn"
+                                      variant="brand"
+                                      label="{!v.active_deactive}" 
+                                      iconName="utility:clear" 
+                                      iconPosition="left" 
+                                      onclick="{!c.handleDeactivate}"
+                                      />
+                </aura:if>
+               </div>
+            
+</div>      
+</aura:component>

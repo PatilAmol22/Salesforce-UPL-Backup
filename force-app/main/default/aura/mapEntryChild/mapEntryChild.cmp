@@ -1,0 +1,66 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+ <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="map" type="map"/>
+    <aura:attribute name="key" type="string"/>
+    <aura:attribute name="value" type="string"/>
+    
+     <lightning:layout>
+             <lightning:layoutItem size="1">
+             </lightning:layoutItem>
+             
+             <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           <b>Total {!v.key}</b>
+             </lightning:layoutItem>
+          <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                               <b> <lightning:formattedNumber value="{!v.value.Goals_Volume}" minimumFractionDigits="2"/></b>
+           
+      			
+              
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                           <b><lightning:formattedNumber value="{!v.value.Goals_Value}" minimumFractionDigits="2"/></b>
+
+                 
+                 <!-- value ill come -->
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <b><lightning:formattedNumber value="{!v.value.Real_Volume}" minimumFractionDigits="2"/></b>
+
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <b><lightning:formattedNumber value="{!v.value.Real_Value}" minimumFractionDigits="2"/></b>
+
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <b><lightning:formattedNumber value="{!v.value.Returns_Volume}" minimumFractionDigits="2"/></b>
+
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <b><lightning:formattedNumber value="{!v.value.Returns_Value}" minimumFractionDigits="2"/></b>
+
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <b><lightning:formattedNumber value="{!v.value.Reach_Volume_Percnt}" minimumFractionDigits="2"/></b>
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+             <b><lightning:formattedNumber value="{!v.value.Reach_Real_Volume}" minimumFractionDigits="2"/></b>
+
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+             <b><lightning:formattedNumber value="{!v.value.Reach_Real_Value}" minimumFractionDigits="2"/></b>
+
+                 
+             </lightning:layoutItem>
+             
+          <lightning:layoutItem size="1">
+             </lightning:layoutItem>
+             
+         </lightning:layout>
+    
+    
+</aura:component>

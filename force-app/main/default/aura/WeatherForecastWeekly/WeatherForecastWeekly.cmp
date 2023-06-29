@@ -1,0 +1,71 @@
+<aura:component controller="WeatherForecastCtlr" implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="allData" type="List" />
+    <aura:attribute name="filteredData" type="List" />
+    <aura:attribute name="tableData" type="List" />
+    <aura:attribute name="columns" type="Object[]" />
+    <aura:attribute name="pageSize" type="Integer" default="5" />
+    <aura:attribute name="pageSizeOptions" type="Integer[]" default="5,10,15,20" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="searchPhrase" type="String" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="isError" type="Boolean" default="true" />
+    <aura:attribute name="moreLess" type="Boolean" default="true" />
+    <aura:attribute name="StateName" type="String" />
+    <aura:attribute name="DistrictName" type="String" />
+    
+    <aura:handler name="init" value="{!this }" action="{! c.doInit }" />
+    <aura:if isTrue="{!v.isError}">
+        <div class="hdr" style="background-color: #083357;color: aliceblue;border-radius: 6px;padding:1%;">
+            <div style="display: inline-block;width:40%;font-size: 14px;">
+                <img src="{!$Resource.nurturecarelogo}" style="width:22%" />
+            Weather Forecast
+            </div>
+            <div style="display: inline-block;width:60%;text-align: right;">
+                
+                    <aura:if isTrue="{!v.moreLess}">
+                        <lightning:button   label="more" variant="neutral" onclick="{!c.more}" />
+                        <aura:set attribute="else">
+                            <lightning:button   label="less" variant="neutral" onclick="{!c.less}" />
+                        </aura:set>
+                    </aura:if>
+                    <lightning:buttonIcon onclick="{!c.doInit}" iconName="utility:refresh" variant="border-filled" alternativeText="reload"/>
+               
+            </div>
+        </div>
+    <lightning:card >
+        <lightning:datatable
+                             aura:id="table"
+                             columns="{!v.columns }"
+                             data="{!v.tableData }"
+                             hideCheckboxColumn="true"
+                             keyField="Id" />
+    </lightning:card>
+    <div class="slds-p-around_small slds-grid slds-grid_align-spread slds-grid_vertical-align-start">
+       <div style="padding-left: 20%;">
+            <lightning:button
+                              label="Previous"
+                              iconName="utility:chevronleft"
+                              iconPosition="left"
+                              onclick="{! c.onPrev }"
+                              disabled="{! v.currentPageNumber == 1 }" />
+
+            <lightning:button
+                              label="Next"
+                              iconName="utility:chevronright"
+                              iconPosition="right"
+                              onclick="{! c.onNext }"
+                              disabled="{! v.currentPageNumber == v.totalPages }" />
+             
+        </div>
+        
+    </div>
+        <aura:set attribute="else">
+            <div class="slds-text-align_center">Something went wrong. Contact administrator.</div>
+        </aura:set>
+        </aura:if>
+    <aura:if isTrue="{!v.isLoading}">
+        <lightning:spinner variant="brand" alternativeText="Loading" />
+    </aura:if>
+</aura:component>

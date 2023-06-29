@@ -1,0 +1,209 @@
+<aura:component controller="InventoryUpload" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute type="InventoryUpload" name="oInventoryUpload"/>
+    <aura:attribute type="Boolean" name="isCustomer" default="false"/>
+    <aura:attribute type="Boolean" name="isSalesRep" default="false"/>
+    <aura:attribute name="blockDate" type="Integer" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="FileName" type="string" />
+    <aura:attribute name="doc" type="string" />
+    <!-- added by Swapnil -->
+    <aura:attribute name="ActiveSection" type="string" /> 
+    <aura:attribute name="enteredValue" type="String" />
+    <aura:handler name="sampleComponentEvent" event="c:compEvent" action="{!c.handleComponentEvent}"/>
+    <!-- ends -->
+    
+    <div></div>   
+    <body class="bgColor">
+        <!--value entered on child component input Box: <b>{!v.enteredValue}</b>-->
+        <lightning:accordion aura:id="accordion" 
+                             activeSectionName="{!v.ActiveSection}">
+            
+            <br/>
+            <lightning:accordionSection name="A" label="{!$Label.c.SIC_Inventory_Upload}">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size--1-of-12 slds-small-size--1-of-1 slds-large-size--9-of-12">             
+                    </div>
+                    <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size--1-of-12 slds-small-size--1-of-1 slds-large-size--3-of-12">             
+                        <div class="slds-float_right">
+                            <!--<a href="{!v.doc}" >{!$Label.c.InventoryUploadTemplate}</a>-->
+                            <a onclick="{!c.downloadCSV}" >{!$Label.c.InventoryUploadTemplate}</a>
+                        </div>
+                        <!--<div>
+                    <button class="slds-button slds-button-brand" onclick="{!c.downloadCsv}">Download As CSV</button>
+                </div>-->
+                    </div>
+                </div>
+                <ui:outputText aura:id="intendSalesReperro" class="slds-align_absolute-center error-text slds-hide"  value="{!$Label.c.SICUpdateblocked}"></ui:outputText>
+                <ui:outputText aura:id="Success" class="slds-align_absolute-center success-text slds-hide"  value="Update Successful"></ui:outputText>
+                <ui:outputText aura:id="selectvolume" class="slds-align_absolute-center error-text slds-hide"  value="{!$Label.c.SICerrorupload}"></ui:outputText>
+                <ui:outputText aura:id="selectfile" class="slds-align_absolute-center error-text slds-hide"  value="{!$Label.c.SICerrorfile}"></ui:outputText>
+                <br />
+                <br />
+                
+                <lightning:layout>
+                    <lightning:layoutItem flexibility="auto"  size="2">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="4">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right">
+                                <div class="slds-grid slds-wrap" style="padding-top:15px;">
+                                    <label class="slds-form-element__label slds-text-heading_small"><aura:unescapedHtml value="{!$Label.c.UploadInventory}"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem flexibility="auto"  size="4">
+                        
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size--5-of-12 slds-small-size--1-of-1 slds-large-size--5-of-12">  
+                                
+                                <div class="input-select-width">
+                                    
+                                    <lightning:select variant="label-hidden" aura:id="volume" >
+                                        
+                                        <option value="">{!$Label.c.chooseone}</option>
+                                        <aura:if isTrue="{!v.isCustomer}">
+                                            <option value="disti">{!$Label.c.DistributorVolume}</option>
+                                            <option value="upl">{!$Label.c.UPLVol}</option>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.isSalesRep}">
+                                            <option value="disti">{!$Label.c.DistributorVolume}</option>
+                                        </aura:if>
+                                    </lightning:select>
+                                </div>  
+                            </div>
+                        </div>
+                    </lightning:layoutItem>    
+                </lightning:layout>
+                
+                <lightning:layout>
+                    <lightning:layoutItem flexibility="auto"  size="2">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="4">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right">
+                                <div class="slds-grid slds-wrap" style="padding-top:30px;">
+                                    <label class="slds-form-element__label slds-text-heading_small"><aura:unescapedHtml value="{!$Label.c.UploadFile}"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto"  size="12">           
+                        <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size--2-of-12 slds-small-size--1-of-1 slds-large-size--4-of-12">
+                            <lightning:input aura:id="fileId" type="file" name="file" multiple="false" onchange="{!c.onFileUploaded}"/> 
+                            <ui:outputText aura:id="filename" class="slds-hide" value="{!v.FileName}"></ui:outputText>
+                            
+                        </div> 
+                    </lightning:layoutItem>
+                </lightning:layout>
+                
+                
+                <!-- button-->  
+                <div class="slds-align_absolute-center">
+                    <lightning:button label="{!$Label.c.UploadButton}" 
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.fileSelected}"/>   
+                </div>
+                <br/>
+                <br/> 
+            </lightning:accordionSection>
+            <aura:if isTrue="{!v.isCustomer}">
+                <lightning:accordionSection name="B" label="{!$Label.c.SIC_Update_End_Date}"  >
+                    <ui:outputText aura:id="selectDate" class="slds-align_absolute-center error-text slds-hide"  value="Value should be between 1-31"></ui:outputText>
+                    <ui:outputText aura:id="selectValue" class="slds-align_absolute-center error-text slds-hide"  value="Please select a value"></ui:outputText>
+                    <lightning:layout>
+                        <lightning:layoutItem flexibility="auto"  size="1">
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto"  size="4">
+                            <div class="slds-clearfix">
+                                <div class="slds-float_right">
+                                    <div class="slds-grid slds-wrap" style="padding-top:15px;">
+                                        <label class="slds-form-element__label slds-text-heading_small"><aura:unescapedHtml value="{!$Label.c.SIC_Enter_Value}"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="auto"  size="4">
+                            
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size--5-of-12 slds-small-size--1-of-1 slds-large-size--5-of-12">  
+                                    
+                                    <div class="input-select-width">
+                                        <lightning:input name="bDate" value="{!v.blockDate}" aura:id="bDate" disabled="{!v.isSalesRep}" pattern="[0-9]*"/>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning:layoutItem> 
+                    </lightning:layout>
+                    <div class="slds-align_absolute-center">
+                        <lightning:button label="{!$Label.c.SIC_Submit}" 
+                                          class="slds-m-top--medium"
+                                          variant="brand"
+                                          onclick="{!c.updateBlockDate}"
+                                          disabled="{!v.isSalesRep}"/>
+                        
+                    </div>
+                </lightning:accordionSection>
+            </aura:if>
+            
+            <!-- SIC Customer Tab / Added  by Swapnil -->
+            <aura:if isTrue="{!v.isCustomer}">
+                <lightning:accordionSection name="C" label="{!$Label.c.SIC_Customer_Upload}"  >
+                    <lightning:layout>
+                        <lightning:layoutItem flexibility="auto"  size="12">
+                            <c:SICCustomerUploadLC ActiveSection="{!v.ActiveSection}"/>
+                        </lightning:layoutItem>
+                        
+                    </lightning:layout>
+                    
+                </lightning:accordionSection>
+            </aura:if>
+            <!-- end -->
+            
+            <!-- SIC Sales Rep Exception / Added  by Swapnil -->
+            <aura:if isTrue="{!v.isCustomer}">
+                <lightning:accordionSection name="D" label="{!$Label.c.SIC_Sales_Rep_Entry_Exception}"  >
+                    <lightning:layout>
+                        <lightning:layoutItem flexibility="auto"  size="12">
+                            <c:SICSalesRepEntryExceptionLC ActiveSection="{!v.ActiveSection}"/>
+                        </lightning:layoutItem>
+                        
+                    </lightning:layout>
+                </lightning:accordionSection> 
+            </aura:if>
+            
+            <!-- end -->
+            
+            <!-- SIC Sales Rep SKU Exception / Added  by Swapnil -->
+            <aura:if isTrue="{!v.isCustomer}">
+                <lightning:accordionSection name="E" label="{!$Label.c.SIC_Sales_Rep_SKU_Entry_Exception}"  >
+                    <lightning:layout>
+                        <lightning:layoutItem flexibility="auto"  size="12">
+                            <c:SICSalesRepSKUEntryLC ActiveSection="{!v.ActiveSection}"/>
+                        </lightning:layoutItem>
+                        
+                    </lightning:layout>
+                    
+                </lightning:accordionSection>
+            </aura:if>
+            <!-- end -->
+            
+            <!-- SIC SKU Upload / Added  by Sayan -->
+            <aura:if isTrue="{!v.isCustomer}">
+                <lightning:accordionSection name="F" label="SIC SKU Upload"  >
+                    <lightning:layout>
+                        <lightning:layoutItem flexibility="auto"  size="12">
+                            <c:SIC_SKU_Upload ActiveSection="{!v.ActiveSection}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:accordionSection>
+            </aura:if>
+            <!-- end -->
+            
+        </lightning:accordion>
+    </body>
+</aura:component>

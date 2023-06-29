@@ -1,0 +1,454 @@
+<aura:component access="global" controller="ProductCatalogController"
+ implements="forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable,lightning:actionOverride,force:appHostable,force:hasRecordId,flexipage:availableForAllPageTypes,force:hasSObjectName,force:lightningQuickAction,flexipage:availableForRecordHome">
+ 
+ <aura:attribute name="recordId" type="Id"/>
+ <aura:handler name="init" value="this" action="{!c.doInit}"/>
+ <aura:attribute name="firstDropDownList" type="ProductCatalogController.ProductWrapper[]" />
+ <aura:attribute name="secondDropDownList" type="ProductCatalogController.ProductWrapper[]" />
+ <aura:attribute name="thirdDropDownList" type="ProductCatalogController.ProductWrapper[]" />
+ <aura:attribute name="allProductList" type="ProductCatalogController.ProductWrapper[]" />
+ <aura:attribute name="showSpinner" type="boolean" default="false"/>
+ <aura:attribute name="firstVal" type="String" default="" access="global"/>
+ <aura:attribute name="secondVal" type="String" default="" access="global"/>
+ <aura:attribute name="thirdVal" type="String" default="" access="global"/>
+ <aura:attribute name="backgroundImageURL" type="String" default=""/>
+ <aura:attribute name="showCatalog" type="boolean" default="true"/>
+ <aura:attribute name="productName" type="String" default="" access="global"/>
+ <aura:attribute name="productDetails" type="ProductCatalogController.ProductWrapper" />
+ <aura:attribute name="showDetails" type="boolean" default="false"/>
+ <aura:attribute name="homeURL" type="String" default="" access="global"/>
+ <aura:attribute name="productURL" type="String" default="" access="global"/>
+
+ <aura:attribute name="pageReference" type="Object"/>
+ <!--Added by vaishnavi for mobile view pagination START-->
+ <aura:attribute name="PaginationList" type="Contact"/>
+ <aura:attribute name="startPage" type="Integer" />
+ <aura:attribute name="endPage" type="Integer"/>
+ <aura:attribute name="totalRecords" type="Integer"/>
+ <aura:attribute name="pageSize" type="Integer" default="15"/>
+   <aura:attribute name="pageNumber" type="Integer" default="1" />
+
+   <!--Pagination End -->
+ <aura:if isTrue="{!v.showSpinner}">
+    <div class="slds-spinner_container slds-is-fixed">
+        <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+    </div> 
+  </aura:if>
+
+<aura:if isTrue="{!v.showCatalog}"> 
+ <div style="background:#f45923;">
+  
+  <div class="slds-grid slds-wrap slds-gutters"  style="{!'padding:50px 10px;background-image: url('+ v.backgroundImageURL + ')'}">
+
+    <div class="slds-grid slds-wrap" style="margin-bottom:5px; padding:0; border-radius:5px 5px 0 0;">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                  <!--<span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px; margin-left:10px;">
+                      <lightning:icon iconName="standard:lead_list" style="background:#48c3cc;" alternative-text="note" size="medium"/>
+                  </span>-->
+              <div class="titleregular" style="float:left; display:inline; margin:8px; color:#fff; font-size:36px; font-weight:normal;">
+                  <span class="slds-page-header_title" title="Find Your Product">{!$Label.c.Find_Your_Products}</span>
+              </div>
+        </div>  
+    </div>    
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+
+      <div class="slds-grid slds-wrap slds-gutters" style="margin:0 5px 10px 0; padding-top:0px;">
+          
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="margin-top:10">   
+
+            <lightning:select value="{!v.firstVal}" label="" aura:id="first_dropDwn" onchange="{!c.handleChange1}">
+                    <option value="">{!$Label.c.Select}</option>
+                <aura:iteration items="{!v.firstDropDownList}" var="firstCat">
+                    <option selected="{!firstCat.id==v.firstVal}" value="{!firstCat.id}">{!firstCat.name}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+            
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+          <lightning:select value="{!v.secondVal}" label="" aura:id="second_dropDwn" onchange="{!c.handleChange2}">
+              <option value="">{!$Label.c.Select}</option>
+          <aura:iteration items="{!v.secondDropDownList}" var="secondCat">
+              <option selected="{!secondCat.id==v.secondVal}" value="{!secondCat.id}">{!secondCat.name}</option>
+          </aura:iteration>
+          </lightning:select>
+        </div>
+            
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+          <lightning:select value="{!v.thirdVal}" label="" aura:id="second_dropDwn" >
+              <option value="">{!$Label.c.Select}</option>
+          <aura:iteration items="{!v.thirdDropDownList}" var="thirdCat">
+              <option selected="{!thirdCat.id==v.thirdVal}" value="{!thirdCat.id}">{!thirdCat.name}</option>
+          </aura:iteration>
+          </lightning:select>
+        </div>
+            
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="margin-top:19px;">
+          <lightning:button variant="Success" label="{!$Label.c.Show_Products}" title="{!$Label.c.Show_Products}" onclick="{! c.handleShow }" />
+        </div>
+        
+      </div>
+    </div>        
+  </div>	
+ </div>
+
+ <aura:if isTrue="{!v.allProductList.length != 0}">
+    <aura:iteration items="{!v.allProductList}" var="prod" indexVar="i">
+
+        <div class="slds-grid slds-wrap" style="background:#fff; padding:0; margin:5px 38px 20px 34px; border-bottom:1px solid #28a44a; border-radius:5px 5px 0 0;">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <div class="titleregular" style="float:left; margin:8px; font-size:36px; font-weight:normal;">
+                    <span><img src="{!prod.productTypeImage}"/></span>
+                    <span class="slds-page-header_title" title="">{!prod.displayName} &nbsp;({!prod.numberOfProducts})</span>
+                </div>
+            </div>  
+        </div>
+        <aura:if isTrue="{!prod.productList.length != 0}">
+            <aura:if isTrue="{!$Browser.formFactor=='DESKTOP'}">
+                <div style="margin:0; padding:0; padding:11px 0; background:#fff;">	
+                    <div class="slds-grid slds-wrap slds-gutters" style="margin:10px; padding:10px;">
+
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                            <aura:iteration items="{!prod.productList}" var="prodList" indexVar="j">
+                                <aura:if isTrue="{!j % 2 == 0}">
+                                    <div class="orange2" style="{!'background-image: url('+ prodList.leafImage+ ')'}">
+                                        <span style="color:#fff; font-size:18px;">{!prodList.name}</span>
+                                    </div>
+                                </aura:if>
+                            </aura:iteration>
+                        </div>
+                            
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_4-of-12 brdbtm" style="padding-top:15px;">
+                            <aura:iteration items="{!prod.productList}" var="prodList2" indexVar="k">
+                                <aura:if isTrue="{!k % 2 == 0}">
+                                    <span style="color:#888; font-size:12px;">{!$Label.c.Active_Ingredients}:</span><br/>
+                                    <span style="color:#000; font-size:14px;">{!prodList2.ingredients}</span><br/><br/>
+                                    <span style="color:#888; font-size:14px;"><lightning:button class="testMar" variant="base" value="{!prodList2.prod_url}" label="{!$Label.c.View_Details}" title="{!$Label.c.View_Details}" onclick="{! c.viewDetails }"/></span><br/>
+                                </aura:if>
+                            </aura:iteration>
+                        </div>
+
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                            <aura:iteration items="{!prod.productList}" var="prodList3" indexVar="m">
+                                <aura:if isTrue="{!m % 2 != 0}">
+                                    <div class="orange2" style="{!'background-image: url('+ prodList3.leafImage+ ')'}">
+                                        <span style="color:#fff; font-size:18px;">{!prodList3.name}</span>
+                                    </div>
+                                </aura:if>
+                            </aura:iteration>
+                        </div>
+                            
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_4-of-12 brdbtm" style="padding-top:15px;">
+                            <aura:iteration items="{!prod.productList}" var="prodList4" indexVar="n">
+                                <aura:if isTrue="{!n % 2 != 0}">
+                                    <span style="color:#888; font-size:12px;">{!$Label.c.Active_Ingredients}:</span><br/>
+                                    <span style="color:#000; font-size:14px;">{!prodList4.ingredients}</span><br/><br/>
+                                    <span style="color:#888; font-size:14px;"><lightning:button class="testMar" variant="base" value="{!prodList4.prod_url}" label="{!$Label.c.View_Details}" title="{!$Label.c.View_Details}" onclick="{! c.viewDetails }"/></span><br/>
+                                </aura:if>
+                            </aura:iteration>
+                        </div>
+
+
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!$Browser.formFactor!='DESKTOP'}">
+                <div style="margin:0; padding:0; padding:11px 0; background:#fff;">	
+                    <aura:iteration items="{!v.PaginationList}" var="prodList" indexVar="j">
+                        <!-- <aura:if isTrue="{!j % 2 == 0}"> -->
+                            <div class="slds-grid slds-wrap slds-gutters" style="margin:10px; padding:10px;">
+                                <div class="slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_2-of-12"  >
+                                   <div class="orange2" style="{!'background-image: url('+ prodList.leafImage+ ')'}">
+                                    <span style="color:#fff; font-size:18px;">{!prodList.name}</span>
+
+                                   </div>
+                                    
+                                </div>
+                                <div class="slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_8-of-12">
+                                    <span style="color:#888; font-size:12px;">{!$Label.c.Active_Ingredients}:</span><br/>
+                                    <span style="color:#000; font-size:14px;">{!prodList.ingredients}</span><br/><br/>
+                                    <span style="color:#888; font-size:14px;"><lightning:button class="testMar" variant="base" value="{!prodList.prod_url}" label="{!$Label.c.View_Details}" title="{!$Label.c.View_Details}" onclick="{! c.viewDetails }"/></span><br/>
+                          
+                                </div>
+                            </div>
+                           
+                            
+                        <!-- </aura:if> -->
+                    </aura:iteration>
+                   
+
+           
+                </div>
+                <div class="slds-clearfix">
+                    <div class="slds-page-header" role="banner">
+                        <div class="slds-m-top_medium slds-align_absolute-center" >
+                            <lightning:buttonGroup >
+                                <lightning:button label="Previous" disabled="{!v.startPage == 0}" 
+                                                  onclick="{!c.handlePrev}" variant="brand"
+                                                  iconName='utility:back'/>
+                                &nbsp; &nbsp; &nbsp;
+                                <lightning:button label="Next" disabled="{!v.endPage > v.totalRecords}" 
+                                                  onclick="{!c.handleNext}" variant="brand"
+                                                  iconName='utility:forward' iconPosition='right'/>
+                            </lightning:buttonGroup>
+                        </div>
+                        <div class="slds-align_absolute-center">
+                            <p class="slds-page-header__title">Page {!v.pageNumber} | {!((v.pageNumber-1)*v.pageSize)+' of '+((v.totalRecords))}</p>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            
+            <aura:set attribute="else">
+                <div class="slds-form-element"><b>{!$Label.c.No_Records_Found}</b></div>
+            </aura:set>
+        </aura:if>
+    </aura:iteration>
+    <aura:set attribute="else">
+        <div style="margin:0; padding:0; padding:11px 0; background:#fff;">	
+            <div class="slds-grid slds-wrap slds-gutters" style="margin:10px; padding:10px;">
+                <div class="slds-form-element"><b>{!$Label.c.No_Records_Found}</b></div>
+            </div>
+        </div>
+    </aura:set>
+ </aura:if>
+   
+   <!-- <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+       <div class="orange2" style="background-image: url('https://us-test.upl-ltd.com/product_type/leafs/yIYVj9dsdzzKjFff6rxPUR58rYsrdyGXOvxlfjGl.png');">
+          <span style="color:#fff; font-size:18px;">CALRIZ</span>
+       </div>
+   </div> 
+    
+   <div class="slds-col slds-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 brdbtm" style="padding-top:15px;">
+       <span style="color:#888; font-size:12px;">Active Ingredients:</span><br/>
+       <span style="color:#000; font-size:14px;">Propanil / Triclopyr</span><br/><br/>
+       <span style="color:#888; font-size:14px;"><a href="" style="text-decoration:none;">Ver Detalles</a></span><br/>
+   </div> -->  
+</aura:if>
+
+<!-- ************************************* Product Details Section ************************************************ -->
+
+<aura:if isTrue="{!v.showDetails}"> 
+    <div style="margin:0; padding:0; padding:11px 0; background:#fff;">	
+    
+        <div class="slds-grid slds-wrap slds-gutters">
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 bgimg" style="{!'background-image: url('+ v.productDetails.bannerImage+ ')'}">
+               <span style="font-size:24px; color:#fff;">{!v.productDetails.name}</span><br/>
+               <span style="font-size:18px; color:#fff;">{!v.productDetails.ingredient}</span>
+               
+        </div>
+        <!-- <div  >
+            <span style="font-size:24px; ">{!v.productDetails.name}</span><br/>
+               <span style="font-size:18px; ">{!v.productDetails.ingredient}</span>
+        </div> -->
+    </div>
+        
+        <div class="slds-grid slds-wrap slds-gutters">
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12 slds-large-size_10-of-12" style="padding:20px 40px;">
+         <lightning:breadcrumbs>
+            <lightning:breadcrumb label="{!$Label.c.Home}" href="{!v.homeURL}"/> <!-- /Distributor/s/ -->
+            <lightning:breadcrumb label="{!$Label.c.Products}" href="{!v.productURL}"/> <!-- /Distributor/s/product-catalogues -->
+            <lightning:breadcrumb label="{!v.productDetails.type}" href="{!v.productURL}"/> <!-- /Distributor/s/product-catalogues -->
+            <lightning:breadcrumb label="{!v.productDetails.name}"/>
+        </lightning:breadcrumbs>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12" style="padding:20px 40px;">
+         <lightning:breadcrumbs>
+            <lightning:breadcrumb label="{!$Label.c.Back_to_Product_List}" href="{!v.productURL}"/> <!-- /Distributor/s/product-catalogues -->
+        </lightning:breadcrumbs>
+            </div>
+        </div>
+        
+     <div class="slds-grid slds-wrap slds-gutters" style="margin:10px; padding:10px;">
+        
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+            <!-- <span><img src="{!$Resource.logo1}"/></span> --> <span><img src="{!v.productDetails.productTypeImage}"/></span>
+        </div>
+         
+        <div class="slds-col slds-size_12-of-12 slds-medium-size_9-of-12 slds-large-size_9-of-12" style="padding-top:15px;">
+            <h2 style="border-bottom: 1px solid #28a44a; color: #28a44a; font-size: 22px;">{!$Label.c.Introduction}</h2><br/>
+            <p style="color:#000; font-size:14px; line-height: 27px;">
+                <!-- {!v.productDetails.description} --> <aura:unescapedHtml value="{!v.productDetails.description}"/>
+            </p><br/>
+            
+            <h2 style="border-bottom: 1px solid #28a44a; color: #28a44a; font-size: 22px;">{!$Label.c.Formulation}</h2><br/>
+            <p style="color:#000; font-size:14px; line-height: 27px;">
+                <!-- {!v.productDetails.formulation} --> <aura:unescapedHtml value="{!v.productDetails.formulation}"/>
+            </p><br/>
+            
+            <!-- <lightning:accordion aura:id="accordion" activeSectionName="">
+            <lightning:accordionSection name="A" label="Presentación" class="lab">
+               <p style="color:#000; font-size:14px; line-height: 27px;">1, 4, 20 y 200 Litros</p>
+            </lightning:accordionSection>
+                
+            <lightning:accordionSection name="B" label="Categoría Toxicológica" class="lab">
+                    <p style="color:#000; font-size:14px; line-height: 27px;">II – Moderadamente Peligroso.</p>
+            </lightning:accordionSection>
+           
+            
+          </lightning:accordion> -->
+          <aura:if isTrue="{!v.productDetails.fact.length != 0}">
+            <h2 style="border-bottom: 1px solid #28a44a; color: #28a44a; font-size: 22px;">{!$Label.c.Fact}</h2><br/>
+                <p style="color:#000; font-size:14px; line-height: 27px;">
+                    <!-- {!v.productDetails.fact} --> <aura:unescapedHtml value="{!v.productDetails.fact}"/>
+                </p><br/>
+          </aura:if>
+        </div>
+         
+         </div>
+         
+          <div class="slds-grid slds-wrap slds-gutters" style="margin:10px; padding:10px;">
+             
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="margin-bottom:10px;">
+              <h2 style="border-bottom:1px solid #ccc; font-size:20px; color:#000; margin-bottom:10px;">{!$Label.c.Downloads}</h2>
+            </div>
+             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_9-of-12"></div>
+             
+        
+             <aura:if isTrue="{!v.productDetails.downList.length != 0}">
+                    
+                <!-- <lightning:layoutItem flexibility="auto" size="1" smallDeviceSize="1" mediumDeviceSize="1" largeDeviceSize="1">
+                    {!crop.name}
+                </lightning:layoutItem> --> 
+
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                    
+                        <aura:iteration items="{!v.productDetails.downList}" var="dwn" indexVar="a">
+                            <aura:if isTrue="{!a % 2 == 0}">
+                                <a href="{!dwn.file_link}" target="_blank"><span><img src="{!dwn.pdf_icon}" class="img"/>{!dwn.file_name}</span></a><br/>
+                            </aura:if>
+                        </aura:iteration>
+                    
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                    
+                        <aura:iteration items="{!v.productDetails.downList}" var="dwn2" indexVar="b">
+                            <aura:if isTrue="{!b % 2 != 0}">
+                                <a href="{!dwn2.file_link}" target="_blank"><span><img src="{!dwn2.pdf_icon}" class="img"/>&nbsp;&nbsp; {!dwn2.file_name}</span></a><br/>
+                            </aura:if>
+                        </aura:iteration>
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_8-of-12">
+                    
+                </div>
+
+                 
+              </aura:if> 
+                    
+                <!-- <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12" style="margin-bottom:10px;">
+                    <a href=""><span><img src="" class="img"/></span></a>
+                </div>
+                    
+                <div class="slds-col slds-size_11-of-12 slds-medium-size_2-of-12 slds-large-size_11-of-12">
+                    <a href=""><span class="pdf">CALLIQUAT - Tarjeta de emergencia</span></a>
+                </div>
+                    
+                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                    <a href=""><span><img src="" class="img"/></span></a>
+                </div>
+                    
+                <div class="slds-col slds-size_11-of-12 slds-medium-size_2-of-12 slds-large-size_11-of-12">
+                    <a href=""><span class="pdf">CALLIQUAT F.T.</span></a>
+                </div> -->
+             
+           </div>
+         
+         
+         <div class="slds-grid slds-wrap" style="margin:10px; padding:10px; line-height:27px;">
+             
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="margin-bottom:10px;">
+                <h2 style="border-bottom:1px solid #ccc; font-size:20px; color:#000; margin-bottom:10px;">{!$Label.c.Crop}</h2>
+              </div>
+              <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_9-of-12"></div>
+             
+              <aura:if isTrue="{!v.productDetails.cropList.length != 0}">
+                    
+                <!-- <lightning:layoutItem flexibility="auto" size="1" smallDeviceSize="1" mediumDeviceSize="1" largeDeviceSize="1">
+                    {!crop.name}
+                </lightning:layoutItem> --> 
+
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                    
+                        <aura:iteration items="{!v.productDetails.cropList}" var="crop" indexVar="k">
+                            <aura:if isTrue="{!k % 2 == 0}">
+                                <span style="float:left;">{!crop.name}</span><br/>
+                            </aura:if>
+                        </aura:iteration>
+                    
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                    
+                        <aura:iteration items="{!v.productDetails.cropList}" var="crop2" indexVar="l">
+                            <aura:if isTrue="{!l % 2 != 0}">
+                                <span style="float:left;">{!crop2.name}</span><br/>
+                            </aura:if>
+                        </aura:iteration>
+                    
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_8-of-12">
+                    
+                </div>
+
+                 
+              </aura:if>    
+                             
+         </div>
+         
+         
+     <div class="slds-grid slds-wrap" style="margin:10px; padding:10px; line-height:27px;">
+             
+         <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="margin-bottom:10px;">
+            <h2 style="border-bottom:1px solid #ccc; font-size:20px; color:#000; margin-bottom:10px;">{!$Label.c.Pests_And_Diseases}</h2>
+        </div>
+             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_9-of-12"></div>
+         
+             <aura:if isTrue="{!v.productDetails.pestList.length != 0}">
+        
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_3-of-12">
+                        
+                    <aura:iteration items="{!v.productDetails.pestList}" var="pest" indexVar="t">
+                        <aura:if isTrue="{!t % 2 == 0}">
+                            <span style="float:left;">{!pest.name}</span><br/>
+                        </aura:if>
+                    </aura:iteration>
+                            
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_3-of-12">
+                        
+                        <aura:iteration items="{!v.productDetails.pestList}" var="pest2" indexVar="w">
+                            <aura:if isTrue="{!w % 2 != 0}">
+                                <span style="float:left;">{!pest2.name}</span><br/>
+                            </aura:if>
+                        </aura:iteration>
+                        
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_6-of-12">
+                        
+                </div>
+             </aura:if>
+        </div>
+
+        <div class="slds-grid slds-wrap" style="margin:10px; padding:10px; line-height:27px;">
+             
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="margin-bottom:10px;">
+               <h2 style="border-bottom:1px solid #ccc; font-size:20px; color:#000; margin-bottom:10px;">{!$Label.c.Registration_Information}</h2>
+           </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_9-of-12"></div>
+            
+                <div class="slds-col slds-size_6-of-12 slds-medium-size_2-of-12 slds-large-size_10-of-12">
+                    <p style="color:#000; font-size:14px; line-height: 27px;">
+                        <!-- {!v.productDetails.regInfo} --> <aura:unescapedHtml value="{!v.productDetails.regInfo}"/>
+                    </p>
+                </div>
+            
+           </div>
+        
+        
+    </div>
+</aura:if>
+  
+</aura:component>

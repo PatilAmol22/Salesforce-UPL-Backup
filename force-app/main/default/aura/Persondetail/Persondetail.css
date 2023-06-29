@@ -1,0 +1,12 @@
+.THIS
+{
+    font-family:myfontregular; 
+    font-weight: 600;
+    color: #1e2331;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 15px !important;
+    text-transform: capitalize;
+    position: relative;
+    padding:10px;
+}

@@ -1,0 +1,21 @@
+.THIS .slds-grid_align-end
+{
+    justify-content: center !important; 
+}
+.THIS.exampleHolder{
+    position: fixed;
+    display: inline-block;
+    margin-left: 15px;
+    width: 55px;
+    height:2px;
+    left:10px;
+    top:100px;
+    vertical-align: middle;
+    white-space: nowrap;
+    background:red;
+    
+}
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}

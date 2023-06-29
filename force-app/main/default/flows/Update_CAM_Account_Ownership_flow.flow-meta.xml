@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>Check_if_Account_Owner_is_blank</name>
+        <label>Check if Account Owner is blank</label>
+        <locationX>28</locationX>
+        <locationY>164</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>Not_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountOwnerId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Ownership</targetReference>
+            </connector>
+            <label>Not blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_PG_Code</name>
+        <label>Check PG Code</label>
+        <locationX>27</locationX>
+        <locationY>28</locationY>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
+        <rules>
+            <name>PG_Code_not_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PGCode</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lookup_on_PriceGroup_Costa_Rica</targetReference>
+            </connector>
+            <label>PG Code not blank</label>
+        </rules>
+    </decisions>
+    <description>for CAM Account</description>
+    <interviewLabel>Update CAM Account Ownership {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update CAM Account Ownership flow</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Lookup_on_PriceGroup_Costa_Rica</name>
+        <label>Lookup on PriceGroup Costa Rica</label>
+        <locationX>298</locationX>
+        <locationY>38</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_Account_Owner_is_blank</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Price_Group_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>PGCode</elementReference>
+            </value>
+        </filters>
+        <object>Price_Group_Costa_Rica__c</object>
+        <outputAssignments>
+            <assignToReference>AccountOwnerId</assignToReference>
+            <field>User__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Account_Ownership</name>
+        <label>Update Account Ownership</label>
+        <locationX>288</locationX>
+        <locationY>169</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>AccountOwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <startElementReference>Check_PG_Code</startElementReference>
+    <status>Obsolete</status>
+    <variables>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>AccountOwnerId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>PGCode</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

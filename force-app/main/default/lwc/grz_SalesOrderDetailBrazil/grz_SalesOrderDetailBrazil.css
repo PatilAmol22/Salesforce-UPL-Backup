@@ -1,0 +1,367 @@
+.node {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display:inline-block;
+  transition: all 1000ms ease;
+}
+.incentercss{
+  text-align: center;
+}
+.activated {
+  box-shadow: 0px 0px 3px 2px rgba(194, 255, 194, 0.8);
+}
+.divider {
+  height: 40px;
+  width: 2px;
+  margin-left: 4px;
+  transition: all 800ms ease;
+}
+.pathValue {
+  display:inline-block;
+  margin-left: 25px;
+}
+.pathli {
+  list-style: none;
+  line-height: 1px;
+}
+.green{ background-color: rgba(92, 184, 92, 1) }
+.grey { background-color: rgba(201, 201, 201, 1); }
+
+.disNone{
+  display: none;
+}
+
+
+.odr-size {
+  font-size: 23px;
+  color: black;
+}
+.bar-scroll{
+  margin:2% 2% 0 2%;
+  overflow-x:auto;
+}
+.status-bar {
+  background-color: white;
+  border-radius: 50%;
+}
+.iconclr{
+  color: #F47920;
+  cursor:pointer;
+}
+.cust-info-div {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5% 0%;
+  border: 1px solid #ddd;
+  margin-bottom: 2.5%;
+}
+.one-block {
+  display: flex;
+  width: 47%;
+}
+.two-block {
+  display: flex;
+  width: 53%;
+}
+.first-block {
+  border-right: 2px solid #dddddd;
+  padding-left: 2%;
+  width: 49%;
+  display: flex;
+}
+.second-block {
+  border-right: 2px solid #dddddd;
+  padding-left: 2%;
+  width: 49%;
+  display: flex;
+}
+.third-block {
+  padding-left: 2%;
+  border-right: 2px solid #dddddd;
+  width: 60%;
+  display: flex;
+}
+.fourth-block {
+  padding-left: 2%;
+  width: 40%;
+  display: flex;
+}
+.cust-data-text {
+  color: #888888;
+  font-size: 15px;
+}
+.lab-btn {
+  margin-bottom: 0px;
+}
+.lab-btn-green {
+  background-color: rgb(65, 182, 88);
+  color: white;
+  padding: 2px 8px;
+  margin-bottom: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cust-data {
+  margin-left: 6%;
+  color: #000000;
+  font-size: 16px;
+}
+
+.carousel-top-pad {
+  margin-top: -36px;
+  margin-bottom: -55px;
+}
+.greycol {
+  color: #c0c0c0;
+}
+
+.nodatacss {
+  border-radius: 4px;
+  opacity: 1;
+  background-color: white;
+  padding: 2%;
+}
+
+.pointer {
+  cursor: pointer;
+}
+.p-table-head,
+.i-table-head {
+  background-color: #f8f8f8;
+  color: #888;
+}
+.p-table-head-css,
+.i-table-head-css {
+  height: 40px;
+}
+.p-table-body,
+.i-table-body {
+  color: black;
+}
+.p-table-body-css,
+.i-table-body-css {
+  height: 40px;
+}
+.product-table-scroll,
+.invoice-table-scroll {
+  overflow-x: auto;
+}
+.product-table-width {
+  background: white;
+}
+.invoice-table-width {
+  background: white;
+}
+.order-icon {
+  height: 40px;
+  width: 40px;
+  border: 1px solid grey;
+  padding: 5px;
+  margin-top: 11px;
+  border-radius: 50%;
+}
+.headingClass {
+  font-size: 22px;
+  color: #000000;
+}
+.borderbottom {
+  padding-bottom: 1%;
+  border-bottom: 1px solid #dddddd;
+}
+.orderDataClass {
+  font-weight: bold;
+}
+.borderleft {
+  border-left: 1px solid #e5e5e5;
+}
+.data-font-size {
+  font-size: 14px;
+}    
+@media screen and (max-width: 1024px) {
+  .status-bar{
+    width: 130%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .status-bar{
+    width: 160%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .statusMargin{
+    margin-left: 5%;
+    padding :10px 0;
+  }
+  .hidePadding {
+    padding: 0px;
+  }
+  .borderleft {
+    border-left: 0;
+  }
+   .textoverflowcls {
+      line-height: 30px;
+      padding-right: 2%;
+      max-width: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .incentercss{
+      text-align: unset;
+    }
+    .shadoweffect{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+   
+   table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+    
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+    
+        tr {
+          border-bottom: 0px;
+          border: 1px solid #ccc;
+          margin-bottom: 10px;
+        }
+    
+        td {
+          /* Behave  like a "row" */
+          /* border: none;
+    		border-bottom: 1px solid #eee;  */
+          position: relative;
+          padding-left: 50%;
+        }
+    
+        td:before {
+          /* Now like a table header */
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 6px;
+          left: 6px;
+          width: 33%;
+          padding-right: 10px;
+          white-space: nowrap;
+        }
+    .br-mobile-view:nth-of-type(1):before {
+      content: "Código do Produto:";
+    }
+  
+    .br-mobile-view:nth-of-type(2):before {
+      content: "Nome do Produto:";
+    }
+  
+    .br-mobile-view:nth-of-type(3):before {
+      content: "Quantidade:";
+    }
+  
+    .br-mobile-view:nth-of-type(4):before {
+      content: "UM:";
+    }
+  
+    .br-mobile-view:nth-of-type(5):before {
+      content: "Preço Unitário:";
+    }
+  
+    .br-mobile-view:nth-of-type(6):before {
+      content: "Valor:";
+    }
+     .i-br-mobile-view:nth-of-type(1):before {
+      content: "Nota Fiscal:";
+    }
+  
+    .i-br-mobile-view:nth-of-type(2):before {
+      content: "Data de Emissão:";
+    }
+  
+    .i-br-mobile-view:nth-of-type(3):before {
+      content: "Valor Total:";
+    }
+  
+    .i-br-mobile-view:nth-of-type(4):before {
+      content: "Status:";
+    }
+  
+    .i-br-mobile-view:nth-of-type(5):before {
+      content: "Download DANFe:";
+    }
+  
+    .i-br-mobile-view:nth-of-type(6):before {
+      content: "Download NF-e XML:";
+    }
+  
+   
+}
+@media screen and (max-width: 600px) {
+  .product-table-width,
+  .invoice-table-width {
+    width: 100%;
+  }
+  .status-bar{
+    width: 210%;
+  }
+}
+@media screen and (max-width: 475px) {
+  .detail-size {
+    font-size: 18px;
+  }
+  .odr-size {
+    font-size: 21px;
+  }
+  .status-bar{
+    width: 290%;
+  }
+  .order-icon {
+    height: 35px;
+    width: 35px;
+  }
+  .product-table-width,
+  .invoice-table-width {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .data-font-size {
+    font-size: 12px;
+  }
+  .product-table-width,
+  .invoice-table-width {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 375px) {
+  .product-table-width,
+  .invoice-table-width {
+    width: 100%;
+  }
+  .status-bar{
+    width: 345%;
+  }
+  .detail-size {
+    font-size: 15px;
+  }
+  .odr-size {
+    font-size: 17px;
+  }
+  .bread-crumb-cls {
+    font-size: 11px;
+    margin-top: 2%;
+  }
+  .order-icon {
+    height: 30px;
+    width: 30px;
+  }
+}

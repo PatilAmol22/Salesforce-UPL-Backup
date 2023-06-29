@@ -1,0 +1,113 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+ <div class="slds-grid slds-wrap slds-gutters" style="background:#000; margin:0; padding:0px;">
+  <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+      <li class="slds-item">
+        <a><B>Hakkımızda</B></a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/tr/open-ag" target="_blank">OpenAg</a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/tr/vizyon-ve-misyon" target="_blank">Vision y Mision</a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/tr/mirasımız" target="_blank">Mirasımız</a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/tr/Liderlerimiz" target="_blank">Liderlerimiz</a>
+      </li>
+  </ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Ürünler</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/Ürün-portföyü?level_one=1&amp;level_two_select=1" target="_blank">Herbisitler</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/Ürün-portföyü?level_one=1&amp;level_two_select=2" target="_blank">Fungisitler</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/Ürün-portföyü?level_one=1&amp;level_two_select=4" target="_blank">İnsektisitler-Akarisitler</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/Ürün-portföyü?level_one=1&amp;level_two_select=5" target="_blank">Fumigantlar</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/Ürün-portföyü?level_one=1&amp;level_two_select=17" target="_blank">Bitki Besleme Ürünleri</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/Ürün-portföyü?level_one=1&amp;level_two_select=3" target="_blank">Bitki Gelişim Düzenleyiciler</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/Ürün-portföyü?level_one=1&amp;level_two_select=12" target="_blank">Adjuvanlar</a>
+  </li>
+  
+</ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/Haberler" target="_blank"><b>Haberler</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/tr/organizasyonlar" target="_blank"><b>Organizasyonlar</b></a>
+  </li> 
+</ul>
+</div>
+     
+  <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Bize ulaşın</b></a>
+  </li>
+  <li class="slds-item">
+    <a>uplturkey@upl-ltd.com</a>
+  </li>
+  <li class="slds-item">
+    <a>Tel. +90 232 446 57 89 - 9</a>
+  </li>    
+</ul>
+</div>
+    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#ff7701; padding:20px 0 10px 20px; margin:0;">    
+<ul class="slds-list_horizontal" style="float:left;">
+    <li><a>Telif Hakkı UPL 2021</a></li>
+    <li><a href="https://www.upl-ltd.com/tr/kullanım-Şartları" target="_blank">Hizmet Kullanım Şartları</a></li>
+    <li><a href="https://www.upl-ltd.com/tr/Gizlilik-Politikası" target="_blank">Gizlilik Politikası</a></li>
+    <li><a href="https://www.upl-ltd.com/tr/çerez-politikası" target="_blank">Çerez Politikası</a></li>
+    <li><a href="https://www.upl-ltd.com/tr/kvkk-bilgilendirme-metni" target="_blank">KVKK Bilgilendirme Metni</a></li>    
+</ul>
+   
+<ul class="slds-list_horizontal" style="float:right;">
+    <li style="margin-top:-5px;"><a href="https://www.youtube.com/channel/UCQwGp1x6fbIwNd06LrlI61g" target="_blank"><img src="{!$Resource.youtubeicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.facebook.com/uplturkey/" target="_blank"><img src="{!$Resource.fbicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://twitter.com/uplltd" target="_blank"><img src="{!$Resource.twittericonnew}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.linkedin.com/company/upl-ltd/" target="_blank"><img src="{!$Resource.inicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.instagram.com/upl.turkey/" target="_blank"><img src="{!$Resource.instaicon}"/></a></li>
+</ul>
+    
+<ul class="slds-list_horizontal" style="float:left;">    
+    <li><a href="https://www.upl-ltd.com/tr/kvkk-başvuru-formu" target="_blank">KVKK Başvuru Formu</a></li>
+    <li><a href="https://www.upl-ltd.com/suppliers" target="_blank">Tedarikçiler</a></li>
+</ul>     
+</div> 
+</div>
+
+<!--
+<div class="slds-grid slds-wrap slds-gutters">    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#FF8833; text-align:center; padding:10px 0; color:#fff;">    
+    Copyright@UPL2019 &nbsp;&nbsp;&nbsp;<a href="">Term of Service</a>&nbsp;&nbsp;&nbsp; <a href="">Contact</a>&nbsp;&nbsp;&nbsp; <a href="">disclaimer</a>
+</div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+      <span>
+      <img src="{!$Resource.social}"/>
+      </span>
+    </div>    
+</div>-->
+</aura:component>

@@ -1,0 +1,103 @@
+.tableFixHead {
+    height: 250px;
+    overflow: auto;
+}
+
+.tableFixHead table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: calibri;
+}
+
+.tableFixHead thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    min-width: 120px;
+    background-color: #99d2f2;;
+    color: #000;
+    text-align: left;
+  }
+.tableFixHead td {
+    background: #fff;
+    text-align: center;
+  }
+  
+.tableFixHead tbody td {
+    /*font-weight: 100;
+    font-style: italic;*/
+    text-align: left;
+    position: relative;
+  }
+.tableFixHead thead th:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+  }
+  .tableFixHead thead th:nth-child(2){
+    position: sticky;
+    left: 125px;
+    z-index: 3;
+  }
+
+  .tableFixHead thead th:nth-child(3){
+    position: sticky;
+    left:217px;
+    z-index: 3;
+  }
+
+  .tableFixHead thead th:nth-last-child(2) {
+    position: sticky;
+    right: 100px;
+    z-index: 3;
+  }
+
+  .tableFixHead thead th:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 3;
+  }
+
+.tableFixHead tbody td:first-child {
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 2;
+  }
+  .tableFixHead tbody td:nth-child(2) {
+    position: sticky;
+    left: 125px;
+    background: white;
+    z-index: 2;
+  }
+  .tableFixHead tbody td:nth-child(3) {
+    position: sticky;
+    left: 217px;
+    background: white;
+    z-index: 2;
+  }
+
+  .tableFixHead tbody td:nth-last-child(2) {
+    position: sticky;
+    right: 100px;
+    background: white;
+    z-index: 2;
+  } 
+  .tableFixHead tbody td:last-child {
+    position: sticky;
+    right: 0;
+    background: white;
+    z-index: 2;
+  }
+.panel-header{
+    background-color: rgb(28 127 212);
+    font-family: calibri;
+    font-size: 17px;
+    padding: 5px;
+    border-radius: 0;
+}
+
+.headerMessage{
+    color: white;
+    padding-top: 9px;
+}

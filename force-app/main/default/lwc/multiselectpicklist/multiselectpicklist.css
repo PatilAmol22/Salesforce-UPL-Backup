@@ -1,0 +1,19 @@
+.picklist-section{
+    display: inline-flex;
+    /* margin-top: -1rem ; 
+     margin-left: -0.5rem ; */
+     position: fixed;
+     bottom: 80px;
+     right: 100px;
+     width: 400px;
+    min-width: 10%;
+    z-index: 99999999999999999999999999;  
+} 
+ 
+/* .picklist-section .slds-dropdown{
+    max-width: 80rem !important;
+    width: 80% !important;
+    overflow-y: auto;
+    overflow-x: auto; 
+    overflow: auto;
+} */

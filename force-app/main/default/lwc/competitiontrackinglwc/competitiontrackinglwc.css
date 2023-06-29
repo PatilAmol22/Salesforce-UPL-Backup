@@ -1,0 +1,23 @@
+.back-ground-color{
+    background-color:white;
+}
+.product-details-css .slds-accordion__section{
+  background: green;
+}
+.slds-accordion__summary .slds-accordion__summary{
+    background: green;
+}
+.center {
+  text-align: center;
+}
+:host {
+  --sds-c-card-color-background: white;
+}
+
+.slds-modal__containerCrop {
+  max-width: 80rem !important;
+  width: 80% !important;
+}
+.slds-line-height_reset{
+  background: rgb(244, 229, 244);
+}

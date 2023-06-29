@@ -1,0 +1,199 @@
+<template>
+    <div style="margin-bottom: 5%;">
+        <c-grz_header-image-cmp bgimg={bgImage} imglabel={label.detailsLabel} customcss='top: 9.5%;'></c-grz_header-image-cmp>
+        <div>
+            <c-grz_bread-crumb labelone={label.detailsLabel} labeltwo='' linkone='' linktwo=''>
+            </c-grz_bread-crumb>
+        </div>
+        <div>
+            <h3 class="headingCls">{label.detailsLabel}</h3>
+        </div>
+        
+        <div class="finalTopClass slds-p-around_medium">
+    
+            <div class="slds-grid slds-wrap mobiledivshow">
+                <div class="slds-col slds-x-small-size_12-of-12">
+                     <img class="" src={filterIcon}/>
+                </div> 
+                <div class="slds-col slds-x-small-size_12-of-12 slds-small-size_12-of-12">
+                    <lightning-combobox
+                name="progress"
+                label="Sales Org"
+                value={companyCode}
+                required
+                placeholder="Select Sales Org"
+                options={orgOptions}
+                onchange={handleOrgChange} ></lightning-combobox>
+    
+                </div> 
+                <div class="slds-grid slds-wrap">
+                      <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12">
+                      <lightning-input required='true' label="From Date" type="date" value={startDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startDateChange} class="customCSS"></lightning-input>
+                  </div> 
+                 <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12">
+                     <lightning-input required='true' label="To Date" type="date" value={endDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={endDateChange} class="customCSS"></lightning-input>
+                 </div> 
+                </div>
+               
+                 <div class="slds-col slds-p-top_large btnDiv slds-text-align_center">
+                     <button disabled={notValidDate} onclick={handleGetClick} class="slds-button slds-button_neutral blueBtn">Get Details</button>
+                 </div>
+            </div>
+    
+                    <div class="slds-grid slds-wrap slds-grid_align-center desktopdivshow">
+                        
+                        <div class="slds-col slds-large-size_1-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                                <img class="imageCls" src={filterIcon}/>
+                        </div> 
+                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-size_3-of-12 startDateClass">
+                            <div class="slds-p-left_medium">
+                                <span>                  
+                                    <lightning-combobox
+                                        name="progress"
+                                        label="Sales Org"
+                                        value={companyCode}
+                                        required
+                                        placeholder="Select Sales Org"
+                                        options={orgOptions}
+                                        onchange={handleOrgChange} ></lightning-combobox>
+    
+                                </span>
+    
+                            </div>
+                        </div>
+                         
+                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-size_3-of-12 startDateClass">
+                            <div class="slds-p-left_medium">
+                                <span>                  
+                                    <lightning-input required='true' label="From Date" type="date" value={startDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startDateChange} class="slds-float_right"></lightning-input>
+    
+                                </span>
+    
+                            </div>
+                        </div>
+                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-size_3-of-12 endDateClass">
+                            <div class="slds-p-left_medium">
+                                <span>
+                                    <lightning-input required='true' label="To Date" type="date" value={endDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={endDateChange} class="slds-float_right"></lightning-input>
+                                </span>                           
+                            </div>
+                        </div> 
+                        <div class="slds-col slds-p-top_large slds-grow-none btnDiv">
+                            <button disabled={notValidDate} onclick={handleGetClick} class="slds-button slds-button_neutral slds-float_right blueBtn">Get Details</button>
+                        </div>
+                    </div>
+                    <template if:true={gstData}>
+                        <template for:each={gstData} for:item="item">
+                            <div key={item.Id} class="table-head-div">
+                        <div key={item.Id} class="slds-grid slds-wrap shadoweffect">
+                            <div class="slds-col slds-order_1 slds-large-order_1 slds-small-order_1 slds-medium-order_1 slds-large-size_1-of-5 slds-medium-size_2-of-5 slds-size_5-of-5 slds-p-around_small">
+                                <div class="firstClass">
+                                    <span class="blackClr">Commercial Invoice No:&nbsp;</span>
+                                    <span class="orangeClr">{item.CIN}</span>
+                                </div>
+                                <div class="secondClass">
+                                    <span class="greyClr">Total Invoice Value:&nbsp;</span>
+                                    <span class="blackClr">INR {item.TIV}</span>
+                                </div>
+                            </div> 
+                            <div class=" slds-col rightBorder slds-order_2 slds-large-order_2 slds-small-order_2 slds-medium-order_2 slds-large-size_1-of-5 slds-medium-size_2-of-5 slds-size_5-of-5 slds-p-around_small">
+                                <div class="firstClass">
+                                    <span class="blackClr">GST Invoice No:&nbsp;</span>
+                                    <span class="orangeClr">{item.GIN}</span>
+                                </div>
+                                <div class="secondClass">
+                                    <span class="greyClr">SGST / UGST Value:&nbsp;</span>
+                                    <span class="blackClr">INR {item.SUV}</span>
+                                </div>
+                            
+                            </div>
+                            <div class="slds-col slds-order_3 slds-large-order_3 slds-small-order_3 slds-medium-order_4 slds-large-size_1-of-5 slds-medium-size_2-of-5 slds-size_5-of-5 slds-p-around_small">
+                                <div class="firstClass">
+                                    <span class="blackClr">Delivery No:&nbsp;</span>
+                                    <span class="orangeClr">{item.DN}</span>
+                                </div>
+                                <div class="secondClass">
+                                    <span class="greyClr">CGST Value:&nbsp;</span>
+                                    <span class="blackClr">INR {item.CV}</span>
+                                </div>
+                            </div>
+                            <div class=" slds-col rightBorder slds-order_4 slds-large-order_4 slds-small-order_4 slds-medium-order_5 slds-large-size_1-of-5 slds-medium-size_2-of-5 slds-size_5-of-5 slds-p-around_small">
+                                <div class="firstClass">
+                                    <span class="greyClr">Taxable Value:&nbsp;</span>
+                                    <span class="blackClr">INR {item.TV}</span>
+                                </div>
+                                <div class="secondClass">
+                                    <span class="greyClr">IGST:&nbsp;</span>
+                                    <span class="blackClr">INR {item.IV}</span>
+                                </div>
+                            </div>
+                        
+                            <div class="lastClass slds-order_5 slds-medium-order_3 slds-large-order_5 slds-small-order_5 slds-col slds-large-size_1-of-5 slds-medium-size_1-of-5 slds-size_5-of-5 borderleft leftClass slds-p-around_small">
+                                <div class="borderbottom" style="padding-bottom: 3%;">
+                                    <div>
+                                        <span class="blackClr">Invoice Date:&nbsp;<span  class="orangeClr">{item.ID}</span></span>
+                                    </div>
+                                    <div>
+                                        <span class="blackClr">Delivery Date:&nbsp;<span  class="orangeClr">{item.DD}</span></span>
+                                    </div>
+                                </div>
+                                <div class="totalClass">
+                                    <span class="blackClr">Total GST:&nbsp;<span  class="orangeClr">INR {item.TGV}</span></span>
+                                </div>
+                            </div>
+                    </div> 
+                    </div>
+                    </template> 
+                    <template if:true={showTotalDiv}>
+                        <div>
+                            <h3 class="totalClassNew">Grand Total:</h3>
+                        </div>
+                    <div class="table-head-div-total headClass slds-grid slds-wrap slds-p-around_small shadoweffect">
+                            <div class="slds-col slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-size_12-of-12 paddingClass">
+                                <span class="greyClr">SGST:&nbsp;</span>
+                                <span class="blackClr">INR {totalSgst}</span>
+                            </div>
+                            <div class="slds-col slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-size_12-of-12 paddingClass">
+                                <span class="greyClr">CGST:&nbsp;</span>
+                                <span class="blackClr">INR {totalCgst}</span>
+                            </div>
+                            <div class="slds-col slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-size_12-of-12 paddingClass">
+                                <span class="greyClr">IGST:&nbsp;</span>
+                                <span class="blackClr">INR {totalIgst}</span>
+                            </div>
+                            <div class="slds-col slds-large-size_3-of-12 slds-medium-size_3-of-12 slds-size_12-of-12 paddingClass">
+                                <span class="greyClr">GST:&nbsp;</span>
+                                <span class="blackClr">INR {grandTotal}</span>
+                            </div>
+                        </div>
+                    </template> 
+                        </template>
+                        <template if:true={showDownloadBtn}>
+                                <div class="download-div">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-size_12-of-12 slds-m-bottom_medium">
+                                            <span class="componentNotoSansBold slds-m-right_medium">
+                                                <a href={downloadUrl}  download="GST_Details.pdf" target="_blank"><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span>Download PDF</span></button></a>
+                                           </span>
+                                        </div>
+                                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_3-of-12 slds-size_12-of-12">
+                                            <span class="componentNotoSansBold">
+                                                <a href={downloadUrlXls}  download="GST_Details.xls" target="_blank"><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span>Download XLS</span></button></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                </div>
+                            </template>
+                            
+                            <div if:true={isSearching} class="slds-is-relative">
+                                <lightning-spinner
+                                    alternative-text="Loading..." variant="brand">
+                                </lightning-spinner>
+                            </div>
+                            </div>
+                        </div>
+                
+                
+    </template>

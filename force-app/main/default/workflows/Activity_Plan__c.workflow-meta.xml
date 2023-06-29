@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_Alert_to_indonesia_users</fullName>
+        <description>Email Alert to indonesia users (add Nadhifatul Rizkiya user to get notification 20.2.2020)</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20003616@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20031454@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20038922@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Delta/Marketing_Requisition_Activity</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Advance_payment_receipt_to_Finanace</fullName>
+        <description>Send Advance payment receipt to Finanace</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Indonesia_Finance_Team</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Delta/MarketingRequisitionFinanceEmail</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_to_MH_once_MM_approved</fullName>
+        <description>Send Email to MH once MM approved</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20008182@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20031454@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032200@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Delta/Marketing_Requisition_Activity</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>MH_Approval_Pending</fullName>
+        <field>MH_Approval_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>MH Approval Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_Approved</fullName>
+        <field>MH_Approval_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>MH Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_Rejected</fullName>
+        <field>MH_Approval_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>MH Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_Settlement_Approved1</fullName>
+        <field>MH_Settlement_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>MH Settlement Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_Settlement_Rejected</fullName>
+        <field>MH_Settlement_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>MH Settlement Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_approval_Rejected</fullName>
+        <field>MH_Approval_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>MH approval Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_approval_status</fullName>
+        <field>MH_Approval_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>MH approval status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_settlement_Pending</fullName>
+        <field>MH_Settlement_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>MH settlement Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_settlement_Rejected1</fullName>
+        <field>MH_Settlement_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>MH settlement Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MH_settlement_approved</fullName>
+        <field>MH_Settlement_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>MH settlement approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MM_Approved</fullName>
+        <field>MM_Approval_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>MM Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MM_Approved_Settlement</fullName>
+        <field>MM_Approval_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>MM Approved Settlement</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MM_Pending</fullName>
+        <field>MM_Approval_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>MM Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MM_Rejected_Settlement</fullName>
+        <field>MM_Approval_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>MM Rejected Settlement</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MM_Settlement_Approved</fullName>
+        <field>MM_Settlement_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>MM Settlement Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MM_Settlement_Pending</fullName>
+        <field>MM_Settlement_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>MM Settlement Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MM_Settlement_Rejected</fullName>
+        <field>MM_Settlement_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>MM Settlement Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MM_rejected</fullName>
+        <field>MM_Approval_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>MM rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_Activity_Appro</fullName>
+        <field>Marketing_Activity_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Marketing Activity Appro</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_Activity_rejected</fullName>
+        <field>Marketing_Activity_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Marketing Activity rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_Flag</fullName>
+        <field>Marketing_Flag__c</field>
+        <literalValue>0</literalValue>
+        <name>Marketing Flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_Flag_MH</fullName>
+        <field>Marketing_Flag__c</field>
+        <literalValue>0</literalValue>
+        <name>Marketing Flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_Flag_MM</fullName>
+        <field>Marketing_Flag__c</field>
+        <literalValue>0</literalValue>
+        <name>Marketing Flag</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_Settlement_Approved</fullName>
+        <field>Marketing_Settlement_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Marketing Settlement Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_Settlement_Approved_MH</fullName>
+        <field>Marketing_Settlement_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Marketing Settlement Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_Settlement_Rejected</fullName>
+        <field>MM_Settlement_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Marketing Settlement Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_activity_approved</fullName>
+        <field>Marketing_Activity_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Marketing activity approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_activity_rejected_Mh</fullName>
+        <field>Marketing_Activity_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Marketing activity rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_settlement_rejected1</fullName>
+        <field>Marketing_Settlement_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Marketing settlement rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Marketing_settlement_rejected_MH</fullName>
+        <field>Marketing_Settlement_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Marketing settlement rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_Approved</fullName>
+        <field>RM_Approval_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>RM Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_Pending_Settlement</fullName>
+        <field>RM_Approval_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>RM Pending Settlement</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_Settlement_Pending</fullName>
+        <field>RM_Approval_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>RM Settlement Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_Settlement_Pending1</fullName>
+        <field>RM_Settlement_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>RM Settlement Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_Settlement_Rejected</fullName>
+        <field>RM_Settlement_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>RM Settlement Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_Settlement_Status</fullName>
+        <field>RM_Settlement_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>RM Settlement Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_approval_settlement</fullName>
+        <field>RM_Approval_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>RM approval settlement</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_pending</fullName>
+        <field>RM_Approval_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>RM pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_rejected</fullName>
+        <field>RM_Approval_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>RM rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>RM_rejected_Settlement</fullName>
+        <field>RM_Approval_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>RM rejected Settlement</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_Approval</fullName>
+        <field>Sent_for_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_Approval_Settlement</fullName>
+        <field>Sent_for_Approval_Settlement__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for Approval Settlement</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_Approval_Settlement_MH</fullName>
+        <field>Sent_for_Approval_Settlement__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for Approval Settlement MH</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_Approval_Settlement_MM</fullName>
+        <field>Sent_for_Approval_Settlement__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for Approval Settlement MM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_Approval_Settlement_RM</fullName>
+        <field>Sent_for_Approval_Settlement__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for Approval Settlement RM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_MH_approval</fullName>
+        <field>Sent_for_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for MH approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_approval_MM</fullName>
+        <field>Sent_for_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for approval_MM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_approval_RM</fullName>
+        <field>Sent_for_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for approval_RM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Settlement_Flag_MH</fullName>
+        <field>Settlement_Flag__c</field>
+        <literalValue>0</literalValue>
+        <name>Settlement Flag MH</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Settlement_Flag_MM</fullName>
+        <field>Settlement_Flag__c</field>
+        <literalValue>0</literalValue>
+        <name>Settlement Flag MM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Settlement_Flag_RM</fullName>
+        <field>Settlement_Flag__c</field>
+        <literalValue>0</literalValue>
+        <name>Settlement Flag RM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Settlement_Flag_RM1</fullName>
+        <field>Settlement_Flag__c</field>
+        <literalValue>0</literalValue>
+        <name>Settlement Flag RM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Send Notification Finance when Marketing requisition approved</fullName>
+        <actions>
+            <name>Send_Advance_payment_receipt_to_Finanace</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Activity_Plan__c.MM_Approval_Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

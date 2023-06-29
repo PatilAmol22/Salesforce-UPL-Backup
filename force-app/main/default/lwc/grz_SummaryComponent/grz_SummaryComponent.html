@@ -1,0 +1,58 @@
+<template>
+<div class="mobile-top-pad">   
+
+<!-- <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+           <header class="slds-modal__header" style="border: solid 1px black;">
+               <h1><b>Notification</b></h1>
+               </header>
+               <div class="slds-modal__content slds-p-around--medium" style="border: solid 1px black;">
+            <center><h2><b>Community is under maintenance and will be up tentatively by 20/1/2023</b></h2></center>
+        </div>
+        </div>
+</div> -->
+
+    <!-- Changes by Grazitti team for India SWOT changes 11 Oct 22 -->
+    <template if:true={showNotice}>
+        <div class="marquee">
+            <p>
+                <!-- <img src={notice} class="notice-img"> -->
+                <template for:each={noticeData} for:item="notice">
+                    <span key={notice.Id} style="color:#f47920; padding-right:10px;">{notice.CreatedDate}</span>
+                    <a key={notice.Id} href={notice.URL} target="__blank" class="vglnk" rel="nofollow">{notice.Description}</a>
+                </template>
+            </p> 
+        </div>
+    </template>
+
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-x-small-size_9-of-12 slds-large-size_10-of-12">
+            <lightning-tabset>
+                <template for:each={tabData} for:item="tab">
+                    <lightning-tab key={tab.Id} data-name={tab.Label} label={tab.Name} value={tab.URL} onactive={handleActive}>
+                    </lightning-tab>
+                </template>
+                
+            </lightning-tabset>
+        </div>
+        <div class="slds-col slds-x-small-size_3-of-12 slds-large-size_2-of-12 slds-p-around_xx-small anchorCls">  
+            <a class="componentNotoSansLight" onclick={handleViewAllClick} href={summarylink} target="_blank">  
+                {customLabel}
+            </a>
+        </div>
+    </div>
+        
+        <div class="slds-grid slds-wrap divheightcls">
+            <div class="slds-col slds-size_12-of-12">
+                <template if:true={displaySaleOrderdata}>
+                    <c-grz_ordersummarycomponent></c-grz_ordersummarycomponent>
+                </template>
+
+                <template if:true={displayCaseOrderdata}>
+                    <c-grz_ticketsummarycomponent></c-grz_ticketsummarycomponent>
+                </template>
+            </div>
+        </div>
+</div>    
+    
+</template>

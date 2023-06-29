@@ -1,0 +1,159 @@
+.THIS {
+    font-family:myfontregular; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+}
+@font-face {
+    font-family:myfontregular; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+    src: url(/resource/myfontregular) 
+}
+@font-face {
+    font-family:myfontlight; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+    src: url(/resource/myfontlight) 
+}
+.THIS label {
+    font-family:myfontregular;
+    font-weight:normal;
+    font-size:12px; color:#000;
+}
+.THIS .titleregular {
+    font-family:myfontlight;
+    font-weight:normal;
+    font-size:36px; color:#000;
+}
+.THIS .titleregulartable {
+    font-family:myfontregular;
+    font-weight:normal;
+    font-size:18px; color:#000;
+}
+.THIS .slds-box {
+    font-family:myfontregular;
+    font-weight:normal!important;
+    font-size:12px;
+    color:#000;
+}
+
+
+.THIS label {display: inline-block;margin-bottom:0; font-size:14px;}
+.THIS .table th {font-family:myfontregular; color:#ff7701; background:#fff; font-weight:normal; font-size:14px; padding:2px;}
+.THIS .table td {font-family:myfontlight; color:#000; font-weight:normal; font-size:14px; border-bottom:1px solid #ccc;}
+.THIS .table td, .THIS .table th {
+    padding: .4rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.THIS .tablecredit th {font-family:myfontregular; color:#ff7701; background:#fff; font-weight:normal; font-size:14px; padding:2px;}
+.THIS .tablecredit td {font-family:myfontlight; color:#000; font-weight:normal; font-size:14px; border-bottom:1px solid #ccc;}
+.THIS .table th {
+    padding: .4rem; text-align:right;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6; border-right: 1px solid #dee2e6;
+}
+.THIS .tablecredit td {
+    padding: .4rem; text-align:right;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6; border-right:0px solid #dee2e6;
+}
+
+
+.THIS .btn {font-size:14px;}
+.THIS .container {max-width:800px;}
+
+.THIS .btnv {background-color:#ff0; color:#000;}
+
+.THIS .btn-warning {
+    color: #fff;
+    background-color: #f88962;
+    border-color: #f88962;
+    box-shadow: none;
+}
+.THIS .btn-warning:hover {
+    color: #fff;
+    background-color: #de3e05;
+    border-color: #de3e05;
+    box-shadow: none;
+}
+
+
+/* ---for action icon 1--- */
+.THIS.redOnYellow svg {
+    fill : red;
+}
+.THIS.redOnYellow {
+   background-color:yellow !important;
+}
+ 
+/* ---for custom icon 2--- */
+.THIS.orangeOnBlack svg{
+    fill:orange !important;
+}
+ 
+.THIS.orangeOnBlack {
+    background-color:black !important;
+}
+ 
+/* ---for standard icon 3--- */
+.THIS.blackOnRed svg{
+    fill:black !important;
+}
+ 
+.THIS.blackOnRed {
+    background-color:IndianRed !important;
+}
+ 
+/* ---for utility icon 4--- */
+.THIS.black svg{
+    fill: red;
+}
+.THIS .col-lg-12{
+    position: relative;
+    width:100%;
+    min-height: 1px;
+    padding-right:0px;
+    padding-left:0px;
+}
+.THIS .card-title {
+    margin-bottom:0;
+}
+
+
+.THIS .slds-table_header-fixed tbody tr:first-child td {
+    border-top: 0px;
+    font-family:myfontlight; font-size:14px;
+    color:#000; text-align:right;
+} 
+.THIS .slds-table_header-fixed tbody tr:first-child th {
+    border-top: 0px;
+    font-family:myfontlight; font-size:14px;
+    color:#000; text-align:right;
+}.THIS .slds-table--header-fixed tbody tr:first-child td {
+    border-top: 0px;
+    font-family:myfontlight; font-size:14px;
+    color:#000; text-align:right;
+}
+.THIS .slds-table--header-fixed tbody tr:first-child th {
+    border-top: 0px;
+    font-family:myfontlight; font-size:14px;
+    color:#000; text-align:right;
+}
+.THIS .slds-cell-fixed {
+    border:1px solid #ccc;
+}
+.THIS .slds-table th {
+    color:#ff7701; text-align:right;
+    font-family:myfontregular; font-size:14px;
+    font-weight:normal!important;
+    border-right:1px solid #ccc;
+}
+.THIS .slds-table td{
+    text-align:right; color:#000;
+    font-family:myfontlight; font-size:14px;
+    font-weight:normal!important;
+    border-right:1px solid #ccc;
+    
+}

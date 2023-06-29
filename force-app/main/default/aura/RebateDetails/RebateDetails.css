@@ -1,0 +1,72 @@
+.THIS {
+}
+
+.THIS .custom-background-green {
+    background-color: #00CC33; 
+}
+.THIS .custom-background-bottle-green {
+    background-color: #A9D08E; 
+}
+.THIS .custom-background-orange {
+    background-color: #F4B084
+}
+.THIS .custom-background-yellow {
+    background-color: #FFD966
+}
+.THIS .custom-background-blue {
+    background-color: #6a71ff
+}
+.THIS .custom-background-gray {
+    background-color: gray
+}
+.THIS .custom-background-light-green {
+    background-color: #C6E0B4
+}
+.THIS .custom-background-light-orange {
+    background-color: #F8CBAD
+}
+.THIS .custom-background-light-blue {
+    background-color: #a6abcc
+}
+.THIS .custom-background-light-black {
+    background-color: #808080
+}
+.THIS .custom-background-light-gray {
+    background-color: #F2F2F2
+}
+.THIS .custom-background-light-pink {
+    background-color: #FCE4D6
+}
+
+.THIS .custom-background-sky-blue {
+    background-color: #d5f2ff
+}
+.THIS .color-red{
+    color: red;
+}
+
+.THIS .align-right{
+    text-align: right;
+}
+
+.THIS .pad{
+    padding-right: 4px;
+}
+
+.THIS .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+
+.THIS lightning-primitive-header-actions {
+    display: none;
+}
+
+.THIS .custom_font_smallxx{
+    font-size: 9px;
+}
+.THIS .custom_font_smallx{
+    font-size: 10px;
+}

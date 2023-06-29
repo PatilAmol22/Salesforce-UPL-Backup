@@ -1,0 +1,135 @@
+<!--********************************************************************************************
+* Name			: Grz_OutstandingSummaryInternal.html
+* Description	: LWC component for Internal Users to display Outstanding Summary                          
+* Created Date	: 27/05/2022
+* Created By	: Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<template>
+    <lightning-quick-action-panel header={labels.outstandingSummary}>
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner alternative-text="Loading..." variant="brand" style="top:60px;"></lightning-spinner>
+        </div>
+        <div class="modal-height">
+            <!-- for RITM0579566 SA GRZ(Nikhil Verma) 26-06-2023-->
+            <template if:true={salesArea}>
+                <div class="slds-m-bottom_small">
+                    <lightning-combobox
+                        value={salesArea}
+                        placeholder="Sales Area"
+                        options={salesAreaOptions}
+                        onchange={handleSalesAreaOption}>
+                    </lightning-combobox> 
+                </div>
+            </template>
+            <!-- END for RITM0579566 SA GRZ(Nikhil Verma) 26-06-2023-->
+            <template if:true={errorMessage}>
+                <p class="error"> {errorMessage} </p>
+            </template>
+            <br>
+            <template if:true={outstandingData}>
+                <table class="slds-m-bottom_small" >
+                    <thead class="componentNotoSansLight table-head">
+                        <tr>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.X0_30}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.X31_60}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.X61_75}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.X76_90}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.Greater90}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.totalOutstanding}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.unadjustedReceipts}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.unadjustedCredits}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.netOutstanding}</div>
+                            </th>
+                            <th class="slds-p-horizontal_x-small table-head-css" scope="col">
+                                <div>{labels.currencyKey}</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <tr class="slds-border_bottom">
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.bucket1} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.bucket2} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.bucket3} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.bucket4} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.greater90} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.totalOutstanding} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.unadjustedReceipts} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.unadjustedCredits} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>
+                                    <lightning-formatted-number value={outstandingData.netOutstanding} minimum-fraction-digits="2"></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td class="slds-p-horizontal_x-small table-body-css" scope="col">
+                                <div>{outstandingData.currencyKey}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+        <template if:true={outstandingData}>
+            <div slot="footer" style="text-align: center;">
+                <a onclick={pdfDownloadClick}>
+                    <lightning-icon icon-name="doctype:pdf" 
+                                    size="medium">
+                    </lightning-icon>
+                </a>
+                <a onclick={xlsDownloadClick} style="margin-left: 3%;">
+                    <lightning-icon icon-name="doctype:excel" 
+                                    size="medium">
+                    </lightning-icon>
+                </a>
+            </div>
+        </template>
+      </lightning-quick-action-panel>
+</template>

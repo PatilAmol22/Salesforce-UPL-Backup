@@ -1,0 +1,73 @@
+.table-body {
+  color: black;
+  background-color: #fdfdfd;
+  padding: 12px 10px;
+  height: auto;
+  width:min-content;
+  word-wrap: normal;
+  
+}
+.table-body-css{
+  height: auto;
+  width: 25%;
+  font-size: medium;
+}
+.table-head-css{
+  width:25%;
+  font-size: medium;
+}
+.table-head {
+  background-color: #03631b;
+  color: #fdfcfc;
+  padding: 12px 10px;
+  
+  
+
+}
+.button {
+  border: none;
+  color: white;
+  background-color: rgb(39, 4, 233);
+  padding: 12px 10px;
+  text-align: center;
+  width: 100%;
+  font-size: 16px;
+  
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button:focus {
+  background-color: #03631b;
+}
+.lightning-formatted-number {
+  text-align: right;
+}
+table, th, td {
+  border: 1px solid rgb(145, 207, 145);
+}
+td {
+  text-align: right;
+  
+}
+th{
+  text-align: center;
+  
+}
+.ytd
+{
+  background-color: #03631b;
+  color: white;
+}
+
+.totalyear
+{
+  background-color: #3cf46a;
+  color: black;
+}
+
+input, label{
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10px 0;
+}

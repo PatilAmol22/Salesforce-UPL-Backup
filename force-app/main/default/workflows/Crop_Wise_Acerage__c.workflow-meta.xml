@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Account</fullName>
+        <field>Crop_Wise_Acerage__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Account</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+        <targetObject>Farmer__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Account_Crop_Code</fullName>
+        <field>Crop_Codes__pc</field>
+        <formula>IF(ISBLANK(Farmer__r.Crop_Code_Temp__c),Crop_Cd__c,Farmer__r.Crop_Code_Temp__c +&quot;,&quot;+ Crop_Cd__c)</formula>
+        <name>Update Account Crop Code</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+        <targetObject>Farmer__c</targetObject>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Processed</fullName>
+        <field>Processed__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Processed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Update</fullName>
+        <active>false</active>
+        <formula>True</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account Crop Code</fullName>
+        <actions>
+            <name>Update_Account_Crop_Code</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(NOT(CONTAINS(&quot;,&quot;+ Farmer__r.Crop_Code_Temp__c+&quot;,&quot;,&quot;,&quot;+ Crop_Cd__c +&quot;,&quot;)),CaseLevelcrop__c!=true)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Account ID on Crop Wise Acerage</fullName>
+        <actions>
+            <name>Update_Account</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Processed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Crop_Wise_Acerage__c.CaseLevelcrop__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

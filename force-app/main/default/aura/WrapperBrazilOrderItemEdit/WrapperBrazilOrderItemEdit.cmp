@@ -1,0 +1,40 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="recordId" type="String"/>  
+    <aura:attribute name="ShowModel" type="boolean" default="False"/>
+    <aura:attribute name="disableCancelOrder" type="boolean"/>
+     <aura:attribute name="recordError" type="String"/>
+    <aura:attribute name="recordInfo" type="Object" />
+    <aura:attribute name="simpleRecord" type="Object"/>
+    
+    <force:recordData aura:id="recordLoader"
+                   recordId="{!v.recordId}"
+                   fields="Order_Status__c,Type_of_Order__c,SAP_Order_Number__c,BrazilSalesOrderStatus__c,Blocked_Cancellation_Message__c,Cancel_Comment__c"                   
+                   targetFields="{!v.simpleRecord}"
+                   targetError="{!v.recordError}"
+                   recordUpdated="{!c.handleRecordUpdated}"/> 
+    
+    
+    <aura:if isTrue="{!!v.disableCancelOrder}">
+    <lightning:button variant="brand" 
+                      label="{!$Label.c.Edit_OrderItem}" 
+                      title="{!$Label.c.Edit_OrderItem}" 
+                      onclick="{! c.handleClick }" 
+                      disabled="{!v.disableCancelOrder}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.ShowModel}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                   
+                    
+                    <!-- Body -->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                      <c:BrazilOrderItemEdit recordId="{!v.recordId}"
+                                         ShowModel="{!v.ShowModel}"/>
+                    </div>
+                    
+            </div>
+        </section>
+    </aura:if>
+</aura:component>

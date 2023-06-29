@@ -1,0 +1,183 @@
+<aura:component controller="CallForRecommendation"
+                implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:appHostable,lightning:isUrlAddressable" 
+                access="global">
+    
+     <lightning:workspaceAPI aura:id="workspace2" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="pageReference" type="Object"/>
+    <aura:attribute name="EmpanelmentVal" type="String" description="ID of the record."/>
+    <aura:attribute name="EmpanelmentNameVal" type="String" description="ID of the record."/>
+    
+    <aura:handler name="change" value="{!v.EmpanelmentVal}" action="{!c.empChange}"/>
+    <!--Attributes-Emp-->
+    <aura:attribute name="recommendationFlagSave" type="Boolean" default="false"/>
+    <aura:attribute name="cid" type="String"/>
+    <aura:attribute name="FarmerId" type="Id" description="ID of the record."/>
+    <aura:attribute name="viewRecommendationFlag" type="Boolean" default="true"/>
+    <aura:attribute name="ListofRecommendation" type="List" />
+    <aura:attribute name="MapCRParent" type="map"/>
+    <aura:attribute name="lstCRParent" type="List"/> 
+    
+    
+    <aura:attribute name="rFlagSave" type="Boolean" default="false"/>
+    <aura:attribute name="vRFlag" type="Boolean" default="false"/>
+    
+    <aura:attribute name="acre" type="Integer"/>
+    <aura:attribute name="sowDate" type="Date"/>
+    <aura:attribute name="cropp" type="String"/>
+    <aura:attribute name="FarmerState" type="String"/>
+    <aura:attribute name="FarmerName" type="String"/>
+    <aura:attribute name="setFalse" type="Boolean" default="true"/>
+    
+    <article class="slds-card">
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-page-header" role="banner">
+                <p class="slds-text-heading_label">Empanelment</p>
+            </div>
+            
+            <!--||Aura if View Empanelment||-->  
+            <br/>
+            <aura:if isTrue="{! not( empty( v.EmpanelmentVal ) ) }">
+                <div class="slds-p-bottom_large slds-p-left_large" >
+                    <lightning:recordViewForm recordId="{!v.EmpanelmentVal}" objectApiName="Empanelment__c">
+                        <div class="slds-box">
+                            <!--slds-form-element_horizontal-->
+                            <div class="slds-grid slds-wrap slds-grid_align-spread slds-form-element_horizontal ">
+                                <div class="slds-col slds-size_4-of-12 ">
+                                    <lightning:outputField fieldName="Name" /> 
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 ">
+                                    <lightning:outputField fieldName="Farmer__c" />
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="CultivatedCrop__c" /> 
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="CultivatedArea__c" />
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="WaterSource__c" /> 
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="SowingDate__c" />
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="Is_Transplanted__c" />
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="PastRecommendation__c" />
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="SeedTreatment__c" />
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="SeedTreatmentProduct__c" />
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField fieldName="NonUplProduct__c" />
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning:outputField name="BlankTest" />
+                                </div>
+                            </div>
+                        </div>     
+                    </lightning:recordViewForm>
+                </div>
+            </aura:if>
+            <!--||Aura if View Call & Recommendation||-->
+            <aura:if isTrue="{! v.setFalse}">
+            <div class="slds-button-group slds-float_right" role="group">
+                
+                <lightning:button aura:id="saverecommend" label="Recommend" onclick="{!c.handleSaveEmpanelmentandRecommend}"
+                                  variant="brand" class="slds-float_right" name="srbutton"/> &nbsp;
+                <lightning:button label="Cancel" onclick="{!c.handleCancelHide}"
+                                  variant="brand" class="slds-float_right" name="cancelbutton"/>  &nbsp;
+                <lightning:button label="Go Back" onclick="{!c.handleCancel}"
+                                  variant="brand" class="slds-float_right" name="cancelbutton"/>  &nbsp;
+                
+            </div>
+            </aura:if>
+            <br/>
+            
+            <!---->
+            <!--||Aura if Create Call & Recommendation||-->
+            <br/>
+            <!--
+            <aura:if isTrue="{!v.recommendationFlagSave}" aura:id = "forCreateRecommend">
+                <div class="slds-page-header" role="banner">
+                    <p class="slds-text-heading_label">Call</p>
+                </div>
+                <br/>
+                <c:CallForRecommendation EmpanelmentId="{!v.EmpanelmentVal}"
+                                         callid="{!v.cid}"
+                                         FarmerId="{!v.FarmerId}"
+                                         recommendationFlagSaveCFR="{!v.recommendationFlagSave}"
+                                         viewRecommendationFlagCFR="{!v.viewRecommendationFlag}" 
+                                         ListofRecommendation="{!v.ListofRecommendation}"
+                                         DateSow="{!v.sowDate}"
+                                         FarmerState="{!v.FarmerState}" 
+                                         crop="{!v.cropp}"
+                                         MapCR="{!v.MapCRParent}"
+                                         lstCR="{!v.lstCRParent}"
+                                         />
+            </aura:if>
+            -->
+            <!--||Aura if View Call & Recommendation||-->
+            <br/>
+            
+            <aura:if isTrue="{!v.viewRecommendationFlag}" aura:id = "forViewRecommend">
+                
+                <aura:iteration items="{!v.lstCRParent}" var="key" indexVar="indx">
+                    
+                    <div class="slds-page-header" role="banner">
+                        <p class="slds-text-heading_label">Call {!v.lstCRParent.length - indx} </p>
+                    </div>
+                    <br/>
+                    <c:WrapperViewRecommendation CallIdFromRecommendationwrapper="{!key}" 
+                                                 viewRecommendationFlagVR="{!v.viewRecommendationFlag}"
+                                                 recommendationFlagSave="{!v.recommendationFlagSave}"
+                                                 rFlagSave="{!v.rFlagSave}"
+                                                 MapCRParentWrapper = "{!v.MapCRParent}"
+                                                 AcreArea="{!v.acre}"
+                                                 />
+                    <!--AcreArea="{!v.simpleNewEmpanelment.CultivatedArea__c}"-->
+                    
+                </aura:iteration>
+            </aura:if> 
+            <aura:if isTrue="{!v.rFlagSave}" aura:id = "forCreateRecommend">
+                <div class="slds-page-header" role="banner">
+                    <p class="slds-text-heading_label">Call Next</p>
+                </div>
+                <br/>
+                <c:CallForRecommendation EmpanelmentId="{!v.EmpanelmentVal}" 
+                                         callid="{!v.cid}"
+                                         FarmerId="{!v.FarmerId}"
+                                         recommendationFlagSaveCFR="{!v.recommendationFlagSave}"
+                                         viewRecommendationFlagCFR="{!v.viewRecommendationFlag}" 
+                                         ListofRecommendation="{!v.ListofRecommendation}"
+                                         DateSow="{!v.sowDate}" 
+                                         FarmerState="{!v.FarmerState}" 
+                                         crop="{!v.cropp}"
+                                         vRFlag="{!v.vRFlag}"
+                                         rFlagSave="{!v.rFlagSave}"
+                                         MapCR="{!v.MapCRParent}"
+                                         lstCR="{!v.lstCRParent}"
+                                         setFalse="{!v.setFalse}"
+                                         />
+                <!--FarmerState="{!v.FarmerState}" -->
+            </aura:if>
+            <br/>
+            <br/>
+            
+        </div>  
+        
+        
+        <!---->
+        
+        
+        
+        <!--1 div-->
+    </article>
+    
+</aura:component>

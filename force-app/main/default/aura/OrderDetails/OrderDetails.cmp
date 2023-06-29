@@ -1,0 +1,51 @@
+<aura:component controller="OrderDetailsController" implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="OrderList" type="List" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    
+    <lightning:card title="Orders" iconName="standard:orders">       
+        <aura:set attribute="actions">
+            <lightning:buttonIcon onclick="{!c.doInit}" iconName="utility:refresh" variant="border-filled" alternativeText="reload"/>
+        </aura:set>
+        
+        <div class="slds-card__body">
+            <aura:if isTrue="{!not(empty(v.OrderList))}">
+                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" aria-label="Example table in a Card">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Order Number">Order Number</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Status"> Status</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.OrderList}" var="item">
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <lightning:formattedUrl value="{!'/' + item.Id}" tooltip="{!item.OrderNumber}" label="{!item.OrderNumber}" target="_self" />
+                                    </div>
+                                </th>
+                                <td role="gridcell">
+                                    <div class="slds-truncate" >{!item.Status}</div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <aura:set attribute="else">
+                    <div class="slds-text-align_center">No order placed yet.</div>
+                </aura:set>
+            </aura:if>
+            
+        </div>
+        
+    </lightning:card>
+    
+    <aura:if isTrue="{!v.loaded }">
+        <lightning:spinner variant="brand" alternativeText="Loading" />
+    </aura:if>
+</aura:component>

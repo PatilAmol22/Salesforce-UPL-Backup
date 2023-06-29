@@ -1,0 +1,81 @@
+<aura:component implements="force:appHostable,force:hasRecordId,lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasSObjectName,force:lightningQuickAction" access="global" controller="SOMBalanceController">
+
+<aura:attribute name="balanceList" type="SOMBalanceController.SOMBalance[]" access="public"/>
+    
+<!-- Reload order using recordId -->
+<aura:attribute name="recordId" type="Id"/>
+<!--End--> 
+    
+<!--Init Component On Load-->
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+<!--End-->    
+    
+<table class="slds-table slds-table_bordered slds-tree slds-table_tree" role="treegrid" aria-readonly="true">
+  <thead>
+    <tr class="slds-text-title_caps">
+      <th class="slds-cell-buffer_left" scope="col">
+        <div class="slds-grid slds-grid_vertical-align-center">
+          <!--<button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-xx-small slds-m-right_xx-small slds-shrink-none slds-table_tree__toggle" tabindex="-1" title="Expand all rows">
+			<lightning:icon iconName="utility:chevrondown" size="xx-small"/>
+            <span class="slds-assistive-text">Expand all rows</span>
+          </button>-->
+          <div class="slds-truncate" title="Product">{!$Label.c.Product}</div>
+        </div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Qty">{!$Label.c.Qty}</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Balance">{!$Label.c.Balance}</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="%">%</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <aura:iteration items="{!v.balanceList}" var="step">  
+    <tr aria-expanded="true" aria-level="1" aria-posinset="2" aria-setsize="4" class="slds-hint-parent">
+      <th class="slds-tree__item" data-label="Product" scope="row">
+        <!--<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-xx-small slds-m-right_xx-small" aria-hidden="true" tabindex="-1" title="Collapse Acme Corporation">-->
+        <!--<button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-xx-small slds-m-right_xx-small slds-shrink-none slds-table_tree__toggle" tabindex="-1" title="Expand all rows">  
+		<lightning:icon iconName="utility:chevrondown" size="xx-small"/>
+          <span class="slds-assistive-text">Expand SOM</span>
+        </button>-->
+        <div class="slds-truncate" title="{!step.product}"><a href="javascript:void(0);" tabindex="-1">{!step.product}</a></div>
+      </th>
+      <td data-label="Qty">
+        <div class="slds-truncate" title="{!step.quantity}"><ui:outputNumber value="{!step.quantity}" format="#,###,###.00"/></div>
+      </td>
+      <td data-label="Balance">
+        <div class="slds-truncate" title="{!step.balance}"><ui:outputNumber value="{!step.balance}" format="#,###,###.00"/></div>
+      </td>
+      <td data-label="%">
+        <div class="slds-truncate" title="{!step.percent}"><ui:outputNumber value="{!step.percent}" format=".00"/></div>
+      </td>
+    </tr>
+    <aura:iteration items="{!step.socList}" var="soc">      
+    <tr aria-level="2" aria-posinset="1" aria-setsize="1" class="slds-hint-parent">
+      <th class="slds-tree__item" data-label="Product" scope="row">
+        <!--<button class="slds-button slds-button_icon slds-button_icon slds-button_icon-xx-small slds-m-right_xx-small slds-is-disabled" aria-hidden="true" tabindex="-1" title="Expand Acme Corporation (Oakland)">-->
+        <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-xx-small slds-m-right_xx-small slds-shrink-none slds-table_tree__toggle" tabindex="-1" title="Expand all rows">  
+		<lightning:icon iconName="utility:chevronright" size="xx-small"/>
+          <span class="slds-assistive-text">Collapse SOC</span>
+        </button>
+        <div class="slds-truncate" title="{!soc.product}"><a href="javascript:void(0);" tabindex="-1">{!soc.product}</a></div>
+      </th>
+      <td data-label="Qty">
+        <div class="slds-truncate" title=""></div>
+      </td>
+      <td data-label="Balance">
+        <div class="slds-truncate" title="{!soc.balance}"><ui:outputNumber value="{!soc.balance}" format="#,###,###.00"/></div>
+      </td>
+      <td data-label="%">
+        <div class="slds-truncate" title=""></div>
+      </td>
+    </tr>
+    </aura:iteration>      
+    </aura:iteration>    
+  </tbody>
+</table>
+</aura:component>

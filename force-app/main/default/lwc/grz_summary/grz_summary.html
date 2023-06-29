@@ -1,0 +1,394 @@
+<template>
+
+<!-- <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+           <header class="slds-modal__header" style="border: solid 1px black;">
+               <h1><b>Notification</b></h1>
+               </header>
+               <div class="slds-modal__content slds-p-around--medium" style="border: solid 1px black;">
+            <center><h2><b>Community is under maintenance and will be up tentatively by 20/01/2023</b></h2></center>
+        </div>
+        </div>
+</div> -->
+
+    <!-- <img src={backgroundimage} style="height:113px; width: 100%; margin-top: -35px; margin-left: 4%">
+    <div class="text-section">
+        <b>Sales Orders</b>
+    </div> -->
+   <c-grz_header-image-cmp bgimg={backgroundimage} imglabel={Headertitle}  customcss='top: 9%;'></c-grz_header-image-cmp>
+    
+    <div>
+        <c-grz_bread-crumb labelone={Headertitle} linkone=''>
+        </c-grz_bread-crumb>
+    </div>
+    <div style=" padding-top: 0%;">
+        <template if:true ={brazilflag}>
+            <div style="font-size: 23px; font-family: NotoSansBold ; margin-bottom: 1%;"><b>{Headertitle}</b></div>  
+        </template>
+    
+           
+    <!--<div class="slds-grid slds-wrap slds-m-bottom_x-small">
+        <div class="slds-size_3-of-12 slds-medium-size--6-of-6 slds-large-size--3-of-12 slds-small-size--6-of-6">
+            <lightning-input type="search" onchange={handleKeyChange} class="slds-m-bottom_small"  placeholder="Search SAP and SFDC Order No."
+            value={searchKey}>
+            </lightning-input>
+        </div>
+         <div class="slds-p-top_large slds-p-left_medium"><b>Start:</b></div>
+        <div class="slds-size_3-of-12 slds-medium-size--6-of-6 slds-large-size--3-of-12 slds-small-size--6-of-6 slds-p-left_xx-small">
+            <div class="slds-grid">
+                
+                <div class="slds-col ">
+                   
+                    <lightning-input type="date" value={startdatesearch} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startdateChange}></lightning-input>
+                </div>
+                <div class="slds-p-top_large slds-p-left_medium"><b>End:</b></div>
+                <div class="slds-col slds-p-left_xx-small">
+                   
+                    <lightning-input type="date"  value={enddatesearch} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={enddateChange}></lightning-input>
+                </div>
+            </div>
+
+        </div> 
+        <div class="slds-size_6-of-12"></div>
+        
+        <div class="slds-size_1-of-12 slds-medium-size--6-of-6 slds-large-size--1-of-12 slds-small-size--6-of-6 slds-p-right_xx-small">
+            
+            <lightning-combobox
+            value={datevalue}
+            placeholder="Sort By"
+            options={dateoptions}
+            onchange={handleChangeDate} >
+            </lightning-combobox>
+        </div>
+       
+        <div class="slds-size_2-of-12 slds-medium-size--6-of-6 slds-large-size--2-of-12 slds-small-size--6-of-6">
+            <lightning-combobox
+           
+            
+            value={value}
+            placeholder="Filter By Order Status..."
+            options={options}
+            onchange={handleChange} >
+            </lightning-combobox>
+        </div>
+    </div>
+-->
+   
+   
+    
+        <div if:false={isLoading}>
+            <div class="outercss slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-p-right_small slds-border_top 
+                slds-medium-size--6-of-6 slds-small-size--6-of-6">
+                <!--div class="slds-grid slds-p-horizontal_small slds-wrap">
+                    <div class="slds-col  slds-large-size_6-of-12 slds-medium-size_12-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-p-right_small slds-large-size_5-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12 slds-x-small-size_12-of-12">
+                                <div class="slds-grid slds-wrap">
+                                    <div
+                                        class="mrg-tp  slds-col  setwidth paddingsearchclass slds-p-right_small slds-large-size_10-of-12  slds-small-size_11-of-12 slds-x-small-size_11-of-12">
+                                        <lightning-input variant="label-hidden" onkeypress={handleKeyChange}
+                                class="slds-col slds-m-bottom_small slds-m-left_small" placeholder="Search by Order No." 
+                                value={searchKey}>
+                            </lightning-input>
+
+                                        <span if:true={searchKey} class="close-icon">
+                                            <lightning-icon size="x-small" icon-name="utility:close" onclick={clearClick}>
+                                            </lightning-icon>
+                                        </span>
+                  download-div                  </div>
+                                    <div
+                                        class="mrg-tp  slds-col  paddingleftclass slds-large-size_2-of-12  slds-small-size_1-of-12 slds-x-small-size_1-of-12">
+                                        <button onclick={buttonClick}
+                                            class="slds-button slds-button_brand slds-button_icon slds-button_icon-border-filled ">
+                                            <lightning-icon icon-name="utility:search" size="x-small" class=""></lightning-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="slds-col slds-large-size_2-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12 slds-x-small-size_12-of-12 fitter-pad-small-none">
+                        <lightning-combobox value={datevalue} placeholder="Sort By" options={dateoptions} onchange={handleChangeDate}>
+                        </lightning-combobox>                    </div>
+                    <div class="slds-col slds-large-size_2-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12 slds-x-small-size_12-of-12 fitter-pad-small-none">
+                        <lightning-combobox value={value} placeholder="Filter By Order Status" options={activedata} onchange={handleChange}>
+                        </lightning-combobox>
+
+                    </div>
+                </div-->
+                <!--div class="slds-grid slds-wrap slds-m-bottom_x-small">
+                    <div class="searchcss slds-col slds-grid slds-size_7-of-12 slds-medium-size--5-of-12 slds-large-size--7-of-12 slds-small-size--12-of-12">
+                       <span style="width: 230px; max-width: 250px; min-width: 150px;">
+                        <span>
+                            <lightning-input variant="label-hidden" onkeypress={handleKeyChange}
+                                class="slds-col slds-m-bottom_small slds-m-left_small" placeholder="Search by Order No." style="margin-top: 19px;"
+                                value={searchKey}>
+                            </lightning-input>
+                        </span>
+                           
+                             <span if:true={searchKey} 
+                                 
+                                style="margin-top: -38px; margin-left: 209px; z-index: 1; cursor: pointer; position: absolute;" >
+                                    <lightning-icon size="x-small" icon-name="utility:close" onclick={clearClick}>
+                                    </lightning-icon>
+                            </span> 
+                        </span>
+                        <div class="slds-col slds-p-left_x-small" style="margin-top: 19px;">
+                           
+                            <button onclick={buttonClick} class="slds-button slds-button_brand slds-button_icon slds-button_icon-border-filled ">
+                                <lightning-icon icon-name="utility:search" size="x-small" class="" ></lightning-icon>
+                            </button>
+                        </div>
+                        
+                    </div>
+                
+                    
+                <div class="slds-grid slds-wrap slds-size_12-of-12 slds-large-size--5-of-12  slds-medium-size--7-of-12 slds-small-size--12-of-12" style="min-width: 250px;" >
+                    <div  class="combocss  slds-size_6-of-12">
+                    
+                        <lightning-combobox value={datevalue} placeholder="Sort By" options={dateoptions} onchange={handleChangeDate}>
+                        </lightning-combobox>
+                    </div>
+                    
+                    <div class="combocss  slds-size_6-of-12"
+                        >
+                        <lightning-combobox value={value} placeholder="Filter By Order Status" options={activedata} onchange={handleChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+                   
+                </div-->
+                <div class="slds-grid slds-wrap" style="padding:2%;">
+                    <div  class="slds-col pTop slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_6-of-12">
+                        <!--div style="display: inline-block;"><lightning-input variant="label-hidden" onkeypress={handleKeyChange}
+                            placeholder="Search by Order No." 
+                            value={searchKey} type="search"> 
+                        </lightning-input>
+                    </div>
+<div style="display: inline-block;">
+<lightning-button onclick={buttonClick} label=" " title="Search" icon-name="utility:search" class="slds-m-left_x-small"></lightning-button>
+</div-->
+
+<span style="float: right">
+    <lightning-button onclick={buttonClick} label=" " title="Search" icon-name="utility:search" class="slds-m-left_x-small"></lightning-button>
+    </span>
+    <div style="overflow: hidden; padding-right: .5em;">
+       <lightning-input variant="label-hidden" onkeypress={handleKeyChange}
+       placeholder="Search by Order No." 
+       value={searchKey} type="search"> 
+    </lightning-input>
+    </div>
+                      </div>
+                      <!--div  class="slds-col pTop slds-x-small-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                        <span><button onclick={buttonClick} class="slds-button slds-button_brand slds-button_icon slds-button_icon-border-filled ">
+                            <lightning-icon icon-name="utility:search" size="x-small" class="" ></lightning-icon>
+                        </button>
+                        </span>
+                      </div-->
+                      
+                      <div class="dtPadding slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_3-of-12">
+                        <span><lightning-combobox value={datevalue} placeholder="Sort By" options={dateoptions} onchange={handleChangeDate}>
+                        </lightning-combobox>
+</span>
+                      </div>
+                      <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_3-of-12">
+                        <span><lightning-combobox value={value} placeholder="Filter By Order Status" options={activedata} onchange={handleChange}>
+                        </lightning-combobox>
+</span>
+                      </div>
+                  </div>
+                <div class="slds-grid slds-wrap" style="overflow-x: auto;">
+                    <table class="tablecss slds-m-left_small  slds-m-right_small slds-m-bottom_small" >
+    
+                        <thead class="componentNotoSansMedium" style="background-color: #f8f8f8;color: #888;">
+                            <tr>
+                                 <template if:false={brazilflag}>
+                                     <th class="slds-p-left_small" style="height: 40px; min-width: 160px;" scope="col">
+                                         <div class="slds-truncate" title="Name">SAP ORDER NUMBER</div>
+                                     </th>
+                                 </template>
+                <template if:true={brazilflag}>
+                    <th class="slds-p-left_small" style="height: 40px; min-width: 160px;" scope="col">
+                        <div class="slds-truncate" title="Name">SAP ORDER NUMBER</div>
+                    </th>
+                    <th class="slds-p-left_small" style="height: 40px; min-width: 160px;" scope="col">
+                        <div class="slds-truncate" title="Name">SALESFORCE ORDER NUMBER</div>
+                    </th>
+                </template>
+               
+                <th class="" scope="col" style="height: 40px; min-width: 110px;">
+                    <div class="slds-truncate" title="Some Custom Column">CREATED DATE</div>
+                </th>
+                <template if:false = {brazilflag}>
+                    <th class="" scope="col" style="height: 40px; min-width: 150px;">
+                        <div class="slds-truncate" title="Some Custom Column">LAST MODIFIED DATE</div>
+                    </th>
+                    <th class="" scope="col" style="height: 40px; min-width: 90px;">
+                        <div class="slds-truncate" title="Some Custom Column">QUANTITY</div>
+                    </th>
+                </template>
+                <template if:true={brazilflag}>
+                    <th class="" scope="col" style="height: 40px; min-width: 80px;">
+                        <div class="slds-truncate" title="Some Custom Column">SOLD TO PARTY</div>
+                    </th>
+                    <th class="" scope="col" style="height: 40px; min-width: 80px;">
+                        <div class="slds-truncate" title="Some Custom Column">CITY</div>
+                    </th>
+                </template>
+               
+                <th class="" scope="col" style="height: 40px; min-width: 110px;">
+                    <div class="slds-truncate" title="Some Custom Column">AMOUNT (INR) </div>
+                </th>
+                <!-- <th class="" scope="col" style="height: 40px; min-width: 90px;">
+                    <div class="slds-truncate" title="Some Custom Column">ORDER TYPE</div>
+                </th> -->
+                <th class="" scope="col" style="height: 40px; text-align: center; min-width: 90px;">
+                    <div class="slds-truncate" title="Some Custom Column">STATUS</div>
+                </th>
+    
+    
+            </tr>
+        </thead>
+    
+        <tbody>
+    
+            <template for:each={testdetails} for:item="Sorder">
+    
+                <tr key={Sorder.Id}  style="font-family: NotoSansRegular;" class="slds-border_bottom bgcolormobile shadoweffect">
+                    <template if:false={Sorder.IsBrazilUser}>
+                        <template if:true={Sorder.SAPOrderNumber}>
+                            <td style="height: 40px;" class="slds-p-left_small table-body-css br-mobile-view">
+                        <div class="valPad textoverflowcls">
+                            <template if:true={isScreen}><span class="titleSpan">SAP ORDER NUMBER:  </span></template><span class="alignLeft">   <a  data-value={Sorder.Id} onclick={handleOrderDetail} href={detailPageLink} style="color: #F47920;"
+                                    target="_blank">{Sorder.SAPOrderNumber}</a></span></div>
+                            </td>
+
+                            <!-- <td class="slds-p-left_small tabledatacss">
+                                <a data-id={caseobj.Id} onclick={navigateToRecordView} href={detailPageLink} style="color: #F47920;"
+                                    target="_blank">
+                                    {caseobj.casenumber}
+                                </a>
+                            </td> -->
+                        </template>
+                        <template if:false={Sorder.SAPOrderNumber}>
+                            <td style="height: 40px;" class="slds-p-left_small table-body-css br-mobile-view">
+                             <div class="valPad textoverflowcls"> <template if:true={isScreen}><span class="titleSpan">SALES ORDER NUMBER: </span> </template><span class="alignLeft">  <a class="valPad" data-value={Sorder.Id} onclick={handleOrderDetail} href={detailPageLink}  target="_blank" style="color: #F47920;">{Sorder.SalesOrderNumber}</a></span>
+                        </div>
+                            </td>
+                        </template>
+                    </template>
+                    <template if:true={Sorder.IsBrazilUser}>
+                        
+                            <td style="height: 40px;" class="slds-p-left_small ">
+                    
+                                <a data-value={Sorder.Id} onclick={handleOrderDetail} href={detailPageLink} style="color: #F47920;"
+                                    target="_blank">{Sorder.SAPOrderNumber}</a>
+                            </td>
+                       
+                        
+                            <td style="height: 40px;" class="slds-p-left_small">
+                                <a data-value={Sorder.Id} onclick={handleOrderDetail} style="color: #F47920;">{Sorder.SalesOrderNumber}</a>
+                    
+                            </td>
+                       
+                    </template>
+                   
+                    <td style="height: 40px" class="slds-p-left_small table-body-css br-mobile-view">
+                      <div class="valPad textoverflowcls"><template if:true={isScreen}><span class="titleSpan">CREATED DATE: </span> </template><span class="alignLeft">{Sorder.OrderDate}</span></div>  
+    
+                    </td>
+                    <template if:false ={Sorder.IsBrazilUser}>
+                        <td  style="height: 40px" class="slds-p-left_small table-body-css br-mobile-view">
+                            
+                        <div class="valPad textoverflowcls"><template if:true={isScreen}><span class="titleSpan">LAST MODIFIED DATE: </span> </template><span class="alignLeft">{Sorder.OrderLastModified}</span></div>
+                        </td>
+                        <td style="height: 40px" scope="col" class="slds-p-left_small table-body-css br-mobile-view">
+                            <div class="valPad textoverflowcls"><template if:true={isScreen}><span class="titleSpan">QUANTITY: </span> </template><span class="alignLeft">{Sorder.Quantity}</span></div>
+                        </td>
+                    </template>
+                    <template if:true={Sorder.IsBrazilUser}>
+                        <td style="height: 40px" scope="col">
+                            <div>{Sorder.CustomerName}</div>
+                        </td>
+                        <td style="height: 40px" scope="col">
+                            <div>{Sorder.BrazilCity}</div>
+                        </td>
+                    </template>
+                    
+                    <td style="height: 40px" scope="col" class="slds-p-left_small table-body-css br-mobile-view">
+                        <div class="valPad textoverflowcls"><template if:true={isScreen}><span class="titleSpan">AMOUNT(INR):</span>  </template><span class="alignLeft">{Sorder.OrderAmount}</span></div>
+                    </td>
+                    <!-- <template if:false={Sorder.IsBrazilUser}>
+                            <td style="height: 40px" scope="col">
+                                <div>{Sorder.OrderType}</div>
+                            </td>
+                        </template>
+                        <template if:true={Sorder.IsBrazilUser}>
+                            <td style="height: 40px" scope="col">
+                                <div>{Sorder.BrazilOrderType}</div>
+                            </td>
+                        </template> -->
+                   
+                    <td scope="col" class="slds-p-left_small slds-m-bottom_small table-body-css br-mobile-view">
+                        <!--div class="valPad textoverflowcls floatClass" style="width:fit-content; background-color: #FAEBD7; text-align: center;">{Sorder.Status}</div-->
+                        <div style="min-width:168px;" class="valPad alignCen textoverflowcls">
+                            <template if:true={isScreen}><span class="titleSpan">STATUS:</span>  </template>
+                            <span class="alignLeft" style="padding:7px;display:inline-table;width:165px; background-color: #FAEBD7; text-align: center;">{Sorder.Status}</span>
+                        </div>
+                    </td>
+                   
+    
+                </tr>
+            </template>
+    
+        </tbody>
+    </table>
+   
+    </div>
+    <div if:true={nodata}>
+        <p class="slds-text-align_center nodatacss" style="background-color: white;">No Sales Order Data To Display
+        </p>
+    </div>
+    
+      </div>
+    <div class="noteclass componentNotoSansBold"><b>*Note:- The items listed on the page pertain to the last fiscal year and the current fiscal year only.</b></div>
+<lightning-layout-item size="12" padding="around-small">
+    <div class="slds-align_absolute-center">
+
+        <lightning-button variant="base" label="First" disabled={disableFirst} onclick={handleFirst}
+            class="slds-m-left_x-small"></lightning-button>
+
+        <lightning-button variant="base" label="Pre" disabled={disableFirst} onclick={handlePrevious}
+            class="slds-m-left_x-small slds-m-right_x-small"></lightning-button>
+
+        <template for:each={pagelist} for:item="item" for:index="index">
+            <span class="themeborder testcss slds-m-left_xx-small slds-m-right_xx-small slds-p-horizontal_x-small"
+                key={item} data-id={item}>
+                <a class="testcss" onclick={processMe} name={item} data-id={item}>{item}</a>
+            </span>
+        </template>
+
+        <lightning-button variant="base" label="Next" disabled={disableNext} onclick={handleNext}
+            class="slds-m-left_x-small"></lightning-button>
+
+        <lightning-button variant="base" label="Last" disabled={disableNext} onclick={handleLast}
+            class="slds-m-left_x-small"></lightning-button>
+    </div>
+</lightning-layout-item>
+    
+      </div>
+     
+<div if:true={isLoading} class="slds-is-relative">
+    <lightning-spinner alternative-text="Loading..." variant="brand">
+    </lightning-spinner>
+</div>
+   
+
+   
+
+</div>
+
+
+      
+</template>

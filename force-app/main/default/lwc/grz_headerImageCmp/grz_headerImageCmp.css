@@ -1,0 +1,59 @@
+.text-section {
+  position: absolute;
+  text-align: center;
+  color: #fff;
+  width: 97%;
+
+  font-size: x-large;
+}
+
+.banner-div {
+  margin: -35px -4.7% 0 -10%;;
+  position: relative;
+}
+.banner-img {
+  height: 116px;
+  width: 100%;
+}
+.banner-text {
+  position: absolute;
+  text-align: center;
+  color: #fff;
+  width: 50%;
+  top: 25%;
+  left: 25%;
+  font-size: 30px;
+}
+.details{
+  position: absolute;
+  color: #fff;
+  top: 0;
+  right: 1%;
+}
+@media only screen and (max-width: 425px) {
+  .banner-text {
+    top: 35%;
+  
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .banner-text {
+    font-size: 15px;
+  }
+}
+  @media (min-width: 320px) and (max-width: 767px) {
+    .banner-text {
+    font-size: 18px;
+   
+    }
+
+
+}
+ @media (min-width: 320px) and (max-width: 1024px) {
+    .banner-div {
+       margin-top: -35px;
+    margin-left: -2%;
+    margin-right: -2%;
+    }
+  }

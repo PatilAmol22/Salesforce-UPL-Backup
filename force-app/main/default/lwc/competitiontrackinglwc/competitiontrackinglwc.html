@@ -1,0 +1,1015 @@
+<template>
+    <div class="back-ground-color">
+        <lightning-card title="Suivi concurrence"  icon-name="custom:custom63"> </lightning-card>
+        <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+            <lightning-accordion-section name="Basic Information" label={label.Basic_Information}>
+                <lightning-layout multiple-rows="">
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small slds-p-right_small">
+                        <div class="slds-p-right_medium">
+                            <lightning-input type="Date" label={label.Reporting_Date}
+                                data-object="competitorObject" data-fieldapi="Reporting_Date__c" name="reporting-date"
+                                value={todayDate} onchange={changeHandler} required></lightning-input> <!--disabled="true"-->
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="Product Details" label={label.PRODUCT_Details}>
+                <lightning-layout multiple-rows="">
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small slds-p-right_small">
+                        <div class="slds-p-right_medium">
+                            <label class="slds-form-element__label" for="form-element-03">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                {label.Company}
+                            </label>
+                            <c-company-custom-lookup class="slds-size_1-of-2" object-api-name="Company__c"
+                                company-selected-record-name={companySelectedRecordName}
+                                company-selected-id={companySelectedId} company-record-exist={companyRecordExist}
+                                company-id={companyId} company-selected-value={companySelectedValue}
+                                is-company-record-not-found={isCompanyRecordNotFound}
+                                oncompanyvaluechanged={companyEventHandler}
+                                    > <!-- onblur={changeHandler} -->
+                            </c-company-custom-lookup>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small slds-p-left_small">
+                        <div class="slds-p-left_medium">
+                            <label class="slds-form-element__label" for="form-element-03">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                {label.Brand}
+                            </label>
+                            <c-brand-custom-lookup class="slds-size_1-of-2" object-api-name="Brand__c"
+                                brand-selected-record-name={brandSelectedRecordName} brand-selected-id={brandSelectedId}
+                                company-id={companyId} brand-id={brandId} brand-record-exist={brandRecordExist}
+                                brand-selected-value={brandSelectedValue}
+                                is-brand-record-not-found={isBrandRecordNotFound}
+                                onbrandvaluechanged={brandEventHandler}>
+                            </c-brand-custom-lookup>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small slds-p-right_small">
+                        <div class="slds-p-right_medium">
+                            <label class="slds-form-element__label" for="form-element-03">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                {label.Formulation}
+                            </label>
+                            <c-formulation-custom-lookup class="slds-size_1-of-2" object-api-name="BrandFormulation__c"
+                                formulation-selected-record-name={formulationSelectedRecordName}
+                                formulation-selected-id={formulationSelectedId} company-id={companyId}
+                                brand-id={brandId} formulation-record-exist={formulationRecordExist}
+                                formulation-selected-value={formulationSelectedValue}
+                                is-formulation-record-not-found={isFormulationRecordNotFound}
+                                onformulationvaluechanged={formulationEventHandler}>
+                            </c-formulation-custom-lookup>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-left_medium slds-p-top_large">
+                            <lightning-input type="checkbox" data-object="competitorObject"
+                                data-fieldapi="Import_Product__c" label={label.Imported_Product} name="Import Product"
+                                onchange={changeHandler}></lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Price & Scheme Details" label={label.Price_Scheme_Details}>
+                <div class="slds-p-around_xx-small">
+                    <template if:true={isDisplayTable}>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered "
+                            aria-labelledby="element-with-table-label other-element-with-table-label">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Pack Size">{label.Packsize}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col" style="text-align: center;">
+                                        <div class="slds-truncate" title="Supplier Price">{label.Supplier}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col" style="text-align: center;">
+                                        <div class="slds-truncate" title="Distributor Price">{label.Distributor_price}
+                                        </div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col" style="text-align: center;">
+                                        <div class="slds-truncate" title="Farmer Price">{label.Farmer_Price}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col" style="text-align: center;">
+                                        <div class="slds-truncate" title="Import Price">{label.Import_price}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col" style="text-align: center;">
+                                        <div class="slds-truncate" title="Information Reliability Scale">
+                                            {label.IRS}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col" style="text-align: center;">
+                                        <div class="slds-truncate" title="Files">Files</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Action">Action</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={priceSchemeDetailList} for:item="item" for:index="index">
+                                    <tr class="slds-hint-parent" key={item}>
+                                        <td data-label={item.PackSizeName}>
+                                            <div class="slds-truncate" title={item.PackSizeName}>{item.PackSizeName}
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div class="slds-truncate">
+                                                <table>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.With_RPD}>{label.With_RPD}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.SupplierPriceRPD}>{item.SupplierPriceRPD}</template>
+                                                            <template if:false={item.SupplierPriceRPD}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Without_RPD}>{label.Without_RPD}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.SupplierPriceWoRPD}>{item.SupplierPriceWoRPD}</template>
+                                                            <template if:false={item.SupplierPriceWoRPD}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;">{label.Tentative_Ha_Cost}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.SupplierPriceTentitive}>{item.SupplierPriceTentitive}</template>
+                                                            <template if:false={item.SupplierPriceTentitive}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div class="slds-truncate">
+                                                <table>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Distributor_Name}>{label.Distributor_Name}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.DistributorName}>{item.DistributorName}</template>
+                                                            <template if:false={item.DistributorName}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.With_RPD}>{label.With_RPD}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.DistributorPriceRPD}>{item.DistributorPriceRPD}</template>
+                                                            <template if:false={item.DistributorPriceRPD}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Without_RPD}>{label.Without_RPD}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.DistributorPriceWoRPD}>{item.DistributorPriceWoRPD}</template>
+                                                            <template if:false={item.DistributorPriceWoRPD}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Tentative_Ha_Cost}>{label.Tentative_Ha_Cost}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.DistributorPriceTentitive}>{item.DistributorPriceTentitive}</template>
+                                                            <template if:false={item.DistributorPriceTentitive}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </table>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div class="slds-truncate">
+                                                <table>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Farmer_Name}>{label.Farmer_Name}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.FarmerName}>{item.FarmerName}</template>
+                                                            <template if:false={item.FarmerName}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.With_RPD}>{label.With_RPD}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.FarmerPriceRPD}>{item.FarmerPriceRPD}</template>
+                                                            <template if:false={item.FarmerPriceRPD}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Without_RPD}>{label.Without_RPD}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.FarmerPriceWoRPD}>{item.FarmerPriceWoRPD}</template>
+                                                            <template if:false={item.FarmerPriceWoRPD}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Tentative_Ha_Cost}>{label.Tentative_Ha_Cost}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.FarmerPriceTentitive}>{item.FarmerPriceTentitive}</template>
+                                                            <template if:false={item.FarmerPriceTentitive}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div class="slds-truncate">
+                                                <table>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.With_RPD}>{label.With_RPD}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.ImportPriceRPD}>{item.ImportPriceRPD}</template>
+                                                            <template if:false={item.ImportPriceRPD}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Without_RPD}>{label.Without_RPD}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.ImportPriceWoRPD}>{item.ImportPriceWoRPD}</template>
+                                                            <template if:false={item.ImportPriceWoRPD}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border:none;">
+                                                        <td style="border:none;" data-label={label.Tentative_Ha_Cost}>{label.Tentative_Ha_Cost}</td>
+                                                        <td style="border:none;">
+                                                            <template if:true={item.ImportPriceTentitive}>{item.ImportPriceTentitive}</template>
+                                                            <template if:false={item.ImportPriceTentitive}>-</template>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="IRS">
+                                            <div class="slds-truncate" title={item.Information_Reliability_Scale__c}> <!--{item.Information_Reliability_Scale__c}-->
+                                                <template
+                                                    if:true={item.InformationReliabilityScale}>{item.InformationReliabilityScale}</template>
+                                                <template if:false={item.InformationReliabilityScale}>-</template>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">
+                                                <table>
+                                                    <template for:each={item.documentNames} for:item="documentName">
+                                                        <tr key={documentName} style="border:none;">
+                                                            <td style="border:none;">{documentName}</td>
+                                                        </tr>
+                                                    </template>
+                                                </table>
+                                            </div>
+                                        </td>
+                                        <td data-label="Delete">
+                                            <div class="slds-truncate" title="Delete">
+                                                <lightning-button-icon icon-name="utility:delete"
+                                                    alternative-text="delete" class="slds-m-left_xx-small"
+                                                    title="Delete" name={index} onclick={deleteClickHandler}>
+                                                </lightning-button-icon>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <lightning-layout multiple-rows="">
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <label class="slds-form-element__label" for="form-element-03">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                    {label.Packsize}
+                                </label>
+                                <c-custom-lookup object-api-name="Pack_Size__c"
+                                    selected-record-name={selectedRecordName} selected-id={selectedId} is-pack-size=true
+                                    pack-size-id={packSizeId} selected-value={selectedValue}
+                                    onpacksizevaluechanged={packSizeEventHandler} 
+                                    required>
+                                </c-custom-lookup>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-left_medium">
+                                <lightning-file-upload label={label.Upload_Files_or_drop_files} multiple
+                                    onuploadfinished={handleUploadFinished}>
+                                </lightning-file-upload>
+                            </div>
+                        </lightning-layout-item>
+                       &nbsp;
+                    <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-1">
+                        <div class="slds-section-title--divider slds-m-top_medium">
+                            <h3 >{label.Supplier_details} </h3>
+                        </div>
+                    </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-input type="decimal" data-object="priceSchemeDetailObj"
+                                    value={priceSchemeDetailObj.SupplierPriceRPD} data-fieldapi="SupplierPriceRPD"
+                                    name="Supplier Price RPD" label={label.SupplierRPD} field-level-help={label.SupplierRPD} onchange={changeHandler}>
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-left_medium">
+                                <lightning-input type="decimal" data-object="priceSchemeDetailObj"
+                                    value={priceSchemeDetailObj.SupplierPriceWoRPD} data-fieldapi="SupplierPriceWoRPD"
+                                    name="Supplier Price without RPD" label={label.SupplierWoRPD} field-level-help={label.SupplierWoRPD} onchange={changeHandler}>
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-input type="decimal" data-object="priceSchemeDetailObj"
+                                    value={priceSchemeDetailObj.SupplierPriceTentitive} data-fieldapi="SupplierPriceTentitive"
+                                    name="Supplier Price Tentitive" label={label.SupplierTentitive} field-level-help={label.SupplierTentitive} onchange={changeHandler}>
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-1">
+                            <div class="slds-section-title--divider slds-m-top_medium">
+                                <h3 >{label.Import_details} </h3>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-input type="decimal" name="Import Price" label={label.Import_priceRPD}
+                                    field-level-help={label.Import_priceRPD}
+                                    data-object="priceSchemeDetailObj" value={priceSchemeDetailObj.ImportPriceRPD}
+                                    data-fieldapi="ImportPriceRPD" onchange={changeHandler}>
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-left_medium">
+                                <lightning-input type="decimal" name="Import Price" label={label.Import_priceWoRPD}
+                                    field-level-help={label.Import_priceWoRPD} data-object="priceSchemeDetailObj" value={priceSchemeDetailObj.ImportPriceWoRPD}
+                                    data-fieldapi="ImportPriceWoRPD" onchange={changeHandler}></lightning-input>
+                            </div>
+                        </lightning-layout-item><lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-input type="decimal" name="Import Price" label={label.Import_priceTentitive}
+                                    field-level-help={label.Import_priceTentitive} data-object="priceSchemeDetailObj" value={priceSchemeDetailObj.ImportPriceTentitive}
+                                    data-fieldapi="ImportPriceTentitive" onchange={changeHandler}></lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-1">
+                            <div class="slds-section-title--divider slds-m-top_medium">
+                                <h3 >{label.Distributor_Details} </h3>
+                            </div>
+                        </lightning-layout-item>
+                   
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-input type="text" data-object="priceSchemeDetailObj"
+                                    data-fieldapi="DistributorName" name=" Distributor Name"
+                                    value={priceSchemeDetailObj.DistributorName} label={label.Distributor_Name}
+                                    onchange={changeHandler} >  <!--data-entry pattern="^([^0-9]*)$"  message-when-pattern-mismatch="Please enter a only text"-->
+                                </lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-left_medium">
+                                <lightning-input type="decimal" data-object="priceSchemeDetailObj"
+                                    data-fieldapi="DistributorPriceRPD" name="Distributor Price with RPD"
+                                    value={priceSchemeDetailObj.DistributorPriceRPD} label={label.Distributor_priceRPD}
+                                    field-level-help={label.Distributor_priceRPD} onchange={changeHandler}></lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-input type="decimal" data-object="priceSchemeDetailObj"
+                                    data-fieldapi="DistributorPriceWoRPD" name="Distributor Price Without RPD"
+                                    value={priceSchemeDetailObj.DistributorPriceWoRPD} label={label.Distributor_priceWoRPD}
+                                    field-level-help={label.Distributor_priceWoRPD} onchange={changeHandler}></lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-left_medium">
+                                <lightning-input type="decimal" data-object="priceSchemeDetailObj"
+                                    data-fieldapi="DistributorPriceTentitive" name="Distributor Price Tentative Per Ha Cost"
+                                    value={priceSchemeDetailObj.DistributorPriceTentitive} label={label.Distributor_priceTentitive}
+                                    field-level-help={label.Distributor_priceTentitive} onchange={changeHandler}></lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                    <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-1">
+                        <div class="slds-section-title--divider slds-m-top_medium">
+                            <h3 >{label.Farmer_details} </h3>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                        <div class="slds-p-right_medium">
+                            <lightning-input type="text" name="Farmer Name" label={label.Farmer_Name}
+                                data-object="priceSchemeDetailObj" data-fieldapi="FarmerName"
+                                value={priceSchemeDetailObj.FarmerName} onchange={changeHandler}></lightning-input> <!-- data-entryfarm pattern="^([^0-9]*)$"  message-when-pattern-mismatch="Please enter a only text" -->
+                        </div>
+                    </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-left_medium">
+                                <lightning-input type="decimal" name="Farmer Price with RPD" label={label.Farmer_PriceRPD}
+                                    field-level-help={label.Farmer_PriceRPD} data-object="priceSchemeDetailObj" data-fieldapi="FarmerPriceRPD"
+                                    value={priceSchemeDetailObj.FarmerPriceRPD}  onchange={changeHandler}></lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-input type="decimal" name="Farmer Price Without RPD" label={label.Farmer_PriceWoRPD}
+                                    field-level-help={label.Farmer_PriceWoRPD} data-object="priceSchemeDetailObj" data-fieldapi="FarmerPriceWoRPD"
+                                    value={priceSchemeDetailObj.FarmerPriceWoRPD} onchange={changeHandler}></lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-left_medium">
+                                <lightning-input type="decimal" name="Farmer Price Tentitive" label={label.Farmer_PriceTentitive}
+                                    field-level-help={label.Farmer_PriceTentitive} data-object="priceSchemeDetailObj" data-fieldapi="FarmerPriceTentitive"
+                                    value={priceSchemeDetailObj.FarmerPriceTentitive} onchange={changeHandler}></lightning-input>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-1">
+                            <div class="slds-section-title--divider slds-m-top_medium">
+                                <h3 >{label.Other_details} </h3>
+                            </div>
+                        </lightning-layout-item>     
+              
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-textarea name="Scheme Details" data-object="priceSchemeDetailObj"
+                                    value={priceSchemeDetailObj.SchemeDetail} data-fieldapi="SchemeDetail"
+                                    label={label.Scheme_Details} onchange={changeHandler}>
+                                </lightning-textarea>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-left_medium">
+                                <lightning-combobox name="Information Reliability Scale"
+                                    label={label.Information_reliability_Scale} options={options}
+                                    value={priceSchemeDetailObj.InformationReliabilityScale}
+                                    data-object="priceSchemeDetailObj" data-fieldapi="InformationReliabilityScale"
+                                    onchange={changeHandler}></lightning-combobox>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-p-around_xx-small slds-size_1-of-2">
+                            <div class="slds-p-right_medium">
+                                <lightning-textarea name="Comments" label={label.COMMENTS}
+                                    value={priceSchemeDetailObj.Comments} data-object="priceSchemeDetailObj"
+                                    data-fieldapi="Comments" onchange={changeHandler}></lightning-textarea>
+                            </div>
+                        </lightning-layout-item>
+
+                    </lightning-layout>
+                    <div class="center slds-var-p-top_large">
+
+                        <lightning-button label={label.Reset} variant="destructive" title="Reset" class="slds-m-left_x-small"
+                            icon-name="utility:clear" name="remove" onclick={resetPackSizeSection}></lightning-button>
+                        <lightning-button variant="success" label={label.Add} title="Add" name="add" icon-name="utility:add"
+                            class="slds-m-left_x-small" onclick={handleclickValidation}></lightning-button>
+                    </div>
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="Update Label Claim" label={label.Update_Label_Claim}>
+                <div class="slds-p-around_xx-small">
+                    <template if:true={isDisplayTableClaim}>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                            aria-labelledby="element-with-table-label other-element-with-table-label">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Crop">{label.Crop_description}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Target (Pest)">{label.Target_description}
+                                        </div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Active Ingredient">{label.Active_Ingredient}
+                                        </div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Market">{label.Market}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Family">{label.Family}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Dose Per Ha">{label.Dose_Ha}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="No of applications">
+                                            {label.Number_of_applications_per_year}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="AMM End Date">{label.AMM_End_date}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Sale End Date">{label.Sale_end_date}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Use End Date">{label.Use_end_date}</div>
+                                    </th>
+                                    <th class="slds-line-height_reset" scope="col">
+                                        <div class="slds-truncate" title="Action">Action</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={UpdateClaimList} for:item="item" for:index="index">
+                                    <tr class="slds-hint-parent" key={item}>
+                                        <td data-label={item.CropName}>
+                                            <div class="slds-truncate" title={item.CropName}>
+                                                <template if:true={item.CropName}>{item.CropName}</template>
+                                                <template if:false={item.CropName}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.PestName}>
+                                            <div class="slds-truncate" title={item.PestName}>
+                                                <template if:true={item.PestName}>{item.PestName}</template>
+                                                <template if:false={item.PestName}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.AIName}>
+                                            <div class="slds-truncate" title={item.AIName}>
+                                                <template if:true={item.AIName}>{item.AIName}</template>
+                                                <template if:false={item.AIName}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.MarketName}>
+                                            <div class="slds-truncate" title={item.MarketName}>
+                                                <template if:true={item.MarketName}>{item.MarketName}</template>
+                                                <template if:false={item.MarketName}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.FamilyName}>
+                                            <div class="slds-truncate" title={item.FamilyName}>
+                                                <template if:true={item.FamilyName}>{item.FamilyName}</template>
+                                                <template if:false={item.FamilyName}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.Dose__c}>
+                                            <div class="slds-truncate" title={item.Dose}>
+                                                <template if:true={item.Dose}>{item.Dose}</template>
+                                                <template if:false={item.Dose}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.NoOfApplications}>
+                                            <div class="slds-truncate" title={item.NoOfApplications}>
+                                                {item.NoOfApplications}
+                                                <template
+                                                    if:true={item.NoOfApplications}>{item.NoOfApplications}</template>
+                                                <template if:false={item.NoOfApplications}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.AMMEndDate}>
+                                            <div class="slds-truncate" title={item.AMMEndDate}>
+                                                <template if:true={item.AMMEndDate}>{item.AMMEndDate}</template>
+                                                <template if:false={item.AMMEndDate}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.SaleEndDate}>
+                                            <div class="slds-truncate" title={item.SaleEndDate}>
+                                                <template if:true={item.SaleEndDate}>{item.SaleEndDate}</template>
+                                                <template if:false={item.SaleEndDate}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label={item.UseEndDate}>
+                                            <div class="slds-truncate" title={item.UseEndDate}>
+                                                <template if:true={item.UseEndDate}>{item.UseEndDate}</template>
+                                                <template if:false={item.UseEndDate}>-</template>
+                                            </div>
+                                        </td>
+                                        <td data-label="Delete">
+                                            <div class="slds-truncate" title="Delete">
+                                                <lightning-button-icon icon-name="utility:delete"
+                                                    alternative-text="delete" class="slds-m-left_xx-small"
+                                                    title="Delete" name={index} onclick={deleteClickHandlerClaim}>
+                                                </lightning-button-icon>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                </div>
+                <lightning-layout multiple-rows="">
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-right_medium">
+                            <label class="slds-form-element__label" for="form-element-03">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                {label.Crop_description}
+                            </label>
+                            <c-custom-lookup object-api-name="Crop__c" crop-id={cropId} is-crop=true
+                                selected-record-name={selectedRecordName} selected-value={selectedValue}
+                                selected-id={selectedId} oncropvaluechanged={cropEventHandler}>
+                            </c-custom-lookup>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-left_medium">
+                            <label class="slds-form-element__label" for="form-element-03">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                {label.Target_description}
+                            </label>
+                            <c-custom-lookup object-api-name="Pest__c" pest-id={pestId} is-pest=true
+                                selected-record-name={selectedRecordName} selected-value={selectedValue}
+                                selected-id={selectedId} onpestvaluechanged={pestEventHandler}>
+
+                            </c-custom-lookup>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-right_medium">
+                            <label class="slds-form-element__label" for="form-element-03">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                {label.Active_Ingredient}
+                            </label>
+                            <c-custom-lookup object-api-name="Active_Ingredient__c" ai-id={aIId} is-a-i=true
+                                selected-record-name={selectedRecordName} selected-value={selectedValue}
+                                selected-id={selectedId} onaivaluechanged={AIEventHandler}>
+
+                            </c-custom-lookup>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-left_medium">
+                            <label class="slds-form-element__label" for="form-element-03">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                {label.Market}
+                            </label>
+                            <!--<c-custom-lookup market-id={marketId} object-api-name="Market__c" is-market=true
+                                company-id={companyId} brand-id={brandId} onmarketvaluechanged={marketEventHandler}
+                                selected-record-name={selectedRecordName} selected-value={selectedValue}
+                                selected-id={selectedId}>
+                            </c-custom-lookup>-->
+                            <c-market-custom-lookup class="slds-size_1-of-2" object-api-name="BrandMarket__c"
+                                market-selected-record-name={marketSelectedRecordName}
+                                market-selected-id={marketSelectedId} company-id={companyId} brand-id={brandId}
+                                market-record-exist={marketRecordExist} market-selected-value={marketSelectedValue}
+                                is-market-record-not-found={isMarketRecordNotFound}
+                                onmarketvaluechanged={marketEventHandler}>
+                            </c-market-custom-lookup>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-right_medium">
+                            <label class="slds-form-element__label" for="form-element-03">
+                                <abbr class="slds-required" title="required">* </abbr>
+                                {label.Family}
+                            </label>
+                            <!--<c-custom-lookup class="slds-size_1-of-2" object-api-name="Family__c" company-id={companyId}
+                                brand-id={brandId} is-family=true onfamilyvaluechanged={familyEventHandler}>
+                            </c-custom-lookup>-->
+                            <c-family-custom-lookup class="slds-size_1-of-2" object-api-name="BrandFamily__c"
+                                family-selected-record-name={familySelectedRecordName}
+                                family-selected-id={familySelectedId} company-id={companyId} brand-id={brandId}
+                                family-record-exist={familyRecordExist} family-selected-value={familySelectedValue}
+                                is-family-record-not-found={isFamilyRecordNotFound}
+                                onfamilyvaluechanged={familyEventHandler}>
+                            </c-family-custom-lookup>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-left_medium">
+                            <lightning-input type="decimal" name="Dose Per Ha" label={label.Dose_Ha}
+                                value={updateLabelClaimObject.Dose} data-object="updateLabelClaimObject"
+                                data-fieldapi="Dose" onchange={changeHandler}>
+                            </lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-right_medium">
+                            <lightning-input type="number" name="No of applications"
+                                label={label.Number_of_applications_per_year} data-object="updateLabelClaimObject"
+                                value={updateLabelClaimObject.NoOfApplications} data-fieldapi="NoOfApplications"
+                                onchange={changeHandler}></lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-left_medium">
+                            <lightning-input type="Date" label={label.AMM_End_date} name="AMM End Date"
+                                value={updateLabelClaimObject.AMMEndDate} data-object="updateLabelClaimObject"
+                                data-fieldapi="AMMEndDate" onchange={changeHandler}></lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-right_medium">
+                            <lightning-input type="Date" name="Sale End Date" label={label.Sale_end_date}
+                                value={updateLabelClaimObject.SaleEndDate} data-object="updateLabelClaimObject"
+                                data-fieldapi="SaleEndDate" onchange={changeHandler}></lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-left_medium">
+                            <lightning-input type="Date" name="Use End Date" label={label.Use_end_date}
+                                value={updateLabelClaimObject.UseEndDate} data-object="updateLabelClaimObject"
+                                data-fieldapi="UseEndDate" onchange={changeHandler}></lightning-input>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-right_medium">
+                            <lightning-textarea name="Other Information" label={label.Other_information_DRE_ZNT_DVP}
+                                data-object="updateLabelClaimObject" data-fieldapi="OtherInformation"
+                                value={updateLabelClaimObject.OtherInformation} onchange={changeHandler} field-level-help="DRE / ZNT / DVP">
+                            </lightning-textarea>
+                        </div>
+                    </lightning-layout-item>
+                   <!-- <lightning-layout-item size="6" class="slds-p-around_xx-small">
+                        <div class="slds-p-left_medium">
+                            <lightning-textarea name="Comments" label={label.COMMENTS}
+                                value={updateLabelClaimObject.Comments} data-object="updateLabelClaimObject"
+                                data-fieldapi="Comments" onchange={changeHandler}>
+                            </lightning-textarea>
+                        </div>
+                    </lightning-layout-item>-->
+                </lightning-layout>
+                <div class="center slds-var-p-top_small">
+                    <lightning-button label={label.Reset} variant="destructive" title="Reset" class="slds-m-left_x-small"
+                        icon-name="utility:clear" name="remove" onclick={resetSectionClaim}></lightning-button>
+                    <lightning-button variant="success" label={label.Add} title="Add" name="add" icon-name="utility:add"
+                        class="slds-m-left_x-small" onclick={handleclickValidationClaim}></lightning-button>
+                </div>
+
+            </lightning-accordion-section>
+        </lightning-accordion>
+        <template if:true={isOpenCompanyModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{label.Add} {label.Company}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="companyObj" data-fieldapi="Name"
+                                        label={label.Company_Name} name="Company" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="url" class="slds-size_1-of-1" data-object="companyObj"
+                                        data-fieldapi="Web_Site__c" label={label.Website} name="Website"
+                                        onchange={changeHandler}></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={isOpenBrandModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">{label.Add} {label.Brand}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="brandObj" data-fieldapi="Name"
+                                        label={label.Brand_Name} name="Company" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={isOpenFormulationModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate">{label.Add} {label.Formulation}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="formulationObj" data-fieldapi="Name"
+                                        label={label.Formulation_Name} name="formulation" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                            <!--<lightning-layout-item size="6" class="slds-p-around_medium">
+                                        <div>
+                                            <lightning-input type="url" class="slds-size_1-of-1" data-object="formulationObj" data-fieldapi="Website" label="Website" name="Website"  onchange={changeHandler} ></lightning-input>
+                                        </div>
+                                    </lightning-layout-item>-->
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={isOpenPackSizeModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-04" class="slds-modal__title slds-hyphenate">{label.Add} {label.Packsize}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="packSizeObj" data-fieldapi="Name"
+                                        label={label.Pack_Size_Name} name="Pack Size" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={isOpenCropModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-06" class="slds-modal__title slds-hyphenate">{label.Add} {label.Crop_description}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-6">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="cropObj" data-fieldapi="Name"
+                                        label={label.Crop_Name} name="Crop" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div class="slds-size_1-of-1">
+                                    <lightning-combobox name="Crop Category" label={label.Crop_category} options={CropOptions}
+                                        data-object="cropObj" data-fieldapi="crop_categorey__c"
+                                        onchange={changeHandler}></lightning-combobox>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={isOpenPestModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-05" class="slds-modal__title slds-hyphenate">{label.Add} {label.Target_description}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="pestObj" data-fieldapi="Name"
+                                        label={label.Pest_Name} name="Pest" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={isOpenAIModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-07" class="slds-modal__title slds-hyphenate">{label.Add} {label.Active_Ingredient}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-7">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="AIObj" data-fieldapi="Name"
+                                        label={label.Active_Ingredient_Name} name="AI" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={isOpenFamilyModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-08" class="slds-modal__title slds-hyphenate">{label.Add} {label.Family}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-8">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="familyObj" data-fieldapi="Name"
+                                        label={label.Family_Name} name="Family" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={isOpenMarketModel}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-09" class="slds-modal__title slds-hyphenate">{label.Add} {label.Market}</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-9">
+                        <lightning-layout multiple-rows="">
+                            <lightning-layout-item size="6" class="slds-p-around_medium">
+                                <div>
+                                    <lightning-input type="text" data-object="marketObj" data-fieldapi="Name"
+                                        label={label.Market_Name} name="Market" class="slds-size_1-of-1"
+                                        onchange={changeHandler} required></lightning-input>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label={label.Cancel} title="Cancel" name="Cancel" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label={label.Save} title="Save" name="Save" variant="brand" onclick={handleClick}
+                            class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+            <div class="center slds-var-p-top_small">
+                <lightning-button variant="success" label={label.Save} onclick={saveDataHandle} title="Save"
+                    class="slds-m-left_x-small"></lightning-button>
+                <lightning-button label={label.Cancel} name="cancel" title="Cancel" class="slds-m-left_x-small">
+                </lightning-button>
+            </div>
+        </template>
+
+        <div class="slds-modal__footer center ">
+            <lightning-button variant="brand-outline" label={label.Cancel} name="cancel" title="Cancel"
+                onclick={refreshComponent} class="slds-m-left_x-small"></lightning-button>
+            <lightning-button variant="brand" label={label.Save} onclick={handleSaveValidation} title="Save"
+                class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </div>
+</template>

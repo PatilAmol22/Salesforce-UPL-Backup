@@ -1,0 +1,130 @@
+<aura:component >
+    
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:attribute name="TravelExpenses" type="Expense_Item__c[]" />
+    <aura:attribute name="TravelExpenses1" type="Expense_Item__c[]" />
+    <aura:attribute name="TravelExpensesList" type="Expense_Item__c[]" />
+    <aura:attribute name="newDate" type="Date" />
+    <aura:attribute name="Get_Result" type="Integer"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:setDateEvt" action="{!c.getValueFromApplication}"/>    
+    
+    <aura:registerEvent name="RemoveItemEvent" type="c:RemoveItemEvent"/> 
+     <aura:registerEvent name="stringDtae" type="c:setDateEvt"/> 
+    
+    
+    <aura:handler name="change" value="{!v.TravelExpenses}" action="{!c.doinit}" /> 
+    <tr class="slds-hint-parent" >
+        
+        <!-- For getting date of parent component in child comp(iteration) using event) -->
+        <!--<th class="slds-truncate"  data-label="Date">
+            <ui:inputDate class="slds-input" 
+                          aura:id="lineitemdate" 
+                          format="dd/MM/yyyy" 
+                          displayDatePicker="true" 
+                          required="true" 
+                          value="{!v.newDate}"
+                          disabled="false"/>             
+        </th>-->
+        <th class="slds-truncate"  data-label="Date">
+            
+            <ui:outputText aura:id="lineitemdate"
+                           value="{!v.TravelExpenses.Date__c}"/>
+            <!--<ui:inputDate class="slds-input" 
+                          aura:id="lineitemdate" 
+                          format="dd/MM/yyyy" 
+                          displayDatePicker="true" 
+                          required="true" 
+                          value="{!v.TravelExpenses.Date__c}"
+                          disabled="true"/>-->          
+        </th>
+        <th class="slds-truncate" data-label="Items">
+            
+            <!-- change="{!c.onPicklistChange}"  aura:id="items" -->
+            
+            <ui:outputText aura:id="lineitemitems"
+                           value="{!v.TravelExpenses.Item__c}"/>
+            <!--<ui:inputText class="slds-input" 
+                          aura:id="lineitemitems"
+                          value="{!v.TravelExpenses.Item__c}"
+                          required="true" 
+                          disabled="true"
+                          />-->     
+        </th>
+        <th class="slds-truncate" data-label="Amount">
+            
+            <!--<lightning:input type="text" label="No Of Farmers Invited" name="date" required="true"/>-->
+            <ui:outputText aura:id="lineitemamount"
+                           value="{!v.TravelExpenses.Amount__c}"/>
+            <!--<ui:inputText class="slds-input" 
+                          aura:id="lineitemamount"  
+                          blur="{!c.click_amnt}"
+                          disabled="true"
+                          value="{!v.TravelExpenses.Amount__c}"/>-->   
+            <!--change="click_amnt"
+             updateOn="change"-->
+        </th>
+        <th class="slds-truncate" data-label="Amount">
+            
+            <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+            <ui:outputText aura:id="lineitempurpose"
+                           value="{!v.TravelExpenses.Purpose__c}"/>
+            <!--<ui:inputText class="slds-input" 
+                          aura:id="lineitempurpose" 
+                          value="{!v.TravelExpenses.Purpose__c}"
+                          disabled="true"
+                          updateOn="click"  />-->         
+        </th>
+        
+        <th class="slds-truncate" data-label="Amount">
+            
+            <ui:outputText aura:id="lineitemlocation"
+                           value="{!v.TravelExpenses.Location__c}"/>
+            <!--<ui:inputText class="slds-input" 
+                          aura:id="lineitemlocation" 
+                          value="{!v.TravelExpenses.Location__c}"
+                          disabled="true"
+                          updateOn="click" />-->        
+        </th>
+        <th class="slds-truncate" data-label="Remark">
+            
+            <ui:outputText aura:id="lineitemlocation"
+                           value="{!v.TravelExpenses.Remarks__c}"/>
+            <!--<ui:inputText class="slds-input" 
+                          aura:id="lineitemlocation" 
+                          value="{!v.TravelExpenses.Remarks__c}"
+                          disabled="true"
+                          updateOn="click" />-->         
+        </th>
+        <div style="display:none;">
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <!--<lightning:input type="text" label="No Of R1 Invited" name="date" required="true"/>-->
+                        <ui:inputText class="slds-input" 
+                                      aura:id="monthi" 
+                                      value="{!v.TravelExpenses.Month__c}"  />         
+                    </div>
+                </div>
+            </div>
+        </div>
+        <th class="slds-truncate" data-label="Delete">
+            <lightning:buttonIcon aura:id="lineitemdelete" 
+                                  alternativeText="Delete"
+                                  iconName="utility:delete"
+                                  variant="bare"
+                                  iconClass="lds-icon slds-icon_small" 
+                                  size="small"
+                                  onclick="{!c.removeDeletedRow}"/>      
+        </th>
+        <!--<th class="slds-truncate" data-label="Edit">
+             <lightning:buttonIcon iconClass="lds-icon slds-icon_small" 
+                             aura:id="lineitemedit"
+                             iconName="utility:edit"
+                             size="small" 
+                             alternativeText="Edit"
+                             onclick="{!c.editRow}"/>   
+        </th>-->
+    </tr>
+</aura:component>

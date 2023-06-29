@@ -1,0 +1,620 @@
+<template>
+    <!-- Banner Section -->
+    <div>
+        <c-grz_header-image-cmp bgimg={backgroundimage} imglabel={Headlabel.detailsLabel} customcss='top: 9%;'></c-grz_header-image-cmp>
+    </div>
+    <div class="bread-crumb">
+        <c-grz_bread-crumb labelone={Headlabel.detailsLabel} linkone=''>
+        </c-grz_bread-crumb>
+    </div>
+    <template if:true={isSpinner}>
+        <div class="">
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <!-- Body Section -->
+    <div class="tab-div">
+        <!--Tab Switching-->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-x-small-size_10-of-12 slds-large-size_12-of-12" style="width: 100%;">
+                <lightning-tabset>
+                    <lightning-tab label= "Declaração do Razão" value="Declaração do Razão" onactive={handleLedgerActive}>
+                    </lightning-tab> 
+                    <lightning-tab label= "Extrato da conta" value="Extrato da conta" onactive={handleAccountActive}>
+                    </lightning-tab> 
+                </lightning-tabset>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap divheightaccount">
+            <div class="slds-col slds-size_12-of-12">
+                <!-- For Ledger Statment -->
+                <template if:true={displayLedgerStatement}>
+                    <!-- Ledger Statement Table Div -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                            <template if:true={isCstAvl}>
+                                <template for:each={ledgerCustInfo} for:item="cst">
+                                    <div key = {cst} class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1.5%; background-color: white; margin-bottom: 2%;">
+                                        <div class="borderbottom headingClass componentNotoSansBold detail-size">Informação ao Cliente</div>
+                                        <div class="slds-grid slds-wrap data-font-size slds-p-top_small componentNotoSansMedium">
+                                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-grid slds-wrap">
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Número do cliente:  </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                                <span class="">{cst.CustomerCode}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Nome do cliente:  </span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                                <span class="">{cst.CustomerName}</span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Cidade:  </span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                                <span class="">{cst.City}</span>
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_medium hidePadding borderleft">
+                                                    <div class="slds-grid slds-wrap">
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Número da conta contábil:  </span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                                <span class="">{cst.GlAccountNumber}</span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Ao abrir o saldo b/f:  </span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                                <span class="">{cst.OpeningBalance}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Para equilibrar c/f:  </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                                <span class="">{cst.ClosingBalance}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="table-comp-div">
+                        <!--Filter Section-->
+                        <div class="filter-div">
+                            <div class="customer-num-div">
+                                <lightning-input label="Número do cliente"
+                                                placeholder="Número do cliente" 
+                                                value = {customerSap}
+                                                type="text"
+                                                class="slds-col slds-m-left_small slds-m-right_small margin-mob"
+                                                onchange = {onChangeSAP}>
+                                </lightning-input>
+                            </div>
+                            <div class="slds-p-left_small year-div">
+                                   <lightning-combobox
+                                        placeholder="Ano"
+                                        label="Ano"
+                                        value={ledgerYearType}
+                                        options={LedgerYearOptions}
+                                        onchange={handleLedgerYearOption} >
+                                    </lightning-combobox>
+                            </div>
+                            <div class="slds-p-left_small quarter-div">
+                                      <lightning-combobox
+                                        placeholder="Trimestre"
+                                        label="Trimestre"
+                                        value={quaterType}
+                                        options={QuaterOptionsBr}
+                                        onchange={handleQuaterOption} >
+                                    </lightning-combobox>                           
+                            </div>
+                            <div class="slds-p-left_small slds-m-right_medium mobile-ledger-statement-btn">
+                                    <button class="ledger-statement-btn componentNotoSansBold" onclick={handleGetLedgerClick}>Obter declaração</button>
+                            </div>
+                        </div>
+                        <!-- Ledger Table Headings -->
+                        <template if:true={showLedgerTable}>
+                            <div class="table-head-div">
+                                <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small ledger-table-head-width">
+                                    <thead class="componentNotoSansLight table-head">
+                                        <tr style="background-color: #f7f7f7;">
+                                            <th class="slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Data de postagem">Data de postagem</div>
+                                            </th>
+                                            <th class="slds-p-left_small head-element-special1" scope="col">
+                                                    <div class="slds-truncate" title="Tipo de Doc">Tipo de Doc</div>
+                                            </th>
+                                            <th class="slds-p-left_small head-element-combine" scope="col">
+                                                <div style="display: flex; justify-content:space-between">
+                                                        <div class="slds-truncate merge-table1" title="Doc No. Particulars">Doc No. Particulars</div>
+                                                        <div class="slds-truncate merge-table2" title="Número Ref / Chq"><span>Número Ref / Chq</span></div>
+                                                </div>
+                                            </th>
+                                            <th class="slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Débito Amt">Débito Amt</div>
+                                            </th>
+                                            <th class="slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Crédito Amt">Crédito Amt</div>
+                                            </th>
+                                            <th class="slds-p-right_small slds-p-left_small head-element" scope="col">
+                                                    <div class="slds-truncate" title="Equilíbrio">Equilíbrio</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                               <div class="open-bal-div">
+                                        <div class="bf-text">Ao abrir o saldo b/f</div>
+                                    <div class="bf-data">
+                                        <template if:true={openingPositiveBalance}>
+                                            {openingBal}
+                                        </template>
+                                    </div>
+                                    <div class="bf-data2">
+                                        <template if:true={openingNegativeBalance}>
+                                            {openingBal}
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class={ledgerTableScroll}>
+                                    <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small">
+                                        <tbody class="mobile-table-font">
+                                            <template for:each={ledgerData} for:item="ledger">
+                                                <tr key={ledger.Id} class="slds-border_top table-body-data">
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                        <div class="slds-truncate"> {ledger.PostDate}</div>
+                                                    </td>
+                                                    <td class="slds-p-left_small table-element-special1" scope="col">
+                                                        <div class="slds-truncate">{ledger.DocType}</div>
+                                                    </td>
+                                                    <td class="slds-p-left_small table-element-combine" scope="col">
+                                                        <div style="display: flex; justify-content:space-between">
+                                                            <div class="slds-truncate merge-table1" >{ledger.AccountingDocNumber}</div>
+                                                            <div class="slds-truncate merge-table2" ><span>{ledger.ReferebceChqNumber}</span><span class="slds-p-left_x-small">{ledger.DocumentHeaderText}</span></div>
+                                                        </div> 
+                                                    </td> 
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                        <div class="slds-truncate">{ledger.Debit}</div>
+                                                    </td> 
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                        <div class="slds-truncate">{ledger.Credit}</div>
+                                                    </td> 
+                                                    <td class="slds-p-left_small table-element" scope="col">
+                                                        <div class="slds-truncate">{ledger.RunningBalance}</div>
+                                                    </td>                       
+                                                </tr>
+                                                <tr key={ledger.Id} style="color: black;">
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td>
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td>
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate">{ledger.SGTXT}</div>
+                                                    </td>
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td> 
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td> 
+                                                    <td class="slds-p-left_small" scope="col">
+                                                        <div class="slds-truncate"></div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="close-bal-div">
+                                        <div class="cf-text">Para equilibrar c/f</div>
+                                    <div class="cf-data">
+                                        <template if:true={closingNegativeBalance}>
+                                            {closingBal}
+                                        </template>
+                                    </div>
+                                    <div class="cf-data2">
+                                        <template if:true={closingPositiveBalance}>
+                                            {closingBal}
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="customer-total-div componentNotoSansRegular">
+                                    <div class="customer-total-text">Cliente Total</div>
+                                    <div class="customer-total-debit">BRL {totalDebit}</div>
+                                    <div class="customer-total-credit">BRL {totalCredit}</div>
+                                </div>
+                                <div class="download-div">
+                                    <div class="componentNotoSansBold">
+                                       <a href={ledgerURL}  download="Declaração do Razão.pdf" target="_blank" onclick={ledPDF}><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span>Download PDF</span></button></a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <template if:true={ledgerNoRecordError}>
+                        <div class="error-div">    
+                            <div class="no-record-error"> Nenhum Resultado Encontrado</div>
+                        </div>
+                    </template>
+                        <!--Doc Type Description-->
+                        <template if:true={showLedgerTable}>
+                            <div class="doc-types-div">
+                                <p class="doc-desc componentNotoSansLight">Descrição do tipo de documento</p>
+                                <div class="main-doc-value-div">
+                                    <div class="doc-value-left-div">
+                                        <div class="single-doc-block-left">
+                                            <template for:each={ledgerDocType} for:item="item">
+                                                <p key={item.Id} class="doc-row">
+                                                    <span class="componentNotoSansBold doc-space">{item.shortForm}</span><span class="text-left-m">{item.fullForm}</span>
+                                                </p>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                </template>
+                <!-- For Account Statment -->
+                <template if:true={displayAccountStatement}>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                            <template if:true={isAccCstAvl}>
+                                <template for:each={accountCustInfo} for:item="cst">
+                                    <div key = {cst} class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1.5%; background-color: white; margin-bottom: 2%;">
+                                        <div class="borderbottom headingClass componentNotoSansBold detail-size">Informação ao Cliente</div>
+                                        <div class="slds-grid slds-wrap data-font-size slds-p-top_small componentNotoSansMedium">
+                                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                                    <div class="slds-grid slds-wrap">
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Número do cliente:  </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                                <span class="">{cst.CustomerCode}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Nome do cliente:  </span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                                <span class="">{cst.CustomerName}</span>
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_medium hidePadding borderleft">
+                                                    <div class="slds-grid slds-wrap">
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Cidade:  </span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                                <span class="">{cst.City}</span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                                <span>Escritório de Vendas:  </span>
+                                                            </div> 
+                                                        </div>
+                                                        <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                            <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                                <span class="">{cst.SalesOffice}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="acc-statement-div">
+                        <div class="acc-filter-div slds-p-bottom_small">
+                            <div class="acc-customer-num-div">
+                                <lightning-input label="Número do cliente"
+                                                placeholder="Número do cliente" 
+                                                value = {customerSapAcc}
+                                                type="text"
+                                                class="slds-col slds-m-left_small slds-m-right_small margin-mob"
+                                                onchange = {onChangeSAPAcc}>
+                                </lightning-input>
+                            </div>
+                            <div class="acc-date-filter">
+                                <div class="acc-year-div">
+                                    <lightning-combobox
+                                        placeholder = "Ano"
+                                        label="Ano"
+                                        value={yearType}
+                                        options={YearOptions}
+                                        onchange={handleYearOption} >
+                                    </lightning-combobox>
+                                </div>
+                                <div class="acc-start-date">
+                                    <span>                  
+                                        <lightning-input  type="date" label="Data de início" value={startDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startdateChange}></lightning-input>
+                                    </span>
+                                </div>
+                                <div class="acc-end-date">
+                                    <span>
+                                        <lightning-input  type="date"  label="Data final" value={endDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={enddateChange}></lightning-input>
+                                    </span>                           
+                                </div>   
+                            </div>
+                            <div class="acc-statement-filter">
+                                <lightning-combobox
+                                    value={statementType}
+                                    placeholder="Tipo de Declaração"
+                                    label="Tipo de Declaração"
+                                    options={StatementOptions}
+                                    onchange={handleStatementOption}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                        <div class="acc-filter2-div">
+                            <div class="acc-doc-filter">
+                                <div onmouseleave={onblurclick} data-id="searchRes" class="searchRes slds-form-element slds-lookup slds-is-close">
+                                    <label class="slds-text-heading_small">{label}</label>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                            <div data-id="lookup-pill" class="">
+                                                <div id="lookupField" class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right slds-size_3-of-3 slds-p-bottom_xxx-small" >
+                                                    
+                                                    <div onkeyup={keyPressController}>
+                                                        <lightning-input
+                                                            type="search"
+                                                            label="Pesquisar"
+                                                            placeholder="pesquisar tipo de doc da conta..."
+                                                            value={SearchKeyWord}
+                                                            class="" 
+                                                            onfocus={onfocusclick}
+                                                        ></lightning-input>
+                                                    </div>
+                                                    <!--<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                                        <lightning-icon icon-name="utility:search" size="x-small" alternative-text="icon"></lightning-icon>
+                                                    </span>-->
+                                                </div>
+                                                <lightning-pill data-id="defaultValue1" class ="all-pill" label="Todos" name="Todos">                            
+                                                    <!--<lightning-icon icon-name="standard:account" variant="circle" size="x-small" alternative-text="icon"></lightning-icon>-->
+                                                </lightning-pill> 
+
+                                                <template for:each={lstSelectedRecords} for:item="item"	for:index="index">
+                                                    <span key={item.index}>
+                                                        <lightning-pill class="" label={item.label} name={item.value} onremove={clear}>                            
+                                                            <!--<lightning-icon icon-name="standard:account" variant="circle" size="x-small" alternative-text="icon"></lightning-icon>-->
+                                                        </lightning-pill>
+                                                    </span>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                        <lightning-spinner class="slds-hide" variant="brand" size="small" data-id="mySpinner" alternative-text="spining"></lightning-spinner>
+                                        <!-- <center> {Message}</center> -->
+                                        <template for:each={listOfSearchRecords} for:item="singleRec" for:index="index">
+                                            <li key ={singleRec.value} role="presentation" class="slds-listbox__item" data-value={singleRec.value} data-label={singleRec.label}
+                                                    onclick={selectRecord}>
+                                                <span class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                    <span class="slds-media__figure">
+                                                        <span class="slds-icon_container" title="Description of icon when needed">
+                                                            <lightning-icon icon-name="standard:account" variant="circle" size="small" alternative-text="icon"></lightning-icon>
+                                                        </span>
+                                                    </span>    
+                                                    <span class="slds-media__body">  
+                                                        <span class="dropdownclass slds-listbox__option-text slds-listbox__option-text_entity" style="font-size: 14px;">{singleRec.label}</span>
+                                                    </span>
+                                                </span>
+                                            </li>
+                                        </template>
+                                    </ul>                                   
+                                </div>
+                            </div>
+                            <div class="acc-st-btn mob-dis-n">
+                                <button class="ledger-statement-btn componentNotoSansBold" onclick={handleGetStatementClick}>Obter declaração</button>
+                            </div>
+                            <div class="reset-div mob-dis-n"> 
+                                <button class="reset-btn componentNotoSansBold" onclick={handleResetFilter}>Limpar Filtros</button>
+                            </div>
+                            <div class="acc-mob-fil-btn">
+                                <div class="acc-st-btn mob-dis-b">
+                                    <button class="ledger-statement-btn acc-m-t componentNotoSansBold" onclick={handleGetStatementClick}>Obter declaração</button>
+                                </div>
+                                <div class="reset-div mob-dis-b"> 
+                                    <button class="reset-btn acc-m-t componentNotoSansBold" onclick={handleResetFilter}>Limpar Filtros</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Account Table Section-->
+                        <template if:true={showAccountStatementTable}>
+                            <div class="acc-table-head-div">
+                                <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small acc-table-head-width" >
+                                    <thead class="componentNotoSansLight table-head">
+                                        <tr style="background-color: #f7f7f7;">
+                                            <th class="slds-p-left_small acc-head-element" scope="col">
+                                                <div class="slds-truncate" title="Date">Data</div>
+                                            </th>
+                                            <th class="slds-p-left_small acc-head-element" scope="col">
+                                                <div class="slds-truncate" title="Doc Number">Número do Doc</div>
+                                            </th>
+                                            <th class="slds-p-left_small acc-head-element" scope="col">
+                                                <div class="slds-truncate" title="Doc Type">Tipo de Documento</div>
+                                            </th>
+                                            <template if:true={isCredit}>
+                                                <th class="slds-p-left_small acc-head-element" scope="col">
+                                                    <div class="slds-truncate" title="Credit">Crédito (BRL)</div>
+                                                </th>
+                                            </template>
+                                            <template if:true={isDebit}>
+                                                <th class="slds-p-left_small acc-head-element" scope="col">
+                                                    <div class="slds-truncate" title="Debit">Débito (BRL)</div>
+                                                </th>
+                                            </template>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class={accTableScroll}>
+                                    <table class=" slds-m-left_small  slds-m-right_small slds-m-bottom_small">
+                                        <tbody class="acc-table-data-font">
+                                            <template for:each={AccStatementData} for:item="item">
+                                                <tr key={item.Id} class="slds-border_bottom slds-border_top table-body-data">
+                                                    <td class="slds-p-left_small acc-table-element" scope="col">
+                                                        <div class="slds-truncate">{item.PostDate}</div>
+                                                    </td>
+                                                    <td class="slds-p-left_small acc-table-element" scope="col">
+                                                        <div class="slds-truncate">{item.AccountingDocNumber}</div>
+                                                    </td>
+                                                    <td class="slds-p-left_small acc-table-element" scope="col">
+                                                        <div class="slds-truncate">{item.DocType}</div>
+                                                    </td>
+                                                    <template if:true={isCredit}>
+                                                        <td class="slds-p-left_small acc-table-element" scope="col">
+                                                            <div class="slds-truncate">{item.Credit}</div>
+                                                        </td>
+                                                    </template>
+                                                    <template if:true={isDebit}>
+                                                        <td class="slds-p-left_small acc-table-element" scope="col">
+                                                            <div class="slds-truncate">{item.Debit}</div>
+                                                        </td> 
+                                                    </template>                        
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="acc-total-div componentNotoSansRegular">
+                                    <template if:true={isCredit}>
+                                        <template if:true={isDebit}>
+                                            <div class="acc-total-text">Total</div>
+                                            <div class="acc-total-credit">BRL {accTotalCredit}</div>
+                                            <div class="acc-total-debit">BRL {accTotalDebit}</div>
+                                        </template>
+                                    </template>
+                                    <template if:true={isCredit}>
+                                        <template if:false={isDebit}>
+                                            <div style="width:75%; margin-left: 12px;">Total</div>
+                                            <div style="width:25%">BRL {accTotalCredit}</div>
+                                        </template>
+                                    </template>
+                                    <template if:true={isDebit}>
+                                        <template if:false={isCredit}>
+                                            <div style="width:75%; margin-left: 12px;">Total</div>
+                                            <div style="width:25%">BRL {accTotalDebit}</div>
+                                        </template>   
+                                </template>
+                                </div>
+                                <div class="download-div">
+                                    <div class="componentNotoSansBold">
+                                        <a href={accStatementURL} download="Extrato da conta.pdf" target="_blank" onclick={accPDF}><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon}/></span><span>Download PDF</span></button></a>                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <template if:true={accNoRecordError}>
+                        <div class="error-div">    
+                            <div class="no-record-error"> Nenhum Resultado Encontrado</div>
+                        </div>
+                </template>
+                    <!--Doc Type Description Filtered-->
+                    <template if:true={showAccountStatementTable}>
+                        <div class="doc-types-div">
+                            <p class="doc-desc componentNotoSansLight">Descrição do tipo de documento</p>
+                            <div class="main-doc-value-div">
+                                <div class="doc-value-left-div">
+                                    <div class="single-doc-block-left">
+                                        <template for:each={accDocType} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.shortForm}</span><span class="text-left-m">{item.fullForm}</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:false={showAccountStatementTable}>
+                        <div class="doc-types-div">
+                            <p class="doc-desc componentNotoSansLight">Descrição do tipo de documento</p>
+                            <div class="main-doc-value-div">
+                                <div class="doc-value-left-div">
+                                    <div class="single-doc-block-left">
+                                        <template for:each={docCol1} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                    <div class="single-doc-block-left">
+                                        <template for:each={docCol2} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div> 
+                                </div>
+                                <div class="doc-value-right-div">
+                                    <div class="single-doc-block-right">
+                                        <template for:each={docCol3} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                    <div class="single-doc-block-right">
+                                        <template for:each={docCol4} for:item="item">
+                                            <p key={item.Id} class="doc-row">
+                                                <span class="componentNotoSansBold doc-space">{item.Short_Form__c}</span><span class="text-left-m">{item.Full_Form__c }</span>
+                                            </p>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>       
+    </div>
+</template>

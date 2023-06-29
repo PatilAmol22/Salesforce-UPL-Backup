@@ -1,0 +1,477 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,force:hasRecordId" 
+                controller = "SpainProtugalCampaign"
+                access="global" >
+		  <ltng:require styles="{! $Resource.datatable + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
+                  scripts="{! $Resource.jquery331}" />
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="isIdPresent" type="Boolean" default ="false"/>
+    <aura:attribute name="isOwner" type="Boolean" default ="false"/>
+    <aura:attribute name="isDateValidate" type="Boolean" default ="true"/>
+    <aura:attribute name="showSKU" type="Boolean" default ="false"/>
+    <aura:attribute name="forecastCost" type="Double" default = ""/>
+    <aura:attribute name="CampCurrency" type="String" default = ""/>
+    <aura:attribute name="CustForeCastInfoList" type="list" />
+    <aura:attribute name="CampStatus" type="String" default = ""/>
+    <aura:attribute name="ActualQty" type="Double" default = ""/>
+    <aura:attribute name="ActualAmt" type="Double" default = ""/>
+    
+    <aura:attribute name="selectedCropLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="selectedCustomerLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="selectedExpCustLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="selectedSKULookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="selectedSKULookUpRecordActivity" type="sObject" default="{}"/>
+    
+    <aura:attribute name="InvoiceLineItem" type="Invoice_Line_Item__c" default="{sobjectType:'Invoice_Line_Item__c'}"/>
+    <aura:attribute name="campaignObj" type="Spain_Portugal_Campaign__c" default="{sobjectType : 'Spain_Portugal_Campaign__c'}"/>
+    
+    <aura:attribute name="cropSet" type="Set" default="[]"/>
+    <aura:attribute name="forecastInfoList" type="SpainProtugalCampaign.forecastInformation[]" access="public"/> 
+    <aura:attribute name="cropDetailList" type="SpainProtugalCampaign.CropDetails[]" access="public"/>
+    <aura:attribute name="demoProtocolList" type="SpainProtugalCampaign.DemoProtocol[]" access="public"/> 
+    <aura:attribute name="expenseActivityList" type="SpainProtugalCampaign.ExpenseActivity[]" access="public"/> 
+    
+   <aura:attribute name="forecastInfoDelList" type="SpainProtugalCampaign.forecastInformation[]" access="public"/> 
+    <aura:attribute name="cropDetailDelList" type="SpainProtugalCampaign.CropDetails[]" access="public"/>
+    <aura:attribute name="demoProtocolDelList" type="SpainProtugalCampaign.DemoProtocol[]" access="public"/> 
+    <aura:attribute name="expenseActivityDelList" type="SpainProtugalCampaign.ExpenseActivity[]" access="public"/> 
+    
+    <aura:attribute name="recordDataRelatedList" type="SpainProtugalCampaign.RecordDataWithRelatedList[]" access="public"/> 
+    
+    <aura:handler name ="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.selectedCustomerLookUpRecord}" action="{!c.custmerSKUChange}"/>
+	<aura:handler name="change" value="{!v.selectedSKULookUpRecord}" action="{!c.custmerSKUChange}"/>
+ 
+<div class="slds-section-title--divider slds-p-horizontal--xx-small slds-size--1-of-1" style="background:#fff;">
+ 	<div>
+    	<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="height:30px; margin-top:0px; background:#769ed9; color:#fff; font-weight:bold;">
+    		<span style="float:left; display:inline;  padding-right:20px; font-weight:bold;">Campaign Information </span>
+		</h3>
+    </div> 
+     <div class="slds-m-around_medium slds-form-element slds-scrollable_x" style="margin-top:5px; margin:0; padding:0 12px 8px 12px; border:1px solid #ccc;">
+        <div class="slds-form-element" style="background:#fff;margin-top:12px;">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-4 slds-large-size--3-of-4">
+              <ui:inputText class="slds-input" 
+                                        aura:id="campName" 
+                                        label="Campaign Name" 
+                                        value="{!v.campaignObj.Name}" 
+                                        required="true"
+                                        change ="{!c.onNameChange}" />
+            </div>
+            <aura:if isTrue="{!v.isOwner}">
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-4 slds-large-size--1-of-4" >
+                     <ui:inputText class="slds-input" 
+                                        aura:id="campOwn" 
+                                        label="Campaign Owner" 
+                                        value="{!v.campaignObj.Owner.Name}" 
+                                        required="true"
+                                        disabled="true" />
+            </div>
+            <aura:set attribute="else">
+                    <ui:inputText class="slds-input" 
+                                        aura:id="tempOwn" 
+                                        label="Campaign Owner" 
+                                        value="" 
+                                        required="true"
+                                        disabled="true" />
+            </aura:set>    
+           </aura:if>
+		</div>
+        
+        <div class="slds-grid slds-gutters" style="margin-top:12px;">
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+                   
+                <ui:inputDate class="slds-input"
+                       aura:id="startDate" 
+                       format="dd/MM/yyyy" 
+                       label="Start Date"
+                       displayDatePicker="true" 
+                       value="{!v.campaignObj.Start_Date__c}" 
+                       change="{!c.onDateChangeStartDate}" 
+                       required="true" 
+                       disabled="false" /> 
+            
+                    </div>
+              
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+                      <ui:inputDate class="slds-input" 
+                       aura:id="endDate" 
+                       format="dd/MM/yyyy" 
+                       label="End Date"
+                       displayDatePicker="true" 
+                       value="{!v.campaignObj.End_Date__c}" 
+                       required="true" 
+                       disabled="false"
+                        change="{!c.onDateChangeEndDate}"/> 
+            </div>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12">
+                <ui:inputSelect class="slds-select" 
+                                aura:id="currency" 
+                                label ="Currency" 
+                                required="true"
+                                value="{!v.campaignObj.CurrencyIsoCode}" 
+                                disabled="false"/>
+                       
+			</div>  
+             <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12">
+                   
+                    <ui:inputSelect class="slds-select" 
+                                     label="Status" 
+                                    aura:id="campStatus" 
+                                    value="{!v.campaignObj.Status__c}"
+                                    required="true" 
+                                    disabled="false"/>
+                           
+			</div>    
+		</div>
+   	</div>
+  	</div>
+    <div>
+          <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="height:30px; margin-top:18px; background:#769ed9; color:#fff; font-weight:bold;">
+          		<span style="float:left; display:inline; padding-right:20px; font-weight:bold;">Customer Forecast Information</span>
+          </h3>
+    </div>
+    	
+<div >
+       <div class="slds-m-around_medium slds-form-element slds-scrollable--x" style="margin-top:5px;margin-left:2px; margin-right:2px; padding:0; z-index:2; position:relative;">
+        <table id="tableId" class="slds-table slds-table_bordered" style="border:1px solid #ccc;" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+            <th>Select Customer</th>
+            <th>Select SKU</th>
+            <th>SKU Code</th>
+            <th>Forecast Quantity</th>
+            <th>Actual Quantity</th>
+            <th>Actual Amount</th>
+                 
+            <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <aura:if isTrue="{!!v.isIdPresent}"> 
+                   <tr>  
+                        <td><c:DynamicLookup aura:id="childCust"
+                                             objectAPIName="Account" 
+                                              IconName="standard:account" 
+                                              selectedRecord="{!v.selectedCustomerLookUpRecord}" 
+                                              displayField = "Name"
+                                              Filter="AND Account_Type__c = 'Sold To Party' AND (Sales_Org_Code__c = '2510' OR Sales_Org_Code__c = '2520') order by Name limit 5 "/>
+                          
+                       </td>
+                        <td> <c:DynamicLookup aura:id="childSkuForecast"
+                                              objectAPIName="SKU__c" 
+                                              IconName="standard:entity" 
+                                              selectedRecord="{!v.selectedSKULookUpRecord}" 
+                                              queryFields =",SKU_Description__c,SKU_Code__c"
+                                              displayField = "SKU_Description__c"
+                                              Filter="AND (Sales_Org_Code__c = '2510' OR Sales_Org_Code__c = '2520') order by SKU_Description__c  limit 5" /></td>
+                        <td></td>
+                        <td>   <ui:inputNumber class="slds-input" 
+                                        aura:id="forecastid" 
+                                        value="{!v.forecastCost}" 
+                                        required="true"
+                                        disabled="false"
+                                        change="{!c.numberValidation}" /></td>
+                                              
+                       
+                       <td>  <ui:inputNumber class="slds-input" 
+                                        aura:id="actualQty" 
+                                        value="{!v.ActualQty}" 
+                                        required="true"
+                                        disabled="false"
+                                        change="{!c.numberValidation}" /></td>
+                        <td>  <ui:inputNumber class="slds-input" 
+                                        aura:id="actualAmt" 
+                                        value="{!v.ActualAmt}" 
+                                        required="true"
+                                        disabled="false"
+                                        change="{!c.numberValidation}" /></td>
+                      
+                        <td> <button class="slds-button slds-button--icon expandall"  >
+                                <img src="{!$Resource.ShowDetails}"  style ="margin-left:5px;" class = "expandimg" labelClass="" onclick="{!c.addCustForecastInfo}"/> 
+                            </button></td>
+                        
+                        
+                         </tr>
+                    </aura:if>
+                <aura:iteration items="{!v.forecastInfoList}" var="singleRec" indexVar="i">
+                 <tr>       
+                     <td><ui:outputText value="{!singleRec.customerName}"/></td>
+                        <td> <ui:outputText value="{!singleRec.sKUDescription}"/></td>
+                        <td><ui:outputText value="{!singleRec.sKUCode}"/></td>
+                        <td><ui:outputNumber value="{!singleRec.forecastAmount}" /></td>
+                     <aura:if isTrue="{!!v.isIdPresent}">   
+                     <td><ui:outputNumber value="{!singleRec.ActualQty}"/></td>
+                        <td><ui:outputNumber value="{!singleRec.ActualAmount}" format="##.00"/></td>
+                     <aura:set attribute="else">
+                         <td><input type= "Number" class="slds-input" id="{!i+'actualQtyedit'}" value="{!singleRec.ActualQty}" disabled ="disabled" data-row-index="{!i}" onchange ="{!c.validateNumber}"></input><br/>
+                          <span id ="{!i+'errorQty'}" style ="color:red;display:none">COMPLETE THIS FIELD</span>
+                          <!--<ui:inputNumber aura:id="actualQtyedit"
+                                          value="{!singleRec.ActualQty}" 
+                                           class="slds-input"
+                                          labelClass="{!i+'actualQtyedit'}"  
+                                          disabled="true"/--></td>
+                        <td><input type= "Number" class="slds-input" id="{!i+'actualAmtedit'}" value="{!singleRec.ActualAmount}" disabled ="disabled" data-row-index="{!i}" onchange ="{!c.validateNumber}"></input><br/>
+                              <span id ="{!i+'errorAmt'}" style ="color:red;display:none">COMPLETE THIS FIELD</span>
+                            <!-- <ui:inputNumber aura:id="actualAmtedit"
+                                            value="{!singleRec.ActualAmount}"
+                                            class="slds-input"
+                                            labelClass="{!i+'actualAmtedit'}"
+                                             disabled="true"
+                                            /--></td>
+                    </aura:set> 
+                     </aura:if>  
+                       <aura:if isTrue="{!!v.isIdPresent}"> <td> <button class="slds-button slds-button--icon expandall"  >
+                                  <img src="{!$Resource.HideDetails}" style ="margin-left:5px;" class ="remove" data-row-index="{!i}" onclick = "{!c.removeforcastinfo}"/> 
+                            </button>
+                     </td>
+                     </aura:if>
+                      <td>
+                     <aura:if isTrue="{!and(v.isIdPresent, singleRec.entryType =='Manual')}">
+                         <button id="{!i+'editbtn'}"  class="slds-button slds-button--neutral" data-row-index="{!i}"  onclick="{!c.editRecord}">Edit</button>
+                         <button id="{!i+'updatebtn'}"  class="slds-button slds-button--neutral" data-row-index="{!i}"  disabled = "true" onclick="{!c.updateRecord}">Save</button>
+                      </aura:if>       
+                    </td>
+                 </tr>
+                     </aura:iteration>
+            </tbody>
+        </table>
+       	      
+   		</div>
+    </div>
+	      
+<div style="clear:both;"></div>
+    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1 " style="margin-top:5px; padding-bottom:20px; background:#769ed9; color:#fff; font-weight:bold;">
+          		<span style="float:left; display:inline;  padding-right:20px; font-weight:bold;">Crop Details</span>
+          </h3>
+
+         <div class="slds-grid slds-gutters slds-m-around_medium slds-form-element slds-scrollable--x" style="border:1px solid #ccc; margin-top:12px; margin:0; padding:0px;z-index:2; position:relative;">
+           <div class="slds-col slds-size_12-of-12" style="margin:0; padding:0px;">
+		   <label class="uiLabel-left form-element__label uiLabel" for="1254:0" data-aura-rendered-by="1272:0" data-aura-class="uiLabel">
+			 <!-- <span class="" data-aura-rendered-by="1273:0">Select Crop</span>-->
+			  <!--render facet: 1275:0<span class="required " data-aura-rendered-by="1255:0">*</span>-->
+		  </label>  
+              
+              <table id="tableId" class="slds-table  slds-table_cell-buffer inventory"  cellspacing="0" width="100%">
+            <thead>
+                 <aura:if isTrue="{!!v.isIdPresent}">
+                <tr>
+              <td>     
+  				<c:DynamicLookup aura:id="childCrop"
+                                 objectAPIName="Crop__c" 
+                                 IconName="standard:cms" 
+                                 selectedRecord="{!v.selectedCropLookUpRecord}"
+                                 displayField = "Name"
+                                 label="Crop Name" 
+                                 Filter="AND (Sales_Org_Code__c ='2510' OR Sales_Org_Code__c = '2520') order by Name limit 5"/>
+              </td> 
+              <td>
+              <button class="slds-button slds-button--icon expandall"  >
+                                <img src="{!$Resource.ShowDetails}"  style ="margin-left:5px; margin-top:5px;" class = "expandimg" onclick="{!c.addCrop}"/> 
+                            </button>
+                </td>
+              
+         </tr>
+        </aura:if>
+                <tr> 
+                    <td colspan="2">
+                        <aura:iteration items="{!v.cropDetailList}" var="singleRec" indexVar="i">
+                        <div style="float:left; display:inline;">{!singleRec.cropName} &nbsp; <button class="slds-button slds-button--icon expandall"  >
+                                <aura:if isTrue="{!!v.isIdPresent}">  <img src="{!$Resource.HideDetails}"  style ="margin-left:5px;" class = "expandimg" data-row-index="{!i}"  onclick="{!c.removeCrop}"/>
+                            </aura:if>
+                            </button>
+                        </div>
+                         </aura:iteration>
+                       
+                        </td>
+                </tr>
+            </thead>
+        </table>
+           </div>  
+      </div> 
+    
+    
+    
+    
+    
+    <div>
+          <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="height:30px; margin-top:18px; background:#769ed9; color:#fff; font-weight:bold;">
+          		<span style="float:left; display:inline; padding-right:20px; font-weight:bold;">Demo Protocol</span>
+          </h3> 
+    </div>
+    <div class="slds-m-around_medium slds-form-element slds-scrollable_x" style="margin-top:5px; margin:0; padding:0;">
+        <table id="tableId" class="slds-table slds-table_bordered slds-table_cell-buffer inventory" style="border:1px solid #ccc;" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                       
+            <th>Objectives</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Cost</th>
+            <th>Status</th>
+          <aura:if isTrue="{!!v.isIdPresent}"> 
+            <th>Action</th>
+          </aura:if>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                 <aura:if isTrue="{!!v.isIdPresent}">
+                <tr>    
+                        <td> <ui:inputText class="slds-input" 
+                                        aura:id="objective" 
+                                        value="" 
+                                        required="true"
+                                        disabled="false" /></td>
+                        <td>  
+                 			<ui:inputDate class="slds-input" 
+                       					  aura:id="demoStartDate" 
+                       					  format="dd/MM/yyyy" 
+                       					  displayDatePicker="true" 
+                       					  value="" 
+                       					  required="true" 
+                       					  disabled="false" 
+                                           change="{!c.onDateChangeDemoStartDate}"/>    
+           			   </td>
+                       <td> 
+                         <ui:inputDate class="slds-input" 
+                               aura:id="demoEndDate" 
+                               format="dd/MM/yyyy" 
+                               displayDatePicker="true" 
+                               value="" 
+                               required="true" 
+                               disabled="false"
+                                change="{!c.onDateChangeDemoEndDate}"/>    
+            		   </td>
+                        <td> <ui:inputNumber class="slds-input" 
+                                        aura:id="costid" 
+                                        value="" 
+                                        required="true"
+                                        disabled="false" change="{!c.numberValidation}" />
+                        </td>
+                        <td>
+                         <ui:inputSelect class="slds-select" aura:id="demoProtocolStatus" >
+                         <ui:inputSelectOption text="Finished"/>
+						 <ui:inputSelectOption text="Contract" value="true"/>
+                         <ui:inputSelectOption text="Ongoing"/>
+                         </ui:inputSelect>
+                       </td>
+                        <td> <button class="slds-button slds-button--icon expandall"  >
+                                <img src="{!$Resource.ShowDetails}"  style ="margin-left:5px;" class = "expandimg" onclick="{!c.addDemoProtocol}"/> 
+                            </button></td>
+                         </tr>
+                     </aura:if>
+                  <aura:iteration items="{!v.demoProtocolList}" var="singleRec" indexVar="i">
+                <tr>       
+                    	
+                   <td><ui:outputText value="{!singleRec.objectives}"/></td>
+                   <td><ui:outputText value="{!singleRec.startDate}"/></td>
+                   <td><ui:outputText value="{!singleRec.endDate}"/></td>
+                   <td><ui:outputNumber value="{!singleRec.cost}" format="##.00"/></td>
+                   <td><ui:outputText value="{!singleRec.status}"/></td>
+                   <td> <button class="slds-button slds-button--icon expandall">
+                         <aura:if isTrue="{!!v.isIdPresent}"> <img src="{!$Resource.HideDetails}"  style ="margin-left:5px;" class = "expandimg" data-row-index="{!i}" onclick = "{!c.removeDemoProtocol}"/> 
+                           </aura:if>  </button></td>
+                    </tr>
+                   </aura:iteration>
+                
+            </tbody>
+        </table>
+       </div>
+    
+      <div>
+          <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="height:30px; margin-top:5px; background:#769ed9; color:#fff; font-weight:bold;">
+          		<span style="float:left; display:inline;  padding-right:20px; font-weight:bold;">Expense Activities</span>
+          </h3> 
+    </div>
+     <div class="slds-m-around_medium slds-form-element slds-scrollable--x" style="margin-top:5px; margin:0; padding:0;z-index:2; position:relative;">
+        <table id="tableId" class="slds-table slds-table_bordered slds-table_cell-buffer inventory" style="border:1px solid #ccc;" cellspacing="0" width="100%">
+            <thead>
+            	<tr>
+                    <th style="bold;">Customer</th>
+                    <th>Expense Activity</th>
+                    <th>Select SKU</th>
+                    <th>SKU Code</th>
+                    <th>Budgeted Cost</th>
+                    <th>Actual Cost</th>
+                    <aura:if isTrue="{!!v.isIdPresent}"> 
+                   <th>Action</th>
+                   </aura:if> 
+            	</tr>
+            </thead>
+            <tbody>
+                 <aura:if isTrue="{!!v.isIdPresent}">
+                    <tr>  
+                        <td><c:DynamicLookup aura:id="expCust"
+                                             objectAPIName="Account" 
+                                              IconName="standard:account" 
+                                              selectedRecord="{!v.selectedExpCustLookUpRecord}" 
+                                              displayField = "Name"
+                                              Filter="AND Account_Type__c = 'Sold To Party' AND (Sales_Org_Code__c = '2510' OR Sales_Org_Code__c = '2520') order by Name limit 5 "/>
+                        </td>
+                        <td> <ui:inputSelect class="slds-select" aura:id="expenActvty"  change="{!c.showSkuLookup}">
+                        	<ui:inputSelectOption text="Promotional Input" value="true"/>
+                            <ui:inputSelectOption text="Lobbying Expenses"/>
+                            <ui:inputSelectOption text="New product Development"/>
+						    <ui:inputSelectOption text="Existing Product Publicity"/>
+                            <ui:inputSelectOption text="Marketing Field Trail Product"/>
+                            </ui:inputSelect></td>
+                        <td style ="margin-top:-3px">  
+                  			<aura:if isTrue="{!v.showSKU == true}"> 
+                            <c:DynamicLookup aura:id="childSKUAct"
+                                             objectAPIName="SKU__c" 
+                                              IconName="standard:entity" 
+                                              selectedRecord="{!v.selectedSKULookUpRecordActivity}" 
+                                              queryFields =",SKU_Description__c,SKU_Code__c"
+                                              displayField = "SKU_Description__c"
+                                              Filter="AND (Sales_Org_Code__c = '2510' OR Sales_Org_Code__c = '2520') order by SKU_Description__c  limit 5"/>
+                           </aura:if>
+           				 </td>
+                        <td> 
+                       </td>
+                        <td> <ui:inputNumber class="slds-input" 
+                                        aura:id="budgetedCost" 
+                                        value="" 
+                                        required="true"
+									    disabled="false"
+                                        change="{!c.numberValidation}"/></td>
+                        <td><ui:inputNumber class="slds-input" 
+                                        aura:id="actualCost" 
+                                        value="" 
+                                        required="true"
+									    disabled="false"
+                                        change="{!c.numberValidation}"/> </td>
+                        <td> <button class="slds-button slds-button--icon expandall"  >
+                                <img src="{!$Resource.ShowDetails}"  style ="margin-left:5px;" class = "expandimg" onclick="{!c.addExpenseActivity}"/> 
+                          </button></td>        
+                </tr>
+                  </aura:if>
+                 <aura:iteration items="{!v.expenseActivityList}" var="singleRec" indexVar="i">
+                <tr>
+                   <td>{!singleRec.customerName}</td>
+                   <td>{!singleRec.expenseActivity}</td>
+                   <td>{!singleRec.sKUDescription} </td>
+                   <td>{!singleRec.sKUCode}</td>
+                   <td><ui:outputNumber value="{!singleRec.budgetedCost}" format="##.00"/></td>
+                   <td><ui:outputNumber value="{!singleRec.actualCost}" format="##.00"/></td>
+                   <td> <button class="slds-button slds-button--icon expandall">
+                               <aura:if isTrue="{!!v.isIdPresent}">   <img src="{!$Resource.HideDetails}"  style ="margin-left:5px;" class = "expandimg" data-row-index="{!i}" onclick ="{!c.removeExpenseActivity}"/> 
+                           </aura:if>  </button></td>       
+                 </tr>
+                 </aura:iteration>
+            </tbody>
+        </table>
+       </div>
+    <div align="center" style="margin-top:5px;">
+      <aura:if isTrue="{!!v.isIdPresent}">
+    <lightning:button  aura:id="savebtn" class="slds-button slds-button--brand"  label="Save" onclick = "{!c.validateandSave}"/>  
+    <lightning:button  aura:id="cancelbtn" class="slds-button slds-button--neutral"  label="Cancel" onclick = "{!c.redirectCancel}"/>  
+    <aura:set attribute="else">
+       <lightning:button  aura:id="cancelbtn" class="slds-button slds-button--neutral"  label="Back" onclick = "{!c.redirectCancel}"/>  
+          </aura:set>
+          </aura:if>
+        </div>
+    </div>
+    
+
+</aura:component>

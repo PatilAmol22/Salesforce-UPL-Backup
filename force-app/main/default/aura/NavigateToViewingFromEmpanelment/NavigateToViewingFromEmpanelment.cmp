@@ -1,0 +1,23 @@
+<aura:component controller= "NavigateToViewEmp"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader"
+                access="global">
+    <aura:attribute name="pageReference" type="Object"/>
+    <aura:attribute name="recordId" type="Id" description="ID of the record."/>
+    <aura:attribute name="FarmerId" type="String" />
+    <aura:attribute name="FarmerState" type="String" />
+    <aura:attribute name="FarmerName" type="String" />
+    
+    
+    
+    <lightning:navigation aura:id="navServiceViewEmp"/>
+    
+    
+    <aura:attribute name="empanelment" type="String"/>
+    
+    <aura:handler name="init" value="{! this }" action = "{!c.doInit}" />
+    
+    <aura:handler name="change" value="{!v.empanelment}" action="{!c.empIdChange}"/>
+    
+    
+    
+</aura:component>

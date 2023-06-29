@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="surveyrecordId" label="surveyrecordId" />
+     <design:attribute name="lat"  label="lat"/>
+    <design:attribute name="long" label="long" />
+</design:component>

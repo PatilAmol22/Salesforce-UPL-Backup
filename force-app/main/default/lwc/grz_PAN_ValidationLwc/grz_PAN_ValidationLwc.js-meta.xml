@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__RecordAction</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <supportedFormFactors>
+                <supportedFormFactor type="Small" />
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="strRecordId" type="String" label="Current Account Id" 
+                        description="Id of the current record"/>
+                        <property name="bttnType" type="Boolean" label="Is GST Validation" 
+                                    description="True for GST and False for PAN"/>
+        </targetConfig>
+</targetConfigs>
+</LightningComponentBundle>

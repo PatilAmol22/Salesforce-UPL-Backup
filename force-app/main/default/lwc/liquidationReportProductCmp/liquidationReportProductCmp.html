@@ -1,0 +1,193 @@
+<template>
+    <div>
+        <!--Show and Hide Spinner for product table-->
+        <template if:false={hideProdSpinner}>
+            <div class="exampleHolder">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:true={showProductTable}>
+            <div class="slds-grid slds-wrap" style="width:100%;padding: 5px;">
+                <!--Search component to search any value within Product Liquidation Table-->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                    <lightning-input type="text" placeholder="Search Here..." value={searchKey} onchange={handleSearch}></lightning-input>
+                </div>
+
+                <!--Buttons for toggle between value and volume-->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+                    <div class="slds-float_left slds-size_4-of-12">
+                        <lightning-radio-group name="valuevolume"
+                          label=""
+                          options={valVolOptions}
+                          value={valVolValue}
+                          type="button"
+                          onchange={handleRadioChange}></lightning-radio-group>
+                    </div>
+                    <div class="slds-float_left slds-size_2-of-12"></div>
+                    <div class="slds-float_left slds-size_2-of-12">
+                        <template if:true={isValue}>
+                            <lightning-combobox
+                            name="progress"
+                            label=""
+                            value={valFigure}
+                            options={valOptions}
+                            onchange={handleValChange} ></lightning-combobox>
+                            </template>
+                        </div>
+                   
+
+                    <div class="slds-float_right slds-size_4-of-12">
+                        <lightning-button variant="brand" label="Crop wise Breakup" title="Show Crop wise Breakup" onclick={handleCropClick} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tableFixHead">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Material Group</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Brand Name</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Opening Inventory</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>MTD Sales</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Total Available Stock</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Distributors Inventory</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Retailers Inventory</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Total Market Inventory</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>Product Budget</span>
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>{liquidationYTD}</span> 
+                            </th>
+                            <th class=" slds-cell-wrap" scope="col">
+                                <span>{liquidationPerYTD}</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={productTableFilteredData} for:item="prodData">
+                            <tr key={prodData.prodCode} class="slds-hint-parent">
+                                <td>
+                                    <div>
+                                        {prodData.prodCode}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div >
+                                        {prodData.prodName}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.openInv}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.ytdSale}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.tAvbStck}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.distInv}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.retInv}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.totMrkInv}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.prodBud}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.liqYTD}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {prodData.liqYTDPer}
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </template>
+                        <template if:true={isValue}>
+                        <tr>
+                            <td></td>
+                            <td>Grand Total</td>
+                            <td>{totValOpenInv}</td>
+                            <td>{totValYtdSale}</td>
+                            <td>{totValtAvbStck}</td>
+                            <td>{totValDistInv}</td>
+                            <td>{totValRetInv}</td>
+                            <td>{totValTotMrkInv}</td>
+                            <td>{totValProdBud}</td>
+                            <td>{totValLiqYTD}</td>
+                            <td></td>
+                        </tr>
+                        </template>
+                        <template if:false={isValue}>
+                            <tr>
+                                <td></td>
+                                <td>Grand Total</td>
+                                <td>{totVolOpenInv}</td>
+                                <td>{totVolYtdSale}</td>
+                                <td>{totVoltAvbStck}</td>
+                                <td>{totVolDistInv}</td>
+                                <td>{totVolRetInv}</td>
+                                <td>{totVolTotMrkInv}</td>
+                                <td>{totVolProdBud}</td>
+                                <td>{totVolLiqYTD}</td>
+                                <td></td>
+                            </tr>
+                            </template>
+                    </tbody>
+                </table>
+                <div><span>{footerMessage}</span></div>
+            </div>
+        </template>
+
+        <!--Show Error on Load-->
+        <template if:false={showProductTable}>
+            <lightning-card>
+                <div>
+                    <span>
+                        {errorMessage}
+                    </span>
+                </div>
+            </lightning-card>
+        </template>
+    </div>
+</template>

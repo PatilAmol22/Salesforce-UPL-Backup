@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Send_Email_upon_community_user_creation</fullName>
+        <ccEmails>salesexcellence2@upl-ltd.com</ccEmails>
+        <ccEmails>uconnect.support@upl-ltd.com</ccEmails>
+        <ccEmails>hari.bandaru@upl-ltd.com</ccEmails>
+        <description>Send Email upon community user creation</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>salesexcellence1@upl-ltd.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>India_community_user_Template/Send_email_on_community_user_creation</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_upon_community_user_creation_Brazil</fullName>
+        <ccEmails>uconnect.support@upl-ltd.com</ccEmails>
+        <ccEmails>mariana.grecco@upl-ltd.com</ccEmails>
+        <description>Send Email upon community user creation Brazil</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>India_community_user_Template/Send_email_on_community_user_creation_Brazil</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_upon_community_user_creation_argentina</fullName>
+        <ccEmails>joaquin.legrand@upl-ltd.com</ccEmails>
+        <ccEmails>sumit.kumar@grazitti.com</ccEmails>
+        <ccEmails>namanjot@grazitti.com</ccEmails>
+        <description>Send Email upon community user creation argentina</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>salesexcellence1@upl-ltd.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>India_community_user_Template/Send_email_on_community_user_creation_for_Argentina</template>
+    </alerts>
+</Workflow>

@@ -1,0 +1,297 @@
+<!--********************************************************************************************
+* Name			: grz_AccountLedgerExternal.html
+* Description	: LWC component for External Users to display Customer Ledger Statement                              
+* Created Date	: 23/05/2022
+* Created By	: Swaranjeet (Grazitti)
+* **********************************************************************************************-->
+<template>
+    
+    <div if:true={isLoading} class="slds-is-relative">
+        <lightning-spinner alternative-text="Loading..." variant="brand" style="top:120px;"></lightning-spinner>
+    </div>
+    <div class="modal-height">
+        <template if:true={errorMessage}>
+            <p class="error"> {errorMessage} </p>
+        </template>
+        <br>
+        <template if:true={account}>
+            <div class="filter-div">
+                <div class="slds-p-left_small year-div">
+                       <lightning-combobox
+                            placeholder={labels.yy}
+                            label={labels.yy}
+                            value={fiscalYear}
+                            options={ledgerYearOptions}
+                            onchange={handleLedgerYearOption} >
+                        </lightning-combobox>
+                </div>
+                <div class="slds-p-left_small month-div">
+                          <lightning-combobox
+                            placeholder={labels.mm}
+                            label={labels.mm}
+                            value={selectedMonth}
+                            options={monthOptions}
+                            dropdown-alignment = "auto"
+                            onchange={handleMonthOption} >
+                        </lightning-combobox>                           
+                </div>
+                <div class="slds-p-left_small slds-m-right_medium">
+                        <button class="ledger-statement-btn btn-itr" onclick={getLedgerData}>{labels.getStatement}</button>
+                </div>
+            </div>
+        </template>
+        <br>
+        <template if:true={ledgerData}>
+            <template if:false={isMobile}>
+                <div class="table-head-div">
+                    <div class={ledgerTableScroll}>
+                        <table class="slds-m-bottom_small">
+                            <thead class="table-head">
+                                <tr style="background-color: #f7f7f7;" class="fixed-header-row1">
+                                    <th class="slds-p-left_small cell-height-bal" scope="col">
+                                            <div class="slds-truncate">{labels.docDate}</div>
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal" scope="col">
+                                            <div class="slds-truncate">{labels.docNumber}</div>
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal" scope="col">
+                                            <div class="slds-truncate">{labels.docType}</div>
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal" scope="col">
+                                            <div class="slds-truncate">{labels.docDes}</div>
+                                    </th>
+                                    <!--<th class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate">{labels.refChqNumber}</div>
+                                    </th>-->
+                                    <!--<th class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate">{labels.maturityDate}</div>
+                                    </th>-->
+                                    <th align ="right" class="slds-p-left_small slds-p-right_small cell-height-bal" scope="col" style="text-align: right;">
+                                            <div class="slds-truncate">{labels.debit}</div>
+                                    </th>
+                                    <th align ="right" class="slds-p-left_small slds-p-right_small cell-height-bal" scope="col" style="text-align: right;">
+                                            <div class="slds-truncate">{labels.credit}</div>
+                                    </th>
+                                    <th align ="right" class="slds-p-right_small slds-p-left_small cell-height-bal" scope="col" style="text-align: right;">
+                                            <div class="slds-truncate">{labels.balance}</div>
+                                    </th>
+                                </tr>
+                                <tr style="background-color:#ffffff;color: #ff7701;" class="fixed-header-row2">
+                                    <td colspan="4" class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate">{labels.openingBalance}</div>
+                                    </td>
+                                    <td align ="right" class="slds-p-left_small slds-p-right_small cell-height-bal" scope="col" style="text-align: right;">
+                                        <div class="slds-truncate">
+                                            <template if:true={openingPositiveBalance}>
+                                                <lightning-formatted-number value={openingBal} minimum-fraction-digits="2"></lightning-formatted-number>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <td align ="right" class="slds-p-left_small slds-p-right_small cell-height-bal" scope="col" style="text-align: right;">
+                                        <div class="slds-truncate">
+                                            <template if:true={openingNegativeBalance}>
+                                                <lightning-formatted-number value={openingBal} minimum-fraction-digits="2"></lightning-formatted-number>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <td class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate"></div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={ledgerData} for:item="ledger">
+                                    <tr key={ledger.Id} class="slds-border_top table-body-data">
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate"> {ledger.PostDate}</div>
+                                        </td>
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate"> {ledger.AccountingDocNumber}</div>
+                                        </td>
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{ledger.DocType}</div>
+                                        </td>
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{ledger.docDes}</div>
+                                        </td>
+                                        <!--<td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{ledger.ReferebceChqNumber}</div>
+                                        </td>-->
+                                        <!--<td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{ledger.DueDate}</div>
+                                        </td>-->
+                                        <td align ="right" class="slds-p-left_small slds-p-right_small cell-height" scope="col" style="text-align: right;">
+                                            <div class="slds-truncate">
+                                                <lightning-formatted-number value={ledger.Debit} minimum-fraction-digits="2"></lightning-formatted-number>
+                                            </div>
+                                        </td> 
+                                        <td align ="right" class="slds-p-left_small slds-p-right_small cell-height" scope="col" style="text-align: right;">
+                                            <div class="slds-truncate">
+                                                <lightning-formatted-number value={ledger.Credit} minimum-fraction-digits="2"></lightning-formatted-number>
+                                            </div>
+                                        </td> 
+                                        <td align ="right" class="slds-p-left_small slds-p-right_small cell-height" scope="col" style="text-align: right;">
+                                            <div class="slds-truncate">
+                                                <lightning-formatted-number value={ledger.RunningBalance} minimum-fraction-digits="2"></lightning-formatted-number>
+                                            </div>
+                                        </td>                       
+                                    </tr>
+                                </template>
+                                <template if:true={ledgerNoRecordError}>
+                                    <tr>
+                                        <td colspan="7"> 
+                                            <div class="no-data-error">{labels.noData}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                            <thead>
+                                <tr style="background-color:#ffffff;" class="fixed-header-row3">
+                                    <td colspan="4" class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate"><b>{labels.closingBalance}</b></div>
+                                    </td>
+                                    <td class="slds-p-left_small slds-p-right_small cell-height-bal" scope="col" style="text-align: right;">
+                                        <div class="slds-truncate">
+                                            <template if:true={closingNegativeBalance}>
+                                               <b><lightning-formatted-number value={closingBal} minimum-fraction-digits="2"></lightning-formatted-number></b>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <td class="slds-p-left_small slds-p-right_small cell-height-bal" scope="col" style="text-align: right;">
+                                        <div class="slds-truncate">
+                                            <template if:true={closingPositiveBalance}>
+                                                <b><lightning-formatted-number value={closingBal} minimum-fraction-digits="2"></lightning-formatted-number></b>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <td class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate"></div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr class="fixed-header-row4 total-ledger-css">
+                                    <td  colspan="4" class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate">{labels.cstTotal}</div>
+                                    </td>
+                                    <td align ="right" class="slds-p-left_small slds-p-right_small cell-height-bal" scope="col" style="text-align: right;">
+                                        <div class="slds-truncate">
+                                            <lightning-formatted-number value={totalDebit} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td align ="right" class="slds-p-left_small slds-p-right_small cell-height-bal" scope="col" style="text-align: right;">
+                                        <div class="slds-truncate">
+                                            <lightning-formatted-number value={totalCredit} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate"></div>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </template>
+          
+            <template if:true={isMobile}>
+                <div class="gray-back">
+                    <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                        <div
+                           class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                           <b>{labels.openingBalance}</b>
+                        </div>
+                        <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                            <template if:true={openingPositiveBalance}>
+                                <b><lightning-formatted-number value={openingBal} minimum-fraction-digits="2"></lightning-formatted-number></b>
+                            </template>
+                            <template if:true={openingNegativeBalance}>
+                                <b><lightning-formatted-number value={openingBal} minimum-fraction-digits="2"></lightning-formatted-number></b>
+                            </template>
+                        </div>
+
+                     </div>
+                     
+                
+                  
+                </div>
+              
+                <div >
+                    <c-responsive-card table-data={data} columns={column}></c-responsive-card>
+
+                </div>
+                <div class="gray-back">
+                    <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                        <div
+                           class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                           <b>{labels.closingBalance}</b>
+                        </div>
+                        <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                            <template if:true={closingNegativeBalance}>
+                                <b><lightning-formatted-number value={closingBal} minimum-fraction-digits="2"></lightning-formatted-number></b>
+                             </template>
+                             <template if:true={closingPositiveBalance}>
+                                <b><lightning-formatted-number value={closingBal} minimum-fraction-digits="2"></lightning-formatted-number></b>
+                            </template>
+                        </div>
+
+                     </div>
+                     
+                
+                  
+                </div>
+
+                <div class="slds-card">
+                    <div class="slds-card__header slds-grid">
+                        <div class="slds-col slds-p-top_small slds-float_left slds-size_12-of-12 ">
+                        <h2 class="slds-text-heading--small slds-truncate"><b>{labels.cstTotal}</b></h2>
+                        <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ledger-statement-btn">                        
+                            <b>{labels.debit}  <lightning-formatted-number value={totalDebit} minimum-fraction-digits="2"></lightning-formatted-number></b>
+                        </div>
+                        <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ledger-statement-btn ">                        
+                            <b>{labels.credit}  <lightning-formatted-number value={totalCredit} minimum-fraction-digits="2"></lightning-formatted-number></b>
+                        </div>
+                    </div>
+                     </div>
+                     
+                
+                  
+                </div>
+
+                <div class="slds-m-top_medium" style="margin-top:15px; margin-bottom:20px; float:left;">
+                    <p>Página : {page} of {totalPage}</p>
+                    <template if:true={flag}>
+                        <lightning-spinner alternative-text="Loading.."></lightning-spinner>
+                    </template>
+                </div>
+              
+                
+                <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 slds-large-size_3-of-12" style="margin-top:10px;">
+            
+                <lightning-button-group>
+                    <lightning-button variant="brand" label="First" onclick={handleFirst} disabled={showFirstButton}></lightning-button>
+                    <lightning-button variant="brand" label="Previous" onclick={handlePrevious} disabled={showFirstButton}></lightning-button>
+                    <lightning-button variant="brand" label="Next" onclick={handleNext} disabled={showLastButton}></lightning-button>
+                    <lightning-button variant="brand" label="Last" onclick={handleLast} disabled={showLastButton}></lightning-button>
+                </lightning-button-group>
+              </div>
+            </template>
+            
+        </template>
+    </div>
+    <template if:true={showDownloadOption}>
+        <div slot="footer" style="text-align: center;">
+            <a onclick={pdfDownloadClick}>
+                <lightning-icon icon-name="doctype:pdf" 
+                                size="medium">
+                </lightning-icon>
+            </a>
+            <a onclick={xlsDownloadClick} style="margin-left: 3%;">
+                <lightning-icon icon-name="doctype:excel" 
+                                size="medium">
+                </lightning-icon>
+            </a>
+        </div>
+    </template>
+  
+</template>

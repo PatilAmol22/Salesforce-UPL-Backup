@@ -1,0 +1,39 @@
+<!-- 
+Developer Name : Ketan Khatri
+Description : Generic AutoComplete Functionality for search bar
+ -->
+<aura:component controller="Autocomplete_Controller">
+    <aura:attribute name="sObjectType" required="true" type="String"
+        description="Name of the sObject that will be filtered" />
+    <aura:attribute name="fields" type="String" default="" description="List of fields to get with each record" />
+    <aura:attribute name="WhereClause" type="String" />
+    <aura:attribute name="limit" type="Integer" default="5" description="Limits the number returned to this value" />
+    <aura:attribute name="inputLabel" type="String" default="Find" description="Label for text input" />
+    <aura:attribute name="productDescription" type="String" />
+    <aura:attribute name="ready" type="Boolean" default="false"
+        description="Used to check if resources have been loaded" />
+    <aura:attribute name="searchText" type="string" />
+    <aura:attribute name="resultlis" type="boolean" default="true" />
+    <aura:attribute name="isAdmin" type="boolean" default="false" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute Name="selItem" type="String" default="" />
+
+    <aura:registerEvent name="autocompleteEvent" type="c:autocomplete_Evt" />
+    <aura:registerEvent name="SearchInventoryEvent" type="c:SearchInventoryEvent" />
+
+    <!-- <ltng:require 
+                  styles="{!$Resource.jQuery + '/css/start/jquery-ui-1.8.16.custom.css'}"
+                  scripts="{!join(',', 
+                           $Resource.jqueryminjs, 
+                           $Resource.jQuery + '/js/jquery-ui-1.8.16.custom.min.js')}"
+                  afterScriptsLoaded="{!c.init}" /> -->
+
+
+    <!--div align="center" class="mainClass" -->
+    <input name="Query" list="resultList" aura:id="searchText" type="text" onchange="{!c.onTyping}"
+        placeholder="Type Something" class="ipText slds-input" />
+    <datalist id="resultList" class="slds-is-absolute resultList">
+    </datalist>
+    <!--/div-->
+</aura:component>

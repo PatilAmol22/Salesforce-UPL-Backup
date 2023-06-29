@@ -1,0 +1,572 @@
+<!--********************************************************************************************
+* Name			    : grz_RebateDetailPageBrazil.html
+* Description	    : LWC component to dispaly Rebate details for Brazil Community
+* Apex Controller	: Grz_LoyaltyAndRebateBrazil 
+* LastModefied Date	: 28/07/2022 
+* Created By	    : Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<template>
+    <c-grz_header-image-cmp bgimg={backgroundimage} imglabel={title} customcss='top: 9%;'></c-grz_header-image-cmp>
+    <div class="bread-crumb-cls">
+        <c-grz_bread-crumb labelone='Rebate' labeltwo={title} linkone='loyaltyAndRebate' linktwo=''>
+        </c-grz_bread-crumb>
+    </div>
+    <!-- Rebate Details View-->
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+            <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-border_top " style="padding: 1.5%; background-color: white;">
+                <div class="borderbottom headingClass componentNotoSansBold detail-size">Detalhes do Contrato</div>
+                <div class="slds-grid slds-wrap slds-p-top_medium slds-p-bottom_x-small data-font-size componentNotoSansMedium">
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Contrato:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                    <span class="">{contractNumber}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Distribuidor:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{distributor}</span>
+                                </div> 
+                            </div>
+                            <!--<div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Diretoria:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{sbuName}</span>
+                                </div>
+                            </div>-->
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Status Atual:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{workflowStatus}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Tipo:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{type}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>BU:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{zoneName}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_medium hidePadding borderleft">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Moeda:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{crncy}</span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Categoria:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{categoryName}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Regional:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{regionalName}</span>
+                                </div>
+                            </div>
+                            <!--<div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Status:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{status}</span>
+                                </div>
+                            </div>-->
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Validade:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class=""><lightning-formatted-date-time value={startDate}></lightning-formatted-date-time> até <lightning-formatted-date-time value={endDate}></lightning-formatted-date-time></span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>CTC:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{salesRep}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022 -->
+    <div class="alert-msg">Os dados constantes acima são meras referências e estão sujeitos à confirmação e/ou alteração pela UPL.</div>
+    <!-- Rebate Details Goal Values -->
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-large-size_12-of-12">
+            <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-border_top " style="padding: 1%; background-color: white;">
+                <div class="slds-grid slds-wrap data-font-size componentNotoSansRegular">
+                    <div class="slds-col slds-medium-size_12-of-12 slds-large-size_4-of-12">
+                        <div class="rebate-value-green-l">
+                            ANÁLISE GATILHO (atingimento mínimo de 100% da meta total)
+                        </div>
+                        <div class="value-data-l">
+                            <table style="width:100%;" border="1">
+                                <tr>
+                                    <th style="background-color: #a9d08e;text-align: center;" >
+                                        Metas {LastYear}
+                                    </th>
+                                    <th style="background-color: #f4b084;text-align: center;">
+                                        Real {LastYear}
+                                    </th>
+                                    <th style="text-align: center;">
+                                        Realização
+                                    </th>
+                                </tr>
+                                    <tr>
+                                        <td style="text-align:right;padding-right: 5px;">
+                                           <lightning-formatted-number value={GoalsL} minimum-fraction-digits="0"></lightning-formatted-number>
+                                           <!-- {GoalsL} -->
+                                        </td>
+                                        <td style="text-align:right;padding-right: 5px;">
+                                          <lightning-formatted-number value={ActualL} minimum-fraction-digits="0"></lightning-formatted-number>  
+                                          <!-- {ActualL}                                        -->
+                                        </td>
+                                        <td style="text-align: right;padding-right: 5px;">
+                                          <lightning-formatted-number value={Attainment} minimum-fraction-digits="0"></lightning-formatted-number>
+                                          <!-- {Attainment} -->
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-medium-size_12-of-12 slds-large-size_4-of-12">
+                        <div class="rebate-value-green-m">
+                            ANÁLISE GATILHO (Dev. Máxima de 3% do faturamento total, considerando valores brutos - com juros e impostos)
+                        </div>
+                        <div class="value-data-m">
+                            <table style="width:100%;" border="1">
+                                <tr>
+                                    <th style="background-color: #a9d08e;text-align: center;" >
+                                        Real
+                                    </th>
+                                    <th style="background-color: #f4b084;text-align: center;">
+                                        Devoluções
+                                    </th>
+                                    <th style="text-align: center;">
+                                        % Devoluções
+                                    </th>
+                                </tr>
+                                    <tr>
+                                        <td style="text-align:right;padding-right: 5px;">
+                                           <lightning-formatted-number value={Real} minimum-fraction-digits="0"></lightning-formatted-number>
+                                           <!-- {Real} -->
+                                        </td>
+                                        <td style="text-align:right;padding-right: 5px;">
+                                          <lightning-formatted-number value={Returns} minimum-fraction-digits="0"></lightning-formatted-number> 
+                                          <!-- {Returns} -->
+                                        </td>
+                                        <td style="text-align: right;padding-right: 5px;">
+                                          <lightning-formatted-number value={PercntReturns} minimum-fraction-digits="2"></lightning-formatted-number>
+                                          <!-- {PercntReturns} -->
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-medium-size_12-of-12 slds-large-size_4-of-12">
+                        <div class="rebate-value-green-r">
+                            Análise Crescimento VS Ano Anterior
+                        </div>
+                        <div class="value-data-r">
+                            <table style="width:100%;" border="1">
+                                <tr>
+                                    <th style="background-color: #a9d08e;text-align: center;" >
+                                        Real {AdjacentYear}
+                                    </th>
+                                    <th style="background-color: #f4b084;text-align: center;">
+                                        Real {LastYear}
+                                    </th>
+                                    <th style="text-align: center;">
+                                        Crescimento
+                                    </th>
+                                </tr>
+                                    <tr>
+                                        <td style="text-align:right;padding-right: 5px;">
+                                           <lightning-formatted-number value={Actual_RL} minimum-fraction-digits="0"></lightning-formatted-number>
+                                           <!-- {Actual_RL} -->
+                                        </td>
+                                        <td style="text-align:right;padding-right: 5px;">
+                                          <lightning-formatted-number value={Actual_RR} minimum-fraction-digits="0"></lightning-formatted-number> 
+                                          <!-- {Actual_RR} -->
+                                        </td>
+                                        <td style="text-align: right;padding-right: 5px;">
+                                          <lightning-formatted-number value={Growth} minimum-fraction-digits="0"></lightning-formatted-number>
+                                          <!-- {Growth} -->
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Rebate Products Table -->
+    <div class="product-table-scroll">
+        <div class="product-table-width slds-border_right slds-m-bottom_x-large slds-border_left slds-border_bottom slds-p-right_large slds-border_top">
+            <template for:each={productData} for:item="product">
+                <div key={product} class="slds-m-top_small slds-m-left_small slds-m-bottom_small componentNotoSansMedium product-name">PRODUTOS {product.productName}</div>
+                <table key={product} class="slds-m-left_small  slds-m-right_small slds-m-bottom_small">
+                    <thead class="p-table-head componentNotoSansBold">
+                        <tr>
+                            <th colspan="7" class="slds-p-left_x-small p-table-head-css" scope="col">
+                                <div class="slds-truncate"></div>
+                            </th>
+                            <th colspan="3" class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #ffd966;">
+                                <div>
+                                    Considerado (Atingimento : Realizado - Devoluções)
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th  class="slds-p-left_x-small p-table-head-css" scope="col">
+                                <div class="slds-truncate" ></div>
+                            </th>
+                            <th colspan="2" class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #a9d08e;">
+                                <div class="slds-truncate" >Metas</div>
+                            </th>                   
+                            <th colspan="2" class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #f4b084;">
+                                <div class="slds-truncate" >Real</div>
+                            </th>
+                            <th  colspan="2" class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #6a71ff;">
+                                <div class="slds-truncate" >Devoluções</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: white;">
+                                <div class="slds-truncate" >Atingimento</div>
+                            </th>
+                            <th colspan="2" class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #f4b084;">
+                                <div class="slds-truncate" >Real</div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: gray;">
+                                <div class="slds-truncate" >Marca</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #c6e0b4;">
+                                <div class="slds-truncate" >Volume</div>
+                            </th>                   
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #c6e0b4;">
+                                <div class="slds-truncate" >Valor</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #f8cbad;">
+                                <div class="slds-truncate" >Volume</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #f8cbad;">
+                                <div class="slds-truncate" >Valor</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #a6abcc;">
+                                <div class="slds-truncate" >Volume</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #a6abcc;">
+                                <div class="slds-truncate" >Valor</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #808080;">
+                                <div class="slds-truncate" >Volume (%)</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #f8cbad;">
+                                <div class="slds-truncate" >Volume</div>
+                            </th>
+                            <th class="slds-p-left_x-small p-table-head-css cell-border" scope="col" style="background-color: #f8cbad;">
+                                <div class="slds-truncate" >Valor</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="p-table-body">
+                        <template for:each={product.children} for:item="lineitem">
+                            <tr key={lineitem} class=" componentNotoSansRegular">
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: white;">
+                                    <div>{lineitem.brandName}</div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #f2f2f2;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Goals_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {lineitem.Goals_Volume} -->
+                                    </div>
+                                </td> 
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #f2f2f2;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Goals_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {lineitem.Goals_Value} -->
+                                    </div>
+                                </td>                              
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Real_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {lineitem.Real_Volume} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Real_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {lineitem.Real_Value} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #d5f2ff;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Returns_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {lineitem.Returns_Volume} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #d5f2ff;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Returns_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {lineitem.Returns_Value} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: white;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Reach_Volume_Percnt} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        <!-- {lineitem.Reach_Volume_Percnt} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Reach_Real_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {lineitem.Reach_Real_Volume} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                    <div>
+                                        <lightning-formatted-number value={lineitem.Reach_Real_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {lineitem.Reach_Real_Value} -->
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                            <tr class="componentNotoSansBold">
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: white;">
+                                    <div>Total {product.productName}</div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #f2f2f2;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TGoals_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {product.TGoals_Volume} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #f2f2f2;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TGoals_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {product.TGoals_Value} -->
+                                    </div>
+                                </td>                              
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TReal_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {product.TReal_Volume} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TReal_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {product.TReal_Value} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #d5f2ff;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TReturns_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {product.TReturns_Volume} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #d5f2ff;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TReturns_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {product.TReturns_Value} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: white;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TReach_Volume_Percnt} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        <!-- {product.TReach_Volume_Percnt} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TReach_Real_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {product.TReach_Real_Volume} -->
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                    <div>
+                                        <lightning-formatted-number value={product.TReach_Real_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                        <!-- {product.TReach_Real_Value} -->
+                                    </div>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </template>
+            <div class="componentNotoSansRegular slds-m-left_small" style="color:red; margin-top:4%;margin-bottom:2%;"> 
+                OBS.: Os produtos que não alcançarem 80 (oitenta) % da meta anual (em valores), serão excluídos do plano de REBATE, e não haverá contabilização e pagamento.
+            </div>
+            <div class="componentNotoSansRegular" style="margin-bottom: 4%;">
+                <table class="slds-m-left_small  slds-m-right_small slds-m-bottom_small">
+                    <template for:each={otherProducts} for:item="other">
+                        <tr key={other}>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border componentNotoSansBold" scope="col" style="background-color: white;">
+                                <div>Outros Produtos</div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #f2f2f2;">
+                                <div>
+                                    <lightning-formatted-number value={other.Goals_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {other.Goals_Volume} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #f2f2f2;">
+                                <div>
+                                    <lightning-formatted-number value={other.Goals_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {other.Goals_Value} -->
+                                </div>
+                            </td>                              
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                <div>
+                                    <lightning-formatted-number value={other.Real_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {other.Real_Volume} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                <div>
+                                    <lightning-formatted-number value={other.Real_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {other.Real_Value} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #d5f2ff;">
+                                <div>
+                                    <lightning-formatted-number value={other.Returns_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {other.Returns_Volume} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #d5f2ff;">
+                                <div>
+                                    <lightning-formatted-number value={other.Returns_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {other.Returns_Value} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div></div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div></div>                            
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div></div>                            
+                            </td>
+                        </tr>
+                    </template>
+                    <template for:each={finalTotal} for:item="final">
+                        <tr key={final} class="componentNotoSansBold">
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: white;">
+                                <div>Totals</div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #f2f2f2;">
+                                <div>
+                                    <lightning-formatted-number value={final.Goals_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {final.Goals_Volume} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #f2f2f2;">
+                                <div>
+                                    <lightning-formatted-number value={final.Goals_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {final.Goals_Value} -->
+                                </div>
+                            </td>                              
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                <div>
+                                    <lightning-formatted-number value={final.Real_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {final.Real_Volume} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #fce4d6;">
+                                <div>
+                                    <lightning-formatted-number value={final.Real_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {final.Real_Value} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #d5f2ff;">
+                                <div>
+                                    <lightning-formatted-number value={final.Returns_Volume} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {final.Returns_Volume} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css cell-border" scope="col" style="background-color: #d5f2ff;">
+                                <div>
+                                    <lightning-formatted-number value={final.Returns_Value} minimum-fraction-digits="0"></lightning-formatted-number>
+                                    <!-- {final.Returns_Value} -->
+                                </div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div></div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div></div>                            
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css" scope="col">
+                                <div></div>                            
+                            </td>
+                        </tr>
+                    </template>
+                </table>
+            </div>
+        </div>
+    </div>
+</template>

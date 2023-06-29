@@ -1,0 +1,112 @@
+<template>
+    <div>
+    <!--Show and Hide Spinner for crop table-->
+    <template if:false={hideCropSpinner}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+    <div class="slds-grid slds-wrap" style="width:100%;padding: 5px;">
+        <!--Search component to search any value within Crop Liquidation Table-->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+            <lightning-input type="text" placeholder="Search Here..." value={searchKey} onchange={handleSearch}></lightning-input>
+        </div>
+
+        <!--Buttons for Crop Liquidation Table Submit-->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12">
+            <div class="slds-float_left slds-size_4-of-12">
+                <lightning-radio-group name="valuevolume"
+                      label=""
+                      options={valVolOptions}
+                      value={valVolValue}
+                      type="button"
+                onchange={handleRadioChange}></lightning-radio-group>
+            </div>
+            <div class="slds-float_left slds-size_2-of-12"></div>
+                    <div class="slds-float_left slds-size_2-of-12">
+                        <template if:true={isValue}>
+                            <lightning-combobox
+                            name="progress"
+                            label=""
+                            value={valFigure}
+                            options={valOptions}
+                            onchange={handleValChange} ></lightning-combobox>
+                            </template>
+                        </div>
+            <div class="slds-float_right slds-size_4-of-12">
+                <lightning-button variant="neutral" label="Back" title="Back" onclick={handleBackClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+    </div> 
+
+    <!--Crop Liquidation Table starts here-->
+    <template if:true={showCropTable}>
+        <div class="tableFixHead">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <div><span>Material Group</span></div>
+                            
+                        </th>
+                        <th scope="col">
+                            <div><span>Brand Name</span></div>
+                        </th>
+                        <th scope="col">
+                            <span>{liqYTDColName}</span>
+                        </th>
+                        
+                        <!--Itrating over crop name-->
+                        <template for:each={cropNameData} for:item="cropName">
+                            <th key={cropName} scope="col">
+                                <div><span>{cropName}</span></div>
+                            </th>
+                        </template>   
+                        <th scope="col">
+                            <div><span>Total</span></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={cropLiqTableFilteredData} for:item="crpRowData">
+                        <tr key={crpRowData.liqId}>
+                            <td>{crpRowData.prdCode}</td>
+                            <td>{crpRowData.prdName}</td>
+                            <td>{crpRowData.prdYTD}</td>
+                            
+                            <template for:each={crpRowData.crpLidList} for:item="crpliq">
+                                <td key={crpliq.prdCode}>
+                                    {crpliq.curLiqValue}
+                                </td>
+                            </template>
+                            <td>
+                                {crpRowData.crpLiqTotal}
+                            </td>
+                        </tr>
+                    </template>
+                    <tr>
+                        <td></td>
+                        <td>Total</td>
+                        <td>{totalYTD}</td>
+                        <template for:each={totalCropLiqData} for:item="totalCrpRowData">
+                            <td key={totalCrpRowData.crpName}>
+                                {totalCrpRowData.curLiqValue}
+                            </td>
+                    </template>
+                        <td>{totalCrop}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div><span>{footerMessage}</span></div>
+        </div>
+    </template>
+    
+    <!--Error Message-->
+    <template if:false={showCropTable}>
+        <div>
+            {errorMessage}
+        </div>
+    </template>
+    </div>
+</template>

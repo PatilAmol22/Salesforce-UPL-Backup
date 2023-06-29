@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>Check_brandMarket_record_present</name>
+        <label>Check brandMarket record present</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_brand_Market_record_present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Fetch_brandMarket_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Brand_Market_Deleted</targetReference>
+            </connector>
+            <label>Check brand Market record present</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Brand Market Delete-Competitor France {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Brand Market Delete-Competitor France</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordDeletes>
+        <name>Brand_Market_Deleted</name>
+        <label>Brand Market Deleted</label>
+        <locationX>50</locationX>
+        <locationY>551</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Market__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <object>BrandMarket__c</object>
+    </recordDeletes>
+    <recordLookups>
+        <name>Fetch_brandMarket_Record</name>
+        <label>Fetch brandMarket Record</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_brandMarket_record_present</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Market__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>BrandMarket__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Fetch_brandMarket_Record</targetReference>
+        </connector>
+        <object>Market__c</object>
+        <recordTriggerType>Delete</recordTriggerType>
+        <triggerType>RecordBeforeDelete</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

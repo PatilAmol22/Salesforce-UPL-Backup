@@ -1,0 +1,3250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <constants>
+        <name>DateErrorMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Please put a past date.</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>C1_5_Did_you_undertake_Seed_TreatmentNew</name>
+        <label>C1.5 Did you undertake Seed Treatment</label>
+        <locationX>502</locationX>
+        <locationY>388</locationY>
+        <defaultConnector>
+            <targetReference>Tele_Selling_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C1_5_Seed_Treatment_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1_5_Did_you_undertake_Seed_Treatment</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1_5_Seed_Treatment</targetReference>
+            </connector>
+            <label>C1.5 Seed Treatment Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>C1_Any_pest_infestation</name>
+        <label>C1 Any pest infestation</label>
+        <locationX>770</locationX>
+        <locationY>281</locationY>
+        <defaultConnector>
+            <targetReference>Tele_Selling_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_YesPest</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1_Any_pest_infestation_observed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Tele_Selling_0_0_0_0_0</targetReference>
+            </connector>
+            <label>If Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>C1F1R1_If</name>
+        <label>C1F1R1_If</label>
+        <locationX>538</locationX>
+        <locationY>477</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F1R1_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_1_Follow_Up</targetReference>
+            </connector>
+            <label>If No,</label>
+        </rules>
+        <rules>
+            <name>If_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F1R1_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_1_Follow_Up_Days</targetReference>
+            </connector>
+            <label>If Yes,</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_C1R02</name>
+        <label>Check C1R02</label>
+        <locationX>1437</locationX>
+        <locationY>201</locationY>
+        <defaultConnector>
+            <targetReference>C1F1R2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1R02_is_None</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Survey.C1R2__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>--None--</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateC1Survey</targetReference>
+            </connector>
+            <label>If C1R02 is None</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_C1R03</name>
+        <label>Check C1R03</label>
+        <locationX>2195</locationX>
+        <locationY>275</locationY>
+        <defaultConnector>
+            <targetReference>C1F1R3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1R03_is_None</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Survey.C1R3__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>--None--</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateC1Survey</targetReference>
+            </connector>
+            <label>If C1R03 is None</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_C1R04</name>
+        <label>Check C1R04</label>
+        <locationX>3185</locationX>
+        <locationY>171</locationY>
+        <defaultConnector>
+            <targetReference>C1F1R4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1R04_is_None</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Survey.C1R4__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>--None--</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateC1Survey</targetReference>
+            </connector>
+            <label>If C1R04 is None</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F12R1</name>
+        <label>If C1F12R1</label>
+        <locationX>922</locationX>
+        <locationY>558</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R02</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F12R1_Dissatisfied</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F12R1_Are_you_satisfied_with_the_results</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Dissatisfied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>C1F12R1_Are_you_satisfied_with_the_results</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Neutral</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F1R1_No_Reasons</targetReference>
+            </connector>
+            <label>If C1F12R1 Dissatisfied</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F12R2</name>
+        <label>If C1F12R2</label>
+        <locationX>1675</locationX>
+        <locationY>652</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R03</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F12R2_Dissatisfied</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F12R2_Are_you_satisfied_with_the_results_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Dissatisfied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>C1F12R2_Are_you_satisfied_with_the_results_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Neutral</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1R2_No_Reasons</targetReference>
+            </connector>
+            <label>If C1F12R2 Dissatisfied</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F12R3</name>
+        <label>If C1F12R3</label>
+        <locationX>2545</locationX>
+        <locationY>694</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R04</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F12R3_Dissatisfied</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F12R3_Are_you_satisfied_with_the_results_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Dissatisfied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>C1F12R3_Are_you_satisfied_with_the_results_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Neutral</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1R3_No_Reasons</targetReference>
+            </connector>
+            <label>If C1F12R3 Dissatisfied</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F12R4</name>
+        <label>If C1F12R4</label>
+        <locationX>3308</locationX>
+        <locationY>699</locationY>
+        <defaultConnector>
+            <targetReference>UpdateC1Survey</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F12R4_Dissatisfied</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F12R4_Are_you_satisfied_with_the_results_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Dissatisfied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>C1F12R4_Are_you_satisfied_with_the_results_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Neutral</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F13R4_No_Reasons</targetReference>
+            </connector>
+            <label>If C1F12R4 Dissatisfied</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F13R1</name>
+        <label>If C1F13R1</label>
+        <locationX>1247</locationX>
+        <locationY>545</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R02</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F13R1_Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F13R1_IfNoReasons</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Others</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F13R1_Others</targetReference>
+            </connector>
+            <label>If C1F13R1 Others</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F13R2</name>
+        <label>If C1F13R2</label>
+        <locationX>1871</locationX>
+        <locationY>407</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R03</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F13R2_Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F13R2_IfNoReasons</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Others</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F13R2_Other</targetReference>
+            </connector>
+            <label>If C1F13R2 Others</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F13R3</name>
+        <label>If C1F13R3</label>
+        <locationX>2813</locationX>
+        <locationY>441</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R04</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F13R3_Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F13R3_IfNoReasons</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Others</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F13R3_Other</targetReference>
+            </connector>
+            <label>If C1F13R3 Others</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F13R4</name>
+        <label>If C1F13R4</label>
+        <locationX>3612</locationX>
+        <locationY>687</locationY>
+        <defaultConnector>
+            <targetReference>UpdateC1Survey</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F13R4_Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F13R4_IfNoReasons</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Others</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F13R4_Others</targetReference>
+            </connector>
+            <label>If C1F13R4 Others</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F1R2</name>
+        <label>If C1F1R2</label>
+        <locationX>1474</locationX>
+        <locationY>639</locationY>
+        <defaultConnector>
+            <targetReference>C1F1R2_No_Details</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F1R2_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F1R2_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1R2_Details</targetReference>
+            </connector>
+            <label>If C1F1R2 Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F1R3</name>
+        <label>If C1F1R3</label>
+        <locationX>2261</locationX>
+        <locationY>611</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F1R3_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F1R3_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1R3_Details</targetReference>
+            </connector>
+            <label>If_C1F1R3_Yes</label>
+        </rules>
+        <rules>
+            <name>If_C1F1R3_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F1R3_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F1R3_No_Details</targetReference>
+            </connector>
+            <label>If_C1F1R3_No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1F1R4</name>
+        <label>If C1F1R4</label>
+        <locationX>3119</locationX>
+        <locationY>775</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C1F1R4_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F1R4_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1R4_Details</targetReference>
+            </connector>
+            <label>If C1F1R4 Yes</label>
+        </rules>
+        <rules>
+            <name>If_C1F1R4_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F1R4_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F2R4_No_Detail</targetReference>
+            </connector>
+            <label>If C1F1R4 No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_Crop_is_Rice</name>
+        <label>If Crop is Rice</label>
+        <locationX>288</locationX>
+        <locationY>540</locationY>
+        <defaultConnector>
+            <targetReference>Tele_Selling</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Crop_is_Rice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1_0_Cultivated_Crop_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rice</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Rice_Details</targetReference>
+            </connector>
+            <label>Crop is Rice</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsSurveyIdNull</name>
+        <label>IsSurveyId</label>
+        <locationX>180</locationX>
+        <locationY>180</locationY>
+        <defaultConnector>
+            <targetReference>GetRecordType</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>False</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsSurveyId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetC1Details</targetReference>
+            </connector>
+            <label>False</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reason_for_not_buying_the_product_C1F2R1</name>
+        <label>Reason for not buying the product C1F2R1</label>
+        <locationX>733</locationX>
+        <locationY>806</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R02</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Will_be_apply_later</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F2R1_Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Will be applying later</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F1R1_Details_1</targetReference>
+            </connector>
+            <label>Will be apply later</label>
+        </rules>
+        <rules>
+            <name>Other</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F2R1_Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F2R1_Reason_for_not_buying_the_productother</targetReference>
+            </connector>
+            <label>Other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reason_for_not_buying_the_product_C1F2R2</name>
+        <label>Reason for not buying the product C1F2R2</label>
+        <locationX>1303</locationX>
+        <locationY>990</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R03</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Will_be_applying_later</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F2R2_Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Will be applying later</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1R2_Details_1</targetReference>
+            </connector>
+            <label>Will be applying later</label>
+        </rules>
+        <rules>
+            <name>Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F2R2_Reason_for_not_buying_the_product</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F2R2_Others</targetReference>
+            </connector>
+            <label>Other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reason_for_not_buying_the_product_C1F2R3</name>
+        <label>Reason for not buying the product - C1F2R3</label>
+        <locationX>2474</locationX>
+        <locationY>1051</locationY>
+        <defaultConnector>
+            <targetReference>Check_C1R04</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Will_be_applying_later_C1F2R3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F2R3_Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Will be applying later</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1R3_Details_1</targetReference>
+            </connector>
+            <label>Will be applying later</label>
+        </rules>
+        <rules>
+            <name>Other_C1F2R3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F2R3_Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F2R3_Other</targetReference>
+            </connector>
+            <label>Other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reason_for_not_buying_the_product_C1F2R4</name>
+        <label>Reason for not buying the product- C1F2R4</label>
+        <locationX>3266</locationX>
+        <locationY>995</locationY>
+        <defaultConnector>
+            <targetReference>UpdateC1Survey</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Will_be_applying_laterC1F2R4</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F2R4Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Will be applying later</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1R4_Details1</targetReference>
+            </connector>
+            <label>Will be applying later</label>
+        </rules>
+        <rules>
+            <name>OtherC1F2R4</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C1F2R4Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C1F2R4_Other</targetReference>
+            </connector>
+            <label>Other</label>
+        </rules>
+    </decisions>
+    <dynamicChoiceSets>
+        <name>C10CultivatedCrop</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_0_Cultivated_Crop__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1_2Isthecropirrigatedorrainfed</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_2_Is_the_crop_irrigated_or_rainfed__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1_4ReceivedanyrecommendationfromAKCearlier</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_4_Received_any_recommendation_from_A__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1_5DidyouundertakeSeedTreatment</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_5_Did_you_undertake_Seed_Treatment__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1_7IfYes_withwhat</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_7_If_Yes_with_what__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1_Anypestinfestationobserved</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_Any_pest_infestation_observed__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1Diseasebox</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_Disease__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F10R1_Didyouusetheprodinentirecroparea</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F10R1_Did_you_use_the_prod_in_entire__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F10R2_Didyouusetheprodinentirecroparea</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F10R2_Did_you_use_the_prod_in_entire_c__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F10R3_Didyouusetheprodinentirecroparea</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F10R3_Did_you_use_the_prod_in_entire__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F10R4_Didyouusetheprodinentirecroparea</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F10R4_Did_you_use_the_prod_in_entire__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F12R1_Areyousatisfiedwiththeresults</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F12R1_Are_you_satisfied_with_the_resul__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F12R2_Areyousatisfiedwiththeresults</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F12R2_Are_you_satisfied_with_the_resu__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F12R3_Areyousatisfiedwiththeresults</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F12R3_Are_you_satisfied_with_the_resu__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F12R4_Areyousatisfiedwiththeresults</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F12R4_Are_you_satisfied_with_the_resu__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F13R1_IfNoReasons</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F13R1_If_No_Reasons__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F13R2_IfNoReasons</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F13R2_If_No_Reasons__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F13R3_IfNoReasons</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F13R3_If_No_Reasons__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F13R4_IfNoReasons</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F13R4_If_No_Reasons__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F1R1_Didyoubuytheproductasperrecommendation</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F1R1_Did_you_buy_the_product_as_per_r__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F1R2_Didyoubuytheproductasperrecommendation</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F1R2_Did_you_buy_the_product_as_per_re__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F1R3_Didyoubuytheproductasperrecommendation</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F1R3_Did_you_buy_the_product_as_per_r__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F1R4_Didyoubuytheproductasperrecommendation</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F1R4_Did_you_buy_the_product_as_per_r__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F2R1_Reasonfornotbuyingtheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F2R1_Reason_for_not_buying_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F2R2_Reasonfornotbuyingtheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F2R2_Reason_for_not_buying_the_product__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F2R3_Reasonfornotbuyingtheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F2R3_Reason_for_not_buying_the_product__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F2R4Reasonfornotbuyingtheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F2R4_Reason_for_not_buying_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F3R2_Whichproductdidyoubuy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F3_R2_Which_product_did_you_buy__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F3R3_Whichproductdidyoubuy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F3_R3_Which_product_did_you_buy__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F3R4_Whichproductdidyoubuy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F3_R4_Which_product_did_you_buy__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F6R1_Didyoubuyorusetheproductyourself</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F6R1_Did_you_buy_or_use_the_product__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F6R2_Didyoubuyorusetheproductyourself</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F6R2_Did_you_buy_or_use_the_product_y__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F6R3_Didyoubuyorusetheproductyourself</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F6R3_Did_you_buy_or_use_the_product_Y__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F6R4_Didyoubuyorusetheproductyourself</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F6R4_Did_you_buy_or_use_the_product__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F7R1_Whatistheformstateoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F7R1What_is_the_form_state_of_the_prod__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F7R2_WhatistheformOrstateoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F7R2_What_is_the_form_state_of_the_pro__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F7R3_WhatistheformOrstateoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F7R3_What_is_the_form_state_of_the__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F7R4_WhatistheformOrstateoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F7R4_What_is_the_form_state_of_the__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F8R1_Whatisthecolourofthepack</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F8R1_What_is_the_colour_of_the_pack__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F8R2_Whatisthecolourofthepack</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F8R2_What_is_the_colour_of_the_pack__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F8R3_Whatisthecolourofthepack</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F8R3_What_is_the_colour_of_the_pack__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F8R4_Whatisthecolourofthepack</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F8R4_What_is_the_colour_of_the_pack__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F9R1_Whatistheartworkoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F9R1_What_is_the_artwork_of_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F9R2_Whatistheartworkoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F9R2_What_is_the_artwork_of_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F9R3_Whatistheartworkoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F9R3_What_is_the_artwork_of_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1F9R4_Whatistheartworkoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1F9R4_What_is_the_artwork_of_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1If_Yes_whichpest</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_If_Yes_which_pest__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1PestBox</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_Pest__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1PGRbox</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_PGR__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1R1</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1R1__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1R2</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1R2__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1R3</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1R3__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1R4</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1R4__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C1Weedbox</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_Weed__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>Tele Selling Survey {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Tele Selling Survey</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_C1_Survey</name>
+        <label>Create C1 Survey</label>
+        <locationX>1161</locationX>
+        <locationY>97</locationY>
+        <connector>
+            <targetReference>Thank_you_C1</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account_Number__c</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1R1__c</field>
+            <value>
+                <elementReference>C1R01</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1R2__c</field>
+            <value>
+                <elementReference>C1R02</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1R3__c</field>
+            <value>
+                <elementReference>C1R03</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1R4__c</field>
+            <value>
+                <elementReference>C1R04</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_01_If_Rice_TP_date__c</field>
+            <value>
+                <elementReference>C1_01_If_Rice_TP_dateD</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_0_Cultivated_Crop__c</field>
+            <value>
+                <elementReference>C1_0_Cultivated_Crop_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_1_Cultivated_Area_in_Acres__c</field>
+            <value>
+                <elementReference>C1_1_Cultivated_Area_in_Acres</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_2_Is_the_crop_irrigated_or_rainfed__c</field>
+            <value>
+                <elementReference>C1_2_Is_the_crop_irrigated_or_rainfed</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_3_When_did_you_sow_the_seeds__c</field>
+            <value>
+                <elementReference>C1_3_When_did_you_sow_the_seeds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_4_Received_any_recommendation_from_A__c</field>
+            <value>
+                <elementReference>C1_4_Received_any_recommendation_from_AKC_earlier</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_5_Did_you_undertake_Seed_Treatment__c</field>
+            <value>
+                <elementReference>C1_5_Did_you_undertake_Seed_Treatment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_6_If_Yes_when__c</field>
+            <value>
+                <elementReference>C1_6_If_Yes_whenNew</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_7_If_Yes_with_what__c</field>
+            <value>
+                <elementReference>C1_7_If_Yes_with_whatNew</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_Any_pest_infestation_observed__c</field>
+            <value>
+                <elementReference>C1_Any_pest_infestation_observed</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_Any_pest_infestation_observed_date__c</field>
+            <value>
+                <elementReference>C1_Any_pest_infestation_observed_date_0_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_Disease__c</field>
+            <value>
+                <elementReference>C1Disease_box</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_PGR__c</field>
+            <value>
+                <elementReference>C1PGR_box</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_Pest__c</field>
+            <value>
+                <elementReference>C1Pest_box</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_Weed__c</field>
+            <value>
+                <elementReference>C1Weed_box</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_follow_up_Needed__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Submit_Response__c</field>
+            <value>
+                <stringValue>Call1Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Survey__c</object>
+    </recordCreates>
+    <recordLookups>
+        <name>GetC1Details</name>
+        <label>GetC1Details</label>
+        <locationX>729</locationX>
+        <locationY>89</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Call_1_Follow_Up_5_DAYS_05</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IsSurveyId</elementReference>
+            </value>
+        </filters>
+        <object>Survey__c</object>
+        <outputReference>Survey</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>C1R1__c</queriedFields>
+        <queriedFields>C1R2__c</queriedFields>
+        <queriedFields>C1R3__c</queriedFields>
+        <queriedFields>C1R4__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>GetRecordType</name>
+        <label>GetRecordType</label>
+        <locationX>389</locationX>
+        <locationY>364</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Tele_Selling_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Tele_Selling</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>recordTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>UpdateC1Survey</name>
+        <label>UpdateC1Survey</label>
+        <locationX>4087</locationX>
+        <locationY>1073</locationY>
+        <connector>
+            <targetReference>C1_Completed_successfully</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IsSurveyId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>C1F10R1_Did_you_use_the_prod_in_entire__c</field>
+            <value>
+                <elementReference>C1F10R1_Did_you_use_the_prod_in_entire_crop_area</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F10R2_Did_you_use_the_prod_in_entire_c__c</field>
+            <value>
+                <elementReference>C1F10R2_Did_you_use_the_prod_in_entire_crop_area_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F10R3_Did_you_use_the_prod_in_entire__c</field>
+            <value>
+                <elementReference>C1F10R3_Did_you_use_the_prod_in_entire_crop_area</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F10R4_Did_you_use_the_prod_in_entire__c</field>
+            <value>
+                <elementReference>C1F10R4_Did_you_use_the_prod_in_entire_crop_area_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F11R1_In_how_many_acres_used_the_reco__c</field>
+            <value>
+                <elementReference>C1F11R1_In_how_many_acres_used_the_recommended_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F11R2_In_how_many_acres_used_the_reco__c</field>
+            <value>
+                <elementReference>C1F11R2_In_how_many_acres_used_the_recommended_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F11R3_In_how_many_acres_used_the_reco__c</field>
+            <value>
+                <elementReference>C1F11R3_In_how_many_acres_used_the_recommended_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F11R4_In_how_many_acres_used_the_reco__c</field>
+            <value>
+                <elementReference>C1F11R4_In_how_many_acres_used_the_recommended_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F12R1_Are_you_satisfied_with_the_resul__c</field>
+            <value>
+                <elementReference>C1F12R1_Are_you_satisfied_with_the_results</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F12R2_Are_you_satisfied_with_the_resu__c</field>
+            <value>
+                <elementReference>C1F12R2_Are_you_satisfied_with_the_results_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F12R3_Are_you_satisfied_with_the_resu__c</field>
+            <value>
+                <elementReference>C1F12R3_Are_you_satisfied_with_the_results_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F12R4_Are_you_satisfied_with_the_resu__c</field>
+            <value>
+                <elementReference>C1F12R4_Are_you_satisfied_with_the_results_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F13R1_If_No_Reasons_Other__c</field>
+            <value>
+                <elementReference>C1F13R1_If_No_Reasons_Others</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F13R1_If_No_Reasons__c</field>
+            <value>
+                <elementReference>C1F13R1_If_No_Reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F13R2_If_No_Reasons_Others__c</field>
+            <value>
+                <elementReference>C1F13R2_Other_Comments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F13R2_If_No_Reasons__c</field>
+            <value>
+                <elementReference>C1F13R2_If_No_Reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F13R3_If_No_Reasons_Others__c</field>
+            <value>
+                <elementReference>C1F13R3_Other_Comments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F13R3_If_No_Reasons__c</field>
+            <value>
+                <elementReference>C1F13R3_If_No_Reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F13R4_If_No_Reasons__c</field>
+            <value>
+                <elementReference>C1F13R4_If_No_Reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F13R4_Others__c</field>
+            <value>
+                <elementReference>C1F13R4_Others_Comments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F14R1_Possible_date_of_purchase__c</field>
+            <value>
+                <elementReference>C1F14R1_Possible_date_of_purchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F14R2_Possible_date_of_purchase__c</field>
+            <value>
+                <elementReference>C1F14R2_Possible_date_of_purchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F14R3_Possible_date_of_purchase__c</field>
+            <value>
+                <elementReference>C1F14R3_Possible_date_of_purchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F14R4_Possible_date_of_purchase__c</field>
+            <value>
+                <elementReference>C1F14R4_Possible_date_of_purchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F15R1_Possible_date_of_Application__c</field>
+            <value>
+                <elementReference>C1F15R1_Possible_date_of_Application</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F15R2_Possible_date_of_Application__c</field>
+            <value>
+                <elementReference>C1F15R2_Possible_date_of_Application</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F15R3_Possible_date_of_Application__c</field>
+            <value>
+                <elementReference>C1F15R3_Possible_date_of_Application</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F15R4_Possible_date_of_Application__c</field>
+            <value>
+                <elementReference>C1F15R4_Possible_date_of_Application</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F1R1_Did_you_buy_the_product_as_per_r__c</field>
+            <value>
+                <elementReference>C1F1R1_Did_you_buy_the_product_as_per_recommendation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F1R2_Did_you_buy_the_product_as_per_re__c</field>
+            <value>
+                <elementReference>C1F1R2_Did_you_buy_the_product_as_per_recommendation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F1R3_Did_you_buy_the_product_as_per_r__c</field>
+            <value>
+                <elementReference>C1F1R3_Did_you_buy_the_product_as_per_recommendation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F1R4_Did_you_buy_the_product_as_per_r__c</field>
+            <value>
+                <elementReference>C1F1R4_Did_you_buy_the_product_as_per_recommendation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F2R1_Reason_for_not_buying_the_produ__c</field>
+            <value>
+                <elementReference>C1F2R1_Reason_for_not_buying_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F2R1_Reason_fr_not_buying_produ_Other__c</field>
+            <value>
+                <elementReference>C1F2R1_Reason_for_not_buying_the_product_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F2R2_Reason_for_not_buying_the_product__c</field>
+            <value>
+                <elementReference>C1F2R2_Reason_for_not_buying_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F2R2_Reason_fr_not_buying_produ_Others__c</field>
+            <value>
+                <elementReference>C1F2R2_Others_Comments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F2R3_Reason_for_not_buying_the_product__c</field>
+            <value>
+                <elementReference>C1F2R3_Reason_for_not_buying_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F2R3_Reason_fr_not_buying_produ_Others__c</field>
+            <value>
+                <elementReference>C1F2R3_Reason_for_not_buying_the_product_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F2R4_Other__c</field>
+            <value>
+                <elementReference>C1F2R4_Reason_for_not_buying_the_product_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F2R4_Reason_for_not_buying_the_produ__c</field>
+            <value>
+                <elementReference>C1F2R4_Reason_for_not_buying_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F3_R1_Which_product_did_you_buy__c</field>
+            <value>
+                <elementReference>C1F3_R1_Which_product_did_you_buy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F3_R2_Which_product_did_you_buy__c</field>
+            <value>
+                <elementReference>C1F3_R2_Which_product_did_you_buy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F3_R3_Which_product_did_you_buy__c</field>
+            <value>
+                <elementReference>C1F3_R3_Which_product_did_you_buy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F3_R4_Which_product_did_you_buy__c</field>
+            <value>
+                <elementReference>C1F3_R4_Which_product_did_you_buy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F4R1_When_did_you_buy_the_product__c</field>
+            <value>
+                <elementReference>C1F4R1_When_did_you_buy_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F4R2_When_did_you_buy_the_product__c</field>
+            <value>
+                <elementReference>C1F4R2_When_did_you_buy_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F4R3_When_did_you_buy_the_product__c</field>
+            <value>
+                <elementReference>C1F4R3_When_did_you_buy_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F4R4_When_did_you_buy_the_product__c</field>
+            <value>
+                <elementReference>C1F4R4_When_did_you_buy_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F5R1_Which_Retailer_did_you_buy__c</field>
+            <value>
+                <elementReference>C1F5R1_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F5R2_Which_Retailer_did_you_buy__c</field>
+            <value>
+                <elementReference>C1F5R2_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F5R3_Which_Retailer_did_you_buy__c</field>
+            <value>
+                <elementReference>C1F5R3_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F5R4_Which_Retailer_did_you_buy__c</field>
+            <value>
+                <elementReference>C1F5R4_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F6R1_Did_you_buy_or_use_the_product__c</field>
+            <value>
+                <elementReference>C1F6R1_Did_you_buy_or_use_the_product_yourself</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F6R2_Did_you_buy_or_use_the_product_y__c</field>
+            <value>
+                <elementReference>C1F6R2_Did_you_buy_or_use_the_product_yourself_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F6R3_Did_you_buy_or_use_the_product_Y__c</field>
+            <value>
+                <elementReference>C1F6R3_Did_you_buy_or_use_the_product_yourself_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F6R4_Did_you_buy_or_use_the_product__c</field>
+            <value>
+                <elementReference>C1F6R4_Did_you_buy_or_use_the_product_yourself_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F7R1What_is_the_form_state_of_the_prod__c</field>
+            <value>
+                <elementReference>C1F7R1_What_is_the_form_state_of_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F7R2_What_is_the_form_state_of_the_pro__c</field>
+            <value>
+                <elementReference>C1F7R2_What_is_the_form_state_of_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F7R3_What_is_the_form_state_of_the__c</field>
+            <value>
+                <elementReference>C1F7R3_What_is_the_form_state_of_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F7R4_What_is_the_form_state_of_the__c</field>
+            <value>
+                <elementReference>C1F7R4_What_is_the_form_state_of_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F8R1_What_is_the_colour_of_the_pack__c</field>
+            <value>
+                <elementReference>C1F8R1_What_is_the_colour_of_the_pack</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F8R2_What_is_the_colour_of_the_pack__c</field>
+            <value>
+                <elementReference>C1F8R2_What_is_the_colour_of_the_pack_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F8R3_What_is_the_colour_of_the_pack__c</field>
+            <value>
+                <elementReference>C1F8R3_What_is_the_colour_of_the_pack_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F8R4_What_is_the_colour_of_the_pack__c</field>
+            <value>
+                <elementReference>C1F8R4_What_is_the_colour_of_the_pack_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F9R1_What_is_the_artwork_of_the_produ__c</field>
+            <value>
+                <elementReference>C1F9R1_What_is_the_artwork_of_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F9R2_What_is_the_artwork_of_the_produ__c</field>
+            <value>
+                <elementReference>C1F9R2_What_is_the_artwork_of_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F9R3_What_is_the_artwork_of_the_produ__c</field>
+            <value>
+                <elementReference>C1F9R3_What_is_the_artwork_of_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1F9R4_What_is_the_artwork_of_the_produ__c</field>
+            <value>
+                <elementReference>C1F9R4_What_is_the_artwork_of_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_Completed__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C1_follow_up_Needed__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Survey__c</object>
+    </recordUpdates>
+    <screens>
+        <name>C1_5_Seed_Treatment</name>
+        <label>C1.5 Seed Treatment</label>
+        <locationX>524</locationX>
+        <locationY>225</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Tele_Selling_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>C1_6_If_Yes_whenNew</name>
+            <dataType>Date</dataType>
+            <fieldText>C1.6  If Yes, when</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;{!DateErrorMessage}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C1_6_If_Yes_whenNew}&lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C1_7_If_Yes_with_whatNew</name>
+            <choiceReferences>C1_7IfYes_withwhat</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1.7  If Yes, with what?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1_Completed_successfully</name>
+        <label>C1 Completed successfully</label>
+        <locationX>4284</locationX>
+        <locationY>821</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Thank_You</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 22px;&quot;&gt;Thank You&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F13R1_Others</name>
+        <label>C1F13R1 Others</label>
+        <locationX>1331</locationX>
+        <locationY>345</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R02</targetReference>
+        </connector>
+        <fields>
+            <name>C1F13R1_If_No_Reasons_Others</name>
+            <dataType>String</dataType>
+            <fieldText>C1F13R1 -If No, Reasons - Others</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F13R2_Other</name>
+        <label>C1F13R2 Other</label>
+        <locationX>2124</locationX>
+        <locationY>477</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R03</targetReference>
+        </connector>
+        <fields>
+            <name>C1F13R2_Other_Comments</name>
+            <dataType>String</dataType>
+            <fieldText>C1F13R2 Other Comments</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F13R3_Other</name>
+        <label>C1F13R3 Other</label>
+        <locationX>2969</locationX>
+        <locationY>493</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R04</targetReference>
+        </connector>
+        <fields>
+            <name>C1F13R3_Other_Comments</name>
+            <dataType>String</dataType>
+            <fieldText>C1F13R3 Other Comments</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F13R4_No_Reasons</name>
+        <label>C1F13R4 No Reasons</label>
+        <locationX>3489</locationX>
+        <locationY>620</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F13R4</targetReference>
+        </connector>
+        <fields>
+            <name>C1F13R4_If_No_Reasons</name>
+            <choiceReferences>C1F13R4_IfNoReasons</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F13R4 -If No, Reasons</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F13R4_Others</name>
+        <label>C1F13R4 Others</label>
+        <locationX>3791</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>UpdateC1Survey</targetReference>
+        </connector>
+        <fields>
+            <name>C1F13R4_Others_Comments</name>
+            <dataType>String</dataType>
+            <fieldText>C1F13R4 Others Comments</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F1R1_Details_1</name>
+        <label>C1F1R1 Details 1</label>
+        <locationX>920</locationX>
+        <locationY>668</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R02</targetReference>
+        </connector>
+        <fields>
+            <name>C1F14R1_Possible_date_of_purchase</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F14R1 -Possible date of purchase</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1F15R1_Possible_date_of_Application</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F15R1 -Possible date of Application</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F1R1_No_Reasons</name>
+        <label>C1F1R1 No Reasons</label>
+        <locationX>1111</locationX>
+        <locationY>497</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F13R1</targetReference>
+        </connector>
+        <fields>
+            <name>C1F13R1_If_No_Reasons</name>
+            <choiceReferences>C1F13R1_IfNoReasons</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F13R1 -If No, Reasons</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F1R2</name>
+        <label>C1F1R2</label>
+        <locationX>1315</locationX>
+        <locationY>733</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F1R2</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC1R2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C1R2:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!Survey.C1R2__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F1R2_Did_you_buy_the_product_as_per_recommendation</name>
+            <choiceReferences>C1F1R2_Didyoubuytheproductasperrecommendation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F1R2 -Did you buy the product as per recommendation?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F1R2_No_Details</name>
+        <label>C1F1R2 No Details</label>
+        <locationX>1484</locationX>
+        <locationY>819</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_for_not_buying_the_product_C1F2R2</targetReference>
+        </connector>
+        <fields>
+            <name>C1F2R2_Reason_for_not_buying_the_product</name>
+            <choiceReferences>C1F2R2_Reasonfornotbuyingtheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F2R2  -Reason for not buying the product</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F1R3</name>
+        <label>C1F1R3</label>
+        <locationX>2015</locationX>
+        <locationY>855</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F1R3</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC1R3</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R3: {!Survey.C1R3__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F1R3_Did_you_buy_the_product_as_per_recommendation</name>
+            <choiceReferences>C1F1R3_Didyoubuytheproductasperrecommendation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F1R3 -Did you buy the product as per recommendation?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F1R3_No_Details</name>
+        <label>C1F1R3 No Details</label>
+        <locationX>2273</locationX>
+        <locationY>1062</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_for_not_buying_the_product_C1F2R3</targetReference>
+        </connector>
+        <fields>
+            <name>C1F2R3_Reason_for_not_buying_the_product</name>
+            <choiceReferences>C1F2R3_Reasonfornotbuyingtheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F2R3  -Reason for not buying the product</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F1R4</name>
+        <label>C1F1R4</label>
+        <locationX>2837</locationX>
+        <locationY>921</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F1R4</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC1R4</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R4: {!Survey.C1R4__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F1R4_Did_you_buy_the_product_as_per_recommendation</name>
+            <choiceReferences>C1F1R4_Didyoubuytheproductasperrecommendation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F1R4 -Did you buy the product as per recommendation?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F2R1_Reason_for_not_buying_the_productother</name>
+        <label>C1F2R1  -Reason for not buying the product Other</label>
+        <locationX>458</locationX>
+        <locationY>898</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R02</targetReference>
+        </connector>
+        <fields>
+            <name>C1F2R1_Reason_for_not_buying_the_product_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C1F2R1  -Reason for not buying the product - Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F2R2_Others</name>
+        <label>C1F2R2 Others</label>
+        <locationX>1411</locationX>
+        <locationY>1063</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R03</targetReference>
+        </connector>
+        <fields>
+            <name>C1F2R2_Others_Comments</name>
+            <dataType>String</dataType>
+            <fieldText>C1F2R2 Others Comments</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F2R3_Other</name>
+        <label>C1F2R3 Other</label>
+        <locationX>2653</locationX>
+        <locationY>1089</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R04</targetReference>
+        </connector>
+        <fields>
+            <name>C1F2R3_Reason_for_not_buying_the_product_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C1F2R3  -Reason for not buying the product Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F2R4_No_Detail</name>
+        <label>C1F2R4 - No Detail</label>
+        <locationX>3126</locationX>
+        <locationY>993</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_for_not_buying_the_product_C1F2R4</targetReference>
+        </connector>
+        <fields>
+            <name>C1F2R4_Reason_for_not_buying_the_product</name>
+            <choiceReferences>C1F2R4Reasonfornotbuyingtheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F2R4  -Reason for not buying the product</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1F2R4_Other</name>
+        <label>C1F2R4 Other</label>
+        <locationX>3476</locationX>
+        <locationY>1088</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>UpdateC1Survey</targetReference>
+        </connector>
+        <fields>
+            <name>C1F2R4_Reason_for_not_buying_the_product_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C1F2R4  -Reason for not buying the product Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R1_Details</name>
+        <label>C1R1 Details</label>
+        <locationX>801</locationX>
+        <locationY>502</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F12R1</targetReference>
+        </connector>
+        <fields>
+            <name>C1R1_D2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R1: {!Survey.C1R1__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F6R1_Did_you_buy_or_use_the_product_yourself</name>
+            <choiceReferences>C1F6R1_Didyoubuyorusetheproductyourself</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F6R1 - Did you buy and use the product yourself?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F7R1_What_is_the_form_state_of_the_product</name>
+            <choiceReferences>C1F7R1_Whatistheformstateoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F7R1  What is the form / state of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F8R1_What_is_the_colour_of_the_pack</name>
+            <choiceReferences>C1F8R1_Whatisthecolourofthepack</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F8R1 What is the colour of the pack?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F9R1_What_is_the_artwork_of_the_product</name>
+            <choiceReferences>C1F9R1_Whatistheartworkoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F9R1  What is the artwork of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F10R1_Did_you_use_the_prod_in_entire_crop_area</name>
+            <choiceReferences>C1F10R1_Didyouusetheprodinentirecroparea</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F10R1  -Did you use the prod in entire crop area?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F11R1_In_how_many_acres_used_the_recommended_product</name>
+            <fieldText>C1F11R1 -In how many acres used the recommended product?</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1F12R1_Are_you_satisfied_with_the_results</name>
+            <choiceReferences>C1F12R1_Areyousatisfiedwiththeresults</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F12R1 -Are you satisfied with the results?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R2_Details</name>
+        <label>C1R2 Details</label>
+        <locationX>1548</locationX>
+        <locationY>521</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C1R2_Details_0</targetReference>
+        </connector>
+        <fields>
+            <name>C1R2_D1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C1R2:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!Survey.C1R2__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F3_R2_Which_product_did_you_buy</name>
+            <choiceReferences>C1F3R2_Whichproductdidyoubuy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F3 R2 - Which product did you buy?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F4R2_When_did_you_buy_the_product</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F4R2 - When did you buy the product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please put a past date&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C1F4R2_When_did_you_buy_the_product} &lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C1F5R2_Which_Retailer_did_you_buy_the_product_from</name>
+            <dataType>String</dataType>
+            <fieldText>C1F5R2 - Which Retailer did you buy the product from?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R2_Details_0</name>
+        <label>C1R2 Details</label>
+        <locationX>1656</locationX>
+        <locationY>506</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F12R2</targetReference>
+        </connector>
+        <fields>
+            <name>C1R2_D2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C1R2:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;{!Survey.C1R2__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F6R2_Did_you_buy_or_use_the_product_yourself_0</name>
+            <choiceReferences>C1F6R2_Didyoubuyorusetheproductyourself</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F6R2 - Did you buy and use the product yourself?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F7R2_What_is_the_form_state_of_the_product_0</name>
+            <choiceReferences>C1F7R2_WhatistheformOrstateoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F7R2  What is the form / state of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F8R2_What_is_the_colour_of_the_pack_0</name>
+            <choiceReferences>C1F8R2_Whatisthecolourofthepack</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F8R2 What is the colour of the pack?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F9R2_What_is_the_artwork_of_the_product_0</name>
+            <choiceReferences>C1F9R2_Whatistheartworkoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F9R2  What is the artwork of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F10R2_Did_you_use_the_prod_in_entire_crop_area_0</name>
+            <choiceReferences>C1F10R2_Didyouusetheprodinentirecroparea</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F10R2  -Did you use the prod in entire crop area?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F11R2_In_how_many_acres_used_the_recommended_product_0</name>
+            <dataType>String</dataType>
+            <fieldText>C1F11R2 -In how many acres used the recommended product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1F12R2_Are_you_satisfied_with_the_results_0</name>
+            <choiceReferences>C1F12R2_Areyousatisfiedwiththeresults</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F12R2 -Are you satisfied with the results?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R2_Details_1</name>
+        <label>C1R2 Details 1</label>
+        <locationX>1799</locationX>
+        <locationY>759</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R03</targetReference>
+        </connector>
+        <fields>
+            <name>C1F14R2_Possible_date_of_purchase</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F14R2 -Possible date of purchase</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1F15R2_Possible_date_of_Application</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F15R2 -Possible date of Application</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R2_No_Reasons</name>
+        <label>C1R2 No Reasons</label>
+        <locationX>1779</locationX>
+        <locationY>466</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F13R2</targetReference>
+        </connector>
+        <fields>
+            <name>C1F13R2_If_No_Reasons</name>
+            <choiceReferences>C1F13R2_IfNoReasons</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F13R2 -If No, Reasons</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R3_Details</name>
+        <label>C1R3 Details</label>
+        <locationX>2446</locationX>
+        <locationY>537</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C1R3_Details_0</targetReference>
+        </connector>
+        <fields>
+            <name>C1R3_D1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R3: {!Survey.C1R3__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F3_R3_Which_product_did_you_buy</name>
+            <choiceReferences>C1F3R3_Whichproductdidyoubuy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F3 R3 - Which product did you buy?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F4R3_When_did_you_buy_the_product</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F4R3 - When did you buy the product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please put a past date.&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C1F4R3_When_did_you_buy_the_product} &lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C1F5R3_Which_Retailer_did_you_buy_the_product_from</name>
+            <dataType>String</dataType>
+            <fieldText>C1F5R3 - Which Retailer did you buy the product from?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R3_Details_0</name>
+        <label>C1R3 Details</label>
+        <locationX>2554</locationX>
+        <locationY>537</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F12R3</targetReference>
+        </connector>
+        <fields>
+            <name>C1R3_D2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R3: {!Survey.C1R3__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F6R3_Did_you_buy_or_use_the_product_yourself_0</name>
+            <choiceReferences>C1F6R3_Didyoubuyorusetheproductyourself</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F6R3 - Did you buy and use the product yourself?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F7R3_What_is_the_form_state_of_the_product_0</name>
+            <choiceReferences>C1F7R3_WhatistheformOrstateoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F7R3  What is the form / state of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F8R3_What_is_the_colour_of_the_pack_0</name>
+            <choiceReferences>C1F8R3_Whatisthecolourofthepack</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F8R3 What is the colour of the pack?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F9R3_What_is_the_artwork_of_the_product_0</name>
+            <choiceReferences>C1F9R3_Whatistheartworkoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F9R3  What is the artwork of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F10R3_Did_you_use_the_prod_in_entire_crop_area</name>
+            <choiceReferences>C1F10R3_Didyouusetheprodinentirecroparea</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F10R3  -Did you use the prod in entire crop area?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F11R3_In_how_many_acres_used_the_recommended_product</name>
+            <dataType>Number</dataType>
+            <fieldText>C1F11R3 -In how many acres used the recommended product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>C1F12R3_Are_you_satisfied_with_the_results_0</name>
+            <choiceReferences>C1F12R3_Areyousatisfiedwiththeresults</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F12R3 -Are you satisfied with the results?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R3_Details_1</name>
+        <label>C1R3 Details 1</label>
+        <locationX>2556</locationX>
+        <locationY>859</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C1R04</targetReference>
+        </connector>
+        <fields>
+            <name>C1F14R3_Possible_date_of_purchase</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F14R3 -Possible date of purchase</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1F15R3_Possible_date_of_Application</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F15R3 -Possible date of Application</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R3_No_Reasons</name>
+        <label>C1R3 No Reasons</label>
+        <locationX>2716</locationX>
+        <locationY>519</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F13R3</targetReference>
+        </connector>
+        <fields>
+            <name>C1F13R3_If_No_Reasons</name>
+            <choiceReferences>C1F13R3_IfNoReasons</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F13R3 -If No, Reasons</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R4_Details</name>
+        <label>C1R4 Details</label>
+        <locationX>3120</locationX>
+        <locationY>583</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C1R4_Details_0</targetReference>
+        </connector>
+        <fields>
+            <name>C1R4_D1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R4: {!Survey.C1R4__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F3_R4_Which_product_did_you_buy</name>
+            <choiceReferences>C1F3R4_Whichproductdidyoubuy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F3 R4 - Which product did you buy?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F4R4_When_did_you_buy_the_product</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F4R4 - When did you buy the product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;{!DateErrorMessage}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C1F4R4_When_did_you_buy_the_product} &lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C1F5R4_Which_Retailer_did_you_buy_the_product_from</name>
+            <dataType>String</dataType>
+            <fieldText>C1F5R4 - Which Retailer did you buy the product from?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R4_Details1</name>
+        <label>C1R4 Details1</label>
+        <locationX>3568</locationX>
+        <locationY>898</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>UpdateC1Survey</targetReference>
+        </connector>
+        <fields>
+            <name>C1F14R4_Possible_date_of_purchase</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F14R4 -Possible date of purchase</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1F15R4_Possible_date_of_Application</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F15R4 -Possible date of Application</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R4_Details_0</name>
+        <label>C1R4 Details</label>
+        <locationX>3242</locationX>
+        <locationY>585</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_C1F12R4</targetReference>
+        </connector>
+        <fields>
+            <name>C1R4_D4</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R4: {!Survey.C1R4__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F6R4_Did_you_buy_or_use_the_product_yourself_0</name>
+            <choiceReferences>C1F6R4_Didyoubuyorusetheproductyourself</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F6R4 - Did you buy and use the product yourself?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F7R4_What_is_the_form_state_of_the_product_0</name>
+            <choiceReferences>C1F7R4_WhatistheformOrstateoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F7R4  What is the form / state of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F8R4_What_is_the_colour_of_the_pack_0</name>
+            <choiceReferences>C1F8R4_Whatisthecolourofthepack</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F8R4 What is the colour of the pack?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F9R4_What_is_the_artwork_of_the_product_0</name>
+            <choiceReferences>C1F9R4_Whatistheartworkoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F9R4  What is the artwork of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F10R4_Did_you_use_the_prod_in_entire_crop_area_0</name>
+            <choiceReferences>C1F10R4_Didyouusetheprodinentirecroparea</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F10R4  -Did you use the prod in entire crop area?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F11R4_In_how_many_acres_used_the_recommended_product_0</name>
+            <dataType>Number</dataType>
+            <fieldText>C1F11R4 -In how many acres used the recommended product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>C1F12R4_Are_you_satisfied_with_the_results_0</name>
+            <choiceReferences>C1F12R4_Areyousatisfiedwiththeresults</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F12R4 -Are you satisfied with the results?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Call_1_Follow_Up</name>
+        <label>Call 1 Follow Up +5 DAYS</label>
+        <locationX>552</locationX>
+        <locationY>673</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_for_not_buying_the_product_C1F2R1</targetReference>
+        </connector>
+        <fields>
+            <name>C1F2R1_Reason_for_not_buying_the_product</name>
+            <choiceReferences>C1F2R1_Reasonfornotbuyingtheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F2R1  -Reason for not buying the product</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Call_1_Follow_Up_5_DAYS_05</name>
+        <label>Call_1_Follow_Up_5_DAYS_05</label>
+        <locationX>985</locationX>
+        <locationY>413</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C1F1R1_If</targetReference>
+        </connector>
+        <fields>
+            <name>Call1FollowUp5DAYS</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Call 1 Follow Up (+5 Days)&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RecommendedC1R1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R1: {!Survey.C1R1__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F1R1_Did_you_buy_the_product_as_per_recommendation</name>
+            <choiceReferences>C1F1R1_Didyoubuytheproductasperrecommendation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F1R1 -Did you buy the product as per recommendation?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Call_1_Follow_Up_Days</name>
+        <label>Call 1 Follow Up (+ 5 DAYS)</label>
+        <locationX>706</locationX>
+        <locationY>503</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C1R1_Details</targetReference>
+        </connector>
+        <fields>
+            <name>C1R1_D1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C1 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C1R1: {!Survey.C1R1__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F3_R1_Which_product_did_you_buy</name>
+            <choiceReferences>C1R1</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1F3 R1 - Which product did you buy?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1F4R1_When_did_you_buy_the_product</name>
+            <dataType>Date</dataType>
+            <fieldText>C1F4R1 - When did you buy the product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please put a past date.&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C1F4R1_When_did_you_buy_the_product} &lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C1F5R1_Which_Retailer_did_you_buy_the_product_from</name>
+            <dataType>String</dataType>
+            <fieldText>C1F5R1 - Which Retailer did you buy the product from?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Rice_Details</name>
+        <label>Rice Details</label>
+        <locationX>306</locationX>
+        <locationY>702</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Tele_Selling</targetReference>
+        </connector>
+        <fields>
+            <name>C1_01_If_Rice_TP_dateD</name>
+            <dataType>Date</dataType>
+            <fieldText>C1.01 If Rice TP date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;{!DateErrorMessage}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C1_01_If_Rice_TP_dateD}&lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Tele_Selling</name>
+        <label>Tele Selling</label>
+        <locationX>406</locationX>
+        <locationY>486</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C1_5_Did_you_undertake_Seed_TreatmentNew</targetReference>
+        </connector>
+        <fields>
+            <name>C1_1_Cultivated_Area_in_Acres</name>
+            <dataType>String</dataType>
+            <fieldText>C1.1 Cultivated Area (in Acres)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1_2_Is_the_crop_irrigated_or_rainfed</name>
+            <choiceReferences>C1_2Isthecropirrigatedorrainfed</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1.2  Is the crop irrigated or rainfed?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1_3_When_did_you_sow_the_seeds</name>
+            <dataType>Date</dataType>
+            <fieldText>C1.3 When did you sow the seeds?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Please Put a past date.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C1_3_When_did_you_sow_the_seeds} &lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C1_4_Received_any_recommendation_from_AKC_earlier</name>
+            <choiceReferences>C1_4ReceivedanyrecommendationfromAKCearlier</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1.4  Received any recommendation from AKC earlier?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1_5_Did_you_undertake_Seed_Treatment</name>
+            <choiceReferences>C1_5DidyouundertakeSeedTreatment</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1.5 Did you undertake Seed Treatment?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Tele_Selling_0</name>
+        <label>Tele Selling</label>
+        <locationX>180</locationX>
+        <locationY>485</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_Crop_is_Rice</targetReference>
+        </connector>
+        <fields>
+            <name>C1_0_Cultivated_Crop_0</name>
+            <choiceReferences>C10CultivatedCrop</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1.0 Cultivated Crop</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Tele_Selling_0_0_0</name>
+        <label>Tele Selling</label>
+        <locationX>652</locationX>
+        <locationY>337</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C1_Any_pest_infestation</targetReference>
+        </connector>
+        <fields>
+            <name>Call_1_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Call 1&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_Any_pest_infestation_observed</name>
+            <choiceReferences>C1_Anypestinfestationobserved</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1-Any pest infestation observed?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Tele_Selling_0_0_0_0</name>
+        <label>Tele Selling</label>
+        <locationX>1002</locationX>
+        <locationY>147</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_C1_Survey</targetReference>
+        </connector>
+        <fields>
+            <name>C1_Recommendation_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;C1-Recommendation&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1R01</name>
+            <choiceReferences>C1R1</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1R1</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1R02</name>
+            <choiceReferences>C1R2</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1R2</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1R03</name>
+            <choiceReferences>C1R3</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1R3</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1R04</name>
+            <choiceReferences>C1R4</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1R4</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Tele_Selling_0_0_0_0_0</name>
+        <label>Tele Selling</label>
+        <locationX>904</locationX>
+        <locationY>270</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Tele_Selling_0_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Call_1_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Call 1&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1Pest_box</name>
+            <choiceReferences>C1PestBox</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1Pest box</fieldText>
+            <fieldType>MultiSelectPicklist</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1Disease_box</name>
+            <choiceReferences>C1Diseasebox</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1Disease box</fieldText>
+            <fieldType>MultiSelectPicklist</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C1Weed_box</name>
+            <choiceReferences>C1Weedbox</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1Weed box</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1PGR_box</name>
+            <choiceReferences>C1PGRbox</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C1PGR box</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C1_Any_pest_infestation_observed_date_0_0</name>
+            <dataType>Date</dataType>
+            <fieldText>C1-Any pest infestation observed date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Please put a past date.&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C1_Any_pest_infestation_observed_date_0_0}&lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Thank_you_C1</name>
+        <label>Thank you C1</label>
+        <locationX>2417</locationX>
+        <locationY>109</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Thanks</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Thank you&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>IsSurveyIdNull</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C1_01IfRiceTPdate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C1F5R1SelectedRetailer</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C1F5R2SelectedRetailer</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C1F5R3SelectedRetailer</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C1F5R4SelectedRetailer</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>IsSurveyId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerId1</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerId2</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerId3</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerId4</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Survey</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Survey__c</objectType>
+    </variables>
+    <variables>
+        <name>SurveyRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Final_Approval_Notificatiom</fullName>
+        <description>Final Approval Notificatiom</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Onboarding_Final_Approval_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Final_Rejection_Notification</fullName>
+        <description>Final Rejection Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Onboarding_Final_Rejection_Notification</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Stage_Update</fullName>
+        <field>Stage__c</field>
+        <literalValue>Final GBS Approval</literalValue>
+        <name>Stage Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_On_Approval</fullName>
+        <field>Substage__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update On Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_On_Rejection</fullName>
+        <field>Substage__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update On Rejection</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>set_rejected_field_false</fullName>
+        <field>Final_Contract_rejected_by_GBS__c</field>
+        <literalValue>0</literalValue>
+        <name>set rejected field false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>set_rejected_field_true</fullName>
+        <field>Final_Contract_rejected_by_GBS__c</field>
+        <literalValue>1</literalValue>
+        <name>set rejected field true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

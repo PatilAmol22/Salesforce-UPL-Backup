@@ -1,0 +1,18 @@
+.THIS.fsize {
+    font-size:15px;
+}
+.THIS .icn svg{
+ padding-right:5px;
+}
+.THIS .icn1 svg{
+ fill: #fff;  
+}
+/*.THIS .slds-modal__container{
+       max-width:80rem !important;
+       width:100% !important;
+
+} */
+.THIS .slds-button--neutral {
+    padding:2px;
+    font-size:12px;
+}

@@ -1,0 +1,66 @@
+<template>
+    <div>
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>       
+    <h1 class="titleregular" style="font-size:36px;">{label.news}</h1>    
+    <!--div class="slds-col slds-size_1-of-1">
+        <div class="titleregular" style="float:left; margin:8px; font-size:36px; font-weight:normal;">
+            <span class="slds-page-header_title" title="News" >News</span>
+        </div>
+    </div-->
+    <div class="slds-grid slds-wrap slds-gutters">
+    <div style="margin-top:15px;box-sizing:border-box" class="slds-col slds-size_12-of-12">
+     
+        <h2 style="font-size:25px;border-bottom: 1px solid black"></h2>   
+            <template if:true={newsList}>
+            <template for:each={visibleNews} for:item="nList" for:index="index">
+
+                <div key={nList.Id} style="margin-top:10px;border-bottom:1px solid #ccc">
+                <div key={nList.Id} class="slds-grid slds-wrap slds-gutters">
+                    <div key={nList.Id} class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">
+                       <img  key={nList.Id} src={nList.imageurl} class="slds-align_absolute-center" style="max-width: 300px;margin-bottom:10px; height: auto; border-radius: 2px;" />
+                    <!--   <p  data-id={nList.Id} key={nList.Id} class="btn slds-align_absolute-center transbtn" onclick={downloadfile}>{label.download}</p>  --> 
+                   </div> 
+               <div class="slds-col slds-size_1-of-1 slds-large-size_8-of-12" style="padding:0 0 0 40px"> 
+                   <p class="text2-style" style="text-align: left;" key={nList.Id}>{nList.title} </p>
+                   <template if:true={showDate}>
+                   <p style="font-family:myfontlight; font-weight:normal; font-size:16px; text-align: left; color:#000" key={nList.Id}>{nList.createDate}</p>
+                    </template>
+                   <!-- <p class="text-style" style="text-align: left;" key={nList.Id}>{nList.description}</p> -->
+                   
+                    <lightning-formatted-rich-text value={nList.RichDescription}></lightning-formatted-rich-text> 
+                    
+               </div> 
+               </div>
+            </div>
+                <!--div class="grid-container" key={nList.Id}> 
+                    <div class="grid-item" key={nList.Id}>
+                        <div style="width:70%;height:100%;">
+                            <img  key={nList.Id} src={nList.imageurl} style="height: 200px; border-radius: 2px;" />
+                            <button data-id={nList.Id} key={nList.Id} class="btn slds-align_absolute-center"  title="Download File" onclick={downloadfile}>{label.downloadFile}</button> 
+                        </div>
+                        <div style="width:30%;">
+                            <p class="text2-style" style="text-align: left;" key={nList.Id}><b>{nList.title}</b> </p>
+                            <p style="font:normal normal normal 13px/1.4em questrial,sans-serif; text-align: left; color:gray" key={nList.Id}><b>12 Dec, 2020</b> </p>
+                            <p class="text-style" style="text-align: justify;" key={nList.Id}><b>{nList.description}</b> </p>
+                        </div>
+                    </div>
+                </div-->
+
+            </template>
+            <br/>
+            <c-paginator-bottom records={newsList} onupdate={updateNewsHandler} onselected={changeHandler2}></c-paginator-bottom>
+        </template>
+        <template if:true={error}>
+        {label.somerroroccured}
+        </template>
+    </div> 
+    <!--Hided Below Event section for future use-->
+<!--div style="margin-top:15px;" class="slds-col slds-size_12-of-12 slds-large-size_6-of-12">
+     
+    <h2 style="font-size:25px;border-bottom: 1px solid black">{label.noticias}</h2>
+    </div-->
+</div>
+</div>
+</template>

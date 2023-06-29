@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>Reason_Selected_Other</name>
+        <label>Reason Selected Other</label>
+        <locationX>99</locationX>
+        <locationY>302</locationY>
+        <defaultConnector>
+            <targetReference>Screen_5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_if_Reason_is_selected_as_other</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Reason_If_not_satisfied</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>screen_4</targetReference>
+            </connector>
+            <label>Check if Reason is selected as other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reason_Selected_Other_2</name>
+        <label>Reason Selected Other 2</label>
+        <locationX>582</locationX>
+        <locationY>303</locationY>
+        <defaultConnector>
+            <targetReference>Screen_5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_if_reason_if_selected_other</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Reason_If_Satisfied</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_3</targetReference>
+            </connector>
+            <label>Check if reason if selected other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>screenDecision1</name>
+        <label>screenDecision1</label>
+        <locationX>356</locationX>
+        <locationY>182</locationY>
+        <defaultConnector>
+            <targetReference>Screen_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>If you are not satisfied with service</defaultConnectorLabel>
+        <rules>
+            <name>Are_you_satisfied_with_service</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AFS_Are_you_satisfied_with_the_service</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_1</targetReference>
+            </connector>
+            <label>Are you satisfied with service</label>
+        </rules>
+    </decisions>
+    <dynamicChoiceSets>
+        <name>AFS_YesNo_picklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>AFS_Are_you_satisfied_with_the_service__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ProductsUsed</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>AFS_Product_Used__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ReasonIfNotsatified</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>AFS_Reason_if_NO__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ReasonIfsatisfied</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>AFS_Reason_if_Yes__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>AFS Survey 2019 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>AFS Survey 2019</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_AFS_Survey_record</name>
+        <label>Create AFS Survey record</label>
+        <locationX>358</locationX>
+        <locationY>873</locationY>
+        <connector>
+            <targetReference>Terminate_Message</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AFS_Are_you_satisfied_with_the_service__c</field>
+            <value>
+                <elementReference>AFS_Are_you_satisfied_with_the_service</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AFS_Farmer_Acreage__c</field>
+            <value>
+                <elementReference>Farmer_Acreage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AFS_Field_Team_Acreage__c</field>
+            <value>
+                <elementReference>Filed_Team_Acreage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AFS_If_Yes_Reason_other_specify__c</field>
+            <value>
+                <elementReference>Specify_reason_if_selected_other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AFS_Product_Used__c</field>
+            <value>
+                <elementReference>Product_Used</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AFS_Reason_If_No_other_specify__c</field>
+            <value>
+                <elementReference>Specify_reason_if_selected_as_other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AFS_Reason_if_NO__c</field>
+            <value>
+                <elementReference>Reason_If_not_satisfied</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AFS_Reason_if_Yes__c</field>
+            <value>
+                <elementReference>Reason_If_Satisfied</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AFS_willingToUseAFSForNextSession__c</field>
+            <value>
+                <elementReference>Are_you_willing_to_use_the_AFS_Services_during_the_next_season</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>recordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Axedasurvey__c</object>
+    </recordCreates>
+    <recordLookups>
+        <name>get_RecordTypeId</name>
+        <label>get RecordTypeId</label>
+        <locationX>194</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>screen_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>AFS Survey 2019</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>recordTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <screens>
+        <name>screen_0</name>
+        <label>screen 0</label>
+        <locationX>364</locationX>
+        <locationY>50</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>screenDecision1</targetReference>
+        </connector>
+        <fields>
+            <name>AFS_Are_you_satisfied_with_the_service</name>
+            <choiceReferences>AFS_YesNo_picklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Are you satisfied with the service?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_1</name>
+        <label>Screen 1</label>
+        <locationX>591</locationX>
+        <locationY>177</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_Selected_Other_2</targetReference>
+        </connector>
+        <fields>
+            <name>Reason_If_Satisfied</name>
+            <choiceReferences>ReasonIfsatisfied</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Reason (If Satisfied)</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_2</name>
+        <label>Screen 2</label>
+        <locationX>106</locationX>
+        <locationY>177</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_Selected_Other</targetReference>
+        </connector>
+        <fields>
+            <name>Reason_If_not_satisfied</name>
+            <choiceReferences>ReasonIfNotsatified</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Reason If not satisfied</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_3</name>
+        <label>Screen 3</label>
+        <locationX>679</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Screen_5</targetReference>
+        </connector>
+        <fields>
+            <name>Specify_reason_if_selected_other</name>
+            <fieldText>Specify reason if selected other</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>screen_4</name>
+        <label>screen 4</label>
+        <locationX>89</locationX>
+        <locationY>459</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Screen_5</targetReference>
+        </connector>
+        <fields>
+            <name>Specify_reason_if_selected_as_other</name>
+            <fieldText>Specify reason if selected as other</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_5</name>
+        <label>Screen 5</label>
+        <locationX>360</locationX>
+        <locationY>616</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Screen_6</targetReference>
+        </connector>
+        <fields>
+            <name>Product_Used</name>
+            <choiceReferences>ProductsUsed</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Product Used</fieldText>
+            <fieldType>MultiSelectPicklist</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_6</name>
+        <label>Screen 6</label>
+        <locationX>360</locationX>
+        <locationY>746</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_AFS_Survey_record</targetReference>
+        </connector>
+        <fields>
+            <name>Farmer_Acreage</name>
+            <dataType>String</dataType>
+            <fieldText>Farmer Acreage</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Filed_Team_Acreage</name>
+            <dataType>String</dataType>
+            <fieldText>Filed Team Acreage</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Are_you_willing_to_use_the_AFS_Services_during_the_next_season</name>
+            <choiceReferences>AFS_YesNo_picklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Are you willing to use the AFS Services during the next season?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Terminate_Message</name>
+        <label>Terminate Message</label>
+        <locationX>360</locationX>
+        <locationY>994</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>terminateMessage</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Thank you for your feedback!!!&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>get_RecordTypeId</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

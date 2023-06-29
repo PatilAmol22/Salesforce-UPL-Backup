@@ -1,0 +1,57 @@
+<aura:component controller="OrderDetailsController" implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="ContractsList" type="List" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    
+    <lightning:card title="Contract" iconName="standard:contract">       
+        <aura:set attribute="actions">
+            <lightning:buttonIcon onclick="{!c.doInit}" iconName="utility:refresh" variant="border-filled" alternativeText="reload"/>
+        </aura:set>
+        
+        <div class="slds-card__body">
+            <aura:if isTrue="{!not(empty(v.ContractsList))}">
+                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" aria-label="Example table in a Card">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Contract Number">Contract Number</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Status"> Status</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="order Status">Listing ID</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.ContractsList}" var="item">
+                            <tr class="slds-hint-parent">
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <lightning:formattedUrl value="{!'/' + item.Id}" tooltip="{!item.ContractNumber}" label="{!item.ContractNumber}" target="_self" />
+                                    </div>
+                                </th>
+                                <td role="gridcell">
+                                    <div class="slds-truncate" >{!item.Status}</div>
+                                </td>
+                                
+                                <td role="gridcell">
+                                    <div class="slds-truncate" >{!item.ListingId__c}</div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <aura:set attribute="else">
+                    <div class="slds-text-align_center">No contracts are available.</div>
+                </aura:set>
+            </aura:if>
+            
+        </div>
+    </lightning:card>
+    
+    <aura:if isTrue="{!v.loaded }">
+        <lightning:spinner variant="brand" alternativeText="Loading" />
+    </aura:if>
+</aura:component>

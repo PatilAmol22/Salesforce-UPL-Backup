@@ -1,0 +1,4 @@
+<design:component>
+	<design:attribute name="AccountId" label="AccountId" />
+    <design:attribute name="SurveyId" label="SurveyId" />
+</design:component>

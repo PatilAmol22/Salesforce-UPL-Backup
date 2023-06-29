@@ -1,0 +1,270 @@
+.claimSuccess{
+    position:relative;
+    margin-left: 50%;
+    margin-top: 50%;
+    border: 1px solid #000000;
+    border-radius: 4px;
+}
+.successMessage{
+    position:relative;
+    text-align: center;
+}
+.right-align{
+    text-align: right;
+}
+
+.input-box-align{
+    position: relative;  
+    min-height: 400px;
+}
+.marginBottom4{
+    margin-bottom: 6px;
+    border-bottom:1px solid;
+    border-color: #a8a7a7;
+    padding-bottom:5px;
+}
+.treatmentTableHeading{
+    border:1px solid;
+    border-color:#bebdbd;
+    border-radius:2px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 99%;
+    list-style-type: none;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: none;
+    padding: 5px 10px;
+    background-color: lightgray;
+}
+.submitBtn, .addRowBtn{
+    position: relative;
+    bottom: 28px;
+    margin: 0px 10px;
+    font-size: 15px;
+    
+}
+
+.qcfHeader{
+    position: relative;
+    width:100%;
+}
+.qcfPageTitle{
+    background-color: rgb(235, 236, 243);
+    font-size:18px;
+    height: 60px;
+    padding: 16px;
+    width: 1416px;
+}
+.TreatmentTable{
+    position: relative;
+     margin-top:10px;
+}
+
+li{
+    display: table-cell !important;
+    text-align: left;
+}
+li.Date{
+     width:20%;
+}
+li.CropType{
+     width:20%; 
+}
+li.ApplicationRate{
+     width:20%;
+}
+li.MixingPartner{
+     width:30%;
+}
+li.Waterquantity{
+     width:10%;
+}
+
+.input-box-align{
+    position: relative;
+    width: 1386px;
+    top: 0px;
+    left: 10px;
+    min-height: 600px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-top: 8px;
+    border-top: 1px solid #bebdbd;
+    background-color: #fff;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+.layoutItemIndex{
+    position: relative;
+     left:25px;
+      width:50px;
+}
+.layoutItemArticle{
+    position: relative;
+     left:56px;
+    width:130px;
+    font-size: 12px;
+}
+.layoutItemDesc{
+    position: relative;
+    left: 96px;
+    width:170px;
+}
+.layoutItemDivision{
+    position: relative;
+    left: 138px;
+    width:103px;
+}
+.layoutItemSize{
+    position: relative;
+    left:203px;
+    width:90px;
+}
+.layoutItemPairs{
+    position: relative;
+    left:243px;
+    width:150px;
+}
+.layoutItemMrp{
+    position: relative;
+    left: 303px;
+    width: 105px;
+}
+.layoutItemRfr{
+    position: relative;
+    left:368px;
+    width:160px;
+}
+.layoutItemDelete{
+    position: absolute;
+     right:25px;
+      width:10px;
+}
+.qcfWrapper{
+    position: relative;
+    border: 1px solid #ddd;
+    height: 717px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+.footer{
+    position: fixed;
+    bottom: 0;
+}
+.formTreatment{
+    position: relative;
+    top: 50px;
+}
+@media only screen and (min-width: 768px) and (max-width: 1366px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+    .qcfPageTitle{
+        width: 1322px;
+    }
+    .qcfWrapper{
+        height: 616px;
+    }
+    .marginBottom4{
+        margin-bottom: 0px;
+        border-bottom:0px;
+        border-color: #a8a7a7;
+        padding-bottom:5px;
+    }
+    .input-box-align{
+        position: relative;
+        max-height:530px;
+        min-height: 440px;
+        overflow-y: auto;
+        width: 98%;
+        border:1px solid #bebdbd;
+    }
+    li.srNo{
+        width:3%;
+   }
+   li.article{
+        width:8%; 
+   }
+   li.description{
+        width:10%;
+   }
+   li.division{
+        width:8%;
+   }
+   li.size{
+        width:8%;
+   }
+   li.srquantityPairs{
+        width:11%;
+   }
+   li.mrp{
+        width:5%;
+   }
+   li.reasonReturn{
+        width:10%;
+   }
+    .layoutItemIndex{
+        position: relative;
+         left:25px;
+          width:50px;
+    }
+    .layoutItemArticle{
+        position: relative;
+         left:38px;
+          width:140px;
+    }
+    .layoutItemDesc{
+        position: relative;
+         left: 58px;
+          width:140px;
+    }
+    .layoutItemDivision{
+        position: relative;
+         left: 116px;
+          width:120px;
+    }
+    .layoutItemSize{
+        position: relative;
+         left:156px;
+        width:106px;
+    }
+    .layoutItemPairs{
+        position: relative;
+         left:210px;
+          width:177px;
+    }
+    .layoutItemMrp{
+        position: relative;
+         left:245px;
+          width:98px;
+    }
+    .layoutItemRfr{
+        position: relative;
+         left:264px;
+          width:160px;
+    }
+    .layoutItemDelete{
+        position: absolute;
+         right:25px;
+          width:10px;
+    }
+
+
+}
+.formQCF .slds-scrollable_y,
+.formQCF .slds-scrollable--y,
+.formQCF .slds-scrollable_x,
+.formQCF .slds-scrollable--x {
+    overflow: auto !important;
+}
+.MRP .slds-select_container:before {
+    border-bottom: 5px solid #747474 !important;
+}
+.MRP .slds-select_container:after {
+    border-top: 5px solid #747474 !important;
+}
+.checkTcs{
+    position: relative;
+    top: -28px;
+}

@@ -1,0 +1,120 @@
+.THIS {
+}
+
+.THIS slds-form-element > label{
+    display: none;
+}
+
+.THIS .slds-m-right_xxx-small{
+    display: none;
+}
+
+.THIS .slds-form-element__label{
+    padding-top: 0;
+}
+
+
+@media screen and (min-width: 1100px){
+.THIS .input-select-width{
+    width: 800px;
+}
+    .THIS .slds-input{
+        width: auto !important;
+        font-size: 12px;
+        border-radius: 0.25rem;
+        box-sizing: border-box;
+        padding: unset;
+        padding-left: var(--lwc-spacingXSmall,0.5rem);
+    } 
+    .THIS .spacePad{
+        padding-left: 20px;
+    }
+    .THIS .slds-form-element__label{
+        padding-right: 20px;
+    }
+    
+    .THIS .wid{
+        font-size: 20px;
+    }
+    
+    .THIS .uiOutputText{
+       font-size: 12px; 
+    }
+    
+    .THIS .slds-button{
+        
+        line-height: 1.5rem;
+        font-weight: 200;
+    }
+    
+.THIS .input-select-width{
+    width: 400px;
+        font-size: 12px;
+}
+    
+  
+	.THIS .slds-p-around_small {
+        font-size: 12px;
+    }
+	.THIS .slds-form-element__label{
+        font-size: 12px;
+    }
+	.THIS .uiInput--default select{
+        font-size: 12px;
+    }
+}
+
+
+@media screen and (max-width: 450px){
+    
+    .THIS .slds-p-around_small{
+        font-size: xx-small;
+    }
+    .THIS .labelFont {
+        font-size: xx-small;
+    }
+    .THIS .slds-p-around_small{
+      padding: unset !important;  
+    }
+    
+    .THIS .slds-input{
+       padding: unset !important;  
+    }
+    
+    
+}
+.THIS.bgColor{background-color:white!important;}
+
+.THIS.slds-accordion__summary-action{color:red!important;}
+
+.THIS.slds-accordion__summary-action{
+    color:red!important;
+}
+.THIS .test{
+    background: #679AE3;
+    font-size: 16px;
+    border-radius: 25px;
+}
+.THIS .error-text {
+   color:red;
+   font:6px;
+}
+.THIS .slds-hide {
+   display: none;
+}
+.THIS .wid{
+    font-size:20px;  
+}
+    
+.THIS .LeftPadding{
+        
+      padding-left: 10px;
+    }
+    
+    .THIS.scrollerSize {
+    height: 300px;
+}
+    
+.THIS .slds-p-around_small {
+    border-top: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(229, 229, 229));
+}

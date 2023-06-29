@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Rebate_Contract_Approved</fullName>
+        <description>Rebate Contract Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Territory_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Contract_Approved_at_each_level_Final</template>
+    </alerts>
+    <alerts>
+        <fullName>Rebate_Contract_Rejected</fullName>
+        <description>Rebate Contract Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Territory_Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Contract_Rejected_at_each_level_Final</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Appr_Sync_Status_step1</fullName>
+        <field>Approval_Sync_Status__c</field>
+        <literalValue>Sync</literalValue>
+        <name>Appr Sync Status step1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approval_Sync_Status_NULL</fullName>
+        <field>Approval_Sync_Status__c</field>
+        <name>Approval Sync Status NULL</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approval_Sync_Status_New</fullName>
+        <field>Approval_Sync_Status__c</field>
+        <literalValue>New</literalValue>
+        <name>Approval Sync Status = &quot;New&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Auto_Approval</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Aprovação de Metas Gerente BU</literalValue>
+        <name>Auto _Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>CRM_Status_In_editing</fullName>
+        <field>CRM_Status__c</field>
+        <literalValue>In Editing</literalValue>
+        <name>CRM Status = In editing</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Current_ApprovalStep4</fullName>
+        <field>Current_Approval_Step__c</field>
+        <formula>4</formula>
+        <name>Current ApprovalStep4</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Current_Approval_Step</fullName>
+        <field>Current_Approval_Step__c</field>
+        <name>Current Approval Step</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Current_Approval_Step0</fullName>
+        <field>Current_Approval_Step__c</field>
+        <formula>0</formula>
+        <name>Current Approval Step0</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Current_Approval_Step_0</fullName>
+        <field>Current_Approval_Step__c</field>
+        <formula>0</formula>
+        <name>Current Approval Step = 0</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Current_Approval_Step_1</fullName>
+        <field>Current_Approval_Step__c</field>
+        <formula>1</formula>
+        <name>Current Approval Step 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Current_Approval_Step_2</fullName>
+        <field>Current_Approval_Step__c</field>
+        <formula>2</formula>
+        <name>Current Approval Step 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Current_Approval_Step_3</fullName>
+        <field>Current_Approval_Step__c</field>
+        <formula>3</formula>
+        <name>Current Approval Step 3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Current_Approval_Step_4</fullName>
+        <field>Current_Approval_Step__c</field>
+        <formula>4</formula>
+        <name>Current Approval Step 4</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Field_Update_to_rejected</fullName>
+        <field>CRM_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Field Update to rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_ApprovalStep3</fullName>
+        <field>Last_Approval_Step__c</field>
+        <formula>3</formula>
+        <name>Last ApprovalStep3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_ApprovalStep4</fullName>
+        <field>Last_Approval_Step__c</field>
+        <formula>4</formula>
+        <name>Last ApprovalStep4</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_Approval_Step_0</fullName>
+        <field>Last_Approval_Step__c</field>
+        <formula>0</formula>
+        <name>Last Approval Step = 0</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_Approval_Step_NULL</fullName>
+        <field>Last_Approval_Sent__c</field>
+        <name>Last Approval Step NULL</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_Approval_step_1</fullName>
+        <field>Last_Approval_Step__c</field>
+        <formula>1</formula>
+        <name>Last Approval step 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_Approval_step_2</fullName>
+        <field>Last_Approval_Step__c</field>
+        <formula>2</formula>
+        <name>Last Approval step 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_Approval_step_3</fullName>
+        <field>Last_Approval_Step__c</field>
+        <formula>3</formula>
+        <name>Last Approval step 3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Last_Approval_step_4</fullName>
+        <field>Last_Approval_Step__c</field>
+        <formula>4</formula>
+        <name>Last Approval step 4</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Reapproval_true</fullName>
+        <field>Reapproval__c</field>
+        <literalValue>1</literalValue>
+        <name>Reapproval = true</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Rebate_Workflow_Status</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Metas</literalValue>
+        <name>Rebate_Workflow Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>TestFieldUpdate</fullName>
+        <field>TestApprove__c</field>
+        <literalValue>1</literalValue>
+        <name>TestFieldUpdate</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Fire1</fullName>
+        <field>Approval_Fire__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Approval Fire1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approval_Sync_Status</fullName>
+        <field>Approval_Sync_Status__c</field>
+        <literalValue>New</literalValue>
+        <name>Update Approval Sync Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_CRM_Status</fullName>
+        <field>CRM_Status__c</field>
+        <literalValue>In Editing</literalValue>
+        <name>Update CRM Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_CRM_Status_to_Approved</fullName>
+        <field>CRM_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update CRM Status to Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Last</fullName>
+        <field>Last_Approval_Step__c</field>
+        <formula>0</formula>
+        <name>Update Last Approval Step</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_approvalfire2</fullName>
+        <field>Approval_Fire__c</field>
+        <literalValue>0</literalValue>
+        <name>Update approvalfire2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_field_to_Approved</fullName>
+        <field>CRM_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update field to Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_Approved_by_all</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Em Acompanhamento</literalValue>
+        <name>Workflow Status Approved by all</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_Update_Aguardando_Metas</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Metas</literalValue>
+        <name>Workflow Status Update Aguardando Metas</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_pending_at_Marketing_D</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Aprovação de Metas Diretor Marketing Operacional</literalValue>
+        <name>Workflow Status pending at Marketing D</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_pending_at_SBU</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Aprovação de Metas CCO</literalValue>
+        <name>Workflow Status pending at SBU</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_pending_for_BU</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Aprovação de Metas Gerente Regional</literalValue>
+        <name>Workflow Status pending for BU</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_pending_with_Marketing_D</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Aprovação de Metas Diretor Marketing Operacional</literalValue>
+        <name>Workflow Status pending with Marketing D</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_pending_with_Regional</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Aprovação de Metas Gerente Regional</literalValue>
+        <name>Workflow Status pending with Regional</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_pending_with_SBU</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguard Aprov Metas Diretor de Vendas</literalValue>
+        <name>Workflow Status pending with SBU</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Workflow_Status_rejected</fullName>
+        <field>Workflow_Status__c</field>
+        <literalValue>Aguardando Metas</literalValue>
+        <name>Workflow Status rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>approvalfire3</fullName>
+        <field>Approval_Fire__c</field>
+        <literalValue>0</literalValue>
+        <name>approvalfire3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>approvalfire4</fullName>
+        <field>Approval_Fire__c</field>
+        <literalValue>0</literalValue>
+        <name>approvalfire4</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>field_update_to_in_Editing</fullName>
+        <field>CRM_Status__c</field>
+        <literalValue>In Review</literalValue>
+        <name>field update to in Editing</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_integration_step</fullName>
+        <field>Integration_Approval_Step__c</field>
+        <literalValue>1</literalValue>
+        <name>update integration step</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

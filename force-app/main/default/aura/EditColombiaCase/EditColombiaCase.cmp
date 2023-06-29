@@ -1,0 +1,6 @@
+<aura:component implements="flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+	
+   <aura:attribute name="recordId" type="string" ></aura:attribute> 
+     
+        <c:colombiaCase case_recordId="{!v.recordId}"></c:colombiaCase>
+</aura:component>

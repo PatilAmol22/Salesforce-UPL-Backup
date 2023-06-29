@@ -1,0 +1,89 @@
+.THIS .maindivcss{
+    border: 1px solid #DDDDDD;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+
+.THIS .textCSS{
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-size:22px;
+}
+.THIS .year-main-div{
+    display:flex;
+    justify-content:space-between;
+    width:100%;
+}
+.THIS .year-left-div{
+    margin-top:2%;
+    margin-left: 2%;
+}
+.THIS .year-right-div{
+    margin-right: 2%;
+}
+.THIS .yearCss{
+    font-size:18px;
+    color:black;
+}
+.THIS .aCSS{
+    color:#000000;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-size:22px;
+}
+@media only screen and (max-width: 768px){
+    .THIS .year-left-div{
+        margin-top:5%;
+        margin-left: 3%;
+    }
+    .THIS .aCSS{
+        font-size:20px;
+    }
+    .THIS .textCSS{
+        font-size:20px;
+    }
+}
+@media only screen and (max-width: 500px){
+    .THIS .aCSS {
+        font-size:16px;
+    }
+    .THIS .textCSS {
+        font-size:16px;
+    } 
+    .THIS .totalcss {
+        text-align: center;
+    } 
+}
+@media only screen and (max-width: 375px){
+    .THIS .year-main-div{
+        display:block;
+        text-align: center;
+    }
+    .THIS .year-left-div{
+        margin-top:2%;
+        margin-left: 0%;
+    }
+    .THIS .year-right-div{
+        margin-right: 0%;
+    }
+    .THIS .yearCss{
+        font-size:15px;
+    }
+    .THIS .combo-css{
+        font-size: 11px;
+        display: inline-block;
+    }
+}
+@media only screen and (max-width: 330px){
+    .THIS .graphcss{
+        width: 270px !important; 
+        height: 150px !important;
+    }
+    .THIS .aCSS {
+        font-size:14px;
+    }
+    .THIS .textCSS {
+        font-size:14px;
+    }   
+}

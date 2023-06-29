@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Brazil_Price_Book_Approval_Alert</fullName>
+        <description>Brazil Price Book Approval Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Price_Book_Campaign_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Brazil_Price_Book_Approval_Alert_Step</fullName>
+        <description>Brazil Price Book Approval Alert Step</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Price_Book_Campaign_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Brazil_Price_Book_Rejection_Alert</fullName>
+        <description>Brazil Price Book Rejection Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Price_Book_Campaign_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Brazil_Price_Book_Rejection_Alert_Step</fullName>
+        <description>Brazil Price Book Rejection Alert Step</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Price_Book_Campaign_Rejected</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Approved_by_Accounts_Receivable</fullName>
+        <field>Accounts_Receivable__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved by Accounts Receivable</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_by_Controller_Areas</fullName>
+        <field>Controller_Areas__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved by Controller Areas</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Is_Appoved_True</fullName>
+        <field>Is_Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Is Approved True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Is_Approved</fullName>
+        <field>Is_Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Is Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Is_Approved_True</fullName>
+        <field>Is_Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Is Approved True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_on_Rejection</fullName>
+        <field>Status__c</field>
+        <literalValue>Disapproved</literalValue>
+        <name>Status on Rejection</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Status as &apos;Approved&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Disapproved</fullName>
+        <field>Status__c</field>
+        <literalValue>Disapproved</literalValue>
+        <name>Update Status as &apos;Disapproved&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

@@ -1,0 +1,174 @@
+<aura:component implements="force:appHostable,force:lightningQuickAction" controller="LiquidationModuleController">
+    <aura:attribute type="Object" name="recordsList"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="LiquidationType" type="List" />
+    <aura:attribute name="today" type="Date" />
+     <aura:attribute name="min" type="Date" />
+     <aura:attribute name="max" type="Date" />
+    <aura:attribute name="LiquidationMonth" type="List" />
+    <aura:attribute name="FinancialYear" type="List" />
+    <aura:attribute name="typeSelected" type="String" />
+    <aura:attribute name="display" type="Boolean" default="false" />
+    <aura:attribute name="salesSelected" type="Boolean" default="false"/>
+    <aura:attribute name="inventorySelected" type="Boolean" default="false"/>
+    
+    <!-- Attribute Declaration For Pagination -->
+    <aura:attribute name="FilterList" type="List"/>
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="FinalList" type="List"/>
+    <aura:attribute name="startPage" type="Integer"/>
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer" default="0"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="TotalPages" type="Integer"/>
+    <aura:attribute name="PageNumber" type="Integer"/>
+    <aura:attribute name="totalAmount" type="Integer"/>
+    <aura:attribute name="totalQuantity" type="Integer"/>
+    <aura:attribute name="Quantity" type="String" default="Quantity:"/>
+    <aura:attribute name="Amount" type="String" default="Amount:"/>
+    
+    <!-- Attribute Declaration For Pagination End-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-box slds-theme_default">
+        <lightning:layout>
+            <lightning:layoutItem flexibility="auto" size="12" mediumDeviceSize="2">
+                <lightning:select aura:id="liquidationselect" class="incHeight" name="liquidationselect" label="Liquidation Type" required="true" onchange="{! c.onSelectchange}">
+                    <option text="Select" value="Select"/>
+                    <aura:iteration items="{!v.LiquidationType}" var="type">
+                        <option text="{!type}" value="{!type}"/>
+                    </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <br/><br/>
+        <lightning:layout>
+            <lightning:layoutItem  flexibility="auto" size="8" mediumDeviceSize="2">
+                <div>
+                     <aura:if isTrue="{!v.display}"> 
+                    <ui:inputText label="Search by SKU " class="BorderTextField" aura:id="selectSKU" updateOn="keyup"   keyup="{!c.onSKUChange}" />
+                         <aura:set attribute="else">
+                         <ui:inputText label="Search by SKU "   disabled="true"/>
+                         </aura:set>
+                    </aura:if>
+                    </div>
+            </lightning:layoutItem>
+            &nbsp; &nbsp;
+             <lightning:layoutItem  flexibility="auto" size="8" mediumDeviceSize="2">
+                <div>
+                     <aura:if isTrue="{!v.display}"> 
+                    <ui:inputText label="Search by Distributor " class="BorderTextField" aura:id="selectDist" updateOn="keyup"   keyup="{!c.onDistChange}" />
+                         <aura:set attribute="else">
+                         <ui:inputText label="Search by Distributor "  disabled="true"/>
+                         </aura:set>
+                    </aura:if>
+                    </div>
+            </lightning:layoutItem>
+            &nbsp; &nbsp;
+            <lightning:layoutItem  flexibility="auto" size="8" mediumDeviceSize="2">
+                <div>
+                     <aura:if isTrue="{!v.display}"> 
+                    <ui:inputText label="Search by City " class="BorderTextField" aura:id="selectCity" updateOn="keyup"   keyup="{!c.onCityChange}" />
+                         <aura:set attribute="else">
+                         <ui:inputText label="Search by City"   disabled="true"/>
+                         </aura:set>
+                    </aura:if>
+                    </div>
+            </lightning:layoutItem>
+            &nbsp; 
+            <lightning:layoutItem  flexibility="auto" size="12" mediumDeviceSize="2">
+                &nbsp; 
+            </lightning:layoutItem>
+            <lightning:layoutItem  flexibility="auto" size="8" mediumDeviceSize="1">
+                <div>
+                    <aura:if isTrue="{!v.salesSelected}"> 
+                            <lightning:select aura:id="liquidationcurrentMonth" name="liquidationcurrentMonth" label="Month" onchange="{! c.onMonthSelectchange}">
+                                <option text="Select" value="Select"/>
+                                <aura:iteration items="{!v.LiquidationMonth}" var="month">
+                                    <option text="{!month}" value="{!month}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:set attribute="else">
+                                <lightning:select name="select" label="Month" disabled="true">
+                                    <option text="Select" value="Select"/>
+                                    <aura:iteration items="{!v.LiquidationMonth}" var="month">
+                                        <option text="{!month}" value="{!month}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:set>
+                    </aura:if>
+                    </div>
+            </lightning:layoutItem>
+             &nbsp; &nbsp;
+            <lightning:layoutItem  flexibility="auto" size="8" mediumDeviceSize="1">
+                <div>
+                     <aura:if isTrue="{!v.salesSelected}">  
+                            <lightning:select aura:id="liquidationfinyear" name="liquidationfinyear" label="Financial Year" onchange="{! c.onYearSelectchange}">
+                                <option text="Select" value="Select"/>
+                                <aura:iteration items="{!v.FinancialYear}" var="year">
+                                    <option text="{!year}" value="{!year}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:set attribute="else">
+                                <lightning:select name="select" label="Financial Year" disabled="true">
+                                    <option text="Select" value="Select"/>
+                                    <aura:iteration items="{!v.FinancialYear}" var="year">
+                                        <option text="{!year}" value="{!year}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+            </lightning:layoutItem>
+             &nbsp; &nbsp;
+            <lightning:layoutItem  flexibility="auto" size="8" mediumDeviceSize="1">
+                <div>
+                     <aura:if isTrue="{!v.inventorySelected}"> 
+                            <lightning:input type="date" aura:id='daterange' name="input2" label="Date" value="{!v.today}" onchange="{! c.onDatechange}" min="{!v.min}" max="{!v.max}"/>
+                            <aura:set attribute="else">
+                                <lightning:input type="date" name="input2" label="Date" value="{!v.today}" disabled="true"/>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+         <br/><br/>
+        <aura:if isTrue="{!v.display}">  
+            <div style="height: 350px">
+
+                <lightning:datatable data="{!v.PaginationList}" 
+                                     columns="{!v.mycolumns}" 
+                                     keyField="Id"
+                                     hideCheckboxColumn="true"
+                                     onsave="{! c.handleSave }"/>
+            </div>
+            <div class="c-container">
+            <lightning:layout horizontalAlign="spread">               
+                <lightning:layoutItem padding="around-small" size="4" mediumDeviceSize="2">
+                    <div class="slds-float_left slds-p-left_xx-small">
+                        <p><b>Page {!v.PageNumber} of {!v.TotalPages}</b></p> 
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="6" mediumDeviceSize="8">
+                    <div class="slds-align_absolute-center">  
+                        <lightning:buttonGroup >
+                            <lightning:button disabled="{!if(or(v.startPage == 0,v.totalRecords==0),true,false)}" variant="brand" aura:id="prevPage" label="Previous" onclick="{!c.handlePrev}" />            
+                            <lightning:button disabled="{!if(or(v.PageNumber == v.TotalPages,v.totalRecords==0),true,false)}" aura:id="nextPage" variant="brand" label="Next" onclick="{!c.handleNext}"/>
+                        </lightning:buttonGroup>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem >
+                      <b>{!v.Quantity}</b>  {!v.totalQuantity}   
+                </lightning:layoutItem>
+                <lightning:layoutItem >
+                      <b>{!v.Amount} </b>   {!v.totalAmount}
+                </lightning:layoutItem>
+                <!--<lightning:layoutItem padding="around-small" size="2" mediumDeviceSize="2">
+                   <aura:if isTrue="{!v.PageNumber == v.TotalPages}">
+                        <lightning:button aura:id="saveTarget" variant="brand" label="Save" onclick="{!c.saveTargetTotal}"/>
+                    </aura:if>
+                </lightning:layoutItem>-->
+            </lightning:layout>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

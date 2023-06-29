@@ -1,0 +1,9 @@
+.exampleHolder{
+    position: fixed;
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+    top: 350px;
+    z-index: 9999 !important;
+    background-color: rgba(255,255,255,.75);
+}

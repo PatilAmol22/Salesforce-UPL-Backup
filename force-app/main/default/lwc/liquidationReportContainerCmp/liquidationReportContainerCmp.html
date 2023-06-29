@@ -1,0 +1,18 @@
+<template>
+    <!--Show and Hide Spinner-->
+    <template if:false={hideSpinner}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <template if:false={showReportHeader}>
+        <lightning-card>
+            <div>
+                <b>{message}</b>
+            </div>
+        </lightning-card>
+    </template>
+    <template if:true={showReportHeader}>
+        <c-liquidation-report-header-cmp shw-prev-fis-yr = {shwPrevFisYr} fiscalyear={fiscalYear} terrzonemap={territoryZoneMap} usrrole={userRole} usrcountry={userCountry}></c-liquidation-report-header-cmp>
+    </template>
+</template>

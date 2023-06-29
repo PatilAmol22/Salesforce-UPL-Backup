@@ -1,0 +1,112 @@
+<aura:component controller="BRRebateModule" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="showHome" type="boolean" />
+    <aura:attribute name="showPrint" type="boolean" />
+    
+    <aura:attribute name="submitConsent" type="boolean" />
+    <aura:attribute name="isDistributor" type="boolean" />
+    <aura:attribute name="ContractHeader" type="Object"/>
+   
+    <aura:attribute name="Accepted" type="boolean" default="false"/>
+    <aura:attribute name="UserType" type="string"/>
+    <aura:attribute name="communityName" type="string"/>
+    <aura:attribute name="spinner" type="boolean" default="false"/><!--Ticket APPS-5297 Created By:-Gunnagya Nijhawan Dated:-1/06/2023-->
+    
+     <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:handler name="change" value="{!v.ContractHeader}" action="{!c.doInit}"/>
+    <lightning:card>
+       <aura:if isTrue="{!v.spinner}">									<!--Ticket APPS-5297 Created By:-Gunnagya Nijhawan Dated:-1/06/2023--><!--Start-->
+        <lightning:spinner class="spins" size="large" variant="brand" alternativeText="Sending" />
+    </aura:if>																														<!--End-->
+        <lightning:layoutItem size="12" padding="around-small">
+            <div class="slds-align_absolute-center">
+     <lightning:button label="Send Contract" title="Send Contract" onclick="{! c.SendContract }"/>		<!--Ticket APPS-5297 Created By:-Gunnagya Nijhawan Dated:-1/06/2023-->
+     <lightning:button label="Back" title="Back" onclick="{! c.Back }"/>
+            </div>
+            </lightning:layoutItem>
+        
+        <lightning:layout>
+            <lightning:layoutItem size="12" padding="horizontal-medium">
+                <aura:if isTrue="{!v.isDistributor}">
+                    <iframe src="{! '/BrazilPortal/apex/PrintRebateForm?contractId='+v.ContractHeader.Contract}" width="100%" height="325px;" frameBorder="0"/> 
+                </aura:if>
+                <aura:if isTrue="{!!v.isDistributor}">
+    <iframe src="{! '/apex/PrintRebateForm?contractId='+v.ContractHeader.Contract}" width="100%" height="325px;" frameBorder="0"/> 
+                </aura:if>
+                    <!--       <iframe src="{! 'https://dev2-upl.cs5.force.com/apex/PrintRebateForm?contractId='+v.ContractHeader.Contract}" width="100%" height="325px;" frameBorder="0"/> -->
+            </lightning:layoutItem>
+        </lightning:layout>
+       
+   
+    <aura:if isTrue="{!v.submitConsent}">
+         <aura:if isTrue="{!v.isDistributor}">
+    <lightning:layout>
+       
+         <lightning:layoutItem size="12">
+              <div class="slds-align_absolute-center">
+              <lightning:input type="checkbox" label="Please review and provide your consent" name="input1" required="true" aura:id="ProofDisclaimer" checked="{!v.Accepted}" />
+             </div>
+             </lightning:layoutItem>
+        
+        
+    </lightning:layout>
+        <br/>
+         <lightning:layout>
+             <lightning:layoutItem size="12">
+                 <div class="slds-align_absolute-center">
+                   <lightning:button label="Submit" title="Submit" onclick="{! c.Submit }"/>  
+                 </div>
+                 
+             </lightning:layoutItem>
+             
+        </lightning:layout>
+        </aura:if>
+        </aura:if>  
+        
+        <aura:if isTrue="{!!v.submitConsent}">
+            <br/>     
+            <lightning:layout>
+                <lightning:layoutItem size="2">
+                </lightning:layoutItem>
+             <lightning:layoutItem size="8">
+                 
+                 <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+  <thead>
+    <tr class="slds-line-height_reset">
+     
+      <th class="" scope="col">
+        <div class="slds-truncate" title="Accepted date">Distributor Accepted Date</div>
+      </th>
+      <th class="" scope="col">
+        <div class="slds-truncate" title="Name">Distributor Reviewer Name</div>
+      </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="slds-hint-parent">
+     
+      <td data-label="{!v.ContractHeader.DistAccDate}">
+        <div class="slds-truncate" title="{!v.ContractHeader.DistAccDate}">{!v.ContractHeader.DistAccDate}</div>
+      </td>
+      <td data-label="{!v.ContractHeader.DistAccDate}">
+        <div class="slds-truncate" title="{!v.ContractHeader.DistReviewName}">{!v.ContractHeader.DistReviewName}</div>
+      </td>
+     
+    </tr>
+                     </tbody>
+                 </table>
+                 
+                </lightning:layoutItem>
+                 <lightning:layoutItem size="2">
+                </lightning:layoutItem>
+            </lightning:layout>
+            
+        </aura:if>
+        <lightning:layoutItem size="12" padding="around-small">
+            <div class="slds-align_absolute-center">
+     <lightning:button label="Send Contract" title="Send Contract" onclick="{! c.SendContract }"/>		<!--Ticket APPS-5297 Created By:-Gunnagya Nijhawan Dated:-1/06/2023-->
+     <lightning:button label="Back" title="Back" onclick="{! c.Back }"/>
+            </div>
+            </lightning:layoutItem>
+         </lightning:card>
+</aura:component>

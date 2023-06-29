@@ -1,0 +1,482 @@
+<aura:component controller="OpportunityProductEntry_Controller"  implements="lightning:hasPageReference,lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!--Attribute Declartion-->
+    
+    <aura:attribute name="pageReference" type="object" access="global"></aura:attribute>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="salesOrgList" type="Sales_Org__c[]" />
+    <aura:attribute name="selectedSalesOrg" type="String" />
+    <aura:attribute name="quantity" type="String" default="0" />
+    <aura:attribute name="price" type="String" default="0.00" />
+    <aura:attribute name="amount" type="String" default="0.00" />
+    <aura:attribute name="description" type="String" default="" />
+    <aura:attribute name="packSize" type="String" default="" />
+    <aura:attribute name="errorMSG" type="String" default="" />
+    <aura:attribute name="errorMSGPopup" type="String" default="" />
+    <aura:attribute name="oppoLineItemObj" type="OpportunityLineItem" />
+    
+    <!--All attribute in Modal Popup-->
+    <aura:attribute name="packSizePopup" type="String" default="" />
+    <aura:attribute name="quantityPopup" type="String"  />
+    <aura:attribute name="pricePopup" type="String"  />
+    <aura:attribute name="amountPopup" type="String"  />
+    <aura:attribute name="rowOppoLineItemId" type="String"  />
+    <aura:attribute name="selectedSalesOrgPopup" type="String" />
+    <aura:attribute name="isPopup" type="Boolean" default="false" />
+    <aura:attribute name="ProductNamePop" type="String" default="" />
+    
+    
+    <!--End of All attribute of Modal Popup-->
+    
+    
+    
+    
+    <!--Aura Attribute for store Contact Object List as Array-->    
+    <aura:attribute name="opportunityLineItemList" type="OpportunityLineItem[]"/> 
+    <aura:attribute name="opportunityLineItemListPopup" type="OpportunityLineItem[]"/> 
+    <aura:attribute name="oppoLineItemList" type="List"/> 
+    
+    
+    <aura:attribute name="disableFields" type="Boolean" default="true" />
+    <aura:attribute name="disableFieldsPopup" type="Boolean" default="true" />
+    <aura:attribute name="isStatus" type="Boolean" default="false" />
+    <!--this is for Modal Popup-->
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    
+    
+    <!--For custom lookupm attribute for SKU-->
+    <aura:attribute name="label" type="string" default="SKU"/>
+    <aura:attribute name="IconName" type="string" default="standard:account"/>
+    <aura:attribute name="SearchKeyWord" type="string"/>
+    <aura:attribute name="listOfSearchRecords" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="selectedRecord" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    
+    <aura:attribute name="selectedRecordPopup" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="SearchKeyWordPopup" type="string"/>
+    
+    
+    <!--All Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="oSelectedRecordEventSKU" event="c:selectedsObjectRecordEventSKU" action="{!c.onChnageSelectedSKU}"/>
+    <aura:handler name="oSelectedRecordEventSKUPopup" event="c:selectedsObjectRecordEventSKUPopup" action="{!c.onChnageSelectedSKUPopup}"/>
+    
+    
+    
+    <!--This is for Heading-->
+    <div class="slds-grid slds-wrap" style="background:#ededed; padding:10px; border-radius:5px 5px 0 0;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+            
+            <span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px;">
+                <lightning:icon iconName="standard:product_item" alternative-text="product_item" size="medium"/>
+            </span>
+            
+            <h1 style="float:left; margin:8px; font-size:22px;">
+                <span class="slds-page-header_title" title="Opportunity Product">Opportunity Line Item</span>
+            </h1>
+        </div>  
+    </div>
+    <!--End of this is for Heading-->
+    
+    <!--Start of Main div-->
+    <div class="slds-box slds-theme_default">
+        
+        <!--Start of Add Product and Edit All -->
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#0D70A5;">
+                <p style="color:#fff; padding:10px; font-weight:700;">Add SKU</p>
+            </div>
+        </div> 
+        <!--End of Add Product and Edit All-->
+        <div class="slds-grid slds-gutters slds-wrap">
+            <p style="color:#ff0000; padding:10px; font-weight:700;"> <ui:outputText value="{!v.errorMSG}"/></p>
+        </div>
+        
+        
+        <!--start of Middle Section-->
+        <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:10px;">
+            
+            
+            
+            <!--
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                <div class="slds-form-element">
+                    <lightning:select name="Sales Org" aura:id="Sales_Org" label="Sales Org"  value="{!v.selectedSalesOrg}" onchange="{!c.onSalesOrgChange}">           
+                        <option value="Select">Select</option>
+                        <aura:iteration items="{!v.salesOrgList}" var="item">
+                            <option value="{!item.Id}">{!item.Business_Description__c}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>-->
+            
+            
+            
+            
+            
+            
+            <!--This is for SKU display-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_3-of-12">
+                <div class="slds-form-element">
+                    <!--Custom Lookup for SKU Display -->
+                    
+                    <div onmouseleave="{!c.onblur}" aura:id="searchRes" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+                        <label class="slds-form-element__label" for="lookup-348">{!v.label}</label>
+                        <!--This part is for display search bar for lookup-->  
+                        <div class="slds-form-element__control">
+                            
+                            <div class="slds-input-has-icon slds-input-has-icon--right">
+                                <!-- This markup is for when an record is selected -->
+                                <div aura:id="lookup-pill" class="slds-pill-container slds-hide">
+                                    <lightning:pill class="pillSize" label="{!v.selectedRecord.Product2.Description}" name="{!v.selectedRecord.Product2.Description}" onremove="{! c.clear }">
+                                        <aura:set attribute="media">
+                                            <!-- <lightning:icon iconName="{!v.IconName}" size="x-small" alternativeText="{!v.IconName}"/>-->
+                                        </aura:set>
+                                    </lightning:pill>
+                                </div>
+                                <div aura:id="lookupField" class="slds-show">
+                                    <lightning:icon class="slds-input__icon slds-show" iconName="utility:search" size="x-small" alternativeText="search"/>
+                                    
+                                    <ui:inputText click="{!c.onfocus}" required="true" updateOn="keyup" keyup="{!c.keyPressController}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWord}" placeholder="Search.."/>
+                                </div>   
+                            </div>
+                        </div>
+                        <!--This part is for Display typehead lookup result List-->  
+                        <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                            <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinner"/>
+                            <center> {!v.Message}</center>
+                            <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                                <c:customLookupResultforSKU oRecord="{!singleRec}"/>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                    <!--End of Custom Lookup for SKU Display -->
+                </div>
+            </div>
+            <!--End of for SKU display Section-->
+            
+            
+            
+            
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_3-of-12">
+                <div class="slds-form-element">
+                    <!-- <label class="slds-form-element__label" for="textarea-id-01">Description</label>-->
+                    <div class="slds-form-element__control">
+                        
+                        <lightning:textarea aura:id="description" messageWhenValueMissing="Please Enter Description." required="true"  label="Description" />
+                        <!--  <textarea  id="description" class="slds-textarea" placeholder="" ></textarea>-->
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_2-of-12">
+                <div class="slds-form-element">
+                    <!-- <label class="slds-form-element__label" for="text-input-id-1">Pack Size</label>-->
+                    <div class="slds-form-element__control">
+                        <lightning:input name="Pack Size" label="Pack Size"
+                                         required="true"
+                                         aura:id="packSize"
+                                         value="{!v.packSize}"
+                                         messageWhenValueMissing="Please enter Pack Size."
+                                         disabled="{!v.disableFields}"
+                                         />
+                        
+                        
+                        <!--  <ui:inputText value="{!v.packSize}" disabled="{!v.disableFields}" class="slds-input" />-->
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                <div class="slds-form-element">
+                    <!-- <label class="slds-form-element__label" for="text-input-id-1">Quantity</label>-->
+                    <div class="slds-form-element__control">
+                        
+                        
+                        <lightning:input name="Quantity"
+                                         label="Quantity"
+                                         required="true"
+                                         aura:id="quantity"
+                                         value="{!v.quantity}"
+                                         onblur="{!c.checkIfNotNumber}"
+                                         onclick="{!c.onfocusQuantity}"
+                                         messageWhenValueMissing="Please Enter Quantity."
+                                         messageWhenBadInput="Incorrect Quantity"/>
+                        
+                        
+                        <!-- <ui:inputText value="{!v.quantity}" click="{!c.onfocusQuantity}"  change="{!c.checkIfNotNumber}" class="slds-input"/>-->
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                <div class="slds-form-element">
+                    <!--  <label class="slds-form-element__label" for="text-input-id-1">Unit Price</label>-->
+                    <div class="slds-form-element__control">
+                        
+                        <lightning:input name="Unit Price"
+                                         label="Unit Price"
+                                         required="true"
+                                         aura:id="price"
+                                         value="{!v.price}"
+                                         onblur="{!c.checkIfNumberOfPrice}"
+                                         onclick="{!c.onfocusPrice}"
+                                         messageWhenValueMissing="Please Enter Unit Price."
+                                         messageWhenBadInput="Incorrect Price"/>
+                        
+                        
+                        <!-- <ui:inputText value="{!v.price}" click="{!c.onfocusPrice}" change="{!c.checkIfNumberOfPrice}" class="slds-input" />-->
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="text-input-id-1">Amount</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputText value="{!v.amount}" disabled="true" class="slds-input" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12" style="margin-top:20px;">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="text-input-id-1"></label>
+                    <div class="slds-form-element__control">
+                        <lightning:button label="Add" onclick="{!c.addToOppLine}" iconName="utility:new" variant="brand" />
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!--End of Middle Section-->
+        
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#0D70A5;">
+                <p style="color:#fff; padding:10px; font-weight:700;">SKU Details</p>
+            </div>
+        </div> 
+        
+        
+        
+        
+        <div style="border:1px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <!-- <th class="" scope="col">
+                            <div class="slds-truncate" title="Account Name">SKU</div>
+                        </th>-->
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Close Date">Description</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Stage">Pack size</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Confidence">Quantity</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Amount">Unit Price</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Contact">Amount</div>
+                        </th>
+                        <th class="actionClass" scope="col" >
+                            <div class="slds-truncate" title="Contact">Action</div>
+                        </th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    
+                    <!--start of the Aura Iteration-->
+                    <aura:iteration items="{!v.oppoLineItemList}" var="item">
+                        
+                        
+                        <tr class="slds-hint-parent">
+                            <!-- <td data-label="Account Name">
+                                <div class="slds-truncate" title="">{!item.Product2.Description}</div>
+                            </td>-->
+                            <td data-label="Close Date">
+                                <div class="slds-truncate" title="">{!item.Description}</div>
+                            </td>
+                            <td data-label="Prospecting">
+                                <div class="slds-truncate" title="">{!item.Pack_Size__c}  </div>
+                            </td>
+                            <td data-label="Confidence">
+                                <div class="slds-truncate" title=""><lightning:formattedNumber value="{!item.Quantity}" maximumFractionDigits="2"/></div>
+                            </td>
+                            <td data-label="Amount">
+                                <div class="slds-truncate" title=""><lightning:formattedNumber value="{!item.UnitPrice}" maximumFractionDigits="2"/></div>
+                            </td>
+                            <td data-label="Contact">
+                                <div class="slds-truncate" title="">
+                                    <lightning:formattedNumber value="{!item.TotalPrice}" maximumFractionDigits="2"/>
+                                </div>
+                            </td>
+                            <td>   
+                                <lightning:button iconName="utility:edit" onclick="{! c.openModel }" value="{!item.Id}" variant="brand" class="btnClass"/>
+                                <lightning:button iconName="action:delete" variant="destructive" value="{!item.Id}" onclick="{! c.deleteOppoLineItem }" class="btnClass"/>
+                            </td>
+                        </tr>
+                    </aura:iteration> <!--End of Iteration-->
+                    
+                </tbody>
+            </table>  
+        </div>    
+        
+        <!--For Modal Code-->
+        <aura:if isTrue="{!v.isOpen}">
+            
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-fade-in-open slds-modal slds-modal_large">
+                
+                
+                
+                
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit SKU Details</h2>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <p style="color:#ff0000; padding:10px; font-weight:700;"> <ui:outputText value="{!v.errorMSGPopup}"/></p>
+                        </div>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>
+                            
+                            <fieldset class="slds-form-element slds-form-element_compound">
+                                
+                                <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:10px;">
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="textarea-id-01">Description</label>
+                                            <div class="slds-form-element__control">
+                                                <textarea id="descriptionPopup" class="slds-textarea" placeholder=""  ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_2-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">Pack Size</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText value="{!v.packSizePopup}"  disabled="{!v.disableFieldsPopup}" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_2-of-12">
+                                        <div class="slds-form-element">
+                                            <!-- <label class="slds-form-element__label" for="text-input-id-1">Quantity</label>-->
+                                            <div class="slds-form-element__control">
+                                                
+                                                <lightning:input name="Quantity" label="Quantity"
+                                                                 required="true"
+                                                                 aura:id="qunatity"
+                                                                 value="{!v.quantityPopup}"
+                                                                 onblur="{!c.checkIfNumberOfQuantityPopup}"
+                                                                 messageWhenValueMissing="Please Enter Quantity."/>
+                                                
+                                                <!--  <ui:inputText value="{!v.quantityPopup}" change="{!c.checkIfNumberOfQuantityPopup}" class="slds-input"/>-->
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_2-of-12">
+                                        <div class="slds-form-element">
+                                            <!--<label class="slds-form-element__label" for="text-input-id-1">Unit Price</label>-->
+                                            <div class="slds-form-element__control">
+                                                <lightning:input name="Unit Price " label="Unit Price"
+                                                                 required="true"
+                                                                 aura:id="Unit Price"
+                                                                 value="{!v.pricePopup}"
+                                                                 onblur="{!c.checkIfNumberOfPricePopup}"
+                                                                 messageWhenValueMissing="Please Enter Unit Price."/>
+                                                
+                                                
+                                                
+                                                <!--  <ui:inputText value="{!v.pricePopup}"  change="{!c.checkIfNumberOfPricePopup}"  class="slds-input" />-->
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_2-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">Amount</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText value="{!v.amountPopup}" disabled="true" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </fieldset>
+                        </p>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand" 
+                                          label="Save"
+                                          title="Save"
+                                          onclick="{! c.likenClose }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+        </aura:if>   
+        <!--End of Modal  -->
+        
+        <div class="outer-div">
+            <lightning:spinner aura:id="Spinner"  alternativeText="Loading" variant="brand" class="spinner slds-hide" />
+        </div>
+        
+        
+    </div>   <!--End of main Div-->    
+    
+    
+    <div class="slds-align_absolute-center" style="height:5rem">
+        
+        
+        <lightning:button  iconName="utility:back" variant="brand" label="Back"
+                          title="Back"
+                          onclick="{! c.closeComponent }"/>
+    </div>
+    
+    
+    
+    
+    
+</aura:component>

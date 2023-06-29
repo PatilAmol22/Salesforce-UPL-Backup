@@ -1,0 +1,243 @@
+<template>
+    <!--
+        /**************************************************************************************************
+* Name             : gRZ_ReturnSalesOrderInv                                                      
+* Description      : LWC componet that let's user returns the sales order invoices that passes required 
+                     criterias
+* Test Class       : -
+* Created Date     : 03-11-2022                                                                        
+* Project/JIRA     : APPS-2818                                                                        
+* Created By       : Gurubaksh Grewal (Grazitti)                                                                        
+* Last Modified By : Gurubaksh Grewal (Grazitti) 14-11-2022                                                                        
+**************************************************************************************************/
+-->
+    <lightning-quick-action-panel header="Return Sales Order">
+
+    <template if:true={detailsData}>
+            
+    <template if:true={detailsData.isError}>
+        <div class="slds-box slds-theme_warning slds-theme_alert-texture">{detailsData.errorMsg}</div>
+    </template>
+    
+    <template if:false={detailsData.isError}>
+    <div style = "background:white;padding:10px;" class="slds-is-relative">
+        <div if:true={isLoaded}>
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+        <div class="slds-grid slds-wrap" style="padding:10px;border: 1px solid grey">
+            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_xx-small">
+                <!--span style = "font-weight: bold;font-size: 18px;color:#b58224;">Sales Order Info :</span-->
+                <div class="slds-page-header slds-page-header_record-home">
+                    <div class="slds-page-header__row">
+                      <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                          <div class="slds-media__figure">
+                            <span class="slds-icon_container">
+                                <lightning-icon icon-name="standard:work_order"></lightning-icon>
+
+                            </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                              <div class="slds-page-header__name-title">
+                                <h1>
+                                  <span>Sales Order Info:</span>
+                                  <span class="slds-page-header__title slds-truncate" >{detailsData.SoDetails.Name}</span>
+                                </h1>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                          <div class="slds-page-header__control">
+                            <ul class="slds-button-group-list">
+                              <li>
+                                <button class="slds-button slds-button_neutral">Edit</button>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div-->
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap" style="padding-top: 10px;font-weight: 500">
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Sales Order No :</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px"> {detailsData.SoDetails.Name}</div>
+                    <template if:true={detailsData.SoDetails.Sales_Org_lk__c}>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Sales Org :</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px"> {detailsData.SoDetails.Sales_Org_lk__r.Name}</div>
+                    </template>
+                    <template if:true={detailsData.SoDetails.Sold_to_Party__c}>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Customer Name :</div>
+                       
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">
+                      <template if:true={detailsData.SoDetails.Sold_to_Party__c}> {detailsData.SoDetails.Sold_to_Party__r.Account_Name__c}</template></div>
+                    
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Customer Code :</div>
+                    
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px"><template if:true={detailsData.SoDetails.Sold_to_Party__c}>{detailsData.SoDetails.Sold_to_Party__r.SAP_Code__c} </template></div>
+                      
+                  </template>
+                </div>
+            </div>
+            <template if:true={detailsData.InvDetails}>
+            <div class="slds-col slds-size_6-of-12 slds-p-horizontal_xx-small">
+                <div class="slds-page-header slds-page-header_record-home">
+                    <div class="slds-page-header__row">
+                      <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                          <div class="slds-media__figure">
+                            <span class="slds-icon_container">
+                                <lightning-icon icon-name="standard:code_set" alternative-text="Event" title="Event"></lightning-icon>
+
+                            </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                              <div class="slds-page-header__name-title">
+                                <h1>
+                                  <span>Invoice Info:</span>
+                                  <span class="slds-page-header__title slds-truncate" >{detailsData.InvDetails.Name}</span>
+                                </h1>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                          <div class="slds-page-header__control">
+                            <ul class="slds-button-group-list">
+                              <li>
+                                <button class="slds-button slds-button_neutral">Edit</button>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div-->
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap" style="padding-top: 10px;font-weight: 500">
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Invoice No :</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px"> {detailsData.InvDetails.Name}</div>
+                    <div class="slds-col slds-size_6-of-12">Billing Doc No :</div>
+                    <div class="slds-col slds-size_6-of-12"> {detailsData.InvDetails.Billing_Doc_Number__c}</div>
+                    <div class="slds-col slds-size_6-of-12"></div>
+                    <div class="slds-col slds-size_6-of-12"></div>
+                </div>
+                <!-- <div>Invoice No : {detailsData.InvoiceName}</div>
+                <div>Billing Doc No : {detailsData.billingDocNum}</div> -->
+            </div>
+            </template>
+        </div>
+
+        <div class="slds-grid slds-wrap slds-grid_align-center" style="border: 1px solid grey;margin-top: 15px">
+        
+            <template if:false={detailsData.InvDetails}>
+        
+        <template if:false={showInvError}>
+              <lightning-card>
+              <template if:true={dataInv}>
+                <template if:false={showInvError}>
+              <div class="slds-page-header slds-page-header_record-home" style="margin-left:10px;margin-right:10px;">
+                    <div class="slds-page-header__row">
+                      <div class="slds-page-header__col-title">
+                        <div style="padding-top: 3.5%;" class="slds-media">
+                          <div class="slds-media__figure">
+                            <span class="slds-icon_container">
+                                <lightning-icon icon-name="standard:code_set" alternative-text="Event" title="Event"></lightning-icon>
+
+                            </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                              <div class="slds-page-header__name-title">
+                                <h1>
+                                  <span style="font-size: 21px;
+                                               font-weight: 700;">Invoices</span>
+                                </h1>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                          <div class="slds-page-header__control">
+                            <ul class="slds-button-group-list">
+                              <li>
+                                
+            <lightning-input name="enter-search"
+            slot="actions"
+            label=""
+            placeholder = "Search Invoice Name/Doc Number"
+            type="search"
+            onchange = {onChangeSearch}>
+</lightning-input>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            <!--h3 slot="title">
+                
+                <div style = "font-weight: bold;font-size: 18px;color:#b58224;">Invoices :</div>
+            </h3-->
+
+            <div class="slds-p-horizontal_small slds-p-top_medium">   <div style="max-height: 300px;width: 100% !important;">
+                
+                <template if:true={dataInv}>
+                <lightning-datatable
+                        key-field="Id"
+                        hide-checkbox-column
+                        data={dataInv}
+                        sorted-by={sortBy}
+                                     sorted-direction={sortDirection}
+                                     onsort={doSorting}
+                        onrowaction={handleRowAction}
+                        columns={columnsInv}>
+                </lightning-datatable>
+                </template>
+                
+            
+            </div></div>
+          
+         </template>
+          </template>
+        </lightning-card>
+        </template>
+        <template if:true={showInvError}>
+          <div class="slds-box slds-theme_warning slds-theme_alert-texture">
+              <p>This sales order does not have any Invoice related to it.</p>
+            </div>
+      </template>
+      </template>
+            <template if:true={detailsData.InvDetails}>
+                <lightning-card style="width: 100% !important;">
+                
+                <c-grz_-Sales-Order-Return-Fnl recid={invId}>
+                             </c-grz_-Sales-Order-Return-Fnl>
+
+</lightning-card>     </template>
+       </div>
+    </div>
+    </template>
+    </template>
+    <template if:true={showBackBttn}>
+        <template if:true={detailsData}>
+    <template if:true={detailsData.InvDetails}>
+    <div slot="footer"><center>
+        <lightning-button
+          variant="neutral"
+          label="Back"
+          onclick={backAction}
+        ></lightning-button></center>>
+      </div></template></template></template>
+</lightning-quick-action-panel>
+</template>

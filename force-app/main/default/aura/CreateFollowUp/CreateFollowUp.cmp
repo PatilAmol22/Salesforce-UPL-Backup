@@ -1,0 +1,225 @@
+<aura:component controller="CreateFollowUp" 
+                implements="force:hasRecordId,flexipage:availableForRecordHome,force:appHostable" 
+                access="global">
+    
+    <!--init handler event call "initialize" function on component load and fetch picklist values-->
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    
+    <!--<aura:method name="callChild" action="{!c.doSave}"  access="public"/>-->
+    <!--Declare Attributes--> 
+    <aura:attribute name="callId" type="String"/>
+    <aura:attribute name="recomId" type="String[]"/>
+    
+    <aura:attribute name="followUpFlagCFU" type="Boolean" default="false" />
+    <aura:attribute name="truthy" type="Boolean" default="false" />
+    <aura:attribute name="isChecked" type="Boolean" default="false"/>
+    <aura:attribute name="isCheckedArea" type="Boolean" default="false"/>
+    
+    <aura:attribute name="objInfo" type="Sobject" default="{sobjectType : 'Recommendations__c'}" />
+    
+    <aura:attribute name="reasonfornotbuying" type="List" default="[]"/>
+    <aura:attribute name="reasonnotbuy" type="String" />
+    <aura:attribute name="ifotherspecifyreason" type="String"/>
+    <aura:attribute name="nameproductbought" type="List" default="[]"/>
+    <aura:attribute name="productbought" type="String" />
+    <aura:attribute name="selfboughtorused" type="List" default="[{'label': 'Yes', 'value': 'Yes'},
+                                                                 {'label': 'No', 'value': 'No'}]"/>
+    <!--<aura:attribute name="selfboughtorused" type="List" default="[]"/>-->
+    <aura:attribute name="selfboughtused" type="String" />
+    <aura:attribute name="productform" type="List" default="[]"/>
+    <aura:attribute name="productformval" type="String" />
+    <aura:attribute name="packcolor" type="List" default="[]"/>
+    <aura:attribute name="packcolorval" type="String" />
+    <aura:attribute name="packartwork" type="List" default="[]"/>
+    <aura:attribute name="packartworkval" type="String" />
+    
+    
+    <aura:attribute name="satisfactionlevel" type="List" default="[]"/>
+    <aura:attribute name="satisfactionlevelval" type="String" />
+    
+    <aura:attribute name="reasonnotusedentirecroparea" type="List" default="[]"/>
+    <aura:attribute name="reasonnotusedentirecropareaval" type="String" />
+    
+    <aura:attribute name="datepro" type="Date" />
+    <aura:attribute name="retailer" type="String" />
+    <aura:attribute name="numAcre" type="Integer" />
+    <aura:attribute name="detailReason" type="String" />
+    <aura:attribute name="purchase" type="Date" />
+    <aura:attribute name="application" type="Date" />
+    
+    <aura:attribute name="setTrue" type="Boolean" default="false"/>
+    <aura:attribute name="returnedId" type="String" />
+    
+    <aura:attribute name="indexOfIteration" type="Integer"/>
+    
+    <aura:attribute name="recommendationItems" type="Recommendations__c[]" />
+    <aura:attribute name="recommendation" type="Object" />
+    <aura:attribute name="ListofRecommendation" type="List" />
+    <aura:attribute name="AcreArea" type="Integer" />
+    <aura:attribute name="disableSet" type="Boolean" default="false"/>
+    <aura:attribute name="reqTrue" type="Boolean" default="false"/>
+    <aura:attribute name="reqTrueVal" type="Boolean" default="false"/>
+    <aura:attribute name="maxBuyDate" type="Date" />
+    <aura:attribute name="cannotBePast" type="Date" />
+    
+    <aura:attribute name="acreAreaValidation" type="Integer"/>
+    
+    
+	<!--DISPLAY FOLLOWUP SECTION AS READ/WRITE FOR THIS COMPONENT-->
+    <article class="slds-card">
+        <div class="slds-card__body slds-card__body_inner">
+            <lightning:formattedText value="FollowUp " />
+            
+            <div class="slds-p-top_x-small">
+                <div class="slds-p-top_x-small">
+                    <!-- lightning input component -->
+                    <lightning:input type="checkbox" 
+                                     name="ifproductbrought" 
+                                     label="Did you buy the product as per recommend?"
+                                     aura:id="AnyPestInfestation"
+                                     class="slds-p-top_x-large"
+                                     onchange="{!c.handlecheckbox}"
+                                     checked="{!v.isChecked}"
+                                     value="{!v.isChecked}"/>
+                </div>  
+                <br/>
+                <aura:if isTrue="{!not(v.truthy)}">
+                <lightning:formattedText value="If No," />
+                
+                <div>               
+                    <div class="slds-form-element">
+                        <lightning:combobox name="reasonnotbuying" label="Reason for not buying the product?" 
+                                            placeholder="Select an Option" 
+                                            options="{! v.reasonfornotbuying }" 
+                                            onchange="{! c.handleReasonNotBuy }"
+                                            value="{! v.recommendation.ResonForNotBuying__c}"
+                                            />
+                    </div> 
+                    <div class="slds-form-element">
+                        <lightning:input name="ifotherspecifyreason" label="If Other, specify Reason" 
+                                         value="{! v.recommendation.ReasonOthers__c}"/>
+                    </div>  
+                    
+                    <div class="slds-form-element">
+                            <lightning:input name="possiblepurchasedate" label="Possible date of purchase?" type="date"
+                                             value="{!v.recommendation.PossiblePurchaseDate__c}" min="{!v.cannotBePast}"/>
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:input name="possibleapplicationdate" label="Possible date of Application?" type="date"
+                                             value="{!v.recommendation.PossibleApplicationDate__c}" min="{!v.recommendation.PossiblePurchaseDate__c}"/>
+                        </div>
+                </div>
+                </aura:if>
+                
+                <br/>
+                
+                <aura:if isTrue="{!v.truthy}">	
+                    <div>
+                        <lightning:formattedText value="If Yes," />
+                        <div class="slds-form-element">
+                            <lightning:combobox name="productboughtname" label="Which product did you buy?" 
+                                                placeholder="Select an Option" 
+                                                options="{! v.nameproductbought }" 
+                                                onchange="{! c.handleNameProductBought }"
+                                                value="{! v.recommendation.NameProductBought__c}"
+                                                />
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:input name="dateproductbought" label="When did you buy the product?" type="date"
+                                             value="{!v.recommendation.DateProductBought__c}" max="{!v.maxBuyDate}"/>
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:input name="retailername" label="Which Retailer did you buy the product from?" 
+                                             value="{!v.recommendation.RetailerName__c}"/>
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:combobox name="selfboughtorused" label="Did you buy or use the product yourself?" 
+                                                placeholder="Select an Option" 
+                                                options="{! v.selfboughtorused }" 
+                                                value="{! v.recommendation.SelfBoughtOrUsed__c}"
+                                                />
+                            
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:combobox name="productform" label="What is the form / state of the product?" 
+                                                placeholder="Select an Option" 
+                                                options="{! v.productform }" 
+                                                onchange="{! c.handleProductForm }"
+                                                value="{! v.recommendation.ProductForm__c}"
+                                                />
+                            
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:combobox name="packcolor" label="What is the colour of the pack?" 
+                                                placeholder="Select an Option" 
+                                                options="{! v.packcolor }" 
+                                                onchange="{! c.handlePackColor }"
+                                                value="{! v.recommendation.PackColour__c}"
+                                                />
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:combobox name="packartwork" label="What is the artwork of the product?" 
+                                                placeholder="Select an Option" 
+                                                options="{! v.packartwork }" 
+                                                onchange="{! c.handlePackArtWork }"
+                                                value="{! v.recommendation.PackArtWork__c}"
+                                                />
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:input aura:id="UsedCropArea"
+                                             type="checkbox" 
+                                             name="productinentirecroparea" 
+                                             label="Did you use the prod in entire crop area?"
+                                             onchange="{!c.handleUsedCropArea}"
+                                             checked="{!v.isCheckedArea}"
+                                             value="{!v.isCheckedArea}"
+                                            />
+                            
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:input aura:id = "manyacres" type="number" name="howmanyacres" 
+                                             label="In how many acres used the recommended product?"
+                                             value="{!v.recommendation.UseCropArea__c}"
+                                             onchange="{!c.handleAcreArea}"
+                                             disabled="{!v.disableSet}"
+                                             
+                                             messageWhenValueMissing = "Please select lower acre area"/>
+                            
+                        </div>
+                        <div class="slds-form-element">
+                            <lightning:combobox name="satisfactionlevel" label=" Are you satisfied with the results?" 
+                                                placeholder="Select an Option" 
+                                                options="{! v.satisfactionlevel }" 
+                                                onchange="{! c.handleSatisfaction }"
+                                                value="{! v.recommendation.SatisfactionLevel__c}"
+                                                />
+                        </div>
+                        
+                        <aura:if isTrue="{!v.reqTrue}">
+                        <div class="slds-form-element">
+                            <lightning:combobox name="reasonnotusedentirecroparea" label=" If Dissatisfied,Reason?" 
+                                                placeholder="Select an Option" 
+                                                options="{! v.reasonnotusedentirecroparea }" 
+                                                onchange="{! c.handleReason }"
+                                                value="{! v.recommendation.If_No_Reason__c}"
+                                                />
+                        </div>  
+                        <div class="slds-form-element">
+                            <lightning:input aura:id="detailOtherReason" name="detailsifotherreason" label="If Others please specify reason" 
+                                             required="{!v.reqTrueVal}"
+                                             value="{!v.recommendation.OtherReasonNotUsedEntireCropArea__c}"/>
+                        </div>
+                            
+						</aura:if>
+                        
+                    </div>
+                </aura:if>
+                
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </article>
+</aura:component>

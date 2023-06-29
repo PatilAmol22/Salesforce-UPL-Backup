@@ -1,0 +1,152 @@
+<aura:component  controller="searchInventory" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="brName" type="String"/>
+    <aura:attribute name="avail" type="String"/>
+    <aura:attribute name="Id" type="String"/>
+    <aura:attribute name="comment" type="String"/>
+    <aura:attribute name="availDate" type="String"/>
+    <aura:attribute name="SKU" type="String"/>
+    <aura:attribute name="warehouse" type="String"/>
+    <aura:attribute name="invntId" type="List"/>    
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="avails" type="List" />    
+    <aura:attribute name="writeaccess" type="Boolean" />
+    <aura:attribute name="WH" type="String"/>
+    <aura:attribute name="SKUCode" type="String"/>    
+    <aura:attribute name="displayDetails" type="Boolean" default="false"/>
+    <aura:attribute name="FreezeDetails" type="Boolean" default="true"/>
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="showAvailabilityDateError" type="String" />
+    <aura:attribute name="AvailabilityVal" type="String"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="FilterList" type="List"/> 
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="startPage" type="Integer"/>
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="30"/>
+    <aura:attribute name="TotalPages" type="Integer"/>
+    <aura:attribute name="PageNumber" type="Integer"/>
+    
+    
+    <br/>
+    <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+            <lightning:layoutItem class="border" padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+                {!$Label.c.Brand_Name}
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+                {!$Label.c.SKU_Name}
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+                {!$Label.c.Availability}
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+               {!$Label.c.Comment} 
+            </lightning:layoutItem>
+        	<lightning:layoutItem padding="around-small" size="2" smallDeviceSize="2" largeDeviceSize="2">
+               {!$Label.c.Availability_Date} 
+            </lightning:layoutItem>            
+        </lightning:layout>
+    
+    <!-- Search Filter -->
+     <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+            <lightning:layoutItem class="border" padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+                <div>
+                    <ui:inputText aura:id="brandSearch" updateOn="keyup"   keyup="{!c.handleSearch}"/>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+                <div>
+                    <ui:inputText aura:id="SKUSearch" updateOn="keyup"   keyup="{!c.handleSearch}"/>
+                </div> 
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2" smallDeviceSize="1" largeDeviceSize="2">
+              
+            </lightning:layoutItem>
+        	<lightning:layoutItem padding="around-small" size="2" smallDeviceSize="2" largeDeviceSize="2">
+                
+            </lightning:layoutItem>            
+        </lightning:layout>
+    
+    
+    <!-- search filter ends here -->
+    <aura:iteration items="{!v.PaginationList}" var="item" indexVar="index">
+            <lightning:layout class="slds-border_top slds-border_bottom" multipleRows="true">
+        		<lightning:layoutItem class="border uiOutputText" padding="around-small" size="2" >
+                    {!item.brandName}                
+                </lightning:layoutItem>
+                <lightning:layoutItem class="border uiOutputText" padding="around-small" size="2" >
+                    {!item.SKUCode} - {!item.SKU}
+                </lightning:layoutItem>                
+                <lightning:layoutItem class="border uiOutputText" padding="around-small" size="2" >
+                    <div>
+                    <div class="slds-col " >
+                        <lightning:select aura:id="avail"
+                                          required="true"
+                                          variant="label-hidden" 
+                                          label="{!index}" 
+                                          value="{!item.avail}" 
+                                          onchange="{! c.updateAvailability }" 
+                                          disabled="{! !v.writeaccess }"                                         
+                                          >
+                            
+                            <aura:iteration items="{!v.avails}" var="op">                                
+                                <!--<option text="{!op.label}" value="{!op.val}" /> -->
+                                <option value="{!op.val}">{!op.label}</option>
+                            </aura:iteration> 
+                        </lightning:select>
+                    </div>
+                    
+                        </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="border " padding="around-small" size="2" >
+                    <lightning:input  padding="around-small" value="{!item.comment}" variant="label-hidden" label="{!index}" onblur="{!c.UpdateComment}" disabled="{! !v.writeaccess }"/>          
+                </lightning:layoutItem>
+                <lightning:layoutItem  class="border" padding="around-small" size="2" >                    
+                    <div >
+                    <lightning:input aura:id="availdte" type="date" value="{!item.availDate}" label="{!index}" variant="label-hidden"  onchange="{!c.updateAvailabilityDate}" disabled="{! !v.writeaccess }" /> 
+                    <ui:outputText aura:id="availDteerro1" class="error-text slds-hide"  value="Please select Future Availability Date "/>
+             		<!--<aura:if isTrue="{!v.showAvailabilityDateError}">
+                    <div aura:id="errorDiv" >
+           				<ui:outputText aura:id="availDteerro" class="error-text"  value="{!$Label.c.Avail_Date_Error}"/> 
+                    </div>
+                    </aura:if> -->   
+                    </div>               
+                	<!--<aura:if isTrue="{!and((or(item.avail == 'Empty' , item.avail == 'Indisponível')),(item.availDate == null)) }">-->
+                        <aura:if isTrue="{!and(item.avail == 'Empty' ,item.availDate == null)}">
+                    <!--<aura:if isTrue = "{!item.availDate == null}"> -->
+                    	<div><ui:outputText aura:id="availDteerro" class="error-text"  value="{!$Label.c.Avail_Date_Error}"/> </div>
+                        </aura:if>
+                      <!-- </aura:if> -->
+                     	
+                </lightning:layoutItem>        	
+        </lightning:layout>        
+    </aura:iteration>
+    <br/>
+     <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="2">
+                <div class="slds-float_left slds-p-left_xx-small">
+                <p class=" slds-col ">Page {!v.PageNumber} of {!v.TotalPages}</p> 
+                </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="8">
+                <div class="slds-align_absolute-center">  
+        <lightning:buttonGroup >
+                         
+            <lightning:button disabled="{!v.startPage == 0}" variant="brand" aura:id="prevPage" label="{!$Label.c.SIC_Prev}" onclick="{!c.handlePrev}" />            
+              
+            <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="{!$Label.c.SIC_Next}" onclick="{!c.handleNext}"/>
+                     
+        </lightning:buttonGroup>
+            </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small" size="2">
+                
+                </lightning:layoutItem>
+            </lightning:layout> 
+</aura:component>

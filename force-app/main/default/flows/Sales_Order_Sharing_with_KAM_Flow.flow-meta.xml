@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>SalesOrderSharingWithKAM</name>
+        <label>SalesOrderSharingWithKAM</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>KAM_not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Sold_to_Party__r.Key_Account_Manager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Sold_to_Party__r.Key_Account_Manager__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>creating_share_records</targetReference>
+            </connector>
+            <label>KAM not Null</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Sales Order Sharing with KAM {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Sales Order Sharing with KAM Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>SalesOrderSharingWithKAM</targetReference>
+        </connector>
+        <object>Sales_Order__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+    <subflows>
+        <name>creating_share_records</name>
+        <label>creating share records</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <flowName>Sales_Order_Sharing_with_KAM</flowName>
+        <inputAssignments>
+            <name>KAM</name>
+            <value>
+                <elementReference>KAM</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>SalesOrder</name>
+            <value>
+                <elementReference>SalesOrderId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <description>Passing value to flow</description>
+        <name>KAM</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Sold_to_Party__r.Key_Account_Manager__c</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <description>Passing Value to flow</description>
+        <name>SalesOrderId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Id</elementReference>
+        </value>
+    </variables>
+</Flow>

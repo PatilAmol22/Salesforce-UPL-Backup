@@ -1,0 +1,24 @@
+<aura:component controller = "SOColumbiaComp_Controller" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="showError" type="boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <div class="slds-spinner_container slds-is-fixed">
+            <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+        </div> 
+    </aura:if>
+    <aura:if isTrue="{!v.showError}">
+        <div class="slds-wrap slds-box slds-theme_default">
+            <div class="slds-grid slds-gutters slds-wrap">
+                
+                <div class="slds-col slds-size_4-of-4">
+                    <div class="slds-page-header__row" ><b>{!v.errorMsg}</b></div>
+                </div>
+            </div>    
+        </div>
+    </aura:if>
+    
+</aura:component>

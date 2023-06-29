@@ -1,0 +1,122 @@
+<!--********************************************************************************************
+* Name			    : Grz_OrderHistoryBarGraph.cmp
+* Description	    : Aura component to display Sales Order and Invoice Data as Bar graph 
+* Apex Controller	: Grz_OrderGraph 
+* LastModefied Date	: 28/07/2022 
+* Created By	    : Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<aura:component controller="Grz_OrderGraph" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}" afterScriptsLoaded="{!c.ctr}"/>
+    <aura:attribute name="creditList" type="Object"/>
+    <aura:attribute name="invoiceList" type="Object"/>
+    <aura:attribute name="totalValue" type="String"/>
+    <aura:attribute name="totalInvoiceValue" type="String"/>
+    <aura:attribute name="isIndia" type="boolean" default="false"/>
+    <aura:attribute name="validUser" type="boolean" default="false"/>
+    <aura:attribute name="isBrazil" type="boolean" default="false"/>
+    <aura:attribute name="isChile" type="boolean" default="false"/>
+    <aura:attribute name="isMexico" type="boolean" default="false"/>
+    <aura:attribute name="yearCheck" type="String" default="0"/>
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': 'Current Fiscal Year', 'value': '0'},
+                                                        {'label': 'Last Fiscal Year', 'value': '1'},
+                                                        ]"/>
+    <aura:attribute name="optionsBr" type="List" default="[
+                                                          {'label': 'Ano Fiscal Atual', 'value': '0'},
+                                                          {'label': 'Último Ano Fiscal', 'value': '1'},
+                                                          ]"/>
+    <aura:attribute name="optionsCl" type="List" default="[
+                                                          {'label': 'Año fiscal actual', 'value': '0'},
+                                                          {'label': 'Último año fiscal', 'value': '1'},
+                                                          ]"/>
+    <aura:attribute name="optionsMx" type="List" default="[
+                                                        {'label': 'Año fiscal actual', 'value': '0'},
+                                                        {'label': 'Último año fiscal', 'value': '1'},
+                                                        ]"/>
+    <div class="maindivcss">
+        <div class="slds-grid slds-wrap maindivcss">
+            <div class="slds-col slds-large-size_12-of-12 slds-p-left_x-small slds-p-right_x-small">
+                <aura:if isTrue="{!v.isIndia}">
+                    <div class="slds-grid slds-wrap slds-p-top_medium slds-p-left_x-small slds-p-right_x-small slds-p-bottom_medium slds-border_bottom">
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 totalcss">
+                            <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_OrderSummary}</span>
+                        </div>
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-align_right totalcss">
+                            <span class="aCSS  componentNotoSansBold totalcss">{!$Locale.currencyCode}&nbsp;{!v.totalValue}</span>
+                        </div>
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.isMexico}">
+                    <div class="slds-grid slds-wrap slds-p-top_medium slds-p-left_x-small slds-p-right_x-small slds-p-bottom_medium slds-border_bottom">
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 totalcss">
+                            <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_OrderSummary}</span>
+                        </div>
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-align_right totalcss">
+                            <span class="aCSS  componentNotoSansBold totalcss">{!$Locale.currencyCode}&nbsp;{!v.totalValue}</span>
+                        </div>
+                    </div>
+                </aura:if>
+                
+                 <aura:if isTrue="{!v.isChile}">
+                    <div class="slds-grid slds-wrap slds-p-top_medium slds-p-left_x-small slds-p-right_x-small slds-p-bottom_medium slds-border_bottom">
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 totalcss">
+                            <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_OrderSummary}</span>
+                        </div>
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-align_right totalcss">
+                            <span class="aCSS  componentNotoSansBold totalcss">{!v.totalValue}</span>
+                        </div>
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.isBrazil}">
+                    <div class="slds-grid slds-wrap slds-p-top_medium slds-p-left_x-small slds-p-right_x-small slds-p-bottom_medium slds-border_bottom">
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 totalcss">
+                            <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_OrderSummary}</span>
+                        </div>
+                        <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-align_right totalcss">
+                            <span class="aCSS  componentNotoSansBold totalcss">{!$Locale.currencyCode}&nbsp;{!v.totalValue}</span>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.validUser}">
+                        <div class="slds-grid slds-wrap slds-p-top_medium slds-p-left_x-small slds-p-right_x-small slds-p-bottom_medium slds-border_bottom">
+                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 totalcss">
+                                <span class="textCSS componentNotoSansLight">Total de faturas</span>
+                            </div>
+                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-align_right totalcss">
+                                <span class="aCSS  componentNotoSansBold totalcss">{!$Locale.currencyCode}&nbsp;{!v.totalInvoiceValue}</span>
+                            </div>
+                        </div>
+                    </aura:if>  
+                </aura:if>
+            </div>
+            <div class="year-main-div slds-p-bottom_medium">
+                <div class="year-left-div">
+                    <aura:if isTrue="{!v.isIndia}">
+                        <span class="yearCss componentNotoSansLight">Yearly Report</span>
+                    </aura:if>
+                    <!--<aura:if isTrue="{!v.isBrazil}">
+                        <span class="yearCss componentNotoSansLight">Relatório Anual</span>
+                    </aura:if>-->
+                </div>
+                <div class="year-right-div">
+                    <span class=" componentNotoSansBold combo-css">
+                        <aura:if isTrue="{!v.isIndia}">
+                            <lightning:combobox name="year" value="0" options="{! v.options }" onchange="{! c.handleYearChange }"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.isBrazil}">
+                            <lightning:combobox name="year" value="0" options="{! v.optionsBr }" onchange="{! c.handleYearChange }"/>
+                        </aura:if>
+                         <aura:if isTrue="{!v.isChile}">
+                            <lightning:combobox name="year" value="0" options="{! v.optionsCl }" onchange="{! c.handleYearChange }"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.isMexico}">
+                            <lightning:combobox name="year" value="0" options="{! v.optionsMx }" onchange="{! c.handleYearChange }"/>
+                        </aura:if>
+                    </span>
+                </div>
+            </div>
+            <div class="slds-col  slds-x-small-size_12-of-12  slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                <canvas aura:id="barChart" id="barChart" class=""/>
+            </div>
+        </div>
+    </div>
+</aura:component>

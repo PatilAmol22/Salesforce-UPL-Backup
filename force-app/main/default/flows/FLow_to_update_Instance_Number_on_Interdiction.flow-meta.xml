@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>update_instance_number</name>
+        <label>update instance number</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <actionName>InterdictionInstanceNumberHandler</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <environments>Default</environments>
+    <formulas>
+        <name>defaultvalue</name>
+        <dataType>Number</dataType>
+        <expression>1</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <name>InstanceNumber</name>
+        <dataType>String</dataType>
+        <expression>IF({!IncreaseValue}=0,&quot;INT0000001&quot;,
+IF(LEN(TEXT({!IncreaseValue}))=1 &amp;&amp; TEXT({!IncreaseValue})=&apos;9&apos;,&quot;INT00000&quot;+ TEXT({!IncreaseValue}+1),
+IF(LEN(TEXT({!IncreaseValue}))=1,&quot;INT000000&quot;+ TEXT({!IncreaseValue}+1),
+IF(LEN(TEXT({!IncreaseValue}))=2 &amp;&amp; TEXT({!IncreaseValue})=&apos;99&apos;,&quot;INT0000&quot;+ TEXT({!IncreaseValue}+1),
+IF(LEN(TEXT({!IncreaseValue}))=2 ,&quot;INT00000&quot; +  TEXT({!IncreaseValue}+1),
+IF(LEN(TEXT({!IncreaseValue}))=3 &amp;&amp; TEXT({!IncreaseValue})=&apos;999&apos;,&quot;INT000&quot;+ TEXT({!IncreaseValue}+1),
+IF(LEN(TEXT({!IncreaseValue}))=3,&quot;INT0000&quot;+ TEXT({!IncreaseValue}+1),
+IF(LEN(TEXT({!IncreaseValue}))=4 &amp;&amp; TEXT({!IncreaseValue})=&apos;9999&apos;,&quot;INT00&quot;+ TEXT({!IncreaseValue}+1),
+IF(LEN(TEXT({!IncreaseValue}))=4,&quot;INT000&quot;+ TEXT({!IncreaseValue}+1),
+&quot;&quot;)))))))))</expression>
+    </formulas>
+    <formulas>
+        <name>UpdateNao</name>
+        <dataType>String</dataType>
+        <expression>IF({!IncreasevalueforNao}=0,&quot;REC0000001&quot;,
+IF(LEN(TEXT({!IncreasevalueforNao}))=1 &amp;&amp; TEXT({!IncreasevalueforNao})=&apos;9&apos;,&quot;REC00000&quot;+ TEXT({!IncreasevalueforNao}+1),
+IF(LEN(TEXT({!IncreasevalueforNao}))=1,&quot;REC000000&quot;+ TEXT({!IncreasevalueforNao}+1),
+IF(LEN(TEXT({!IncreasevalueforNao}))=2 &amp;&amp; TEXT({!IncreasevalueforNao})=&apos;99&apos;,&quot;REC0000&quot;+ TEXT({!IncreasevalueforNao}+1),
+IF(LEN(TEXT({!IncreasevalueforNao}))=2 ,&quot;REC00000&quot; +  TEXT({!IncreasevalueforNao}+1),
+IF(LEN(TEXT({!IncreasevalueforNao}))=3 &amp;&amp; TEXT({!IncreasevalueforNao})=&apos;999&apos;,&quot;REC000&quot;+ TEXT({!IncreasevalueforNao}+1),
+IF(LEN(TEXT({!IncreasevalueforNao}))=3,&quot;REC0000&quot;+ TEXT({!IncreasevalueforNao}+1),
+IF(LEN(TEXT({!IncreasevalueforNao}))=4 &amp;&amp; TEXT({!IncreasevalueforNao})=&apos;9999&apos;,&quot;REC00&quot;+ TEXT({!IncreasevalueforNao}+1),
+IF(LEN(TEXT({!IncreasevalueforNao}))=4,&quot;REC000&quot;+ TEXT({!IncreasevalueforNao}+1),
+&quot;&quot;)))))))))</expression>
+    </formulas>
+    <interviewLabel>FLow to update Instance Number on Interdiction {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FLow to update Instance Number on Interdiction</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>update_instance_number</targetReference>
+        </connector>
+        <object>Interdiction_Process__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>IncreaseValue</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>IncreasevalueforNao</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+</Flow>

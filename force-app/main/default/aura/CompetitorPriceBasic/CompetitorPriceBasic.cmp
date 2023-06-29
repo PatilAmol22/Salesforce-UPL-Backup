@@ -1,0 +1,393 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride" access="global">
+<aura:attribute name="customAddress" type="Boolean" default="false"/>
+<div class="slds">
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <!-- <c:svgIcon svgPath="/resource/slds090/assets/icons/standard-sprite/svg/symbols.svg#orders" category="standard" size="large" name="orders"/> -->
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-heading--label">Create Competitor</p>
+                        <div class="slds-grid">
+                            <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">Competitor Pricing</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div style="float:right; margin-top:10px;">
+              Auto Response:
+              <span><img src="{!$Resource.like}" style="margin-top:-10px; width:40px; height:38px;"/></span></div> -->
+        </div>
+    </div>
+</div>
+
+
+<div class="slds" style="background:#fff;">
+<div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+    PRODUCT Details
+</h3>
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+<div class="slds-form-element" style="margin-top:12px;">
+<div class="slds-form-element__control">
+    <lightning:select name="TypeofOrder" label="Reporting Type" onchange="" disabled="{!v.customAddress}">
+        <option value="">Choose one...</option>
+        <option value="1">one</option>
+        <option value="2">two</option>
+    </lightning:select>
+</div>
+</div>
+</div>
+    
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+<div class="slds-form-element" style="margin-top:12px;">
+<div class="slds-form-element__control">
+    <lightning:select name="TypeofOrder" label="Brand" onchange="" disabled="{!v.customAddress}">
+        <option value="">Choose one...</option>
+        <option value="1">one</option>
+        <option value="2">two</option>
+    </lightning:select>
+</div>
+</div>
+</div>
+
+    <div style="clear:both;"></div>
+    
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+<div class="slds-form-element" style="margin-top:12px;">
+<div class="slds-form-element__control">
+    <lightning:select name="TypeofOrder" label="Company" onchange="" disabled="{!v.customAddress}">
+        <option value="">Choose one...</option>
+        <option value="1">one</option>
+        <option value="2">two</option>
+    </lightning:select>
+</div>
+</div>
+</div>
+ 
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">  
+<div class="slds-form-element" style="margin-top:12px;">
+<div class="slds-form-element__control">
+    <lightning:select name="TypeofOrder" label="Formulation" onchange="" disabled="{!v.customAddress}">
+        <option value="">Choose one...</option>
+        <option value="1">one</option>
+        <option value="2">two</option>
+    </lightning:select>
+</div>
+</div>
+</div>    
+  
+ <!-- -->
+    
+<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+    Price and Scheme Details
+</h3>
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="margin-top:12px;">
+
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin:0; padding:0;">
+  
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:select name="Pack Size" label="Pack Size" onchange="">
+        <option value="">Choose one...</option>
+        <option value="1 Unit">1 Unit</option>
+        <option value="2 Unit">2 Unit</option>
+    </lightning:select>
+  </div>
+  </div>
+    
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="MRP" name="MRP"/>
+  </div>
+  </div>
+    
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Farmer Price" name="Farmer Price"/>
+  </div>
+  </div>
+    
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Retailer Price/Pack" name="Retailer Price/Pack"/>
+  </div>
+  </div>
+  
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Distributor Price NRV/Pack" name="Distributor Price NRV/Pack"/>
+  </div>
+  </div>
+    
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Schemes" name="Schemes"/>
+  </div>
+  </div>
+    
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Comments" name="Comments"/>
+  </div>
+  </div>  
+    
+</div>
+    
+</div>
+    
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" style="margin-top:12px;">
+  
+<div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-top:12px;">
+  <div class="slds-form-element">
+  <span class="slds-form-element__label" id="file-selector-primary-label">Schemes Photo</span>
+  <div class="slds-form-element__control">
+    <div class="slds-file-selector slds-file-selector_files">
+      <div class="slds-file-selector__dropzone">
+        <input class="slds-file-selector__input slds-assistive-text" accept="image/png" type="file" id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
+        <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
+          <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+        </label>
+      </div>
+     </div>
+    </div>
+   </div>
+  
+ <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Item 1" name="Item 1"/>
+  </div>
+ </div>
+    
+ <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Item 2" name="Item 2"/>
+  </div>
+ </div>
+ 
+ <div class="slds-form-element">
+  <span class="slds-form-element__label" id="file-selector-primary-label">Packshots</span>
+  <div class="slds-form-element__control">
+    <div class="slds-file-selector slds-file-selector_files">
+      <div class="slds-file-selector__dropzone">
+        <input class="slds-file-selector__input slds-assistive-text" accept="image/png" type="file" id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
+        <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
+          <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+        </label>
+      </div>
+     </div>
+    </div>
+  </div>
+    
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Item 1" name="Item 1"/>
+  </div>
+ </div>
+    
+ <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Item 2" name="Item 2"/>
+  </div>
+ </div>
+ 
+  <div class="slds-form-element">
+  <span class="slds-form-element__label" id="file-selector-primary-label">Labels</span>
+  <div class="slds-form-element__control">
+    <div class="slds-file-selector slds-file-selector_files">
+      <div class="slds-file-selector__dropzone">
+        <input class="slds-file-selector__input slds-assistive-text" accept="image/png" type="file" id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
+        <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
+          <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+        </label>
+      </div>
+     </div>
+    </div>
+  </div>
+    
+  <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Item 1" name="Item 1"/>
+  </div>
+ </div>
+    
+ <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Item 2" name="Item 2"/>
+  </div>
+ </div>   
+  
+</div>    
+</div> 
+    
+<div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+ 	<lightning:button variant="brand" label="Add" iconName="utility:add" iconPosition="left" />
+ 	<lightning:button variant="brand" label="Reset" iconName="utility:close" iconPosition="left" />
+</div>
+</div>  
+    
+<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:0; background:#769ed9; color:#fff; font-weight:bold;">
+  <div style="margin-top:5px; padding-right:20px; font-weight:bold;">Scheme Details</div>
+</h3>
+
+<div class="slds-scrollable_x" width="100%" style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+  <thead>
+    <tr class="slds-text-heading--label">
+      <th class="slds-is-sortable" scope="col">
+        <div class="slds-truncate">Packsize</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+        <div class="slds-truncate">MRP</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+          <div class="slds-truncate">Farmer Price/Pack</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+          <div class="slds-truncate">Retailer Price/Pack</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+          <div class="slds-truncate">Distributor Price NRV/Pack</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+        <div class="slds-truncate">ACTION</div>
+      </th>
+      <th class="slds-cell-shrink"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="slds-hint-parent">
+      <th class="slds-truncate" data-label="Packsize">Packsize 1</th>
+      <td class="slds-truncate" data-label="MRP">400</td>
+      <td class="slds-truncate" data-label="Farmer Price/Pack">350</td>
+      <td class="slds-truncate" data-label="Retailer Price/Pack">321</td>
+      <td class="slds-truncate" data-label="Distributor Price NRV/Pack">300</td>
+      <td class="slds-truncate" data-label="ACTION"><lightning:icon class="icn" iconName="utility:clear" size="small" alternativeText="Indicates Delete"/></td>
+    </tr>
+    <tr class="slds-hint-parent">
+      <th class="slds-truncate" data-label="Packsize">Packsize 2</th>
+      <td class="slds-truncate" data-label="MRP">500</td>
+      <td class="slds-truncate" data-label="Farmer Price/Pack">525</td>
+      <td class="slds-truncate" data-label="Retailer Price/Pack">489</td>
+      <td class="slds-truncate" data-label="Distributor Price NRV/Pack">450</td>
+      <td class="slds-truncate" data-label="ACTION"><lightning:icon class="icn" iconName="utility:clear" size="small" alternativeText="Indicates Delete"/></td>
+    </tr>
+    <tr class="slds-hint-parent">
+      <th class="slds-truncate" data-label="Packsize">Packsize 3</th>
+      <td class="slds-truncate" data-label="MRP">2500</td>
+      <td class="slds-truncate" data-label="Farmer Price/Pack">2420</td>
+      <td class="slds-truncate" data-label="Retailer Price/Pack">2300</td>
+      <td class="slds-truncate" data-label="Distributor Price NRV/Pack">2250</td>
+      <td class="slds-truncate" data-label="ACTION"><lightning:icon class="icn" iconName="utility:clear" size="small" alternativeText="Indicates Delete"/></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    
+<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:20px 0 0 0; background:#dcedfb; font-weight:bold;">
+    Update Label Claim
+</h3> 
+<div class="slds-grid slds-gutters" style="padding:0 12px 0 12px;">
+<div class="slds-col">
+<div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:select name="Crop" label="Crop" onchange="">
+        <option value="">Choose one...</option>
+        <option value="1 Unit">1 Unit</option>
+        <option value="2 Unit">2 Unit</option>
+    </lightning:select>
+  </div>
+  </div>
+</div>
+<div class="slds-col">
+<div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:select name="Pest" label="Pest" onchange="">
+        <option value="">Choose one...</option>
+        <option value="1 Unit">1 Unit</option>
+        <option value="2 Unit">2 Unit</option>
+    </lightning:select>
+  </div>
+  </div>
+</div>
+<div class="slds-col">
+ <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Dose" name="Dose"/>
+  </div>
+ </div>
+</div>
+<div class="slds-col">
+ <div class="slds-form-element">
+  <div class="slds-form-element__control">
+      <lightning:input label="Per Acre Cost" name="Per Acre Cost"/>
+  </div>
+ </div>
+</div>
+</div>
+
+<div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+ 	<lightning:button variant="brand" label="Add" iconName="utility:add" iconPosition="left" />
+ 	<lightning:button variant="brand" label="Reset" iconName="utility:close" iconPosition="left" />
+</div>
+
+    
+<div class="slds-scrollable_x" width="100%" style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+  <thead>
+    <tr class="slds-text-heading--label">
+      <th class="slds-is-sortable" scope="col">
+        <div class="slds-truncate">Crop</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+        <div class="slds-truncate">Pest</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+          <div class="slds-truncate">Dose(ml/gm per acre)</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+          <div class="slds-truncate">Per Acre Cost</div>
+      </th>
+      <th class="slds-is-sortable" scope="col">
+          <div class="slds-truncate">Action</div>
+      </th>  
+      <th class="slds-cell-shrink"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="slds-hint-parent">
+      <th class="slds-truncate" data-label="Crop">Apple</th>
+      <td class="slds-truncate" data-label="Pest">Apple bitter rot</td>
+      <td class="slds-truncate" data-label="Dose(ml/gm per acre)">50</td>
+      <td class="slds-truncate" data-label="Per Acre Cost">321</td>
+      <td class="slds-truncate" data-label="ACTION"><lightning:icon class="icn" iconName="utility:clear" size="small" alternativeText="Indicates Delete"/></td>
+    </tr>
+    <tr class="slds-hint-parent">
+      <th class="slds-truncate" data-label="Crop">Apple</th>
+      <td class="slds-truncate" data-label="Pest">Apple bitter rot</td>
+      <td class="slds-truncate" data-label="Dose(ml/gm per acre)">50</td>
+      <td class="slds-truncate" data-label="Per Acre Cost">321</td>
+      <td class="slds-truncate" data-label="ACTION"><lightning:icon class="icn" iconName="utility:clear" size="small" alternativeText="Indicates Delete"/></td>
+    </tr>
+    <tr class="slds-hint-parent">
+      <th class="slds-truncate" data-label="Crop">Apple</th>
+      <td class="slds-truncate" data-label="Pest">Apple bitter rot</td>
+      <td class="slds-truncate" data-label="Dose(ml/gm per acre)">50</td>
+      <td class="slds-truncate" data-label="Per Acre Cost">321</td>
+      <td class="slds-truncate" data-label="ACTION"><lightning:icon class="icn" iconName="utility:clear" size="small" alternativeText="Indicates Delete"/></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+    
+<div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+ 	<lightning:button variant="brand" label="Submit" iconName="utility:check" iconPosition="left" />
+ 	<lightning:button variant="brand" label="Reset" iconName="utility:close" iconPosition="left" />
+ 	<lightning:button variant="brand" label="Save As Draft" iconName="utility:save" iconPosition="left" />
+</div>
+</div>
+
+
+</aura:component>

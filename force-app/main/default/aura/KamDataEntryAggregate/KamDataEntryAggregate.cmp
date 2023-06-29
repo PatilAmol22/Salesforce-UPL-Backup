@@ -1,0 +1,76 @@
+<aura:component >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="PayoutList" type="List" />
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:attribute name="masterList" type="List"/>
+    <aura:attribute name="rCode" type="String"/>
+    <aura:attribute name="pType" type="String"/>
+    <aura:registerEvent name="setPayout" type="c:KamDataEntryAggregateSubmit"/>
+    <aura:registerEvent name="closeModal" type="c:KamDataEntryAggregateCloseModal"/>
+    
+    <lightning:layout class="slds-p-bottom_xx-small">
+        <lightning:layoutItem class="slds-p-top_small" size="2">
+            <b>Tier</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="slds-p-top_small" size="5">
+            <b>Threshold Qty</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="slds-p-top_small" size="5">
+            <b>Payout Per unit</b>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <aura:iteration items="{!v.PayoutList}" var="item" indexVar="ppindex">
+        <lightning:layout  multipleRows="true" class="slds-p-bottom_x-small">
+            <lightning:layoutItem size="2">
+                <b>
+                    <lightning:formattedNumber value="{!item.Tier}"  variant="label-hidden"  />
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="5">
+                <b>
+                    <lightning:input type="number" class="right-text-align" disabled=""  variant="label-hidden"  value="{!item.threshold}" onblur=""  />  
+                </b>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="5">
+                <b>
+                    <lightning:input type="number" disabled="" class="right-text-align"  variant="label-hidden"  value="{!item.payout}" onblur=""   step=".01"/>  
+                </b>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:iteration>
+    <div class="right-align">
+        <a onclick="{!c.removeRow}" data-index="{!v.rowIndex}">
+            <lightning:buttonIcon iconName="utility:dash" variant="bare"  alternativeText="Remove" title="Remove" />
+        </a>&nbsp;<a  data-index="{!v.rowIndex}">
+        <lightning:buttonIcon iconName="utility:add" variant="bare" onclick="{!c.addNewRow}" alternativeText="Add" title="Add" />
+        </a>
+    </div>
+    <!--Modified by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem class="slds-p-top_large rCode"  size="4">
+            Reason Code :
+        </lightning:layoutItem>
+        <lightning:layoutItem class="rCodeP"  size="8">
+            <lightning:select name="ReasonCode" label="Reason Code : " variant="label-hidden" onchange = "{!c.AddrCode}" value="{!v.rCode}" >
+                <option value="Competitive Response">Competitive Response</option>
+                <option value="Early Stocking">Early Stocking</option>
+                <option value="Growth">Growth</option>
+                <option value="Growth">SG&amp;A Expense</option>
+                <option value="Other">Other</option>
+            </lightning:select>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!--***************End*************** by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+    <footer class="slds-text-align_center slds-m-top_x-large slds-m-bottom_x-large">
+        <lightning:button variant="neutral"
+                          label="Cancel"
+                          title="Cancel"
+                          onclick="{! c.closeModel }"/>
+        <lightning:button variant="brand"
+                          label="OK"
+                          title="OK"
+                          onclick="{!c.submitDetails}"/>
+    </footer>
+    
+</aura:component>

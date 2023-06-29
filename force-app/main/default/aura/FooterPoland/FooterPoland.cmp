@@ -1,0 +1,133 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+ <div class="slds-grid slds-wrap slds-gutters" style="background:#000; margin:0; padding:0px;">
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+      <li class="slds-item">
+          <a><b>O nas</b></a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/pl/misja-i-warto%C5%9Bci" target="_blank">Misja i wartosci</a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/pl/nasza-historia" target="_blank">Nasza historia</a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/pl/pracownicy" target="_blank">Pracownicy</a>
+      </li>
+  </ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Produkty</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=1" target="_blank">Herbicydy</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=2" target="_blank">Fungicydy</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=3" target="_blank">Regulatory Wzrostu</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=4" target="_blank">Insektycydy</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=5" target="_blank">Kondycjoner Gleby</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=6" target="_blank">Nawozy</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=9" target="_blank">Zaprawy</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=11" target="_blank">Adiuwanty</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=14" target="_blank">Biostymulatory</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/produkty?level_one=1&amp;level_two_select=16" target="_blank">Ochrona Biologiczna</a>
+  </li>
+</ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/aktualno%C5%9Bci" target="_blank"><b>Aktualności</b></a>
+  </li>
+</ul>
+</div>
+  <!--  
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pl/dystrybucja" target="_blank"><b>Dystrybucja</b></a>
+  </li>
+</ul>
+</div>
+  -->   
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Programy</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://pronutiva.pl" target="_blank">ProNutiva</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://upllider.pl/" target="_blank">Lider</a>
+  </li> 
+  <li class="slds-item">
+    <a href="https://www.kasa-wraca.pl/" target="_blank">KasaWraca</a>
+  </li>      
+</ul>
+</div>  
+  
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Kontakt</b></a>
+  </li>
+  <li class="slds-item">
+    <a>Email:sekretariat@upl-ltd.com</a>
+  </li> 
+  <li class="slds-item">
+    <a>Tel. 22 434 00 90</a>
+  </li>     
+</ul>
+</div>   
+    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#ff7701; padding:20px 0 10px 20px; margin:0;">    
+<ul class="slds-list_horizontal" style="float:left;">
+<li>Copyright @ UPL 2020</li>
+    <li><a href="https://www.upl-ltd.com/pl/warunki-korzystania-z-serwisu" target="_blank">Warunki korzystania z serwisu</a></li>
+    <li><a href="https://www.upl-ltd.com/pl/polityka-prywatno%C5%9Bci" target="_blank">Polityka prywatności</a></li>
+</ul>
+    
+<ul class="slds-list_horizontal" style="float:right;">
+    <li style="margin-top:-5px;"><a href="https://www.youtube.com/channel/UCPVVXjm9G8FnO0WDmsTpXRQ" target="_blank"><img src="{!$Resource.youtubeicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.facebook.com/uplltd/?ref=settings" target="_blank"><img src="{!$Resource.fbicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://twitter.com/upl_polska" target="_blank"><img src="{!$Resource.twittericonnew}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.linkedin.com/company/upl-ltd/" target="_blank"><img src="{!$Resource.inicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.instagram.com/upl_polska/" target="_blank"><img src="{!$Resource.instaicon}"/></a></li>
+</ul>     
+</div> 
+</div>
+
+<!--
+<div class="slds-grid slds-wrap slds-gutters">    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#FF8833; text-align:center; padding:10px 0; color:#fff;">    
+    Copyright@UPL2019 &nbsp;&nbsp;&nbsp;<a href="">Term of Service</a>&nbsp;&nbsp;&nbsp; <a href="">Contact</a>&nbsp;&nbsp;&nbsp; <a href="">disclaimer</a>
+</div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+      <span>
+      <img src="{!$Resource.social}"/>
+      </span>
+    </div>    
+</div>-->
+</aura:component>

@@ -1,0 +1,72 @@
+<template>
+    <div class={divclass}>
+        <div class={textclass} style="padding:10px; font-weight:bold; font-size: medium;" >{label.PO_Number_and_Documents}</div>
+        <div class="margin_top">
+            <ul class="Ul_class" style="width:100%">
+                <li class="li-items">
+                <label class="slds-form-element__label" for="text-input-id-1"  style="font-weight:bold;"><span class="slds-required">*</span>{label.Po_Number_Uk}</label>
+                <lightning-input class="poclass" type="text" variant="label-hidden" message-when-value-missing="Please complete this required field" value={ponumber} placeholder="Type Here..." maxlength="32" style="margin-top: 5px;" message-when-too-long={label.Po_Number_error} onchange={handlechange} disabled={isdisabledtrue} required={required}></lightning-input>
+                </li>
+                <li class="li-items">
+                <!--label class="slds-form-element__label" for="text-input-id-1"  style="font-weight:bold;">{label.Po_DocumentsUk}</label-->
+                <div>
+                    <lightning-file-upload
+                    class="fileuploader"
+                    style="font-weight:bold;"
+                    label={label.Po_DocumentsUk}
+                    name="fileUploader"
+                    accept={acceptedFormats}
+                    record-id={strUserId}
+                    disabled={isdisabledtrue}
+                    onuploadfinished={handleUploadFinished}>
+                   </lightning-file-upload>
+                </div>
+                
+                <!--div class="displayfileuploaderdesktop">
+                    <lightning-file-upload
+                    variant="label-hidden"
+                    name="fileUploader"
+                    accept={acceptedFormats}
+                    record-id={strUserId}
+                    disabled={isdisabledtrue}
+                    onuploadfinished={handleUploadFinished}>
+            </lightning-file-upload>
+                </div>
+                    
+                <div class="displayfileuploader">
+                        <lightning-input type="file" 
+                        accept={acceptedFormats}
+                        disabled={isdisabledtrue}
+                        variant="label-hidden"
+                        label="Attachment" onchange={openfileUpload}></lightning-input>
+                </div-->
+                </li>
+                <li class="li-items" style="margin-top: 3%;">
+                    <template if:true={fileUploderlist}>
+                        <template for:each={fileUploderlist} for:item="item" for:index="indexed">
+                        <ul key={item.contentVersionId} class="Ul_class" style=" width:100%">
+                            <li class="li-items2">
+                                <lightning-pill label={item.name}  data-id={item.contentVersionId} data-record={indexed} onremove={handleRemove}>
+                                    <lightning-icon icon-name="utility:file" variant="circle" alternative-text="account" disabled={isdisabledtrue}></lightning-icon>
+                                </lightning-pill>
+                            </li>
+
+                        </ul>
+                        </template>
+                    </template>
+                </li>
+
+                <!-- Start SKI(Nik) : #CR152 : PO And Delivery Date : 07-09-2022 -->
+                <template if:true={showPODate}>
+                    <li class="li-items">
+                        <label class="slds-form-element__label" for="text-input-id-2"  style="font-weight:bold;">  <template if:true={isPODateReq}><span class="slds-required">*</span></template>{label.poDateL}</label>
+                        <lightning-input type="date" variant="label-hidden" message-when-value-missing={label.poRequired} value={poDate} style="margin-top: 5px;"  onchange={handlePODatechange} disabled={isdisabledtrue} required={isPODateReq}></lightning-input>
+                        <!-- min={currentdate} message-when-range-underflow={label.poDateNotLessThanToday} -->
+                    </li>
+                </template>
+                <!-- End SKI(Nik) : #CR152 : PO And Delivery Date : 07-09-2022 -->
+        </ul>
+        </div>
+    </div>
+    
+</template>

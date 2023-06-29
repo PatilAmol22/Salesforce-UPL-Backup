@@ -1,0 +1,553 @@
+<aura:component controller="QuoteProductEntry_CAM_Controller" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!--All Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="oSelectedRecordEventSKU" event="c:selectedsObjectRecordEventSKU" action="{!c.onChnageSelectedSKU}"/>
+    <aura:handler name="oSelectedRecordEventSKUPopup" event="c:selectedsObjectRecordEventSKUPopup" action="{!c.onChnageSelectedSKUPopup}"/>
+    
+    
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="salesOrgList" type="List"/>
+    <aura:attribute name="selectedSalesOrg" type="String" />
+    <aura:attribute name="packSize" type="String" default="" />
+    <aura:attribute name="quantity" type="String" default="0" />
+    <aura:attribute name="price" type="String" default="0.00" />
+    <aura:attribute name="amount" type="String" default="0.00" />
+    <aura:attribute name="label" type="String" default="SKU" />
+    <aura:attribute name="errorMSG" type="String" default="" /> 
+    <aura:attribute name="disableFields" type="Boolean" default="true" />
+    <aura:attribute name="selectedRecord" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="selectedRecordPopup" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="SearchKeyWord" type="string"/>
+    <aura:attribute name="SearchKeyWordPopup" type="string"/>
+    <aura:attribute name="quoteLineItemList" type="List"/> 
+    <aura:attribute name="rowQuoteLineItemId" type="String"/>
+    <aura:attribute name="disableComfirm" type="Boolean" default="true"/>
+    <aura:attribute name="UOM" type="String"/> 
+    <aura:attribute name="UOMPopup" type="String"/>  
+    <aura:attribute name="minPricePopup" type="String"/>
+    <aura:attribute name="maxPricePopup" type="String"/> 
+    <aura:attribute name="inventoryPopup" type="String"/>
+    <aura:attribute name="showHideInventory" type="Boolean" default="false"/> 
+    <aura:attribute name="showHideInventory1" type="Boolean" default="false"/>
+    
+    <aura:attribute name="minPrice" type="String"/>
+    <aura:attribute name="maxPrice" type="String"/>
+    <aura:attribute name="Inventory" type="String"/>
+    <aura:attribute name="SKUId" type="String" default="" /> 
+    <aura:attribute name="itemNumber" type="String" default="" /> 
+    <aura:attribute name="depotId" type="String" default="" /> 
+    <aura:attribute name="storageLocation" type="String" default=""/> 
+    <aura:attribute name="division" type="String" default="" />
+    <aura:attribute name="distributionChannel" type="String" default="" />
+    <aura:attribute name="SalesOrg" type="String" default="" />
+    
+    
+    
+    <!--This is for Custom Lookup-->
+    <aura:attribute name="listOfSearchRecords" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    
+    
+    <!--this is for Modal Popup-->
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="selectedSalesOrgPopup" type="String" />
+    <aura:attribute name="packSizePopup" type="String" />
+    <aura:attribute name="disableFieldsPopup" type="Boolean" default="true" />
+    <aura:attribute name="quantityPopup" type="String"  />
+    <aura:attribute name="pricePopup" type="String"  />
+    <aura:attribute name="amountPopup" type="String"  />
+    <aura:attribute name="errorMSGPopup" type="String" default="" />
+    <aura:attribute name="quoteLineItemListPopup" type="QuoteLineItem[]"/> 
+    <aura:attribute name="isPopup" type="Boolean" default="false" />
+    <aura:attribute name="ProductNamePop" type="String" default="" />
+    
+    
+    <div class="slds-grid slds-wrap" style="background:#ededed; padding:10px; border-radius:5px 5px 0 0;">
+        
+        
+        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+            
+            <span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px;">
+                <lightning:icon iconName="standard:product_item" alternative-text="product_item" size="medium"/>
+            </span>
+            
+            <h1 style="float:left; margin:8px; font-size:22px;">
+                <span class="slds-page-header_title" title="{!$Label.c.Quote_Line_Item}">{!$Label.c.Quote_Line_Item}</span>
+            </h1>
+        </div>  
+    </div>
+    
+    
+    <div class="slds-box slds-theme_default">
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#0D70A5;">
+                <p style="color:#fff; padding:10px; font-weight:700;">{!$Label.c.Add} {!$Label.c.SKU}</p>
+            </div>
+        </div> 
+        
+        <div class="slds-grid slds-gutters slds-wrap">
+            <p style="color:#ff0000; padding:10px; font-weight:700;"> <ui:outputText value="{!v.errorMSG}"/></p>
+        </div>
+        <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:10px;">
+            
+            
+            
+            <!--this is Start for SKU Section Lookup-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                <div class="slds-form-element">
+                    <div onmouseleave="{!c.onblur}" aura:id="searchRes" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+                        <label class="slds-form-element__label" for="lookup-348">{!v.label}</label>
+                        <!--This part is for display search bar for lookup-->  
+                        <div class="slds-form-element__control">
+                            
+                            <div class="slds-input-has-icon slds-input-has-icon--right">
+                                <!-- This markup is for when an record is selected -->
+                                <div aura:id="lookup-pill" class="slds-pill-container slds-hide">
+                                    <lightning:pill class="pillSize" label="{!v.selectedRecord.Product2.Description}" name="{!v.selectedRecord.Product2.Description}" onremove="{! c.clear }">
+                                        <aura:set attribute="media">
+                                            <!-- <lightning:icon iconName="{!v.IconName}" size="x-small" alternativeText="{!v.IconName}"/>-->
+                                        </aura:set>
+                                    </lightning:pill>
+                                </div>
+                                <div aura:id="lookupField" class="slds-show">
+                                    <lightning:icon class="slds-input__icon slds-show" iconName="utility:search" size="x-small" alternativeText="{!$Label.c.Search}"/>
+                                    <ui:inputText click="{!c.onfocus}"  updateOn="keyup" keyup="{!c.keyPressController}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWord}" placeholder="{!$Label.c.Search}"/>
+                                </div>   
+                            </div>
+                        </div>
+                        <!--This part is for Display type head lookup result List-->  
+                        <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                            <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinner"/>
+                            <center> {!v.Message}</center>
+                            <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                                <c:customLookupResultforSKU oRecord="{!singleRec}"/>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--this is end for SKU Section Lookup-->
+            
+            
+            <!--This is for UOM-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_2-of-12">
+                <div class="slds-form-element">
+                    
+                    <div class="slds-form-element__control">
+                        
+                        <lightning:input name="UOM" label="{!$Label.c.UOM}"
+                                         aura:id="UOM"
+                                         value="{!v.UOM}"
+                                         disabled="{!v.disableFields}"/>
+                    </div>
+                </div>
+            </div>
+            <!--This is for En d of UOM-->
+            
+            
+            
+            <!--This is for Pack Size-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12">
+                <div class="slds-form-element">
+                    <!-- <label class="slds-form-element__label" for="text-input-id-1">Pack Size</label>-->
+                    <div class="slds-form-element__control">
+                        
+                        <lightning:input name="Pack Size" label="{!$Label.c.Pack_Size}"
+                                         aura:id="packSize"
+                                         value="{!v.packSize}"
+                                         disabled="{!v.disableFields}"
+                                         messageWhenValueMissing="{!$Label.c.Please_Enter_Pack_Size}"
+                                         style="width:150px;"/>
+                        
+                    </div>
+                </div>
+            </div>
+            <!--This is End for Pack Size-->
+            
+            
+            <!--This is for minimum Price-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12" style="display:none;">
+                <div class="slds-form-element">
+                    
+                    <div class="slds-form-element__control">
+                        <lightning:input name="minPrice" label="{!$Label.c.Min_Price}"
+                                         aura:id="minPrice"
+                                         value="{!v.minPrice}"
+                                         messageWhenValueMissing="{!$Label.c.Please_Enter_Min_Price}"
+                                         disabled="{!v.disableFields}"
+                                         />
+                    </div>
+                </div>
+            </div> 
+            <!--This is end for Pack Size-->
+            
+            
+            <!--This is for Maximum Price-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                <div class="slds-form-element">
+                    <!-- <label class="slds-form-element__label" for="text-input-id-1">Pack Size</label>-->
+                    <div class="slds-form-element__control">
+                        <lightning:input name="maxPrice" label="{!$Label.c.Max_Price}"
+                                         aura:id="maxPrice"
+                                         value="{!v.maxPrice}"
+                                         messageWhenValueMissing="{!$Label.c.Please_Enter_Max_Price}"
+                                         disabled="{!v.disableFields}"
+                                         />
+                    </div>
+                </div>
+            </div> <!--This is end for Max Price-->
+            
+            <!--This is start of Quantity-->
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                <div class="slds-form-element">
+                    <!--  <label class="slds-form-element__label" for="text-input-id-1">Quantity</label>-->
+                    <div class="slds-form-element__control">
+                        
+                        
+                        <lightning:input name="Quantity" label="{!$Label.c.Quantity}"
+                                         required="true"
+                                         aura:id="quantity"
+                                         value="{!v.quantity}"
+                                         onblur="{!c.checkIfNotNumber}"
+                                         onclick="{!c.onfocusQuantity}"
+                                         messageWhenValueMissing="{!$Label.c.Please_enter_Quantity}"/>                        
+                        
+                    </div>
+                </div>
+            </div>
+            <!--This is end of Quantity-->
+            
+            <!--This is Start of Final Price-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                <div class="slds-form-element">
+                    
+                    <div class="slds-form-element__control " >
+                        
+                        <lightning:input name="Final Price" label="{!$Label.c.Final_Price}"
+                                         required="true"
+                                         aura:id="price"
+                                         value="{!v.price}"
+                                         onblur="{!c.checkIfNumberOfPrice}"
+                                         onclick="{!c.onfocusPrice}"
+                                         messageWhenValueMissing="{!$Label.c.Please_enter_Final_Price}"
+                                         class="finalPriceClass"/>    
+                        
+                    </div>
+                </div>
+            </div><!--This is end of Final Price-->
+            
+            <!--This is for Net Sales Start-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label netPriceClass" for="text-input-id-1">{!$Label.c.Net_Sales}</label>
+                    <div class="slds-form-element__control">
+                        <ui:inputText value="{!v.amount}" disabled="true" class="slds-input netPriceClass" />
+                    </div>
+                </div>
+            </div>
+            <!--This is for End of Net Sales-->
+            
+            <!--This is for Inventory-->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                <div class="slds-form-element">
+                    <!--  <label class="slds-form-element__label" for="text-input-id-1">Unit Price</label>-->
+                    <div class="slds-form-element__control">
+                        
+                        <aura:if isTrue="{!v.showHideInventory}">
+                            <lightning:input name="Inventory"
+                                         label="{!$Label.c.Inventory}"
+                                         aura:id="Inventory"
+                                         value="{!v.Inventory}"
+                                         disabled="{!v.disableFields}"/>   
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+            
+            <!--This is End  for Inventory-->
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12" >
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="text-input-id-1">{!$Label.c.Add}</label>
+                    <div class="slds-form-element__control" disabled="{!v.disableComfirm}">
+                        <lightning:icon iconName="utility:add" size="medium" alternativeText="Connected" title="{!$Label.c.Add}" onclick="{!c.addToQuoteLine}" />
+                        <!--<lightning:button label="{!$Label.c.Add}" onclick="{!c.addToQuoteLine}" disabled="{!v.disableComfirm}" iconName="utility:new" variant="brand" />-->
+                        
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <div class="outer-div">
+            <lightning:spinner aura:id="Spinner"  alternativeText="{!$Label.c.Loading}" variant="brand" class="spinner slds-hide" />
+        </div>
+        
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#0D70A5;">
+                <p style="color:#fff; padding:10px; font-weight:700;">{!$Label.c.SKU_Details}</p>
+            </div>
+        </div> 
+        
+        <div style="border:1px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <!-- <th class="" scope="col">
+                            <div class="slds-truncate" title="Account Name">SKU</div>
+                        </th>-->
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="{!$Label.c.Description}">{!$Label.c.Description}</div>
+                        </th>
+                        
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="{!$Label.c.UOM}">{!$Label.c.UOM}</div>
+                        </th>
+                        
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="{!$Label.c.Pack_Size}">{!$Label.c.Pack_Size}</div>
+                        </th>
+                        
+                        <th class="" scope="col" style="display:none;">
+                            <div class="slds-truncate" title="{!$Label.c.Min_Price}">{!$Label.c.Min_Price}</div>
+                        </th>
+                        
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="{!$Label.c.Max_Price}">{!$Label.c.Max_Price}</div>
+                        </th>
+                        
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="{!$Label.c.Quantity}">{!$Label.c.Quantity}</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="{!$Label.c.Final_Price}">{!$Label.c.Final_Price}</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="{!$Label.c.Net_Sales}">{!$Label.c.Net_Sales}</div>
+                        </th>
+                        <th class="actionClass" scope="col" >
+                            <div class="slds-truncate" title="{!$Label.c.Action}">{!$Label.c.Action}</div>
+                        </th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <aura:iteration items="{!v.quoteLineItemList}" var="item">
+                        
+                        <tr class="slds-hint-parent">
+                            <!--  <td data-label="Account Name">
+                                <div class="slds-truncate" title="">{!item.Product2.Description}</div>
+                            </td>-->
+                            <td data-label="Close Date">
+                                <div class="slds-truncate" title="">{!item.Product2.Description}</div>
+                            </td>
+                            
+                            <td data-label="Prospecting">
+                                <div class="slds-truncate" title="">{!item.UOM__c}</div>
+                            </td>
+                            
+                            
+                            <td data-label="Prospecting">
+                                <div class="slds-truncate" title="">{!item.Pack_Size__c}</div>
+                            </td>
+                            
+                            <td data-label="Prospecting" style="display:none;">
+                                <div class="slds-truncate" title="">{!item.Min_Price__c}</div>
+                            </td>
+                            
+                            <td data-label="Prospecting">
+                                <div class="slds-truncate" title="">{!item.Max_Price__c}</div>
+                            </td>
+                            
+                            <td data-label="Confidence"> <!--<lightning:formattedNumber value="{!item.Quantity}" maximumFractionDigits="2"/> -->
+                                <div class="slds-truncate" title=""> {!item.Quantity}  </div>
+                            </td>
+                            <td data-label="Amount"> <!--<lightning:formattedNumber value="{!item.UnitPrice}" maximumFractionDigits="2"/> -->
+                                <div class="slds-truncate" title=""> {!item.UnitPrice}  </div>
+                            </td>
+                            <td data-label="Contact"> <!-- <lightning:formattedNumber value="{!item.TotalPrice}" maximumFractionDigits="2"/>-->
+                                <div class="slds-truncate" title=""> {!item.TotalPrice} </div>
+                            </td>
+                            <td>   
+                                <lightning:button iconName="utility:edit" variant="brand" disabled="{!v.disableComfirm}" onclick="{! c.openModel }" value="{!item.Id}" class="btnClass"/>
+                                <lightning:button iconName="action:delete"  disabled="{!v.disableComfirm}" variant="destructive" value="{!item.Id}" onclick="{! c.deleteQuoteLineItem }" class="btnClass"/>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>  
+        </div>    
+        
+        <aura:if isTrue="{!v.isOpen}">
+            
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-fade-in-open slds-modal slds-modal_large">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="{!$Label.c.Close}"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.Edit_SKU_Details}</h2>
+                    </header>
+                    
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <p style="color:#ff0000; padding:10px; font-weight:700;"> 
+                                <ui:outputText value="{!v.errorMSGPopup}"/>
+                            </p>
+                        </div>
+                        <p>
+                            
+                            <fieldset class="slds-form-element slds-form-element_compound">
+                                
+                                <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:10px;">
+                                    
+                                    
+                                    
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_3-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="textarea-id-01">{!$Label.c.Description}</label>
+                                            <div class="slds-form-element__control">
+                                                <textarea id="descriptionPopup" class="slds-textarea" placeholder="" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">{!$Label.c.UOM}</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText value="{!v.UOMPopup}"  disabled="{!v.disableFieldsPopup}" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">{!$Label.c.Pack_Size}</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText value="{!v.packSizePopup}"  disabled="{!v.disableFieldsPopup}" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12" style="display:none;">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">{!$Label.c.Min_Price}</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText value="{!v.minPricePopup}"  disabled="{!v.disableFieldsPopup}" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">{!$Label.c.Max_Price}</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText value="{!v.maxPricePopup}"  disabled="{!v.disableFieldsPopup}" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                        <div class="slds-form-element">
+                                            <!-- <label class="slds-form-element__label" for="text-input-id-1">Quantity</label>-->
+                                            <div class="slds-form-element__control">
+                                                
+                                                <lightning:input name="Quantity" label="{!$Label.c.Quantity}"
+                                                                 required="true"
+                                                                 aura:id="qunatity"
+                                                                 value="{!v.quantityPopup}"
+                                                                 onblur="{!c.checkIfNumberOfQuantityPopup}"
+                                                                 messageWhenValueMissing="{!$Label.c.Please_enter_Quantity}"/>
+                                                
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_2-of-12">
+                                        <div class="slds-form-element">
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <lightning:input name="final Price " label="{!$Label.c.Final_Price}"
+                                                                 required="true"
+                                                                 aura:id="Unit_Price"
+                                                                 value="{!v.pricePopup}"
+                                                                 onblur="{!c.checkIfNumberOfPricePopup}"
+                                                                 messageWhenValueMissing="{!$Label.c.Please_enter_Final_Price}"/>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">{!$Label.c.Net_Sales}</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText value="{!v.amountPopup}" disabled="true" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                  <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="text-input-id-1">Inventory</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText value="{!v.inventoryPopup}"  disabled="{!v.disableFieldsPopup}" class="slds-input" />
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    
+                                </div>
+                                
+                            </fieldset>
+                        </p>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="{!$Label.c.Cancel}"
+                                          title="{!$Label.c.Cancel}"
+                                          onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand" 
+                                          label="{!$Label.c.Save}"
+                                          title="{!$Label.c.Save}"
+                                          onclick="{! c.likenClose }"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+        </aura:if>   
+        
+        
+        
+    </div> 
+    
+    <div class="slds-align_absolute-center" style="height:5rem">
+        <lightning:button iconName="utility:check" variant="brand" label="{!$Label.c.Confirm}"
+                          title="{!$Label.c.Confirm}"
+                          onclick="{! c.sendToApproval}" disabled="{!v.disableComfirm}" />
+        
+        
+        <lightning:button   iconName="utility:back" variant="brand" label="{!$Label.c.Back}"
+                          title="{!$Label.c.Back}"
+                          onclick="{! c.closeComponent }"/>
+    </div>
+    
+    
+    
+</aura:component>

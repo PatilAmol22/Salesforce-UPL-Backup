@@ -1,0 +1,38 @@
+.THIS label {
+   font-weight:600;
+}
+
+.THIS .outer-div {
+    position: relative;
+}
+
+.THIS .spinner {
+    position: absolute;
+}
+
+.THIS .outerBox {
+	position:relative;
+	height:280px;
+	border:1px solid #666;
+	overflow:auto;
+	background-color:#7D797F
+}
+ 
+.THIS .spinner {
+	position:absolute;
+}
+.THIS .btnClass{
+    padding: 5px 10px 5px 15px;
+    text-align:center;
+    margin-right:10px;
+    margin-left:22px;
+}
+.THIS .actionClass{
+    width: 100px;
+    text-align: center;
+}
+
+.THIS .netPriceClass{
+    width:100px;
+    
+}

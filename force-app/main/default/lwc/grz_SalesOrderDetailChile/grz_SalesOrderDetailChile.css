@@ -1,0 +1,252 @@
+.odr-size {
+	font-size: 23px;
+	color: black;
+  }
+  .bar-scroll{
+	margin:2% 2% 0 2%;
+	overflow-x:auto;
+  }
+  .status-bar {
+	background-color: white;
+	border-radius: 50%;
+  }
+  .border-btm{
+    border-bottom: 2px solid rgb(244, 121, 32);
+    margin: 5px 0px;
+  }
+  .iconclr{
+	color: #F47920;
+	cursor:pointer;
+  }
+  .cust-info-div {
+	background-color: white;
+	display: flex;
+	justify-content: space-between;
+	padding: 1.5% 0%;
+	border: 1px solid #ddd;
+	margin-bottom: 2.5%;
+  }
+  .one-block {
+	display: flex;
+	width: 47%;
+  }
+  .two-block {
+	display: flex;
+	width: 53%;
+  }
+  .first-block {
+	border-right: 2px solid #dddddd;
+	padding-left: 2%;
+	width: 49%;
+	display: flex;
+  }
+  .second-block {
+	border-right: 2px solid #dddddd;
+	padding-left: 2%;
+	width: 49%;
+	display: flex;
+  }
+  .third-block {
+	padding-left: 2%;
+	border-right: 2px solid #dddddd;
+	width: 60%;
+	display: flex;
+  }
+  .fourth-block {
+	padding-left: 2%;
+	width: 40%;
+	display: flex;
+  }
+  .cust-data-text {
+	color: #888888;
+	font-size: 15px;
+  }
+  .lab-btn {
+	margin-bottom: 0px;
+  }
+  .lab-btn-green {
+	background-color: rgb(65, 182, 88);
+	color: white;
+	padding: 2px 8px;
+	margin-bottom: 0px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+  }
+  .cust-data {
+	margin-left: 6%;
+	color: #000000;
+	font-size: 16px;
+  }
+  
+  .carousel-top-pad {
+	margin-top: -36px;
+	margin-bottom: -55px;
+  }
+  .greycol {
+	color: #c0c0c0;
+  }
+  
+  .nodatacss {
+	border-radius: 4px;
+	opacity: 1;
+	background-color: white;
+	padding: 2%;
+  }
+  
+  .pointer {
+	cursor: pointer;
+  }
+  .p-table-head,
+  .i-table-head {
+	background-color: #f8f8f8;
+	color: #888;
+  }
+  .p-table-head-css,
+  .i-table-head-css {
+	height: 40px;
+  }
+  .p-table-body,
+  .i-table-body {
+	color: black;
+  }
+  .p-table-body-css,
+  .i-table-body-css {
+	height: 40px;
+  }
+  .product-table-scroll,
+  .invoice-table-scroll {
+	overflow-x: auto;
+  }
+  .product-table-width {
+	background: white;
+  }
+  .invoice-table-width {
+	background: white;
+  }
+  .order-icon {
+	height: 40px;
+	width: 40px;
+	border: 1px solid grey;
+	padding: 5px;
+	margin-top: 11px;
+	border-radius: 50%;
+  }
+  .headingClass {
+	font-size: 22px;
+	color: #000000;
+  }
+  .borderbottom {
+	padding-bottom: 1%;
+	border-bottom: 1px solid #dddddd;
+  }
+  .orderDataClass {
+	font-weight: bold;
+  }
+  .borderleft {
+	border-left: 1px solid #e5e5e5;
+  }
+  .data-font-size {
+	font-size: 14px;
+  }  
+  .delivery-head{
+    display: inline-block;
+    width: 30%;
+    color: black;
+  }
+  .delivery-details{
+    display: inline-block;
+    width: 70%;
+    vertical-align: top;
+  }
+  .no-delivery{
+    text-align: center;
+    padding: 10px 0;
+  }  
+  @media screen and (max-width: 1024px) {
+	.status-bar{
+	  width: 130%;
+	}
+  }
+  @media screen and (max-width: 768px) {
+	.status-bar{
+	  width: 160%;
+	}
+	.delivery-details{
+		width: 100%;
+	  }
+  }
+  @media screen and (max-width: 767px) {
+	.hidePadding {
+	  padding: 0px;
+	}
+	.borderleft {
+	  border-left: 0;
+	}
+	.delivery-details{
+		width: 70%;
+	  }
+  }
+  @media screen and (max-width: 600px) {
+	.product-table-width,
+	.invoice-table-width {
+	  width: 130%;
+	}
+	.status-bar{
+	  width: 210%;
+	}
+	.delivery-details{
+		width: 100%;
+	}
+  }
+  @media screen and (max-width: 475px) {
+	.detail-size {
+	  font-size: 18px;
+	}
+	.odr-size {
+	  font-size: 21px;
+	}
+	.status-bar{
+	  width: 290%;
+	}
+	.order-icon {
+	  height: 35px;
+	  width: 35px;
+	}
+	.product-table-width,
+	.invoice-table-width {
+	  width: 150%;
+	}
+  }
+  @media screen and (max-width: 400px) {
+	.data-font-size {
+	  font-size: 12px;
+	}
+	.product-table-width,
+	.invoice-table-width {
+	  width: 160%;
+	}
+  }
+  @media screen and (max-width: 375px) {
+	.product-table-width,
+	.invoice-table-width {
+	  width: 200%;
+	}
+	.status-bar{
+	  width: 345%;
+	}
+	.detail-size {
+	  font-size: 15px;
+	}
+	.odr-size {
+	  font-size: 17px;
+	}
+	.bread-crumb-cls {
+	  font-size: 11px;
+	  margin-top: 2%;
+	}
+	.order-icon {
+	  height: 30px;
+	  width: 30px;
+	}
+  }

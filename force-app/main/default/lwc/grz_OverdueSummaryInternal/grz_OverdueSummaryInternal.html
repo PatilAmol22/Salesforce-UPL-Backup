@@ -1,0 +1,232 @@
+<!--********************************************************************************************
+* Name			: grz_OverdueSummaryInternal.html
+* Description	: LWC component for Internal Users to display Overdue Summary                             
+* Created Date	: 26/05/2022
+* Created By	: Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<template>
+    <lightning-quick-action-panel header={labels.overdueSummary} >
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner alternative-text="Loading..." variant="brand" style="top:120px;"></lightning-spinner>
+        </div>
+        <div class="modal-height">
+            <template if:true={errorMessage}>
+                <p class="error"> {errorMessage} </p>
+            </template>
+            <br>
+            <template if:true={account}>
+                <div class="filter-div">
+                    <div class="slds-p-left_small text-div">
+                        {labels.documentDate}
+                    </div>
+                    <div class="slds-p-left_small date-div">
+                        <lightning-input    
+                                        placeholder={labels.initialDate} 
+                                        label={labels.initialDate}
+                                        type="date" 
+                                        value={startDate} 
+                                        min={fiscalyearStartDate} 
+                                        max={fiscalyearEndDate} 
+                                        onchange={startDateChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-p-left_small date-div">
+                        <lightning-input  
+                                        placeholder={labels.finalDate}
+                                        label={labels.finalDate}
+                                        type="date" 
+                                        value={endDate} 
+                                        min={fiscalyearStartDate} 
+                                        max={fiscalyearEndDate} 
+                                        onchange={endDateChange}>
+                        </lightning-input>                         
+                    </div>
+                    <!-- for RITM0579566 SA GRZ(Nikhil Verma) 26-06-2023-->
+                    <template if:true={salesArea}>
+                        <div class="slds-p-left_small">
+                            <lightning-combobox
+                                value={salesArea}
+                                label="Sales Area"
+                                placeholder="Sales Area"
+                                options={salesAreaOptions}
+                                onchange={handleSalesAreaOption}>
+                            </lightning-combobox> 
+                        </div>
+                    </template>
+                    <!-- END for RITM0579566 SA GRZ(Nikhil Verma) 26-06-2023-->
+                    <div class="slds-p-left_small slds-m-right_medium">
+                            <button class="getBtn btn-itr" onclick={getOverdueData}>{labels.getStatement}</button>
+                    </div>
+                </div>
+            </template>
+            <br>
+            <template if:true={overdueData}>
+                <div class="table-head-div">
+                    <div class={overdueTableScroll}>
+                        <table class="slds-m-bottom_small">
+                            <thead class="table-head">
+                                <!-- Added for  RITM0435555 GRZ(Javed  Ahmed) 5-10-2022-->
+                                <tr style="background-color: #f7f7f7;" class="fixed-header-row1">
+                                    <th class="slds-p-left_small cell-height-bal display-flex align-items-center" scope="col" onclick ={sortDocDate} style="cursor:pointer;">
+                                        <div class="slds-truncate">{labels.docDate}</div>
+                                        <div class="margin-x">
+                                        <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={DocDateUpBool}></lightning-icon>
+                                        <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={DocDateDownBool}></lightning-icon>
+                                    </div></th>
+                                    <!-- Added for Poland User RITM0431761 GRZ(Nikhil Verma) 27-09-2022-->
+                                    <template if:true={polandUser}>
+                                        <th class="slds-p-left_small cell-height-bal" scope="col">
+                                            <div class="slds-truncate">{labels.so}</div>  
+
+                                        </th>
+                                    </template>
+
+                                    <th class="slds-p-left_small cell-height-bal" scope="col" onclick ={sortDocNumber} style="cursor:pointer;">
+                                        <div class="display-flex align-items-center">
+                                            <div class="slds-truncate">{labels.docNumber}</div>
+                                            <div class="margin-x">
+                                                <lightning-icon  icon-name="utility:arrowup"  size="x-small" if:true={DocNoUpBool}></lightning-icon>
+                                                <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={DocNoDownBool}></lightning-icon>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal " scope="col">
+                                        <div class="slds-truncate">{labels.docType}</div>
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal " scope="col">
+                                        <div class="slds-truncate">{labels.docDes}</div>
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal " scope="col" style=" cursor:pointer;" onclick ={sortAmount}>
+                                        <div class="display-flex align-items-center">
+                                          <div class="slds-truncate">{labels.amount}</div>
+                                          <div class="margin-x">
+                                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={AmtDoccurUpBool}></lightning-icon>
+                                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={AmtDoccurDownBool}></lightning-icon>
+                                          </div>
+                                            
+                                     </div>
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal" scope="col" style=" cursor:pointer;" onclick ={sortPaymentTerm}>
+                                        <div class="display-flex align-items-center">                                     
+                                             <div class="slds-truncate">{labels.pt}</div>
+                                             <div class="margin-x">
+                                               <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={DsctDays1UpBool}></lightning-icon>
+                                               <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={DsctDays1DownBool}></lightning-icon>
+                                            </div>
+                                        </div>
+  
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal" scope="col" onclick ={sortDueDate} style="cursor:pointer;">
+                                        <div class="display-flex align-items-center">
+                                           <div class="slds-truncate">{labels.dueDate}</div>
+                                        <div class="margin-x">
+                                            <lightning-icon icon-name="utility:arrowup" size="x-small" if:true={DueDateUpBool}></lightning-icon>
+                                            <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={DueDateDownBool}></lightning-icon>
+                                        </div>
+                                    </div>
+                                    </th>
+                                    <th class="slds-p-left_small cell-height-bal" scope="col" onclick ={sortOverdue} style="cursor:pointer;">
+                                        <div class="display-flex align-items-center">
+                                          <div class="slds-truncate">{labels.overdue}</div>
+                                          <div class="margin-x"><lightning-icon icon-name="utility:arrowup" size="x-small" if:true={overDuedUpBool}></lightning-icon>
+                                        <lightning-icon icon-name="utility:arrowdown" size="x-small" if:true={overDuedDownBool}></lightning-icon>
+                                    </div></div>   
+                                    </th>
+                                </tr>
+                                <!-- ***********************************End  RITM0435555 GRZ(Javed  Ahmed) 5-10-2022-->
+                            </thead>
+                            <tbody>
+                                <template for:each={overdueData} for:item="item">
+                                    <tr key={item.Id} class="slds-border_top table-body-data">
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate"> {item.DocDate}</div>
+                                        </td>
+
+                                        <!-- Added for Poland User RITM0431761 GRZ(Nikhil Verma) 27-09-2022-->
+                                        <template if:true={polandUser}>
+                                            <td class="slds-p-left_small cell-height" scope="col">
+                                                <div class="slds-truncate">
+                                                    <a href={item.salesOrderLink} target="_blank">{item.salesOrder}</a>
+                                                </div>
+                                            </td>
+                                        </template>
+
+
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{item.DocNo}</div>
+                                        </td>
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{item.DocType}</div>
+                                        </td>
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{item.docDes}</div>
+                                        </td>
+                                        <td class="slds-p-left_small cell-height" scope="col" >
+                                            <div class="slds-truncate">
+                                                <lightning-formatted-number value={item.AmtDoccur} minimum-fraction-digits="2"></lightning-formatted-number>
+                                            </div>
+                                        </td> 
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{item.DsctDays1}</div>
+                                        </td>
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <div class="slds-truncate">{item.DueDate}</div>
+                                        </td>
+                                        <td class="slds-p-left_small cell-height" scope="col">
+                                            <template if:true={item.overDued}>
+                                                <div class="slds-truncate">
+                                                    <img src={dislike} height="40" width="40">
+                                                </div>
+                                            </template>
+                                            <template if:false={item.overDued}>
+                                                <div class="slds-truncate">
+                                                    <img src={like} height="40" width="40">
+                                                </div> 
+                                            </template>
+                                        </td>                
+                                    </tr>
+                                </template>
+                                <template if:true={noRecordError}>
+                                    <tr>
+                                        <td colspan={callSpanNoData}> <!-- RITM0431761 GRZ(Nikhil Verma) 27-09-2022-->
+                                            <div class="no-data-error">{labels.noData}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                            <thead>
+                                <tr class="fixed-header-row4 total-css">
+                                    <td  colspan={callSpanTotal} class="slds-p-left_small cell-height-bal" scope="col"> <!-- RITM0431761 GRZ(Nikhil Verma) 27-09-2022-->
+                                        <div class="slds-truncate">{labels.total}</div>
+                                    </td>
+                                    <td align ="right" class="slds-p-left_small cell-height-bal" scope="col" >
+                                        <div class="slds-truncate">
+                                            <lightning-formatted-number value={totalOutstanding} minimum-fraction-digits="2"></lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                    <td colspan="3" class="slds-p-left_small cell-height-bal" scope="col">
+                                        <div class="slds-truncate"></div>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <template if:true={showDownloadOption}>
+            <div slot="footer" style="text-align: center;">
+                <a onclick={pdfDownloadClick}>
+                    <lightning-icon icon-name="doctype:pdf" 
+                                    size="medium">
+                    </lightning-icon>
+                </a>
+                <a onclick={xlsDownloadClick} style="margin-left: 3%;">
+                    <lightning-icon icon-name="doctype:excel" 
+                                    size="medium">
+                    </lightning-icon>
+                </a>
+            </div>
+        </template>
+      </lightning-quick-action-panel>
+</template>

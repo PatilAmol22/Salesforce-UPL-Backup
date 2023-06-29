@@ -1,0 +1,87 @@
+<template>
+   
+    <div style="background-color:white;width:100%;">
+        <div class="demo-only" style="padding:0.5rem;background:#16325c">
+            <div class="slds-text-color_inverse slds-align_absolute-center" style="Font-size:15px;">Visit Planner Report</div>
+          </div>
+        <div class="slds-grid slds-gutters slds-p-horizontal_x-small">
+           
+            <div class="slds-col slds-p-vertical_small slds-size_3-of-12">
+                <lightning-input type="date" name="input1" label="Start Date"   placeholder="Start Date"  value={startDateTimeValue} onchange={handleChangeStartDateTime} ></lightning-input>
+            </div>
+            <div class="slds-col slds-p-vertical_small slds-size_3-of-12">
+                <lightning-input type="date" name="input1" label="End date" value={enddataTimevalue}   placeholder="End Date" onchange={handleChangeEndDateTime} ></lightning-input>
+            </div>
+            <div class="slds-col slds-p-vertical_small slds-size_2-of-12">
+                <lightning-combobox
+                name="progress"
+                label="Approval Status"
+                value={ApprovalStatusvalue}
+                placeholder="Approval Status"
+                options={optionsForApprovalStatus}
+                onchange={handleChangeApprovalStatus} ></lightning-combobox>
+            </div>
+            <div class="slds-col slds-p-vertical_small slds-size_4-of-12" style="padding-top: 35px;">
+                <lightning-button class="slds-p-horizontal_xx-small"
+                variant="brand"
+                label="Apply Filter"
+                icon-name="utility:search"
+                icon-position="right"
+                onclick={handleClickSearchFilter}
+            >
+            </lightning-button>
+            <lightning-button
+            variant="brand"
+            class="slds-p-horizontal_xx-small"
+            label="Reset Filter"
+            icon-position="right"
+            onclick={handleClickResetFilter}
+
+        >
+        </lightning-button>
+        <lightning-button
+        variant="brand"
+        class="slds-p-horizontal_xx-small"
+        label="Download Report"
+        icon-name="utility:download"
+        icon-position="right"
+        onclick={exportData}></lightning-button>
+            </div>
+          </div>
+    </div>
+    <div style="height: 100%; background-color:white;" class="slds-is-relative">
+        <div class="slds-scrollable--y slds-p-horizontal_x-small">
+            <div if:true ={isLoaded} >
+                <lightning-spinner style="position:absolute; padding-top:10px;"
+                    alternative-text="Loading..." variant="brand">
+                </lightning-spinner>
+            </div>
+            <lightning-datatable
+            key-field="id"
+            hide-checkbox-column="true"
+            data={data}
+            min-column-width="150"
+            columns={columns}>
+    </lightning-datatable></div>
+       <div class="slds-p-horizontal_x-small slds-p-vertical_large ">
+        <lightning-layout>
+            <lightning-layout-item>
+                <lightning-button label="Previous" 
+                icon-name="utility:chevronleft"
+                onclick={previousHandler}
+                disabled={disablePrevious}></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="grow">
+                <p class="slds-text-align_center">Displaying {currentPage} of {totalPage} Page</p>
+            </lightning-layout-item>
+            <lightning-layout-item>
+                <lightning-button label="Next" 
+                icon-name="utility:chevronright"
+                icon-position="right"
+                onclick={nextHandler}
+                disabled={disableNext}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+        </div>
+    </div>
+</template>

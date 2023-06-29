@@ -1,0 +1,1531 @@
+<aura:component access="global"
+                controller="ReturnOrderItalyController"
+                implements="force:appHostable,force:hasRecordId,lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasSObjectName,force:lightningQuickAction" > 
+    
+    <!--Init Component On Load-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--End-->
+    
+    <!-- Reload order using recordId -->
+    <aura:attribute name="recordId" type="Id" />
+    <!--End-->
+    <aura:attribute name="orderType" type="String" />
+    <aura:attribute name="orderType2" type="String" />
+    <aura:attribute name="paymentTerm" type="String" />
+    <aura:attribute name="pgCodeId" type="String" />
+    <aura:attribute name="customerCodeId" type="String" />
+    <aura:attribute name="pgCode" type="String" />
+    <aura:attribute name="comments" type="String" />
+    <aura:attribute name="sfdcOrderNo" type="String" />
+    <aura:attribute name="sapOrderNo" type="String" />
+    <aura:attribute name="orderSubStatus" type="String" default=""/>
+    <aura:attribute name="areaManagerID" type="String" default=""/>
+    <!-- Divya: 11-01-2020: Added orderTypeNames for SCTASK0351764-->
+    <aura:attribute name="orderTypeNames" type="String" />
+    <aura:attribute name="flagMessage" type="String" default=""/>
+    <aura:attribute name="toastFlag" type="String" default=""/>
+    <aura:attribute name="MultipleOfDialogMessage" type="String" default=""/>
+    
+    
+    <aura:attribute name="headerMsg" type="String" default="Crea Ordine"/>
+    <aura:attribute name="showSubmitEdit" type="Boolean" default="true" />
+    <aura:attribute name="isApproval" type="Boolean" default="false" />
+    <aura:attribute name="isFCAOrder" type="Boolean" default="false" />
+    <aura:attribute name="FCAOrderCheck" type="Boolean" default="false" />
+    <aura:attribute name="ExpressOrderCheck" type="Boolean" default="false" />
+    <aura:attribute name="disableFCA" type="Boolean" default="false" />
+    <aura:attribute name="disableExpress" type="Boolean" default="false" />
+    
+    <aura:attribute name="showSaveDraft" type="Boolean" default="true" />
+    <aura:attribute name="disableEdit" type="Boolean" default="true" />
+    <aura:attribute name="disableUnit" type="Boolean" default="false" />
+    <aura:attribute name="fixedRateAvailable" type="Boolean" default="false" /> 
+    <!-- Divya: 12/05/2021: Added for SCTASK0452622 -->
+    <aura:attribute name="specialRateAvailable" type="Boolean" default="false" />
+    <aura:attribute name="isCommonPB" type="Boolean" default="true" />
+    <aura:attribute name="isPaymentDiscDisable" type="Boolean" default="true" />
+    <!-- Divya: 03-02-2021: SCTASK0368058 -->
+    <aura:attribute name="showWarning" type="Boolean" default="true" />
+    <aura:attribute name="discdPT" type="Boolean" default="true" />
+    <aura:attribute name="emptyPaymetTerm" type="Boolean" default="false" />
+    <aura:attribute name="disabledSOI" type="Boolean" default="false" /> <!--for single order Item-->
+    <aura:attribute name="isCustomizePB" type="Boolean" default="true" />
+    <aura:attribute name="ShippingLocMap" type="Map" access="public" default="{}"/>
+    <aura:attribute name="PaymentTermMap" type="Map" access="public" default="{}"/>
+    <aura:attribute name="shippingLoc" type="String" />
+    <aura:attribute name="shipToParty" type="String" default="" />
+    <aura:attribute name="sOId" type="String" />
+    <aura:attribute name="orderObjId" type="String" /> 
+    <aura:attribute name="object" type="Object" />
+    
+    <aura:attribute name="showSAPNo" type="Boolean" default="true" />
+    <aura:attribute name="grossNetPrice" type="Decimal" default="0.00" />
+    <aura:attribute name="paymentDisc" type="Decimal" default="0.00" />
+    <aura:attribute name="normalDCostTC" type="Decimal" />
+    <aura:attribute name="expressDCostTC" type="Decimal" />
+    <aura:attribute name="isCustomerTCAvailable" type="Boolean" default="false" />
+    
+    <!--Added by Azhar for campaign -->
+    
+    <aura:attribute name="showOrderType" type="Boolean" default="true" />
+    <aura:attribute name="showStartEndDate" type="Boolean" default="false" />
+    <aura:attribute name="showChildOrder" type="Boolean" default="false" />
+    <aura:attribute name="showExpressDelivery" type="Boolean" default="true" />
+    <aura:attribute name="showSKU" type="Boolean" default="true" />
+    <aura:attribute name="showFCA" type="Boolean" default="true" />
+    <aura:attribute name="showBalanceQty" type="Boolean" default="false" />
+    <aura:attribute name="disableOnExpress" type="Boolean" default="false" />
+    <aura:attribute name="parentOrderNo" type="String" />
+    <aura:attribute name="parentSAPOrderNo" type="String" />
+    <aura:attribute name="omaggioFlag" type="Boolean" default="false" />
+    <aura:attribute name="balanceQtyFlag" type="Boolean" default="false" />
+    <aura:attribute name="venditaPos" type="String" />    
+    <aura:attribute name="startDate" type="Date"/>
+    <aura:attribute name="endDate" type="Date"/>
+    
+    <aura:attribute name="qtySOLI" type="Decimal" />
+    <aura:attribute name="qtyIndexSOLI" type="Decimal" />
+    <aura:attribute name="OrderTypeItaly" type="String" />
+    <aura:attribute name="isChildOrderType" type="Boolean" default="false" />
+    <aura:attribute name="rebidDisabled" type="Boolean" default="false" />
+    <aura:attribute name="placechildOrderDisabled" type="Boolean" default="false" />
+    <aura:attribute name="transcDisabled" type="Boolean" default="false" />
+    <aura:attribute name="showParentOrder" type="Boolean" default="false" />
+    <aura:attribute name="showDeleteAll" type="Boolean" default="true" />
+    <!--Used for steps-->
+    <aura:attribute name="two" type="Integer" default="2" />
+    <aura:attribute name="three" type="Integer" default="3" />
+    <aura:attribute name="four" type="Integer" default="4" />
+    <aura:attribute name="five" type="Integer" default="5" />
+    
+    <!-- orderItemList2 wrappelist for summation of balance qty is 0 -->
+    
+    <aura:attribute name="orderItemList2" 
+                    type="OrderItalyController.SalesOrderItem[]" />	
+    <!--EOC-->
+    
+    <aura:attribute name="disableThis" type="Boolean" default="false" />
+    <aura:attribute name="disableSelect" type="Boolean" default="false" />
+    <aura:attribute name="showApproveReject" type="Boolean" default="false" />
+    <aura:attribute name="isSimulated" type="Boolean" default="false" />
+    <aura:attribute name="isDraft" type="Boolean" default="false" />
+    <aura:attribute name="showOnReLoad" type="Boolean" default="false" />
+    <aura:attribute name="showRaiseOrder" type="Boolean" default="true" />
+    <aura:attribute name="showDiscMargin" type="Boolean" default="true" />
+    <aura:attribute name="fileName" type="string" default="{!$Label.c.No_file_selected}" />
+    <aura:attribute name="confirmMsg" type="String" default="{!$Label.c.you_want_to_apply_for_FCA}"/>
+    <lightning:workspaceAPI aura:id="workspace" />
+    
+    <aura:attribute name="noFileError" type="Boolean" default="false" />
+    
+    <aura:attribute name="user" type="User" access="public"/>
+    <aura:attribute name="userId" type="String" access="public"/>
+    
+    <aura:attribute name="businessTypesList" type="String[]" access="public"/><!--delete once done-->
+    <aura:attribute name="businessTypesListCopy" type="String[]" access="public"/><!--delete once done-->
+    
+    <aura:attribute name="productTypesList" type="String[]" access="public"/>
+    <aura:attribute name="productTypesListCopy" type="String[]" access="public"/>
+    
+    <aura:attribute name="approvalList" type="OrderItalyController.ApprovalList" access="public"/>
+    <aura:attribute name="orderWrapper" type="OrderItalyController.OrderWrapper" access="public"/>
+    <aura:attribute Name="TCParam" type="Trans_Contribution__c" access="public" />
+    
+    
+    
+    <!-- On Change Handler-->
+    <aura:handler name="change" value="{!v.shippingLoc}" action="{!c.handleShipLocChange}"/>
+    <!--<aura:handler name="change" value="{!v.ExpressOrderCheck}" action="{!c.handleExpressChange}"/>-->
+    
+    <!--Lookup Object Attributes-->
+    <aura:attribute Name="selItem" type="object" access="public" /> <!--For Account -->
+    <aura:attribute Name="selItem2" type="object" access="public" /> <!--For Payment Term --> 
+    <aura:attribute Name="selItem4" type="object" access="public" /> <!--For Product --> 
+    <!-- End -->
+    
+    <!-- CSS Modal Adjustment -->    
+    <aura:attribute name="rowIndex" type="Integer" />
+    <aura:attribute name="modalHeader" type="String" default="Products"/> 
+    <!-- End --> 
+    
+    <!--DataTable Component Handler-->  
+    <aura:handler name="dtActionClick" event="ldt:clickedDtAction" action="{!c.tabActionClicked}"/>
+    <!--End Modal-->
+    
+    <!--PriceList Modal-->
+    <aura:attribute name="priceDetailList" type="OrderItalyController.PriceDetail[]" access="public"/>
+    <aura:attribute name="priceDetailTableColumns" type="List" access="public"/>
+    <aura:attribute name="priceDetailTableConfig" type="Map" access="public"/>
+    <!--End-->
+    
+    <aura:attribute name="totalQtyOfOmaggioProduct" type="List" access="public"/>
+    
+    <aura:attribute name="newSalesOrder" type="Sales_Order__c"
+                    default="{'sobjectType': 'Sales_Order__c',
+                             'Bill_To_Party__c': ''
+                             }"/>
+    
+    <aura:attribute name="newOrder" type="Order__c"
+                    default="{'sobjectType': 'Order__c',
+                             'Sold_to_Party__c': '',
+                             'Program_Margin_Discount__c': '0'
+                             }"/>
+    <!--Wrapper List-->    
+    <aura:attribute name="orderItemList" 
+                    type="OrderItalyController.SalesOrderItem[]" />	
+    
+    <!--Added by Varun Shrivastava start: SCTASK0360650 -->
+    <aura:attribute name="orderItemListTest" 
+                    type="OrderItalyController.SalesOrderItem[]" />	
+    <!--Added by Varun Shrivastava End: SCTASK0360650 -->
+    <aura:attribute name="SingleOrderItem" 
+                    type="OrderItalyController.SalesOrderItem"  />	
+    
+    <aura:attribute name="orderFields" 
+                    type="OrderItalyController.OrderFields" />    
+    <!--End-->   
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <!-- by Priya Dhawan for SCTASK0333953 (RITM0153568) Validity date in Precampaign order changes  -->
+    <aura:attribute name="isModifyDraft" type="Boolean" default="false" />
+    
+    <div id="snackbar">
+        <aura:if isTrue="{!and(v.toastFlag == 'setSuccess' , v.sOId != undefined)}">    
+            <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+                {!v.flagMessage}
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!and(v.toastFlag == 'setError' , v.sOId != undefined)}">
+            <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                {!v.flagMessage}
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!and(v.toastFlag == 'setWarn' , v.sOId != undefined)}">
+            <div class="slds-notify slds-notify_toast slds-theme_warning" role="alert">
+                {!v.flagMessage}
+            </div>
+        </aura:if>
+    </div>
+    
+    <div class="slds">
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-spinner_container slds-is-fixed">
+                <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+            </div>
+        </aura:if>  
+        
+        <!-- Multiple Of Modal Start -->
+        <div aura:id="multipleOfDialog" role="dialog" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-hide">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="{!$Label.c.Close}" onclick="{!c.closeMultipleOfDialog}">
+                        X
+                        <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                    </button>
+                    <h2 id="header43" class="slds-text-heading--medium">Quantity In Multiple Of</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    {!v.MultipleOfDialogMessage}
+                </div>
+                <div class="slds-modal__footer">
+                    <button onclick="{!c.NoMultiplyOf}" class="slds-button slds-button--neutral">{!$Label.c.No}</button>
+                    <button onclick="{!c.YesMultiplyOf}" class="slds-button slds-button--brand">{!$Label.c.Yes}</button>
+                    
+                </div>
+            </div>
+        </div>
+        <div aura:id="backdrop4" class="slds-backdrop slds-backdrop--open slds-hide"></div>
+        <!-- End of Multiple Of Modal -->
+        
+        <!-- Multiple Of In Cart Modal Start -->
+        <div aura:id="multipleOfCartDialog" role="dialog" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-hide">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="{!$Label.c.Close}" onclick="{!c.closeMultipleOfDialog}">
+                        X
+                        <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                    </button>
+                    <h2 id="header43" class="slds-text-heading--medium">Quantity In Multiple Of</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    {!v.MultipleOfDialogMessage}
+                </div>
+                <div class="slds-modal__footer">
+                    <button onclick="{!c.NoMultiplyOf1}" class="slds-button slds-button--neutral">{!$Label.c.No}</button>
+                    <button onclick="{!c.YesMultiplyOf1}" class="slds-button slds-button--brand">{!$Label.c.Yes}</button>
+                    
+                </div>
+            </div>
+        </div>
+        <div aura:id="backdrop5" class="slds-backdrop slds-backdrop--open slds-hide"></div>
+        <!-- End of Multiple Of Modal -->
+        
+        <!-- Approval Process Modal Start -->
+        <div aura:id="approvalDialog" role="dialog" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-hide">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="{!$Label.c.Close}" onclick="{!c.closeDialog}">
+                        X
+                        <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                    </button>
+                    <h2 id="header43" class="slds-text-heading--medium">{!$Label.c.Enter_Comments}</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <ui:inputTextArea aura:id="comments" class="slds-textarea" value="{!v.comments}" rows="5" cols="40"/>
+                </div>
+                <div class="slds-modal__footer">
+                    <button onclick="{!c.closeDialog}" class="slds-button slds-button--neutral">{!$Label.c.Cancel}</button>
+                    <button onclick="{!c.saveComment}" class="slds-button slds-button--brand">{!$Label.c.Save}</button>
+                    
+                </div>
+            </div>
+        </div>
+        <div aura:id="backdrop2" class="slds-backdrop slds-backdrop--open slds-hide"></div>
+        <!-- End of Approval Process Modal -->
+        
+        <!-- Confirm Modal -->
+        <div aura:id="confirmDialog" role="dialog" aria-labelledby="header43"  class="slds-modal slds-fade-in-open slds-hide">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button  slds-modal__close slds-button_icon-inverse" style="color:black;" title="{!$Label.c.Close}" onclick="{!c.closeConfirmDialog}">
+                        {!$Label.c.Close}
+                        <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                    </button>
+                    <h2 id="header43" class="slds-text-heading--medium">{!$Label.c.Confirm}</h2>
+                </div>
+                <div class="slds-modal__content">
+                    <div style="float:left; margin:10px 0 10px 80px;">                        
+                        <!-- <div style="float:left; display:inline; width:60px;"><lightning:icon iconName="action:question_post_action" size="small"/></div> -->
+                        <div style="float:left; display:inline;"><ui:outputText value="{!v.confirmMsg}" /></div>
+                    </div>   
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning:button onclick="{!c.saveSalesOrderData}"  variant="brand" label="{!$Label.c.Yes}"></lightning:button>
+                    <button onclick="{!c.handleFCABeforeSave}" class="slds-button slds-button--neutral">{!$Label.c.No}</button>
+                </div>
+            </div>
+        </div>
+        <div aura:id="backdrop3" class="slds-backdrop slds-backdrop--open slds-hide"></div> 
+        <!-- End of Confirm Modal -->  
+        
+        
+        <!--###### MODAL BOX Start From Here ######--> 
+        <div aura:id="lookupmodal" class="slds-modal slds-fade-in-open slds-modal--large slds-hide"  aria-hidden="false" role="dialog">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="{!$Label.c.Close}" onclick="{!c.closePopUp}">
+                        X
+                        <span class="slds-assistive-text">{!$Label.c.Close}</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.modalHeader}</h2>                        
+                </div>
+                <!--###### MODAL BOX BODY Part Start From Here ######-->
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div aura:id="pricedata1" style="display:all;">
+                        <ldt:datatableDev title="" aura:id="priceDetailsTable"
+                                          dataRows="{!v.priceDetailList}" header="{!v.priceDetailTableColumns}"
+                                          config="{!v.priceDetailTableConfig}"/>
+                    </div>  
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.closePopUp}" >{!$Label.c.Cancel}</button>
+                </div>
+            </div>
+        </div>
+        <div aura:id="backdrop" class="slds-backdrop slds-backdrop--open slds-hide"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+        
+        <div class="slds-page-header">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-has-flexi-truncate slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:orders" size="large"/>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-heading--label">{!v.headerMsg}</p>
+                            <div class="slds-grid">
+                                <aura:if isTrue="{!v.showRaiseOrder}">
+                                    <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">{!$Label.c.Raise_Sales_Order}</h1>                                
+                                </aura:if>    
+                            </div>
+                            <aura:if isTrue="{!v.showOnReLoad}"><div>{!$Label.c.Order_No}. {!v.sfdcOrderNo}</div></aura:if>
+                            <aura:if isTrue="{!v.showOnReLoad}">
+                                <aura:if isTrue="{!v.showSAPNo}">
+                                    <div style="font-weight:bold;">{!$Label.c.SAP_Order_Number}. {!v.sapOrderNo}</div>
+                                </aura:if>
+                            </aura:if>  
+                            <aura:if isTrue="{!v.showParentOrder}">
+                                <div>{!$Label.c.Parent_Order_Number}. {!v.parentOrderNo}</div>
+                            </aura:if>   
+                        </div>
+                    </div>
+                </div>
+                
+                <!--div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12" style="float:left;">
+<aura:if isTrue="{!v.showOnReLoad}">
+<div style="float:right; margin-top:10px;">
+<aura:if isTrue="{!v.showSAPNo}">
+<div style="float:left; display:inline;"><ui:outputText value="{!v.orderSubStatus}" /></div>
+<aura:set attribute="else">
+<div style="float:left; display:inline;"><ui:outputText value="{!v.newSalesOrder.Order_Status__c}" /></div>
+</aura:set>
+</aura:if>    
+</div>                    
+</aura:if>
+</div-->
+            </div>
+        </div>
+    </div>
+    
+    <div id ="content" class="slds">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+            <!--ADDED-->
+            <aura:if isTrue="{!v.showOrderType}">
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                    {!$Label.c.Select_order_type}
+                </h3>
+                
+                <div class="slds-scrollable_x slds-grid slds-gutters " style="margin-top:12px;margin-bottom:18px;">
+                    <div class="slds-col">
+                        <table class="slds-table">
+                            <thead>
+                                <tr class="slds-text-heading--label">
+                                    <th class="slds-is-sortable"  title="{!$Label.c.Order_Type}" scope="col">
+                                        <div aria-label="" style="width:107px;" class=" slds-cell-wrap">{!$Label.c.Order_Type}</div> 
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-truncate" data-label="{!$Label.c.Order_Type}">
+                                        <ui:inputSelect class="slds-input" 
+                                                        aura:id="orderTypeOptions" 
+                                                        value="{!v.orderType}"
+                                                        disabled="{!v.disableOnExpress}"
+                                                        change ="{!c.handleOrderTypeChange}"><!--label="{!$Label.c.Order_Type}"--> 
+                                            
+                                        </ui:inputSelect> 
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="slds-col" >
+                        <aura:if isTrue="{!v.showStartEndDate}">
+                            <table class="slds-table">
+                                <thead>
+                                    <tr class="slds-text-heading--label">
+                                        <th class="slds-is-sortable"  title="{!$Label.c.Start_Date}" scope="col">
+                                            <div aria-label="" style="width:107px;" class=" slds-cell-wrap">{!$Label.c.Start_Date}</div> 
+                                        </th>
+                                        
+                                        <th class="slds-is-sortable"  title="{!$Label.c.End_Date}" scope="col">
+                                            <div aria-label="" style="width:107px;" class=" slds-cell-wrap">{!$Label.c.End_Date}</div> 
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="slds-hint-parent">
+                                        <td class="slds-truncate" data-label="{!$Label.c.Start_Date}">
+                                            <ui:inputDate aura:id="startDate" 
+                                                          format="dd/MM/yyyy" 
+                                                          class="slds-input"    
+                                                          disabled="true"
+                                                          required="true" 
+                                                          value="{!v.newSalesOrder.Valid_From__c}"
+                                                          change="{!c.onDateChangeStartFromDate}"/><!-- displayDatePicker="true" value="{!v.SingleOrderItem.shipDate}" 
+change="{!c.onDateChangeValidFromDate1}" blur="{!c.restrictHolidays}" disabled="{!v.disabledSOI}" -->
+                                        </td>
+                                        <td class="slds-truncate" data-label="{!$Label.c.End_Date}">
+                                            <ui:inputDate aura:id="endDate" 
+                                                          format="dd/MM/yyyy" 
+                                                          class="slds-input"
+                                                          displayDatePicker="true" 
+                                                          required="true"
+                                                          value="{!v.newSalesOrder.Valid_To__c}"
+                                                          change="{!c.onDateChangeEndFromDate}"/><!-- blur="{!c.restrictHolidays}" -->
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </aura:if>
+                    </div>
+                    <div class="slds-col" >
+                        <aura:if isTrue="{!v.showChildOrder}">
+                            <table class="slds-table">
+                                <thead>
+                                    <tr class="slds-text-heading--label">
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div aria-label="" style="width:100px;" class=" slds-cell-wrap"></div> 
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            
+                        </aura:if>
+                    </div>
+                </div>
+            </aura:if>
+            <!--ADDED-->
+            
+            
+            <!--ADDED-->
+            <div class="slds-hide">
+                <aura:if isTrue="{!v.showExpressDelivery}">
+                    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                        {!$Label.c.Express_Delivery}
+                    </h3>
+                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;margin-bottom:18px;">
+                        
+                        <div  class="slds-form-element" >
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <span class="slds-form-element__label slds-m-bottom_none">{!$Label.c.Express_Delivery}</span>
+                                <ui:inputCheckbox  aura:id="expressOrder"  value="{!v.ExpressOrderCheck}" change="{!c.handleExpressChange}"  disabled="{!v.disableExpress}"/>
+                                <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+            <!--ADDED-->
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:0; background:#769ed9; color:#fff; font-weight:bold;">
+                {!$Label.c.Step} 1: {!$Label.c.Account_Credit_Summary}
+            </h3>
+            <div class="slds-scrollable_x " style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+                <table class="slds-table slds-table--bordered ">
+                    <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Account_Name}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.SAP_Code}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Total_Credit_Limit}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Internal_Credit_Limit}</div>
+                            </th>      
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Credit_Limit_Used}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Credit_Limit_Balance}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Total_Outstanding}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Net_Overdue}</div>
+                            </th>
+                            <th class="slds-cell-shrink"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="slds-hint-parent"><!-- <ui:outputNumber value="{!v.totalValue}" format="#,###,##0.00"/>-->
+                            <th class="slds-truncate" scope="row" data-label="{!$Label.c.Account_Name}"><ui:outputText value="{!v.orderFields.DistributorData.distributorName}"/></th>
+                            <td class="slds-truncate" data-label="{!$Label.c.SAP_Code}"><ui:outputText  value="{!v.orderFields.DistributorData.sapCode}"/></td>
+                            <td class="slds-truncate" data-label="{!$Label.c.Total_Credit_Limit}"><ui:outputNumber aura:id="creditLimitId" value="{!v.orderFields.DistributorData.creditLimit}"  format="#,###,###.00"/></td>
+                            <td class="slds-truncate" data-label="{!$Label.c.Internal_Credit_Limit}"><ui:outputNumber value="{!v.orderFields.DistributorData.internalCredit}" format="#,###,##0.00"/></td>
+                            <td class="slds-truncate" data-label="{!$Label.c.Credit_Limit_Used}"><ui:outputNumber value="{!v.orderFields.DistributorData.creditUsed}" format="#,###,##0.00"/></td>
+                            <td class="slds-truncate" data-label="{!$Label.c.Credit_Limit_Balance}" style="background:#32CD32; font-weight:bold;"><ui:outputNumber value="{!v.orderFields.DistributorData.creditBalance}" format="#,###,##0.00"/></td>
+                            <td class="slds-truncate" data-label="{!$Label.c.Total_Outstanding}"><ui:outputNumber value="{!v.orderFields.DistributorData.paymentOutstanding}" format="#,###,##0.00"/></td>
+                            <td class="slds-truncate" data-label="{!$Label.c.Net_Overdue}" style="background:#f00; font-weight:bold;"><ui:outputNumber value="{!v.orderFields.DistributorData.greaterThan90}" format="#,###,##0.00"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <aura:if isTrue="{!v.showSKU}">
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                    <div style="display:inline; margin-top:5px; padding-right:20px; font-weight:bold;" >{!$Label.c.Step}&nbsp;{!v.two}:  {!$Label.c.ADD_PRODUCT}</div>
+                    
+                </h3>
+                <div class="slds-scrollable_x " style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+                    <table class="slds-table slds-table--bordered  ">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-is-sortable" title="SKU" scope="col">
+                                    <div aria-label="" style="width:350px;" class="slds-cell-wrap">SKU</div>
+                                </th>
+                                <th class="slds-is-sortable" title="UOM" scope="col">
+                                    <div  style="width:48px;">UOM</div>
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Qty}" scope="col">
+                                    <div style="width:93px;">{!$Label.c.Qty}</div>
+                                </th>
+                                <!--<aura:if isTrue="{!v.showBalanceQty}">
+<th class="slds-is-sortable" title="{!$Label.c.Balance_Qty}" scope="col">
+<div aria-label="" class=" slds-cell-wrap">{!$Label.c.Balance_Qty}</div>
+</th>
+</aura:if>-->
+                                <th class="slds-is-sortable" title="{!$Label.c.Pallet_Size}"  scope="col">
+                                    <div aria-label="" style="width:70px;" class=" slds-cell-wrap">{!$Label.c.Pallet_Size}</div><!--style="width:47px;"-->
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Material_Price}" scope="col">
+                                    <div aria-label="" style="width:70px;" class=" slds-cell-wrap">{!$Label.c.Material_Price}</div>
+                                    <!-- <div>Material Price</div>-->
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Standard_Rebate}" scope="col">
+                                    <div aria-label=""  class=" slds-cell-wrap">{!$Label.c.Standard_Rebate}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Product_Type}" scope="col">
+                                    <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Product_Type}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Apply_Rebate}" scope="col">
+                                    <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Apply_Rebate}</div> 
+                                    <!-- <div >Apply Rebate Discount</div>-->
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Net_Invoice_Price}"  scope="col">
+                                    <div aria-label="" style="width:85px;"  class=" slds-cell-wrap">{!$Label.c.Net_Invoice_Price}</div>
+                                </th>
+                                
+                                <th class="slds-is-sortable" title="{!$Label.c.Net_Price}" scope="col">
+                                    <div aria-label="" style="width:107px;"  class=" slds-cell-wrap">{!$Label.c.Net_Price}</div>
+                                    <!--   <div style="width:70px;" >Net Price</div>-->
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Estimated_Final_Price}" scope="col">
+                                    <div aria-label="" style="width:90px;"  class=" slds-cell-wrap">{!$Label.c.Estimated_Final_Price}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Accrual}" scope="col">
+                                    <div aria-label=""  class=" slds-cell-wrap">{!$Label.c.Accrual}</div>
+                                </th>
+                                <!--Delivery Date Changed to Pick Up date by Nikhil -->
+                                <th class="slds-is-sortable"  title="{!$Label.c.Date_Of_Shipment}" scope="col">
+                                    <div aria-label="" style="width:107px;" class=" slds-cell-wrap">{!$Label.c.Pick_Up_Date}</div> 
+                                </th>
+                                <!--Nikhil Change End -->
+                                <!--This field has been reactivated in Order Page by Nikhil -->
+                                <th class="slds-is-sortable" title="{!$Label.c.Transport_Contribution}" scope="col">
+                                    <div aria-label="" style="width:107px;" class="slds-cell-wrap">{!$Label.c.Transport_Contribution}</div>
+                                </th>
+                                <!--Nikhil Change end -->
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Stock}" scope="col">
+                                    <div style="width:47px;" class="slds-cell-wrap">{!$Label.c.Stock}</div>
+                                </th>
+                                
+                                <th class="slds-is-sortable" title="{!$Label.c.Personal_Notes}" scope="col">
+                                    <div style="width:150px;height:20px" class="slds-cell-wrap">{!$Label.c.Personal_Notes}</div>
+                                </th>
+                                
+                                <th class="slds-is-sortable" scope="col">
+                                    <div >{!$Label.c.Action}</div>
+                                </th> 
+                                <th class="slds-cell-shrink"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--  <aura:iteration items="{!v.SingleOrderItem}" var="orderItem1" indexVar="i"> -->
+                            <tr class="slds-hint-parent">
+                                <!--<th class="slds-truncate" scope="row" data-label="APPROVER"><a href="javascript:void(0);">Sanjeev Singh Chaudhary</a></th>-->
+                                <th class="slds-truncate" data-label="{!$Label.c.Product}">
+                                    <!--Start-->
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-combobox_container slds-has-inline-listbox">
+                                                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                                                        <ui:inputText class="slds-input" 
+                                                                      aura:id="itemproduct" 
+                                                                      placeholder="" 
+                                                                      value="{!v.SingleOrderItem.productName}" 
+                                                                      updateOn="click" 
+                                                                      disabled="true"/>
+                                                        
+                                                    </div>
+                                                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right"  style="margin-top:-29px; z-index:1000;" title="{!v.SingleOrderItem.productName}">
+                                                        <lightning:buttonIcon aura:id="itemsel" value="{!i}" iconName="utility:search" onclick="{!c.openPriceDeatilsPopUp}" class="slds-float_right"  size="large" variant="bare" alternativeText=""  /><!--disabled="{!v.disableSelect}"-->
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End-->
+                                </th>
+                                <td class="slds-truncate" data-label="UOM">
+                                    <ui:inputText  class="slds-input" disabled="true"  value="{!v.SingleOrderItem.UOM}"/>
+                                </td>
+                                <td class="slds-truncate" data-label="{!$Label.c.Qty}">
+                                    <ui:inputNumber aura:id="itemqty1" 
+                                                    class="slds-input qtyplh"
+                                                    required="true" 
+                                                    placeholder="{!v.SingleOrderItem.multipleOf}"
+                                                    requiredIndicatorClass="{!v.SingleOrderItem.itemNo}" 
+                                                    format="#,###,###.00"
+                                                    value="{!v.SingleOrderItem.qty}" 
+                                                    disabled="{!v.disabledSOI}" 
+                                                    updateOn="blur,change,focus"
+                                                    change="{!c.restrictQuantity1}"/>
+                                </td>
+                                <!--<aura:if isTrue="{!v.showBalanceQty}">
+<td class="slds-truncate" data-label="{!$Label.c.Balance_Qty}">
+<ui:inputNumber aura:id="balanceqty" 
+class="slds-input qtyplh"
+required="true" 
+labelClass="{!i}"
+placeholder="{!SingleOrderItem.multipleOf}"
+requiredIndicatorClass="{!SingleOrderItem.itemNo}" 
+format="#,###,###.00"
+value="{!SingleOrderItem.balanceQty}" 
+disabled="true"/>
+</td>
+</aura:if>-->
+                                <td class="slds-truncate" data-label="{!$Label.c.Pallet_Size}">
+                                    <ui:inputNumber class="slds-input" value="{!v.SingleOrderItem.palletSize}" disabled="true" format="#,###,###.00"/>
+                                </td>
+                                <td class="slds-truncate" data-label="{!$Label.c.Material_Price}">
+                                    <ui:inputText  class="slds-input" disabled="true" aura:id="matPrice"  value="{!v.SingleOrderItem.materialPrice}"/>
+                                </td>
+                                <td class="slds-truncate slds-hide" data-label="{!$Label.c.Standard_Rebate}">
+                                    <ui:inputNumber class="slds-input" aura:id="stRebate1"  value="{!v.SingleOrderItem.standardRebate}" disabled="{!v.isCustomizePB}"  change="{!c.handleRDiscountChange1}"/>
+                                </td>
+                                <td class="slds-truncate slds-hide" data-label="{!$Label.c.Product_Type}" id="productsID">
+                                    <ui:inputSelect class="slds-input single" aura:id="productTypeOptions" value="{!v.SingleOrderItem.typeOfProduct}" required="true" change="{!c.handleProductChange}"  >
+                                        <aura:iteration items="{!v.productTypesList}" var="level">
+                                            <ui:inputSelectOption text="{!level}" label="{!level}"/>
+                                        </aura:iteration>                                
+                                    </ui:inputSelect> 
+                                </td> 
+                                <td class="slds-truncate slds-hide" data-label="{!$Label.c.Apply_Rebate}" align="center">
+                                    <div  class="slds-form-element" ><!--style="width:17%" style="margin-left:70px;"-->
+                                        <label class="slds-checkbox_toggle slds-grid">
+                                            <ui:inputCheckbox  aura:id="rebId1"  value="{!v.SingleOrderItem.applyRebate}" change="{!c.handleRDiscountChange1}"/> 
+                                            <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+                                                <span class="slds-checkbox_faux"></span>
+                                                
+                                            </span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="slds-truncate" data-label="{!$Label.c.Net_Invoice_Price}">
+                                    <ui:inputNumber class="slds-input" aura:id="netInvPrice12"  value="{!v.SingleOrderItem.netInvoicePrice}" format="#,###,###.00" disabled="true" />
+                                </td>
+                                <!--  <td class="slds-truncate" data-label="{!$Label.c.Qty}">
+<ui:inputText aura:id="itemqty1" 
+class="slds-input qtyplh"
+required="true" 
+placeholder="{!v.SingleOrderItem.multipleOf}"
+requiredIndicatorClass="{!v.SingleOrderItem.itemNo}" 
+value="{!v.SingleOrderItem.qty}" 
+disabled="{!v.disabledSOI}" 
+maxlength="8"
+updateOn="keyup"
+keyup ="{!c.validateQty}" 
+change="{!c.restrictQuantity1}"
+/> 
+</td>-->
+                                
+                                
+                                <td class="slds-truncate" data-label="{!$Label.c.Net_Price}">
+                                    <ui:inputNumber class="slds-input" value="{!v.SingleOrderItem.netPrice}" disabled="true" format="#,###,###.00"/>
+                                </td>
+                                <td class="slds-truncate" data-label="{!$Label.c.Estimated_Final_Price}">
+                                    <ui:inputNumber class="slds-input"
+                                                    aura:id="estimatedFinal1" 
+                                                    value="{!v.SingleOrderItem.unitValue}" 
+                                                    requiredIndicatorClass="{!v.SingleOrderItem.netInvoicePrice}" 
+                                                    change="{!c.updateTableRow1}"
+                                                    format="#,###,###.00"
+                                                    /> <!--itemunitvalue-->
+                                </td>
+                                <td class="slds-truncate slds-hide" data-label="{!$Label.c.Accrual}">
+                                    <ui:inputNumber class="slds-input" aura:id="Accrual1"  value="{!v.SingleOrderItem.accrualDiscount}" disabled="true"/>
+                                </td>
+                                <aura:if isTrue="{!v.showDiscMargin}">
+                                    <td class="slds-truncate" data-label="{!$Label.c.Date_Of_Shipment}">
+                                        <ui:inputDate aura:id="shipDt1" 
+                                                      format="dd/MM/yyyy" 
+                                                      class="slds-input"
+                                                      value="{!v.SingleOrderItem.shipDate}" 
+                                                      change="{!c.onDateChangeValidFromDate1}" 
+                                                      displayDatePicker="true" 
+                                                      required="true" 
+                                                      disabled="{!v.disabledSOI}" /><!-- blur="{!c.restrictHolidays}" -->
+                                    </td>
+                                    <!--Reactivated the field on order page by Nikhil -->
+                                    <td class="slds-truncate" data-label="{!$Label.c.Transport_Contribution}">
+                                        <ui:inputNumber aura:id="TC1" class="slds-input" value="{!v.SingleOrderItem.TransContribution }" format="#,###,###.00"/>
+                                    </td>
+                                    <!--Nikhil Change end -->
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Stock}">
+                                        <div style="float:left;width:40px;white-space:pre-line;" title="{!v.SingleOrderItem.flagImageDisc}">
+                                            <ui:outputRichText aura:id="outputRT" value="{!v.SingleOrderItem.flagImage}"/>
+                                        </div>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Personal_Notes}">
+                                        <ui:inputTextarea rows="1" class="slds-input" aura:id="personalNotes"  value="{!v.SingleOrderItem.personalNotes}"/>
+                                    </td>
+                                </aura:if>
+                                <td class="slds-truncate" data-label="{!$Label.c.Action}">
+                                    <lightning:buttonIcon iconName="utility:add" variant="bare" size="large" alternativeText="Add To Cart" onclick="{!c.addSkuRow}" iconClass="dark" disabled="{!v.disabledSOI}"/>
+                                    <!-- <lightning:buttonIcon  aura:id="deleteBtn"  class="icn" value="{!i}" iconName="utility:delete" onclick="{!c.removeTableRow}" size="medium" alternativeText="Indicates delete"  />-->
+                                </td>
+                            </tr>
+                            <!-- </aura:iteration>-->
+                        </tbody>
+                    </table>
+                </div>
+            </aura:if>
+            
+            
+            
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                <div style="display:inline; margin-top:5px; padding-right:20px; font-weight:bold;" >{!$Label.c.Step}&nbsp;{!v.three}: {!$Label.c.Order_Summary}</div> 
+                <aura:if isTrue="{!v.showDeleteAll}">
+                    <lightning:buttonIcon iconName="utility:delete" variant="bare-inverse"   size="large" alternativeText="Delete Cart"  iconClass="dark" onclick="{!c.deleteAllItem}" disabled="{!v.disableThis}"/>
+                </aura:if>
+                <span class="slds-assistive-text">Show More</span>
+            </h3>
+            <!-- Added by Varun Shrivastva : Start:SCTASK0360650 -->
+            <aura:if isTrue="{!!v.isChildOrderType}">
+                <!-- Added by Varun Shrivastva : End: SCTASK0360650 -->    
+                <div class="slds-scrollable_x slds-grid" style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+                    <table class="slds-table slds-table--bordered ">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-is-sortable" title="SKU" scope="col">
+                                    <div aria-label="" style="width:350px;" class=" slds-cell-wrap">SKU</div>
+                                </th>
+                                <th class="slds-is-sortable" title="UOM" scope="col">
+                                    <div  style="width:48px;" >UOM</div>
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Qty}" scope="col">
+                                    <div style="width:93px;" >{!$Label.c.Qty}</div>
+                                </th>
+                                <aura:if isTrue="{!v.showBalanceQty}">
+                                    <th class="slds-is-sortable" title="{!$Label.c.Balance_Qty}" scope="col">
+                                        <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Balance_Qty}</div>
+                                    </th>
+                                </aura:if>
+                                <th class="slds-is-sortable" title="{!$Label.c.Pallet_Size}" scope="col">
+                                    <div aria-label=""  style="width:70px;" class="slds-cell-wrap">{!$Label.c.Pallet_Size}</div> 
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Material_Price}" scope="col">
+                                    <div aria-label="" style="width:70px;"  class="slds-cell-wrap">{!$Label.c.Material_Price}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Standard_Rebate}" scope="col">
+                                    <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Standard_Rebate}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Product_Type}" scope="col">
+                                    <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Product_Type}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Apply_Rebate}" scope="col">
+                                    <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Apply_Rebate}</div> 
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Net_Invoice_Price}" scope="col">
+                                    <div aria-label="" style="width:85px;" class="slds-cell-wrap">{!$Label.c.Net_Invoice_Price}</div>
+                                </th>
+                                
+                                <th class="slds-is-sortable" title="{!$Label.c.Net_Price}" scope="col">
+                                    <div aria-label="" style="width:107px;" class="slds-cell-wrap">{!$Label.c.Net_Price}</div>
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Estimated_Final_Price}" scope="col">
+                                    <div aria-label="" style="width:90px;" class="slds-cell-wrap">{!$Label.c.Estimated_Final_Price}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Accrual}" scope="col">
+                                    <div aria-label=""  class=" slds-cell-wrap">{!$Label.c.Accrual}</div>
+                                </th>
+                                <!--Delivery Date Changed to Pick Up Date by Nikhil -->
+                                <th class="slds-is-sortable"  title="{!$Label.c.Date_Of_Shipment}" scope="col">
+                                    <div aria-label="" style="width:107px;" class="slds-cell-wrap">{!$Label.c.Pick_Up_Date}</div>
+                                </th>
+                                <!--Nikhil Changes end -->
+                                <!--Reactivated the field in Order Page by Nikhil -->
+                                <th class="slds-is-sortable" title="{!$Label.c.Transport_Contribution}" scope="col">
+                                    <div aria-label="" style="width:107px;" class="slds-cell-wrap">{!$Label.c.Transport_Contribution}</div>
+                                </th>
+                                <!--Nikhil Changes end -->
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Stock}" scope="col">
+                                    <div style="width:47px;" class="slds-cell-wrap">{!$Label.c.Stock}</div>
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Personal_Notes}" scope="col">
+                                    <div style="width:150px;" class="slds-cell-wrap">{!$Label.c.Personal_Notes}</div>
+                                </th>
+                                
+                                <th class="slds-is-sortable" scope="col">
+                                    <div >{!$Label.c.Action}</div>
+                                </th> 
+                                <th class="slds-cell-shrink"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.orderItemList}" var="orderItem" indexVar="i"> 
+                                <tr class="slds-hint-parent">
+                                    <!--<th class="slds-truncate" scope="row" data-label="APPROVER"><a href="javascript:void(0);">Sanjeev Singh Chaudhary</a></th>-->
+                                    <th class="slds-truncate" title="{!orderItem.productName}"  data-label="{!$Label.c.Product}">
+                                        <!--Start-->
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-combobox_container slds-has-inline-listbox">
+                                                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                        <div   class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                                                            <ui:inputText class="slds-input" 
+                                                                          aura:id="itemproduct1" 
+                                                                          placeholder="" 
+                                                                          value="{!orderItem.productName}" 
+                                                                          updateOn="click" 
+                                                                          disabled="true"/>
+                                                            
+                                                        </div>
+                                                        <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right" title="{!orderItem.productName}" >
+                                                            <!-- <lightning:buttonIcon aura:id="itemsel1" value="{!i}" iconName="utility:search" onclick="{!c.openPriceDeatilsPopUp}" class="slds-float_right" size="large" variant="bare"  disabled="true" alternativeText=""  />-->
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End-->
+                                    </th>
+                                    <td class="slds-truncate" data-label="UOM">
+                                        <ui:inputText  class="slds-input" disabled="true"  value="{!orderItem.UOM}"/>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Qty}">
+                                        <ui:inputNumber aura:id="itemqty" 
+                                                        class="slds-input qtyplh"
+                                                        required="true" 
+                                                        labelClass="{!i}"
+                                                        placeholder="{!orderItem.multipleOf}"
+                                                        requiredIndicatorClass="{!orderItem.itemNo}" 
+                                                        format="#,###,###.00"
+                                                        value="{!orderItem.qty}" 
+                                                        disabled="{!v.disableThis}" 
+                                                        updateOn="blur,change,focus"
+                                                        change="{!c.restrictQuantity}"/>
+                                    </td>
+                                    <aura:if isTrue="{!v.showBalanceQty}">
+                                        <td class="slds-truncate" data-label="{!$Label.c.Balance_Qty}">
+                                            <ui:inputNumber aura:id="balanceqty" 
+                                                            class="slds-input qtyplh"
+                                                            required="true" 
+                                                            labelClass="{!i}"
+                                                            placeholder="{!orderItem.multipleOf}"
+                                                            requiredIndicatorClass="{!orderItem.itemNo}" 
+                                                            format="#,###,###.00"
+                                                            value="{!orderItem.balanceQty}" 
+                                                            disabled="true"/>
+                                        </td>
+                                    </aura:if>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Pallet_Size}">
+                                        <ui:inputNumber class="slds-input" value="{!orderItem.palletSize}" disabled="true" format="#,###,###.00"/>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Material_Price}">
+                                        <ui:inputText  class="slds-input" disabled="true" aura:id="matPrice"  value="{!orderItem.materialPrice}"/>
+                                    </td>
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Standard_Rebate}">
+                                        <ui:inputNumber class="slds-input" aura:id="stRebate" labelClass="{!i}"  value="{!orderItem.standardRebate}" disabled="{!v.isCustomizePB}" change="{!c.handleRDiscountChange}"/>
+                                    </td>
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Product_Type}" id="productsID">
+                                        <ui:inputSelect class="slds-input single" aura:id="productTypeOptions1" value="{!orderItem.typeOfProduct}" disabled="true" required="true"  >
+                                            <aura:iteration items="{!v.productTypesList}" var="level">
+                                                <ui:inputSelectOption text="{!level}" label="{!level}"/>
+                                            </aura:iteration>                                
+                                        </ui:inputSelect> 
+                                    </td> 
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Apply_Rebate}">
+                                        <div  class="slds-form-element" ><!--style="width:17%" style="margin-left:50px;" -->
+                                            <label class="slds-checkbox_toggle slds-grid">
+                                                <aura:if isTrue="{!v.showBalanceQty}">
+                                                    <ui:inputCheckbox  aura:id="rebId"  labelClass="{!i}" value="{!orderItem.applyRebate}" disabled="{!v.rebidDisabled}" change="{!c.handleRDiscountChange}"/> 
+                                                    <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+                                                        <span class="slds-checkbox_faux"></span>
+                                                    </span>
+                                                    <aura:set attribute="else">
+                                                        <ui:inputCheckbox  aura:id="rebId"  labelClass="{!i}" value="{!orderItem.applyRebate}" change="{!c.handleRDiscountChange}"/> 
+                                                        <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+                                                            <span class="slds-checkbox_faux"></span>
+                                                        </span>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Net_Invoice_Price}">
+                                        <ui:inputNumber class="slds-input" aura:id="netInvPrice2"  value="{!orderItem.netInvoicePrice}" format="#,###,###.00" disabled="true" />
+                                    </td>
+                                    <!-- <td class="slds-truncate" data-label="{!$Label.c.Qty}">
+<ui:inputText aura:id="itemqty" 
+class="slds-input qtyplh"
+required="true" 
+labelClass="{!i}"
+placeholder="{!orderItem.multipleOf}"
+requiredIndicatorClass="{!orderItem.itemNo}" 
+value="{!orderItem.qty}" 
+disabled="{!v.disableThis}" 
+maxlength="8"
+updateOn="keyup"
+keyup ="{!c.validateQty}" 
+change="{!c.restrictQuantity}"/>
+</td>-->
+                                    
+                                    <td class="slds-truncate" data-label="{!$Label.c.Net_Price}">
+                                        <ui:inputNumber class="slds-input"  aura:id="ntPrice" value="{!orderItem.netPrice}" disabled="true" format="#,###,###.00"/>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Estimated_Final_Price}">
+                                        
+                                        <aura:if isTrue="{!v.showBalanceQty}">
+                                            <ui:inputNumber class="slds-input"
+                                                            aura:id="estimatedFinal" 
+                                                            disabled ="{!v.rebidDisabled}"
+                                                            value="{!orderItem.unitValue}" 
+                                                            requiredIndicatorClass="{!orderItem.netInvoicePrice}" 
+                                                            change="{!c.updateTableRow}"
+                                                            format="#,###,###.00"
+                                                            /> <!--itemunitvalue-->
+                                            <aura:set attribute="else">
+                                                <ui:inputNumber class="slds-input"
+                                                                aura:id="estimatedFinal"
+                                                                value="{!orderItem.unitValue}" 
+                                                                requiredIndicatorClass="{!orderItem.netInvoicePrice}" 
+                                                                change="{!c.updateTableRow}"
+                                                                format="#,###,###.00"
+                                                                /> <!--itemunitvalue-->
+                                            </aura:set>
+                                        </aura:if>
+                                        
+                                    </td>
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Accrual}">
+                                        <ui:inputNumber class="slds-input" aura:id="Accrual" labelClass="{!i}"  value="{!orderItem.accrualDiscount}" disabled="true"/>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Date_Of_Shipment}">
+                                        <ui:inputDate aura:id="shipDt" 
+                                                      labelClass="{!i}"
+                                                      format="dd/MM/yyyy" 
+                                                      class="slds-input"
+                                                      value="{!orderItem.shipDate}" 
+                                                      change="{!c.onDateChangeValidFromDate}" 
+                                                      displayDatePicker="true" 
+                                                      required="true" 
+                                                      disabled="{!v.disableThis}" 
+                                                      />
+                                    </td>
+                                    <!--Reactivated the field on Order Page by Nikhil -->
+                                    <td class="slds-truncate" data-label="{!$Label.c.Transport_Contribution}">
+                                        <aura:if isTrue="{!orderItem.typeOfProduct=='Vendita'}"><!--class="{!orderItem.typeOfProduct=='Vendita'? 'slds-input' : 'slds-input;slds-text-disabled' }"-->
+                                            <ui:inputNumber class="slds-input" aura:id="transC" value="{!orderItem.TransContribution}" labelClass="{!i}" change="{!c.handleTransportChange}" format="#,###,###.00"/>
+                                        </aura:if>
+                                        <aura:if isTrue="{!orderItem.typeOfProduct=='Omaggio'}">
+                                            <ui:inputNumber class="slds-input" disabled="true" aura:id="transC" value="{!orderItem.TransContribution}" labelClass="{!i}" change="{!c.handleTransportChange}" format="#,###,###.00"/>
+                                        </aura:if>
+                                    </td>
+                                    <!-- Nikhil changes end -->
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Stock}">
+                                        <div style="float:left; display:inline; width:40px;" title="{!orderItem.flagImageDisc}">
+                                            <ui:outputRichText aura:id="outputRT" value="{!orderItem.flagImage}"/>
+                                        </div>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Personal_Notes}">
+                                        <div style="float:left; display:inline;" title="{!orderItem.personalNotes}">
+                                            <ui:inputText  class="slds-input" aura:id="personalNotes1"  value="{!orderItem.personalNotes}"/>
+                                        </div>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Action}">
+                                        <lightning:buttonIcon  aura:id="deleteBtn"  class="icn slds-align_absolute-center" value="{!i}" iconName="utility:delete" onclick="{!c.removeTableRow}" size="large" alternativeText="delete Items"  />
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Added by Varun Shrivastava Start SCTASK0360650-->
+            </aura:if>
+            <aura:if isTrue="{!v.isChildOrderType}">
+                <div class="slds-scrollable_x slds-grid" label="Child Section" style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+                    <table class="slds-table slds-table--bordered ">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-is-sortable" title="SKU" scope="col">
+                                    <div aria-label="" style="width:350px;" class=" slds-cell-wrap">SKU</div>
+                                </th>
+                                <th class="slds-is-sortable" title="UOM" scope="col">
+                                    <div  style="width:48px;" >UOM</div>
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Qty}" scope="col">
+                                    <div style="width:93px;" >{!$Label.c.Qty}</div>
+                                </th>
+                                <aura:if isTrue="{!v.showBalanceQty}">
+                                    <th class="slds-is-sortable" title="{!$Label.c.Balance_Qty}" scope="col">
+                                        <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Balance_Qty}</div>
+                                    </th>
+                                </aura:if>
+                                <th class="slds-is-sortable" title="{!$Label.c.Pallet_Size}" scope="col">
+                                    <div aria-label=""  style="width:70px;" class="slds-cell-wrap">{!$Label.c.Pallet_Size}</div> 
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Material_Price}" scope="col">
+                                    <div aria-label="" style="width:70px;"  class="slds-cell-wrap">{!$Label.c.Material_Price}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Standard_Rebate}" scope="col">
+                                    <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Standard_Rebate}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Accrual}" scope="col">
+                                    <div aria-label=""  class=" slds-cell-wrap">{!$Label.c.Accrual}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Product_Type}" scope="col">
+                                    <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Product_Type}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Apply_Rebate}" scope="col">
+                                    <div aria-label="" class=" slds-cell-wrap">{!$Label.c.Apply_Rebate}</div> 
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Net_Invoice_Price}" scope="col">
+                                    <div aria-label="" style="width:85px;" class="slds-cell-wrap">{!$Label.c.Net_Invoice_Price}</div>
+                                </th>
+                                
+                                <th class="slds-is-sortable" title="{!$Label.c.Net_Price}" scope="col">
+                                    <div aria-label="" style="width:107px;" class="slds-cell-wrap">{!$Label.c.Net_Price}</div>
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Estimated_Final_Price}" scope="col">
+                                    <div aria-label="" style="width:90px;" class="slds-cell-wrap">{!$Label.c.Estimated_Final_Price}</div>
+                                </th>
+                                <th class="slds-is-sortable"  title="{!$Label.c.Date_Of_Shipment}" scope="col">
+                                    <div aria-label="" style="width:107px;" class="slds-cell-wrap">{!$Label.c.Date_Of_Shipment}</div>
+                                </th>
+                                
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Transport_Contribution}" scope="col">
+                                    <div aria-label="" style="width:107px;" class="slds-cell-wrap">{!$Label.c.Transport_Contribution}</div>
+                                </th>
+                                <th class="slds-is-sortable slds-hide" title="{!$Label.c.Stock}" scope="col">
+                                    <div style="width:47px;" class="slds-cell-wrap">{!$Label.c.Stock}</div>
+                                </th>
+                                <th class="slds-is-sortable" title="{!$Label.c.Personal_Notes}" scope="col">
+                                    <div style="width:150px;" class="slds-cell-wrap">{!$Label.c.Personal_Notes}</div>
+                                </th>
+                                
+                                <th class="slds-is-sortable" scope="col">
+                                    <div >{!$Label.c.Action}</div>
+                                </th> 
+                                <th class="slds-cell-shrink"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.orderItemListTest}" var="orderItem" indexVar="i"> 
+                                <tr class="slds-hint-parent">
+                                    <!--<th class="slds-truncate" scope="row" data-label="APPROVER"><a href="javascript:void(0);">Sanjeev Singh Chaudhary</a></th>-->
+                                    <th class="slds-truncate" title="{!orderItem.productName}"  data-label="{!$Label.c.Product}">
+                                        <!--Start-->
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-combobox_container slds-has-inline-listbox">
+                                                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                        <div   class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                                                            <ui:inputText class="slds-input" 
+                                                                          aura:id="itemproduct1" 
+                                                                          placeholder="" 
+                                                                          value="{!orderItem.productName}" 
+                                                                          updateOn="click" 
+                                                                          disabled="true"/>
+                                                            
+                                                        </div>
+                                                        <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right" title="{!orderItem.productName}" >
+                                                            <!-- <lightning:buttonIcon aura:id="itemsel1" value="{!i}" iconName="utility:search" onclick="{!c.openPriceDeatilsPopUp}" class="slds-float_right" size="large" variant="bare"  disabled="true" alternativeText=""  />-->
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End-->
+                                    </th>
+                                    <td class="slds-truncate" data-label="UOM">
+                                        <ui:inputText  class="slds-input" disabled="true"  value="{!orderItem.UOM}"/>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Qty}">
+                                        <ui:inputNumber aura:id="itemqty" 
+                                                        class="slds-input qtyplh"
+                                                        required="true" 
+                                                        labelClass="{!i}"
+                                                        placeholder="{!orderItem.multipleOf}"
+                                                        requiredIndicatorClass="{!orderItem.itemNo}" 
+                                                        format="#,###,###.00"
+                                                        value="{!orderItem.qty}" 
+                                                        disabled="{!v.disableThis}" 
+                                                        updateOn="blur,change,focus"
+                                                        change="{!c.restrictQuantity}"/>
+                                    </td>
+                                    <aura:if isTrue="{!v.showBalanceQty}">
+                                        <td class="slds-truncate" data-label="{!$Label.c.Balance_Qty}">
+                                            <ui:inputNumber aura:id="balanceqty" 
+                                                            class="slds-input qtyplh"
+                                                            required="true" 
+                                                            labelClass="{!i}"
+                                                            placeholder="{!orderItem.multipleOf}"
+                                                            requiredIndicatorClass="{!orderItem.itemNo}" 
+                                                            format="#,###,###.00"
+                                                            value="{!orderItem.balanceQty}" 
+                                                            disabled="true"/>
+                                        </td>
+                                    </aura:if>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Pallet_Size}">
+                                        <ui:inputNumber class="slds-input" value="{!orderItem.palletSize}" disabled="true" format="#,###,###.00"/>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Material_Price}">
+                                        <ui:inputText  class="slds-input" disabled="true" aura:id="matPrice"  value="{!orderItem.materialPrice}"/>
+                                    </td>
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Standard_Rebate}">
+                                        <ui:inputNumber class="slds-input" aura:id="stRebate" labelClass="{!i}"  value="{!orderItem.standardRebate}" disabled="{!v.isCustomizePB}" change="{!c.handleRDiscountChange}"/>
+                                    </td>
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Accrual}">
+                                        <ui:inputNumber class="slds-input" aura:id="Accrual" labelClass="{!i}"  value="{!orderItem.accrualDiscount}" disabled="true"/>
+                                    </td>
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Product_Type}" id="productsID">
+                                        <ui:inputSelect class="slds-input single" aura:id="productTypeOptions1" value="{!orderItem.typeOfProduct}" disabled="true" required="true"  >
+                                            <aura:iteration items="{!v.productTypesList}" var="level">
+                                                <ui:inputSelectOption text="{!level}" label="{!level}"/>
+                                            </aura:iteration>                                
+                                        </ui:inputSelect> 
+                                    </td> 
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Apply_Rebate}">
+                                        <div  class="slds-form-element" ><!--style="width:17%" style="margin-left:50px;" -->
+                                            <label class="slds-checkbox_toggle slds-grid">
+                                                <aura:if isTrue="{!v.showBalanceQty}">
+                                                    <ui:inputCheckbox  aura:id="rebId"  labelClass="{!i}" value="{!orderItem.applyRebate}" disabled="{!v.rebidDisabled}" change="{!c.handleRDiscountChange}"/> 
+                                                    <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+                                                        <span class="slds-checkbox_faux"></span>
+                                                    </span>
+                                                    <aura:set attribute="else">
+                                                        <ui:inputCheckbox  aura:id="rebId"  labelClass="{!i}" value="{!orderItem.applyRebate}" change="{!c.handleRDiscountChange}"/> 
+                                                        <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+                                                            <span class="slds-checkbox_faux"></span>
+                                                        </span>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Net_Invoice_Price}">
+                                        <ui:inputNumber class="slds-input" aura:id="netInvPrice2"  value="{!orderItem.netInvoicePrice}" format="#,###,###.00" disabled="true" />
+                                    </td>
+                                    <!-- <td class="slds-truncate" data-label="{!$Label.c.Qty}">
+<ui:inputText aura:id="itemqty" 
+class="slds-input qtyplh"
+required="true" 
+labelClass="{!i}"
+placeholder="{!orderItem.multipleOf}"
+requiredIndicatorClass="{!orderItem.itemNo}" 
+value="{!orderItem.qty}" 
+disabled="{!v.disableThis}" 
+maxlength="8"
+updateOn="keyup"
+keyup ="{!c.validateQty}" 
+change="{!c.restrictQuantity}"/>
+</td>-->
+                                    
+                                    <td class="slds-truncate" data-label="{!$Label.c.Net_Price}">
+                                        <ui:inputNumber class="slds-input"  aura:id="ntPrice" value="{!orderItem.netPrice}" disabled="true" format="#,###,###.00"/>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Estimated_Final_Price}">
+                                        
+                                        <aura:if isTrue="{!v.showBalanceQty}">
+                                            <ui:inputNumber class="slds-input"
+                                                            aura:id="estimatedFinal" 
+                                                            disabled ="{!v.rebidDisabled}"
+                                                            value="{!orderItem.unitValue}" 
+                                                            requiredIndicatorClass="{!orderItem.netInvoicePrice}" 
+                                                            change="{!c.updateTableRow}"
+                                                            format="#,###,###.00"
+                                                            /> <!--itemunitvalue-->
+                                            <aura:set attribute="else">
+                                                <ui:inputNumber class="slds-input"
+                                                                aura:id="estimatedFinal"
+                                                                value="{!orderItem.unitValue}" 
+                                                                requiredIndicatorClass="{!orderItem.netInvoicePrice}" 
+                                                                change="{!c.updateTableRow}"
+                                                                format="#,###,###.00"
+                                                                /> <!--itemunitvalue-->
+                                            </aura:set>
+                                        </aura:if>
+                                        
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Date_Of_Shipment}">
+                                        <ui:inputDate aura:id="shipDt" 
+                                                      labelClass="{!i}"
+                                                      format="dd/MM/yyyy" 
+                                                      class="slds-input"
+                                                      value="{!orderItem.shipDate}" 
+                                                      change="{!c.onDateChangeValidFromDate}" 
+                                                      displayDatePicker="true" 
+                                                      required="true" 
+                                                      disabled="{!v.disableThis}" 
+                                                      />
+                                    </td>
+                                    
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Transport_Contribution}">
+                                        <aura:if isTrue="{!orderItem.typeOfProduct=='Vendita'}"><!--class="{!orderItem.typeOfProduct=='Vendita'? 'slds-input' : 'slds-input;slds-text-disabled' }"-->
+                                            <ui:inputNumber class="slds-input" aura:id="transC" value="{!orderItem.TransContribution}" labelClass="{!i}" change="{!c.handleTransportChange}" format="#,###,###.00"/>
+                                        </aura:if>
+                                        <aura:if isTrue="{!orderItem.typeOfProduct=='Omaggio'}">
+                                            <ui:inputNumber class="slds-input" disabled="true" aura:id="transC" value="{!orderItem.TransContribution}" labelClass="{!i}" change="{!c.handleTransportChange}" format="#,###,###.00"/>
+                                        </aura:if>
+                                    </td>
+                                    <td class="slds-truncate slds-hide" data-label="{!$Label.c.Stock}">
+                                        <div style="float:left; display:inline; width:40px;" title="{!orderItem.flagImageDisc}">
+                                            <ui:outputRichText aura:id="outputRT" value="{!orderItem.flagImage}"/>
+                                        </div>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Personal_Notes}">
+                                        <div style="float:left; display:inline;" title="{!orderItem.personalNotes}">
+                                            <ui:inputText  class="slds-input" aura:id="personalNotes1"  value="{!orderItem.personalNotes}"/>
+                                        </div>
+                                    </td>
+                                    <td class="slds-truncate" data-label="{!$Label.c.Action}">
+                                        <lightning:buttonIcon  aura:id="deleteBtn"  class="icn slds-align_absolute-center" value="{!i}" iconName="utility:delete" onclick="{!c.removeTableRow}" size="large" alternativeText="delete Items"  />
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </aura:if>
+            <!-- Added by Varun Shrivastava End SCTASK0360650-->
+            <div class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#fff; border-top:1px solid #d8dde6; border-bottom:1px solid #d8dde6;">
+                <div class="slds-box slds-box_small slds-float_right" style="background:#eee; font-weight:bold; color:#000; margin-bottom:5px; margin-right:5px;">{!$Label.c.Net_Amount} :&nbsp;
+                    <ui:outputNumber value="{!v.grossNetPrice}"/></div> 
+            </div>
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">{!$Label.c.Step}&nbsp;{!v.four}: {!$Label.c.Shippment} &amp; {!$Label.c.Payment_Details}</h3>  
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label>{!$Label.c.Billing_Address}</label>
+                        <div class="slds-text-body_regular">
+                            <aura:if isTrue="{!v.orderFields.DistributorData.billingSteet1 != null}"><ui:outputText value="{!v.orderFields.DistributorData.billingSteet1}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.billingSteet2 != null}"><ui:outputText value="{!v.orderFields.DistributorData.billingSteet2}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.billingSteet3 != null}"><ui:outputText value="{!v.orderFields.DistributorData.billingSteet3}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.billingSteet4 != null}"><ui:outputText value="{!v.orderFields.DistributorData.billingSteet4}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.billingSteet5 != null}"><ui:outputText value="{!v.orderFields.DistributorData.billingSteet5}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.billingSteet6 != null}"><ui:outputText value="{!v.orderFields.DistributorData.billingSteet6}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.address != null}"> <ui:outputText value="{!v.orderFields.DistributorData.address}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.city != null}"><ui:outputText value="{!v.orderFields.DistributorData.city}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.state != null}"><ui:outputText value="{!v.orderFields.DistributorData.state +'   '+v.orderFields.DistributorData.pincode}"/><br/></aura:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <ui:inputSelect class="slds-input" 
+                                        label="{!$Label.c.Pick_Up_Address}" 
+                                        aura:id="shippListOptions" 
+                                        value="{!v.shippingLoc}"
+                                        disabled="{!v.disableThis}"> 
+                        </ui:inputSelect>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label>{!$Label.c.Pick_Up_Address}</label>
+                        <div class="slds-text-body_regular">
+                            <aura:if isTrue="{!v.selItem.House_Number__c != null}"> <ui:outputText value="{!v.selItem.House_Number__c}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.selItem.Billing_Street_1__c != null}"> <ui:outputText value="{!v.selItem.Billing_Street_1__c}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.selItem.Billing_Street_2__c != null}"> <ui:outputText value="{!v.selItem.Billing_Street_2__c}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.selItem.Billing_Street_3__c != null}"> <ui:outputText value="{!v.selItem.Billing_Street_3__c}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.selItem.Billing_Street_4__c != null}"><ui:outputText value="{!v.selItem.Billing_Street_4__c}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.selItem.Billing_Street_5__c != null}"> <ui:outputText value="{!v.selItem.Billing_Street_5__c}"/><br/></aura:if> 
+                            <aura:if isTrue="{!v.selItem.Billing_Street_6__c != null}"><ui:outputText value="{!v.selItem.Billing_Street_6__c}"/><br/></aura:if> 
+                            <aura:if isTrue="{!v.selItem.City__c != null}"> <ui:outputText value="{!v.selItem.City__c+'  '+v.selItem.Pincode__c}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.selItem.State__c != null}"><ui:outputText value="{!v.selItem.State__c}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.selItem.Country__c != null}"> <ui:outputText value="{!v.selItem.Region__c+'  '+v.selItem.Country__c}"/><br/></aura:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label>{!$Label.c.Expiry_Date}</label>
+                        <div class="slds-text-body_regular">
+                            <aura:if isTrue="{!v.selItem.Expiry_Date__c != null}"> <ui:outputDate format="dd/MM/yyyy" value="{!v.selItem.Expiry_Date__c}"/><br/></aura:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;margin-bottom:18px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <ui:inputSelect class="slds-input  " 
+                                        label="{!$Label.c.Payment_Terms}" 
+                                        aura:id="paymentListOptions" 
+                                        value="{!v.paymentTerm}"
+                                        disabled="{!v.disableThis}"
+                                        change ="{!c.handlePaymentChange}">
+                        </ui:inputSelect>
+                        <br/>
+                        
+                        <ui:inputNumber class="slds-input slds-large-size-2-of-3"
+                                        label="{!$Label.c.Discount}"  
+                                        aura:id="payDiscount" 
+                                        value="{!v.paymentDisc}" 
+                                        updateOn="keyup"
+                                        change ="{!c.validateDisc}" 
+                                        disabled="{!v.isPaymentDiscDisable}"
+                                        format="#,###,###.00"/> <!-- change="{!c.handleDiscountChange}"-->
+                        <!-- Divya: 03-02-2021: SCTASK0368058: Make Payment Term Discount required along with tool tip starts here
+<aura:if isTrue="{!v.showWarning}">
+<lightning:icon size="small" iconName="utility:question_mark" title = "{!$Label.c.Please_select_Payment_Term_Discount}" variant="warning"/>
+</aura:if> -->
+                        <!-- ends here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;margin-bottom:18px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <ui:inputTextArea class="slds-input" rows="2"
+                                          aura:id="shippingNotes"
+                                          label="{!$Label.c.Shipping_Notes}" 
+                                          value="{!v.newSalesOrder.Shipping_Notes__c}" 
+                                          disabled="true" />
+                    </div>
+                </div>
+            </div>
+            <br/>
+            
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                {!$Label.c.Step}&nbsp;{!v.five}: {!$Label.c.PO_NUMBER} &amp; Ritira cliente
+            </h3>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;margin-bottom:18px;">
+                <div  class="slds-form-element" >
+                    <div class="slds-form-element__control">
+                        <ui:inputText class="slds-input"
+                                      aura:id="poNumber"
+                                      value="{!v.newSalesOrder.PONumber__c}" 
+                                      label="{!$Label.c.PO_NUMBER}" 
+                                      maxlength="50"/>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.showFCA}">
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-hide" style="margin-top:12px;margin-bottom:18px;">
+                    <br/>
+                    <div  class="slds-form-element" >
+                        <label class="slds-checkbox_toggle slds-grid">
+                            <span class="slds-form-element__label slds-m-bottom_none">Ritira cliente</span>
+                            
+                            <ui:inputCheckbox  aura:id="FCAOrder"  value="{!v.FCAOrderCheck}" change="{!c.handleFCAChange}" disabled="{!v.disableFCA}"/> <!--isFCAOrder-->
+                            <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+                                <span class="slds-checkbox_faux"></span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </aura:if>
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">{!$Label.c.Note} : {!$Label.c.This_order_value_is_exclusive_of_taxes_Taxes_are_applicable_as_extra}</h3>
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#dcedfb; font-weight:bold;">{!$Label.c.Remarks}</h3>
+            <div class="slds-p-horizontal--small slds-size--1-of-1" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <ui:inputTextArea class="slds-input" rows="2"
+                                          aura:id="remarks"
+                                          value="{!v.newSalesOrder.Remarks_Long__c}" 
+                                          label="" 
+                                          maxlength="132" 
+                                          disabled="{!v.disableThis}"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+                <aura:if isTrue="{!v.FCAOrderCheck}"> 
+                    <lightning:button onclick="{!c.openConfirmDialog}" 
+                                      variant="brand" 
+                                      label="{!$Label.c.Confirm}"
+                                      iconName="utility:check" 
+                                      iconPosition="left" 
+                                      disabled="{!v.disableThis}" />
+                    <aura:set attribute="else">
+                        <lightning:button onclick="{!c.saveSalesOrderData}" 
+                                          variant="brand" 
+                                          label="{!$Label.c.Confirm}"
+                                          iconName="utility:check" 
+                                          iconPosition="left" 
+                                          disabled="{!v.disableThis}" />
+                    </aura:set>
+                </aura:if>
+                <aura:if isTrue="{!v.showSaveDraft}">
+                    <lightning:button onclick="{!c.saveSalesOrderData}" 
+                                      variant="brand" 
+                                      label="{!$Label.c.Save_as_Draft}" 
+                                      iconName="utility:save" 
+                                      iconPosition="left" 
+                                      disabled="{!v.disableThis}" />
+                </aura:if>
+                <aura:if isTrue="{!v.showSubmitEdit}">            
+                    <lightning:button onclick="{!c.editForm}" 
+                                      variant="brand" 
+                                      label="{!$Label.c.Edit}" 
+                                      iconName="utility:edit" 
+                                      iconPosition="left" 
+                                      disabled="{!v.disableEdit}" />
+                </aura:if>
+                
+                
+                <aura:if isTrue="{!v.showApproveReject}">
+                    <lightning:button onclick="{!c.openDialog}" 
+                                      variant="brand" 
+                                      label="{!$Label.c.Approve}" 
+                                      iconName="utility:approval" 
+                                      iconPosition="left"/>
+                    
+                    <lightning:button onclick="{!c.openDialog}" 
+                                      variant="brand" 
+                                      label="{!$Label.c.Reject}" 
+                                      iconName="utility:remove_link"
+                                      iconPosition="left"/>
+                </aura:if>
+            </div>
+            <br/>
+        </div>
+    </div>
+    
+    
+    <aura:if isTrue="{!v.showOnReLoad}">      
+        <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#ccf2ff; color:#000; font-weight:bold;">
+            {!$Label.c.Approval_History} 
+        </h3>
+        <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+            <thead>
+                <tr class="slds-text-heading--label">
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate">{!$Label.c.DATE_TIME}</div>
+                    </th>
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate">{!$Label.c.Status}</div>
+                    </th>
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate">{!$Label.c.USER}</div>
+                    </th>
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate">{!$Label.c.APPROVER}</div>
+                    </th>        
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate">{!$Label.c.COMMENTS}</div>
+                    </th>
+                    <th class="slds-cell-shrink"></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <aura:iteration items="{!v.approvalList.listOfStepsAudit}" var="step">
+                    <tr class="slds-hint-parent">
+                        <th class="slds-truncate" scope="row" data-label="{!$Label.c.DATE_TIME}"><ui:outputDateTime value="{!step.createdDate}"/></th>
+                        <td class="slds-truncate" data-label="{!$Label.c.Status}"><ui:outputText value="{!step.stepStatus}" /></td>
+                        <td class="slds-truncate" data-label="{!$Label.c.USER}"><ui:outputText value="{!step.originalActorName}" /></td>
+                        <td class="slds-truncate" data-label="{!$Label.c.APPROVER}"><ui:outputText value="{!step.actorName}" /></td>
+                        <td class="slds-truncate" data-label="{!$Label.c.COMMENTS}"><ui:outputText value="{!step.comments}" /></td>
+                    </tr>
+                </aura:iteration>    
+            </tbody>
+        </table> 
+    </aura:if>
+</aura:component>

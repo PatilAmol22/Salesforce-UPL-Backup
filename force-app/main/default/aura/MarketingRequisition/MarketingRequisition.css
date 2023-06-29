@@ -1,0 +1,31 @@
+.THIS.fsize {
+    font-size:15px;
+}
+.THIS .icn svg{
+ padding-right:5px;
+}
+.THIS .icn1 svg{
+ fill: #fff;  
+}
+/*.THIS .slds-modal__container{
+       max-width:80rem !important;
+       width:100% !important;
+}*/
+.THIS .paddright{
+  padding-right:8px;
+}
+.THIS .invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.THIS .popover {
+position: absolute;
+left: 0%;
+bottom: 65%;
+}
+.THIS .slds-button--neutral {
+    padding:2px;
+    font-size:12px;
+}
+.THIS .tog {
+    display : none;
+}

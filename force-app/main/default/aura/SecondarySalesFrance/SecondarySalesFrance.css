@@ -1,0 +1,23 @@
+.THIS {
+}
+.THIS.bgColor{background-color:white!important;}
+
+.THIS .success-text {
+    color:green;
+   font-size:20px;
+}
+
+.THIS .error-text {
+   color:red;
+   font-size:20px;
+}
+.THIS .slds-file-selector__dropzone .slds-file-selector__text{
+			width:200px;
+}
+
+.THIS .slds-file-selector__button{
+ height:90px; 
+}
+.THIS .slds-file-selector__button{
+    width: 170px;
+}

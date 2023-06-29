@@ -1,0 +1,136 @@
+<template>
+    <!--========================== For India Tile View 3 Tiles ==============================-->
+    <template if:true={isIn}>
+        <div class="slds-grid slds-wrap tilelayoutsetup-en">
+            <template if:true={isInternal}>
+                <div class="slds-col slds-x-small-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-right_medium mobile-rt-pad-en mob-rt-pad-en childDiv1" aria-current="true" >
+                    <div class="slds-grid sapTabcolorInternal">
+                        <div class="slds-col slds-xx-small-size_3-of-12 slds-x-small-size_2-of-12 slds-medium-size_2-of-12 slds-large-size_3-of-12 profileIconDiv-en">
+                            <img src={profileIcon} alt="SAP Number" class="profileIcon-en">
+                        </div>
+                        <div class="slds-col slds-xx-small-size_9-of-12 slds-x-small-size_10-of-12 slds-medium-size_10-of-12 slds-large-size_9-of-12 slds-p-top_large slds-text-align_left mobilepaddinglabel-internal-en">
+                            <span class="title-en">{userText}</span>
+                        </div>
+                        <!--<div class="slds-col slds-xx-small-size_2-of-12 slds-x-small-size_3-of-12 slds-medium-size_5-of-12 slds-large-size_4-of-12 slds-p-top_medium slds-text-align_right mobilepaddingcount-en">
+                            <span class="countcls-en">{sapCode}</span>
+                        </div>-->
+                    </div>
+                </div>
+            </template>
+            <template if:false={isInternal}>
+                <div class="slds-col slds-x-small-size_12-of-12 slds-small-size_12-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-right_medium mobile-rt-pad-en mob-rt-pad-en childDiv2" aria-current="true">
+                  
+                    <div class="slds-grid sapTabcolor-en">
+                        <div class="slds-col slds-xx-small-size_3-of-12 slds-x-small-size_2-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 profileIconDiv-en">
+                            <img src={profileIcon} alt="SAP Number" class="profileIcon-en">
+                        </div>
+                        <div class="secMainDiv slds-xx-small-size_9-of-12 slds-x-small-size_10-of-12 slds-medium-size_9-of-12 slds-large-size_9-of-12">
+                        <div class="slds-col slds-large-size_12-of-12 mobilepaddinglabel-en">
+                            <span class="title-en">{userText}</span>
+                        </div>
+                        <div class="slds-col slds-large-size_12-of-12 mobilepaddingcount-sap-en">
+                            <span class="countcls-sap-en">{sapCode}</span>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </template>
+        <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-right_medium mobile-rt-pad-en rt-mob-pad childDiv3" aria-current="true">
+            <div class="slds-grid slds-wrap orderTabcolor-en">
+                <div class="slds-col slds-xx-small-size_3-of-12 slds-x-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 borderclr-en">
+                    <img src={orderSummary} alt="Order Summary" class="mobilepaddingcls-en">
+                </div>
+                <div class="slds-col slds-xx-small-size_7-of-12 slds-x-small-size_9-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-p-top_large slds-text-align_left mobilepaddinglabel-ot-en">
+                    <span class="title-en">{label.OrdersLabel}</span>
+                </div>
+                <div class="slds-col slds-xx-small-size_2-of-12 slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-top_medium slds-text-align_right mobilepaddingcount-ot-en textaligncentercls">
+                    <span class="countcls-en">{completelyProcessedCount}/{salesOrderCount}</span>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-right_medium ticketleftpadding-en childDiv4">
+            <div class="slds-grid slds-wrap ticketTabcolor-en">
+                <div class="slds-col slds-xx-small-size_3-of-12 slds-x-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 borderclr-en">
+                    <img src={ticketSummary} alt="Ticket Summary" class="imgheight-en">
+                </div>
+                <div class="slds-col slds-xx-small-size_7-of-12 slds-x-small-size_9-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12  slds-p-top_large slds-text-align_left mobilepaddinglabel-ot-en">
+                    <span class="title-en">{label.TicketLable}</span>
+                </div>
+                <div class="slds-col slds-xx-small-size_2-of-12 slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-top_medium slds-text-align_right mobilepaddingcount-ot-en textaligncentercls">
+                    <span class="countcls-en">{ticketCount}/{totalCount}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </template>
+    
+    <!--========================== For Brazil Tile ==============================-->
+    <template if:true={isBr}>
+        <div class="slds-grid slds-wrap tilelayoutsetup">
+            <div class="slds-col slds-size_6-of-12 slds-p-right_large mobile-rt-pad " aria-current="true">
+                <div data-id="tab-1" data-name="tab-1" class="slds-grid orderTabcolor BrazilTileOne">
+                    <div data-id="tab-1" data-name="tab-1" class="slds-col slds-x-small-size_2-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 borderclr">
+                        <img data-id="tab-1" src={orderSummary} alt="Order Summary" class="slds-p-top_medium slds-p-bottom_small slds-p-left_medium mobilepaddingcls">
+                    </div>
+                    <div data-id="tab-1" class="slds-col slds-x-small-size_6-of-12 slds-small-size_5-of-12 slds-medium-size_7-of-12 slds-large-size_6-of-12 slds-p-top_large slds-text-align_left mobilepaddinglabel mobilepaddinglabel-br">
+                        <span data-id="tab-1" class="title">{label.OrdersLabel}</span>
+                    </div>
+                    <div data-id="tab-1" class="slds-col slds-x-small-size_3-of-12 slds-medium-size_2-of-12 slds-large-size_3-of-12 slds-p-top_medium slds-text-align_right mobilepaddingcount">
+                        <span data-id="" class="countcls">{salesOrderCount}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-right_medium ticketleftpadding">
+                <div data-id="tab-2" class="slds-grid ticketTabcolor BrazilTileTwo">
+                    <div data-id="tab-2" class="slds-col slds-x-small-size_2-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 borderclr ">
+                        <img data-id="tab-2" src={ticketSummary} alt="Ticket Summary" class="slds-p-top_medium slds-p-left_small imgheight cl-Imghei">
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-small-size_5-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12  slds-p-top_large slds-text-align_left mobilepaddinglabel mobilepaddinglabel-br">
+                        <span data-id="tab-2" class="title">{label.TicketLable}</span>
+                    </div>
+                    <div class="slds-col slds-x-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-p-top_medium slds-text-align_right mobilepaddingcount">
+                        <!--<span data-id="" class="countcls">{ticketCount}/{totalCount}</span>-->
+                        <span data-id="" class="countcls">{ticketCount}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+  <!--========================== For Chile Tile ==============================-->
+
+
+   <template if:true={isCl}>
+        <div class="slds-grid slds-wrap tilelayoutsetup">
+            <div class="slds-col slds-size_6-of-12 slds-p-right_large mobile-rt-pad" aria-current="true">
+                <div data-id="tab-1" data-name="tab-1" class="slds-grid orderTabcolor">
+                    <div data-id="tab-1" data-name="tab-1" class="slds-col slds-x-small-size_2-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 borderclr">
+                        <img data-id="tab-1" src={orderSummary} alt="Order Summary" class="slds-p-top_medium slds-p-bottom_small slds-p-left_medium mobilepaddingcls">
+                    </div>
+                    <div data-id="tab-1" class="slds-col slds-x-small-size_6-of-12 slds-medium-size_7-of-12 slds-large-size_6-of-12 slds-p-top_large slds-text-align_left mobilepaddinglabel mobilepaddinglabel-br">
+                        <span data-id="tab-1" class="title">Pedidos totales</span>
+                    </div>
+                    <div data-id="tab-1" class="slds-col slds-x-small-size_3-of-12 slds-medium-size_2-of-12 slds-large-size_3-of-12 slds-p-top_medium slds-text-align_right mobilepaddingcount">
+                        <span data-id="" class="countcls">{salesOrderCount}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-p-right_medium ticketleftpadding">
+                <div data-id="tab-2" class="slds-grid ticketTabcolor">
+                    <div data-id="tab-2" class="slds-col slds-x-small-size_2-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 borderclr">
+                        <img data-id="tab-2" src={ticketSummary} alt="Ticket Summary" class="slds-p-top_medium slds-p-left_small imgheight cl-Imghei">
+                    </div>
+                    <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12  slds-p-top_large slds-text-align_left mobilepaddinglabel mobilepaddinglabel-br">
+                        <span data-id="tab-2" class="title">Orden abierta</span>
+                    </div>
+                    <div class="slds-col slds-x-small-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-p-top_medium slds-text-align_right mobilepaddingcount">
+                        <!--<span data-id="" class="countcls">{ticketCount}/{totalCount}</span>-->
+                        <span data-id="" class="countcls">{openOrdersCountCl}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

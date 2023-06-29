@@ -1,0 +1,327 @@
+.drop-css {
+  font-size: 13px;
+}
+.list-title {
+  font-size: 23px;
+  margin-bottom: 1%;
+  margin-top: -1%;
+}
+.component-block-contract {
+  background-color: white;
+  border: 1px solid #ddd;
+}
+.contract-class {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  font-size: 15px;
+  text-align: center;
+}
+.component-block {
+  background-color: white;
+  min-height: 500px;
+  border: 1px solid #ddd;
+}
+.search-btn-contract {
+  background-color: #00bdf2;
+  color: #fff;
+  border: none;
+  padding: 4px 24px;
+  font-size: 14px;
+}
+.resetDiv {
+  float: right;
+  margin-top: 5%;
+}
+.iconcls {
+  cursor: pointer;
+}
+.cancel-btn-contract {
+  background-color: gray;
+  color: #fff;
+  border: none;
+  padding: 4px 24px;
+  font-size: 14px;
+}
+.reset-btn {
+  background-color: gray;
+  color: #fff;
+  border: none;
+  padding: 4px 24px;
+  font-size: 14px;
+}
+.s-btn-div {
+  text-align: end;
+}
+.s-btn-div,
+.c-btn-div {
+  margin-top: 25px;
+}
+.filter-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+.year-filter {
+  width: 35%;
+}
+.search-filter {
+  width: 65%;
+  display: flex;
+  justify-content: space-between;
+}
+.mrg-tp {
+  margin-top: 20px;
+}
+.search-btn {
+  width: 40%;
+}
+.nodatacss {
+  margin-top: 5%;
+}
+.ext-nodata{
+  font-weight: bold;
+  margin-top: 15%;
+}
+.table-head {
+  background-color: #f8f8f8;
+  color: #888;
+}
+.table-head-css {
+  height: 40px;
+}
+.table-body {
+  color: black;
+}
+.table-body-css {
+  height: 40px;
+}
+.order-link {
+  color: #f47920;
+  text-decoration: none;
+}
+.table-scroll {
+  overflow-x: auto;
+  margin-top: 2%;
+}
+.table-scroll::-webkit-scrollbar {
+  width: 0;
+}
+.table-width-scroll {
+  width: 100%;
+}
+.spinner-css {
+  margin-top: 20%;
+}
+@media only screen and (max-width: 1024px) {
+  .table-width-scroll {
+    width: 115%;
+  }
+  .search-box {
+    width: 80%;
+  }
+  .search-btn {
+    width: 20%;
+  }
+  .mrg-tp {
+    margin-top: 25px;
+  }
+  .close-icon {
+    top: 45%;
+  }
+  .resetDiv {
+    margin-top: 7%;
+  }
+  .contract-class {
+    margin-top: 13%;
+    margin-bottom: 11%;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .contract-class {
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+  .s-btn-div,
+  .c-btn-div {
+    margin-top: 0px;
+    margin-bottom: 2%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .table-width-scroll {
+    width: 150%;
+  }
+  .table-scroll {
+    margin-top: 3%;
+  }
+  .resetDiv {
+    margin-top: 15%;
+  }
+  .c-btn-div,
+  .s-btn-div {
+    margin-top: 1%;
+    margin-bottom: 3%;
+  }
+  .contract-class{
+    margin-top: 13%;
+    margin-bottom: 10%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .resetDiv {
+    float: left;
+    margin-top: 1%;
+  }
+  .contract-class {
+    margin-top: 2%;
+    margin-bottom: 0%;
+  }
+  .c-btn-div,
+  .s-btn-div {
+    margin-top: 3%;
+  }
+  .reset-btn {
+    padding: 3px 20px;
+    font-size: 12px;
+  }
+  .nodatacss {
+    margin-bottom: 8%;
+  }
+
+   .shadoweffect {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  
+     .textoverflowcls {
+       line-height: 35px;
+       padding-right: 2%;
+       max-width: none;
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+     }
+  
+     .table-body-css {
+       height: 30px;
+     }
+    .table-width-scroll {
+      width: 100%;
+    }
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+    
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+    
+        tr {
+          border-bottom: 0px;
+          border: 1px solid #ccc;
+          margin-bottom: 10px;
+        }
+    
+        td {
+          /* Behave  like a "row" */
+          /* border: none;
+        		border-bottom: 1px solid #eee;  */
+          position: relative;
+          padding-left: 47%;
+        }
+    
+        td:before {
+          /* Now like a table header */
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 6px;
+          left: 6px;
+          width: 33%;
+          padding-right: 10px;
+          white-space: nowrap;
+        }
+    
+        .br-mobile-view:nth-of-type(1):before {
+          content: "";
+        }
+    
+        .br-mobile-view:nth-of-type(2):before {
+          content: "Contrato:";
+        }
+    
+        .br-mobile-view:nth-of-type(3):before {
+          content: "Distribuidor:";
+        }
+    
+        .br-mobile-view:nth-of-type(4):before {
+          content: "Tipo:";
+        }
+    
+        .br-mobile-view:nth-of-type(5):before {
+          content: "Classificação:";
+        }
+    
+        .br-mobile-view:nth-of-type(6):before {
+          content: "Status:";
+        }
+    
+        .br-mobile-view:nth-of-type(7):before {
+          content: "BU:";
+        }
+    
+        .br-mobile-view:nth-of-type(8):before {
+          content: "Regional:";
+        }
+    
+        .br-mobile-view:nth-of-type(9):before {
+          content: "CTC:";
+        }
+        .br-mobile-view:nth-of-type(10):before {
+          content: "Válido de:";
+        }
+        .br-mobile-view:nth-of-type(11):before {
+          content: "Válido Até:";
+        }
+}
+@media only screen and (max-width: 650px) {
+  .table-width-scroll {
+    width: 100%;
+  }
+  .table-scroll {
+    margin-top: 4%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .table-width-scroll {
+    width: 100%;
+  }
+  .mrg-tp {
+    margin-top: 10px;
+  }
+  .list-title {
+    font-size: 17px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .table-width-scroll {
+    width: 100%;
+  }
+  .mobile-font-date {
+    font-size: 12px;
+  }
+  .table-head,
+  .table-body {
+    font-size: 12px;
+  }
+  .reset-btn {
+    font-size: 11px;
+  }
+}

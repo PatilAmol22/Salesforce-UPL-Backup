@@ -1,0 +1,29 @@
+.THIS .slds-form-element__label {
+    display : none;
+    visibility : hidden;
+}
+
+.THIS .show_label .slds-form-element__label{
+    display: initial;
+    visibility: visible;
+}
+
+.THIS .icn_destructive svg{
+    fill:red;
+}
+
+.THIS .icn_success svg{
+    fill:green;
+}
+
+.THIS .icn_info svg{
+    fill:blue;
+}
+
+.THIS.container{
+    background:rgb(208 212 216);
+}
+
+.THIS .quantity{
+    width:110px;
+}

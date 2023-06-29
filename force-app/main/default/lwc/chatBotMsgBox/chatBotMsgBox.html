@@ -1,0 +1,78 @@
+<template>
+     <div style="font-size:12px; margin-top:10px;">  
+      <template if:true={isBaseTextVisible}>
+        <lightning-formatted-rich-text  class="slds-chat-message__text slds-chat-message__text_outbound-agent"
+         value={strMessage} style="margin-left:10px; border-radius:5px 5px 5px 0px; width:75%;">
+      </lightning-formatted-rich-text>
+      </template>
+      <template if:true={isBaseTextVisible1}>   
+      <lightning-avatar variant="circle" src="https://www.lightningdesignsystem.com/assets/images/avatar2.jpg" initials="AW" fallback-icon-name="standard:person_account" alternative-text="Amy Weaver" class="slds-m-right_small" style="float:right;margin-left:4px"></lightning-avatar>
+         <lightning-formatted-rich-text  class="slds-chat-message__text slds-chat-message__text_outbound"
+         value={strMessage} style="margin-right:0px; max-width:100%; float:right;">
+        </lightning-formatted-rich-text>
+      </template>
+  <br/>
+
+<!-- newly Added1-->
+<!--For Brand Details-->  
+        <div style="margin-top: 10px;">
+          <template if:true={showBrandDetails}>
+            <lightning-datatable class="wraptable" 
+            columns={brandColumns}
+              data={brandData} 
+              hide-checkbox-column="true" 
+              wrap-text-max-lines="3"
+              key-field="Id">
+            </lightning-datatable>
+          </template>
+        </div>
+<!--For Order Status-->
+        <div style="margin-top: 10px;">
+          <template if:true={showOrderStatus}>
+            <lightning-datatable class="wraptable"
+             columns={OrderStatusColumns}
+              data={orderStatus}
+              hide-checkbox-column="true"
+              wrap-text-max-lines="3"
+              key-field="Id">
+            </lightning-datatable>
+          </template>
+        </div>
+<!--For Order Details-->
+        <div style="margin-top: 10px;">
+          <template if:true={showOrderDetails}>
+            <!-- <lightning-button  icon-name="utility:download" style=" color: black; padding:0; margin:0; display:inline-block"
+                                      onclick={downloadCSVFile} ></lightning-button> -->
+            <lightning-datatable class="wraptable" 
+             columns={OrderDetailColumns}
+              data={orderDetailsData}
+              hide-checkbox-column="true"  
+              wrap-text-max-lines="3"           
+              key-field="Id">
+            </lightning-datatable>
+          </template>
+        </div>
+<!-- For No Data-->
+        <div>
+          <template if:true={noDataFound}>
+            <strong>No data found.</strong>
+          </template>
+        </div>
+  <!-- newly Added2
+  <div class="slds-grid slds-wrap slds-col slds-size_11-of-12" style="float:right;">
+    <template if:true={showSalesMTDbyCustomer1}>
+        <h2 class="slds-card__header-title" style="margin-top:22px;margin: 0 auto;">
+            <lightning-icon icon-name="utility:case"  alternative-text="case!"  variant="warning"><p style="text-align: center">Deatils!!!</p></lightning-icon>
+        </h2>
+        <div class="slds-scrollable_x">
+        <lightning-datatable columns={columns}
+        data={custData} 
+        hide-checkbox-column="true" 
+        key-field="Id" style="overflow-x: hidden">
+        </lightning-datatable>
+      </div>
+    </template>
+  </div>
+   ended-->
+</div>
+</template>

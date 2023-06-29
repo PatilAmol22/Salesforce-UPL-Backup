@@ -1,0 +1,31 @@
+.THIS {
+}
+
+.THIS .field{
+  padding: 5px;
+  border: 1px solid #dce4ec;
+  border-radius: 2px;
+}
+ 
+ 
+.THIS .slds-radio {
+    display: inline-block !important;
+    margin-right:5px;
+}
+
+.THIS .slds-table .slds-radio [type=radio]+.slds-radio__label .slds-radio_faux 
+{
+    margin-right: 6px;
+}
+
+.THIS .dinput
+{
+        width: 100px;
+    text-align: center;
+}
+
+.THIS input[type=checkbox]:checked.green-checkbox{
+    border-color: rgb(216, 214, 213); /*Choose your color*/
+    box-shadow: 0 0 3px #D8D6D5; /*Choose a darker color for the shadow*/
+    background-color: rgb(216, 214, 213);
+}

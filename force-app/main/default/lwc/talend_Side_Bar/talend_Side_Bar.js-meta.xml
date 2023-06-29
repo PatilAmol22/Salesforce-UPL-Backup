@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Side Bar Pannel</masterLabel>
+    <description>Side Bar Pannel</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <!-- Configuring the design attributes -->
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightningCommunity__Default">
+            <property name="backgroundcolor" type="String" default="#000000" label="Enter the BackGround Color" />
+            <property name="fontcolor" type="String" default="#fff" label="Enter the Font Color" />
+            <property name="hoverbackgroundcolor" type="String" default="#F47920" label="Enter the BackGround Color on Hover" />
+            <property name="hoverfontcolor" type="String" default="#fff" label="Enter the Font Color on Hover" />
+            <property name="highlightParent" type="String" default="Home" label="Parent Tab Name to be hightlighted" />
+            <property name="highlightChild" type="String" default="" label="Child Tab Name to be hightlighted" />
+            <property name="highlightParentBrazil" type="String" default="" label="Parent Tab Name to be hightlighted-Brazil" />
+            <property name="highlightChildBrazil" type="String" default="" label="Child Tab Name to be hightlighted-Brazil" />
+            <property name="highlightParentChile" type="String" default="" label="Parent Tab Name to be hightlighted-Chile" />
+            <property name="highlightChildChile" type="String" default="" label="Child Tab Name to be hightlighted-Chile" />
+            <property name="highlightParentMexico" type="String" default="" label="Parent Tab Name to be hightlighted-Mexico" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

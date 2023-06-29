@@ -1,0 +1,160 @@
+<aura:component controller="CallForRecommendation" access="global" implements="force:hasRecordId">
+    
+    <!--<aura:attribute name="EmpanelmentId" type="String" />-->
+    <aura:attribute name="CallIdFromRecommendation" type="String" />
+    <aura:attribute name="ListofRecommendation" type="List" />
+    
+    <aura:attribute name="viewRecommendationFlagVR" type="Boolean" default="false" />
+    <aura:attribute name="followUpFlagVR" type="Boolean" default="false" />
+    <aura:attribute name="followUpFlagVR1" type="Boolean" default="true" />
+    
+    <aura:attribute name="sett" type="Boolean" default="true" />
+    <aura:attribute name="sett1" type="Boolean" default="true" />
+    <aura:attribute name="editfollowup" type="Boolean" default="false" />
+    <aura:attribute name="viewfollowup" type="Boolean" default="true" />
+    <aura:attribute name="subjectrecommendation" type="String"/>
+    <aura:attribute name="subjectfollowup" type="String"/>
+    <aura:attribute name="passViewFollow" type="Boolean" default="false" />
+    <aura:attribute name="passViewFollowCloseCall" type="Boolean" default="false" />
+    
+    <aura:attribute name="returnedIdVal" type="String"/>
+    <aura:attribute name="AcreArea" type="Integer" />
+    <aura:attribute name="onSaveHide" type="Boolean" default="true" />
+    <aura:attribute name="onSaveHide1" type="Boolean" default="true" />
+    <aura:attribute name="rFlagSave" type="Boolean" default="false"/>
+    <aura:attribute name="recommendationFlagSave" type="Boolean" default="false"/>
+    
+    <aura:attribute name="acreAreaValidation" type="Integer"/>
+    <aura:attribute name="TaskId" type="Id" description="get taskid from wrapperviewrecommnedation"/>
+    <aura:handler name="init" value="{! this }" action = "{!c.doInit}" />
+        
+    <article class="slds-card">
+        <!--<div class="slds-card__body slds-card__body_inner"></div>-->
+        <div class="slds-p-bottom_large slds-p-left_large slds-form-element_horizontal" >
+            <lightning:recordViewForm recordId="{!v.CallIdFromRecommendation}" objectApiName="Call__c">
+                <div class="slds-box">
+                    
+                    <div class="slds-grid slds-wrap slds-gutters slds-grid_align-spread">
+                        <div class="slds-col slds-size_2-of-8">
+                            <lightning:outputField fieldName="Name" /> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-8">
+                            <lightning:outputField fieldName="PestInfestation__c" />
+                        </div>
+                        <div class="slds-col slds-size_2-of-8">
+                            <lightning:outputField fieldName="PestInfestationDate__c" /> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-8">
+                            <lightning:outputField name="CreatedDate" />
+                        </div>
+                        <div class="slds-col slds-size_2-of-8">
+                            <lightning:outputField fieldName="Disease__c" />
+                        </div>
+                        <div class="slds-col slds-size_2-of-8">
+                            <lightning:outputField fieldName="Insect__c" /> 
+                        </div>
+                        <div class="slds-col slds-size_2-of-8">
+                            <lightning:outputField fieldName="PGR__c" />
+                        </div>
+                        <div class="slds-col slds-size_2-of-8">
+                            <lightning:outputField fieldName="Weed__c" />
+                        </div>
+                        
+                    </div>
+                </div>     
+            </lightning:recordViewForm>
+        </div>
+        <div class="slds-p-bottom_large slds-p-left_large" >
+            <div class="slds-page-header" role="banner">
+                <p class="slds-text-heading_label">Recommendations</p>
+            </div>
+            <br/>
+            <aura:iteration items="{!v.ListofRecommendation}" var="recommendations" indexVar="indx"> 
+                <div class="slds-page-header" role="banner">
+                    <p class="slds-text-heading_label"> Product {!indx+1} </p>
+                </div>
+                <lightning:recordViewForm recordId="{!recommendations.Id}" objectApiName="Recommendations__c">
+                    <div class="slds-box">
+                        
+                        <div class="slds-grid slds-wrap slds-gutters slds-grid_align-spread slds-form-element_horizontal">
+                            <div class="slds-col slds-size_1-of-3 slds-form-element__label">
+                                <lightning:outputField fieldName="Product__c" /> 
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-form-element__label">
+                                <lightning:outputField fieldName="Dosage__c" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-form-element__label">
+                                <lightning:outputField fieldName="DosageUnit__c" /> 
+                            </div>
+                        </div>
+                        
+                    </div>     
+                </lightning:recordViewForm>
+                <br/>
+                <!---->
+                <!---->
+                <!---->
+                
+                <!--<c:ViewFollowUp ril="{recommendations}"/>-->
+                
+                <!---->
+                <!---->
+                <!---->
+                <!---->
+                <aura:if isTrue="{!v.followUpFlagVR1}" aura:id = "forCreateFollowup">
+                    <div class="slds-page-header" role="banner">
+                        <p class="slds-text-heading_label">FollowUp for Product {!indx+1} </p>
+                    </div>
+                    <br/>
+                    <aura:if isTrue="{!v.passViewFollowCloseCall}" >
+                        <div>
+                            <c:CreateFollowUp aura:id="createFollowComponent" callId="{v.CallIdFromRecommendation}" recomId="{!v.ListofRecommendation}" followUpFlagCFU="{!v.followUpFlagVR}"
+                                              setTrue="{!v.passViewFollow}" returnedId="{!v.returnedIdVal}" indexOfIteration = "{!v.ListofRecommendation.length}"
+                                              recommendation="{!recommendations}" ListofRecommendation="{!v.ListofRecommendation}"
+                                              AcreArea="{!v.AcreArea}" acreAreaValidation="{!v.acreAreaValidation}"/>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.passViewFollow}"> 
+                        <div>
+                            <c:ViewFollowUp  indexOfIterationVR="{!v.ListofRecommendation.length}" 
+                                            recommendation="{!recommendations}" rId="{!recommendations.Id}"/> <!--rId="{!v.returnedIdVal}"-->
+                        </div>
+                    </aura:if>
+                </aura:if>
+                <br/>
+            </aura:iteration>
+             
+            <aura:if isTrue="{!v.onSaveHide}" >
+                <div class="slds-button-group slds-float_right" role="group">
+                    <!--viewfollowupfromtask-->
+                    <aura:if isTrue="{!v.viewfollowup}">
+                    <lightning:button aura:id="productfollowupviewonly" label="View - Follow Up" onclick="{!c.handleViewFollowUp}"
+                                      variant="brand" class="slds-float_right" name="srbutton1" value="{!v.sett1}"/> &nbsp;
+                    </aura:if>
+                     <aura:if isTrue="{!v.editfollowup}">
+            <lightning:button aura:id="productfollowup" label="Follow Up" onclick="{!c.handleProductFollowUp}"
+                                      variant="brand" class="slds-float_right" name="srbutton" value="{!v.sett}"/> &nbsp;
+             </aura:if> 
+                    <lightning:button label="Cancel" onclick="{!c.handleCancel}"
+                                      variant="brand" class="slds-float_right"/> &nbsp;
+                    <aura:if isTrue="{!v.followUpFlagVR}">
+                        <div class="slds-button-group slds-float_right" role="group">
+                            <lightning:button aura:id="saving" label="Save" onclick="{!c.doSaveChild}"
+                                              variant="brand" class="slds-float_right" name="srbutton"/> &nbsp;
+                        </div>
+                    </aura:if>
+                </div>
+            </aura:if>
+        </div>
+        <br/>
+        <aura:if isTrue="{!not(v.onSaveHide1)}" >
+            <div class="slds-button-group slds-float_right" role="group">
+                <lightning:button aura:id="closecall" label="Recommend Another" onclick="{!c.handleNextRecommendation}"
+                                  variant="brand" class="slds-float_right" name="srbutton"/> &nbsp;
+                
+                <lightning:button label="Cancel" onclick="{!c.handleCancelAfterFollowUp}"
+                                  variant="brand" class="slds-float_right"/> &nbsp;
+            </div>  
+        </aura:if>
+    </article>
+</aura:component>

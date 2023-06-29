@@ -1,0 +1,81 @@
+<template>
+    <lightning-card>
+        <div style="height: 350px;">
+            <!--Header Part Starts Here-->
+            <div class="panel-header">
+                <div class="slds-grid slds-grid_pull-padded-medium">
+                    <!--Header message Label-->
+                    <div class="slds-col slds-p-horizontal_medium" style="color: white;padding-top: 10px;">
+                        <span>{headerMessage}</span>
+                    </div>
+                    <!--Territory, Fiscal year and Month Selection-->
+                    <div class="slds-col slds-p-horizontal_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col" style="width: 40px;">
+                                <span>
+                                    <lightning-combobox
+                                    name="zone"
+                                    label=""
+                                    value={zoneOptionsValue}
+                                    options={zoneOptions}
+                                    onchange={handleZoneChange}
+                                    readonly={showCropTable}
+                                    ></lightning-combobox>
+                                </span>
+                            </div>
+                            <div class="slds-col" style="width: 30px;">
+                                <span>
+                                    <lightning-combobox
+                                    name="territory"
+                                    label=""
+                                    value={territoryOptionsValue}
+                                    options={territoryOptions}
+                                    onchange={handleTerritoryChange}
+                                    readonly={showCropTable}
+                                    ></lightning-combobox>
+                                </span>
+                            </div>
+                            <div class="slds-col" style="width: 30px;">
+                                <span>
+                                    <lightning-combobox
+                                    name="fiscalYear"
+                                    label=""
+                                    value={fiscalOptionsValue}
+                                    options={fiscalYearOptions}
+                                    onchange={handleFiscalYearChange}
+                                    readonly={showCropTable}
+                                    ></lightning-combobox>
+                                </span>
+                            </div>
+                            <div class="slds-col" style="width: 0;">
+                                <span>
+                                    <lightning-combobox
+                                    name="month"
+                                    label=""
+                                    value={monthOptionsValue}
+                                    options={monthOptions}
+                                    onchange={handleMonthChange}
+                                    readonly={showCropTable}
+                                    ></lightning-combobox>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Header Part Ends Here-->
+
+            <!--Product table-->
+            <template if:true={showProdTable}>
+                <c-liquidation-report-product-cmp liquidationzone={zoneOptionsValue} liquidationterritory={territoryOptionsValue} liquidationfiscalyear={fiscalOptionsValue} liquidationmonth={monthOptionsValue} usrcountry={usrcountry}
+                onradioselected={radioSelected} onradioonload={radioSelected} onshowcrp={openCropTable}></c-liquidation-report-product-cmp>
+            </template>
+
+            <!--Crop Table-->
+            <template if:true={showCropTable}>
+                <c-liquidation-report-crop-cmp liquidationzone={zoneOptionsValue} liquidationterritory={territoryOptionsValue} liquidationfiscalyear={fiscalOptionsValue} liquidationmonth={monthOptionsValue} usrcountry={usrcountry}
+                onradioselected={radioSelected} onradioonload={radioSelected} onshowprd={openProdTable}></c-liquidation-report-crop-cmp>
+            </template>
+        </div>
+    </lightning-card>
+</template>

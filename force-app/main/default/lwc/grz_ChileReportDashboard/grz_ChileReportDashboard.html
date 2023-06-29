@@ -1,0 +1,410 @@
+<template>
+    <div class="report-head">
+        <div class="slds-col slds-grow-none slds-p-right_medium paddingclass">
+            <lightning-icon icon-name="standard:dashboard"></lightning-icon>
+        </div>
+        <div class="slds-col  slds-x-small-size_10-of-12 slds-medium-size_11-of-12 slds-large-size_11-of-12">
+            <div class="slds-p-top_xxx-small head-font"> 
+                <b>Informe resumido</b>
+            </div>
+        </div>
+    </div>
+    <template if:true={isSpinner}>
+        <div class="">
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <!-- Block For Filter And Tabel -->
+    <div class=" slds-m-bottom_large component-block">
+        <div class="slds-grid slds-wrap slds-p-left_small slds-p-right_small">
+            <div class=" slds-col slds-large-size_2-of-12 ">
+                <lightning-combobox value={typeValue} 
+                                    label="Tipo de Documento"
+                                    placeholder="Tipo de Documento" 
+                                    class="" 
+                                    options={typeOption} 
+                                    onchange={handleType}>
+                </lightning-combobox>
+            </div>
+            <div class=" slds-col slds-x-small-size_12-of-12 slds-large-size_3-of-12  slds-p-left_small left-pad ">
+                <lightning-input onchange={handleKeyChange}
+                                 class="slds-col slds-m-bottom_smallmrg-tp" 
+                                 label="Búsqueda" 
+                                 placeholder="Búsqueda"
+                                 value={searchKey}>
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_small left-pad">
+                        <lightning-input placeholder="Fecha de inicio" 
+                                         label="Fecha de inicio" 
+                                         type="date"
+                                         value={startDate} 
+                                         min={fiscalyearStartDate} 
+                                         max={fiscalyearEndDate}
+                                         onchange={startDateChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_small pd-zero">
+                        <lightning-input placeholder="Fecha final" 
+                                         label="Fecha final" 
+                                         type="date" 
+                                         value={endDate}
+                                         min={fiscalyearStartDate} 
+                                         max={fiscalyearEndDate} 
+                                         onchange={endDateChange}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </div>
+            <template if:true={deliveryTabel}>
+                <div class=" slds-col slds-x-small-size_12-of-12 slds-large-size_2-of-12 slds-p-left_small left-pad">
+                    <lightning-combobox value={orderStatus} 
+                                        label = "Estado de entrega"
+                                        options={orderStatusOptions} 
+                                        class="drop-css"
+                                        onchange={handleStatus}>
+                    </lightning-combobox>
+                </div>
+            </template>
+        </div>
+        <div if:false={isLoading}>
+            <template if:true={poTabel}>
+                <template if:true={isMobile}>
+                    <template if:true={resultList}>
+                    <c-responsive-card table-data={resultList} columns={poTableColumn} onshow={handleOrderDetail} onbuttonclick={downldPOFile} country="Chile" ></c-responsive-card>
+                    </template>
+                </template>
+                <template if:false={isMobile}>
+                <div class="table-scroll slds-p-left_small  slds-p-right_small">
+                    <div class="slds-grid slds-wrap table-width-scroll">
+                        <table class="slds-m-bottom_small">
+                            <thead class="componentNotoSansLight table-head">
+                                <tr>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Pedido">Pedido</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Cliente">Cliente</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Creación">Creación</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Número de orden de compra">PO Número</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Fecha de la orden de compra">PO Fecha</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Divisa">Divisa</div>
+                                    </th>
+                                    <th class="slds-p-left_small slds-p-right_small table-head-css" scope="col" style="text-align: right;">
+                                        <div class="slds-truncate" title="Monto">Monto</div>
+                                    </th>
+                                    <th class="slds-p-left-small slds-p-right_small p-table-head-css" scope="col" style="text-align: center;">
+                                        <div class="slds-truncate" title="Documento PO">Documento PO</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <template for:each={resultList} for:item="Sorder">
+                                    <tr key={Sorder.Id} class="slds-border_bottom">
+                                        <td class="slds-p-left_small table-body-css">
+                                            <a data-value={Sorder.Id} onclick={handleOrderDetail} href={detailPageLink}
+                                            target="_blank" class="order-link">{Sorder.Name}</a>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{Sorder.Sold_to_Party__r.Name}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>
+                                                <lightning-formatted-date-time value={Sorder.CreatedDate}></lightning-formatted-date-time>
+                                            </div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{Sorder.Purchase_Order_no__c}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>
+                                                <lightning-formatted-date-time value={Sorder.Purchase_Order_Date__c}></lightning-formatted-date-time>
+                                            </div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{Sorder.CurrencyIsoCode}</div>
+                                        </td>
+                                        <td class="slds-p-left_small slds-p-right_small table-body-css" scope="col" style="text-align: right;">
+                                            <div>
+                                                <lightning-formatted-number value={Sorder.Total_Amount__c}></lightning-formatted-number>
+                                            </div>
+                                        </td>
+                                        <td class="slds-p-left_small slds-p-right_small table-body-css" scope="col" style="text-align: center;">
+                                            <div>
+                                                <lightning-icon icon-name="doctype:pdf" 
+                                                                data-value={Sorder.Id}
+                                                                onclick = {downldPOFile}
+                                                                size="small" 
+                                                                class="iconclr">
+                                                </lightning-icon>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            </template>
+            <template if:true={invoiceTabel}>
+                <template if:true={isMobile}>
+                    <template if:true={resultList}>
+                        <c-responsive-card table-data={resultList} columns={invoiceTabelColumn} onshow={handleInvoiceDetail} onbuttonclick={handleInvoiceClick} country="Chile" ></c-responsive-card>
+                    </template>
+                </template>
+                <template if:false={isMobile}>
+                <div class="table-scroll slds-p-left_small  slds-p-right_small">
+                    <div class="slds-grid slds-wrap table-width-scroll">
+                        <table class="slds-m-bottom_small">
+                            <thead class="componentNotoSansLight table-head">
+                                <tr>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Nota Fiscal">Nota Fiscal</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Nota Fiscal">Número de entrega</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Cliente">Cliente</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Número de Ref / Chq">Número de Ref / Chq</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Data de Emissão">Fecha de emisión</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Pedido">Pedido</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Número de orden de compra">PO Número</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Fecha de la orden de compra">PO Fecha</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Divisa">Divisa</div>
+                                    </th>
+                                    <th class="slds-p-left_small slds-p-right_small table-head-css" scope="col" style="text-align: right;">
+                                        <div class="slds-truncate" title="Valor Total">Valor Total</div>
+                                    </th>
+                                    <th class="slds-p-left_small slds-p-right_small table-head-css" scope="col" style="text-align: center;">
+                                        <div class="slds-truncate" title="FACTURA PDF">FACTURA PDF</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <template for:each={resultList} for:item="invoice">
+                                    <tr key={invoice.ivId} class="slds-border_bottom componentNotoSansRegular">
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <a data-value={invoice.Id} onclick={handleInvoiceDetail} href={detailPageLink}
+                                            target="_blank" class="order-link">{invoice.Billing_Doc_Number__c}</a>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{invoice.Delivery_Number__c}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{invoice.Sold_To_Party__r.Name}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{invoice.Folio__c}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <lightning-formatted-date-time value={invoice.Billing_Date__c}></lightning-formatted-date-time>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div> {invoice.Sales_Order__r.Name}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div> {invoice.Sales_Order__r.Purchase_Order_no__c}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <lightning-formatted-date-time value={invoice.Sales_Order__r.Purchase_Order_Date__c}></lightning-formatted-date-time>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div> {invoice.CurrencyIsoCode}</div>
+                                        </td>
+                                        <td class="slds-p-left_small slds-p-right_small table-body-css" scope="col" style="text-align: right;">
+                                            <div><lightning-formatted-number value={invoice.TotalSalesAmount__c} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                                        </td>
+                                        <td class="slds-p-left_small slds-p-right_small table-body-css" scope="col" style="text-align: center;">
+                                            <a data-value={invoice.Id} onclick={handleInvoiceClick}>
+                                                <lightning-icon icon-name="doctype:pdf" 
+                                                                title="Facturas"
+                                                                size="small" >
+                                                </lightning-icon>
+                                            </a> 
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            </template>
+            <template if:true={deliveryTabel}>
+                <template if:true={isMobile}>
+                    <template if:true={resultList}>
+                        <c-responsive-card table-data={resultList} columns={deliveryTabelColumn} onshow={handleOrderDetail} onbuttonclick={handleDeliveryClick} country="Chile" ></c-responsive-card>
+                    </template>
+                </template>
+                <template if:false={isMobile}>
+                <div class="table-scroll slds-p-left_small  slds-p-right_small">
+                    <div class="slds-grid slds-wrap table-width-scroll">
+                        <table class="slds-m-bottom_small">
+                            <thead class="componentNotoSansLight table-head">
+                                <tr>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Pedido">Pedido</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Cliente">Cliente</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Producto">Producto</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Número de orden de compra">PO Número</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Fecha de la orden de compra">PO Fecha</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Nota Fiscal">Número de entrega</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Fecha del doc">Fecha del doc</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Estado de entrega">Estado de entrega</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Fecha de entrega">Fecha de entrega</div>
+                                    </th>
+                                    <th class="slds-p-left_small table-head-css" scope="col">
+                                        <div  title="Divisa">Divisa</div>
+                                    </th>
+                                    <th class="slds-p-left_small slds-p-right_small table-head-css" scope="col" style="text-align: right;">
+                                        <div  title="Valor Total">Valor Total</div>
+                                    </th>
+                                    <th class="slds-p-left_small slds-p-right_small table-head-css" scope="col" style="text-align: center;">
+                                        <div  title="Receipt">Receipt</div>
+                                    </th>
+                                    <th class="slds-p-left_small slds-p-right_small table-head-css" scope="col" style="text-align: center;">
+                                        <div  title="DESPACHO PDF">DESPACHO PDF</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <template for:each={resultList} for:item="lineItem">
+                                        <tr key={lineItem.Id} class="slds-border_bottom componentNotoSansRegular">
+                                        <td class="slds-p-left_small table-body-css">
+                                                <a data-value={lineItem.Id} onclick={handleOrderDetail} href={detailPageLink}
+                                            target="_blank" class="order-link">{lineItem.sFDCOrderNumber}</a>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{lineItem.clientName}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{lineItem.productName}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{lineItem.purchaseOrderNumber}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{lineItem.purchaseOrderDate}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{lineItem.deliveryNumber}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{lineItem.documentDate}</div>
+                                        </td>
+                                        <td  class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{lineItem.orderStatus}</div>
+                                        </td>
+                                        <td  class="slds-p-left_small table-body-css" scope="col">
+                                            <div>{lineItem.arrivedAt}</div>
+                                        </td>
+                                        <td class="slds-p-left_small table-body-css" scope="col">
+                                            <div> {lineItem.orderCurrency}</div>
+                                        </td>
+                                        <td class="slds-p-left_small slds-p-right_small table-body-css" scope="col" style="text-align: right;">
+                                            <div><lightning-formatted-number value={lineItem.amount} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                                        </td>
+                                        <template if:true={lineItem.receipt}>
+                                            <td class="slds-p-left_small slds-p-right_small table-body-css" scope="col" style="text-align: center;">
+                                                <a data-value={lineItem.Id} href={lineItem.receipt} target="_blank">
+                                                    <lightning-icon icon-name="doctype:image" 
+                                                                    title="Receipt"
+                                                                    size="small" >
+                                                    </lightning-icon>
+                                                </a> 
+                                            </td>
+                                        </template>
+                                        <template if:false={lineItem.receipt}>
+                                            <td class="slds-p-left_small slds-p-right_small table-body-css" scope="col" style="text-align: center;">
+                                                <div> - </div>
+                                            </td>
+                                        </template>
+                                        <td class="slds-p-left_small slds-p-right_small table-body-css" scope="col" style="text-align: center;">
+                                            <a data-value={lineItem.lineItemId} onclick={handleDeliveryClick}>
+                                                <lightning-icon icon-name="doctype:pdf" 
+                                                                title="Despacho"
+                                                                size="small" >
+                                                </lightning-icon>
+                                            </a> 
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            </template>
+            <!-- No Data Error -->
+            <div if:true={nodata}>
+                <p class="slds-text-align_center nodatacss">Datos no encontrados.</p>
+            </div>
+        </div>
+        <div if:true={isLoading} class="slds-is-relative" style="z-index: 5;">
+            <lightning-spinner alternative-text="Loading..." variant="brand" class="spinner-css"></lightning-spinner>
+        </div>
+    </div>
+    <!-- Pagination Values -->
+    <lightning-layout-item size="12" padding="around-small">
+        <div class="slds-align_absolute-center">
+            <lightning-button variant="base" label="Primera" disabled={disableFirst} onclick={handleFirst}
+                class="slds-m-left_x-small">
+            </lightning-button>
+            <lightning-button variant="base" label="Previa" disabled={disableFirst} onclick={handlePrevious}
+                class="slds-m-left_x-small slds-m-right_x-small">
+            </lightning-button>
+            <template for:each={pagelist} for:item="item" for:index="index">
+                <span key={item} data-id={item}
+                    class="themeborder testcss slds-m-left_xx-small slds-m-right_xx-small slds-p-horizontal_x-small">
+                    <a class="testcss" onclick={processMe} name={item} data-id={item}>{item}</a>
+                </span>
+            </template>
+            <lightning-button variant="base" label="Próxima" disabled={disableNext} onclick={handleNext}
+                class="slds-m-left_x-small">
+            </lightning-button>
+            <lightning-button variant="base" label="Última" disabled={disableNext} onclick={handleLast}
+                class="slds-m-left_x-small">
+            </lightning-button>
+        </div>
+    </lightning-layout-item>
+</template>

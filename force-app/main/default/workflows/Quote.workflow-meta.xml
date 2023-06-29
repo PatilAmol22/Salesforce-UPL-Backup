@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>CAM_Approved_Email_Alert</fullName>
+        <description>CAM Approved Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_Quotation_Approved_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>CAM_Rejected_Email_Alert</fullName>
+        <description>CAM Rejected Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_Quotation_Rejected_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>East_Africa_Quotation_Approved_Email_Alert</fullName>
+        <description>East Africa:Quotation Approved Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>East_Africa/East_Africa_Quotation_Approved_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>East_Africa_Quotation_Rejected_Email_Alert</fullName>
+        <description>East Africa:Quotation Rejected Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>East_Africa/East_Africa_Quotation_Rejected_Template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Approved_By_Country_Manager_as_TRUE</fullName>
+        <field>Approved_By_Country_Manager__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved By Country Manager as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_Region_Head_as_TRUE</fullName>
+        <field>Approved_By_Region_Head__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved By Region Head as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Final_approval</fullName>
+        <field>Status</field>
+        <literalValue>Sales Approved</literalValue>
+        <name>Final approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Final_rejected</fullName>
+        <field>Status</field>
+        <literalValue>Sales Denied</literalValue>
+        <name>Final rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_sent_Commercial_Head_Approval</fullName>
+        <field>sent_for_Commercial_Head_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck sent Commercial Head Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_sent_Commercial_Manager_Approval</fullName>
+        <field>sent_for_Commercial_Manager_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck sent Commercial Manager Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_sent_Region_Manager_Approval</fullName>
+        <field>sent_for_Region_Manager_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck sent Region Manager Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Draft</fullName>
+        <field>Status</field>
+        <literalValue>Draft</literalValue>
+        <name>Update Order Status as &apos;Draft&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Quote_Status_to_Approved</fullName>
+        <field>Status</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Quote Status to &quot;Approved&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Quote_Status_to_Auto_Approved</fullName>
+        <field>Status</field>
+        <literalValue>Auto Approved</literalValue>
+        <name>Update Quote Status to &quot;Auto Approved&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Quote_Status_to_Pending</fullName>
+        <field>Status</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Quote Status to &quot;Pending&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Quote_Status_to_Rejected</fullName>
+        <field>Status</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Quote Status to &quot;Rejected&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_approval_status_1</fullName>
+        <field>Status</field>
+        <literalValue>Sales Approval Pending</literalValue>
+        <name>Update approval status 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>uncheck_IsApprovalRequire_field</fullName>
+        <field>IsApprovalRequired__c</field>
+        <literalValue>0</literalValue>
+        <name>uncheck IsApprovalRequire field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

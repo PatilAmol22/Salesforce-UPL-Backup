@@ -1,0 +1,40 @@
+.headingCss{
+    background:#fff; padding:10px; border-radius:5px 5px 0 0;
+}
+.tableCss{
+    max-height: 440px; overflow-y:scroll;
+}
+.table_fixed{
+    position: relative;
+}
+
+.th_fixed{
+    position: sticky;
+    top: 0;
+    background: #FAFAF9;
+    z-index: 1;
+}
+.tr_fixed{
+    z-index: 0;
+}
+.hide_col{
+    display: none;
+}
+
+.dwnld-btn {                         /* Start GRZ(Butesh Singla) : APPS-1395 PO And Delivery Date :17-07-2022 */
+    border: 2px solid #f83;
+    padding: 2px 10px;
+    font-size: 10px;
+    background-color: white;
+    color: black;
+}
+.scrollContainer {                       /* Start GRZ(Butesh Singla) : APPS-1395 PO And Delivery Date :17-07-2022 */
+    
+    max-height: 300px;
+    overflow: auto;
+    position: relative;
+
+}
+.scrollArea {                           /* Start GRZ(Butesh Singla) : APPS-1395 PO And Delivery Date :17-07-2022 */
+    position: relative;
+}

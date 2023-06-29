@@ -1,0 +1,39 @@
+.THIS.fsize {
+    font-size:18px;
+}
+.THIS .icn svg{
+ fill: #fb8c8c;  
+}
+.THIS .action {
+    width: 10%;
+}
+.THIS .SK {
+    color:RED;
+}
+
+.THIS .hiddenTextbox {
+    Display:None;
+}
+.THIS .disabled {
+    background: #dddddd;
+}
+.THIS .hide-error-message > .slds-form-element__help {
+    display: none;
+}
+.THIS .error{
+    background:Pink
+}
+.THIS.tr.row_selected td{
+    background-color:red !important;
+}
+
+/* For Firefox browser */
+.THIS input[type='number'] {  
+   -moz-appearance:textfield;
+}
+/* For webkit browsers like Chrome and Safari */
+.THIS input[type=number]::-webkit-inner-spin-button,
+.THIS input[type=number]::-webkit-outer-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+}

@@ -1,0 +1,76 @@
+.THIS .label-hidden > label {
+    display: none;
+}
+.THIS.accountTable {
+  min-height: 3em;
+}
+
+.THIS .btn_next button {
+    min-width: 120px;
+    min-height: 30px;
+}
+
+.THIS .vgq{
+  background-color: #18BC26 !important;
+}
+.THIS .bg-white{
+  background-color: #FFFFFF !important;
+}
+.THIS .gq{
+  background-color: #E4FF33 !important; 
+}
+
+.THIS .lq{
+  background-color: #FFA500 !important;
+}
+
+.THIS .vlq{
+  background-color: #FF0000 !important; 
+}
+.THIS .slds-combobox__form-element .Active{
+  border: 4px solid #008000 !important; 
+}
+.THIS .slds-combobox__form-element .Inactive{
+  border: 4px solid #FF0000 !important; 
+}
+.THIS .slds-modal__container__POPUP{
+	margin-top: -60px !important;
+    width: 40% !important;
+	max-width: 40% !important;
+}
+.THIS .slds-modal__test{
+	    margin-top: -60px !important;
+        width: 520px !important;
+    	height: -15px !important;
+}
+
+.THIS .slds-input__mod{
+	    height: -150px !important;
+        width: 280px !important;
+    	
+}
+
+.THIS .slds-text-heading_smalls{
+    font: 10px !important;
+}
+.THIS .strong-text {
+    font-weight: bold;
+}
+.THIS .tier-one {
+    
+    display: none;
+}
+.THIS .forNew {
+    
+  display: none;
+}
+.THIS .valueequal{
+    padding: 6px;
+       border-radius: 3px;
+
+}
+.THIS .valueunequal{
+   padding: 6px;
+        border-radius: 3px;
+    border-color: red;
+}

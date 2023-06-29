@@ -1,0 +1,246 @@
+/*.carousel-top-pad {
+  margin-top: -36px;
+  margin-bottom: -55px;
+}*/
+
+/*Custom carousel CSS */
+.container {
+  margin: auto;
+  margin-left: 5%;
+  margin-right: 0%;
+}
+.text-section {
+  position: absolute;
+  text-align: center;
+  color: #fff;
+  width: 70%;
+  top: 24%;
+  left: 15%;
+  right: 15%;
+}
+.details{
+  position: absolute;
+    text-align: right;
+    color: #fff;
+    width: 70%;
+    top: 3%;
+    left: 29%;
+}
+.label-div {
+  font-size: 58px;
+  font-family: "NotoSansBold";
+}
+.label-div-br {
+  font-size: 54px;
+}
+.description-div {
+  font-size: 18px;
+}
+.prev {
+  position: absolute;
+  top: 33%;
+  left: 5%;
+}
+.next {
+  position: absolute;
+  top: 33%;
+  right: 5%;
+}
+.carousal-img {
+  width: 100%;
+  height: 383px;
+}
+
+.carousal-img-br {
+  width: 100%;
+  height: 383px;
+}
+
+.surveyDiv {
+  display: inline-block;
+  position: fixed;
+  right: 0;
+  z-index: 1;
+  bottom: 20%;
+  height: 40px;
+  width: 40px;
+  background-color: #f83;
+}
+.survey-img-div{
+  text-align: center;
+}
+.survey-img{
+  padding: 15% 20% 0% 20%;
+}
+@media only screen and (max-width: 1024px) {
+  .label-div {
+    font-size: 40px;
+  }
+  .label-div-br {
+    font-size: 40px;
+  }
+  .container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .description-div {
+    font-size: 17px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .label-div {
+    font-size: 34px;
+  }
+  .label-div-br {
+    font-size: 34px;
+  }
+  .surveyDiv {
+    height: 35px;
+    width: 35px;
+  }
+  .description-div {
+    font-size: 15px;
+  }
+  .expIcon {
+    width: 24px;
+    height: 24px;
+  }
+  .carousal-img {
+    height: 214px;
+  }
+  .carousal-img-br {
+    height: 100%;
+  }
+}
+@media only screen and (max-width: 695px) {
+  .label-div {
+    font-size: 28px;
+  }
+  .label-div-br {
+    font-size: 28px;
+  }
+  .description-div {
+    font-size: 13px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .label-div {
+    font-size: 27px;
+  }
+  .label-div-br {
+    font-size: 24px;
+  }
+  .description-div {
+    font-size: 12px;
+  }
+  .surveyDiv {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .label-div {
+    font-size: 27px;
+  }
+  .label-div-br {
+    font-size: 20px;
+  }
+  .description-div {
+    font-size: 12px;
+  }
+  .surveyDiv {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .carousal-img-br {
+    height: 123px;
+  }
+  .carousal-img {
+    height: 220px;
+  }
+  .label-div {
+    font-size: 27px;
+  }
+  .label-div-br {
+    font-size: 18px;
+  }
+  .description-div {
+    font-size: 12px;
+  }
+  .surveyDiv {
+    height: 30px;
+    width: 30px;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .label-div {
+    font-size: 24px;
+    margin-left: 0;
+  }
+  .label-div-br {
+    font-size: 18px;
+    margin-left: 0;
+  }
+  .description-div {
+    font-size: 11px;
+    margin-left: 0;
+  }
+  .prev {
+    top: 35px;
+    left: 25px;
+  }
+  .next {
+    top: 35px;
+    right: 25px;
+  }
+  .carousal-img {
+    height: 220px;
+  }
+  .carousal-img-br {
+    height: 112px;
+  }
+  .container {
+    margin-bottom: 7px;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .label-div {
+    font-size: 24px;
+  }
+  .label-div-br {
+    font-size: 16px;
+  }
+  .description-div {
+    font-size: 10px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .carousal-img {
+    height: 200px;
+  }
+  .carousal-img-br {
+    height: 105px;
+  }
+  .label-div {
+    font-size: 22px;
+  }
+  .label-div-br {
+    font-size: 15px;
+  }
+  .description-div {
+    font-size: 10px;
+  }
+  .text-section{
+    top:30%;
+  }
+  .surveyDiv {
+    height: 25px;
+    width: 25px;
+  }
+}

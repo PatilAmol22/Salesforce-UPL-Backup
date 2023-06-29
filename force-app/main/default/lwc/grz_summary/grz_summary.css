@@ -1,0 +1,183 @@
+.siteforceContentArea{
+  padding-top: 0px !important;
+
+}
+.pTop{
+  padding-top: 1.7% !important;
+
+}
+.alignCen{
+  text-align: center;
+}
+.dtPadding{
+  padding-right: 1em;
+  padding-left: 2em;
+
+}
+.text-section{
+  position: absolute;
+    text-align: center;
+    color: #fff;
+    width: 102%;
+    top: 9%;
+    font-size: x-large;
+
+}
+.outercss{
+  background-color: white; 
+  min-height: 525px;
+width: 98% !important;
+}
+.table-data-scroll::-webkit-scrollbar {
+  width: 0;
+}
+.nodatacss{
+  text-align: center;
+    border-radius: 4px;
+    opacity: 1;
+    background-color: white;
+    padding: 2%;
+}
+.noteclass{
+  color: rgb(136, 136, 136);
+}
+.combocss{
+  width: 45%; 
+  margin-left: 13px;
+   max-width:  fit-content; 
+   min-width: 150px;
+}
+.tablecss{
+  width: 98% !important;
+}
+@media (min-width: 100px) and (max-width: 1023px){
+  .dtPadding{
+    padding-right: 0em;
+    padding-left: 0em;
+  
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px){
+ .combocss{
+  width: 45%; 
+  margin-left: 13px;
+   max-width:  fit-content; 
+   min-width: 150px;
+}
+}
+@media (min-width: 320px) and (max-width: 767px){
+ .combocss{
+  
+  margin-left: 13px;
+  max-width: fit-content;
+   min-width: 219px;
+   
+}
+.searchcss{
+  min-width: 300px;
+}
+}
+
+
+@media only screen and (max-width: 767px) {
+  .alignCen{
+    text-align: left;
+  }
+  .alignLeft{
+    float: right;
+    margin-right: 0%;  }
+  .titleSpan{
+   /* font-weight: bold;*/
+  }
+  .valPad{
+    text-align: left;
+    padding-left:1px;
+  }
+  .shadoweffect{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+    .textoverflowcls {
+      line-height: 30px;
+      padding-right: 2%;
+      max-width: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .table-body-css {
+      height: 30px;
+    }
+  .bgcolormobile {
+    background-color: white;
+  }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+    
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+    
+        tr {
+          border-bottom: 0px;
+          border: 1px solid #ccc;
+          margin-bottom: 10px;
+        }
+    
+        td {
+          /* Behave  like a "row" */
+          /* border: none;
+    		border-bottom: 1px solid #eee;  */
+          position: relative;
+          /*padding-left: 50%;*/
+        }
+    
+        td:before {
+          /* Now like a table header */
+          position: absolute;
+          /* Top/left values mimic padding */
+          top: 6px;
+          left: 6px;
+          width: 33%;
+         /* padding-right: 10px;*/
+          white-space: nowrap;
+        }
+        /*
+    .br-mobile-view:nth-of-type(1):before {
+      content: "SALES ORDER NUMBER:";
+    }
+  
+    .br-mobile-view:nth-of-type(2):before {
+      content: "CREATED DATE:";
+    }
+  
+    .br-mobile-view:nth-of-type(3):before {
+      content: "LAST MODIFIED DATE:";
+    }
+  
+    .br-mobile-view:nth-of-type(4):before {
+      content: "QUANTITY:";
+    }
+  
+    .br-mobile-view:nth-of-type(5):before {
+      content: "AMOUNT(INR):";
+    }
+  
+    .br-mobile-view:nth-of-type(6):before {
+      content: "STATUS:";
+    }
+  */
+}
+@media only screen and (max-width: 425px) {
+  
+  .floatClass {float: right;}
+}

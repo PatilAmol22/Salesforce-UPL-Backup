@@ -1,0 +1,175 @@
+<template>
+    <div class="slds-box slds-theme_default" style="margin-bottom:10px;">
+        <template if:true={showSpinner}>
+            <div class="exampleHolder">
+                <lightning-spinner alternative-text={label.PleaseWait} size="medium" variant="brand"></lightning-spinner>
+            </div>
+        </template>
+        <div class="slds-page-header" style="padding:0 0 0 10px;">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                    
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-action-account" >
+                                <lightning-icon icon-name="standard:return_order" size="medium"> </lightning-icon> 
+                                <span class="slds-assistive-text"></span>
+                            </span>
+                        </div>
+                        
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <span class="slds-truncate" title={label.Return_Order_Number} style="margin-top:4px;">{label.Return_Order_Number}</span>
+                                    <span class="slds-page-header__title slds-truncate">{orderDetails.returnOrderNumber}</span>
+                                </div>
+                            </div>
+                            <div style="float:right; padding-right:20px;margin-top: 10px;">
+                                <span class="slds-truncate" title={label.Return_Policy} style="margin-top:4px;"><span style="color:red;">* &nbsp;</span></span>
+                                <!-- <span class="slds-page-header__title slds-truncate">{rebetContName}</span> -->
+                                <lightning-formatted-url class="slds-truncate" value={policyURL} tooltip={label.Download_Return_Policy} label={label.Return_Policy} target="_blank"></lightning-formatted-url>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+        <div class="slds-grid slds-gutters slds-wrap">
+            <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                <lightning-input name="order_number" type="text" label="RETURN ORDER NUMBER" value={orderDetails.returnOrderNumber} onblur={handleChange}></lightning-input>
+            </div> -->
+            <template if:false={accDisable}>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label" style="padding-top:10px;">
+                     <span style="color:red;">* </span><span>{label.Customer_Name}</span>
+                       <!-- <c-lookupcmp placeholder={label.Search_Account}  iconname='standard:client' multiselect=false sobject={objectName}
+                                fieldname={fieldNames} filter={filter} displayfield={serarchField} onselected={handleAccountSelected} 
+                                singleselectedrec={accountName} onremove={handleRemoveAccount} cmpwidth='long'></c-lookupcmp> -->
+                    <c-dynamiclookupcmp 
+                        placeholder={label.Search_Account} 
+                        iconname='standard:account' 
+                        onremove={handleRemoveAccount} 
+                        onselected={handleAccountSelected}  
+                        singleselectedrec={accountName} 
+                        sobject={objectName}
+                        keyfield = 'Id' 
+                        displayfields={serarchField}
+                        mergefields={fieldNames}
+                        filter={filter}
+                        disable={accDisable}
+                        cmpwidth='width:400px;'
+                        spinnerwidth='margin-left: 16rem;'
+                        requireattribute={accRequired}>
+                    </c-dynamiclookupcmp>            
+                </div>
+            </template>
+            <template if:true={accDisable}>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                    <lightning-input type="text" label={label.Customer_Name} value={accountName} required="true" disabled="true"></lightning-input>
+                </div>
+            </template>
+
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex" style="padding-top:10px;">
+                <span>{label.RebateContract}</span>
+                <lightning-formatted-url class="slds-page-header__title slds-truncate" value={rebateURL} tooltip={label.Open_Rebate_Contract} label={rebetContName} target="_blank"></lightning-formatted-url>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                <lightning-input type="text" name="region" value={regionName} label={label.Region} disabled="true"></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                <lightning-input type="text" name="district" value={disrictName} label={label.District} disabled="true"></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                <lightning-input type="text" name="requester" value={orderDetails.requester} label={label.Requestor_s_Name} disabled="true"></lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                <lightning-input type="date" name="create_date" value={orderDetails.createDate} label={label.Creation_Date} disabled="true"></lightning-input>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters slds-wrap">  
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label">
+                <lightning-combobox
+                    label={label.Reinvoicing} name="reinvoicing" value={orderDetails.reInvoicing} options={reinvoicingOptions} onchange={handleChange} disabled={isDisable}> 
+                </lightning-combobox>     
+            </div>            
+
+            <template if:true={isAdmin}>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                    <lightning-combobox
+                        label={label.Status} name="status" value={orderDetails.status} options={statusOptions} onchange={handleChange} disabled={isDisable}> 
+                    </lightning-combobox>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                    <lightning-combobox
+                        label={label.Sub_Status} name="sub_status" value={orderDetails.subStatus} options={subStatusOptions} onchange={handleChange} disabled={isDisable}> 
+                    </lightning-combobox>
+                </div>
+            </template>
+
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label">
+                <lightning-combobox
+                    label={label.Return_Type} name="return_type" value={orderDetails.returnType} options={returnTypeOptions} onchange={handleChange} required="true" disabled={isDisable}> 
+                </lightning-combobox>
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label">
+                <lightning-combobox
+                    label={label.Return_Sub_Type} name="return_sub_type" value={orderDetails.returnSubType} options={returnSubTypeOptions} onchange={handleChange} required="true" disabled={isDisable}> 
+                </lightning-combobox>
+            </div>
+
+            <template if:true={isCustomerService}>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label">
+                    <lightning-combobox
+                        label={label.Refusal} name="refusal" value={orderDetails.refusal} options={refusalOptions} onchange={handleChange} required="true" disabled={isDisable}> 
+                    </lightning-combobox>    
+                </div>
+            </template>            
+
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                <!-- <lightning-input type="text" label={label.Return_Details} name="returnDetails" value={orderDetails.returnDetails} required="true" onblur={handleChange} disabled={isDisable}></lightning-input> -->
+                <lightning-textarea label={label.Return_Details} name="returnDetails" max-length="1000" value={orderDetails.returnDetails} required="true" onblur={handleChange} disabled={isDisable}></lightning-textarea>
+            </div>
+
+            <template if:true={isSO}>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                    <lightning-input type="text" label={label.Sales_Order_Number} name="soNumber" value={orderDetails.soNumber} onblur={handleChange} disabled={isDisable}></lightning-input>
+                </div>
+            </template>
+
+            <template if:true={isLogistic}>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                    <lightning-input type="date" name="date_of_incident" label={label.Date_of_Incident} value={orderDetails.dateOfIncident} onchange={handleChange} disabled={isDisable}></lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                    <lightning-input type="text" name="logistics_operator" value={orderDetails.logisticsOperator} label={label.Logistics_Operator} onblur={handleChange} disabled={isDisable}></lightning-input>
+                </div>
+            </template>
+            
+            <template if:true={isCredit}>
+                <template if:false={isDisable}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex" style="padding-top: 10px;">
+                        <!-- <lightning-input type="text" name="credit_analyst" label="Credit Analyst" value={orderDetails.creditAnalyst} onblur={handleChange} disabled></lightning-input> -->
+                        <span style="color:red;">* &nbsp;</span><span>{label.Credit_Analyst}</span>
+                        <c-lookupcmp placeholder={label.Search_User}  iconname='standard:user' multiselect=false sobject="User"
+                                fieldname="Name, IsActive, Full_Name__c, Profile_Name__c " filter={analystfilter} displayfield="Full_Name__c" onselected={handleAnalystSelected} 
+                                singleselectedrec={creditAnalystName} onremove={handleRemoveAnalyst} cmpwidth='long'></c-lookupcmp>
+                    </div>
+                </template>
+                
+                <template if:true={isDisable}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                        <lightning-input type="text" name="credit_analyst" value={creditAnalystName} label={label.Credit_Analyst} disabled={isDisable} required="true"></lightning-input>
+                    </div>
+                </template>
+            </template>
+            <!-- <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-form-element__label slds-no-flex">
+                <lightning-input type="text" name="contact" label="Contact" value={orderDetails.contact} onblur={handleChange} required="true"></lightning-input>
+            </div> -->
+                
+        </div>
+    </div>
+</template>

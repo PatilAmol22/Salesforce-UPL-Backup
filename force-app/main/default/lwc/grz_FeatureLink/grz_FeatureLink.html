@@ -1,0 +1,21 @@
+<template>
+  <div class="slds-p-around_x-small main tabletView">
+    <p class="title slds-p-bottom_x-small componentNotoSansLight">
+      {label.featurelink}
+    </p>
+    <div class="borderCSS slds-m-top_medium textCSS">
+      <template for:each={data} for:item="featureItem">
+        <div key={featureItem.Id}>
+          <p class="slds-border_bottom slds-p-top_small slds-p-bottom_small pCSS">
+            <img class="slds-p-around_small" src={Logo} alt="LOGO Unavilable" />
+            <b>
+              <a href={featureItem.URL} class="textcolor componentNotoSansMedium" target="_blank">
+                {featureItem.Name}
+              </a>
+            </b>
+          </p>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>

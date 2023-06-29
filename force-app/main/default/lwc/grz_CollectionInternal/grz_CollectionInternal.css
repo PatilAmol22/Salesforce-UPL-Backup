@@ -1,0 +1,53 @@
+.error{
+    text-align: center;
+    color: red;
+    font-size: 15px;
+}
+.no-data-error{
+    text-align: center;
+    color: red;
+    font-size: 15px;
+    padding: 3% 0;
+}
+.modal-height{
+    min-height: 200px;
+}
+
+.filter-div {
+    display: flex;
+    justify-content: center;
+}
+.year-div {
+    width: 17%;
+}
+.month-div {
+    width: 20%;
+}
+.statement-btn {
+    background: #00bdf2;
+    color: #fff;
+    border: none;
+    padding: 6px 15px;
+    font-size: 14px;
+    margin-top: 23px;
+}
+.btn-itr{
+    margin-top:23px;
+    border-radius: 5px;
+}
+.table-head-css{
+    border: 1px solid rgb(193 193 193);
+    font-size: 15px;
+    height: 40px;
+}
+.table-head-css1{
+    border: 1px solid rgb(193 193 193);
+    font-size: 15px;
+    height: 40px;
+    border-top: none;
+}
+.table-body-css{
+    border: 1px solid rgb(193 193 193);
+    font-size: 15px;
+    height: 40px;
+}

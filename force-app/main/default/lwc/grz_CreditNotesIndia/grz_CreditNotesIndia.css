@@ -1,0 +1,918 @@
+.hidedefaultvalue {
+    display: none;
+  }
+  .showfaultvalue {
+    display: block;
+  }
+  .pointer {
+    cursor: pointer;
+  }
+  
+  .flexsideclass{
+    display: flex;
+    justify-content: space-between;
+  }
+  .divmargenclstable {
+    margin-left: 8%;
+    margin-bottom: 5%;
+  }
+  .divheightaccount {
+    min-height: 100px;
+  }
+  .exampleHolder {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    background-color: #f7f7f7;
+  }
+  /*New Css*/
+  .banner-div {
+    margin: -35px -12px 0 -12px;
+    position: relative;
+  }
+  .banner-img {
+    height: 116px;
+    width: 100%;
+  }
+  .banner-text {
+    position: absolute;
+    text-align: center;
+    color: #fff;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+    font-size: 30px;
+  }
+  .bread-crumb {
+    margin-left: 0%;
+  }
+  .tab-div {
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+  .cust-info-div {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 2% 0%;
+    border: 1px solid #ddd;
+  }
+  .first-block {
+    border-right: 2px solid #dddddd;
+    padding-left: 2%;
+    width: 26%;
+    display: flex;
+  }
+  .second-block {
+    border-right: 2px solid #dddddd;
+    padding-left: 2%;
+    width: 37%;
+    display: flex;
+  }
+  .third-block {
+    padding-left: 2%;
+    width: 37%;
+    display: flex;
+  }
+  .cust-data-text {
+    color: #888888;
+    font-size: 16px;
+  }
+  .lab-btn {
+    margin-bottom: 0px;
+  }
+  .cust-data {
+    margin-left: 2%;
+    color: #000000;
+    font-size: 16px;
+  }
+  .table-comp-div {
+    margin-bottom: 2%;
+    margin-top: 2%;
+    background-color: white;
+    border: 1px solid #ddd;
+  }
+  .filter-div {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 18px;
+  }
+  .filter-icon-div {
+    margin-top: 23px;
+  }
+  .ledger-statement-btn {
+    background-color: #00bdf2;
+    color: #fff;
+    border: none;
+    padding: 6px 25px;
+    font-size: 14px;
+    margin-top: 18px;
+  }
+  .quarter-div {
+    width: 14%;
+  }
+  .year-div {
+    width: 14%;
+  }
+  .table-head-div {
+    margin-top: 2%;
+    margin-right: 28px;
+  }
+  .table-head {
+    color: #888888;
+    font-size: 12px;
+  }
+  .error-div {
+    background-color: white;
+    border: 1px solid #ddd;
+    margin-top: 2%;
+  }
+  .head-element,
+  .table-element {
+    height: 33px;
+    width: 10%;
+  }
+  .head-element-combine,
+  .table-element-combine {
+    width: 39%;
+  }
+  .merge-table1{
+    width:29%;
+  }
+  .merge-table2{
+    width:70%;
+  }
+  .head-element-doc,
+  .table-element-doc {
+    height: 40px;
+    width: 15.5%;
+  }
+  .head-element-special1,
+  .table-element-special1 {
+    width: 10.5%;
+  }
+  .head-element-special2,
+  .table-element-special2 {
+    width: 12.5%;
+  }
+  .open-bal-div,
+  .close-bal-div {
+    display: flex;
+    height: 40px;
+    background-color: #ebebeb;
+    margin-top: -12px;
+    margin-left: 12px;
+    margin-right: -12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .bf-text {
+    margin-left: 12px;
+    width: 62%;
+  }
+  .bf-data {
+    width: 13%;
+  }
+  .bf-data2 {
+    width: 25%;
+  }
+  .close-bal-div {
+    margin-top: 0;
+  }
+  .cf-text {
+    margin-left: 12px;
+    width: 62%;
+  }
+  .cf-data {
+    width: 13%;
+  }
+  .cf-data2 {
+    width: 25%;
+  }
+  .customer-total-div {
+    display: flex;
+    height: 45px;
+    font-size: 16px;
+    background-color: rgb(38 64 138);
+    color: white;
+    margin-left: 12px;
+    margin-right: -12px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .customer-total-text {
+    margin-left: 12px;
+    width: 39%;
+  }
+  .customer-total-debit {
+    width: 32%;
+      text-align: right;
+  }
+  .customer-total-credit {
+    width: 24%;
+  }
+  .table-body-data {
+    color: #000000;
+  }
+  .table-data-scroll {
+    width: 101%;
+    height: 495px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  /*.table-data-scroll::-webkit-scrollbar {
+    width: 0;
+  }*/
+  .acc-table-data-scroll {
+    width: 101.5%;
+    height: 495px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  /*.acc-table-data-scroll::-webkit-scrollbar {
+    width: 0;
+  }*/
+  .download-div {
+    margin: 17px 0 17px 12px;
+  }
+  .dwnld-btn {
+    border: 2px solid rgb(255 136 51);
+    padding: 7px 17px;
+    background-color: white;
+    color: black;
+  }
+  .download-icon {
+    padding-right: 10px;
+  }
+  
+  .acc-statement-div {
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  .out-statement-div {
+    background-color: #fff;
+    margin-left:3%;
+  }
+  .acc-head-element,
+  .acc-table-element {
+    height: 40px;
+    width: 18%;
+  }
+  .out-head-element,
+  .out-table-element {
+    height: 40px;
+    width: auto;
+  }
+  .acc-filter-div {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .acc-doc-filter {
+    width: 45%;
+  }
+  .acc-date-filter {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+  }
+  .date-date-filter{
+     display: flex;
+    justify-content: space-between;
+    width: 45%;
+  }
+  .acc-st-div {
+     display: flex;
+    justify-content: space-between;
+    width: 50%;
+   
+  }
+  .acc-year-div {
+    width: 45%;
+  
+   
+    }
+  .acc-start-date,
+  .acc-end-date {
+    width: 45%;
+  
+  }
+  
+  .acc-statement-filter {
+    width: 45%;
+  }
+  .acc-st-btn {
+    width: 45%;
+  }
+  .acc-table-head-div {
+    margin-right: 28px;
+  }
+  .acc-total-div {
+    display: flex;
+    height: 45px;
+    font-size: 16px;
+    background-color: rgb(38 64 138);
+    color: white;
+    margin-left: 12px;
+    margin-right: -12px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .acc-total-text {
+    margin-left: 12px;
+    width: 60%;
+  }
+  .acc-total-debit {
+    width: 20%;
+  }
+  .acc-total-credit {
+    width: 20%;
+  }
+  .no-record-error {
+    text-align: center;
+    color: red;
+    font-size: 20px;
+    padding-bottom: 4%;
+    padding-top: 4%;
+  }
+  .doc-types-div {
+    margin-bottom: 6%;
+    margin-top: 3%;
+  }
+  .doc-desc {
+    font-size: 28px;
+    font-family: "NotoSansLight";
+    margin-bottom: 2%;
+  }
+  .main-doc-value-div {
+    display: flex;
+    justify-content: space-between;
+  }
+  .doc-value-left-div {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+  }
+  .doc-value-right-div {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+  }
+  .single-doc-block-left {
+    width: 50%;
+  }
+  .single-doc-block-right {
+    width: 50%;
+  }
+  .doc-row {
+    margin-bottom: 3%;
+    font-size: 13px;
+  }
+  .doc-space{
+    display: inline-block;
+    width: 12%;
+  }
+  .error{
+    text-align: center;
+    color: red;
+    font-size: 15px;
+    padding-top: 5%;
+  }
+  @media only screen and (max-width: 1232px) {
+    .cust-data-text {
+      font-size: 14px;
+    }
+    .cust-data {
+      font-size: 14px;
+    }
+    .ledger-statement-btn {
+      padding: 6px 20px;
+      font-size: 13px;
+    }
+  }
+  @media only screen and (max-width: 1120px) {
+    .cust-data-text {
+      font-size: 13px;
+    }
+    .cust-data {
+      font-size: 13px;
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    .table-data-scroll {
+      width: 100%;
+    }
+    .acc-table-data-scroll {
+      width: 100%;
+    }
+    .tab-div {
+      margin-left: 0%;
+      margin-right: 0%;
+    }
+    .bread-crumb {
+      margin-left: 0%;
+    }
+  }
+  @media only screen and (max-width: 912px) {
+    .acc-filter-div {
+      display: block;
+    }
+  
+    .acc-doc-filter {
+      padding-right: 15px;
+      width: 100%;
+    }
+    .acc-date-filter {
+      padding: 0 15px;
+      width: 100%;
+    }
+    .date-date-filter {
+      padding: 0 15px;
+      width: 100%;
+    }
+    .acc-st-div {
+        padding: 0 15px;
+      width: 100%;
+   }
+    .acc-statement-filter {
+      width: 45%;
+      
+    }
+    .acc-st-btn {
+      
+      width: 45%;
+      
+    }
+  }
+  @media only screen and (max-width: 894px) {
+    .cust-data-text {
+      font-size: 11px;
+    }
+    .cust-data {
+      font-size: 11px;
+      margin-left: 3%;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .table-data-scroll {
+      overflow-x: hidden;
+    }
+    .acc-table-data-scroll {
+      overflow-x:hidden;
+    }
+    .merge-table1{
+    width:87%;
+  }
+  .merge-table2{
+    width:87%;
+  }
+    .flexsideclass{
+      display: block;
+    }
+    .table-data-scroll::-webkit-scrollbar {
+      width: 0;
+    }
+    .acc-table-data-scroll::-webkit-scrollbar {
+      width: 0;
+    }
+    .table-head-div {
+      overflow-x: hidden;
+      margin-right: 12px;
+    }
+    .ledger-table-head-width{
+      width:100%;
+    }
+    .table-data-scroll{
+      width:100%;
+      overflow-x: hidden;
+    }
+    .table-no-scroll{
+      width:100%;
+    }
+    .close-bal-div, .open-bal-div, .customer-total-div{
+      width:98%;
+    }
+    .cust-data-text {
+      font-size: 10px;
+    }
+    .cust-data {
+      font-size: 10px;
+    }
+    .filter-div {
+      justify-content: center;
+    }
+    .quarter-div,
+    .year-div {
+      width: 20%;
+    }
+    .doc-row {
+      margin-bottom: 1%;
+    }
+    .doc-value-left-div,
+    .doc-value-right-div {
+      display: block;
+    }
+    .single-doc-block-left,
+    .single-doc-block-right {
+      width: 100%;
+    }
+  .head-element,
+  .table-element {
+    height: 33px;
+    width: 70%;
+  }
+  
+  .head-element-special1,
+  .table-element-special1 {
+    width: 70%;
+  }
+  .head-element-combine,
+  .table-element-combine {
+    width: 80%;
+  }
+  .acc-head-element,
+  .acc-table-element {
+    height: 40px;
+    width: 80%;
+  }
+  .content1:after{
+      content: "\a";
+      white-space: pre;
+  }
+  .content2:before{
+      content: "\a";
+      white-space: pre;
+  }
+    .shadoweffect{
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+      .textoverflowcls {
+        line-height: 30px;
+        padding-right: 2%;
+        max-width: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+    .valPad{
+      text-align: left;
+      padding-left:1px;
+    }
+       .alignLeft{
+      float: right;
+      margin-right: 0%;  }
+  
+      .absolutealignLeft{
+         float: right;
+      margin-right: -16%;
+      }
+      
+       .onlyaddpadding{
+         padding-left: 50%;
+       } 
+       
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+  
+      /* Hide table headers (but not display: none;, for accessibility) */
+      thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+  
+      tr {
+        border-bottom: 0px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
+  
+      td {
+       
+        position: relative;
+        /* padding-left: 50%; */
+      }
+  
+      td:before {
+       
+        position: absolute;
+       
+        top: 6px;
+        left: 6px;
+        width: 33%;
+         padding-right: 10px; 
+        white-space: nowrap;
+      }
+      
+  .out-mobile-view:nth-of-type(1):before {
+    content: "0-30:";
+  }
+  
+  .out-mobile-view:nth-of-type(2):before {
+    content: "31-60:";
+  }
+  
+  .out-mobile-view:nth-of-type(3):before {
+    content: "61-75:";
+  }
+  
+  .out-mobile-view:nth-of-type(4):before {
+    content: "76-90:";
+  }
+  
+  .out-mobile-view:nth-of-type(5):before {
+    content: ">90:";
+  }
+  
+  .out-mobile-view:nth-of-type(6):before {
+    content: "Total Outstanding:";
+  }
+  
+  .out-mobile-view:nth-of-type(7):before {
+    content: "Unadjusted Receipts:";
+  }
+  .out-mobile-view:nth-of-type(8):before {
+        content: "Unadjusted Credits:";
+  }
+  .out-mobile-view:nth-of-type(9):before {
+  content: "Net Outstanding:";
+  }
+  .out-mobile-view:nth-of-type(10):before {
+  content: "Currency:";
+  }
+  
+  
+  
+  .acc-mobile-view:nth-of-type(1):before {
+    content: "Date:";
+  }
+  
+  .acc-mobile-view:nth-of-type(2):before {
+    content: "Doc Number:";
+  }
+  
+  .acc-mobile-view:nth-of-type(3):before {
+    content: "Doc Type:";
+  }
+  .acc-mobile-view:nth-of-type(4):before {
+        content: "Credit (INR):";
+  }
+  .acc-mobile-view:nth-of-type(5):before {
+  content: "Debit (INR):";
+  }
+  .acc-mobile-view:nth-of-type(6):before {
+  content: "Action:";
+  }
+      
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .filter-div {
+      display: block;
+    }
+    .filter-icon-div {
+      display: none;
+    }
+    .acc-total-credit {
+    width: 29%;
+  }
+    .acc-total-debit {
+      width: 34%
+  
+  }
+     .absolutealignLeft{
+         float: right;
+      margin-right: -20%;
+      }
+    .quarter-div,
+    .year-div {
+      width: 100%;
+      padding-right: 2%;
+    }
+    .cust-data-text {
+      font-size: 8px;
+    }
+    .cust-data {
+      font-size: 8px;
+    }
+    .mobile-ledger-statement-btn {
+      text-align: center;
+    }
+    .table-data-scroll {
+      width: 100%;
+    }
+    .ledger-table-head-width{
+      width:100%;
+    }
+    .open-bal-div,
+    .close-bal-div,
+    .customer-total-div {
+      width: 96%;
+       font-size: 13px;
+    }
+    .table-no-scroll {
+      width: 100%;
+    }
+    .acc-table-head-div{
+      overflow-x: hidden;
+      margin-right: 12px;
+    }
+    .acc-table-head-width{
+      width:100%;
+    }
+    .acc-total-div{
+      width:97%;
+    }
+    .acc-table-data-scroll{
+      overflow-x: hidden;
+      width:100%;
+    }
+    .acc-table-no-scroll{
+      width:100%;
+    }
+    
+  }
+  @media only screen and (max-width: 425px) {
+    .acc-date-filter {
+      display: block;
+    }
+    .incenter{
+      text-align: center;
+    }
+    .acc-year-div,
+    .acc-start-date,
+    .acc-end-date,
+    .acc-st-btn,
+    .acc-statement-filter{
+      width: 100%;
+      padding-right: 1px;
+    }
+     .absolutealignLeft{
+         float: right;
+      margin-right: -23%;
+      }
+    .doc-row {
+      font-size: 9px;
+    }
+    .acc-table-data-font {
+      font-size: 11px;
+    }
+    .acc-total-div {
+      font-size: 13px;
+      width: 96%;
+    }
+    .cust-data-text {
+      font-size: 11px;
+    }
+    .cust-data {
+      font-size: 11px;
+    }
+    .cust-info-div {
+      display: block;
+    }
+    .first-block {
+      width: 100%;
+      border: none;
+    }
+    .second-block {
+      width: 100%;
+      border: none;
+    }
+    .third-block {
+      width: 100%;
+      border: none;
+    }
+    .lab-btn,
+    .mobile-cust-text {
+      margin-bottom: 7px;
+    }
+    .cust-data-mobile-1 {
+      margin-left: 9%;
+    }
+    .cust-data-mobile-2 {
+      margin-left: 5%;
+    }
+    .cust-data-mobile-3 {
+      margin-left: 21%;
+    }
+    .filter-div {
+      display: block;
+    }
+    .filter-icon-div {
+      display: none;
+    }
+    .quarter-div,
+    .year-div {
+      width: 100%;
+      padding-right: 2%;
+    }
+    .mobile-ledger-statement-btn {
+      text-align: center;
+    }
+    
+    .table-head-div {
+      overflow-x: hidden;
+      margin-right: 3%;
+    }
+    .mobile-table-font {
+      font-size: 11px;
+    }
+    .table-data-scroll {
+      width: 100%;
+    }
+    .ledger-table-head-width{
+      width:100%;
+    }
+    
+    .customer-total-div {
+      width: 96%;
+      font-size: 11px;
+    }
+    .table-no-scroll {
+      width: 100%;
+    }
+    .acc-table-head-width{
+      width:100%;
+    }
+    .acc-total-div{
+      width:95%;
+    }
+    .acc-table-data-scroll{
+      overflow-x: hidden;
+      width:100%;
+    }
+    .acc-table-no-scroll{
+      width:100%;
+    }
+  }
+  
+  @media only screen and (max-width: 375px) {
+    .ledger-table-head-width{
+      width:100%;
+    }
+     .absolutealignLeft{
+         float: right;
+      margin-right: -25%;
+      }
+    
+    .customer-total-div {
+      width: 96%;
+      font-size: 9px;
+    }
+    .doc-desc {
+      font-size: 20px;
+    }
+    .table-data-scroll {
+      width: 100%;
+    }
+    .table-no-scroll {
+      width: 100%;
+    }
+    .cust-data-mobile-1 {
+      margin-left: 9%;
+    }
+    .cust-data-mobile-3 {
+      margin-left: 23%;
+    }
+    .cust-data-mobile-2 {
+      margin-left: 4%;
+    }
+    
+    
+  }
+  @media only screen and (max-width: 360px) {
+    .cust-data-mobile-1 {
+      margin-left: 12.5%;
+    }
+    .cust-data-mobile-2 {
+      margin-left: 7.5%;
+    }
+    .cust-data-mobile-3 {
+      margin-left: 27%;
+    }
+      .absolutealignLeft{
+         float: right;
+      margin-right: -27%;
+      }
+  }
+  @media only screen and (max-width: 320px) {
+    .cust-data-mobile-2 {
+      margin-left: 8%;
+    }
+    .cust-data-mobile-1 {
+      margin-left: 13.5%;
+    }
+    .cust-data-mobile-3 {
+      margin-left: 30%;
+    }
+  }

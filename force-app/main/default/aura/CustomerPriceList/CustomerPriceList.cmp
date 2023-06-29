@@ -1,0 +1,205 @@
+<aura:component Controller="customer_Price_List" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="sd" type="List" default="False"/>
+    <aura:attribute name="cust" type="List" default="False"/>
+    <aura:attribute name="pbl" type="List" default="False"/>     
+    <aura:attribute name="selloutmatrix" type="Sell_Out_Percentage__c[]"/><!-- Added by Krishanu & Ankita @ Wipro -->
+    <aura:attribute name="pricebookdetail" type="customer_Price_List.pricebookdetaillist[]"/><!-- added by Harshit@Wipro PB-006 -->
+    <aura:attribute name="crmId1" type="String"/> <!-- added by Harshit@Wipro PB-006 -->
+    
+    <aura:attribute name="custPLs" type="List" default="False"/>
+    <aura:attribute name="PV" type="Boolean" default="false"/>
+    <aura:attribute name="showCust" type="Boolean" default="false"/>    
+    <aura:attribute name="showPB" type="Boolean" default="false"/>
+	<aura:attribute name="showFSP" type="Boolean" default="False"/> 
+    <aura:attribute name="showMinP" type="Boolean" default="False"/> 
+    
+    <aura:attribute name="showBRLPrice" type="Boolean" default="False"/> <!-- added by Harshit@Wipro PB-006 -->
+    <aura:attribute name="showUSDPrice" type="Boolean" default="False"/> <!-- added by Harshit@Wipro PB-006 -->
+
+
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <!-- child component data variable -->
+    <aura:attribute name="SKU" type="String"/>
+    <aura:attribute name="SKUName" type="String"/>
+    <aura:attribute name="minPrice" type="String"/>
+    <aura:attribute name="futureSP" type="String"/>
+    <aura:attribute name="finalPrice" type="String"/>    
+    <aura:attribute name="ShowSpinner" type="Boolean" default="false"/>        
+    <aura:attribute name="DisplayComponents" type="Boolean" default="false"/>    
+    <aura:attribute name="Id" type="String"/>
+    
+    <!-- --> 
+    <aura:if isTrue="{! v.ShowSpinner }"> <!-- displayDetails -->
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+    <body class="bgColor" >
+
+        <lightning:layout multiplerows="true">
+           
+            <lightning:layoutItem  size="12">
+               
+                <div class="slds-align_absolute-center">        
+            		<lightning:button label="{!$Label.c.Get_Price_List}" 
+                              class="slds-m-top--medium"
+                                      variant="brand"
+                              		  onclick="{!c.getPriceList}"/>
+                </div>
+               
+             </lightning:layoutItem>
+        </lightning:layout><br/>
+
+        <lightning:layout multipleRows="true">
+             <lightning:layoutItem flexibility="auto"  size="1" smallDeviceSize="1" largeDeviceSize="1">
+            </lightning:layoutItem>
+            <lightning:layoutItem  flexibility="auto"  size="1" smallDeviceSize="3" largeDeviceSize="1">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.Sales_District}"></aura:unescapedHtml> <span class="error-text" style="color:red"> * </span></label> 
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+             <lightning:layoutItem  size="3" smallDeviceSize="8" largeDeviceSize="3">
+                    <div class="slds-form-element__control">
+                                                           
+                                <lightning:select  
+                                                  variant="label-hidden" 
+                                                  aura:id="salesDist" 
+                                                  onchange="{!c.getCustomer}" 
+                                                  >                                   
+                                  <option value="">{!$Label.c.None}</option> 
+                                    <aura:iteration items="{!v.sd}" var="sd1">
+                                        <option value="{!sd1.regionId}">{!sd1.regionCode}-{!sd1.regionName} </option>                                         
+                                    </aura:iteration> 
+                                </lightning:select>								                                
+                              <ui:outputText aura:id="sderro" class="error-text slds-hide"  value="{!$Label.c.SalesDistError}"/>
+                            </div>
+                  
+                  
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto"  size="2" smallDeviceSize="2" largeDeviceSize="2">
+            </lightning:layoutItem>
+        
+              <lightning:layoutItem flexibility="auto"  size="1" smallDeviceSize="4" largeDeviceSize="1">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.Customers}"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+             <lightning:layoutItem flexibility="auto"  size="3" smallDeviceSize="6" largeDeviceSize="3">
+                    <div class="slds-form-element__control">
+                                                   
+                                <lightning:select  
+                                                  variant="label-hidden" 
+                                                  aura:id="customer" 
+                                                  disabled="{! !v.showCust}" 
+                                                  onchange="{!c.custValidation}"
+                                                  >                                   
+                                    <option value="">{!$Label.c.None}</option>                                      
+                                    <aura:iteration items="{!v.cust}" var="cust1">
+                                        <option value="{!cust1.Customer_Name__c}"> {!cust1.Customer_Name__r.Name} -
+                                                                                   {!cust1.Customer_Name__r.SAP_Code__c} -
+                                                                                   {!cust1.Customer_Name__r.BillingCity}
+                                        </option>                                         
+                                    	</aura:iteration> 
+                                </lightning:select>
+                                <ui:outputText aura:id="custerro" class="error-text slds-hide"  value="{!$Label.c.customerError}"/>
+                            </div>
+                     
+            </lightning:layoutItem>
+             <lightning:layoutItem flexibility="auto"  size="1" largeDeviceSize="1">
+            </lightning:layoutItem>
+        </lightning:layout><br/>
+        
+         <lightning:layout multipleRows="true"> 
+             
+             <lightning:layoutItem flexibility="auto"  size="1" largeDeviceSize="1">
+            </lightning:layoutItem>
+          
+            <lightning:layoutItem flexibility="auto"  size="1" smallDeviceSize="1" largeDeviceSize="1">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.Price_Book}"></aura:unescapedHtml> <span class="error-text" style="color:red"> * </span></label> 
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+             <lightning:layoutItem flexibility="auto"  size="3" smallDeviceSize="3" largeDeviceSize="3">
+                    <div class="slds-form-element__control">
+                            <div >                                
+                                <lightning:select  
+                                                  variant="label-hidden" 
+                                                  aura:id="priceBook"  
+                                                  disabled="{! !v.showPB}"
+                                                  onchange="{!c.Validation}"
+                                                  >                                   
+                                  <option value="">{!$Label.c.None}</option> 
+                                    <aura:iteration items="{!v.pbl}" var="pb">
+                                        <option value="{!pb.Id}">{!pb.priceBook} </option>                                         
+                                    </aura:iteration> 
+                                </lightning:select>	
+                                <ui:outputText aura:id="pberro" class="error-text slds-hide"  value="{!$Label.c.priceBookError}"/>
+                            </div>
+                     </div>                  
+            </lightning:layoutItem>
+             <lightning:layoutItem flexibility="auto"  size="1" smallDeviceSize="1" largeDeviceSize="1">
+             </lightning:layoutItem>
+             <aura:if isTrue="{!v.PV}">
+             <lightning:layoutItem flexibility="auto"   size="2" smallDeviceSize="2" largeDeviceSize="2">
+                  <div class="slds-clearfix">
+                     <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap">
+                            <label class="slds-form-element__label labelFont"><aura:unescapedHtml value="{!$Label.c.Show_Minimum_Price}"></aura:unescapedHtml> </label> 
+                        </div>
+                      </div>
+                </div>
+             </lightning:layoutItem>
+             <lightning:layoutItem flexibility="auto"   size="1" smallDeviceSize="1" largeDeviceSize="1">
+                   
+                 <div class="slds-form-element__control">
+                            <div class="input-select-width">                                
+                               <ui:inputCheckbox class="myCheckbox" aura:id="MP" label="" />
+                            </div>
+                     </div>   
+                 
+            </lightning:layoutItem>
+            
+             <lightning:layoutItem flexibility="auto"  size="2" smallDeviceSize="2" largeDeviceSize="2">
+                    <div class="slds-form-element__control">
+                            <div class="input-select-width">                                
+                               <ui:inputCheckbox  class="myCheckbox" aura:id="FSP" label="{!$Label.c.Show_Future_Sales_Price}" />
+                            </div>
+                     </div>                  
+            </lightning:layoutItem>
+             </aura:if>
+        </lightning:layout>        
+         <lightning:layout multiplerows="true">
+            
+            <lightning:layoutItem  size="12">
+                <div class="slds-align_absolute-center">        
+            		<lightning:button label="{!$Label.c.Get_Price_List}" 
+                              class="slds-m-top--medium"
+                                      variant="brand"
+                              		  onclick="{!c.getPriceList}"/>
+                </div>
+             </lightning:layoutItem>
+        </lightning:layout><br/>
+        
+        
+    
+         <aura:if isTrue="{!v.DisplayComponents}">
+             <!-- modified by Harshit@Wipro PB-006 -->
+            <c:ShowCustPriceList  aura:id="priceList" displayDetails="{!v.DisplayComponents}" showBRLPrice="{!v.showBRLPrice}" showUSDPrice="{!v.showUSDPrice}" pricebookdetail="{!v.pricebookdetail}" showFSP="{!v.showFSP}" showMinP="{!v.showMinP}" custPLs="{!v.custPLs}" SKU="{!v.SKU}" SKUName="{!SKUName}" ShowSpinner="{!v.ShowSpinner}" minPrice="{!v.minPrice}" futureSP="{!v.futureSP}" finalPrice ="{!v.finalPrice}"  Id="{!v.Id}"/>  
+            <!-- <c:ShowCustPriceList  aura:id="priceList" displayDetails="{!v.DisplayComponents}" custPL="{!v.custPL}" />  -->
+      </aura:if>
+
+    </body>
+</aura:component>

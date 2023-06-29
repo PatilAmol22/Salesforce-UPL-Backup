@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Approved_Field_Update</fullName>
+        <field>Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Company Approval</fullName>
+        <actions>
+            <name>Approved_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Company__c.Company_Code__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>to update Approved field if Company code is Not Empty</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

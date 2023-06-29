@@ -1,0 +1,11 @@
+.THIS .slds-table {
+    text-align:left;
+}
+.THIS .slds-table td {
+    text-align:left;
+    padding:0; margin:0;
+}
+.THIS .slds-button--neutral {
+    padding:2px;
+    font-size:12px;
+}

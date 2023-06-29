@@ -1,0 +1,223 @@
+<template>
+    <div style="margin-top:20px;">
+        <h1 class="titleregular" style="font-size:36px; font-weight:normal;">{labels.Account_Ledger}</h1>
+            <div style="margin:10px 0 0 0; padding:10px; background:#eaeaea;">
+                <h1 style="color:#000; font-weight:normal; font-size:18px; padding:3px 3px 3px 3px;" class="slds-m-bottom_medium">{labels.Search_Ledger}</h1>
+                <div class="slds-grid slds-wrap" style="margin-left:-13px;">
+                
+                <!--<div class="slds-col slds-size_3-of-12">
+                    <lightning-combobox
+                    name="Doc Type"
+                    label="Select Doc Type"
+                    value={DocType}
+                    options={options1}
+                    onchange={handleDTChange} 
+                    class="slds-m-left_medium">
+                    </lightning-combobox>    
+                </div> -->
+                <div class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                <lightning-input  type="date" name="input2" label={labels.Posting_Date_From} value={fyd} onchange={handlePDFromChange} class="slds-m-left_medium labelcu" required></lightning-input>
+                </div>
+                <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                <lightning-input type="date" name="input3" label={labels.Posting_Date_To}  value={date} onchange={handlePDToChange} class="slds-m-left_medium labelcu" required></lightning-input>
+                </div>
+            </div>
+                <div class="slds-m-top_medium slds-col slds-size_6-of-12" style="margin-left:-13px;">
+                <lightning-button label={labels.Search} onclick={handleSearch} class="slds-m-left_medium"></lightning-button>
+                </div>
+
+                <div class="slds-m-top_medium slds-col slds-size_12-of-12" style="margin-left:0px;">
+                    <h6>{labels.Disclaimer}</h6>
+                </div>
+            </div>
+            
+            <div if:true={showResult}>
+                <!--
+                <h1 style="font-size: 15px; text-align: center; margin-bottom:15px;" class="slds-m-top_medium">Customer Ledger Report</h1>
+                <h1 style="font-size: 15px; text-align: center; margin-bottom:15px;" class="slds-m-top_medium">Report Date: {reportDate}</h1>
+                <h1 style="font-size: 15px; text-align: center; margin-bottom:15px;" class="slds-m-top_medium">(Period from:{PostingDateFromHtml} to {PostingDateToHtml} )</h1>
+
+                <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:15px;margin-top:15px;"> 
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12" style="margin-bottom:15px;">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">    
+                        <tbody>
+                                        
+                                <tr class="slds-hint-parent"  >
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate" title="">Customer Name:</div>
+                                    </th>
+                                    
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate" title="">{CustName}</div>
+                                    </th>
+                                </tr>
+                                
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12" style="margin-bottom:15px;">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">    
+                            <tbody>
+                                            
+                                    <tr class="slds-hint-parent"  >
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate" title="">Customer Code:</div>
+                                        </th>
+                                        
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate" title="">{CustCode}</div>
+                                        </th>
+                                    </tr>
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12" style="margin-bottom:15px;">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">    
+                            <tbody>
+                                                
+                                    <tr class="slds-hint-parent"  >
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate" title="">Currency:</div>
+                                        </th>
+                                            
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate" title="">{Currency}</div>
+                                        </th>
+                                    </tr>
+                                        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>   --> 
+                <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:15px;margin-top:15px;">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12" style="margin-top:15px; margin-bottom:15px; ">
+                        <div style="border:0px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+                
+                            <table class="slds-table slds-table_cell-buffer" style="border: 1px solid #ccc;">   
+                                
+                                <thead>
+                                    <tr class="slds-hint-parent">
+                                        <th class="" scope="col"  width="233" style="border-right: none;">
+                                            <div class="slds-truncate" title="Value1" style="border-right: none;" >{labels.Opening_Balance_b_f}:</div>
+                                        </th>
+                                        <td class="" scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="Value2" >{openingBalance}</div>
+                                        </td>
+                                        <th class="" scope="col" width="230">
+                                            <div class="slds-truncate" title="Value3" >{labels.Currency}:</div>
+                                        </th>
+                                        <td class="" scope="col" width="230">
+                                            <div class="slds-truncate" title="Value4" >{Currency}</div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+                           
+                    </div>
+                    
+                </div>
+                    <template if:false={isMobile}>
+                        <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:15px;margin-left:2px; margin-right:2px; padding: 0 10px; border:1px solid #ccc;">
+                            <div class="slds-scrollable_x" style="border:0px solid #ccc; margin:0; padding:0;" > 
+                                <lightning-datatable
+                                key-field="Id"
+                                data={Account_Ledger_Data_table}
+                                columns={columns}
+                                hide-checkbox-column
+                                class={hideClass}
+                                style="color:#000; font-family:myfontlight; text-shadow:none;
+                            font-weight:normal !important; font-size:14px;">
+                                </lightning-datatable>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!--Added by AKhilesh w.r.t Mobile card-->
+                    <template if:true={isMobile}>
+                        <div >
+                            <c-responsive-card table-data={Account_Ledger_Data_table} columns={columns}></c-responsive-card>
+                        </div>
+                    </template>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12" style="margin-top:15px; margin-bottom:15px;">
+                        <div style="border:0px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+                
+                            <table class="slds-table slds-table_cell-buffer" style="border: 1px solid #ccc;">   
+                                
+                                <thead>
+                                    <tr class="slds-hint-parent">
+                                        <th class="" scope="col"  width="233" style="border-right: none;">
+                                            <div class="slds-truncate" title="Value1" style="border-right: none;" >{labels.To_Balance_c_f}:</div>
+                                        </th>
+                                        <td class="" scope="col" width="230" style="border-right: none;">
+                                            <div class="slds-truncate" title="Value2" >{toBalance}</div>
+                                        </td>
+                                        <th class="" scope="col" width="230">
+                                            <div class="slds-truncate" title="Value3"></div>
+                                        </th>
+                                        <th class="" scope="col" width="230">
+                                            <div class="slds-truncate" title="Value4" ></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table> 
+                        </div>
+        
+                    </div>
+                    
+                    <div class="slds-grid slds-wrap slds-gutters" style="margin-top:15px;margin-bottom:15px;">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                            <div style="border:0px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+                
+                                <table class="slds-table " style="border: 1px solid #ccc;">   
+                                    
+                                    <thead>
+                                        <tr class="slds-hint-parent">
+                                            <th class="" scope="col" width="233">
+                                                <div class="slds-truncate" title="Value1" >{labels.Opening_Balance}</div>
+                                            </th>
+                                            <th class="" scope="col" width="230">
+                                                <div class="slds-truncate" title="Value2" >{labels.Debit}</div>
+                                            </th>
+                                            <th class="" scope="col" width="230">
+                                                <div class="slds-truncate" title="Value3" >{labels.Credit}</div>
+                                            </th>
+                                            <th class="" scope="col" width="230">
+                                                <div class="slds-truncate" title="Value4" >{labels.Closing_Balance}</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                            <tr class="slds-hint-parent" >
+                                                <td scope="col" width="233">
+                                                 {openingBalance}
+                                                </td>
+                                                <td scope="col" width="230">
+                                                {totalDebit}
+                                                </td>
+                                                <td scope="col" width="230">
+                                                    {totalCredit}
+                                                </td>
+                                                <td scope="col" width="230" >
+                                                    {closingBalance}
+                                                </td>
+                                            </tr>
+                                        
+                                        
+                                    </tbody>
+                                </table> 
+                            </div>  
+                        </div>
+                    </div>
+                <div class="slds-m-top_medium" style="margin-top:50px; text-align: center;">
+                    <!--<lightning-button label={labels.Download_as_PDF} variant="brand" onclick={downloadPDFFile} class="slds-m-left_x-small" ></lightning-button>
+                    <lightning-button label={labels.Download_as_Excel} variant="brand" onclick={downloadExcelFile} class="slds-m-left_x-small" ></lightning-button>-->
+                    <lightning-icon title={labels.Download_as_PDF} icon-name="doctype:pdf" alternative-text={labels.Download_as_PDF} onclick={downloadPDFFile} ></lightning-icon>
+                    <lightning-icon title={labels.Download_as_Excel} icon-name="doctype:excel" alternative-text={labels.Download_as_Excel} onclick={downloadExcelFile} ></lightning-icon>
+                </div>
+            </div>
+            
+        </div>
+</template>

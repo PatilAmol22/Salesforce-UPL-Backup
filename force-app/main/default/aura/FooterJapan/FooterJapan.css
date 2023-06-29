@@ -1,0 +1,90 @@
+.THIS {
+    font-family:myfontregular; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+}
+@font-face {
+    font-family:myfontregular; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+    src: url(/resource/myfontregular) 
+}
+@font-face {
+    font-family:myfontlight; 
+    font-size:12px; color:#000;
+    font-weight:normal !important;
+    src: url(/resource/myfontlight) 
+}
+.THIS label {
+    font-family:myfontregular;
+    font-weight:normal;
+    font-size:12px; color:#000;
+}
+.THIS .titleregular {
+    font-family:myfontlight;
+    font-weight:normal;
+    font-size:36px; color:#000;
+}
+.THIS .slds-box {
+    font-family:myfontregular;
+    font-weight:normal!important;
+    font-size:12px;
+    color:#000;
+}
+.THIS .slds-button_success, .THIS .slds-button--success {
+    background:#fff; text-transform:uppercase; 
+    padding-left:25px; padding-right:25px;
+    color:#ff7701; border:1px solid #ff7701; 
+    border-radius:0;
+}
+
+.THIS .slds-button_success:hover, .THIS .slds-button--success:hover {
+    background:#fff; text-transform:uppercase;
+    color:#ff7701; border-radius:0;
+}
+
+.THIS.hideLabel label{
+    display:none;
+    font-weight:normal;
+    font-size:12px;
+}
+.THIS .slds-item a {
+    font-family:myfontlight;
+    font-weight:normal;
+    font-size:10px; color:#fff;
+}
+
+.THIS .head {
+    font-size:12px;
+}
+.THIS th .slds-truncate {color:#ff7701; font-weight:normal;}
+.THIS td .slds-truncate {font-family:myfontlight; color:#000; font-weight:normal;}
+
+.THIS ul li {margin-right:20px; color:#fff;}
+
+.THIS .element {
+    position: relative;
+}
+.THIS a:link{
+    text-decoration:none;
+    color:#fff;
+}
+ 
+@font-face {
+    font-family: 'myFontAwesome';
+    src: url('resource/FontAwesome/fontawesome-free-5.15.1-web/webfonts/fa-regular-400.woff') format('woff');
+}
+
+.THIS ul.ks-cboxtags li label::before {
+    font-family: myFontAwesome;
+    content: "\f002";
+    font-size: 12px;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 900;
+    padding: 2px 6px 2px 2px;
+    transition: transform .3s ease-in-out;
+}

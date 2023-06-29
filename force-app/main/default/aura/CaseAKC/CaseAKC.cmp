@@ -1,0 +1,36 @@
+<aura:component controller="ProductPatternAKC_Controller" implements="lightning:actionOverride,force:appHostable,force:hasRecordId,flexipage:availableForAllPageTypes,force:hasSObjectName,lightning:hasPageReference,force:lightningQuickAction" access="global" >
+   <aura:attribute name="pageReference" type="object" access="global"></aura:attribute>
+   <aura:attribute name="recordId" type="string" ></aura:attribute>
+      <aura:attribute name="recordTypeId" type="string" ></aura:attribute>
+    <aura:attribute name="isColombiaCase" type="boolean" default="false"></aura:attribute>
+    <!--New Changes(start) - Ben-->
+    <lightning:workspaceAPI aura:id="workspace" />
+	<aura:attribute name="isNurtureFarmCase" type="boolean" default="false"></aura:attribute> 
+    <aura:attribute name="isUPLConsumerProduct" type="boolean" default="false"></aura:attribute> 
+    <aura:attribute name="focustab" type="String"></aura:attribute> 
+    <aura:attribute name="accIdForNurture" type="String"></aura:attribute> 
+    
+    <aura:attribute name="caseRecordTypeForNurture" type="String"></aura:attribute>
+    <aura:attribute name="objName" type="String" default="Account"></aura:attribute> 
+    <!--New Changes(end) - Ben-->
+    
+     <aura:attribute name="accIdForUPLConsumer" type="String"></aura:attribute> <!--New Changes(added) - Ishu CR -APPS5243--> 
+    
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.handlePageChange}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+                  <!--<iframe src="/apex/Case_AKC" height="400px" style="border:0px"></iframe>-->
+     <!--<iframe src="/apex/sampleOverride" height="400px" style="border:0px"></iframe>-->
+    <aura:if isTrue="{!v.isColombiaCase}">
+       <!-- <c:colombiaCase aura:id="colombiaCase" case_recordId="{!v.recordId}"></c:colombiaCase>-->
+    </aura:if>
+    <!--New Changes(start) - Ben-->
+    <aura:if isTrue="{!v.isNurtureFarmCase}">
+        <c:newCaseCreationLwc aura:id="nurtureCase" recid="{!v.accIdForNurture}" objname="{!v.objName}" rectype="{!v.caseRecordTypeForNurture}" onclose="{!c.handleNurturePageClose}" onsave="{!c.handleNurtureSave}"></c:newCaseCreationLwc>
+    </aura:if>
+     <!--New Changes(end) - Ben-->
+    <!--New Changes(start) - Ishu Changes Added for new Record Type UPL Consumer-->
+    <aura:if isTrue="{!v.isUPLConsumerProduct}">
+        <c:newUPLConsumerProductCaseCreation aura:id="nurtureCase" recid="{!v.accIdForUPLConsumer}" objname="{!v.objName}" rectype="{!v.caseRecordTypeForNurture}" onclose="{!c.handleNurturePageClose}" onsave="{!c.handleNurtureSave}"></c:newUPLConsumerProductCaseCreation>
+    </aura:if>
+    <!--New Changes(end) - Ishu-->
+</aura:component>

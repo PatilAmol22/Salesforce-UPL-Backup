@@ -1,0 +1,498 @@
+.download-div {
+    padding: 13px 0 13px 12px;
+    background-color: #f8f8f8;
+  }
+  .headerBodyCSS {
+    background-color: #f7f7f7;
+    color: #888888;
+  }
+  .download-icon {
+    padding-right: 10px;
+  }
+  
+  .dwnld-btn {
+    border: 2px solid #f83;
+    padding: 2px 10px;
+    font-size: 10px;
+    background-color: white;
+    color: black;
+  }
+  
+  .spinner {
+    position: absolute;
+  }
+  
+  .maindivcss {
+    padding: 1%;
+    background-color: white;
+    min-height: 525px;
+  }
+  
+  .tableheadercss {
+    height: 40px;
+    min-width: 150px;
+  }
+  
+  .tabledatacss {
+    height: 40px;
+  }
+  
+  .textoverflowcls {
+    padding-right: 5%;
+    /* max-width: 155px; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .nodatacss {
+    opacity: 1;
+    background-color: white;
+    padding: 2%;
+  }
+  
+  .filter-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1%;
+  }
+  .left-filter {
+    display: flex;
+    justify-content: space-between;
+    width: 59%;
+  }
+  .right-filter {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+  }
+  .year-filter {
+    width: 64%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .search-filter {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .date-filter {
+    width: 49%;
+  }
+  .type-filter {
+    width: 49%;
+  }
+  .startDate-filter {
+    width: 49%;
+  }
+  .endDate-filter {
+    width: 49%;
+  }
+  .fitter-pad-none{
+    padding-left: 10px;
+    padding-right: 0;
+  }
+  .search-box {
+    width: 100%;
+    position: relative;
+  }
+  .close-icon {
+    position: absolute;
+    top: 43%;
+    right: 2%;
+  }
+  .mrg-tp {
+    margin-top: 24px;
+  }
+  .search-btn {
+    width: 0%;
+  }
+  
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:landscape) {
+    /* For landscape layouts only */
+    .search-filter {
+      width: 42%;
+    }
+    .year-filter{
+      width: 50%;
+    }
+    .tablemarginTop {
+      margin-top: 10px;
+    }
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    .left-filter {
+      width: 55%;
+    }
+    .right-filter {
+      width: 44%;
+    }
+    .search-box {
+      width: 80%;
+    }
+    .search-btn {
+      width: 20%;
+    }
+    .mrg-tp {
+      margin-top: 25px;
+    }
+    .close-icon {
+      top: 44%;
+    }
+    .search-filter {
+      width: 36%;
+    }
+    .year-filter {
+      width: 64%;
+      display: flex;
+      justify-content: space-between;
+    }
+    .date-width {
+      width: 50%;
+    }
+  }
+  @media only screen and (max-width: 1124px) {
+    .filter-section {
+      display: block;
+    }
+    .left-filter {
+      width: 100%;
+    }
+    .right-filter {
+      width: 100%;
+      margin-left: 12px;
+      padding-right: 12px;
+    }
+  }
+  @media only screen and (max-width: 1124px) and (min-device-width: 768px) {
+    
+    .tablemarginTop {
+      margin-top: 10px;
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    
+    .download-div {
+      text-align: center;
+    }
+    .maindivcss {
+      background-color: #f7f7f7;
+    }
+  
+    .bgcolormobile {
+      background-color: white;
+      background-color: white;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      font-weight: bold;
+    }
+
+    .mobile-header{
+      background-color:rgb(243, 135, 63);
+      color: rgb(0, 0, 0);
+      margin-bottom: 5px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding-bottom: 2px;
+      font-weight: bold;
+    }
+    .mobile-header a{
+      color: rgb(0, 0, 0);
+    }
+  
+    .tablepadding {
+      padding-top: 3%;
+    }
+  
+    .tabledatacss {
+      height: 30px;
+    }
+  
+    .textoverflowcls {
+      line-height: 25px;
+      padding-right: 2%;
+      max-width: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    /* Force table to not be like tables anymore */
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+  
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+  
+    tr {
+      border-bottom: 0px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+    }
+  
+    td {
+      /* Behave  like a "row" */
+      /* border: none;
+          border-bottom: 1px solid #eee;  */
+      position: relative;
+      padding-left: 35%;
+      padding-top: 5px;
+    }
+  
+    td:before {
+      /* Now like a table header */
+      position: absolute;
+      /* Top/left values mimic padding */
+      top: 6px;
+      left: 6px;
+      width: 33%;
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+    @media screen and (max-width: 420px) {
+      .textoverflowcls {
+        line-height: 25px;
+        padding-right: 2%;
+        max-width: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  
+    /*
+      Label the data
+      */
+    td:nth-of-type(1):before {
+      content: "Sale order";   
+    }
+    td:nth-of-type(2):before {
+      content: "Order Status";
+    }
+    td:nth-of-type(3):before {
+      content: "Creation date";
+    }
+    td:nth-of-type(4):before {
+      content: "Client";
+    }
+    td:nth-of-type(5):before {
+      content: "City";
+    }
+    td:nth-of-type(6):before {
+      content: "Currency";
+    }
+    td:nth-of-type(7):before {
+      content: "Amount";
+    }
+    
+  
+    .br-mobile-view:nth-of-type(1):before {
+      content: "Orden de venta";
+    }
+    .br-mobile-view:nth-of-type(2):before {
+      content: "Estado de la orden";
+    }
+    .br-mobile-view:nth-of-type(3):before {
+      content: "Fecha de creación";
+    }
+    .br-mobile-view:nth-of-type(4):before {
+      content: "Cliente";
+    }
+    .br-mobile-view:nth-of-type(5):before {
+      content: "Ciudad";
+    }
+    .br-mobile-view:nth-of-type(6):before {
+      content: "Moneda";
+    }
+    .br-mobile-view:nth-of-type(7):before {
+      content: "Monto";
+    }
+  
+  
+    .mx-mobile-view:nth-of-type(1):before {
+        content: "Orden de venta";
+    }
+    .mx-mobile-view:nth-of-type(2):before {
+        content: "Estado de la orden";
+    }
+    .mx-mobile-view:nth-of-type(3):before {
+        content: "Fecha de creación";
+    }
+    .mx-mobile-view:nth-of-type(4):before {
+        content: "Cliente";
+    }
+    .mx-mobile-view:nth-of-type(5):before {
+        content: "Ciudad";
+    }
+    .mx-mobile-view:nth-of-type(6):before {
+        content: "Moneda";
+    }
+    .mx-mobile-view:nth-of-type(7):before {
+        content: "Monto";
+    }
+  
+  }
+  @media only screen and (max-width: 535px) {
+    .left-filter,
+    .right-filter {
+      display: block;
+      padding-right: 0;
+      margin-left: 0;
+    }
+    
+    .search-box {
+      width: 230%;
+    }
+    .search-filter {
+      width: 100%;
+      margin-left: 0%;
+      padding-right: 0%;
+    }
+    .year-filter {
+      width: 100%;
+      display: block;
+    }
+    .mrg-tp {
+      margin-top: 10px;
+    }
+    .type-filter,
+    .date-filter {
+      width: 100%;
+      margin-left: 12px;
+      padding-right: 12px;
+      padding-top: 2%;
+    }
+    .startDate-filter,
+    .endDate-filter {
+      width: 100%;
+      margin-left: 12px;
+      padding-right: 12px;
+      padding-top: 2%;
+    }
+    .fitter-pad-none{
+      padding-left: 10px;
+      padding-right: 0;
+    }
+    .close-icon {
+      top: 27%;
+    }
+  }
+  @media screen and (max-width: 425px) {
+    .br-mobile-view {
+      padding-left: 40%;
+    }
+    .mx-mobile-view{
+      padding-left: 40%;
+    }
+    .mobile-header{
+      background-color:rgb(243, 135, 63);
+      color: rgb(0, 0, 0);
+      margin-bottom: 5px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding-bottom: 2px;
+      font-weight: bold;
+    }
+    
+  }
+  @media screen and (max-width: 375px) {
+    .br-mobile-view {
+      padding-left: 46%;
+    }
+    .mx-mobile-view{
+      padding-left: 46%;
+    }
+    .mobile-header{
+      background-color:rgb(243, 135, 63);
+      color: rgb(0, 0, 0);
+      margin-bottom: 5px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding-bottom: 2px;
+      font-weight: bold;
+    }
+  }
+  @media only screen and (max-width: 319px) {
+    .year-filter {
+      display: block;
+    }
+    .date-width {
+      padding-left: 0;
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 320px) {
+    .br-mobile-view {
+      padding-left: 52%;
+    }
+    .mx-mobile-view{
+      padding-left: 52%;
+    }
+    .mob-font-pageination {
+      font-size: 11px;
+    }
+    .mobile-header{
+      background-color:rgb(243, 135, 63);
+      color: rgb(0, 0, 0);
+      margin-bottom: 5px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding-bottom: 2px;
+      font-weight: bold;
+    }
+  }
+
+  @media screen and (min-width: 536px) and (max-width: 767px) {
+
+    .search-filter {
+      width: 100%;
+      margin-left: 0%;
+      padding-right: 0%;
+    }
+    
+    .year-filter {
+      width: 100%;
+      margin-left: 12px;
+      padding-right: 12px;
+    }
+
+    .startDate-filter {
+      width: 49%;
+    }
+
+    .endDate-filter {
+      width: 49%;
+    }
+    .fitter-pad-none{
+      padding-left: 10px;
+      padding-right: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 400px) {
+    .year-filter {
+      display: block;
+    }
+    
+  }
+
+  .list-title {
+    font-size: 23px;
+    margin-top: 4%;
+  }

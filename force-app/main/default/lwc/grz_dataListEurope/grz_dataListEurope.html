@@ -1,0 +1,18 @@
+<template>
+    <template if:true={spinnerVisible}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    </template>
+<label for="Search by Product" style="font-weight: bolder;  color:#59474D;">{titleTag}</label>
+    <div class="slds-align_absolute-center">
+    <input name="Query" list="valueList" id="input" data-id="searchText" type="text" onchange={onTyping}
+    placeholder="Search" class="ipText slds-input inputClass" /></div>
+    <datalist id="valueList" class="slds-is-absolute resultList">
+    
+    <template for:each={datalistResult} for:item='item'>
+    <option key={item.key} value={item.value}>{item.value}</option>
+    </template>
+    </datalist>
+    
+    </template>

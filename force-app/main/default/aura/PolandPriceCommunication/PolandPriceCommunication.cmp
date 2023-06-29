@@ -1,0 +1,181 @@
+<aura:component controller="PolandPriceCommunicationAuraController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="description" type="String" />
+    <aura:attribute name="fileName" type="String" />
+    <aura:attribute name="fileSize" type="Integer" />
+    <aura:attribute name="totalFilength" type="Integer" />
+    <aura:attribute name="totalFileCount" type="Integer" />
+    <aura:attribute name="isSelectAll" type="boolean" default="false"/>
+    <aura:attribute name="isSelect" type="boolean" default="false"/>
+    <aura:attribute name="isSendEmailChecked" type="boolean" default="false" />
+    <aura:attribute name="options" type="List" access="public"/>
+    <aura:attribute name="selectedValue" type="String" access="public"/>
+    <aura:attribute name="contactListMap" type="map" access="public"/>
+    <aura:attribute name="polandPriceComList" type="List" access="public"/>
+    <aura:attribute name="cvIDs" type="List" access="public"/>
+    <aura:attribute name="contactEmailList" type="PolandPriceCommunicationAuraController.DistributorDetailsWrapper[]" access="public"/>
+    <aura:attribute name="distributorDetailList" type="PolandPriceCommunicationAuraController.DistributorDetailsWrapper[]" access="public"/>
+    <aura:attribute name="FileList" type="Object" access="public"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="recordSaved" type="boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="listOptions" type="List"/>
+    <aura:attribute name="selectedOptions" type="List"/>
+    <aura:attribute name="selectedIds" type="List"/>
+    
+    <!-- UI Starts from here-->
+	<div class="slds-box slds-theme_default">
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-spinner_container slds-is-fixed">
+                <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+            </div>
+        </aura:if>      
+    <lightning:card title="{!$Label.c.Price_Communication}" iconName="standard:scan_card"/>
+      
+    <div class="slds-scrollable_x " style="margin-top:10px ;margin-bottom:0; border-bottom:0px solid #cce4f8;">
+        <h3 class="slds-section-title--divider" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">{!$Label.c.Add_Details}</h3>     
+        
+            <form class="slds-form--inline ">
+                <div class="slds-form-element" style="margin-left:10%">
+                    
+                    <label class="slds-form-element__label"  style="margin-right:50px" for="Distributor"><b>Select Distributor</b></label>
+                    
+                    <div class="slds-form-element__control " style="margin-top:10px">
+                        <div id="step-disributors" class="slds-is-expanded">
+                            <lightning:dualListbox aura:id="selectOptions" name="Select Distributors"  label="" 
+                                                   sourceLabel="Available Distributors" 
+                                                   selectedLabel="Selected Distributors" 
+                                                   options="{! v.listOptions }"
+                                                   value="{! v.selectedOptions }"
+                                                   onchange="{! c.handleChange }"/>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div style="margin-top:20px;">
+                        <div class="slds-align_absolute-center">
+                            <lightning:button name="{!i}" variant="brand" label="Add Distributors"  onclick="{!c.addDistributors}"/>
+                        </div>
+                    </div>
+            </form>
+        
+        
+    </div>
+    <h3 class="slds-section-title--divider" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">{!$Label.c.Distributor_Details}</h3>
+        <div class="slds-scrollable_x slds-grid" style="margin-top:10px;margin-bottom:0; border-bottom:0px solid #cce4f8;">
+           
+            <table class="slds-table slds-table--bordered ">
+                <thead>
+                        <tr class="slds-text-heading--label">
+                            <th>           
+                                <label class="slds-checkbox">
+                                    <ui:inputCheckbox value="{!v.isSelectAll}" change="{!c.handleSelectAll}" aura:id="selectAll"/>
+                                    <span class="slds-checkbox--faux" />
+                                    <span class="slds-form-element__label"></span>
+                                </label>
+                            </th>
+                            <th class="slds-is-sortable" title="{!$Label.c.Distributor_Name}" scope="col">
+                                <div aria-label=""  class=" slds-cell-wrap">{!$Label.c.Distributor_Name}</div>
+                            </th>
+                            <th class="slds-is-sortable" title="{!$Label.c.Contact_Name}" scope="col">
+                                <div aria-label=""  class=" slds-cell-wrap">{!$Label.c.Contact_Name}</div>
+                            </th>
+                            <th class="slds-is-sortable" scope="col">
+                                <div >{!$Label.c.Action}</div>
+                            </th> 
+                            <th class="slds-cell-shrink"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.distributorDetailList}" var="distributorItem" indexVar="i"> 
+                            <tr class="slds-hint-parent">
+                                <th>
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox aura:id="checkId" value="{!distributorItem.checkMail}" change="{!c.handleSelect}"/><!-- text="{!distributorItem.checkMail}" /-->
+                                        <span class="slds-checkbox--faux" />
+                                        <span class="slds-form-element__label"></span>
+                                    </label>
+                                </th>
+                                <th class="slds-truncate" data-label="Distributor Name">
+                                    <!--Start-->
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-combobox_container slds-has-inline-listbox">
+                                                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                    <div   class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                                                        <ui:outputText class="slds-input" 
+                                                                      aura:id="distributor1"
+                                                                      value="{!distributorItem.accName}"/>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End-->
+                                </th>
+                                <td class="slds-truncate" data-label="Contact">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-combobox_container slds-has-inline-listbox">
+                                                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                    <div   class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                                                        <ui:outputText class="slds-input" 
+                                                                      aura:id="distributor1"
+                                                                      value="{!distributorItem.cName}"/>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="slds-truncate" data-label="Action">
+                                    <lightning:buttonIcon  aura:id="deleteBtn"  class="icn" value="{!i}" name="{!i}" iconName="utility:delete" onclick="{!c.removeTableRow}" size="large" alternativeText="delete Items"  />
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+     <h3 class="slds-section-title--divider" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">{!$Label.c.Communication_Details}</h3>
+      <div class="slds-p-horizontal--small slds-size--1-of-1" style="margin-top:10px;">
+          <form class="slds-form--inline">
+              <div class="slds-form-element" style="width:400px">
+                  <ui:inputTextArea class="slds-input" rows="2"
+                                          aura:id="remarks"
+                                          value="{!v.description}" 
+                                          label="" 
+                                    	  placeholder="Description"
+                                          maxlength="132"
+                                          disabled="{!v.disableThis}"/>
+              </div>
+              <div class="slds-form-element">
+                  <lightning:input aura:id="fileId" onchange="{!c.handleFilesChange}" files="{!v.FileList}" type="file" name="file" label="" multiple="true"/>
+              		{!v.fileName}
+              </div>
+          </form>          
+          
+    </div>
+    <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+        
+        <form class="slds-form--inline">
+            <div class="slds-form-element" style="margin-left:10px">
+                <div class="slds-form-element__control" style="padding:10px; width:150px">
+                    <ui:inputCheckbox class="mySendEmailCheckbox" aura:id="isSendEmailChecked" label="{!$Label.c.Send_Email}" change="{!c.onCheckSendEmail}"/>
+                </div>
+            </div>
+            <div class="slds-form-element" style="margin-left:10px">
+                <lightning:button onclick="{!c.savePBC}" 
+                                  variant="brand" 
+                                  label="{!$Label.c.Save}" 
+                                  iconName="utility:save" 
+                                  iconPosition="left" 
+                                  disabled="{!v.disableThis}" />
+            </div>
+        </form>
+        
+    </div>
+ </div>
+    
+</aura:component>

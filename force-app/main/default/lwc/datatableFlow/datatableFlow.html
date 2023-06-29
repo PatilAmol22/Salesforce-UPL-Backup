@@ -1,0 +1,217 @@
+<template>
+    <div class="slds-resizable">
+    <!--lightning-datatable
+            data={mydata}
+            columns={columns}
+            key-field="Id"
+            onrowselection={getSelectedName}
+            onrowaction={handleRowAction}
+            sorted-by={sortBy}
+            sorted-direction={sortDirection}
+            onsort={handleSortdata}>
+    </lightning-datatable-->
+
+    <div class="slds-m-around_medium">
+        <div class="slds-scrollable_x">
+        <template if:true={mydata}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead style="border-top: 0;">
+                    <tr style="border-top: 0;">
+                        <th  class="" scope="col">
+                            <lightning-input class="" type="checkbox" title="Select All" checked={isCheckedAll} onchange={handleSelectAll} >
+                            </lightning-input>
+                        </th>   
+                        <th style="border-top: 0;" width="" class="" scope="col" onclick={sortName}>
+                            <a href="#" class="slds-th__action slds-text-link--reset">
+                            <!--div class="slds-truncate" style="color:#FF7701;font-size:14px" title="Name">Name</div-->
+                            <span class="slds-assistive-text">Sort</span>
+                            <span class="slds-truncate" style="color:#000000;font-size:14px" title="Name">Name</span>
+                            <div if:true={isNameSort}>
+                                <div if:true={isAsc}>
+                                    &#9650;
+                                </div>
+                                <div if:true={isDsc}>
+                                    &#9660;
+                                </div>
+                            </div>
+                        </a>
+                        </th>
+                        <th class="" scope="col" width="" style="border-top: 0;" onclick={sortDepot}>
+                            <!--div class="slds-truncate" style="color:#FF7701;font-size:14px" title="Depot">Depot</div-->
+                            <a href="#" class="slds-th__action slds-text-link--reset">
+                                <span class="slds-assistive-text">Sort</span>
+                                <span class="slds-truncate" style="color:#000000;font-size:14px" title="Depot">Depot</span>
+                                <div if:true={isDepotSort}>
+                                    <div if:true={isAsc}>
+                                        &#9650;
+                                    </div>
+                                    <div if:true={isDsc}>
+                                        &#9660;
+                                    </div>
+                                </div>
+                            </a>
+                        </th>
+                        <th class="" scope="col" width="" style="border-top: 0;" onclick={sortTerritory}>
+                            <!--div class="slds-truncate" style="color:#FF7701;font-size:14px" title="Territory">Territory</div-->
+                            <a href="#" class="slds-th__action slds-text-link--reset">
+                                <span class="slds-assistive-text">Sort</span>
+                                <span class="slds-truncate" style="color:#000000;font-size:14px" title="Territory">Territory</span>
+                                <div if:true={isTerritorySort}>
+                                    <div if:true={isAsc}>
+                                        &#9650;
+                                    </div>
+                                    <div if:true={isDsc}>
+                                        &#9660;
+                                    </div>
+                                </div>
+                            </a>
+                        </th>
+                        <th class="" scope="col" width="" style="border-top: 0;" onclick={sortTM}>
+                            <!--div class="slds-truncate" style="color:#FF7701;font-size:14px" title="Territory Manager">Territory Manager</div-->
+                            <a href="#" class="slds-th__action slds-text-link--reset">
+                                <span class="slds-assistive-text">Sort</span>
+                                <span class="slds-truncate" style="color:#000000;font-size:14px" title="Territory Manager">Territory Manager</span>
+                                <div if:true={isTMSort}>
+                                    <div if:true={isAsc}>
+                                        &#9650;
+                                    </div>
+                                    <div if:true={isDsc}>
+                                        &#9660;
+                                    </div>
+                                </div>
+                            </a>
+                        </th>
+                        <th class="" scope="col" width="" style="border-top: 0;" onclick={sortSDate}>
+                            <!--div class="slds-truncate" style="color:#FF7701;font-size:14px" title="Submitted Date">Submitted Date</div-->
+                            <a href="#" class="slds-th__action slds-text-link--reset">
+                                <span class="slds-assistive-text">Sort</span>
+                                <span class="slds-truncate" style="color:#000000;font-size:14px" title="Submitted Date">Submitted Date</span>
+                                <div if:true={isSDateSort}>
+                                    <div if:true={isAsc}>
+                                        &#9650;
+                                    </div>
+                                    <div if:true={isDsc}>
+                                        &#9660;
+                                    </div>
+                                </div>
+                            </a>
+                        </th>
+                        <th class="" scope="col" width="" style="border-top: 0;">
+                            <div class="slds-truncate" style="color:#000000;font-size:14px" title="Product">Product Details</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={mydata} for:item="aList">
+                        <tr key={aList.reqId}>
+                            
+                            <th class="chk">
+                                <lightning-input checked={isChecked} class="" type="checkbox" title="Select"  onchange={getSelectedName} data-id={aList.WorkItemId}></lightning-input>
+                            </th>    
+
+                            <th scope="col">
+                                <div class="text-style" style="font-size:14px" id={aList.reqId} key={aList.reqId} onclick={getRecordURL} ><a>{aList.reqName}</a> </div>
+                            </th>
+                            <th scope="col">
+                                <div class="text-style" style="font-size:14px">{aList.depot}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="text-style" style="font-size:14px">{aList.territory}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="text-style" style="font-size:14px">{aList.tmName}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="text-style" style="font-size:14px">{aList.submittedDate}</div>
+                            </th>
+                            <th scope="col">
+                                <template if:true={aList.fspWrapList}>
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                        <thead style="border-top: 0;">
+                                            <tr style="background-color:#ccc; border-top: 0;" >
+                                                <th style="border-top: 0;" class="" scope="col">
+                                                    <div class="slds-truncate" style="color:#a0a0a0;font-size:14px;width:150px;" title="PRODUCT">Product</div>
+                                                </th>
+                                                <th class="" scope="col" style="border-top: 0;">
+                                                    <div class="slds-truncate" style="color:#a0a0a0;font-size:14px;width:150px;" title="Dose per acre (Gram/ML)">Dose per acre</div>
+                                                </th>
+                                                <th class="" scope="col" style="border-top: 0;">
+                                                    <div class="slds-truncate" style="color:#a0a0a0;font-size:14px;width:150px;" title="Demo Plot Size (Acre)">Demo plot size (Acre)</div>
+                                                </th>
+                                                <th class="" scope="col" style="border-top: 0;">
+                                                    <div class="slds-truncate" style="color:#a0a0a0;font-size:14px;width:150px;" title="Number of Demo">Number of demo</div>
+                                                </th>
+                                                <th class="" scope="col" style="border-top: 0;">
+                                                    <div class="slds-truncate" style="color:#a0a0a0;font-size:14px;width:150px;" title="SAMPLE QTY(GM/ML)">Sample Qty(GM/ML)</div>
+                                                </th>
+                                                <th class="" scope="col" style="border-top: 0;">
+                                                    <div class="slds-truncate" style="color:#a0a0a0;font-size:14px;width:150px;" title="TARGET CROP">Target Crop</div>
+                                                </th>
+                                                <th class="" scope="col" style="border-top: 0;">
+                                                    <div class="slds-truncate" style="color:#a0a0a0;font-size:14px;width:150px;" title="TARGET PEST">Target Pest</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={aList.fspWrapList} for:item="aList">
+                                                <tr key={aList.Id}>
+                                                    
+                                                    <th scope="col">
+                                                        <div class="text-style" style="font-size:14px">{aList.productName}</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="text-style" style="font-size:14px">{aList.acre}</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="text-style" style="font-size:14px">{aList.size}</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="text-style" style="font-size:14px">{aList.demo}</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="text-style" style="font-size:14px">{aList.demoQtyGMML}</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <template for:each={aList.targetCopList} for:item="cropList">
+                                                            <div key={aList.Id} class="text-style" style="font-size:14px">{cropList}</div>
+                                                        </template>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <template for:each={aList.targetPestList} for:item="pestList">
+                                                            <div key={aList.Id} class="text-style" style="font-size:14px">{pestList}</div>
+                                                        </template>
+                                                    </th>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </br>
+                                </template>
+                            </th>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <br/>
+        </template>
+        <template if:true={error}>
+            {label.somerroroccured}
+        </template>
+</div>
+</div>
+</div>
+</br>
+<lightning-layout horizontal-align="space">
+    <lightning-layout-item flexibility="auto">
+        <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler} disabled={disablePrevious}>
+        </lightning-button>
+    </lightning-layout-item>
+    <lightning-layout-item flexibility="auto">
+        Page {page} of {totalPage}
+    </lightning-layout-item>
+    <lightning-layout-item flexibility="auto">
+        <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right"
+            onclick={nextHandler} disabled={disableNext}></lightning-button>
+    </lightning-layout-item>
+</lightning-layout>
+</template>

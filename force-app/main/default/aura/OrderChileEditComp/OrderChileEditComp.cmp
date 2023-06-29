@@ -1,0 +1,720 @@
+<aura:component access="global"
+                controller="SoChileEditController"
+                implements="force:appHostable,force:hasRecordId,lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasSObjectName,force:lightningQuickAction" > 
+    <ltng:require styles="/resource/font_awesome" scripts="{!$Resource.jquery331}"/>
+    <!--Init Component On Load-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="sORecordId" type="Id" />
+    
+    <!--End-->
+    <!-- Reload order using recordId -->
+    <aura:attribute name="recordId" type="Id" />
+    <!--End-->
+    
+    <!--Sayan-->
+    <aura:attribute name="defaultTerm" type="String" />
+    <!--Sayan-->
+    
+    <aura:attribute name="validCodeCounter" type="Integer" default = "0"/>
+    <aura:attribute name="shippingOptions" type="String[]"/>
+    <aura:attribute name="poNoList" type="String[]"/>
+    <aura:attribute name="comments" type="String" />
+    <aura:attribute name="sfdcOrderNo" type="String" />
+    <aura:attribute name="sapOrderNo" type="String" />
+    <aura:attribute name="orderSubStatus" type="String" default=""/>
+    <aura:attribute name="flagMessage" type="String" default=""/>
+    <aura:attribute name="toastFlag" type="String" default=""/>
+    <aura:attribute name="headerMsg" type="String" default="Edit Sales Order"/>
+    <aura:attribute name="CLPCurrency" type="Boolean" default="false" />
+    <aura:attribute name="custSelectionFlag" type="Boolean" default="false" />
+    <aura:attribute name="ShippingLocMap" type="Map" access="public" default="{}"/>
+    <aura:attribute name="accPaymentTerm" type="String" access="public" default="None"/>
+    <aura:attribute name="paymentTermList" type="List" access="public" default="{}"/>
+    <aura:attribute name="incoTermList" type="List" access="public" default="{}"/>
+    <aura:attribute name="currencyList" type="String" />
+    <!--CR#174 -Chile Margin Block-SKI- kalpesh chande -  06/01/2023 -Start here  -->
+     <aura:attribute name="currencyList1" type="String" />
+    <aura:attribute name="solItemCurrency" type="String" />
+  <!--CR#174 -Chile Margin Block-SKI- kalpesh chande -  06/01/2023 -End here  -->
+    <aura:attribute name="shipToParty" type="String" default="" />
+    <aura:attribute name="salesOrg" type="String" default="" />
+    <aura:attribute name="parentId" type="Id"/>  
+    <aura:attribute name="sOId" type="String" />
+    <aura:attribute name="object" type="Object" />
+    <!--Start SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022-->
+    <aura:attribute name="loginCountryObjs" type="Login_Country__c" />
+    <!--End SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022-->
+    <aura:attribute name="exchangeRate" type="Decimal" default="0.00" />
+    <aura:attribute name="showSAPNo" type="Boolean" default="true" />
+    <aura:attribute name="totalSales" type="Decimal" default="0.00" />
+    <aura:attribute name="grossProfit" type="Decimal" default="0.00" />
+    <aura:attribute name="grossMargin" type="Decimal" default="0.00" />
+    <aura:attribute name="totalDisc" type="Decimal" default="0.00" />
+    <aura:attribute name="disableThis" type="Boolean" default="false" />
+    <aura:attribute name="disableSelect" type="Boolean" default="false" />
+    <aura:attribute name="fileName" type="string" default="{!$Label.c.No_file_selected}" />
+    <lightning:workspaceAPI aura:id="workspace" />
+    
+    <aura:attribute name="noFileError" type="Boolean" default="false" />
+    
+    <aura:attribute name="user" type="User" access="public"/>
+    <aura:attribute name="userId" type="String" access="public"/>
+    <aura:attribute name="orderWrapper" type="OrderChileController.OrderWrapper" access="public"/>
+    <aura:attribute name="showOnReLoad" type="Boolean" default="false" />
+    <aura:attribute name="showRaiseOrder" type="Boolean" default="true" />
+    
+    <!-- CSS Modal Adjustment -->    
+    <aura:attribute name="rowIndex" type="Integer" />
+    <aura:attribute name="currentIndex" type="integer"/>
+    <aura:attribute name="modalHeader" type="String" default="Products"/> 
+    <!-- End --> 
+     <!-- CR#174 -Chile Margin Block- kalpesh chande -  12/01/2023 - Start Here-->
+    <aura:registerEvent name ="UpdateRows" type="c:UpdateRows"/> 
+    <!-- CR#174 -Chile Margin Block- kalpesh chande - 12/01/2023 - End Here-->
+    <aura:handler name= "UpdateRows" event="c.UpdateRows" action = "{!c.normalUpdateRowCalculations}"></aura:handler>
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.normalremoveTableRow}"/>
+    <!--PriceList Modal-->
+    <aura:attribute name="priceDetailList" type="OrderChileController.PriceDetail[]" access="public"/>
+    <aura:attribute name="priceDetailTableColumns" type="List" access="public"/>
+    <aura:attribute name="priceDetailTableConfig" type="Map" access="public"/>
+    <!--End-->
+    
+    <aura:attribute name="newSalesOrder" type="Sales_Order__c"
+                    default="{'sobjectType': 'Sales_Order__c',
+                             'Sold_to_Party__c': '',
+                             'Payment_Term__c':'',
+                             'Test':'',
+                             'Id':'',
+                             'Program_Margin_Discount__c': '0',
+                             'Purchase_Order_Date__c': '','Purchase_Order_no__c': '',
+                             'Order__c' : '',
+                             'CurrencyIsoCode':'',
+                             'Order_Type_lk__c':'',
+                             'Inco_Term__c':'',
+                             }"/> <!-- CR#183 -Chile Export Sales - kalpesh chande -  28/03/2023 - -->
+    <!--Wrapper List-->    
+    <aura:attribute name="orderItemList" 
+                    type="OrderChileController.SalesOrderItem[]" />	
+    
+    <aura:attribute name="orderFields" 
+                    type="OrderChileController.OrderFields" />    
+    <!--End-->   
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+     <!-- CR#174 -Chile Margin Block- SKI- kalpesh chande -  06/01/2023 - Start Here-->
+    <aura:attribute name="isSimulationOrder" type="boolean" default="true"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="ApprovalFlags" type="List" access="public" />
+    <aura:attribute name="isSalesrep" type="boolean" default="false"/>
+   <!-- CR#174 -Chile Margin Block- SKI- kalpesh chande -  06/01/2023 - End Here-->
+     <!-- CR#183 -Chile Export Sales - kalpesh chande -  28/03/2023 - Start Here-->
+     <aura:attribute name="orderTypeList" type="List" access="public" default="{}"/>
+     <!-- CR#183 -Chile Export Sales - kalpesh chande -  28/03/2023 - End Here-->
+    
+    <div id="snackbar">
+        <aura:if isTrue="{!and(v.toastFlag == 'setSuccess' , v.sOId != undefined)}">    
+            <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+                {!v.flagMessage}
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!and(v.toastFlag == 'setError' , v.sOId != undefined)}">
+            <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                {!v.flagMessage}
+            </div>
+        </aura:if>
+    </div>
+    
+    
+    <div class="slds">
+        <aura:if isTrue="{!v.showSpinner}">
+            <div class="slds-spinner_container slds-is-fixed">
+                <lightning:spinner aura:id="spinner" variant="brand" size="medium"/>
+            </div>
+        </aura:if>  
+        
+        
+        <div class="slds-page-header">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-has-flexi-truncate slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning:icon iconName="standard:orders" size="large"/>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-heading--label">{!v.headerMsg}</p>
+                            <div class="slds-grid">
+                                <aura:if isTrue="{!v.showRaiseOrder}">
+                                    <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">{!$Label.c.Raise_Sales_Order}</h1>                                
+                                </aura:if>    
+                            </div>
+                            <aura:if isTrue="{!v.showOnReLoad}"><div>{!$Label.c.Order_No}. {!v.sfdcOrderNo}</div></aura:if>
+                            <aura:if isTrue="{!v.showOnReLoad}">
+                                <aura:if isTrue="{!v.showSAPNo}">
+                                    <div style="font-weight:bold;">{!$Label.c.SAP_Order_Number}. {!v.sapOrderNo}</div>
+                                </aura:if>
+                            </aura:if>   
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12" style="float:left;">
+                    <aura:if isTrue="{!v.showOnReLoad}">
+                        <div style="float:right; margin-top:10px;">
+                            <aura:if isTrue="{!v.showSAPNo}">
+                                <div style="float:left; display:inline;"><lightning:formattedText value="{!v.orderSubStatus}" /></div>
+                                <aura:set attribute="else">
+                                    <div style="float:left; display:inline;"><lightning:formattedText value="{!v.newSalesOrder.Order_Status__c}" /></div>
+                                </aura:set>
+                            </aura:if>    
+                        </div>                    
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <aura:attribute name="recordPageFlag" type="Boolean" default="false"/>
+    <aura:attribute name="objectName" type="String" default="Account"/>
+    <aura:attribute name="fieldName" type="String" default="Name"/>
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/>
+    <aura:attribute name="Label" type="String"/>
+    <aura:attribute name="searchRecords" type="Account[]"/>
+    <aura:attribute name="required" type="Boolean" default="false"/>
+    <aura:attribute name="iconName" type="String" default="action:new_account"/>
+    <aura:attribute name="LoadingText" type="Boolean" default="false"/>
+    
+    
+    <div id ="content" class="slds">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded " style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:0; background:#769ed9; color:#fff; font-weight:bold;">
+                {!$Label.c.Step} 1: {!$Label.c.Account_Credit_Summary}
+            </h3>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1" style="margin-top:12px;">
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element__control">
+                        <div class="slds-scrollable_x slds-grid">
+                            <table class="slds-table slds-table--bordered " >
+                                <thead>
+                                    <tr class="slds-text-heading--label">
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Account_Name}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.SAP_Code}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Total_Credit_Limit}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Internal_Credit_Limit}</div>
+                                        </th>      
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Credit_Limit_Used}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Credit_Limit_Balance}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Total_Outstanding}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Net_Overdue}</div>
+                                        </th>
+                                        <th class="slds-cell-shrink"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="slds-hint-parent"><!-- <ui:outputNumber value="{!v.totalValue}" format="#,###,##0.00"/>-->
+                                        <!-- Account-->
+                                        <aura:if isTrue="{!!v.recordPageFlag}">      
+                                            <th class="slds-truncate" scope="row" data-label="{!$Label.c.Account_Name}">
+                                                
+                                                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aura:id="resultBox" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                                                        <lightning:input required="{!v.required}" aura:id="userinput" label="{!v.Label}" name="searchText" onchange="{!c.searchField}" value="{!v.selectRecordName}" class="leftspace"/> 
+                                                        <aura:if isTrue="{!empty(v.selectRecordId)}">
+                                                            <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right iconheight">
+                                                                <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="utility:search" size="x-small" alternativeText="icon" />
+                                                            </span> 
+                                                            <aura:set attribute="else">
+                                                                <button class="slds-input__icon slds-input__icon_right slds-button slds-button_icon iconheight" onclick="{!c.resetData}">
+                                                                    <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="utility:clear" size="x-small" alternativeText="icon" />
+                                                                    <span class="slds-assistive-text">Clear</span></button>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                    </div>
+                                                    
+                                                    <!-- Second part display result -->
+                                                    <div id="listbox-id-1" style="Display:contents" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                                                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                                            <aura:iteration items="{!v.searchRecords}" var="serecord" indexVar="hdtv">
+                                                                <li role="presentation" class="slds-listbox__item">
+                                                                    <div id="{!serecord.Id}" data-name="{!serecord.Name}" onclick="{!c.setSelectedRecord}" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                                                        <span class="slds-media__body">
+                                                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!serecord.Name}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </li>
+                                                            </aura:iteration>
+                                                            <aura:if isTrue="{!and(v.searchRecords.length == 0 , !v.LoadingText)}">
+                                                                No result found.
+                                                            </aura:if>
+                                                            <aura:if isTrue="{!v.LoadingText}">
+                                                                Loading...
+                                                            </aura:if>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                        </aura:if>
+                                        <!--Account-->		<aura:if isTrue="{!v.recordPageFlag}">  				
+                                        <th class="slds-truncate" scope="row" data-label="{!$Label.c.Account_Name}"><lightning:formattedText value="{!v.orderFields.DistributorData.distributorName}"/></th>
+                                        </aura:if>
+                                        <td class="slds-truncate" data-label="{!$Label.c.SAP_Code}"><lightning:formattedText  value="{!v.orderFields.DistributorData.sapCode}"/></td>
+                                        <td class="slds-truncate" data-label="{!$Label.c.Total_Credit_Limit}"><lightning:formattedNumber aura:id="creditLimitId" value="{!v.orderFields.DistributorData.creditLimit}"  format="#,###,###.00"/></td>
+                                        <td class="slds-truncate" data-label="{!$Label.c.Internal_Credit_Limit}"><lightning:formattedNumber value="{!v.orderFields.DistributorData.internalCredit}" format="#,###,##0.00"/></td>
+                                        <td class="slds-truncate" data-label="{!$Label.c.Credit_Limit_Used}"><lightning:formattedNumber value="{!v.orderFields.DistributorData.creditUsed}" format="#,###,##0.00"/></td>
+                                        <td class="slds-truncate" data-label="{!$Label.c.Credit_Limit_Balance}" style="background:#32CD32; font-weight:bold;"><lightning:formattedNumber value="{!v.orderFields.DistributorData.creditBalance}" format="#,###,##0.00"/></td>
+                                        <td class="slds-truncate" data-label="{!$Label.c.Total_Outstanding}"><lightning:formattedNumber value="{!v.orderFields.DistributorData.paymentOutstanding}" format="#,###,##0.00"/></td>
+                                        <td class="slds-truncate" data-label="{!$Label.c.Net_Overdue}" style="background:#f00; font-weight:bold;"><lightning:formattedNumber value="{!v.orderFields.DistributorData.greaterThan90}" format="#,###,##0.00"/></td>
+                                    </tr>
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                <div  style="display:inline; margin-top:5px; padding-right:5px; font-weight:bold;" >{!$Label.c.Step} 2: {!$Label.c.Purchase_Order_Detail}</div>
+                <!--  <div style="display:inline; margin-top:5px; padding-right:5px; font-weight:bold;" >{!$Label.c.Order_Type}: </div>-->
+                
+                
+            </h3>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3"  style="margin-top:12px;" >
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:input  
+                                         placeholder="{!$Label.c.Enter_PO_No}"  
+                                         aura:id="poNo" 
+                                         maxlength="30"
+                                         label="{!$Label.c.Purchase_Order_No}" 
+                                         value="{!v.newSalesOrder.Purchase_Order_no__c}" 
+                                         required="true" 
+                                         onblur="{!c.validatePO}"
+                                         oncommit="{!c.CheckPOAvailability}"
+                                         disabled="{!v.disableThis}"
+                                         />   
+                    </div>
+                </div>
+            </div>  
+            
+            
+            <!--Start SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022-->
+            <aura:if isTrue="{!v.loginCountryObjs.Show_PO_Date__c}">
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3"  style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control" style = "">
+                        <lightning:input aura:id="startDate" type="date" onchange ="{!c.restrictPODate}" name="startDate" label="{!$Label.c.Purchase_Order_Date}" value="{!v.newSalesOrder.Purchase_Order_Date__c}" messageWhenValueMissing="Please select purchase Order date" required="{!v.loginCountryObjs.PO_Date__c}" />
+                    </div>
+                </div>
+            </div> 
+            </aura:if>
+            <!--End SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022-->
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3"  style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:select  
+                                          label="{!$Label.c.Currency}" 
+                                          aura:id="Currency" 
+                                          value="{!v.currencyList1}"
+                                           disabled="true"><!--CR#174 -Chile Margin Block-SKI- kalpesh chande -  06/01/2023 -->
+                            <option value="USD">USD</option>
+                            <option value="CLP">CLP</option>
+                        </lightning:select> 
+                    </div>
+                </div>
+            </div> 
+             <!-- CR#183 -Chile Export Sales - kalpesh chande -  28/03/2023 - Start Here-->
+             <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:select 
+                                          label="{!$Label.c.Order_Type}"
+                                          aura:id="orderType" 
+                                          disabled="true"  
+                                          value = "{!v.newSalesOrder.Order_Type_lk__c}">
+                            <aura:iteration items="{!v.orderTypeList}" var="level1"><!-- // SKI(Kalpesh Chande) : #CR169 : Chile Margin Block : 05-12-2022.......-->
+                                <option selected ="{!level1.Id == v.newSalesOrder.Order_Type_lk__c}" value="{!level1.Id}" text="{!level1.id}" label="{!level1.Description__c}"/> <!-- // SKI(Kalpesh Chande) : #CR169 : Chile Margin Block : 05-12-2022.......-->
+                            </aura:iteration>
+                        </lightning:select >
+                    </div>
+                </div>
+            </div>
+             <!-- CR#183 -Chile Export Sales - kalpesh chande -  28/03/2023 - End Here-->
+            
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                <div  style="display:inline; margin-top:5px; padding-right:5px; font-weight:bold;" >{!$Label.c.Step} 3: {!$Label.c.Currency_and_Order}</div>
+                <!--  <div style="display:inline; margin-top:5px; padding-right:5px; font-weight:bold;" >{!$Label.c.Order_Type}: </div>-->
+                
+                    <div style="display:inline; margin-top:5px; padding-right:9px; font-weight:bold;" >&nbsp; &nbsp;&nbsp;  {!$Label.c.Add_Poduct} </div>
+                    <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small "  onclick="{!c.addTableRow}" disabled="{!v.disableThis}">
+                        <lightning:buttonIcon iconName="utility:add" variant="bare" size="large" alternativeText="Add" iconClass="dark" disabled="{!v.disableThis}"/>
+                        <span class="slds-assistive-text">Show More</span>
+                    </button>
+                <div style="display:inline; margin-top:5px; padding-right:9px; font-weight:bold; margin-left: auto;" ></div>
+                    <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small " style="float:right;" onclick="{!c.deleteAllItems}" disabled="{!v.disableThis}">
+                        <lightning:Icon iconName="standard:cancel_checkout" variant="bare" size="small" alternativeText="Empty Cart" disabled="{!v.disableThis}"/>
+                        
+                    </button>
+                
+            </h3>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:select  
+                                          label="Product Currency" 
+                                          aura:id="CurrencyForItems" 
+                                          value="{!v.solItemCurrency}"
+                                          onchange= "{!c.changeCurrency}"
+                                          disabled="true"><!--CR#174 -Chile Margin Block-SKI- kalpesh chande -  06/01/2023 -->
+                            <option value="USD">USD</option>
+                            <option value="CLP">CLP</option>
+                        </lightning:select> 
+                    </div>
+                </div>
+            </div> 
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1" style="margin-top:12px;">
+                <div class="slds-form-element__control">
+                    <div class="slds-form-element__control">
+                        <div class="slds-scrollable_x slds-grid" style="margin-bottom:0; border-bottom:0px solid #cce4f8;">
+                            <table class="slds-table slds-table--bordered  ">
+                                <thead>
+                                    <tr class="slds-text-heading--label">
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate" style="width:300px;">SKU</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate"  style="width:60px;">UOM</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate" style="width:100px;">{!$Label.c.Quantity}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Maximum_Price}</div>
+                                        </th>
+                                        <!--<th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">{!$Label.c.Type_of_Business}</div>
+                            </th>-->
+                                        
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Final_Price}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate" style="width:130px;">{!$Label.c.Net_Sales}</div>
+                                        </th>
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate" style="width:130px;">{!$Label.c.Shipping_Address}</div>
+                                        </th>
+                                        
+                                        <!--Start SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022-->
+                                        <aura:if isTrue="{!v.loginCountryObjs.Show_Delivery_Date__c}">
+                                            <th class="slds-is-sortable" scope="col">
+                                                <div class="slds-truncate" style="width:130px;">{!$Label.c.Delivery_Date}</div>
+                                            </th> 
+                                        </aura:if>
+                                        <!--End SKI(Vishal P) : #CR152 : PO And Delivery Date : 18-07-2022-->
+                                        
+                                        
+                                        
+                                        <th class="slds-is-sortable" scope="col">
+                                            <div class="slds-truncate">{!$Label.c.Action}</div>
+                                        </th> 
+                                        <th class="slds-cell-shrink"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.orderItemList}" var="orderItem" indexVar="i"> 
+                                        <tr class="slds-hint-parent">
+                                            
+                                            <c:SOChileChildEdit aura:id= "ChildComponent" orderItem = "{!orderItem}" 
+                                                               rowIndex = "{!i}" 
+                                                               priceDetailList = "{!v.priceDetailList}"
+                                                               priceDetailTableColumns = "{!v.priceDetailTableColumns}"
+                                                               priceDetailTableConfig = "{!v.priceDetailTableConfig}"
+                                                               ShippingLocMap = "{!v.ShippingLocMap}" 
+                                                               validCodeCounter = "{!v.validCodeCounter}"
+                                                               currencyList = "{!v.solItemCurrency}"
+                                                               newSalesOrder = "{!v.newSalesOrder}"
+                                                               exchangeRate = "{!v.exchangeRate}"></c:SOChileChildEdit>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                {!$Label.c.Step} 4: {!$Label.c.Order_Summary}
+            </h3>
+            <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">{!$Label.c.Currency}</div>
+                        </th>
+                        
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">{!$Label.c.Total_Sales}</div>
+                        </th>
+                        
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">{!$Label.c.Gross_Margin} %</div>
+                        </th>
+                        
+                        
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">{!$Label.c.Total_Discount} %</div>
+                        </th>
+                        <th class="slds-cell-shrink"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="slds-hint-parent">
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">USD</div>
+                        </th>
+                        <th class="slds-truncate" scope="row" data-label="{!$Label.c.Total_Sales}">
+                            <lightning:formattedNumber value="{!v.totalSales}" format="#,###,##0.00"/> 
+                        </th>
+                        <!-- <ui:inputNumber  value="{!v.totalSales}" disabled="true" format="#,###,###.00"/>-->
+                        
+                        <td class="slds-truncate" data-label="{!$Label.c.Gross_Margin}">
+                            <lightning:formattedNumber value="{!v.grossMargin}" format="#,###,##0.00"/> 
+                        </td>
+                        
+                        
+                        <td class="slds-truncate" data-label="{!$Label.c.Total_Discount}">
+                            <lightning:formattedNumber value="{!v.totalDisc}" format="#,###,##0.00"/> 
+                        </td>      
+                    </tr>
+                    <aura:if isTrue = "{!v.newSalesOrder.CurrencyIsoCode=='CLP'}">
+                        <tr class="slds-hint-parent">
+                            <th class="slds-is-sortable" scope="col">
+                                <div class="slds-truncate">CLP</div>
+                            </th>
+                            <th class="slds-truncate" scope="row" data-label="{!$Label.c.Total_Sales}">
+                                <lightning:formattedNumber value="{!v.totalSales*v.exchangeRate}" format="#,###,##0.00"/> 
+                            </th>
+                            
+                        </tr>
+                    </aura:if>
+                </tbody>
+            </table>
+            
+            
+            
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">{!$Label.c.Step} 5: {!$Label.c.Shippment} &amp; {!$Label.c.Payment_Details}</h3>  
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label>{!$Label.c.Billing_Address}</label>
+                        <div class="slds-text-body_regular">
+                            <aura:if isTrue="{!v.orderFields.DistributorData.address != null}"> <lightning:formattedText value="{!v.orderFields.DistributorData.address}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.city != null}"><lightning:formattedText value="{!v.orderFields.DistributorData.city}"/><br/></aura:if>
+                            <aura:if isTrue="{!v.orderFields.DistributorData.state != null}"><lightning:formattedText value="{!v.orderFields.DistributorData.state +'   '+v.orderFields.DistributorData.pincode}"/><br/></aura:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label>{!$Label.c.Inco_Terms}</label>
+                        <lightning:select 
+                                          aura:id="incoTerm" 
+                                          disabled="false"  
+                                          value = "{!v.newSalesOrder.Inco_Term__c}"><!-- CR#183 -Chile Export Sales - kalpesh chande -  21/06/2023 -->
+                            <aura:iteration items="{!v.incoTermList}" var="level">
+                                <option selected ="{!level.Id == v.newSalesOrder.Payment_Term__c}" value="{!level.Id}" text="{!level.id}" label="{!level.IncoTerm_Desc__c}"/><!-- CR#183 -Chile Export Sales - kalpesh chande -  21/06/2023  -->
+                            </aura:iteration>
+                        </lightning:select >
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                       <lightning:select 
+                                          aura:id="paymentTermId" 
+                                          label= "Payment Terms"
+                                          value="{!v.newSalesOrder.Payment_Term__c}" 
+                                          disabled="false"  >
+                            <aura:iteration items="{!v.paymentTermList}" var="level">
+                                <option selected ="{!level.Id == v.accPaymentTerm}" text="{!level.Payment_Term_Code__c +'-'+ level.Payterms_Desc__c}" value="{!level.Id}"></option>
+                                
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#769ed9; color:#fff; font-weight:bold;">
+                {!$Label.c.Step} 6: {!$Label.c.Upload_Attachment}  
+            </h3>
+            <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th width="120" class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">{!$Label.c.PO_Upload}</div>
+                        </th>
+                        <td class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-file-selector slds-file-selector_files">
+                                            <div class="slds-file-selector__dropzone">
+                                                <lightning:input aura:id="fileId"  type="file" name="file" accept="image/png,.png.csv,.pdf,.xlsx"  multiple="false" onchange="{!c.handleFilesChange}" disabled="{!v.disableThis}"/>
+                                                <aura:if isTrue="{!v.noFileError}">
+                                                    <div  class="slds-text-body_small slds-text-color_success">{!v.fileName}</div>
+                                                    <aura:set attribute="else">
+                                                        <div  class="slds-text-body_small slds-text-color_error">{!v.fileName}</div>
+                                                    </aura:set>    
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                        </td>  
+                        <td class="slds-cell-shrink"></td>
+                    </tr>
+                </thead>
+            </table>
+            
+            
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="background:#dcedfb; font-weight:bold;">{!$Label.c.Remarks}</h3>
+            <div class="slds-p-horizontal--small slds-size--1-of-1" style="margin-top:12px;">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:textarea rows="2"
+                                            aura:id="remarks"
+                                            value="{!v.newSalesOrder.Remarks_Long__c}" 
+                                            label="" 
+                                            maxlength="132"
+                                            disabled="{!v.disableThis}"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+                <lightning:button onclick="{!c.openConfirmDialog}" 
+                                  variant="brand" 
+                                  label="{!$Label.c.Confirm}"
+                                  iconName="utility:check" 
+                                  iconPosition="left" 
+                                  disabled="{!v.disableThis}" />
+            </div>
+            <br/>
+        </div>
+    </div>
+     <!--CR#174 -Chile Margin Block- SKI- kalpesh chande -  06/01/2023 - Start Here-->
+    
+    <aura:if isTrue="{!v.isModalOpen}">
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog"
+                 tabindex="-1"
+                 aria-labelledby="modal-heading-01"
+                 aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+            <div class="slds-modal__container ">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{!c.handlecancel}"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" 
+                        class="slds-text-heading_medium slds-hyphenate"><b style="font-size:30px">{!$Label.c.Approval_Process}</b></h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium slds-scrollable_y" style="height:12rem" id="modal-content-id-1">
+                    <aura:if isTrue="{!v.isSalesrep}">
+                        <p>
+                            <Div class="slds-text-heading_small"><b>{!$Label.c.Order_will_go_to_below_approval_authority}</b></Div><br/>
+                            <ol class="slds-list_ordered">
+                                <aura:iteration items="{!v.ApprovalFlags}" var="flagKey" indexVar="key">
+                                    
+                                    <li style="font-size:15px"><b>{!flagKey.key} – </b></li>
+                                    <ul style="margin-left:50px">
+                                        <li  style="font-size:14px"><b>{!flagKey.value}</b></li>
+                                    </ul>
+                                    
+                                    <br/>
+                                </aura:iteration>
+                            </ol>                            
+                            <Div  class="slds-align_absolute-center" style="font-size:20px"><b>{!$Label.c.Do_you_want_to_place_order}</b></Div>
+                        </p>
+                        <!--Modal/Popup Box Footer Starts here-->
+                        <footer class="slds-modal__footer ">
+                            <div class="slds-align_absolute-center">
+                                <lightning:button variant="brand"
+                                                  label="{!$Label.c.Yes}"
+                                                  title="{!$Label.c.Yes}"
+                                                  onclick="{!c.handleYes}"/>
+                                <lightning:button 
+                                                  variant="destructive"
+                                                  label="{!$Label.c.No}"
+                                                  title="{!$Label.c.No}"
+                                                  onclick="{! c.handlecancel}"/>
+                            </div>
+                        </footer>
+                        <aura:set attribute="else">
+                            <p>
+                                <Div class="slds-text-heading_small"><b>{!$Label.c.Order_will_go_to_below_approval_authority}</b></Div><br/>
+                                
+                                <aura:iteration items="{!v.ApprovalFlags}" var="flagKey" indexVar="key">
+                                    <ol>
+                                        <li style="font-size:15px"><b>{!flagKey.key} – </b></li>
+                                        <ul style="margin-left:50px">
+                                            <li  style="font-size:14px"><b>{!flagKey.value}</b></li>
+                                        </ul>
+                                    </ol>
+                                    <br/>
+                                </aura:iteration></p>
+                            <footer class="slds-modal__footer ">
+                                <div class="slds-align_absolute-center">
+                                    <lightning:button 
+                                                      variant="destructive"
+                                                      label="{!$Label.c.Cancel}"
+                                                      title="{!$Label.c.Cancel}"
+                                                      onclick="{! c.handlecancel}"/>
+                                </div>
+                            </footer>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+   <!-- CR#174 -Chile Margin Block- SKI- kalpesh chande -  06/01/2023 - End Here-->
+    
+    
+    
+</aura:component>

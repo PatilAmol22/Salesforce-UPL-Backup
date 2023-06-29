@@ -1,0 +1,73 @@
+<aura:component >
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:attribute name="TravelExpenseMonthList" type="Monthly_Travel_Expense__c[]" />
+    <aura:attribute name="newDate" type="Date" />
+    <aura:attribute name="Get_Result" type="Integer"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:setDateEvt" action="{!c.getValueFromApplication}"/>    
+    
+    <aura:registerEvent name="RemoveItemEvent" type="c:RemoveItemEvent"/> 
+    <aura:registerEvent name="stringDtae" type="c:setDateEvt"/> 
+    <tr class="slds-hint-parent">  
+        
+        <!--<td class="slds-truncate" data-label="Sr.NO">
+                                <ui:outputText value="{!TravelExpenseMonthList.Activity_Type__c}"/>
+                            </td>--> 
+        <!--<td class="slds-truncate" data-label="ACTIVITY NO">-->
+        <!--<a href="{! '#/sObject/' + account.Id + '/view'}">{!account.Name}</a>-->
+        <!--<a href="{! '#/sObject/' + step.Id + '/view'}"><ui:outputText value="{!TravelExpenseMonthList.Name}"/></a>-->
+        <!--</td>-->     
+        <td class="slds-truncate" data-label="MONTH">
+            <ui:outputText value="{!TravelExpenseMonthList.Month__c}"/>
+        </td>  
+        <!--<td class="slds-truncate" data-label="START DATE" >
+                                <ui:outputDate value="{!TravelExpenseMonthList.Start_Date__c}" format="dd MMM yyyy"/>
+                            </td>  
+                            <td class="slds-truncate" data-label="END DATE">
+                                <ui:outputDate value="{!TravelExpenseMonthList.End_Date__c}" format="dd MMM yyyy"/>
+                            </td>  
+                            <td class="slds-truncate" data-label="TIME">
+                                <ui:outputText value="{!TravelExpenseMonthList.Time__c}"/>
+                            </td>-->  
+        <td class="slds-truncate" data-label="COMMENT">
+            <ui:outputCurrency value="{!TravelExpenseMonthList.Comment__c}"/>
+        </td>  
+        
+        
+        <td class="slds-truncate" data-label="RM">
+            <div style="float:left; display:inline; width:40px;">
+                <ui:outputRichText aura:id="outputRT" value="{!TravelExpenseMonthList.RM_Approval_Status__c}"/>
+            </div>
+        </td>
+        <td class="slds-truncate" data-label="NSM">
+            <div style="float:left; display:inline; width:40px;">
+                <ui:outputRichText aura:id="outputRT" value="{!TravelExpenseMonthList.NSM_Approved_Status__c}"/>
+            </div>              
+        </td>
+        <td class="slds-truncate" data-label="CH">
+            <div style="float:left; display:inline; width:40px;">
+                <ui:outputRichText aura:id="outputRT" value="{!TravelExpenseMonthList.CH_Approved_Status__c}"/>
+            </div>              
+        </td>
+
+        <td class="slds-truncate" data-label="TOTAL">
+            <ui:outputCurrency value="{!TravelExpenseMonthList.TotalAmount__c}"/>
+        </td>  
+        <td class="slds-truncate" data-label="">
+            <lightning:buttonIcon value="{!TravelExpenseMonthList.Id}" iconName="utility:edit" 
+                                  variant="bare" size="large" alternativeText="Edit" 
+                                  disabled="{! and(TravelExpenseMonthList.MM_Approval_Status__c == 'Approved', TravelExpenseMonthList.RM_Approval_Status__c == 'Approved') }" onclick="{!c.editRecord}" name="{!TravelExpenseMonthList.Name}"/>
+        </td>
+        <td class="slds-truncate" data-label="">
+            <lightning:buttonIcon value="{!TravelExpenseMonthList.Id}" iconName="utility:delete" 
+                                  size="large" variant="bare" alternativeText="Delete" 
+                                  disabled="{! and(TravelExpenseMonthList.MM_Approval_Status__c == 'Approved', TravelExpenseMonthItem.RM_Approval_Status__c == 'Approved') }" onclick="{!c.openDeleteModal}" name="{!TravelExpenseMonthList.Name}"/>
+        </td>
+        <td class="slds-truncate" data-label="ACTION">
+            <lightning:buttonIcon value="{!TravelExpenseMonthList.Id}" iconName="utility:preview" 
+                                  variant="bare" size="large" alternativeText="Preview" 
+                                  disabled="false" onclick="{!c.viewRecord}"/>
+        </td>                            
+    </tr>
+</aura:component>

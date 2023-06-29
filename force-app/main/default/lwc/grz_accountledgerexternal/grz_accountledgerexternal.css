@@ -1,0 +1,121 @@
+.error{
+    text-align: center;
+    color: red;
+    font-size: 15px;
+}
+.no-data-error{
+    text-align: center;
+    color: red;
+    font-size: 15px;
+    padding: 3% 0;
+}
+.modal-height{
+    min-height: 200px;
+}
+.table-data-scroll {
+    width: 100%;
+    height: 495px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+.filter-div {
+    display: flex;
+    justify-content: center;
+    background: #ebebeb;
+}
+.year-div {
+    width: 17%;
+}
+.month-div {
+    width: 20%;
+}
+.ledger-statement-btn {
+    background: #fff;
+    color: #ff7701;
+    border-color: #f7f7f7;
+    padding: 6px 15px;
+    font-size: 14px;
+    margin-top: 23px;
+}
+.btn-itr{
+    margin-top:23px;
+    border-radius: 5px;
+}
+.table-head {
+    font-size: 12px;
+    color: black;
+}
+.fixed-header-row1{
+    position: sticky;
+    top: 0;
+  }
+  .fixed-header-row2{
+    position: sticky;
+    top: 40px;
+  }
+  .fixed-header-row3{
+    position: sticky;
+    bottom: 40px;
+  }
+  .fixed-header-row4{
+    position: sticky;
+    bottom: 0;
+  }
+  .cell-height-bal{
+    height: 40px;
+    font-size: 13px;
+  }
+  .cell-height{
+    height: 33px;
+  }
+  .table-body-data {
+    color: #000000;
+  }
+  .total-ledger-css{
+    font-size: 14px;
+    background-color: #f7f7f7;
+    color: #ff7701;
+  }
+    
+  .gray-back{
+    background: hsl(210,1.6%,75.7%);
+    color: #fefefe;
+    border-color: #f7f7f7;
+    padding: 6px 15px;
+    font-size: 14px;
+    margin-top: 23px;
+    border-radius: 10px;
+}
+
+      /*added by vaishnavi w.r.t Mobile changes*/
+.slds-card-half{
+  background-color:rgb(243, 135, 63);
+  color: rgb(0, 0, 0);
+  margin-bottom: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding-bottom: 2px;
+}
+.slds-card {
+  background-color: rgb(255, 252, 252);
+  color: rgb(0, 0, 0);
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  border-radius: 10px;
+}
+@media screen and (max-width: 1023px) {
+  .slds-card {
+      background-color: rgb(255, 252, 252);
+      color: rgb(0, 0, 0);    
+      margin-left: 2px;
+      margin-right: 2px;
+      margin-bottom: 2px;
+      margin-top: 2px;  
+      border-radius: 10px;
+  } 
+}
+.u-break-word {
+  overflow-wrap: break-word;
+}

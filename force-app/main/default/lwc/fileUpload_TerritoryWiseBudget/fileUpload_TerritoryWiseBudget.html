@@ -1,0 +1,60 @@
+<template>
+
+    <div class="slds-box slds-theme_default">
+
+
+          <div>
+            <lightning-tabset>
+            <lightning-tab label='Territory Wise Budget'>
+
+                     <div class="slds-grid slds-gutters slds-align_absolute-center" style=" margin-bottom:10px;">
+                       
+
+                      <div style="margin:0 auto; text-align:center;">
+                        
+                      </br><h1 style="top:0 auto;"><lightning-icon icon-name="standard:picklist_choice"></lightning-icon> &nbsp; Upload Territory Wise Budget CSV File</h1></br>
+                    
+                      </div>  
+                  
+                </div>
+                <div class="slds-grid slds-gutters slds-align_absolute-center" style="border-bottom:1px solid #ccc; margin-bottom:1px;">
+                       
+                        <div style="margin:0 auto; text-align:center;">
+                            <lightning-file-upload accept={acceptedFormats} 
+                                             label= "Attach File"
+                                             multiple="multiple" 
+                                             onuploadfinished={handleUploadFinished}
+                                             record-id={recordId}>
+                      </lightning-file-upload>   
+                        </br>
+                        </div>
+                        </div>
+
+                   
+                      <lightning-accordion allow-multiple-sections-open
+                         onsectiontoggle={handleSectionToggle}
+                         active-section-name={activeSections}>
+        <lightning-accordion-section name="Instructions" label="Instructions for uploading CSV file">
+            <ul class="slds-list_dotted">
+            <li>File to be uploaded must be in CSV format.</li>
+            <li>Please follow the same column sequence and column names as given in template.</li>
+            <li>All column names mentioned in template file are mandatory.</li>
+            <li>Once the file gets uploaded, you will receive an email notification.</li>
+            </ul>
+        </lightning-accordion-section>
+       
+        <lightning-accordion-section name="C" label="Sample Template for Territory Wise Budget CSV file">
+            <ul class="slds-list_dotted">
+             <li><a href={Link}>Download CSV Template</a></li>
+            </ul>
+        </lightning-accordion-section>
+    </lightning-accordion>
+</lightning-tab>
+</lightning-tabset>
+
+    
+    </div>
+
+    </div>
+    
+</template>

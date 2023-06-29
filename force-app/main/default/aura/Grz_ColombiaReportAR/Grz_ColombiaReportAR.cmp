@@ -1,0 +1,34 @@
+<!--********************************************************************************************
+* Name			    : Grz_ColombiaReportAR.cmp
+* Description	    : Aura component to display AR data as Pie Graph
+* Apex Controller	: Grz_ColombiaControllerAR 
+* Created By        : RITM0537888 Nikhil Verma (Grazitti) 12-04-2023
+* **********************************************************************************************-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global" controller="Grz_ColombiaControllerAR">
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="nodatafound" type="Boolean" default="false" />
+    <aura:attribute name="Message" type="String" />
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}"
+        afterScriptsLoaded="{!c.scriptsLoaded}" />
+    <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small">
+        <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small">
+            <div class="slds-col slds-size_12-of-12 filter-div">
+                <div class="textCSS componentNotoSansLight">Valor de la factura por plazo de pago</div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.loaded}">
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Loading" variant="brand" />
+            </aura:set>
+        </aura:if>
+        <div>
+            <div class="qwe">
+                <canvas class="canCSS slds-align_absolute-center" id="ARpie-charts" width="300" height="300" />
+            </div>
+            <aura:if isTrue="{!v.nodatafound }">
+                <p class="Errors componentNotoSansBold">{!v.Message}</p>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

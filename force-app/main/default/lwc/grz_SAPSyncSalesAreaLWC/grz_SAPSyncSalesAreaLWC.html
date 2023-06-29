@@ -1,0 +1,30 @@
+<template>
+<lightning-quick-action-panel>
+<div if:true={isLoading} class="slds-is-relative">
+    <lightning-spinner alternative-text="Loading..." variant="brand" style="top:60px;"></lightning-spinner>
+</div>
+<template if:true={isTMOrAdmin}>
+    <div class="modal-height">
+        <template if:true={displayAccountValues}>
+        <p><b>Kindly enter below details on the related distributor first before sending to SAP</b></p>
+        <ul class="slds-list_dotted">
+        <template for:each={emptyAccountValues} for:item="item">
+        <li key={item}>{item}</li>
+        </template>
+        </ul>
+        </template>
+        <br/><br/>
+        <template if:true={displaySalesAreaValues}>
+        <p><b>Kindly enter below details on the sales area first before sending to SAP</b></p>
+        
+        <ul class="slds-list_dotted">
+            <template for:each={emptySalesAreaValues} for:item="item">
+            <li key={item}>{item}</li>
+            </template>
+            </ul>
+            </template>
+        </div>
+</template>
+
+</lightning-quick-action-panel>
+</template>

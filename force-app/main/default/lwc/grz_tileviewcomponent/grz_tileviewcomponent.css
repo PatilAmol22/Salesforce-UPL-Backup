@@ -1,0 +1,838 @@
+/**************** India Community CSS ****************/
+.tilelayoutsetup-en {
+  margin-left: 11%;
+  margin-right: 5%;
+}
+
+.sapTabcolor-en {
+  background: transparent linear-gradient(122deg, #f47920 0%, #ffdd00 100%) 0%
+    0% no-repeat padding-box;
+  box-shadow: 2px 3px 6px #00000066;
+  opacity: 1;
+  padding: 25px 20px 25px 16px;
+}
+.sapTabcolorInternal{
+  background: transparent linear-gradient(122deg, #f47920 0%, #ffdd00 100%) 0%
+  0% no-repeat padding-box;
+  box-shadow: 2px 3px 6px #00000066;
+  opacity: 1;
+  padding: 25px 20px 25px 16px;
+}
+
+
+.orderTabcolor-en {
+  background: transparent linear-gradient(135deg, #8266ac 0%, #ee3e80 100%) 0%
+    0% no-repeat padding-box;
+  box-shadow: 2px 3px 6px #00000066;
+  opacity: 1;
+  padding: 25px 20px 25px 16px;
+}
+.ticketTabcolor-en {
+  background: transparent linear-gradient(147deg, #028f27 0%, #81ef86 100%) 0%
+    0% no-repeat padding-box;
+  box-shadow: 2px 3px 6px #00000066;
+  opacity: 1;
+  padding: 25px 20px 25px 16px;
+}
+.borderclr-en {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  border: 1px solid #ffffff;
+  text-align: center;
+  padding-top: 5%;
+}
+.profileIconDiv-en{
+  height: 80px;
+  width: 80px;
+  text-align: center;
+}
+.mobilepaddinglabel-en {
+  padding-left: 3%;
+  padding-top: 5%;
+}
+.mobilepaddinglabel-internal-en {
+  padding-left: 2%;
+  padding-top: 8%;
+}
+.mobilepaddinglabel-ot-en {
+  padding-left: 2%;
+  padding-top: 8%;
+}
+.title-en {
+  font-size: 17px;
+  color: #ffffff;
+}
+.countcls-en {
+  font-size: 25px;
+  color: #ffffff;
+}
+.countcls-sap-en {
+  font-size: 20px;
+  color: #ffffff;
+}
+.mobilepaddingcount-en {
+  padding-top: 4%;
+}
+.mobilepaddingcount-sap-en {
+  padding-top: 3%;
+  text-align : left !important;
+  padding-left: 3%;
+}
+.mobilepaddingcount-ot-en {
+  padding-top: 6%;
+}
+.imgheight-en {
+  padding-top: 6%;
+}
+
+.mobilepaddinglabel_Cl{
+  padding-left: 3%;
+}
+
+.mobilepaddingcount_sap_Cl{
+  padding-left: 3%;
+}
+
+
+@media only screen and (min-width:1025px) and (max-device-width: 1089px) {
+.sapTabcolor-en {
+  padding: 21px 20px 21px 16px;
+}
+}
+
+@media only screen and (min-width: 769px) and (max-device-width: 897px) {
+  .sapTabcolor-en {
+    padding: 15px 20px 13px 16px !important;
+  }
+}
+@media only screen and (min-width: 769px) and (max-device-width: 1024px) {
+  .sapTabcolor-en {
+    padding: 23px 20px 20px 16px;
+  }
+
+  .mobilepaddinglabel-en {
+    text-align: left;
+    padding-top: 2%;
+  }
+  .ticketleftpadding-en {
+    padding: 0px;
+  }
+  .countcls-sap-en {
+    font-size: 17px;
+  }
+  .mobilepaddingcount-sap-en {
+    padding-top: 5%;
+    padding-left: 3%;
+  }
+  .mobilepaddinglabel-internal-en {
+    padding-top: 6%;
+  }
+  .tilelayoutsetup-en {
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  .imgheight-en {
+    padding: 20%;
+  }
+  .mobilepaddingcls-en {
+    padding: 18%;
+  }
+  .mobilepaddingcount-en {
+    padding-top: 2%;
+  }
+  .mobilepaddinglabel-ot-en {
+    padding-top: 6%;
+  }
+  .countcls-en {
+    font-size: 18px;
+  }
+  .title-en {
+    font-size: 15px;
+  }
+  .borderclr-en {
+    width: 52px;
+    height: 52px;
+    padding-top: 0;
+  }
+  .profileIconDiv-en {
+    width: 52px;
+    height: 52px;
+  }
+  
+}
+
+
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+  .sapTabcolorInternal{
+    padding: 10px 10px 20px;
+  }
+  .mobilepaddinglabel-en {
+    padding-top: 2%;
+  }
+  .mobilepaddinglabel-internal-en {
+    padding-top: 11%;
+  }
+
+  .sapTabcolor-en {
+    padding: 11px 20px 9px 16px !important;
+    height: 85px !important;
+  }
+  .countcls-sap-en {
+    font-size: 14px;
+  }
+  
+  .sapTabcolor-en,
+  .orderTabcolor-en,
+  .ticketTabcolor-en {
+    padding: 20px 10px;
+    padding-top: 10px;
+  }
+  .sapTabcolor-en{
+    padding-bottom:15px;
+  }
+  .title-en {
+    font-size: 14px;
+  }
+  .tilelayoutsetup-en {
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
+  .borderclr-en {
+    width: 44px;
+    height: 44px;
+    padding-top: 0;
+    margin-top: 6%;
+  }
+
+  .profileIconDiv-Cl{
+    width: 53px !important;
+    height: 53px !important;
+    margin-top: 0% !important;
+  }
+
+  .profileIconDiv-en {
+    width: 44px;
+    height: 44px;
+    margin-top: 6%;
+  }
+  .ticketleftpadding-en {
+    padding: 0px;
+  }
+  .mobilepaddingcls-en {
+    padding: 20%;
+  }
+  .countcls-en {
+    font-size: 15px;
+  }
+  .mobilepaddingcount-en {
+    text-align: left;
+    padding-top: 10%;
+  }
+  .mobilepaddingcount-sap-en{
+
+    padding-top: 4% !important;
+  }
+  .mobilepaddinglabel-ot-en,
+  .mobilepaddingcount-ot-en {
+    padding-left: 2%;
+    padding-top: 11%;
+  }
+  .imgheight-en {
+    padding: 20%;
+    padding-top: 24%;
+  }
+}
+
+@media only screen and (max-width: 678px) and (min-width: 511px) {
+  .ChileMob{
+        padding-top: 6% !important;
+  }
+  }
+
+  @media only screen and (max-width: 510px) and (min-width: 481px) {
+  .chile-en{
+       font-size: 13px !important;
+  }
+  }
+
+ 
+  @media only screen and (max-width: 480px) {
+  .ChileMob{
+       display:none !important;
+  }
+  .ch_ticketTabcolor{
+       padding-bottom: 5% !important;
+       padding-top: 5%  !important;
+  }
+  .ch_orderTabcolor{
+    display:none !important;
+  }
+  }
+
+  
+
+@media only screen and (max-width: 767px) {
+  .countcls-sap-en{
+    font-size: 15px;;
+  }
+ .ChileMob{
+   padding-bottom: 5% !important;
+ }
+
+   .profileIconDiv-Cl{
+    width: 30px !important;
+    height: 30px !important;
+    margin-top: 0% !important;
+  }
+  .mobilepaddinglabel-en {
+    padding-top: 1.5%;
+  }
+  .secMainDiv{
+   display:flex;
+   flex-wrap:wrap;
+  }
+  .textaligncentercls{
+    text-align: center;
+  }
+  .mobilepaddingcount-sap-en{
+    padding-top: 1.5%;
+  }
+  .mobilepaddinglabel-internal-en{
+    padding-left: 4%;
+    padding-top: 2%;
+  }
+  .mobile-rt-pad-en {
+    margin-bottom: 2%;
+  }
+  .mob-rt-pad-en {
+    padding-right: 0;
+  }
+  .sapTabcolor-en,
+  .orderTabcolor-en,
+  .ticketTabcolor-en {
+    padding: 15px 10px;
+  }
+  .title-en {
+    font-size: 14px;
+  }
+  .tilelayoutsetup-en {
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 22%;
+  }
+
+  .borderclr-en {
+    width: 44px;
+    height: 44px;
+    padding-top: 0;
+    margin-top: 0%;
+  }
+  .profileIconDiv-en {
+    width: 44px;
+    height: 44px;
+    padding-top: 0;
+    margin-top: 0%;
+  }
+  .ticketleftpadding-en {
+    padding: 0px;
+  }
+  .mobilepaddingcls-en {
+    padding: 20%;
+  }
+  .countcls-en {
+    font-size: 15px;
+  }
+  .mobilepaddingcount-en {
+    text-align: left;
+    padding-top: 10%;
+  }
+  .mobilepaddinglabel-ot-en,
+  .mobilepaddingcount-ot-en {
+    padding-top: 3%;
+  }
+  .imgheight-en {
+    padding: 20%;
+    padding-top: 24%;
+  }
+  .mobilepaddingcount-sap-en {
+    text-align:right !important;
+  }
+  .sapTabcolorInternal{
+    padding: 15px 10px;
+  }
+}
+@media only screen and (max-width: 479px) {
+  .mobilepaddingcount-sap-en {
+    text-align:right !important;
+  }
+
+  .chile_countcls{
+    font-size: 14px !important;
+  }
+
+  .chile_tab{
+    font-size: 14px !important;
+  }
+  .textaligncentercls{
+    text-align: center;
+  }
+  .mobilepaddinglabel-en {
+    padding-top: 2%;
+  }
+  .tilelayoutsetup-en {
+    margin-top: 30%;
+  }
+  .countcls-sap-en {
+    font-size: 16px;
+  }
+  .mobilepaddingcount-sap-en {
+    padding-top: 1%;
+  }
+  .mobile-rt-pad-en {
+    margin-bottom: 3%;
+  }
+  .mob-rt-pad-en {
+    padding-right: 0;
+  }
+  .mobilepaddinglabel-internal-en {
+    padding-top: 1%;
+  }
+  .sapTabcolor-en,
+  .orderTabcolor-en,
+  .ticketTabcolor-en {
+    padding: 15px 10px;
+  }
+  .borderclr-en {
+    width: 30px;
+    height: 30px;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .profileIconDiv-en {
+    width: 30px;
+    height: 30px;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .mobilepaddinglabel-ot-en,
+  .mobilepaddingcount-ot-en {
+    padding-top: 3%;
+  }
+  .title-en {
+    font-size: 14px;
+  }
+  .ticketleftpadding-en {
+    padding: 0px;
+  }
+  .countcls-en {
+    font-size: 15px;
+  }
+  .mobilepaddingcount-en,
+  .mobilepaddinglabel-en {
+    padding-top: 1%;
+  }
+  .mobilepaddingcount-en{
+    text-align: right;
+  }
+  .imgheight-en {
+    padding: 20%;
+    padding-top: 24%;
+  }
+  .countcls-sap-en{
+    font-size: 15px;;
+  }
+  .sapTabcolorInternal{
+    padding: 15px 10px;
+  }
+}
+@media only screen and (max-width: 340px) {
+  .rt-mob-pad{
+    padding-right:3%;
+  }
+  
+  .sapTabcolor-en,
+  .orderTabcolor-en,
+  .ticketTabcolor-en {
+    padding: 10px 5px;
+  }
+  .tilelayoutsetup-en {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+
+  
+}
+
+/******************************************************************/
+.title {
+  font-size: 19px;
+  color: #ffffff;
+}
+.countcls {
+  font-size: 28px;
+  color: #ffffff;
+}
+.orderTabcolor {
+  background: transparent linear-gradient(122deg, #f47920 0%, #ffdd00 100%) 0%
+    0% no-repeat padding-box;
+  box-shadow: 2px 3px 6px #00000066;
+  opacity: 1;
+  padding-top: 5%;
+  padding-left: 6%;
+  padding-bottom: 5%;
+  padding-right: 1%;
+  
+  /* height: 122px; */
+}
+
+
+.orderTabcolorChile {
+  background: transparent linear-gradient(
+135deg, #8266ac 0%, #ee3e80 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 2px 3px 6px #00000066;
+  opacity: 1;
+  padding-top: 5%;
+  padding-left: 6%;
+  padding-bottom: 5%;
+  padding-right: 1%;
+  /* height: 122px; */
+}
+
+
+.ticketTabcolor {
+  background: transparent linear-gradient(135deg, #8266ac 0%, #ee3e80 100%) 0%
+    0% no-repeat padding-box;
+  box-shadow: 2px 3px 6px #00000066;
+  opacity: 1;
+  padding-top: 5%;
+  padding-left: 6%;
+  padding-bottom: 5%;
+  padding-right: 1%;
+  /* height: 122px; */
+}
+.borderclr {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  border: 1px solid #ffffff;
+}
+.imgheight {
+  padding: 24%;
+  padding-top: 27%;
+}
+.tilelayoutsetup {
+  margin-left: 11%;
+  margin-right: 5%;
+}
+.mobilepaddinglabel {
+  padding-left: 20px;
+}
+.mobilepaddinglabel-pedi{
+   padding-left: 3%;
+}
+.mobilepaddingcount {
+  padding-top: 4%;
+}
+
+@media only screen and (max-width: 767px) {
+  .tilelayoutsetup {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  .mobile-rt-pad {
+    padding-right: 10px;
+  }
+  .orderTabcolor {
+    padding-top: 7%;
+    padding-left: 4%;
+    padding-left: 3%;
+    padding-bottom: 7%;
+    height: 65px;
+  }
+  
+  .orderTabcolorChile {
+    padding-top: 7%;
+    padding-left: 4%;
+    padding-left: 3%;
+    padding-bottom: 7%;
+  }
+  .ticketTabcolor {
+    padding-top: 7%;
+    padding-left: 4%;
+    padding-left: 3%;
+    padding-bottom: 7%;
+    height: 65px;
+  }
+  .borderclr {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ffffff;
+  }
+
+  .imgheight {
+    height: 30px;
+    width: 30px;
+    padding: 22%;
+  }
+  .title {
+    font-size: 15px;
+    color: #ffffff;
+  }
+  .mobilepaddingcount {
+    padding-top: 5px;
+    padding-right: 1px;
+  }
+  .mobilepaddinglabel-br{
+    padding-top: 4px;
+  }
+  .mobilepaddinglabel {
+    padding-top: 2px;
+    padding-left: 4%;
+  }
+
+  .mobilepaddinglabel-pedi {
+    padding-top: 2px;
+    padding-left: 3%;
+  }
+  
+  .ticketleftpadding {
+    padding: 0px;
+  }
+  .countcls {
+    font-size: 16px;
+    color: #fff;
+  }
+  .mobilepaddingcls {
+    padding: 20%;
+  }
+}
+
+/* @media only screen and (max-width: 767px) {
+  .ticketleftpadding {
+    padding: 0px;
+  }
+  .mobilepaddinglabel {
+    padding-top: 2px;
+    text-align: center;
+    width: 48.3333%;
+  }
+} */
+@media only screen and (min-width: 769px) and (max-device-width: 1024px) {
+  .mobilepaddinglabel {
+    text-align: left;
+    padding-top: 3%;
+  }
+  .mobilepaddinglabel-br{
+    padding-top: 4%;
+  }
+  
+  .mobilepaddinglabel-pedi{
+     text-align: left;
+    padding-top: 3%;
+  }
+  .ticketleftpadding {
+    padding: 0px;
+  }
+  .tilelayoutsetup {
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  .mobilepaddingcls {
+    padding: 20%;
+  }
+  .countcls {
+    font-size: 20px;
+    color: #ffffff;
+  }
+  .title {
+    font-size: 17px;
+  }
+
+  .borderclr {
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    border: 1px solid #ffffff;
+  }
+}
+@media only screen and (max-width: 768px) and (min-device-width: 768px) {
+  .mobilepaddinglabel {
+    text-align: left;
+    padding-top: 0%;
+  }
+  .mobilepaddinglabel-br{
+    padding-top: 4%;
+  }
+  .mobilepaddingcount{
+    padding-top: 4%;
+  }
+  .mobilepaddinglabel-pedi{
+     text-align: left;
+    padding-top: 10px;
+  }
+
+  .mobilepaddinglabelccl{
+    padding-top: 10px !important;
+  }
+  .orderTabcolor {
+    padding: 6%;
+    padding-bottom: 7%;
+    height: 120px;
+  }
+
+  .orderTabcolorChile {
+    padding: 6%;
+    padding-bottom: 7%;
+  }
+
+  .ticketTabcolor {
+    padding: 6%;
+    height: 65px;
+    
+  }
+  .title {
+    font-size: 18px;
+  }
+  .tilelayoutsetup {
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+
+  .borderclr {
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    border: 1px solid #ffffff;
+  }
+  .ticketleftpadding {
+    padding: 0px;
+  }
+  .mobilepaddingcls {
+    padding: 20%;
+  }
+  .countcls {
+    font-size: 20px;
+    color: #ffffff;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .tilelayoutsetup{
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+  .countcls-sap-en{
+    font-size: 15px;;
+  }
+  .mobilepaddinglabel{
+    padding-top: 0px;
+    padding-left: 2%;
+  }
+  .mobilepaddinglabel-br{
+    padding-top: 3%;
+  }
+  .mobilepaddinglabel-pedi{
+    padding-top: 0px;
+    padding-left: 3%;
+  }
+  .chile_countcls{
+    font-size: 14px !important;
+  }
+
+  .chile_tab{
+    font-size: 14px !important;
+  }
+  .title{
+    font-size: 12px;
+  }
+  
+  .mobilepaddingcount{
+    padding-top: 4%;
+    text-align: center;
+  }
+  .ch_mobilepaddingcount{
+    padding-top: 0% !important;
+    text-align: right !important;
+  }
+  .countcls{
+    font-size: 12px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .mobile-rt-pad {
+    padding-right: 15px;
+  }
+  .mobilepaddingcount {
+    padding-top: 5%;
+  }
+  .mobilepaddinglabel-br{
+    padding-top: 4% !important;
+  }
+  .mobilepaddinglabel {
+    padding-top: 0;
+  }
+  .mobilepaddinglabel-pedi{
+    padding-top: 0;
+  }
+  .countcls {
+    font-size: 12px;
+  }
+  .title {
+    font-size: 10px;
+  }
+  .chile_countcls{
+    font-size: 14px !important;
+  }
+
+  .chile_tab{
+    font-size: 14px !important;
+  }
+ 
+  .sapTabcolorInternal{
+    padding: 10px 5px;
+  }
+}
+
+ @media only screen and (max-width: 345px) {
+    .mobilepaddingcount {
+      text-align: left;
+    }
+    .countcls {
+      font-size: 11px;
+    }
+    .title {
+      font-size: 11px;
+    }
+  }
+
+@media (width: 1024px) and (orientation : landscape){
+  .sapTabcolor-en{
+    height: 102px !important;
+  }
+}
+
+
+/* Special CSS only for oneplus nord 2 landscape mode by butesh singla */
+@media only screen and (-webkit-min-device-pixel-ratio: 2.625) and (orientation: landscape) { 
+
+  .ch_orderTabcolor{
+    padding-bottom: 38px !important;
+  }
+  .profileIconDiv-Cl{
+    width: 52px !important;
+  }
+  .cl-Imghei{
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .ch_mobilepaddingcount{
+    padding-top: 10px;
+  }
+
+  .ChileMob{
+    padding-bottom: 33px !important;
+  }
+ }

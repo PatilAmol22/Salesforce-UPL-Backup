@@ -1,0 +1,142 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+ <div class="slds-grid slds-wrap slds-gutters" style="background:#000; margin:0; padding:0px;">
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+      <li class="slds-item head" >
+        <a><B>ホーム</B></a>
+      </li>
+      <li class="slds-item">
+        <a href="https://arystalifescience.jp" target="_blank">ホーム</a>
+      </li>
+  </ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>アリスタについて</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/gaiyou/aisatsu.php" target="_blank">代表者メッセージ</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/gaiyou/gaiyou_index.php" target="_blank">会社概要</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/gaiyou/enkaku.php" target="_blank">沿革</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/gaiyou/soshikizu.php" target="_blank">組織図</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/news/index.php" target="_blank">お知らせ</a>
+  </li>    
+	      
+</ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>製品情報</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/catalog/catalog_index.php" target="_blank">製品一覧</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/gallery/gallery_index.php" target="_blank">チラシギャラリー</a>
+  </li> 
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/faq/faq_index.php" target="_blank">よくある質問（Q&amp;A)</a>
+  </li>
+   <li class="slds-item">
+    <a href="https://arystalifescience.jp/product/product_index.php" target="_blank">農薬影響表</a>
+  </li> 
+   <li class="slds-item">
+    <a href="https://arystalifescience.jp/msds/msds_index.php" target="_blank">SDS</a>
+  </li> 
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/littlefarmer/farmer_index.php" target="_blank">天敵使ってますシール</a>
+  </li>     
+</ul>
+</div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>技術情報</b></a>
+  </li>    
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/crop/index.php" target="_blank">作物・病害虫・防除</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/ipm/ipmtsuushin.php" target="_blank">アリスタ通信について</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/ipm/ipm_bk.php" target="_blank">アリスタ通信バックナンバー</a>
+  </li>    
+</ul>
+</div>
+     
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>お役立ちコンテンツ</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/guide/bs.php" target="_blank">バイオスティミュラントについて</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/guide/tenteki.php" target="_blank">生物農薬について</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/guide/maruhana.php" target="_blank">マルハナバチについて</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/guide/guide_index.php" target="_blank">農薬ガイドのバックナンバー</a>
+  </li>    
+</ul>
+</div>
+     
+<div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>お問い合わせ</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/refer/refer_index.php" target="_blank">お問い合わせ</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://arystalifescience.jp/site/site_index.php" target="_blank">サイトポリシー</a>
+  </li>      
+  </ul>
+</div>      
+    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#ff7701; padding:20px 0 10px 20px; margin:0;">    
+<!--<ul class="slds-list_horizontal" style="float:left;">
+<li>著作権 @ UPL 2021</li>
+    <li><a href="https://jp.uplonline.com/privacy-policy" target="_blank">個人情報保護方針</a></li>
+</ul>
+    
+<ul class="slds-list_horizontal" style="float:right;">
+    <li style="margin-top:-5px;"><a href="https://www.youtube.com/channel/UCQwGp1x6fbIwNd06LrlI61g" target="_blank"><img src="{!$Resource.youtubeicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.facebook.com/UPLGlobal/?ref=bookmarks" target="_blank"><img src="{!$Resource.fbicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://twitter.com/uplltd" target="_blank"><img src="{!$Resource.twittericonnew}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.linkedin.com/company/upl-ltd/" target="_blank"><img src="{!$Resource.inicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.instagram.com/upl_global/" target="_blank"><img src="{!$Resource.instaicon}"/></a></li>
+</ul>     -->
+</div> 
+</div>
+
+<!--
+<div class="slds-grid slds-wrap slds-gutters">    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#FF8833; text-align:center; padding:10px 0; color:#fff;">    
+    Copyright@UPL2019 &nbsp;&nbsp;&nbsp;<a href="">Term of Service</a>&nbsp;&nbsp;&nbsp; <a href="">Contact</a>&nbsp;&nbsp;&nbsp; <a href="">disclaimer</a>
+</div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+      <span>
+      <img src="{!$Resource.social}"/>
+      </span>
+    </div>    
+</div>-->
+</aura:component>

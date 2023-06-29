@@ -1,0 +1,729 @@
+<template>
+        <template if:true={showSpinneer}>
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+             </template>
+    <div class="main" style="margin-top:20px;">
+        <h1 class="titleregular" style="font-size:36px; font-weight:normal;">{labels.Invoice_Summary}</h1>
+            <div style="margin:10px 0 0 0; padding:10px; background:#eaeaea;">
+                <h1 style="color:#000; font-weight:normal; font-size:18px; padding:3px 3px 3px 3px;" class="slds-m-bottom_medium">{labels.Search_Invoice_Bill}</h1>
+                <div class="slds-grid slds-wrap slds-gutters" style="margin-left:-13px;">            
+                
+                        <template if:true={isParent}>
+                                <div class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                                <lightning-combobox
+                                name="Branch"
+                                label={labels.Select_Branch}
+                                value={child}
+                                options={returnChilds}
+                                onchange={handleChildChange} 
+                                >
+                                </lightning-combobox>            
+                                </div>
+                            </template>
+                <div  class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_2-of-12">    
+                    <lightning-input type="text" value={InvoiceNo} name="input1" label={labels.Invoice_No} pattern="[0-9]+" onchange={handleINChange} class="slds-m-left_medium"></lightning-input>
+                </div>
+                <template if:true={showSON}>
+                <div  class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_2-of-12">    
+                    <lightning-input type="text" name="input1" label={labels.Sales_Order_No} pattern="[0-9]+" onchange={handleSONChange} class="slds-m-left_medium"></lightning-input>
+                </div>
+                </template>
+                <div class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                    <lightning-input type="text" name="input5" value={PONumber} label={labels.PO_No} onchange={handlePONChange} class="slds-m-left_medium"></lightning-input>
+                </div>
+                <template if:true={showSAPON}>
+                <div  class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_2-of-12">    
+                    <lightning-input type="text" name="input1" label={labels.Sales_Order_No_SAP} pattern="[0-9]+" onchange={handleSAPONChange} class="slds-m-left_medium"></lightning-input>
+                </div>
+                </template>   
+                <div class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                    <lightning-input type="date" name="input2" value={InvoiceDateFrom} label={labels.Invoice_Date_From} onchange={handleIDFromChange} class="slds-m-left_medium"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                    <lightning-input type="date" name="input3" value={InvoiceDateTo} label={labels.Invoice_Date_To}  onchange={handleODToChange} class="slds-m-left_medium"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_2-of-12">
+                    <lightning-combobox
+                    name="Product"
+                    label={labels.select_Product_Line_Item}
+                    value={product}
+                    options={option}
+                    onchange={handleProductChange} 
+                    >
+                    </lightning-combobox>
+                </div>
+                
+                
+                <!--
+                <div class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                <lightning-input type="number" name="input5" label="Order Value(From)" onchange={handleOVFChange} class="slds-m-left_medium"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                <lightning-input type="number" name="input6" label="Order Value(To)" onchange={handleOVTChange} class="slds-m-left_medium"></lightning-input>
+                </div>
+                -->
+                
+            </div>
+            <div class="slds-m-top_medium">
+                <lightning-button label={labels.Search} onclick={handleSearch} ></lightning-button>
+                </div>
+                </div>
+            
+            <div if:true={showResult} >
+                <h1 style="color:#000; font-weight:normal; font-size:18px; padding:6px; margin:7px;" class="slds-m-top_medium">{labels.Search_Result}</h1>
+                <template if:false={isMobile}>
+                    <div class="slds-grid slds-wrap slds-gutters" style="margin:5px;border: 1px solid #ccc;">
+                            <div class="slds-scrollable_x" style="border:0px solid #ccc; margin:0; padding:0;" > 
+                                <lightning-datatable
+                                    class="myCss"
+                                    key-field="Id"
+                                    data={data}
+                                    columns={column}
+                                    sorted-by={sortBy}
+                                    sorted-direction={sortDirection}
+                                    onsort={doSorting}
+                                    hide-checkbox-column
+                                    show-row-number-column
+                                    wrap-text-max-lines="3"
+                                    row-number-offset={rowNumberOffset}
+                                    onrowaction={handleRowAction}
+                                    style="color:#000; font-family:myfontlight; text-shadow:none;
+                                    font-weight:normal !important; font-size:14px;">
+                                </lightning-datatable>
+                            </div>
+                        </div>
+                </template>
+
+                <template if:true={isMobile}>
+                    <c-responsive-card country={country} table-data={data} columns={column} onshow={showDetails} onbuttonclick={showDetails}></c-responsive-card>
+                </template>
+            
+                <div class="slds-m-top_medium" style="margin-top:15px; margin-bottom:20px; float:left;">
+                    <p>{labels.Page} : {page} of {totalPage}</p>
+                    <template if:true={flag}>
+                        <lightning-spinner alternative-text="Loading.."></lightning-spinner>
+                    </template>
+                </div>
+
+                <div class="slds-m-top_medium" style="margin-top:15px; margin-bottom:10px; float:right;">
+                    <lightning-button-group>
+                        <lightning-button variant="brand" label={labels.First} onclick={handleFirst} disabled={showFirstButton}></lightning-button>
+                        <lightning-button variant="brand" label={labels.Previous} onclick={handlePrevious} disabled={showFirstButton}></lightning-button>
+                        <lightning-button variant="brand" label={labels.Next} onclick={handleNext} disabled={showLastButton}></lightning-button>
+                        <lightning-button variant="brand" label={labels.Last} onclick={handleLast} disabled={showLastButton}></lightning-button>
+                    </lightning-button-group>
+                </div>
+        
+                <div class="slds-m-top_medium" style="margin-top:50px; text-align: center;">
+                        <div class="slds-m-top_medium" style="margin-top:50px; text-align: center;"><lightning-button label={labels.Download_All_Invoices} variant="brand" onclick={downloadExcelFile} class="slds-m-left_x-small" ></lightning-button>
+                        </div> 
+                </div>
+            </div>
+    </div>
+        <div style="clear:both;"></div>
+        <template if:true={bShowModal}>
+            <section role="dialog" tabindex="-1"
+                     aria-labelledby="modal-heading-01"
+                     aria-modal="true"
+                     aria-describedby="modal-content-id-1"
+                     class="slds-fade-in-open slds-modal slds-modal_large">
+               <div class="slds-modal__container ">
+                  <!-- modal header start -->
+                  <header class="slds-modal__header">
+                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={labels.Close} onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                     </button>
+                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{labels.Invoice_Details}</h2>
+                  </header>
+                  <!-- modal body start -->
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p style="font-size: 20px;">{labels.Invoice}</p>
+                    <fieldset class="slds-form-element slds-form-element_compound"> 
+                        <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:10px;"> 
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div style="border:0px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+                    
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="border: 1px solid #ccc;">    
+                                <tbody>
+                                    <template for:each={invoice} for:item="item" for:index="index">
+                                    <tr class="slds-hint-parent" key={item.id}>
+                                        <th scope="row" width="230" style="border-right: 1px solid #ccc;">
+                                        <div class="slds-truncate" title="">{labels.Billing_Doc_No}</div>
+                                        </th>
+                                        
+                                        <td scope="col" width="230">
+                                        <div class="slds-truncate" title="">{item.BillingDocNumber}</div>
+                                        </td>
+                                    </tr>
+                                    </template>
+                                        
+                                    <template if:false={isKaneko} for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Sales_Order_No}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230" >
+                                            <div class="slds-truncate" title="">{item.SalesOrderNo}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <template if:true={isKaneko} for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Sales_Order_No}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230" >
+                                            <div class="slds-truncate" title="">{InvoiceReflectioncode}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <template for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Delivery_No}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230" >
+                                            <div class="slds-truncate" title="">{item.DeliveryNumber}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                    <template for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.PO_No}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230">
+                                            <div class="slds-truncate" title="">{item.PONumber}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                    <template if:true={showBillToParty} for:each={invoice} for:item="item" for:index="index" >
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Bill_to_Party}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230" >
+                                            <div class="slds-truncate" title="">{item.BillToParty}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                                </table>  
+                
+                                </div>
+                            </div>
+                      
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div style="border:0px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+                                
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="border: 1px solid #ccc;">  
+                                <tbody>
+                                <!--
+                                    <template for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="row" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">Currency</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230">
+                                            <div class="slds-truncate" title="">{item.CurrencyIsoCode}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                     -->   
+                                    <template for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Invoice_Date}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230" >
+                                            <div class="slds-truncate" title="">{item.InvoiceDate}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                    <template if:false={showTotalAmountCurrency} for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Total_Invoice_Amount}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230" >
+                                            <div class="slds-truncate" title="">{item.TotalAmount}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                    <template if:true={showTotalAmountCurrency} for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Total_Invoice_Amount}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230" >
+                                            <div class="slds-truncate" title="">
+                                                <lightning-formatted-number value={item.TotalAmount} format-style="currency" currency-code={currencyCode} currency-display-as="code" minimum-fraction-digits="0" maximum-fraction-digits="0"></lightning-formatted-number>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                    <template for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Sold_To_Party}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230">
+                                            <div class="slds-truncate" title="">{item.SoldToParty}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                    <template for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <th scope="col" width="230" style="border-right: 1px solid #ccc;">
+                                            <div class="slds-truncate" title="">{labels.Ship_to_Party}</div>
+                                            </th>
+                                            
+                                            <td scope="col" width="230" >
+                                            <div class="slds-truncate" title="">{item.ShiptoParty}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                
+                            </tbody>
+                            </table>  
+                
+                            </div>    
+                            </div>
+                        
+                        </div>
+                      
+                
+                                                 
+                    </fieldset>
+                    
+                    <p style="font-size: 20px;">{labels.Invoice_Line_Item}</p>
+                    <div class="slds-grid slds-wrap slds-gutters" style="margin:5px 2px 5px 2px; border:1px solid #ccc;">
+                    <div class="slds-scrollable_x">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={invoiceLineItems}
+                        columns={column2}
+                        hide-checkbox-column
+                        show-row-number-column	
+                        wrap-text-max-lines="3"
+                        style="color:#000; font-family:myfontlight; text-shadow:none;
+                        font-weight:normal !important; font-size:14px;">
+                    </lightning-datatable>
+                    </div>
+                    </div>
+                  </div>
+                  <!-- modal footer start-->
+                  <footer class="slds-modal__footer">
+                       <lightning-button variant="brand"
+                       label={labels.Close}
+                       title="Close"
+                       onclick={closeModal}
+                       ></lightning-button>
+                  </footer>
+               </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        
+         </template>
+<!--For Mobile model-->
+<template if:true={showInvoiceModal}>
+    <!--First Modal factura-->
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+        <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate slds-text-color_inverse slds-align_absolute-center" style="background-color: rgb(16, 15, 14);">{labels.Invoice_Details}</h2>
+
+           <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+              <p style="font-size: 20px;">{labels.Invoice}</p>
+
+              <template if:true={isMobile}>
+                <!--For Mobile Application on clicking on Invoice row Modal gets open starts here-->
+                
+                <template for:each={invoice} for:item="item">
+                   <div key={item.Id} data-id={item.Id}>
+                      <article class="slds-card">
+                         <div class="slds-col slds-size_12-of-12  slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                            <div class="slds-card-half">
+                               <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                    <div
+                                        class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                                        <b>{labels.Billing_Doc_No}</b>
+                                    </div>
+                                    <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                                        <b>{item.BillingDocNumber}</b>
+                                    </div>
+                               </div>
+                            </div>   
+                                <template if:false={isKaneko} for:each={invoice} for:item="item" for:index="index">
+                                    <div key={item.Id} data-id={item.Id}>
+                                        <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                            <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                                <b>{labels.Sales_Order_No}</b>
+                                            </div>
+                                            <div class="slds-col slds-float_left slds-size_6-of-12">
+                                                <b>{item.SalesOrderNo}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:true={isKaneko} for:each={invoice} for:item="item" for:index="index">
+                                    <div key={item.Id} data-id={item.Id}>
+                                        <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                            <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                                <b>{labels.Sales_Order_No}</b>
+                                            </div>
+                                            <div class="slds-col slds-float_left slds-size_6-of-12">
+                                                <b>{InvoiceReflectioncode}</b>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </template>
+
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                    <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                        <b>{labels.Delivery_No}</b>
+                                    </div>
+                                    <div class="slds-col slds-float_left slds-size_6-of-12">
+                                        <b>{item.DeliveryNumber}</b>
+                                    </div>
+                                </div>
+
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                    <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                        <b>{labels.PO_No}</b>
+                                    </div>
+                                    <div class="slds-col slds-float_left slds-size_6-of-12">
+                                        <div class="u-break-word">
+                                            <b>{item.PONumber}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={showBillToParty}>
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                    <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                        <b>{labels.Bill_to_Party}</b>
+                                    </div>
+                                    <div class="slds-col slds-float_left slds-size_6-of-12">
+                                        <b>{item.BillToParty}</b>
+                                    </div>
+                                </div>
+                            </template>
+
+                               
+                            
+                         </div>
+                      </article>
+                   </div>
+                </template>
+                <!--First Modal factura ends here-->
+
+                <!--Second Modal Starts here-->
+                <template for:each={invoice} for:item="item" for:index="index">
+                    <div key={item.Id} data-id={item.Id}>
+                       <article class="slds-card">
+                          <div class="slds-col slds-size_12-of-12  slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                             <div class="slds-card-half">
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                    <div
+                                        class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                                        <b>{labels.Invoice_Date}</b>
+                                    </div>
+                                    <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                                        <b>{item.InvoiceDate}</b>
+                                    </div>
+                               </div>
+                            </div>   
+                            <template if:false={showTotalAmountCurrency} for:each={invoice} for:item="item" for:index="index">
+                                    <div key={item.Id} data-id={item.Id}>
+                                        <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                            <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                                <b>{labels.Total_Invoice_Amount}</b>
+                                            </div>
+                                            <div class="slds-col slds-float_left slds-size_6-of-12">
+                                                <b>{item.TotalAmount}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:true={showTotalAmountCurrency} for:each={invoice} for:item="item" for:index="index">
+                                    <div key={item.Id} data-id={item.Id}>
+                                        <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                            <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                                <b>{labels.Total_Invoice_Amount}</b>
+                                            </div>
+                                            <div class="slds-col slds-float_left slds-size_6-of-12">
+                                                <b><lightning-formatted-number value={item.TotalAmount} format-style="currency" currency-code={currencyCode} currency-display-as="code" minimum-fraction-digits="0" maximum-fraction-digits="0"></lightning-formatted-number></b>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </template>
+
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                    <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                        <b>{labels.Sold_To_Party}</b>
+                                    </div>
+                                    <div class="slds-col slds-float_left slds-size_6-of-12">
+                                        <b>{item.SoldToParty}</b>
+                                    </div>
+                                </div>
+
+                                <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                    <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                        <b>{labels.Ship_to_Party}</b>
+                                    </div>
+                                    <div class="slds-col slds-float_left slds-size_6-of-12">
+                                        <b>{item.ShiptoParty}</b>
+                                    </div>
+                                </div>
+
+
+                         </div>
+                      </article>
+                   </div>
+                </template>
+                <!--Second Modal Ends here-->
+
+                <!--3rd Column Starts Here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-4">
+                    <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate slds-text-color_inverse slds-align_absolute-center" style="background-color: rgb(16, 15, 14);">{labels.Invoice_Line_Item}</h2>
+        
+                            
+                            <!-- <template for:each={invoiceLineDataLength} for:item="item">
+                               <div key={item.Id} data-id={item.Id}>
+                                  <article class="slds-card">
+                                     <div class="slds-col slds-size_12-of-12  slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                        <div class="slds-card-half">
+                                           <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                                <div
+                                                    class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                                                    <b>{labels.Description}</b>
+                                                </div>
+                                                <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                                                    <b>{item.SKU_Description__c}</b>
+                                                </div>
+                                           </div>
+                                        </div>   
+                                            
+                                        <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                            <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                                <b>{labels.UOM}</b>
+                                            </div>
+                                            <div class="slds-col slds-float_left slds-size_6-of-12">
+                                                <b>{item.UOM__c}</b>
+                                            </div>
+                                        </div>
+        
+                                            
+                                        <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                            <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                                <b>{labels.Quantity}</b>
+                                            </div>
+                                            <div class="slds-col slds-float_left slds-size_6-of-12">
+                                                <b>{item.Quantity__c}</b>
+                                            </div>
+                                        </div>
+                                              
+        
+                                            <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                                <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                                    <b>{labels.Payment_Terms}</b>
+                                                </div>
+                                                <div class="slds-col slds-float_left slds-size_6-of-12">
+                                                    <b>{item.Payment_Term__c}</b>
+                                                </div>
+                                            </div>
+        
+                                            <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                                <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                                                    <b>{labels.Net_Value}</b>
+                                                </div>
+                                                <div class="slds-col slds-float_left slds-size_6-of-12">
+                                                    <b>{item.Net_Value_Cal__c}</b>
+                                                </div>
+                                            </div>
+                                           
+                                        
+                                     </div>                    
+                                  </article>
+                               </div>    
+                            </template> -->
+                            <c-responsive-card country={country} table-data={invoiceLineItems} columns={column2} onshow={showDetails} onbuttonclick={showDetails}></c-responsive-card>
+                            <div class="slds-m-top_medium" style="margin-top:15px; margin-bottom:20px; float:left;">
+                                <p>{labels.Page} : {page} of {totalPage}</p>
+                                <template if:true={flag}>
+                                    <lightning-spinner alternative-text="Loading.."></lightning-spinner>
+                                </template>
+                            </div>
+            
+                            <div class="slds-m-top_medium" style="margin-top:15px; margin-bottom:10px; float:right;">
+                                <lightning-button-group>
+                                    <lightning-button variant="brand" label={labels.First} onclick={handleFirst} disabled={showFirstButton}></lightning-button>
+                                    <lightning-button variant="brand" label={labels.Previous} onclick={handlePrevious} disabled={showFirstButton}></lightning-button>
+                                    <lightning-button variant="brand" label={labels.Next} onclick={handleNext} disabled={showLastButton}></lightning-button>
+                                    <lightning-button variant="brand" label={labels.Last} onclick={handleLast} disabled={showLastButton}></lightning-button>
+                                </lightning-button-group>
+                            </div>
+
+                </div>    
+                <!--3rd Column Ends Here-->
+                
+              </template>
+           </div>
+    </div>
+    <footer class="slds-modal__footer">
+        <lightning-button variant="brand" 
+        label={labels.Close}
+        title="Close"
+        onclick={closeModal}
+        ></lightning-button>
+   </footer>
+</template>
+
+         <!-- <template if:true={bShowModal1}>
+            <section role="dialog" tabindex="-1"
+                     aria-labelledby="modal-heading-02"
+                     aria-modal="true"
+                     aria-describedby="modal-content-id-2"
+                    class="slds-modal slds-fade-in-open">
+               <div class="slds-modal__container ">
+
+                 modal header start 
+
+                   <header class="slds-modal__header">
+                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                     </button>
+                     <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Acknowledge The Delivery Details</h2>
+                  </header>
+
+
+                  modal body start 
+
+
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <fieldset class="slds-form-element slds-form-element_compound"> 
+                        <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:10px;"> 
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <div style="border:0px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+                    
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered">   
+                                    
+                                    <thead>
+                                        <tr class="slds-hint-parent">
+                                          <th class="" scope="col">
+                                            <div class="slds-truncate" title="Value1">Invoice Doc Number</div>
+                                          </th>
+                                          <th class="" scope="col">
+                                            <div class="slds-truncate" title="Value2">Invoice Date</div>
+                                          </th>
+                                          <th class="" scope="col">
+                                            <div class="slds-truncate" title="Value3">Invoice Amount</div>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                <tbody>
+                                    <template for:each={invoice} for:item="item" for:index="index">
+                                        <tr class="slds-hint-parent" key={item.id}>
+                                            <td scope="col">
+                                             {item.Name}
+                                            </td>
+                                            <td scope="col">
+                                            {item.Invoice_Date__c}
+                                            </td>
+                                            <td scope="col">
+                                            {item.TotalAmount__c}
+                                            </td>
+                                        </tr>
+                                    
+                                    </template>
+                                    
+                                </tbody>
+                                </table>  
+                
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-grid slds-wrap slds-gutters" style="margin-bottom:10px;"> 
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <div style="border:0px solid #ccc; margin-top:10px;" class="slds-scrollable_x">    
+                    
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered">   
+                                    
+                                    <thead>
+                                        <tr class="slds-hint-parent">
+                                          <th class="" scope="col">
+                                            <div class="slds-truncate" title="Value2">Invoice Doc Number</div>
+                                          </th>
+                                          <th class="" scope="col">
+                                            <div class="slds-truncate" title="Value3">Invoice Date</div>
+                                          </th>
+                                          <th class="" scope="col">
+                                            <div class="slds-truncate" title="Value4">Qty Received</div>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                <tbody>
+                                
+                                    <template for:each={invoiceLineItems} for:item="item" for:index="index">
+                                            <tr class="slds-hint-parent" key={item.id}>
+                                            <td scope="col">
+                                            {item.SKU_Name__c}
+                                            </td>
+                                            <td scope="col">
+                                            {item.Quantity__c}
+                                            </td>
+                                        
+                                        
+                                            <td scope="col">
+                                                <input type="number" style="width:50px;" >
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    
+                                </tbody>
+                                </table>  
+                
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    
+                  </div>
+
+
+                   modal footer start
+
+
+                  <footer class="slds-modal__footer">
+                       <lightning-button variant="success" 
+                       label="Save"
+                       title="Save"
+                       onclick={closeModal}
+                       ></lightning-button>
+                  </footer>
+               </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        
+         </template>-->
+
+
+</template>

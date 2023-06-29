@@ -1,0 +1,4196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <constants>
+        <name>DateErrorMessage</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Please put a past date.</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Are_you_satisfied_with_the_results_C2F12R1</name>
+        <label>Are you satisfied with the results C2F12R1</label>
+        <locationX>940</locationX>
+        <locationY>636</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dissatisfied</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F12R1_Are_you_satisfied_with_the_results</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Dissatisfied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>C2F12R1_Are_you_satisfied_with_the_results</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Neutral</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F12R1_Details</targetReference>
+            </connector>
+            <label>Dissatisfied</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Are_you_satisfied_with_the_results_C2F12R2</name>
+        <label>Are you satisfied with the results C2F12R2</label>
+        <locationX>1707</locationX>
+        <locationY>639</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dissatisfied_C2F12R2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F12R2_Are_you_satisfied_with_the_results_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Dissatisfied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>C2F12R2_Are_you_satisfied_with_the_results_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Neutral</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F12R2_Details</targetReference>
+            </connector>
+            <label>Dissatisfied</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Are_you_satisfied_with_the_results_C2F12R3</name>
+        <label>Are you satisfied with the results C2F12R3</label>
+        <locationX>2227</locationX>
+        <locationY>894</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dissatisfied_C2F12R3</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F12R3_Are_you_satisfied_with_the_results</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Dissatisfied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>C2F12R3_Are_you_satisfied_with_the_results</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Neutral</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F12R3_Details</targetReference>
+            </connector>
+            <label>Dissatisfied C2F12R3</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Are_you_satisfied_with_the_results_C2F12R4</name>
+        <label>Are you satisfied with the results C2F12R4</label>
+        <locationX>2943</locationX>
+        <locationY>913</locationY>
+        <defaultConnector>
+            <targetReference>Update_C2_Details</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dissatisfied_C2F12R4</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F12R4_Are_you_satisfied_with_the_results</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1 - Dissatisfied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>C2F12R4_Are_you_satisfied_with_the_results</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2 - Neutral</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F12R4_Details</targetReference>
+            </connector>
+            <label>Dissatisfied C2F12R4</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>C2_Any_pest_infestation</name>
+        <label>C2 Any pest infestation</label>
+        <locationX>383</locationX>
+        <locationY>450</locationY>
+        <defaultConnector>
+            <targetReference>TeleSelling_Call_2_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_YesC2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2_Any_pest_infestation_observed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>TeleSelling_Call_2_0</targetReference>
+            </connector>
+            <label>If Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>C2F1R1_If</name>
+        <label>C2F1R1 If</label>
+        <locationX>579</locationX>
+        <locationY>643</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F1R1_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F1R1_IF_NO</targetReference>
+            </connector>
+            <label>If No,</label>
+        </rules>
+        <rules>
+            <name>If_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F1R1_Didyoubuytheproductasperrecommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_2_Follow_Up_5_DAYS</targetReference>
+            </connector>
+            <label>If Yes,</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>C2F1R2_Decision</name>
+        <label>C2F1R2- Decision</label>
+        <locationX>1344</locationX>
+        <locationY>646</locationY>
+        <defaultConnector>
+            <targetReference>C2FR2Ifyes</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_No_C2F1R2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F1R2_Did_you_buy_the_product_as_per_recommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R2_Reason_not_for_buying</targetReference>
+            </connector>
+            <label>If No C2F1R2</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>C2F1R3_If</name>
+        <label>C2F1R3 If</label>
+        <locationX>1955</locationX>
+        <locationY>629</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2F1R3_If_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F1R3_Did_you_buy_the_product_as_per_recommendation_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F3R3_If_Yes</targetReference>
+            </connector>
+            <label>C2F1R3, If Yes</label>
+        </rules>
+        <rules>
+            <name>C2F1R3_If_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F1R3_Did_you_buy_the_product_as_per_recommendation_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R3_Reason_not_for_buying</targetReference>
+            </connector>
+            <label>C2F1R3 If No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>C2F1R4_If</name>
+        <label>C2F1R4 If</label>
+        <locationX>2639</locationX>
+        <locationY>661</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2F1R4_If_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F1R4_Did_you_buy_the_product_as_per_recommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F3R4_If_Yes</targetReference>
+            </connector>
+            <label>C2F1R4, If Yes</label>
+        </rules>
+        <rules>
+            <name>C2F1R4_If_No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F1R4_Did_you_buy_the_product_as_per_recommendation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R4_Reason_not_for_buying</targetReference>
+            </connector>
+            <label>C2F1R4 If No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>C2F2R3Reason_not_for_buying</name>
+        <label>C2F2R3Reason not for buying</label>
+        <locationX>2120</locationX>
+        <locationY>546</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2F2R3_Will_be_applying_later</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F2R3_Reason_for_not_buying_the_product</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Will be applying later</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R3_Details</targetReference>
+            </connector>
+            <label>C2F2R3 Will be applying later</label>
+        </rules>
+        <rules>
+            <name>C2F2R3_Other</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F2R3_Reason_for_not_buying_the_product</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R3_reason_Other</targetReference>
+            </connector>
+            <label>C2F2R3 Other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_C2R2</name>
+        <label>Check C2R2</label>
+        <locationX>1111</locationX>
+        <locationY>1138</locationY>
+        <defaultConnector>
+            <targetReference>C2F1R2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C2R2_is_None</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SurveyC2.C2R2__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>--None--</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_C2_Details</targetReference>
+            </connector>
+            <label>If C2R2 is None</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_C2R3</name>
+        <label>Check C2R3</label>
+        <locationX>1575</locationX>
+        <locationY>1225</locationY>
+        <defaultConnector>
+            <targetReference>C2F1R3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C2R3_is_None</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SurveyC2.C2R3__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>--None--</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_C2_Details</targetReference>
+            </connector>
+            <label>If C2R3 is None</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_C2R4</name>
+        <label>Check C2R4</label>
+        <locationX>2307</locationX>
+        <locationY>1321</locationY>
+        <defaultConnector>
+            <targetReference>C2F1R4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_C2R4_is_None</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SurveyC2.C2R4__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>--None--</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_C2_Details</targetReference>
+            </connector>
+            <label>If C2R4 is None</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Call_detail_Followup_C2</name>
+        <label>Check Call detail Followup C2</label>
+        <locationX>536</locationX>
+        <locationY>81</locationY>
+        <defaultConnector>
+            <targetReference>Do_you_want_to_see_C1_Details</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2_FollowUp_True</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2Followup</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_2_Details</targetReference>
+            </connector>
+            <label>C2 FollowUp True</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_C1_Details_Present</name>
+        <label>If C1 Details Present?</label>
+        <locationX>1115</locationX>
+        <locationY>23</locationY>
+        <defaultConnector>
+            <targetReference>C1DetailsNotpresent</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C1_Details_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Survey.C1_Completed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_1_Details</targetReference>
+            </connector>
+            <label>C1 Details - Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_No_Reasons_Other_C2F13R1</name>
+        <label>If No, Reasons Other C2F13R1</label>
+        <locationX>1100</locationX>
+        <locationY>454</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2F13R1_If_No_Reasons_Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F13R1_If_No_Reasons</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Others</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F13R1_Other</targetReference>
+            </connector>
+            <label>C2F13R1 -If No, Reasons Others</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_No_Reasons_Other_C2F13R2</name>
+        <label>If No, Reasons Other C2F13R2``</label>
+        <locationX>1822</locationX>
+        <locationY>965</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2F13R2_If_No_Reasons_Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F13R2_If_No_Reasons_Other</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Others</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F13R2_Other</targetReference>
+            </connector>
+            <label>C2F13R2 -If No, Reasons Others</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_No_Reasons_Other_C2F13R3</name>
+        <label>If No, Reasons Other C2F13R3</label>
+        <locationX>2477</locationX>
+        <locationY>895</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2F13R3_If_No_Reasons_Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F13R3_If_No_Reasons</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>C2F13R3_Other</targetReference>
+            </connector>
+            <label>C2F13R3 -If No, Reasons Others</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_No_Reasons_Other_C2F13R4</name>
+        <label>If No, Reasons Other C2F13R4</label>
+        <locationX>3009</locationX>
+        <locationY>757</locationY>
+        <defaultConnector>
+            <targetReference>Update_C2_Details</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2F13R4_If_No_Reasons_Others</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F13R4_If_No_Reasons</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>C2F13R4_Other</targetReference>
+            </connector>
+            <label>C2F13R4 -If No, Reasons Others</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reason_for_not_buying_the_product_C2F2R1</name>
+        <label>Reason for not buying the product C2F2R1</label>
+        <locationX>558</locationX>
+        <locationY>817</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Will_be_apply_later</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F2R1_Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Will be applying later</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F1R1_Details_1</targetReference>
+            </connector>
+            <label>Will be apply later</label>
+        </rules>
+        <rules>
+            <name>Other</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F2R1_Reasonfornotbuyingtheproduct</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R1_Reason_for_not_buying_the_productother</targetReference>
+            </connector>
+            <label>Other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reason_for_not_buying_the_product_C2F2R2</name>
+        <label>Reason for not buying the product- C2F2R2</label>
+        <locationX>1483</locationX>
+        <locationY>465</locationY>
+        <defaultConnector>
+            <targetReference>Check_C2R3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Will_be_applying_later</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F2R2_Reason_for_not_buying_the_product</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Will be applying later</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R2_Details</targetReference>
+            </connector>
+            <label>Will be applying later</label>
+        </rules>
+        <rules>
+            <name>Other_C2F2R2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F2R2_Reason_for_not_buying_the_product</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R2_Other</targetReference>
+            </connector>
+            <label>Other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reason_not_for_buying_C2F2R4</name>
+        <label>Reason not for buying C2F2R4</label>
+        <locationX>2807</locationX>
+        <locationY>591</locationY>
+        <defaultConnector>
+            <targetReference>Update_C2_Details</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C2F2R4_Will_be_applying_later</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F2R4_Reason_for_not_buying_the_product_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Will be applying later</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R4_Details</targetReference>
+            </connector>
+            <label>C2F2R4 Will be applying later</label>
+        </rules>
+        <rules>
+            <name>C2F2R4_Other</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>C2F2R4_Reason_for_not_buying_the_product_0</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>C2F2R4_reason_Other</targetReference>
+            </connector>
+            <label>C2F2R4 Other</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Want_to_see_C1_details</name>
+        <label>Want to see C1 details?</label>
+        <locationX>811</locationX>
+        <locationY>171</locationY>
+        <defaultConnector>
+            <targetReference>TeleSelling_Call_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>C1_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Yes</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_C1_Details</targetReference>
+            </connector>
+            <label>C1 - Yes</label>
+        </rules>
+    </decisions>
+    <description>call 2 start</description>
+    <dynamicChoiceSets>
+        <name>C1_0CultivatedCrop</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C1_0_Cultivated_Crop__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2_2Isthecropirrigatedorrainfed</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_2_Is_the_crop_irrigated_or_rainfed__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2_4ReceivedanyrecommendationfromAKCearlier</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_4_Received_any_recommendation_from_A__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2_5DidyouundertakeSeedTreatment</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_5_Did_you_undertake_Seed_Treatment__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2_7IfYeswithwhat</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_7_If_Yes_with_what__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2_Anypestinfestationobserved</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_Any_pest_infestation_observed__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2Diseasebox</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_Disease__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F10R1Didyouusetheprodinentirecroparea</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F10R1_Did_you_use_the_prod_in_entire__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F10R2Didyouusetheprodinentirecroparea</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F10R2_Did_you_use_the_prod_in_entire__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F10R3Didyouusetheprodinentirecroparea</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F10R3_Did_you_use_the_prod_in_entire__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F10R4Didyouusetheprodinentirecroparea</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F10R4_Did_you_use_the_prod_in_entire__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F12R1Areyousatisfiedwiththeresults</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F12R1_Are_you_satisfied_with_the_resu__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F12R2Areyousatisfiedwiththeresults</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F12R2_Are_you_satisfied_with_the_resu__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F12R3Areyousatisfiedwiththeresults</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F12R3_Are_you_satisfied_with_the_resu__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F12R4Areyousatisfiedwiththeresults</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F12R4_Are_you_satisfied_with_the_resu__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F13R1IfNoReasons</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F13R1_If_No_Reasons__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F13R2IfNoReasons</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F13R2_If_No_Reasons__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F13R3IfNoReasons</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F13R3_If_No_Reasons__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F13R4IfNo_Reasons</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F13R4_If_No_Reasons__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F1R1_Didyoubuytheproductasperrecommendation</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F1R1_Did_you_buy_the_product_as_per_r__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F1R2Didyoubuytheproductasperrecommendation</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F1R2_Did_you_buy_the_product_as_per_r__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F1R3Didyoubuytheproductasperrecommendation</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F1R3_Did_you_buy_the_product_as_per_r__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F1R4Didyoubuytheproductasperrecommendation</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F1R4_Did_you_buy_the_product_as_per_r__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F2R1_Reasonfornotbuyingtheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F2R1_Reason_for_not_buying_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F2R2Reasonfornotbuyingtheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F2R2_Reason_for_not_buying_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F2R3Reasonfornotbuyingtheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F2R3_Reason_for_not_buying_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F2R4Reasonfornotbuyingtheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F2R4_Reason_for_not_buying_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F3R1_Whichproductdidyoubuy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F3_R1_Which_product_did_you_buy__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F3R2Whichproductdidyoubuy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F3_R2_Which_product_did_you_buy__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F3R3Whichproductdidyoubuy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F3_R3_Which_product_did_you_buy__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F3R4Whichproductdidyoubuy</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F3_R4_Which_product_did_you_buy__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F5R1Retailer</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>C2F5R1_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RetailerRecordId</elementReference>
+            </value>
+        </filters>
+        <limit>1</limit>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>RetailerId1</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>C2F5R1SelectedRetailer</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F5R2Retailer</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>C2F5R2_Which_Retailer_did_you_buy_the_product_from_0</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RetailerRecordId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>RetailerId2</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>C2F5R2SelectedRetailer</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F5R3Retailer</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>C2F5R2_Which_Retailer_did_you_buy_the_product_from_0</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RetailerRecordId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>RetailerId3</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>C2F5R3SelectedRetailer</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F5R4Retailer</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>C2F5R1_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RetailerRecordId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>RetailerId4</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>C2F5R4SelectedRetailer</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F6R1Didyoubuyorusetheproductyourself</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F6R1_Did_you_buy_or_use_the_product__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F6R2Didyoubuyorusetheproductyourself</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F6R2_Did_you_buy_or_use_the_product__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F6R3Didyoubuyorusetheproductyourself</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F6R3_Did_you_buy_or_use_the_product__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F6R4Didyoubuyorusetheproductyourself</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F6R4_Did_you_buy_or_use_the_product__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F7R1Whatistheform_stateoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F7R1_What_is_the_form_state_of_the__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F7R2Whatistheform_stateoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F7R2What_is_the_form_state_of_the_prod__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F7R3Whatistheform_stateoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F7R3What_is_the_form_state_of_the_prod__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F7R4Whatistheform_stateoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F7R4_What_is_the_form_state_of_the__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F8R1Whatisthecolourofthepack</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F8R1_What_is_the_colour_of_the_pack__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F8R2Whatisthecolourofthepack</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F8R2_What_is_the_colour_of_the_pack__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F8R3Whatisthecolourofthepack</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F8R3_What_is_the_colour_of_the_pack__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F8R4Whatisthecolourofthepack</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F8R4_What_is_the_colour_of_the_pack__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F9R1Whatistheartworkoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F9R1_What_is_the_artwork_of_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F9R2Whatistheartworkoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F9R2_What_is_the_artwork_of_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F9R3Whatistheartworkoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F9R3_What_is_the_artwork_of_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2F9R4Whatistheartworkoftheproduct</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2F9R4_What_is_the_artwork_of_the_produ__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2IfYes_whichpest</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_If_Yes_which_pest__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2PestBox</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_Pest__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2PGR</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_PGR__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2R01</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2R1__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2R02</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2R2__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2R03</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2R3__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2R04</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2R4__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>C2Weed</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>C2_Weed__c</picklistField>
+        <picklistObject>Survey__c</picklistObject>
+    </dynamicChoiceSets>
+    <formulas>
+        <name>C1_01IfRiceTPdateDetails</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1_01_If_Rice_TP_date__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1_0CultivatedCrop_Details</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1_0_Cultivated_Crop__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1_1CultivatedArea_inAcres</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1_1_Cultivated_Area_in_Acres__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1_2Isthecropirrigatedorrainfed</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1_2_Is_the_crop_irrigated_or_rainfed__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1_3Whendidyousowtheseeds</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1_3_When_did_you_sow_the_seeds__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1_4ReceivedanyrecommendationfromAKCearlier</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1_4_Received_any_recommendation_from_A__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1_5DidyouundertakeSeedTreatment</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1_5_Did_you_undertake_Seed_Treatment__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1_6IfYeswhen</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1_6_If_Yes_when__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1_7IfYeswithwhat</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1_7_If_Yes_with_what__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1_Anypestinfestationobserved</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1_Any_pest_infestation_observed__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1_Anypestinfestationobserveddate</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1_Any_pest_infestation_observed_date__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F10R1_Didyouusetheprodinentirecroparea</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F10R1_Did_you_use_the_prod_in_entire__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F10R2Didyouusetheprodinentirecroparea</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F10R2_Did_you_use_the_prod_in_entire_c__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F10R3Didyouusetheprodinentirecroparea</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F10R3_Did_you_use_the_prod_in_entire__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F10R4Didyouusetheprodinentirecroparea</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F10R4_Did_you_use_the_prod_in_entire__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F11R1_Inhowmanyacresusedtherecommendedproduct</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F11R1_In_how_many_acres_used_the_reco__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F11R2Inhowmanyacresusedtherecommendedproduct</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F11R2_In_how_many_acres_used_the_reco__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F11R3Inhowmanyacresusedtherecommendedproduct</name>
+        <dataType>Number</dataType>
+        <expression>{!Survey.C1F11R3_In_how_many_acres_used_the_reco__c}</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>C1F11R4Inhowmanyacresusedtherecommendedproduct</name>
+        <dataType>Number</dataType>
+        <expression>{!Survey.C1F11R4_In_how_many_acres_used_the_reco__c}</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>C1F12R1_Areyousatisfiedwiththeresults</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F12R1_Are_you_satisfied_with_the_resul__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F12R2Areyousatisfiedwiththeresults</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F12R2_Are_you_satisfied_with_the_resu__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F12R3Areyousatisfiedwiththeresults</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F12R3_Are_you_satisfied_with_the_resu__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F12R4Areyousatisfiedwiththeresults</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F12R4_Are_you_satisfied_with_the_resu__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F13R1_IfNoReasons</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F13R1_If_No_Reasons__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F13R1_IfNoReasons_Others</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F13R1_If_No_Reasons_Other__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F13R2IfNoReasons</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F13R2_If_No_Reasons__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F13R2IfNoReasonsOther</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F13R2_If_No_Reasons_Others__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F13R3IfNoReasons</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F13R3_If_No_Reasons__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F13R3IfNoReasonsOther</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F13R3_If_No_Reasons_Others__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F13R4IfNoReasons</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F13R4_If_No_Reasons__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F13R4IfNoReasonsOther</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F13R4_Others__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F14R1_Possibledateofpurchase</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F14R1_Possible_date_of_purchase__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F14R2Possibledateofpurchase</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F14R2_Possible_date_of_purchase__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F14R3_Possibledateofpurchase</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F14R3_Possible_date_of_purchase__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F14R4_Possibledateofpurchase</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F14R4_Possible_date_of_purchase__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F15R1_PossibledateofApplication</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F15R1_Possible_date_of_Application__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F15R2_PossibledateofApplication</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F15R2_Possible_date_of_Application__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F15R3_PossibledateofApplication</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F15R3_Possible_date_of_Application__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F15R4_PossibledateofApplication</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F15R4_Possible_date_of_Application__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F1R1_Didyoubuytheproductasperrecommendation</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F1R1_Did_you_buy_the_product_as_per_r__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F1R2_Didyoubuytheproductasperrecommendation</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F1R2_Did_you_buy_the_product_as_per_re__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F1R3_Didyoubuytheproductasperrecommendation</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F1R3_Did_you_buy_the_product_as_per_r__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F1R4_Didyoubuytheproductasperrecommendation</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F1R4_Did_you_buy_the_product_as_per_r__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F2R1_Reasonfornotbuyingtheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F2R1_Reason_for_not_buying_the_produ__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F2R1_ReasonfornotbuyingtheproductOther</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F2R1_Reason_fr_not_buying_produ_Other__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F2R2_Reasonfornotbuyingtheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F2R2_Reason_for_not_buying_the_product__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F2R2_ReasonfornotbuyingtheproductOther</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F2R2_Reason_fr_not_buying_produ_Others__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F2R3_Reasonfornotbuyingtheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F2R3_Reason_for_not_buying_the_product__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F2R3_ReasonfornotbuyingtheproductOther</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F2R3_Reason_fr_not_buying_produ_Others__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F2R4_Reasonfornotbuyingtheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F2R4_Reason_for_not_buying_the_produ__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F2R4ReasonfornotbuyingtheproductOther</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F2R4_Other__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F3R1Whichproductdidyoubuy</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F3_R1_Which_product_did_you_buy__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F3R2Whichproductdidyoubuy</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F3_R2_Which_product_did_you_buy__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F3R3Whichproductdidyoubuy</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F3_R3_Which_product_did_you_buy__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F3R4Whichproductdidyoubuy</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F3_R4_Which_product_did_you_buy__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F4R1_Whendidyoubuytheproduct</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F4R1_When_did_you_buy_the_product__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F4R2_Whendidyoubuytheproduct</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F4R2_When_did_you_buy_the_product__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F4R3_Whendidyoubuytheproduct</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F4R3_When_did_you_buy_the_product__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F4R4_Whendidyoubuytheproduct</name>
+        <dataType>Date</dataType>
+        <expression>{!Survey.C1F4R4_When_did_you_buy_the_product__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F5R1_WhichRetailerdidyoubuytheproductfrom</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F5R1_Which_Retailer_did_you_buy_the__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F5R2_WhichRetailerdidyoubuytheproductfrom</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F5R2_Which_Retailer_did_you_buy_the__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F5R3_WhichRetailerdidyoubuytheproductfrom</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F5R3_Which_Retailer_did_you_buy_the__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F5R4_WhichRetailerdidyoubuytheproductfrom</name>
+        <dataType>String</dataType>
+        <expression>{!Survey.C1F5R4_Which_Retailer_did_you_buy_the__c}</expression>
+    </formulas>
+    <formulas>
+        <name>C1F6R1_Didyoubuyorusetheproductyourself</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F6R1_Did_you_buy_or_use_the_product__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F6R2_Didyoubuyorusetheproductyourself</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F6R2_Did_you_buy_or_use_the_product_y__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F6R3_Didyoubuyorusetheproductyourself</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F6R3_Did_you_buy_or_use_the_product_Y__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F6R4_Didyoubuyorusetheproductyourself</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F6R4_Did_you_buy_or_use_the_product__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F7R1_Whatistheform_stateoftheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F7R1What_is_the_form_state_of_the_prod__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F7R2Whatistheform_stateoftheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F7R2_What_is_the_form_state_of_the_pro__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F7R3Whatistheform_stateoftheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F7R3_What_is_the_form_state_of_the__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F7R4Whatistheform_stateoftheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F7R4_What_is_the_form_state_of_the__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F8R1_Whatisthecolourofthepack</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F8R1_What_is_the_colour_of_the_pack__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F8R2Whatisthecolourofthepack</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F8R2_What_is_the_colour_of_the_pack__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F8R3Whatisthecolourofthepack</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F8R3_What_is_the_colour_of_the_pack__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F8R4Whatisthecolourofthepack</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F8R4_What_is_the_colour_of_the_pack__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F9R1Whatistheartworkoftheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F9R1_What_is_the_artwork_of_the_produ__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F9R2Whatistheartworkoftheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F9R2_What_is_the_artwork_of_the_produ__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F9R3Whatistheartworkoftheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F9R3_What_is_the_artwork_of_the_produ__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1F9R4Whatistheartworkoftheproduct</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1F9R4_What_is_the_artwork_of_the_produ__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1IfYeswhichpest</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1_If_Yes_which_pest__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1R1</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1R1__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1R2</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1R2__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1R3</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1R3__c})</expression>
+    </formulas>
+    <formulas>
+        <name>C1R4</name>
+        <dataType>String</dataType>
+        <expression>Text({!Survey.C1R4__c})</expression>
+    </formulas>
+    <interviewLabel>Teleselling Call2 {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Teleselling Call2</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Call_2_Details</name>
+        <label>Call 2 Details</label>
+        <locationX>180</locationX>
+        <locationY>269</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Call_2_Follow_Up_5_DAYS_05</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SurveyId</elementReference>
+            </value>
+        </filters>
+        <object>Survey__c</object>
+        <outputReference>SurveyC2</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>C2R1__c</queriedFields>
+        <queriedFields>C2R2__c</queriedFields>
+        <queriedFields>C2R3__c</queriedFields>
+        <queriedFields>C2R4__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_C1_Details</name>
+        <label>Get C1 Details</label>
+        <locationX>973</locationX>
+        <locationY>107</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>If_C1_Details_Present</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>C1_Completed__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SurveyId</elementReference>
+            </value>
+        </filters>
+        <object>Survey__c</object>
+        <outputReference>Survey</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>C1_0_Cultivated_Crop__c</queriedFields>
+        <queriedFields>C1_01_If_Rice_TP_date__c</queriedFields>
+        <queriedFields>C1_1_Cultivated_Area_in_Acres__c</queriedFields>
+        <queriedFields>C1_2_Is_the_crop_irrigated_or_rainfed__c</queriedFields>
+        <queriedFields>C1_3_When_did_you_sow_the_seeds__c</queriedFields>
+        <queriedFields>C1_4_Received_any_recommendation_from_A__c</queriedFields>
+        <queriedFields>C1_5_Did_you_undertake_Seed_Treatment__c</queriedFields>
+        <queriedFields>C1_6_If_Yes_when__c</queriedFields>
+        <queriedFields>C1_7_If_Yes_with_what__c</queriedFields>
+        <queriedFields>C1_Any_pest_infestation_observed__c</queriedFields>
+        <queriedFields>C1_Any_pest_infestation_observed_date__c</queriedFields>
+        <queriedFields>C1_If_Yes_which_pest__c</queriedFields>
+        <queriedFields>C1R1__c</queriedFields>
+        <queriedFields>C1R2__c</queriedFields>
+        <queriedFields>C1R3__c</queriedFields>
+        <queriedFields>C1R4__c</queriedFields>
+        <queriedFields>C1F1R1_Did_you_buy_the_product_as_per_r__c</queriedFields>
+        <queriedFields>C1F1R2_Did_you_buy_the_product_as_per_re__c</queriedFields>
+        <queriedFields>C1F1R3_Did_you_buy_the_product_as_per_r__c</queriedFields>
+        <queriedFields>C1F1R4_Did_you_buy_the_product_as_per_r__c</queriedFields>
+        <queriedFields>C1F2R1_Reason_for_not_buying_the_produ__c</queriedFields>
+        <queriedFields>C1F2R1_Reason_fr_not_buying_produ_Other__c</queriedFields>
+        <queriedFields>C1F2R2_Reason_for_not_buying_the_product__c</queriedFields>
+        <queriedFields>C1F2R2_Reason_fr_not_buying_produ_Others__c</queriedFields>
+        <queriedFields>C1F2R3_Reason_for_not_buying_the_product__c</queriedFields>
+        <queriedFields>C1F2R3_Reason_fr_not_buying_produ_Others__c</queriedFields>
+        <queriedFields>C1F2R4_Reason_for_not_buying_the_produ__c</queriedFields>
+        <queriedFields>C1F2R4_Other__c</queriedFields>
+        <queriedFields>C1F3_R1_Which_product_did_you_buy__c</queriedFields>
+        <queriedFields>C1F3_R2_Which_product_did_you_buy__c</queriedFields>
+        <queriedFields>C1F3_R3_Which_product_did_you_buy__c</queriedFields>
+        <queriedFields>C1F3_R4_Which_product_did_you_buy__c</queriedFields>
+        <queriedFields>C1F4R1_When_did_you_buy_the_product__c</queriedFields>
+        <queriedFields>C1F4R2_When_did_you_buy_the_product__c</queriedFields>
+        <queriedFields>C1F4R3_When_did_you_buy_the_product__c</queriedFields>
+        <queriedFields>C1F4R4_When_did_you_buy_the_product__c</queriedFields>
+        <queriedFields>C1F5R1_Which_Retailer_did_you_buy_the__c</queriedFields>
+        <queriedFields>C1F5R2_Which_Retailer_did_you_buy_the__c</queriedFields>
+        <queriedFields>C1F5R3_Which_Retailer_did_you_buy_the__c</queriedFields>
+        <queriedFields>C1F5R4_Which_Retailer_did_you_buy_the__c</queriedFields>
+        <queriedFields>C1F6R1_Did_you_buy_or_use_the_product__c</queriedFields>
+        <queriedFields>C1F6R2_Did_you_buy_or_use_the_product_y__c</queriedFields>
+        <queriedFields>C1F6R3_Did_you_buy_or_use_the_product_Y__c</queriedFields>
+        <queriedFields>C1F6R4_Did_you_buy_or_use_the_product__c</queriedFields>
+        <queriedFields>C1F7R1What_is_the_form_state_of_the_prod__c</queriedFields>
+        <queriedFields>C1F7R2_What_is_the_form_state_of_the_pro__c</queriedFields>
+        <queriedFields>C1F7R3_What_is_the_form_state_of_the__c</queriedFields>
+        <queriedFields>C1F7R4_What_is_the_form_state_of_the__c</queriedFields>
+        <queriedFields>C1F8R1_What_is_the_colour_of_the_pack__c</queriedFields>
+        <queriedFields>C1F8R2_What_is_the_colour_of_the_pack__c</queriedFields>
+        <queriedFields>C1F8R3_What_is_the_colour_of_the_pack__c</queriedFields>
+        <queriedFields>C1F8R4_What_is_the_colour_of_the_pack__c</queriedFields>
+        <queriedFields>C1F9R1_What_is_the_artwork_of_the_produ__c</queriedFields>
+        <queriedFields>C1F9R2_What_is_the_artwork_of_the_produ__c</queriedFields>
+        <queriedFields>C1F9R3_What_is_the_artwork_of_the_produ__c</queriedFields>
+        <queriedFields>C1F9R4_What_is_the_artwork_of_the_produ__c</queriedFields>
+        <queriedFields>C1F10R1_Did_you_use_the_prod_in_entire__c</queriedFields>
+        <queriedFields>C1F10R2_Did_you_use_the_prod_in_entire_c__c</queriedFields>
+        <queriedFields>C1F10R3_Did_you_use_the_prod_in_entire__c</queriedFields>
+        <queriedFields>C1F10R4_Did_you_use_the_prod_in_entire__c</queriedFields>
+        <queriedFields>C1F11R1_In_how_many_acres_used_the_reco__c</queriedFields>
+        <queriedFields>C1F11R2_In_how_many_acres_used_the_reco__c</queriedFields>
+        <queriedFields>C1F11R3_In_how_many_acres_used_the_reco__c</queriedFields>
+        <queriedFields>C1F11R4_In_how_many_acres_used_the_reco__c</queriedFields>
+        <queriedFields>C1F12R1_Are_you_satisfied_with_the_resul__c</queriedFields>
+        <queriedFields>C1F12R2_Are_you_satisfied_with_the_resu__c</queriedFields>
+        <queriedFields>C1F12R3_Are_you_satisfied_with_the_resu__c</queriedFields>
+        <queriedFields>C1F12R4_Are_you_satisfied_with_the_resu__c</queriedFields>
+        <queriedFields>C1F13R1_If_No_Reasons__c</queriedFields>
+        <queriedFields>C1F13R1_If_No_Reasons_Other__c</queriedFields>
+        <queriedFields>C1F13R2_If_No_Reasons__c</queriedFields>
+        <queriedFields>C1F13R2_If_No_Reasons_Others__c</queriedFields>
+        <queriedFields>C1F13R3_If_No_Reasons__c</queriedFields>
+        <queriedFields>C1F13R3_If_No_Reasons_Others__c</queriedFields>
+        <queriedFields>C1F13R4_If_No_Reasons__c</queriedFields>
+        <queriedFields>C1F13R4_Others__c</queriedFields>
+        <queriedFields>C1F14R1_Possible_date_of_purchase__c</queriedFields>
+        <queriedFields>C1F14R2_Possible_date_of_purchase__c</queriedFields>
+        <queriedFields>C1F14R3_Possible_date_of_purchase__c</queriedFields>
+        <queriedFields>C1F14R4_Possible_date_of_purchase__c</queriedFields>
+        <queriedFields>C1F15R1_Possible_date_of_Application__c</queriedFields>
+        <queriedFields>C1F15R2_Possible_date_of_Application__c</queriedFields>
+        <queriedFields>C1F15R3_Possible_date_of_Application__c</queriedFields>
+        <queriedFields>C1F15R4_Possible_date_of_Application__c</queriedFields>
+        <queriedFields>C1_Completed__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>GetC2Survey</name>
+        <label>GetC2Survey</label>
+        <locationX>394</locationX>
+        <locationY>63</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Call_detail_Followup_C2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SurveyId</elementReference>
+            </value>
+        </filters>
+        <object>Survey__c</object>
+        <outputAssignments>
+            <assignToReference>C2Followup</assignToReference>
+            <field>C2_follow_up_Needed__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_C2_Details</name>
+        <label>Update C2 Details</label>
+        <locationX>3331</locationX>
+        <locationY>1131</locationY>
+        <connector>
+            <targetReference>Thank_You</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SurveyId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>C2F10R1_Did_you_use_the_prod_in_entire__c</field>
+            <value>
+                <elementReference>C2F10R1_Did_you_use_the_prod_in_entire_crop_area</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F10R2_Did_you_use_the_prod_in_entire__c</field>
+            <value>
+                <elementReference>C2F10R2_Did_you_use_the_prod_in_entire_crop_area_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F10R3_Did_you_use_the_prod_in_entire__c</field>
+            <value>
+                <elementReference>C2F10R3_Did_you_use_the_prod_in_entire_crop_area</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F10R4_Did_you_use_the_prod_in_entire__c</field>
+            <value>
+                <elementReference>C2F10R4_Did_you_use_the_prod_in_entire_crop_area</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F11R1_In_how_many_acres_used_the_reco__c</field>
+            <value>
+                <elementReference>C2F11R1_In_how_many_acres_used_the_recommended_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F11R2_In_how_many_acres_used_the_reco__c</field>
+            <value>
+                <elementReference>C2F11R2_In_how_many_acres_used_the_recommended_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F11R3_In_how_many_acres_used_the_reco__c</field>
+            <value>
+                <elementReference>C2F11R3_In_how_many_acres_used_the_recommended_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F11R4_In_how_many_acres_used_the_reco__c</field>
+            <value>
+                <elementReference>C2F11R4_In_how_many_acres_used_the_recommended_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F12R1_Are_you_satisfied_with_the_resu__c</field>
+            <value>
+                <elementReference>C2F12R1_Are_you_satisfied_with_the_results</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F12R2_Are_you_satisfied_with_the_resu__c</field>
+            <value>
+                <elementReference>C2F12R2_Are_you_satisfied_with_the_results_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F12R3_Are_you_satisfied_with_the_resu__c</field>
+            <value>
+                <elementReference>C2F12R3_Are_you_satisfied_with_the_results</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F12R4_Are_you_satisfied_with_the_resu__c</field>
+            <value>
+                <elementReference>C2F12R4_Are_you_satisfied_with_the_results</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F13R1_If_No_Reasons_Others__c</field>
+            <value>
+                <elementReference>C2F13R1_If_No_Reasons_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F13R1_If_No_Reasons__c</field>
+            <value>
+                <elementReference>C2F13R1_If_No_Reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F13R2_If_No_Reasons_Others__c</field>
+            <value>
+                <elementReference>C2F13R2_If_No_Reasons_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F13R2_If_No_Reasons__c</field>
+            <value>
+                <elementReference>C2F13R2_If_No_Reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F13R3_If_No_Reasons_Others__c</field>
+            <value>
+                <elementReference>C2F13R3_If_No_Reasons_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F13R3_If_No_Reasons__c</field>
+            <value>
+                <elementReference>C2F13R3_If_No_Reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F13R4_If_No_Reasons_Others__c</field>
+            <value>
+                <elementReference>C2F13R4_If_No_Reasons_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F13R4_If_No_Reasons__c</field>
+            <value>
+                <elementReference>C2F13R4_If_No_Reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F14R1_Possible_date_of_purchase__c</field>
+            <value>
+                <elementReference>C2F14R1_Possible_date_of_purchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F14R2_Possible_date_of_purchase__c</field>
+            <value>
+                <elementReference>C2F14R2_Possible_date_of_purchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F14R3_Possible_date_of_purchase__c</field>
+            <value>
+                <elementReference>C2F14R3_Possible_date_of_purchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F14R4_Possible_date_of_purchase__c</field>
+            <value>
+                <elementReference>C2F14R4_Possible_date_of_purchase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F15R1_Possible_date_of_Application__c</field>
+            <value>
+                <elementReference>C2F15R1_Possible_date_of_Application</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F15R2_Possible_date_of_Application__c</field>
+            <value>
+                <elementReference>C2F15R2_Possible_date_of_Application</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F15R3_Possible_date_of_Application__c</field>
+            <value>
+                <elementReference>C2F15R3_Possible_date_of_Application</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F15R4_Possible_date_of_Application__c</field>
+            <value>
+                <elementReference>C2F15R4_Possible_date_of_Application</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F1R1_Did_you_buy_the_product_as_per_r__c</field>
+            <value>
+                <elementReference>C2F1R1_Did_you_buy_the_product_as_per_recommendation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F1R2_Did_you_buy_the_product_as_per_r__c</field>
+            <value>
+                <elementReference>C2F1R2_Did_you_buy_the_product_as_per_recommendation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F1R3_Did_you_buy_the_product_as_per_r__c</field>
+            <value>
+                <elementReference>C2F1R3_Did_you_buy_the_product_as_per_recommendation_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F1R4_Did_you_buy_the_product_as_per_r__c</field>
+            <value>
+                <elementReference>C2F1R4_Did_you_buy_the_product_as_per_recommendation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F2R1_Reason_for_not_buying_the_produ__c</field>
+            <value>
+                <elementReference>C2F2R1_Reason_for_not_buying_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F2R1_Reason_fr_nt_buying_prod_other__c</field>
+            <value>
+                <elementReference>C2F2R1_Reason_for_not_buying_the_product_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F2R2_Reason_for_not_buying_the_produ__c</field>
+            <value>
+                <elementReference>C2F2R2_Reason_for_not_buying_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F2R2_Reason_fr_nt_buying_prod_other__c</field>
+            <value>
+                <elementReference>C2F2R2_Reason_for_not_buying_the_product_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F2R3_Reason_for_not_buying_the_produ__c</field>
+            <value>
+                <elementReference>C2F2R3_Reason_for_not_buying_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F2R3_Reason_fr_nt_buying_prod_other__c</field>
+            <value>
+                <elementReference>C2F2R3_Reason_for_not_buying_the_product_Other</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F2R4_Reason_for_not_buying_the_produ__c</field>
+            <value>
+                <elementReference>C2F2R4_Reason_for_not_buying_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F2R4_Reason_fr_nt_buying_prod_other__c</field>
+            <value>
+                <elementReference>C2F2R4_Reason_for_not_buying_the_product_Other_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F3_R1_Which_product_did_you_buy__c</field>
+            <value>
+                <elementReference>C2F3_R1_Which_product_did_you_buy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F3_R2_Which_product_did_you_buy__c</field>
+            <value>
+                <elementReference>C2F3_R2_Which_product_did_you_buy_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F3_R3_Which_product_did_you_buy__c</field>
+            <value>
+                <elementReference>C2F3_R3_Which_product_did_you_buy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F3_R4_Which_product_did_you_buy__c</field>
+            <value>
+                <elementReference>C2F3_R4_Which_product_did_you_buy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F4R1_When_did_you_buy_the_product__c</field>
+            <value>
+                <elementReference>C2F4R1_When_did_you_buy_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F4R2_When_did_you_buy_the_product__c</field>
+            <value>
+                <elementReference>C2F4R2_When_did_you_buy_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F4R3_When_did_you_buy_the_product__c</field>
+            <value>
+                <elementReference>C2F4R3_When_did_you_buy_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F4R4_When_did_you_buy_the_product__c</field>
+            <value>
+                <elementReference>C2F4R4_When_did_you_buy_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F5R1_Which_Retailer_did_you_buy_the_pr__c</field>
+            <value>
+                <elementReference>C2F5R1_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F5R2_Which_Retailer_did_you_buy_the_pr__c</field>
+            <value>
+                <elementReference>C2F5R2_Which_Retailer_did_you_buy_the_product_from_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F5R3_Which_Retailer_did_you_buy_the_pr__c</field>
+            <value>
+                <elementReference>C2F5R3_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F5R4_Which_Retailer_did_you_buy_the_pr__c</field>
+            <value>
+                <elementReference>C2F5R4_Which_Retailer_did_you_buy_the_product_from</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F6R1_Did_you_buy_or_use_the_product__c</field>
+            <value>
+                <elementReference>C2F6R1_Did_you_buy_or_use_the_product_yourself</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F6R2_Did_you_buy_or_use_the_product__c</field>
+            <value>
+                <elementReference>C2F6R2_Did_you_buy_or_use_the_product_yourself_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F6R3_Did_you_buy_or_use_the_product__c</field>
+            <value>
+                <elementReference>C2F6R3_Did_you_buy_or_use_the_product_yourself</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F6R4_Did_you_buy_or_use_the_product__c</field>
+            <value>
+                <elementReference>C2F6R4_Did_you_buy_or_use_the_product_yourself</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F7R1_What_is_the_form_state_of_the__c</field>
+            <value>
+                <elementReference>C2F7R1_What_is_the_form_state_of_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F7R2What_is_the_form_state_of_the_prod__c</field>
+            <value>
+                <elementReference>C2F7R2_What_is_the_form_state_of_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F7R3What_is_the_form_state_of_the_prod__c</field>
+            <value>
+                <elementReference>C2F7R3_What_is_the_form_state_of_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F7R4_What_is_the_form_state_of_the__c</field>
+            <value>
+                <elementReference>C2F7R4_What_is_the_form_state_of_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F8R1_What_is_the_colour_of_the_pack__c</field>
+            <value>
+                <elementReference>C2F8R1_What_is_the_colour_of_the_pack</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F8R2_What_is_the_colour_of_the_pack__c</field>
+            <value>
+                <elementReference>C2F8R2_What_is_the_colour_of_the_pack_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F8R3_What_is_the_colour_of_the_pack__c</field>
+            <value>
+                <elementReference>C2F8R3_What_is_the_colour_of_the_pack</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F8R4_What_is_the_colour_of_the_pack__c</field>
+            <value>
+                <elementReference>C2F8R4_What_is_the_colour_of_the_pack</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F9R1_What_is_the_artwork_of_the_produ__c</field>
+            <value>
+                <elementReference>C2F9R1_What_is_the_artwork_of_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F9R2_What_is_the_artwork_of_the_produ__c</field>
+            <value>
+                <elementReference>C2F9R2_What_is_the_artwork_of_the_product_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F9R3_What_is_the_artwork_of_the_produ__c</field>
+            <value>
+                <elementReference>C2F9R3_What_is_the_artwork_of_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2F9R4_What_is_the_artwork_of_the_produ__c</field>
+            <value>
+                <elementReference>C2F9R4_What_is_the_artwork_of_the_product</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_Completed__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_follow_up_Needed__c</field>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Survey__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateC2Survey</name>
+        <label>UpdateC2Survey</label>
+        <locationX>1209</locationX>
+        <locationY>345</locationY>
+        <connector>
+            <targetReference>Call_Completion</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SurveyId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>C2R1__c</field>
+            <value>
+                <elementReference>C2R1</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2R2__c</field>
+            <value>
+                <elementReference>C2R2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2R3__c</field>
+            <value>
+                <elementReference>C2R3</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2R4__c</field>
+            <value>
+                <elementReference>C2R4</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_Any_pest_infestation_observed__c</field>
+            <value>
+                <elementReference>C2_Any_pest_infestation_observed</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_Any_pest_infestation_observed_date__c</field>
+            <value>
+                <elementReference>C2_Any_pest_infestation_observed_date_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_Disease__c</field>
+            <value>
+                <elementReference>C2Disease_box</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_PGR__c</field>
+            <value>
+                <elementReference>C2PGR_box</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_Pest__c</field>
+            <value>
+                <elementReference>C2_Pest_Box</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_Weed__c</field>
+            <value>
+                <elementReference>C2Weed_box</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>C2_follow_up_Needed__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Survey__c</object>
+    </recordUpdates>
+    <screens>
+        <name>C1DetailsNotpresent</name>
+        <label>C1DetailsNotpresent</label>
+        <locationX>1315</locationX>
+        <locationY>211</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Call_Completion</targetReference>
+        </connector>
+        <fields>
+            <name>C1DetailsNull</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;C1 Details are not present. Click next to Finish.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C1R1_Details</name>
+        <label>C1R1 Details</label>
+        <locationX>850</locationX>
+        <locationY>641</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Are_you_satisfied_with_the_results_C2F12R1</targetReference>
+        </connector>
+        <fields>
+            <name>Recommendation_C2R1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C2R1: &lt;/b&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SurveyC2.C2R1__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F6R1_Did_you_buy_or_use_the_product_yourself</name>
+            <choiceReferences>C2F6R1Didyoubuyorusetheproductyourself</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F6R1 - Did you buy or use the product yourself?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F7R1_What_is_the_form_state_of_the_product</name>
+            <choiceReferences>C2F7R1Whatistheform_stateoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F7R1  What is the form / state of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F8R1_What_is_the_colour_of_the_pack</name>
+            <choiceReferences>C2F8R1Whatisthecolourofthepack</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F8R1 What is the colour of the pack?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F9R1_What_is_the_artwork_of_the_product</name>
+            <choiceReferences>C2F9R1Whatistheartworkoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F9R1  What is the artwork of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F10R1_Did_you_use_the_prod_in_entire_crop_area</name>
+            <choiceReferences>C2F10R1Didyouusetheprodinentirecroparea</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F10R1  -Did you use the prod in entire crop area?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F11R1_In_how_many_acres_used_the_recommended_product</name>
+            <dataType>String</dataType>
+            <fieldText>C2F11R1 -In how many acres used the recommended product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2F12R1_Are_you_satisfied_with_the_results</name>
+            <choiceReferences>C2F12R1Areyousatisfiedwiththeresults</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F12R1 -Are you satisfied with the results?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F12R1_Details</name>
+        <label>C2F12R1 Details</label>
+        <locationX>948</locationX>
+        <locationY>455</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_No_Reasons_Other_C2F13R1</targetReference>
+        </connector>
+        <fields>
+            <name>C2F13R1_If_No_Reasons</name>
+            <choiceReferences>C2F13R1IfNoReasons</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F13R1 -If No, Reasons</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F12R2_Details</name>
+        <label>C2F12R2 Details</label>
+        <locationX>1781</locationX>
+        <locationY>1059</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_No_Reasons_Other_C2F13R2</targetReference>
+        </connector>
+        <fields>
+            <name>C2F13R2_If_No_Reasons</name>
+            <choiceReferences>C2F13R2IfNoReasons</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F13R2 -If No, Reasons</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F12R3_Details</name>
+        <label>C2F12R3 Details</label>
+        <locationX>2357</locationX>
+        <locationY>891</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_No_Reasons_Other_C2F13R3</targetReference>
+        </connector>
+        <fields>
+            <name>C2F13R3_If_No_Reasons</name>
+            <choiceReferences>C2F13R3IfNoReasons</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F13R3 -If No, Reasons</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F12R4_Details</name>
+        <label>C2F12R4 Details</label>
+        <locationX>3056</locationX>
+        <locationY>921</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_No_Reasons_Other_C2F13R4</targetReference>
+        </connector>
+        <fields>
+            <name>C2F13R4_If_No_Reasons</name>
+            <choiceReferences>C2F13R4IfNo_Reasons</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F13R4 -If No, Reasons</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F13R1_Other</name>
+        <label>C2F13R1 Other</label>
+        <locationX>1227</locationX>
+        <locationY>461</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R2</targetReference>
+        </connector>
+        <fields>
+            <name>C2F13R1_If_No_Reasons_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C2F13R1 -If No, Reasons Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F13R2_Other</name>
+        <label>C2F13R2 Other</label>
+        <locationX>1834</locationX>
+        <locationY>728</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R3</targetReference>
+        </connector>
+        <fields>
+            <name>C2F13R2_If_No_Reasons_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C2F13R2 -If No, Reasons Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F13R3_Other</name>
+        <label>C2F13R3 Other</label>
+        <locationX>2483</locationX>
+        <locationY>743</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R4</targetReference>
+        </connector>
+        <fields>
+            <name>C2F13R3_If_No_Reasons_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C2F13R3 -If No, Reasons Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F13R4_Other</name>
+        <label>C2F13R4 Other</label>
+        <locationX>3227</locationX>
+        <locationY>827</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_C2_Details</targetReference>
+        </connector>
+        <fields>
+            <name>C2F13R4_If_No_Reasons_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C2F13R4 -If No, Reasons Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F1R1_Details_1</name>
+        <label>C2F1R1 Details 1</label>
+        <locationX>781</locationX>
+        <locationY>781</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R2</targetReference>
+        </connector>
+        <fields>
+            <name>C2F14R1_Possible_date_of_purchase</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F14R1 -Possible date of purchase</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2F15R1_Possible_date_of_Application</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F15R1 -Possible date of Application</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F1R1_IF_NO</name>
+        <label>Call 2 Follow Up (+ 5 DAYS)</label>
+        <locationX>366</locationX>
+        <locationY>811</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_for_not_buying_the_product_C2F2R1</targetReference>
+        </connector>
+        <fields>
+            <name>C2F2R1_Reason_for_not_buying_the_product</name>
+            <choiceReferences>C2F2R1_Reasonfornotbuyingtheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F2R1  -Reason for not buying the product</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F1R2</name>
+        <label>C2F1R2</label>
+        <locationX>1241</locationX>
+        <locationY>913</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2F1R2_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R2:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SurveyC2.C2R2__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F1R2_Did_you_buy_the_product_as_per_recommendation</name>
+            <choiceReferences>C2F1R2Didyoubuytheproductasperrecommendation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F1R2 -Did you buy the product as per recommendation?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F1R3</name>
+        <label>C2F1R3</label>
+        <locationX>1787</locationX>
+        <locationY>521</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2F1R3_If</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R3</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R3:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SurveyC2.C2R3__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F1R3_Did_you_buy_the_product_as_per_recommendation_0</name>
+            <choiceReferences>C2F1R3Didyoubuytheproductasperrecommendation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F1R3 -Did you buy the product as per recommendation?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F1R4</name>
+        <label>C2F1R4</label>
+        <locationX>2385</locationX>
+        <locationY>565</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2F1R4_If</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R4</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R4:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SurveyC2.C2R4__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F1R4_Did_you_buy_the_product_as_per_recommendation</name>
+            <choiceReferences>C2F1R4Didyoubuytheproductasperrecommendation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F1R4 -Did you buy the product as per recommendation?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R1_Reason_for_not_buying_the_productother</name>
+        <label>C2F2R1  -Reason for not buying the productother</label>
+        <locationX>717</locationX>
+        <locationY>907</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R2</targetReference>
+        </connector>
+        <fields>
+            <name>C2F2R1_Reason_for_not_buying_the_product_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C2F2R1  -Reason for not buying the product Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R2_Details</name>
+        <label>C2F2R2  Details</label>
+        <locationX>1455</locationX>
+        <locationY>631</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R3</targetReference>
+        </connector>
+        <fields>
+            <name>C2F14R2_Possible_date_of_purchase</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F14R2 -Possible date of purchase</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2F15R2_Possible_date_of_Application</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F15R2 -Possible date of Application</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R2_Other</name>
+        <label>C2F2R2  Other</label>
+        <locationX>1644</locationX>
+        <locationY>467</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R3</targetReference>
+        </connector>
+        <fields>
+            <name>C2F2R2_Reason_for_not_buying_the_product_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C2F2R2  -Reason for not buying the product Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R2_Reason_not_for_buying</name>
+        <label>C2F2R2 - Reason not for buying</label>
+        <locationX>1348</locationX>
+        <locationY>463</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_for_not_buying_the_product_C2F2R2</targetReference>
+        </connector>
+        <fields>
+            <name>C2F2R2_Reason_for_not_buying_the_product</name>
+            <choiceReferences>C2F2R2Reasonfornotbuyingtheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F2R2  -Reason for not buying the product</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R3_Details</name>
+        <label>C2F2R3 Details</label>
+        <locationX>2133</locationX>
+        <locationY>715</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R4</targetReference>
+        </connector>
+        <fields>
+            <name>C2F14R3_Possible_date_of_purchase</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F14R3 -Possible date of purchase</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2F15R3_Possible_date_of_Application</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F15R3 -Possible date of Application</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R3_Reason_not_for_buying</name>
+        <label>C2F2R3  - Reason not for buying</label>
+        <locationX>1963</locationX>
+        <locationY>465</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2F2R3Reason_not_for_buying</targetReference>
+        </connector>
+        <fields>
+            <name>C2F2R3_Reason_for_not_buying_the_product</name>
+            <choiceReferences>C2F2R3Reasonfornotbuyingtheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F2R3  -Reason for not buying the product</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R3_reason_Other</name>
+        <label>C2F2R3 reason Other</label>
+        <locationX>2243</locationX>
+        <locationY>447</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_C2R4</targetReference>
+        </connector>
+        <fields>
+            <name>C2F2R3_Reason_for_not_buying_the_product_Other</name>
+            <dataType>String</dataType>
+            <fieldText>C2F2R3  -Reason for not buying the product Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R4_Details</name>
+        <label>C2F2R4 Details</label>
+        <locationX>2817</locationX>
+        <locationY>749</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_C2_Details</targetReference>
+        </connector>
+        <fields>
+            <name>C2F14R4_Possible_date_of_purchase</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F14R4 -Possible date of purchase</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2F15R4_Possible_date_of_Application</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F15R4 -Possible date of Application</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R4_Reason_not_for_buying</name>
+        <label>C2F2R4  - Reason not for buying</label>
+        <locationX>2646</locationX>
+        <locationY>509</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Reason_not_for_buying_C2F2R4</targetReference>
+        </connector>
+        <fields>
+            <name>C2F2R4_Reason_for_not_buying_the_product_0</name>
+            <choiceReferences>C2F2R4Reasonfornotbuyingtheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F2R4  -Reason for not buying the product</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F2R4_reason_Other</name>
+        <label>C2F2R4 reason Other</label>
+        <locationX>2890</locationX>
+        <locationY>429</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_C2_Details</targetReference>
+        </connector>
+        <fields>
+            <name>C2F2R4_Reason_for_not_buying_the_product_Other_0</name>
+            <dataType>String</dataType>
+            <fieldText>C2F2R4  -Reason for not buying the product Other</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F3R3_Details</name>
+        <label>C2F3R3 Details</label>
+        <locationX>2085</locationX>
+        <locationY>891</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Are_you_satisfied_with_the_results_C2F12R3</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R3_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R3:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SurveyC2.C2R3__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F6R3_Did_you_buy_or_use_the_product_yourself</name>
+            <choiceReferences>C2F6R3Didyoubuyorusetheproductyourself</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F6R3 - Did you buy or use the product yourself?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F7R3_What_is_the_form_state_of_the_product</name>
+            <choiceReferences>C2F7R3Whatistheform_stateoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F7R3  What is the form / state of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F8R3_What_is_the_colour_of_the_pack</name>
+            <choiceReferences>C2F8R3Whatisthecolourofthepack</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F8R3 What is the colour of the pack?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F9R3_What_is_the_artwork_of_the_product</name>
+            <choiceReferences>C2F9R3Whatistheartworkoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F9R3  What is the artwork of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F10R3_Did_you_use_the_prod_in_entire_crop_area</name>
+            <choiceReferences>C2F10R3Didyouusetheprodinentirecroparea</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F10R3  -Did you use the prod in entire crop area?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F11R3_In_how_many_acres_used_the_recommended_product</name>
+            <dataType>String</dataType>
+            <fieldText>C2F11R3 -In how many acres used the recommended product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2F12R3_Are_you_satisfied_with_the_results</name>
+            <choiceReferences>C2F12R3Areyousatisfiedwiththeresults</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F12R3 -Are you satisfied with the results?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F3R3_If_Yes</name>
+        <label>C2F3R3 If Yes</label>
+        <locationX>1975</locationX>
+        <locationY>891</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2F3R3_Details</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R03</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R3:&lt;/b&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SurveyC2.C2R3__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F3_R3_Which_product_did_you_buy</name>
+            <choiceReferences>C2F3R3Whichproductdidyoubuy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F3 R3 - Which product did you buy?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F4R3_When_did_you_buy_the_product</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F4R3 - When did you buy the product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;{!DateErrorMessage}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C2F4R3_When_did_you_buy_the_product}&lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C2F5R3_Which_Retailer_did_you_buy_the_product_from</name>
+            <dataType>String</dataType>
+            <fieldText>C2F5R3 - Which Retailer did you buy the product from?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F3R4_Details</name>
+        <label>C2F3R4 Details</label>
+        <locationX>2795</locationX>
+        <locationY>911</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Are_you_satisfied_with_the_results_C2F12R4</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R4_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R4:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SurveyC2.C2R4__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F6R4_Did_you_buy_or_use_the_product_yourself</name>
+            <choiceReferences>C2F6R4Didyoubuyorusetheproductyourself</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F6R4 - Did you buy or use the product yourself?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F7R4_What_is_the_form_state_of_the_product</name>
+            <choiceReferences>C2F7R4Whatistheform_stateoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F7R4  What is the form / state of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F8R4_What_is_the_colour_of_the_pack</name>
+            <choiceReferences>C2F8R4Whatisthecolourofthepack</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F8R4 What is the colour of the pack?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F9R4_What_is_the_artwork_of_the_product</name>
+            <choiceReferences>C2F9R4Whatistheartworkoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F9R4  What is the artwork of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F10R4_Did_you_use_the_prod_in_entire_crop_area</name>
+            <choiceReferences>C2F10R4Didyouusetheprodinentirecroparea</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F10R4 -Did you use the prod in entire crop area?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F11R4_In_how_many_acres_used_the_recommended_product</name>
+            <dataType>String</dataType>
+            <fieldText>C2F11R4 -In how many acres used the recommended product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2F12R4_Are_you_satisfied_with_the_results</name>
+            <choiceReferences>C2F12R4Areyousatisfiedwiththeresults</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F12R4 -Are you satisfied with the results?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2F3R4_If_Yes</name>
+        <label>C2F3R4 If Yes</label>
+        <locationX>2649</locationX>
+        <locationY>909</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2F3R4_Details</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R04</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R4:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!SurveyC2.C2R4__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F3_R4_Which_product_did_you_buy</name>
+            <choiceReferences>C2F3R4Whichproductdidyoubuy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F3 R4 - Which product did you buy?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F4R4_When_did_you_buy_the_product</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F4R4 - When did you buy the product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;{!DateErrorMessage}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C2F4R4_When_did_you_buy_the_product}&lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C2F5R4_Which_Retailer_did_you_buy_the_product_from</name>
+            <dataType>String</dataType>
+            <fieldText>C2F5R4 - Which Retailer did you buy the product from?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2FR2Ifyes</name>
+        <label>C2FR2 If Yes</label>
+        <locationX>1356</locationX>
+        <locationY>829</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2R2_Details</targetReference>
+        </connector>
+        <fields>
+            <name>Recommendation_C2R2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R2:&lt;/b&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!SurveyC2.C2R2__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F3_R2_Which_product_did_you_buy_0</name>
+            <choiceReferences>C2F3R2Whichproductdidyoubuy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F3 R2 - Which product did you buy?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F4R2_When_did_you_buy_the_product_0</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F4R2- When did you buy the product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;{!DateErrorMessage}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C2F4R2_When_did_you_buy_the_product_0}&lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C2F5R2_Which_Retailer_did_you_buy_the_product_from_0</name>
+            <dataType>String</dataType>
+            <fieldText>C2F5R2 - Which Retailer did you buy the product from?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>C2R2_Details</name>
+        <label>C2R2 Details</label>
+        <locationX>1591</locationX>
+        <locationY>681</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Are_you_satisfied_with_the_results_C2F12R2</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R2_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;C2R2:&lt;/b&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt; &lt;/b&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!SurveyC2.C2R2__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F6R2_Did_you_buy_or_use_the_product_yourself_0</name>
+            <choiceReferences>C2F6R2Didyoubuyorusetheproductyourself</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F6R2 - Did you buy or use the product yourself?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F7R2_What_is_the_form_state_of_the_product_0</name>
+            <choiceReferences>C2F7R2Whatistheform_stateoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F7R2  What is the form / state of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F8R2_What_is_the_colour_of_the_pack_0</name>
+            <choiceReferences>C2F8R2Whatisthecolourofthepack</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F8R2 What is the colour of the pack?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F9R2_What_is_the_artwork_of_the_product_0</name>
+            <choiceReferences>C2F9R2Whatistheartworkoftheproduct</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F9R2  What is the artwork of the product?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F10R2_Did_you_use_the_prod_in_entire_crop_area_0</name>
+            <choiceReferences>C2F10R2Didyouusetheprodinentirecroparea</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F10R2  -Did you use the prod in entire crop area?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F11R2_In_how_many_acres_used_the_recommended_product_0</name>
+            <dataType>String</dataType>
+            <fieldText>C2F11R2 -In how many acres used the recommended product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2F12R2_Are_you_satisfied_with_the_results_0</name>
+            <choiceReferences>C2F12R2Areyousatisfiedwiththeresults</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F12R2 -Are you satisfied with the results?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Call_1_Details</name>
+        <label>Call 1 Details</label>
+        <locationX>1035</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>TeleSelling_Call_2</targetReference>
+        </connector>
+        <fields>
+            <name>Call1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Call 1&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_0CultivatedCropD</name>
+            <fieldText>&lt;p&gt;C1.0 Cultivated Crop : {!C1_0CultivatedCrop_Details}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_01IfRiceTPdate</name>
+            <fieldText>&lt;p&gt;C1.01 If Rice TP date :{!C1_01IfRiceTPdateDetails}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_1CultivatedAreainAcres</name>
+            <fieldText>&lt;p&gt;C1.1 Cultivated Area (in Acres)&amp;nbsp;:{!C1_1CultivatedArea_inAcres}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_2IsthecropirrigatedorrainfedD</name>
+            <fieldText>&lt;p&gt;C1.2&amp;nbsp;Is the crop irrigated or rainfed? :&lt;/p&gt;&lt;p&gt;{!C1_2Isthecropirrigatedorrainfed}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_3WhendidyousowtheseedsD</name>
+            <fieldText>&lt;p&gt;C1.3 When did you sow the seeds? :{!C1_3Whendidyousowtheseeds}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_4ReceivedanyrecommendationfromAKCearlierD</name>
+            <fieldText>&lt;p&gt;C1.4&amp;nbsp;Received any recommendation from AKC earlier? :{!C1_4ReceivedanyrecommendationfromAKCearlier}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_5DidyouundertakeSeedTreatmentD</name>
+            <fieldText>&lt;p&gt;C1.5 Did you undertake Seed Treatment? :{!C1_5DidyouundertakeSeedTreatment}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_6IfYeswhenD</name>
+            <fieldText>&lt;p&gt;C1.6&amp;nbsp;If Yes, when? :{!C1_6IfYeswhen}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_7IfYeswithwhatD</name>
+            <fieldText>&lt;p&gt;C1.7&amp;nbsp;If Yes, with what? :{!C1_7IfYeswithwhat}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1Anypestinfestationobserved</name>
+            <fieldText>&lt;p&gt;C1-Any pest infestation observed? :{!C1_Anypestinfestationobserved}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1IfYeswhichpestD</name>
+            <fieldText>&lt;p&gt;C1 If &quot;Yes&quot;, which pest? :{!C1IfYeswhichpest}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1R1D</name>
+            <fieldText>&lt;p&gt;C1R1 :{!C1R1}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1R2D</name>
+            <fieldText>&lt;p&gt;C1R2 :{!C1R2}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1R3D</name>
+            <fieldText>&lt;p&gt;C1R3 :{!C1R3}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1R4D</name>
+            <fieldText>&lt;p&gt;C1R4 :{!C1R4}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1_AnypestinfestationobserveddateD</name>
+            <fieldText>&lt;p&gt;C1-Any pest infestation observed date :{!C1_Anypestinfestationobserveddate}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F1R1Didyoubuytheproductasperrecommendation</name>
+            <fieldText>&lt;p&gt;C1F1R1 -Did you buy the product as per recommendation? : {!C1F1R1_Didyoubuytheproductasperrecommendation}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F2R1Reasonfornotbuyingtheproduct</name>
+            <fieldText>&lt;p&gt;C1F2R1&amp;nbsp;-Reason for not buying the product :{!C1F2R1_Reasonfornotbuyingtheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F2R1ReasonfornotbuyingtheproductOther</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;C1F2R1&amp;nbsp;-Reason for not buying the product Other : {!C1F2R1_ReasonfornotbuyingtheproductOther}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F3R1WhichproductdidyoubuyD</name>
+            <fieldText>&lt;p&gt;C1F3 R1 - Which product did you buy? :{!C1F3R1Whichproductdidyoubuy}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F4R1Whendidyoubuytheproduct</name>
+            <fieldText>&lt;p&gt;C1F4R1 - When did you buy the product? :{!C1F4R1_Whendidyoubuytheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F5R1WhichRetailerdidyoubuytheproductfrom</name>
+            <fieldText>&lt;p&gt;C1F5R1 - Which Retailer did you buy the product from? :{!C1F5R1_WhichRetailerdidyoubuytheproductfrom}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F6R1Didyoubuyorusetheproductyourself</name>
+            <fieldText>&lt;p&gt;C1F6R1 - Did you buy or use the product yourself? :{!C1F6R1_Didyoubuyorusetheproductyourself}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F7R1Whatistheform_stateoftheproduct</name>
+            <fieldText>&lt;p&gt;C1F7R1&amp;nbsp;Wha{!C1F7R1_Whatistheform_stateoftheproduct}t is the form / state of the product? :&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F8R1Whatisthecolourofthepack</name>
+            <fieldText>&lt;p&gt;C1F8R1 What is the colour of the pack? :{!C1F8R1_Whatisthecolourofthepack}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F9R1WhatistheartworkoftheproductD</name>
+            <fieldText>&lt;p&gt;C1F9R1&amp;nbsp;Wh&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;at is the artwork of the product? :&lt;/span&gt;{!C1F9R1Whatistheartworkoftheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F10R1Didyouusetheprodinentirecroparea</name>
+            <fieldText>&lt;p&gt;C1F10R1&amp;nbsp;-Did you use the prod in entire crop area? : {!C1F10R1_Didyouusetheprodinentirecroparea}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F11R1Inhowmanyacresusedtherecommendedproduct</name>
+            <fieldText>&lt;p&gt;C1F11R1 -In how many acres used the recommended product? :{!C1F11R1_Inhowmanyacresusedtherecommendedproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F12R1Areyousatisfiedwiththeresults</name>
+            <fieldText>&lt;p&gt;C1F12R1 -Are you satisfied with the results? : {!C1F12R1_Areyousatisfiedwiththeresults}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F13R1IfNoReasons</name>
+            <fieldText>&lt;p&gt;C1F13R1 -If No, Reasons? : {!C1F13R1_IfNoReasons}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F13R1IfNoReasonsOther</name>
+            <fieldText>&lt;p&gt;C1F13R1 -If No, Reasons - Others? :{!C1F13R1_IfNoReasons_Others}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F14R1Possibledateofpurchase</name>
+            <fieldText>&lt;p&gt;C1F14R1 -Possible date of purchase? :{!C1F14R1_Possibledateofpurchase}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F15R1PossibledateofApplication</name>
+            <fieldText>&lt;p&gt;C1F15R1 -Possible date of Application? :{!C1F15R1_PossibledateofApplication}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F1R2Didyoubuytheproductasperrecommendation</name>
+            <fieldText>&lt;p&gt;C1F1R2 -Did you buy the product as per recommendation? :{!C1F1R2_Didyoubuytheproductasperrecommendation}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F2R2Reasonfornotbuyingtheproduct</name>
+            <fieldText>&lt;p&gt;C1F2R2&amp;nbsp;-Reason for not buying the product? :{!C1F2R2_Reasonfornotbuyingtheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F2R2ReasonfornotbuyingtheproductOther</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;C1F2R2&amp;nbsp;-Reason for not buying the product Other :{!C1F2R2_ReasonfornotbuyingtheproductOther}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F3R2WhichproductdidyoubuyD</name>
+            <fieldText>&lt;p&gt;C1F3R2 - Which product did you buy? :{!C1F3R2Whichproductdidyoubuy}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F4R2Whendidyoubuytheproduct</name>
+            <fieldText>&lt;p&gt;C1F4R2 - When did you buy the product?:{!C1F4R2_Whendidyoubuytheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F5R2WhichRetailerdidyoubuytheproductfrom</name>
+            <fieldText>&lt;p&gt;C1F5R2 - Which Retailer did you buy the product from? :{!C1F5R2_WhichRetailerdidyoubuytheproductfrom}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F6R2Didyoubuyorusetheproductyourself</name>
+            <fieldText>&lt;p&gt;C1F6R2 - Did you buy or use the product yourself? :{!C1F6R2_Didyoubuyorusetheproductyourself}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F7R2Whatistheformstateoftheproduct</name>
+            <fieldText>&lt;p&gt;C1F7R2&amp;nbsp;What is the form / state of the product? :{!C1F7R2Whatistheform_stateoftheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F8R2WhatisthecolourofthepackD</name>
+            <fieldText>&lt;p&gt;C1F8R2 What is the colour of the pack? :{!C1F8R2Whatisthecolourofthepack}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F9R2WhatistheartworkoftheproductD</name>
+            <fieldText>&lt;p&gt;C1F9R2&amp;nbsp;What is the artwork of the product? :{!C1F9R2Whatistheartworkoftheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F10R2DidyouusetheprodinentirecropareaD</name>
+            <fieldText>&lt;p&gt;C1F10R2&amp;nbsp;-Did you use the prod in entire crop area? :{!C1F10R2Didyouusetheprodinentirecroparea}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F11R2InhowmanyacresusedtherecommendedproductD</name>
+            <fieldText>&lt;p&gt;C1F11R2 -In how many acres used the recommended product? :{!C1F11R2Inhowmanyacresusedtherecommendedproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F12R2AreyousatisfiedwiththeresultsD</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;C1F12R2 -Are you satisfied with the results? :&lt;/span&gt;{!C1F12R2Areyousatisfiedwiththeresults}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F13R2IfNoReasonsD</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;C1F13R2 -If No, Reasons :&lt;/span&gt;{!C1F13R2IfNoReasons}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F13R2IfNoReasonsOtherD</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;C1F13R2 -If No, Reasons Other :&lt;/span&gt;{!C1F13R2IfNoReasonsOther}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F14R2PossibledateofpurchaseD</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;C1F14R2 -Possible date of purchase :&lt;/span&gt;{!C1F14R2Possibledateofpurchase}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F15R2PossibledateofApplication</name>
+            <fieldText>&lt;p&gt;C1F15R2 -Possible date of Application :{!C1F15R2_PossibledateofApplication}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F1R3Didyoubuytheproductasperrecommendation</name>
+            <fieldText>&lt;p&gt;C1F1R3 -Did you buy the product as per recommendation?:{!C1F1R3_Didyoubuytheproductasperrecommendation}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F2R3Reasonfornotbuyingtheproduct</name>
+            <fieldText>&lt;p&gt;C1F2R3&amp;nbsp;-Reason for not buying the product :{!C1F2R3_Reasonfornotbuyingtheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F2R3ReasonfornotbuyingtheproductOther</name>
+            <fieldText>&lt;p&gt;C1F2R3&amp;nbsp;-Reason for not buying the product Other :{!C1F2R3_ReasonfornotbuyingtheproductOther}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F3R3WhichproductdidyoubuyD</name>
+            <fieldText>&lt;p&gt;C1F3 R3 - Which product did you buy?:{!C1F3R3Whichproductdidyoubuy}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F4R3Whendidyoubuytheproduct</name>
+            <fieldText>&lt;p&gt;C1F4R3 - When did you buy the product? :{!C1F4R3_Whendidyoubuytheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F5R3WhichRetailerdidyoubuytheproductfrom</name>
+            <fieldText>&lt;p&gt;C1F5R3 - Which Retailer did you buy the product from? :{!C1F5R3_WhichRetailerdidyoubuytheproductfrom}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F6R3Didyoubuyorusetheproductyourself</name>
+            <fieldText>&lt;p&gt;C1F6R3 - Did you buy or use the product yourself? :{!C1F6R3_Didyoubuyorusetheproductyourself}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F7R3Whatistheformstateoftheproduct</name>
+            <fieldText>&lt;p&gt;C1F7R3 What is the form / state of the product? :&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!C1F7R3Whatistheform_stateoftheproduct}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F8R3WhatisthecolourofthepackD</name>
+            <fieldText>&lt;p&gt;C1F8R3 What is the colour of the pack? :{!C1F8R3Whatisthecolourofthepack}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F9R3WhatistheartworkoftheproductD</name>
+            <fieldText>&lt;p&gt;C1F9R3&amp;nbsp;What is the artwork of the product? :{!C1F9R3Whatistheartworkoftheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F10R3DidyouusetheprodinentirecropareaD</name>
+            <fieldText>&lt;p&gt;C1F10R3&amp;nbsp;-Did you use the prod in entire crop area? :{!C1F10R3Didyouusetheprodinentirecroparea}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F11R3InhowmanyacresusedtherecommendedproductD</name>
+            <fieldText>&lt;p&gt;C1F11R3 -In how many acres used the recommended product? :{!C1F11R3Inhowmanyacresusedtherecommendedproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F12R3AreyousatisfiedwiththeresultsD</name>
+            <fieldText>&lt;p&gt;C1F12R3 -Are you satisfied with the results? :{!C1F12R3Areyousatisfiedwiththeresults}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F13R3IfNoReasonsD</name>
+            <fieldText>&lt;p&gt;C1F13R3 -If No, Reasons :{!C1F13R3IfNoReasons}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F13R3IfNoReasonsOtherD</name>
+            <fieldText>&lt;p&gt;C1F13R3 -If No, Reasons Other :{!C1F13R3IfNoReasonsOther}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F14R3PossibledateofpurchaseD</name>
+            <fieldText>&lt;p&gt;C1F14R3 -Possible date of purchase :{!C1F14R3_Possibledateofpurchase}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F15R3PossibledateofApplicationD</name>
+            <fieldText>&lt;p&gt;C1F15R3 -Possible date of Application :{!C1F15R3_PossibledateofApplication}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F1R4Didyoubuytheproductasperrecommendation</name>
+            <fieldText>&lt;p&gt;C1F1R4 -Did you buy the product as per recommendation? :{!C1F1R4_Didyoubuytheproductasperrecommendation}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F2R4Reasonfornotbuyingtheproduct</name>
+            <fieldText>&lt;p&gt;C1F2R4&amp;nbsp;-Reason for not buying the product :{!C1F2R4_Reasonfornotbuyingtheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F2R4ReasonfornotbuyingtheproductOtherD</name>
+            <fieldText>&lt;p&gt;C1F2R4&amp;nbsp;-Reason for not buying the product Other :{!C1F2R4ReasonfornotbuyingtheproductOther}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F3R4WhichproductdidyoubuyD</name>
+            <fieldText>&lt;p&gt;C1F3 R4 - Which product did you buy? :{!C1F3R4Whichproductdidyoubuy}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F4R4Whendidyoubuytheproduct</name>
+            <fieldText>&lt;p&gt;C1F4R4 - When did you buy the product? :{!C1F4R4_Whendidyoubuytheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F5R4WhichRetailerdidyoubuytheproductfrom</name>
+            <fieldText>&lt;p&gt;C1F5R4 - Which Retailer did you buy the product from? :{!C1F5R4_WhichRetailerdidyoubuytheproductfrom}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F6R4Didyoubuyorusetheproductyourself</name>
+            <fieldText>&lt;p&gt;C1F6R4 - Did you buy or use the product yourself? :{!C1F6R4_Didyoubuyorusetheproductyourself}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F7R4Whatistheformstateoftheproduct</name>
+            <fieldText>&lt;p&gt;C1F7R4&amp;nbsp;What is the form / state of the product?{!C1F7R4Whatistheform_stateoftheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F8R4WhatisthecolourofthepackD</name>
+            <fieldText>&lt;p&gt;C1F8R4 What is the colour of the pack? :{!C1F8R4Whatisthecolourofthepack}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F9R4WhatistheartworkoftheproductD</name>
+            <fieldText>&lt;p&gt;C1F9R4&amp;nbsp;What is the artwork of the product? :{!C1F9R4Whatistheartworkoftheproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F10R4DidyouusetheprodinentirecropareaD</name>
+            <fieldText>&lt;p&gt;C1F10R4&amp;nbsp;-Did you use the prod in entire crop area? :{!C1F10R4Didyouusetheprodinentirecroparea}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F11R4InhowmanyacresusedtherecommendedproductD</name>
+            <fieldText>&lt;p&gt;C1F11R4 -In how many acres used the recommended product? :{!C1F11R4Inhowmanyacresusedtherecommendedproduct}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F12R4AreyousatisfiedwiththeresultsD</name>
+            <fieldText>&lt;p&gt;C1F12R4 -Are you satisfied with the results? :{!C1F12R4Areyousatisfiedwiththeresults}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F13R4IfNoReasonsD</name>
+            <fieldText>&lt;p&gt;C1F13R4 -If No, Reasons :{!C1F13R4IfNoReasons}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F13R4IfNoReasonsDOther</name>
+            <fieldText>&lt;p&gt;C1F13R4 -If No, Reasons Other :{!C1F13R4IfNoReasonsOther}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F14R4Possibledateofpurchase</name>
+            <fieldText>&lt;p&gt;C1F14R4 -Possible date of purchase :{!C1F14R4_Possibledateofpurchase}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C1F15R4PossibledateofApplication</name>
+            <fieldText>&lt;p&gt;C1F15R4 -Possible date of Application :{!C1F15R4_PossibledateofApplication}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Call_2_Follow_Up_5_DAYS</name>
+        <label>Call 2 Follow Up (+ 5 DAYS)</label>
+        <locationX>726</locationX>
+        <locationY>641</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C1R1_Details</targetReference>
+        </connector>
+        <fields>
+            <name>RecommendationC2R1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;C2 Recommendation:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;C2R1:{!SurveyC2.C2R1__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F3_R1_Which_product_did_you_buy</name>
+            <choiceReferences>C2F3R1_Whichproductdidyoubuy</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F3 R1 - Which product did you buy?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2F4R1_When_did_you_buy_the_product</name>
+            <dataType>Date</dataType>
+            <fieldText>C2F4R1 - When did you buy the product?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;{!DateErrorMessage}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C2F4R1_When_did_you_buy_the_product}&lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>C2F5R1_Which_Retailer_did_you_buy_the_product_from</name>
+            <dataType>String</dataType>
+            <fieldText>C2F5R1 - Which Retailer did you buy the product from?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Call_2_Follow_Up_5_DAYS_05</name>
+        <label>Call_2_Follow_Up_5_DAYS_05</label>
+        <locationX>183</locationX>
+        <locationY>609</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2F1R1_If</targetReference>
+        </connector>
+        <fields>
+            <name>Call2FollowUp5DAYS</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Call 2 Follow Up (+5 DAYS)&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RecommendedC2R1</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;RecommendedC2R1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;C2R1: {!SurveyC2.C2R1__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2F1R1_Did_you_buy_the_product_as_per_recommendation</name>
+            <choiceReferences>C2F1R1_Didyoubuytheproductasperrecommendation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2F1R1 -Did you buy the product as per recommendation?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Call_Completion</name>
+        <label>Call Completion</label>
+        <locationX>1483</locationX>
+        <locationY>283</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ThankYou</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Thank You&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Do_you_want_to_see_C1_Details</name>
+        <label>Do you want to see C1 Details?</label>
+        <locationX>658</locationX>
+        <locationY>83</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Want_to_see_C1_details</targetReference>
+        </connector>
+        <fields>
+            <name>DoyouwanttoseeC1Details</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Do you want to see C1 Details&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Yes</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Yes</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>TeleSelling_Call_2</name>
+        <label>TeleSelling_Call 2</label>
+        <locationX>261</locationX>
+        <locationY>391</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>C2_Any_pest_infestation</targetReference>
+        </connector>
+        <fields>
+            <name>Call2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Call 2&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2_Any_pest_infestation_observed</name>
+            <choiceReferences>C2_Anypestinfestationobserved</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2-Any pest infestation observed?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>TeleSelling_Call_2_0</name>
+        <label>TeleSelling_Call 2</label>
+        <locationX>637</locationX>
+        <locationY>486</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>TeleSelling_Call_2_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Call2_0</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Call 2&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2_Pest_Box</name>
+            <choiceReferences>C2PestBox</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2 Pest Box</fieldText>
+            <fieldType>MultiSelectPicklist</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2Disease_box</name>
+            <choiceReferences>C2Diseasebox</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2Disease box</fieldText>
+            <fieldType>MultiSelectPicklist</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>C2Weed_box</name>
+            <choiceReferences>C2Weed</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2Weed box</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2PGR_box</name>
+            <choiceReferences>C2PGR</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2PGR box</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2_Any_pest_infestation_observed_date_0</name>
+            <dataType>Date</dataType>
+            <fieldText>C2-Any pest infestation observed date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;{!DateErrorMessage}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!C2_Any_pest_infestation_observed_date_0}&lt;Today()</formulaExpression>
+            </validationRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>TeleSelling_Call_2_0_0</name>
+        <label>TeleSelling_Call 2</label>
+        <locationX>777</locationX>
+        <locationY>414</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>UpdateC2Survey</targetReference>
+        </connector>
+        <fields>
+            <name>C2_Recommendation</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;C2- Recommendation&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>C2R1</name>
+            <choiceReferences>C2R01</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2R1</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2R2</name>
+            <choiceReferences>C2R02</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2R2</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2R3</name>
+            <choiceReferences>C2R03</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2R3</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>C2R4</name>
+            <choiceReferences>C2R04</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>C2R4</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Thank_You</name>
+        <label>Thank You</label>
+        <locationX>3469</locationX>
+        <locationY>723</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Thank_You_C2</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Thank You&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>GetC2Survey</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C2F5R1SelectedRetailer</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C2F5R2SelectedRetailer</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C2F5R3SelectedRetailer</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C2F5R4SelectedRetailer</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>C2Followup</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerId1</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerId2</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerId3</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerId4</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RetailerRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Survey</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Survey__c</objectType>
+    </variables>
+    <variables>
+        <name>SurveyC2</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Survey__c</objectType>
+    </variables>
+    <variables>
+        <name>SurveyId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

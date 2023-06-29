@@ -1,0 +1,192 @@
+.THIS .slds-p-right_medium{
+    padding:0px !important;
+}
+.THIS .slds-p-left_medium{
+    padding:0px !important;
+}
+
+.THIS .custom-background-green {
+    background-color: #00CC33; 
+}
+.THIS .custom-background-bottle-10 {
+    background-color:lightgray; 
+}
+.THIS .custom-background-bottle-20 {
+    background-color:#ffffbb; 
+}
+.THIS .custom-background-bottle-30 {
+    background-color:LIGHTBLUE; 
+}
+.THIS .custom-background-bottle-40 {
+    background-color:#ffe5ea; 
+}
+.THIS .custom-background-bottle-50 {
+    background-color:DARKGRAY; 
+}
+.THIS .custom-background-bottle-11 {
+    background-color:#9595e1; 
+}
+.THIS .custom-background-bottle-12 {
+    background-color:beige; 
+}
+
+.THIS .custom-background-bottle-21 {
+    background-color:#f3f38d; 
+}
+.THIS .custom-background-bottle-22 {
+    background-color:#f7f7cd; 
+}
+
+.THIS .custom-background-bottle-31 {
+    background-color:#f6f6fd; 
+}
+.THIS .custom-background-bottle-32 {
+    background-color:#d5f5b5; 
+}
+.THIS .custom-background-bottle-41 {
+    background-color:#f5a4b2; 
+}
+.THIS .custom-background-bottle-42 {
+    background-color:#fce4d6; 
+}
+.THIS .custom-background-bottle-51 {
+    background-color:#ffcb6c; 
+}
+.THIS .custom-background-bottle-52 {
+    background-color:#ffe2ad; 
+}
+
+.THIS .custom-background-bottle-80 {
+    background-color:#494dcf; 
+}
+.THIS .custom-background-bottle-90 {
+    background-color:#f3bfc9; 
+}
+
+
+.THIS .custom-background-bottle-Re {
+    background-color:#e16d22; 
+}
+
+.THIS .custom-background-bottle-ReP {
+    background-color:#ff6400; 
+}
+.THIS .custom-background-bottle-RePC {
+    background-color:#ffc7a3; 
+}
+
+.THIS .custom-background-orange {
+    background-color: #F4B084
+}
+.THIS .custom-background-yellow {
+    background-color: #FFD966
+}
+.THIS .custom-background-blue {
+    background-color: #6a71ff
+}
+.THIS .custom-background-gray {
+    background-color: gray
+}
+.THIS .custom-background-light-green {
+    background-color: #C6E0B4
+}
+.THIS .custom-background-light-orange {
+    background-color: #F8CBAD
+}
+.THIS .custom-background-light-blue {
+    background-color: #a6abcc
+}
+.THIS .custom-background-light-black {
+    background-color: #808080
+}
+.THIS .custom-background-light-gray {
+    background-color: lightgray;
+}
+.THIS .custom-background-light-pink {
+    background-color: #FCE4D6
+}
+
+.THIS .custom-background-sky-blue {
+    background-color: #d5f2ff
+}
+.THIS .color-red{
+    color: red;
+}
+
+.THIS .align-right{
+    /*text-align: right;*/
+}
+
+.THIS .pad{
+    padding-right: 0px;
+}
+
+.THIS .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+
+.THIS lightning-primitive-header-actions {
+    display: none;
+}
+
+.THIS .custom_font_smallxx{
+    font-size: 9px;
+}
+.THIS .custom_font_smallx{
+    font-size: 10px;
+}
+       
+.THIS .input {
+    font-weight: normal !important;
+    font-size: unset !important;
+    padding: inherit !important;
+        line-height: 14px !important;
+    min-height: 10px !important;
+}
+
+.THIS .uiInputSmartNumber {
+    font-weight: normal !important;
+    font-size: unset !important;
+    padding: inherit !important;
+        line-height: 14px !important;
+    min-height: 10px !important;
+}
+
+.THIS .uiInput {
+    font-weight: normal !important;
+    font-size: unset !important;
+    padding: inherit !important;
+        line-height: 14px !important;
+    min-height: 10px !important;
+}
+
+.THIS .uiInputNumber {
+    font-weight: normal !important;
+    font-size: unset !important;
+    padding: inherit !important;
+        line-height: 14px !important;
+    min-height: 10px !important;
+}
+.THIS .uiInput--input {
+    font-weight: normal !important;
+    font-size: unset !important;
+    padding: inherit !important;
+        line-height: 14px !important;
+    min-height: 10px !important;
+}
+
+.THIS .uiInput--default {
+    font-weight: normal !important;
+    font-size: unset !important;
+    padding: inherit !important;
+        line-height: 14px !important;
+    min-height: 10px !important;
+}
+
+.THIS .slds-input {
+    min-height: 10px !important;
+    line-height: 14px !important;
+}

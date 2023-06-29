@@ -1,0 +1,92 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+ <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="resultG" type="List"/>
+    <aura:attribute name="key" type="string"/>
+    <aura:attribute name="value" type="object"/>
+    <aura:handler action="{!c.getEvents}" event="c:RebateEvent" />
+    <aura:attribute name="childValue" type="List" />
+    <lightning:layout>
+                    
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <lightning:layout>
+                         <lightning:layoutItem size="5" padding="horizontal-medium"> 
+                          <b>Total {!v.value.Product_Category__c}</b>
+                    </lightning:layoutItem>
+                    <!--lightning:layoutItem size="4" -->
+                       
+                <!--lightning:layout-->
+                    
+                    <lightning:layoutItem size="7" class="slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-medium">
+                        <b class="slds-float_right"> <lightning:formattedNumber value="{!v.value.per1}"  maximumFractionDigits="2"/></b>
+                    </lightning:layoutItem>
+                    
+                    
+                <!--/lightning:layout--> 
+                    <!--/lightning:layoutItem-->
+                        </lightning:layout>
+        </lightning:layoutItem>
+                   <lightning:layoutItem size="1" class=" custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.Value__c}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.Actual_Value__c}" maximumFractionDigits="2"/></b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.Returns_Value__c}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.OO_Value__c}" maximumFractionDigits="2"/></b>   
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.CO_Value__c}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="3" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="6" class="custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.nn}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="6" class="custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.nd}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="3" class="custom-background-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="2">
+                            <lightning:layout>  
+                                <lightning:layoutItem size="12">
+                    
+                    </lightning:layoutItem>
+                    
+                             </lightning:layout>
+                             </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="10" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <lightning:layout>  
+                   <lightning:layoutItem size="6" class="custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.bva}" maximumFractionDigits="2"/></b> </lightning:layoutItem>
+                            
+                                 <lightning:layoutItem size="6" class="custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                     <b class="slds-float_right"><lightning:formattedNumber value="{!v.value.cva}" maximumFractionDigits="2"/></b>
+                           </lightning:layoutItem>
+                            
+                                 </lightning:layout>
+                                  
+                             
+                             </lightning:layoutItem>
+                    
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    
+                    
+                    
+                </lightning:layout>
+                
+    
+    
+</aura:component>

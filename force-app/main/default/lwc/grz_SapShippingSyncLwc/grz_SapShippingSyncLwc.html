@@ -1,0 +1,19 @@
+<template>
+    <lightning-quick-action-panel>
+        <div if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading..." variant="brand" ></lightning-spinner>
+        </div>
+        <div if:false={isLoading}>
+        <div if:true={rerror} class="slds-box slds-theme_warning">
+            <p><b>Kindly fill in the fields mentioned below before Syncing:</b></p>
+        
+        <ol class="slds-list_dotted">
+            <template for:each={rerror} for:item="item">
+            <li key={item}>{item}</li>
+            </template>
+            </ol>
+        
+        </div>
+           </div> 
+    </lightning-quick-action-panel>
+    </template>

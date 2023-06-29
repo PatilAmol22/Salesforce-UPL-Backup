@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Insert_SAP</name>
+        <label>Insert SAP</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <actionName>Insert_SAP123</actionName>
+        <actionType>dataProcessingEngineAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
+    <interviewLabel>Insert SAP {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Insert SAP</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Insert_SAP</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>test</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

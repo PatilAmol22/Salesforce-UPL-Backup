@@ -1,0 +1,39 @@
+<template>
+    <div class="slds-grid outerDiv slds-wrap">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 videoCol prodCls">
+            <div class="p-inner-div">
+                <h1 class="heading">{label.prodLabel}
+                    <span class="p-arrow-span">
+                        <lightning-button-icon icon-name="utility:chevronleft" variant="bare" onclick={previousHandler1}  disabled  class="Previous1"></lightning-button-icon>
+                        <lightning-button-icon icon-name="utility:chevronright" variant="bare" onclick={nextHandler1}  class="Next1"></lightning-button-icon>
+                    </span>
+                </h1>
+                <div class="p-image-div">
+                    <img src={prodUse} class="image">
+                    <template if:false={hide}>
+                        <img src={logoImg} class="p-logo-img">
+                        <p class="nameClass">{nameImg}</p>
+                    </template>
+                    <div class="dataDiv">
+                        <lightning-formatted-rich-text value={factImg}></lightning-formatted-rich-text>
+                        <lightning-button label={label.knowMore} onclick={knowMoreAction} class="knowMoreButton"></lightning-button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-medium-size_1-of-2 video-m-top videoCol videoClass">
+          <div class="v-inner-div">
+            <h1 class="heading video-head-width" >{label.videoLabel}
+                <span class="v-arrow-span">
+                    <lightning-button-icon icon-name="utility:chevronleft" variant="bare" onclick={previousHandler}  disabled="true" class="Previous"></lightning-button-icon>
+                    <lightning-button-icon icon-name="utility:chevronright" variant="bare" onclick={nextHandler}  class="Next"></lightning-button-icon>
+                </span>
+            </h1>
+            <div onmouseenter={videoHover}>
+                <iframe class="videoSize" src={videoURL} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+    </div>
+</template>

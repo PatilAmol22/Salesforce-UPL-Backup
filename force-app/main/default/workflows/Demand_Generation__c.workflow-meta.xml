@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_alert_if_DG_Approved</fullName>
+        <description>Email alert if DG Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>20011924@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20038539@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/DG_Approved_Email_template</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_alert_if_DG_Rejected</fullName>
+        <description>Email alert if DG Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/DG_Rejected_Email_template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Approved</fullName>
+        <field>Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Status as &apos;Approved&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Open</fullName>
+        <field>Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>Update Status as &apos;Open&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_Pending_At_SAP</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Awaiting At SAP</literalValue>
+        <name>Update Sub Status as &apos;Pending At SAP&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_MKT_Acc</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By MKT Access</literalValue>
+        <name>Update Sub status &apos;Rejected By MKT Acc&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_RM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By GR</literalValue>
+        <name>Update Sub status &apos;Rejected By RM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_ZM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By BU</literalValue>
+        <name>Update Sub status &apos;Rejected By ZM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_as_MKT_Access</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Awaiting MKT Access Approval</literalValue>
+        <name>Update Sub status as &apos;MKT Access&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_as_Rejected</fullName>
+        <field>Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update status as &apos;Rejected&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_sub_Status_Rejected_By_Mkt_mgr</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By MKT</literalValue>
+        <name>Update sub Status &apos;Rejected By Mkt mgr&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_sub_Status_as_Awaiting_at_MKT</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Awaiting MKT Approval</literalValue>
+        <name>Update sub Status as &apos;Awaiting at MKT&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_sub_Status_as_Awaiting_at_Reg</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Awaiting GR Approval</literalValue>
+        <name>Update sub Status as &apos;Awaiting at Reg&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_sub_Status_as_Awaiting_at_Zone</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Awaiting BU Approval</literalValue>
+        <name>Update sub Status as &apos;Awaiting at Zone&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

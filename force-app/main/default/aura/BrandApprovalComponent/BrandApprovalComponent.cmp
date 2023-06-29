@@ -1,0 +1,157 @@
+<aura:component controller ="BrandCompanyFormulationApprovalCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction,force:hasRecordId" access="global">
+    <aura:attribute name="selectedBrandRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="singleBrandRecord" type="sObject" default=""/>
+     <aura:attribute name="selectedCompanyRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="singleCompanyRecord" type="sObject" default=""/>
+     <aura:attribute name="selectedFormulationRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="singleFormulationRecord" type="sObject" default=""/>
+    <aura:attribute name="selectedValue" type="string" default=""/>
+    
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.singleBrandRecord}" action="{!c.onChangeBrand}"/>
+    <aura:handler name="change" value="{!v.selectedBrandRecords}" action="{!c.onChangeBrands}"/>  
+     <aura:handler name="change" value="{!v.singleCompanyRecord}" action="{!c.onChangeCmp}"/>
+    <aura:handler name="change" value="{!v.selectedCompanyRecords}" action="{!c.onChangecmpes}"/>  
+     <aura:handler name="change" value="{!v.singleFormulationRecord}" action="{!c.onChangefrm}"/>
+    <aura:handler name="change" value="{!v.selectedFormulationRecords}" action="{!c.onChangefrms}"/>  
+    <div class="slds-page-header" style="background:#769ed9; color:#fff; font-weight:bold;">
+        <div class="slds-grid" >
+            <div class="slds-col slds-has-flexi-truncate">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                    </div>
+                    <div class="slds-media__body" >
+                        <!--p class="slds-text-heading-label">Create Competitor</p-->
+                        <div class="slds-grid">
+                            <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">Approval Interface</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+    </div>
+    
+    <div class="slds-grid slds-gutters" style="margin-top:12px;">
+ <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+      </div>
+ <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--3-of-12">
+                <lightning:select name="Crop" required="true" aura:id="select" label="Select Option" value="{!v.selectedValue}" onchange="{!c.onChangeSelection}">
+                    <option value="None">--None--</option>
+                     <option value="Brand">Brand</option> 
+                     <option value="Company">Company</option>
+                    <option value="Formulation">Formulation</option>
+                </lightning:select>                       
+			</div> 
+        </div>
+  <aura:if isTrue="{!v.selectedValue =='Brand'}">  
+  <div class="slds-grid slds-gutters" style="margin-top:12px;">
+        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+      </div>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+    <!--Company__c--><!--Company_Code__c-->
+    <!--Brand__c--><!--_Code__c-->
+    <!--Formulation__c--><!--Formulation_Code__c-->
+ 			<c:SingleSelectLookup aura:id="brandlookup"
+                                  objectAPIName="Brand__c"
+                                              IconName="standard:account" 
+                                              selectedRecord="{!v.singleBrandRecord}" 
+                                              queryFields ="Brand_Code__c"
+                                              displayField = "Name"
+                                              label = "Approved Brand"
+                                              Filter=" AND Approved__c=true order by Name  limit 5" />
+    
+ 		<span id="brndError" class="slds-text-body_small slds-text-color_error" style="display:none">Please select a Brand.</span>    
+     </div>
+      
+     <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-12 slds-large-size--3-of-12" > 
+ <c:MultiSelectLookUp aura:id="brandlookups" objectAPIName="Brand__c"
+                               IconName="standard:account"
+                               lstSelectedRecords="{!v.selectedBrandRecords}"
+                               label="Unapproved Brand"
+                      		   Filter="AND Approved__c=false AND Tagged_To_Approved__c=false order by Name limit 5"
+                               queryFields ="Brand_Code__c,Tagged_To_Approved__c"/>
+  <span id="brndsError" class="slds-text-body_small slds-text-color_error" style="display:none">Please select at least a Brand.</span>    
+   </div>
+</div>
+ <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+    <lightning:button variant="brand" label="Submit" iconName="utility:check" iconPosition="left" onclick="{!c.updateBrand}" />
+ 	<lightning:button variant="brand" label="Cancel" iconName="utility:close" iconPosition="left" onclick="{!c.cancel}" />
+</div>
+</aura:if>
+    
+<aura:if isTrue="{!v.selectedValue =='Company'}">  
+  <div class="slds-grid slds-gutters" style="margin-top:12px;">
+        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+      </div>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+    <!--Company__c--><!--Company_Code__c-->
+    <!--Brand__c--><!--_Code__c-->
+    <!--Formulation__c--><!--Formulation_Code__c-->
+ 			<c:SingleSelectLookup aura:id="childSkuForecast"
+                                  objectAPIName="Company__c"
+                                              IconName="standard:account" 
+                                              selectedRecord="{!v.singleCompanyRecord}" 
+                                              queryFields ="Company_Code__c"
+                                              displayField = "Name"
+                                              label = "Approved Company"
+                                              Filter=" AND Approved__c=true  order by Name  limit 5" />
+    
+  	<span id="cmpError" class="slds-text-body_small slds-text-color_error" style="display:none">Please select a Brand.</span>    
+     </div>
+     <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-12 slds-large-size--3-of-12" > 
+ <c:MultiSelectLookUp aura:id="companylookups" objectAPIName="Company__c"
+                               IconName="standard:account"
+                               lstSelectedRecords="{!v.selectedCompanyRecords}"
+                               label="Unapproved Company"
+                      		   Filter="AND Approved__c=false AND Tagged_To_Approved__c=false order by Name  limit 5"
+                               queryFields ="Company_Code__c,Tagged_To_Approved__c"/>
+ <span id="cmpesError" class="slds-text-body_small slds-text-color_error" style="display:none">Please select a Brand.</span>    
+   </div>
+</div>
+ <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+    <lightning:button variant="brand" label="Submit" iconName="utility:check" iconPosition="left" onclick="{!c.updateCompany}"/>
+ 	<lightning:button variant="brand" label="Cancel" iconName="utility:close" iconPosition="left" onclick="{!c.cancel}"/>
+</div>
+</aura:if>
+    
+    
+    <aura:if isTrue="{!v.selectedValue =='Formulation'}">  
+  <div class="slds-grid slds-gutters" style="margin-top:12px;">
+        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+      </div>
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" >
+    <!--Company__c--><!--Company_Code__c-->
+    <!--Brand__c--><!--_Code__c-->
+    <!--Formulation__c--><!--Formulation_Code__c-->
+ 			<c:SingleSelectLookup aura:id="formulationlookup"
+                                  objectAPIName="Formulation__c"
+                                              IconName="standard:account" 
+                                              selectedRecord="{!v.singleFormulationRecord}" 
+                                              queryFields ="Formulation_Code__c"
+                                              displayField = "Name"
+                                              label = "Approved Formulation"
+                                              Filter=" AND Approved__c=true order by Name  limit 5" />
+    <span id="frmError" class="slds-text-body_small slds-text-color_error" style="display:none">Please select a Formulation.</span>    
+ 
+     </div>
+     <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-12 slds-large-size--3-of-12" > 
+ <c:MultiSelectLookUp aura:id="formulationlookups" objectAPIName="Formulation__c"
+                               IconName="standard:account"
+                               lstSelectedRecords="{!v.selectedFormulationRecords}"
+                               label="Unapproved Formulation"
+                      		   Filter="AND Approved__c=false AND Tagged_To_Approved__c=false order by Name  limit 5"
+                               queryFields ="Formulation_Code__c,Tagged_To_Approved__c"/>
+  <span id="frmsError" class="slds-text-body_small slds-text-color_error" style="display:none">Please select at least a Formulation.</span>    
+   </div>
+</div>
+ <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+    <lightning:button variant="brand" label="Submit" iconName="utility:check" iconPosition="left" onclick="{!c.updateFormulation}" />
+ 	<lightning:button variant="brand" label="Cancel" iconName="utility:close" iconPosition="left" onclick="{!c.cancel}"/>
+</div>
+</aura:if>
+    <aura:if isTrue="{!v.selectedValue ==''}">
+        <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px;margin-bottom:20px; border-bottom:1px solid #d8dde6;">
+        <lightning:button variant="brand" label="Cancel" iconName="utility:close" iconPosition="left" onclick="{!c.cancel}"/>
+        </div>
+    </aura:if>
+</aura:component>

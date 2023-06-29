@@ -1,0 +1,40 @@
+<!--// UPL-2-I386: Modified by:Ankita Saxena Changes in Travel request  for Indonesia-->
+<apex:component Controller="IndonesiaTravelExpenseSummaryController" access="global">
+    <apex:attribute name="MTExpence_id" type="String" description="MTE id" assignTo="{!mte_id}"/>
+    <table width="100%" style="border: 1px solid black;border-collapse: collapse;" cellspacing ="0" cellpadding="5" >
+        <tr> 
+            <th style="border: 1px solid black;border-collapse: collapse; text-align:left;">EXPENSE SUMMARY LIST</th>
+            <th style="border: 1px solid black;border-collapse:collapse;width:1%;white-space:nowrap;text-align:left;">FIXED ADVANCE: </th> <!--Ankita: just created field no value come-->
+            <th style="border: 1px solid black;border-collapse: collapse;width:1%;white-space:nowrap; text-align:left;">BALANCE DUE:  </th> <!--Ankita: just created field no value come-->
+            <th style="border: 1px solid black;border-collapse: collapse;width:1%;white-space:nowrap; text-align:right;">TOTAL Expense:  <apex:outputText value="{0, number,###,###}">
+                                        <apex:param value="{!sum}" />
+                                    </apex:outputText></th> 
+        </tr>
+        <tr>
+            <th style="border: 1px solid black;border-collapse: collapse; text-align:left;">DESCRIPTION </th>
+            <th style="border: 1px solid black;border-collapse: collapse; text-align:right;" colspan="2" class="text-right">REMARKS </th>
+            <th style="border: 1px solid black;border-collapse: collapse; text-align:right;">AMOUNT </th>
+        </tr>
+        <apex:repeat value="{!keys}" var="k">
+            <tr>
+                
+                <td style="border: 1px solid black;border-collapse: collapse;width:1%;white-space:nowrap; text-align:left;">{!k}</td>
+                <td colspan="2" style="border: 1px solid black;border-collapse: collapse; text-align:right;">{!activityLimitMap[k]}
+                <apex:outputLabel rendered="{!ISNUMBER(activityLimitMap[k])}" style="font-weight: normal !important;">/month</apex:outputLabel>
+                </td>
+                <td style ="border: 1px solid black;border-collapse: collapse; text-align:right;">
+                     <apex:outputText value="{0, number, ###,###}">
+                                            <apex:param value="{!activityAmountMap[k]}" />
+                                        </apex:outputText>
+                 <apex:outputLabel rendered="{!if(ISNUMBER(activityLimitMap[k]),if(VALUE(activityLimitMap[k])<activityAmountMap[k],true,false),false)}" style="color: red !important;">*</apex:outputLabel> 
+                </td> 
+            </tr>
+        </apex:repeat>
+        <tr>
+            <th style="border: 1px solid black;border-collapse: collapse; text-align:right;" colspan="3" >TOTAL</th> 
+            <th style="border: 1px solid black;border-collapse: collapse; text-align:right;"><apex:outputText value="{0, number, ###,###}">
+                                        <apex:param value="{!sum}" />
+                                    </apex:outputText></th>   
+        </tr>
+    </table>
+</apex:component>

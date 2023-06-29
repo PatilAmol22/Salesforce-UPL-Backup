@@ -1,0 +1,25 @@
+<aura:component controller="ContactSupportController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name='documentId' type='String' />
+    <aura:attribute name='subject' type='String' />
+    <aura:attribute name='Description' type='String' />    
+    <br /><br />
+    <center><p>{!$Label.c.Contact_Customer_Support}</p></center>
+    <center><p>{!$Label.c.Tell_Us_How_We_Can_Help}</p></center>
+    
+    <aura:attribute name="filetype" type="List" default="['.png', '.jpg', '.jpeg', '.pdf', '.csv']" />
+    <aura:attribute name="multiple" type="Boolean" default="true" />
+    <aura:attribute name="recordId" type="String" default="a671m0000004D6pAAE"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    
+    <lightning:input name="input1" label="{!$Label.c.Subject}" value="" onchange="{! c.handleSubjectChange }"/>
+    <lightning:textarea name="input1" label="{!$Label.c.Description}" value="" onchange="{! c.handleDescriptionChange }"/>
+    <lightning:fileUpload label="{!$Label.c.Attachments}"
+                          name="fileUploader"
+                          multiple="true"
+                          accept="{!v.filetype}"
+                          recordId="{!v.recordId}"
+                          onuploadfinished="{!c.handleUploadFinished}" />
+    <div style="margin-top:10px;">
+    <center><lightning:button variant="brand" label="{!$Label.c.Submit}" title="Brand action" onclick="{! c.handleClick }" /></center>
+        </div>
+</aura:component>

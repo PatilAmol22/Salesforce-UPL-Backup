@@ -1,0 +1,111 @@
+<template>
+    <div class="slds" style="background:#fff;">
+        <h1 style="color:#000; font-weight:normal; font-size:18px; padding:10px 3px 3px 3px; margin:5px 0 10px 10px;" class="slds-m-bottom_medium">{label.Sales_Agreement_Update_Metrics}</h1>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:0px solid #cce4f8;">
+            
+                <div style="clear:both;"></div>
+                
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:0; background:#dcedfb; font-weight:bold;">
+                    {label.Period}
+                </h3>
+                <!-- Nik(SKI)...changed variable for value tag and added onchange function....18-10-2022 -->
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin:10px 0 10px 0;">
+                    <div class="slds-form-element" style="margin-top:12px;">
+                        <div class="slds-form-element__control">
+                            <lightning-combobox
+                                name="progress"
+                                label={label.Year}
+                                value={yearVal}
+                                placeholder="Select Progress"
+                                options={options}
+                                onchange={handleYearChange} >
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </div>  
+                   
+        </div>
+        <div class="slds-scrollable_x" style="margin-bottom:0;">
+            <table width="100%" class="slds-table slds-table_bordered slds-table_cell-buffer">
+              <thead>
+                <tr class="slds-text-heading--label">
+                <th class="slds-is-sortable" scope="col">
+                  <div class="slds-truncate" title={label.Month}>{label.Month}</div>
+                </th>
+                
+                <th class="slds-is-sortable" scope="col">
+                  <div class="slds-truncate" style="text-align:center;" title={label.Update_Metrics}>{label.Update_Metrics}</div>
+                </th>           
+                <th class="slds-cell-shrink"></th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <template for:each={salesAgreementList2} for:item="saList">
+                    <tr key={saList.Id}>
+                        <th scope="col" data-label="Month" >
+                            <div class="text-style" >{saList.month}</div>
+                        </th>
+                        
+                        <th scope="col" data-label="Update Metrics">
+                            <div class="text-style" style="text-align:center;">
+                                <lightning-button variant="base" label={label.click_here} disabled={saList.upload} onclick={suretyModalOpen}></lightning-button>
+                            </div>
+                        </th>
+                    </tr>
+                </template>
+              </tbody>
+              </table>
+          </div>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+    </template>
+    <template if:true={isSuretyModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={label.Close} onclick={closeSuretyModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">{label.Close}</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{label.Confirm}</h2>
+                </header>
+               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                {label.Are_you_sure_you_want_to_process_it}
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeSuretyModal} title={label.No}>{label.No}</button>
+                    <button class="slds-button slds-button_neutral" onclick={executeBatch} title={label.Yes}>{label.Yes}</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={isProcessingModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title={label.Close} onclick={closeProcessingModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">{label.Close}</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">{label.Processing}</h2>
+                </header>
+               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                {label.Update_Metrics_is_already_in_process}
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeProcessingModal} title={label.Cancel}>{label.Cancel}</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    </div>
+</template>

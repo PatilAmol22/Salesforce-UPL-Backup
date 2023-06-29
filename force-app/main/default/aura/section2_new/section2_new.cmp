@@ -1,0 +1,201 @@
+<aura:component controller="Section_Controller"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    
+    <aura:attribute name='Total_Collectible' type='Boolean'/>
+    <aura:attribute name='Outstanding' type='Boolean'/>
+    <aura:attribute name='Balance_Credit_Limit' type='Boolean'/>
+    
+    <aura:attribute name='curYear' type='Boolean'/>
+    <aura:attribute name='lastYear' type='Boolean'/> 
+    <aura:attribute name='isForPoland' type='Boolean'/> 
+    <aura:attribute name='isForJapan' type='Boolean'/>
+    <aura:attribute name='isForOther' type='Boolean'/> 
+    
+     
+    
+    
+    <aura:attribute name='totalNumberOfOrder' type='Boolean'/> 
+    <aura:attribute name='growth' type='Boolean'/> 
+    <aura:attribute name='asOnDate' type='String'/> 
+    
+    
+    
+    
+    <aura:attribute name='DataNotfoundCollection' type='Boolean' default="false"/>
+    <aura:attribute name='DataNotfoundOutstand' type='Boolean' default="false"/>
+    <aura:attribute name='DataNotfoundCreditBalance' type='Boolean' default="false"/>
+    
+    
+    <aura:attribute name='DataNotfoundCollectionMsg' type='String' default=""/>
+    <aura:attribute name='DataNotfoundOutstanMsg' type='String' default=""/>
+    <aura:attribute name='DataNotfoundCreditBalanceMsg' type='String' default=""/>
+    
+    
+    <aura:attribute name='collection' type='Payments__c'/>
+    <aura:attribute name='outstandingDate' type='Outstanding_Ageing__c'/>
+    <aura:attribute name='balanceCredit' type='Credit_Info__c'/>
+    
+    <aura:attribute name="collectionLastDate" type="String"/>
+    <aura:attribute name="outstandingLastDate" type="String"/>
+    <aura:attribute name="BalanceCreditLastDate" type="String"/>
+    
+    <aura:attribute name="curentSalesOrderAmt" type="Decimal"/>
+    <aura:attribute name="growthAmount" type="Decimal"/>
+    <aura:attribute name="lastSalesOrderAmt" type="Decimal"/>
+    <aura:attribute name="totalNumberOfOrders" type="Integer"/>
+    
+    <aura:attribute name="curCode" type="String"/>
+    
+    <aura:attribute name="lstYear" type="String"/>
+    <aura:attribute name="lstYear1" type="String"/>
+    
+    <aura:attribute name="curYears" type="String"/>
+    <aura:attribute name="curYears1" type="String"/>
+    <aura:attribute name="monthName" type="String"/>
+    
+    
+    
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <div class="" style="margin-left:5px; margin-right:0;">
+        <div class="banner slds-grid slds-wrap grass slds-align_absolute-center" style="padding:30px 0">
+            
+            <aura:if isTrue="{!v.Total_Collectible}">
+                
+                <aura:if isTrue="{!v.DataNotfoundCollection}">
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                        <span style="font-family:myfontregular; font-size:16px; color:#f54904;">{!$Label.c.Total_Collectible}</span><br/>
+                        <span style="font-family:myfontregular; font-size:25px; color:#000;"><lightning:formattedNumber  value="{!v.collection.Total_Collectibles__c}" style="currency" />   </span><br/>
+                        <span style="font-family:myfontregular; font-size:14px; color:#000;"> {!v.collectionLastDate}<!--<lightning:formattedDateTime value="{!v.collection.LastModifiedDate}"/>--></span>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                            <span style="font-family:myfontregular; font-size:16px; color:#f54904;">{!$Label.c.Total_Collectible}</span><br/>
+                            <span style="font-family:myfontregular; font-size:18px; color:#000;">{!v.DataNotfoundCollectionMsg}  </span><br/>
+                            <span style="font-family:myfontregular; font-size:14px; color:#000;">&nbsp;&nbsp;</span>
+                            
+                        </div>
+                        
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.Outstanding}">
+                <aura:if isTrue="{!v.DataNotfoundOutstand}">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                        <div style="font-family:myfontregular; font-size:16px; color:#f54904; margin-bottom:px;">{!$Label.c.Outstanding}</div>
+                        <span style="font-family:myfontregular; font-size:25px; color:#000;"> <lightning:formattedNumber  value="{!v.outstandingDate.Net_Outstanding__c}" style="currency" /> </span><br/>
+                        <span style="font-family:myfontregular; font-size:14px; color:#000;">{!v.outstandingLastDate}<!--<lightning:formattedDateTime value="{!v.outstandingDate.LastModifiedDate}"/>--></span>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                            <div style="font-family:myfontregular; font-size:16px; color:#f54904; margin-bottom:px;">{!$Label.c.Outstanding}</div>
+                            <span style="font-family:myfontregular; font-size:18px; color:#000;">{!v.DataNotfoundOutstandMsg}<br/></span>
+                            <span style="font-family:myfontregular; font-size:14px; color:#000;">&nbsp;&nbsp;</span>
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+            
+            
+            
+            
+            <aura:if isTrue="{!v.Balance_Credit_Limit}">
+                <aura:if isTrue="{!v.DataNotfoundCreditBalance}">
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                        <span style="font-family:myfontregular; font-size:16px; color:#f54904;"> {!$Label.c.Balance_Credit_Limit}</span><br/>
+                        <span style="font-family:myfontregular; font-size:25px; color:#000;"><lightning:formattedNumber  value="{!v.balanceCredit.Total_credit_limit_Ag__c}" style="currency" /></span><br/>
+                        <span style="font-family:myfontregular; font-size:14px; color:#000;">{!v.BalanceCreditLastDate}<!--<lightning:formattedDateTime value="{!v.balanceCredit.LastModifiedDate}"/>--></span>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                            <span style="font-family:myfontregular; font-size:16px; color:#f54904;"> {!$Label.c.Balance_Credit_Limit}</span><br/>
+                            <span style="font-family:myfontregular; font-size:18px; color:#000;">{!v.DataNotfoundCreditBalanceMsg}</span><br/>
+                            <span style="font-family:myfontregular; font-size:14px; color:#000;">&nbsp;&nbsp;</span>
+                            
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+            
+             <!--This Year Sales -->
+            <aura:if isTrue="{!v.curYear}">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                  <!--  <span style="font-family:myfontregular; font-size:16px; color:#f54904;"> {!$Label.c.This_Year_Sales}</span><br/>-->
+                    <span style="font-family:myfontregular; font-size:14px; color:#f54904;"> <!--{!$Label.c.Sales}-->
+                        <aura:if isTrue="{!v.isForPoland}">
+                        styczeń {!v.curYears} &nbsp;-&nbsp;{!v.monthName}&nbsp;{!v.curYears1} 
+                        </aura:if>
+                        <aura:if isTrue="{!v.isForJapan}">
+                        {!v.curYears}&nbsp;{!$Label.c.Apr}&nbsp;-&nbsp;{!v.curYears1}&nbsp;{!v.monthName}
+                        </aura:if>
+                        <aura:if isTrue="{!v.isForOther}">
+                        {!$Label.c.Apr} CY {!v.curYears} &nbsp;-&nbsp;{!v.monthName}&nbsp;{!v.curYears1}
+                        </aura:if>
+                        </span><br/>
+                    <!-- Changes by Aashima(Grazitti) for APPS-2532 21Oct22 -->
+                    <span style="font-family:myfontregular; font-size:25px; color:#000;">{!v.curCode}&nbsp;<lightning:formattedNumber  value="{!v.curentSalesOrderAmt}" maximumFractionDigits="1" style="decimal" /></span><br/>
+                    <span style="font-family:myfontregular; font-size:14px; color:#000;"><!--as on <lightning:formattedDateTime value="{!v.asOnDate}"/> --> </span>
+                </div>
+            </aura:if>
+            
+            
+            
+            
+             <!--Last Year Sales -->
+            <aura:if isTrue="{!v.lastYear}">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                  <!--  <span style="font-family:myfontregular; font-size:16px; color:#f54904;"> {!$Label.c.Last_Year_Sales}</span><br/>-->
+                    <span style="font-family:myfontregular; font-size:14px; color:#f54904;"> <!--{!$Label.c.Sales}-->
+                        <aura:if isTrue="{!v.isForPoland}">
+                        styczeń {!v.lstYear} &nbsp;- grudzień &nbsp;{!v.lstYear1}
+                        </aura:if>
+                        <aura:if isTrue="{!v.isForJapan}">
+                        {!v.lstYear}&nbsp;{!$Label.c.Apr} &nbsp;- &nbsp;{!v.lstYear1}&nbsp;{!v.monthName}
+                        </aura:if>
+                        <aura:if isTrue="{!v.isForOther}">
+                        {!$Label.c.Apr} PY {!v.lstYear} &nbsp;- &nbsp;{!v.monthName}&nbsp;{!v.lstYear1}
+                        </aura:if>
+                        </span><br/>
+                    <!-- Changes by Aashima(Grazitti) for APPS-2532 21Oct22 -->
+                    <span style="font-family:myfontregular; font-size:25px; color:#000;">{!v.curCode}&nbsp;<lightning:formattedNumber  value="{!v.lastSalesOrderAmt}" maximumFractionDigits="1" style="decimal" />  </span><br/>
+                    <span style="font-family:myfontregular; font-size:14px; color:#000;"><!--&nbsp;&nbsp;--></span>
+                </div>
+            </aura:if>
+            
+            
+            
+             <!--This is for growth of Sales Order-->
+             <aura:if isTrue="{!v.growth}">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                    <span style="font-family:myfontregular; font-size:16px; color:#f54904;"> {!$Label.c.Growth}</span><br/>
+                    <span style="font-family:myfontregular; font-size:25px; color:#000;"><lightning:formattedNumber value="{!v.growthAmount}" style="decimal" minimumSignificantDigits="2"/> %</span><br/>
+                    <!--<span style="font-family:myfontregular; font-size:14px; color:#000;">&nbsp;&nbsp;</span>
+                    <span style="font-family:myfontregular; font-size:16px; color:#f54904;"> &nbsp;&nbsp;</span><br/>-->
+                </div>
+            </aura:if>
+            
+            
+            
+             <!--This is for Total Number of Sale Order -->
+            <aura:if isTrue="{!v.totalNumberOfOrder}">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 box" style="padding:10px 0 10px 0;">
+                    <span style="font-family:myfontregular; font-size:16px; color:#f54904;"> {!$Label.c.Total_Order}</span><br/>
+                    <span style="font-family:myfontregular; font-size:16px; color:#f54904;"> </span><br/>
+                    <span style="font-family:myfontregular; font-size:25px; color:#000;"><lightning:formattedNumber  value="{!v.totalNumberOfOrders}"/></span><br/>
+                    <span style="font-family:myfontregular; font-size:14px; color:#000;">&nbsp;&nbsp;</span>
+                </div>
+            </aura:if>
+         
+            
+        </div> 
+    </div>
+    
+    
+</aura:component>

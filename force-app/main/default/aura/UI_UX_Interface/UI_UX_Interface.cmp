@@ -1,0 +1,107 @@
+<aura:component controller="UI_UX_InterfaceController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="data" type="sObject" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div style="height: 50px;" class="slds-scrollable_x">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Customer SAP Code">{!$Label.c.SAP_Code}</div>
+                    </th>
+                    <!--
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Price Group">{!$Label.c.Price_Book}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Depot">{!$Label.c.Depot}</div>
+                    </th>
+					-->
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Total Credit Limit">{!$Label.c.Total_Credit_Limit}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Internal Credit Limit">{!$Label.c.Internal_Credit_Limit}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Credit Limit Used">{!$Label.c.Credit_Limit_Used}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Credit Limit Balance">{!$Label.c.Credit_Limit_Balance}</div>
+                    </th>
+                    <!--Hiding two columns RITM0431761 GRZ(Nikhil Verma)-->
+                    <!--<th class="" scope="col">
+                        <div class="slds-truncate" title="Total Outstanding">{!$Label.c.Total_Outstanding}</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Net Overdue">{!$Label.c.Net_Overdue}</div>
+                    </th>-->
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr class="slds-hint-parent">
+                    <th data-label="Customer SAP Code" scope="row">
+                        <div class="slds-truncate" title="Customer SAP Code">
+                            <ui:outputText value="{!v.data.customerSAPCode}"/>
+                        </div>
+                    </th>
+                    <!--
+                    <td data-label="Price Group">
+                        <div class="slds-truncate" title="Price Group">
+                            <ui:outputText value="{!v.data.priceGroup}"/>
+                        </div>
+                    </td>
+                    <td data-label="Depot">
+                        <div class="slds-truncate" title="Depot">
+                         <ui:outputText value="{!v.data.depot}"/>
+                        </div>
+                    </td>
+                    -->
+                    <td data-label="Total Credit Limit">
+                        <div class="slds-truncate" title="Total Credit Limit">
+                          <!-- <ui:outputText value="{!v.data.totalCreditLimit}" /> -->
+                            <lightning:formattedNumber  value="{!v.data.totalCreditLimit}" style="currency"/>
+                           <!--  <lightning:formattedNumber  value="{!v.orderFields.DistributorData.creditUsed}" style="currency" currencyCode="PLN"/> -->
+                            
+                        </div>
+                    </td>
+                    <td data-label="Internal Credit Limit">
+                        <div class="slds-truncate" title="Internal Credit Limit%">
+                        <!-- <ui:outputText value="{!v.data.internalCreditLimit}"/> -->
+                            <lightning:formattedNumber  value="{!v.data.internalCreditLimit}" style="currency"/>
+                        </div>
+                    </td>
+                    <td data-label="Credit Limit Used">
+                        <div class="slds-truncate" title="Credit Limit Used">
+                       <!--  <ui:outputText value="{!v.data.creditLimitUsed}"/> -->
+                            <lightning:formattedNumber  value="{!v.data.creditLimitUsed}" style="currency"/>
+                        </div>
+                    </td>
+                    <td data-label="Credit Limit Balance" style="background:#00FF00;">
+                        <div class="slds-truncate" title="Credit Limit Balance">
+                        <!-- <ui:outputText value="{!v.data.creditLimitBalance}"/> -->
+                            <lightning:formattedNumber  value="{!v.data.creditLimitBalance}" style="currency"/>
+                        </div>
+                    </td>
+                    <!--Hiding two columns RITM0431761 GRZ(Nikhil Verma)-->
+                    <!--<td data-label="Total Outstanding">
+                        <div class="slds-truncate" title="Total Outstanding">
+                            <lightning:formattedNumber  value="{!v.data.totalOutstanding}" style="currency"/>
+                        </div>
+                    </td>
+                    <td data-label="Net Overdue" style="background:#ff0000;">
+                        <div class="slds-truncate" title="Net Overdue">
+                            <lightning:formattedNumber  value="{!v.data.netOverdue}" style="currency"/>
+                        </div>
+                    </td>-->
+                </tr>
+                
+                
+                
+            </tbody>
+        </table>
+    </div>    
+    
+    
+</aura:component>

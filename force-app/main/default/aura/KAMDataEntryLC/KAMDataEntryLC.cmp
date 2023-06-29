@@ -1,0 +1,563 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" 
+                controller="KAMDataEntryClass">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <ltng:require styles="{!$Resource.popupCSS}" />
+    <aura:handler name="setPayout" event="c:KamDataEntryAggregateSubmit" action="{!c.handleSetPayoutEvent}"/>
+    <aura:handler name="closeModal" event="c:KamDataEntryAggregateCloseModal" action="{!c.closeModel}"/>
+    <aura:handler name="KAMDataEntryDynamicRowPayoutList" event="c:KAMDataEntryDynamicRowPayoutList" action="{!c.ApplyChangesWrapper}"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <!-- Attribute Declration For Pagination -->
+    <aura:attribute name="histList" type="List"/> 
+    <aura:attribute name="AggCh" type="String"/> 
+    <aura:attribute name="FilterList" type="List"/>
+    <aura:attribute name="ChangeList" type="List"/>
+    <aura:attribute name="PList" type="List"/>
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="aggrDValue" type="List"/>
+    <aura:attribute name="startPage" type="Integer"/>
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" />
+    <aura:attribute name="TotalPages" type="Integer"/>
+    <aura:attribute name="PageNumber" type="Integer"/>
+    <!-- Attribute Declration For Pagination End-->
+    <!-- Attribute Section -->
+    <aura:attribute name="showHistOnly" type="boolean" default="false"/>
+    <aura:attribute name="showHist" type="boolean" default="false"/>
+    <aura:attribute name="yearEditAccess" type="boolean" default="true"/>
+    <aura:attribute name="firstYear" type="Integer"/>
+    <aura:attribute name="secondYear" type="Integer"/>
+    <aura:attribute name="mktYear" type="String" default = "first"/>
+    <aura:attribute name="PayDeleteList" type="List"/>
+    <aura:attribute name="MKTYearName" type="String"/>
+    <aura:attribute name="SAPcode" type="String"/>
+    <aura:attribute name="payoutType" type="String" default='Value'/>
+    <aura:attribute name="dHeader" type="String"/>
+    <aura:attribute name="MKT" type="String"/>
+    <aura:attribute name="sOrg" type="String"/>
+    <aura:attribute name="showLast" type="boolean" default="true"/>
+    <aura:attribute name="lastSavedBy" type="String"/>
+    <aura:attribute name="lastSaveddate" type="String"/>
+    <aura:attribute name="freezeInput" type="boolean" default="false"/>
+    <aura:attribute name="pctDisable" type="boolean" default="false"/>
+    <aura:attribute name="selectedRowNum" type="Integer"/>
+    <aura:attribute name="AccountName" type="string" />
+    <aura:attribute name="curYear" type="Integer" />
+    <aura:attribute name="ediTotal" type="Decimal" />
+    <aura:attribute name="invTotal" type="Decimal" />
+    <aura:attribute name="draftTotal" type="Decimal" />
+    <aura:attribute name="valTotal" type="Decimal" />
+    <aura:attribute name="finPct" type="Decimal" />
+    <aura:attribute name="commonPct" type="Decimal" />
+    <aura:attribute name="prevYear" type="Integer" />
+    <aura:attribute name="ShowInnerSection" type="Boolean" default="False"/>
+    <aura:attribute name="recordId" type="string" default="0010K00002aEQLQQA4"/>
+    <aura:attribute name="catList" type="List" />
+    <aura:attribute name="datList" type="List" />
+    <aura:attribute name="secMap" type="List" />
+    <aura:attribute name="salMap" type="Map" />
+    <aura:attribute name="dfMap" type="Map" />    
+    <aura:attribute name="subDisabled" type="boolean" default="true" /> 
+    <aura:attribute name="divList" type="Object" />
+    <aura:attribute name="custDiv" type="String"/>
+    <aura:attribute name="custDivCode" type="String"/>
+    <aura:attribute name="cHeck" type="boolean" default="false"/>
+    <aura:attribute name="count" type="Integer" default="0"/>
+    <aura:attribute name="CheckedList" type="List"/>
+    <aura:attribute name="filterdata" type="object"/>
+    <aura:attribute name="value" type="String" default="option1"/>
+    <aura:attribute name="aggregatePayoutType" type="String" default="Value"/>
+    <aura:attribute name="Payout" type="String"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="isModalActive" type="boolean" default="false"/>
+    <aura:attribute name="ChoosetheScreenflow" type="String"/>
+    <aura:attribute name="ExistingScreen" type="String"/>
+    <aura:attribute name="NewFlowScreen" type="String"/>
+    <aura:attribute name="OptionSelection" type="String"/>
+    <aura:attribute name="optionSelected" type="String"/>
+    <aura:attribute name = "picklistVisibility" type = "boolean"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="diableDownload" type="Boolean" default="true" />
+    <aura:attribute name="diableEmail" type="Boolean" default="true" />
+    <aura:attribute name="approvalList" type="List"/>
+
+    <!-- Draft Plan Clone RITM0560054 GRZ(Nikhil Verma) 24-05-2023-->
+    <aura:attribute name="DraftCloneRedords" type="List"/>
+    <aura:attribute name="diableClone" type="Boolean" default="true" />
+    <aura:attribute name="showCloneScreen" type="Boolean" default="false" />
+
+    <aura:attribute name="options" type="List" default="[
+                                                        {'label': '$ Value', 'value': 'Value'},
+                                                        {'label': '% of Product Price', 'value': 'Pct of Product Price'}
+                                                        ]"/>
+    
+    <div class="exampleHolder">
+        <aura:if isTrue="{! v.loaded }">
+            <lightning:spinner alternativeText="Loading" />
+        </aura:if>
+    </div>
+    <lightning:card class="topMargin">
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small" class="custom-background-blue" size="12">
+                <b>Draft Entry</b>
+            </lightning:layoutItem>            
+        </lightning:layout>
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="12">
+                <b>Customer Name: {!v.AccountName}</b>
+            </lightning:layoutItem>            
+        </lightning:layout>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem padding="around-small">
+                <b>Set ALL 'PCT of Prev Yr' to</b>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-p-around_xx-small">
+                <div style="text-align:center;">
+                    <div class="left">
+                        <lightning:input variant="label-hidden"  name="input1" value="{!v.commonPct}" disabled="{!v.freezeInput}"  step=".01"/>
+                    </div>
+                    <div class="right">
+                        %
+                    </div>
+                </div>  
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-p-around_xx-small">
+                <lightning:button variant="brand" label="Apply" title="Apply" onclick="{!c.applyPct}" />
+            </lightning:layoutItem>  
+
+            <lightning:layoutItem class="slds-p-around_xx-small">
+                <lightning:button variant="brand" disabled="{!v.diableClone}" label="Clone Draft Plan" onclick="{!c.handleClone}" />
+            </lightning:layoutItem>
+
+            <lightning:layoutItem class="slds-p-around_xx-small">
+                <lightning:button variant="brand" disabled="{!v.diableDownload}" label="Download PDF" onclick="{!c.downloadPDF}" />
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-p-around_xx-small">
+                <lightning:button variant="brand" disabled="{!v.diableEmail}" label="Email PDF" onclick="{!c.sendEmail}" />
+            </lightning:layoutItem> 
+        </lightning:layout>
+        
+        <lightning:layout>
+            <lightning:layoutItem padding="around-small" size="12">
+                <aura:if isTrue="{!v.showLast}">
+                    Last Saved on {!v.lastSaveddate} by {!v.lastSavedBy}
+                </aura:if>     
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem class="m-pad" padding="around-small" size="12" mediumDeviceSize="2">
+                <div>
+                    <ui:inputText label="Search by Category" class="BorderTextField" aura:id="selectMaterial" updateOn="keyup"   keyup="{!c.onMaterialChange}"/> 
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem  class="m-pad" padding="around-small" size="12" mediumDeviceSize="2">
+                <div>
+                    <ui:inputText label="Search by Product" class="BorderTextField" aura:id="selectProduct" updateOn="keyup"   keyup="{!c.onProductChange}"/>
+                </div>    
+            </lightning:layoutItem>
+            <!--Added Brand Filter by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+            <lightning:layoutItem  class="m-pad" padding="around-small" size="12" mediumDeviceSize="2">
+                <div>
+                    <ui:inputText label="Search by Brand" class="BorderTextField" aura:id="selectBrand" updateOn="keyup"   keyup="{!c.onBrandChange}"/>
+                </div>    
+            </lightning:layoutItem>
+            <lightning:layoutItem   class="m-pad" padding="around-small" size="12" mediumDeviceSize="3">
+                <ui:inputSelect aura:id="div" label="Division" change="{!c.changeDivision}" class="m-select">
+                    <aura:iteration items="{!v.divList}" var="divc">
+                        <ui:inputSelectOption text="{!divc.divId}" label="{!divc.divName}"/>
+                    </aura:iteration>
+                </ui:inputSelect> 
+            </lightning:layoutItem>
+            <lightning:layoutItem class="m-pad" padding="around-small" size="12" mediumDeviceSize="3">
+                <ui:inputSelect aura:id="select" label="Marketing Year" change="{! c.changeMarketYear }" class="m-select">
+                    <ui:inputSelectOption value="true" text="first" label="{!v.firstYear}" />
+                    <ui:inputSelectOption text="second" label="{!v.secondYear}" />
+                </ui:inputSelect>
+            </lightning:layoutItem>
+            <aura:if isTrue="{!v.picklistVisibility}">
+                <lightning:layoutItem padding="around-small" size="12" mediumDeviceSize="4">
+                    <ui:inputSelect aura:id="radioGrpLayoutPicklist" 
+                                    label="Choose the layout you want to enter the values for Draft Plan:" 
+                                    change="{!c.handleChange}" class="m-select">
+                        <ui:inputSelectOption text="--Choose the screen flow--" label="{!v.ChoosetheScreenflow}" />
+                        <ui:inputSelectOption text="Individual Product Offer" label="{!v.ExistingScreen}" />
+                        <ui:inputSelectOption text="Portfolio product offer" label="{!v.NewFlowScreen}" />
+                    </ui:inputSelect>
+                </lightning:layoutItem>
+            </aura:if>
+            
+            <lightning:layoutItem padding="around-small" size="12" mediumDeviceSize="4">
+                Show items with historical sales only  
+                <input type="checkbox" label="Show items with historical sales only" name="Show items with historical sales only" id="checkbox-unique-id-73" value="{!v.showHistOnly}" onchange="{!c.showhistoryOnly}" />
+            </lightning:layoutItem>
+        </lightning:layout>
+        <!--Created By: Ishita Kansal: Ticket no.: RITM0266323-->
+        <!--v.optionSelected used to determine the screen flow-->
+
+        <!-- Existing Flow-->
+        <!--Modified UI by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+        <aura:if isTrue="{!v.optionSelected == 'true'}">
+            <div id = "Existingflow">
+                <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="slds-is-sortable head-back" scope="col"></th>
+                            <th colspan="2" class="slds-is-sortable head-back" scope="col" style="text-align: center;">{!v.prevYear} Mkt Yr</th>
+                            <th colspan="2" class="slds-is-sortable head-back" scope="col" style="text-align: center;">{!v.prevYear} Mkt Yr</th>
+                            <th colspan="5" class="slds-is-sortable head-back" scope="col" style="text-align: center;">{!v.curYear} Mkt Yr</th>
+                        </tr>
+                        <tr>
+                            <th class="slds-is-sortable head-back" scope="col">Product Type</th>
+                            <th class="slds-is-sortable head-back" scope="col">Product Name</th>
+                            <th class="slds-is-sortable head-back" scope="col">UOM</th>
+                            <th class="slds-is-sortable head-back" scope="col">EDI Qty</th>
+                            <th class="slds-is-sortable head-back" scope="col">EDI $$</th>
+                            <th class="slds-is-sortable head-back" scope="col">Invoice Qty</th>
+                            <th class="slds-is-sortable head-back" scope="col">Invoice $$</th>
+                            <th class="slds-is-sortable head-back" scope="col">Product Price</th>
+                            <th class="slds-is-sortable head-back" scope="col">Draft Qty</th>
+                            <th class="slds-is-sortable head-back" scope="col">Pct of Prev Yr</th>
+                            <th class="slds-is-sortable head-back" scope="col">Draft $$</th>
+                            <th class="slds-is-sortable head-back" scope="col">Value at Draft</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.PaginationList}"  var="item" indexVar="index">
+                            <tr class="slds-hint-parent">
+                                <td class="slds-truncate" data-label="Product Type">{!item.cat}</td>
+                                <td class="slds-truncate" data-label="Product Name">{!item.SkuName}</td>
+                                <td class="slds-truncate" data-label="UOM">{!item.UOM}</td>
+                                <td class="slds-truncate" data-label="EDI Qty" style="text-align:center;">
+                                    <lightning:formattedNumber value="{!item.eQty}" label="{!index}" variant="label-hidden"  />
+                                </td>
+                                <td class="slds-truncate" data-label="EDI $$" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.eAmt}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                                </td>
+                                <td class="slds-truncate" data-label="Invoice Qty" style="text-align:center;">
+                                    <lightning:formattedNumber value="{!item.iQty}" label="{!index}" variant="label-hidden"  /> &nbsp; &nbsp;&nbsp;
+                                </td>
+                                <td class="slds-truncate" data-label="Invoice $$" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.iAmt}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                                </td>
+                                <td class="slds-truncate" data-label="Product Price" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.productPrice}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                                </td>
+                                <td class="slds-truncate" data-label="Draft Qty">
+                                    <lightning:input type="number" label="{!index}" class="right-text-align"  variant="label-hidden" onchange="{!c.CalcPct}" value="{!item.dQty}" disabled="{!v.freezeInput}"  step=".01"/>
+                                </td>
+                                <td class="slds-truncate" data-label="Pct of Prev Yr">
+                                    <aura:if isTrue="{!or(v.freezeInput, item.pctDisabled)}">
+                                        <lightning:input type="number" label="{!index}" class="right-text-align"   variant="label-hidden" onchange="{!c.CalcDfQty}" value="{!item.dPct}"   disabled="true" step=".01"/>  
+                                        <aura:set attribute="else">
+                                            <lightning:input type="number" label="{!index}" class="right-text-align"   variant="label-hidden" onchange="{!c.CalcDfQty}" value="{!item.dPct}"    step=".01"/>  
+                                        </aura:set>
+                                    </aura:if>
+                                </td>
+                                <td class="slds-truncate" data-label="Draft $$" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.dAmt}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>
+                                </td>
+                                <td class="slds-truncate" data-label="Value at Draft" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.dVal}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                                    &nbsp;
+                                    <aura:if isTrue="{!or(item.expanded,item.dQty!=null)}">
+                                        <a onclick="{!c.handleClick}" data-index="{!index}">
+                                            <lightning:buttonIcon iconName="utility:add" aura:id="{!index}" variant="bare"  alternativeText="Add" title="Add" />
+                                        </a>
+                                    </aura:if>
+                                </td>
+                            </tr>
+                            <aura:if isTrue="{!item.expanded}">
+                                <tr>
+                                    <td colspan="2" class="custom-background-LighterGray"></td>
+                                    <td colspan="10" class="custom-background-LighterGray">
+                                        <div class="data-entry-inner-section">
+                                            <div>
+                                                <lightning:radioGroup name="radioGroup"
+                                                                    label="Enter Payout As"
+                                                                    options="{!v.options }"
+                                                                    value="{!item.payType }"
+                                                                    type="radio"/>
+                                            </div>
+                                            <div>
+                                                <c:KAMDataEntryInnerSection freeze="{!v.freezeInput}" PayoutList="{!item.dfpayList}" productPrice="{!item.productPrice}" draftQty="{!item.dQty}" pType="{!item.payType}" rowIndex="{!index}" rCode="{!item.reasonCode}" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </aura:if>
+                        </aura:iteration>
+                    </tbody>
+                        <tr class="slds-hint-parent">
+                            <th colspan="4" class="slds-is-sortable head-back m-total-back" scope="col">Total</th>
+                            <th class="slds-is-sortable head-back m-total-back" scope="col" style="text-align:right;" data-label="Total EDI $$">
+                                <lightning:formattedNumber value="{!v.ediTotal}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                            </th>
+                            <th colspan="2" class="slds-is-sortable head-back m-total-back" scope="col" style="text-align:right;" data-label="Total Invoice $$">
+                                <lightning:formattedNumber value="{!v.invTotal}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                            </th>
+                            <th colspan="4" class="slds-is-sortable head-back m-total-back" scope="col" style="text-align:right;" data-label="Total Draft $$">
+                                <lightning:formattedNumber value="{!v.draftTotal}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                            </th>
+                            <th class="slds-is-sortable head-back m-total-back" scope="col" style="text-align:right;" data-label="Total Value $$">
+                                <lightning:formattedNumber value="{!v.valTotal}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                            </th>
+                        </tr>
+                        <tr class="slds-hint-parent">
+                            <th style="text-align:right;" colspan="11" class="slds-is-sortable head-back m-total-back m-display-none" scope="col">% of Draft</th>
+                            <th style="text-align:right;" class="slds-is-sortable head-back m-total-back" scope="col" data-label="% of Draft">
+                                <lightning:formattedNumber value="{!v.finPct}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                            </th>
+                        </tr>
+                </table>
+            </div>
+        </aura:if>
+        <!--*********End***********Modified UI by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+
+        <!-- New Flow-->
+        <!--Modified UI by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+        <aura:if isTrue="{!v.optionSelected == 'false'}">
+            <div id = "NewFlow">
+                <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="slds-is-sortable head-back" scope="col"></th>
+                            <th colspan="2" class="slds-is-sortable head-back" scope="col" style="text-align: center;">{!v.prevYear} Mkt Yr</th>
+                            <th colspan="2" class="slds-is-sortable head-back" scope="col" style="text-align: center;">{!v.prevYear} Mkt Yr</th>
+                            <th colspan="5" class="slds-is-sortable head-back" scope="col" style="text-align: center;">{!v.curYear} Mkt Yr</th>
+                        </tr>
+                        <tr>
+                            <th class="slds-is-sortable head-back" scope="col">Product Type</th>
+                            <th class="slds-is-sortable head-back" scope="col">Product Name</th>
+                            <th class="slds-is-sortable head-back" scope="col">UOM</th>
+                            <th class="slds-is-sortable head-back" scope="col">EDI Qty</th>
+                            <th class="slds-is-sortable head-back" scope="col">EDI $$</th>
+                            <th class="slds-is-sortable head-back" scope="col">Invoice Qty</th>
+                            <th class="slds-is-sortable head-back" scope="col">Invoice $$</th>
+                            <th class="slds-is-sortable head-back" scope="col">Product Price</th>
+                            <th class="slds-is-sortable head-back" scope="col">Draft Qty</th>
+                            <th class="slds-is-sortable head-back" scope="col">Pct of Prev Yr</th>
+                            <th class="slds-is-sortable head-back" scope="col">Draft $$</th>
+                            <th class="slds-is-sortable head-back" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.PaginationList}"  var="item" indexVar="index">
+                            <tr class="slds-hint-parent">
+                                <td class="slds-truncate" data-label="Product Type">{!item.cat}</td>
+                                <td class="slds-truncate" data-label="Product Name">
+                                    <input type = "checkbox" name="{!item.sid}" checked="{!item.isProductChecked}" disabled = "{!item.disabledItem}" value = "{!item.isProductChecked}" onchange="{!c.handleProductCheck}" />&nbsp;
+                                    {!item.SkuName}
+                                </td>
+                                <td class="slds-truncate" data-label="UOM">{!item.UOM}</td>
+                                <td class="slds-truncate" data-label="EDI Qty" style="text-align:center;">
+                                    <lightning:formattedNumber value="{!item.eQty}" label="{!index}" variant="label-hidden"  />
+                                </td>
+                                <td class="slds-truncate" data-label="EDI $$" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.eAmt}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                                </td>
+                                <td class="slds-truncate" data-label="Invoice Qty" style="text-align:center;">
+                                    <lightning:formattedNumber value="{!item.iQty}" label="{!index}" variant="label-hidden"  /> &nbsp; &nbsp;&nbsp;
+                                </td>
+                                <td class="slds-truncate" data-label="Invoice $$" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.iAmt}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                                </td>
+                                <td class="slds-truncate" data-label="Product Price" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.productPrice}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                                </td>
+                                <td class="slds-truncate" data-label="Draft Qty">
+                                    <lightning:input type="number" label="{!index}" class="right-text-align"  variant="label-hidden" onchange="{!c.CalcPct}" value="{!item.dQty}" disabled="{!!item.isProductChecked}"  step=".01"/>  
+                                </td>
+                                <td class="slds-truncate" data-label="Pct of Prev Yr">
+                                    <aura:if isTrue="{!or(v.freezeInput, item.pctDisabled)}">
+                                        <lightning:input type="number" label="{!index}" class="right-text-align"   variant="label-hidden" onchange="{!c.CalcDfQty}" value="{!item.dPct}"   disabled="true" step=".01"/>  
+                                        <aura:set attribute="else">
+                                            <lightning:input type="number" label="{!index}" class="right-text-align"   variant="label-hidden" onchange="{!c.CalcDfQty}" value="{!item.dPct}"    step=".01"/>  
+                                        </aura:set>
+                                    </aura:if>
+                                </td>
+                                <td class="slds-truncate" data-label="Draft $$" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.dAmt}" label="{!index}" variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>
+                                </td>
+                                <td class="slds-truncate" data-label="Value at Draft" style="text-align:right;">
+                                    <lightning:formattedNumber value="{!item.dVal}" label="{!index}"  variant="label-hidden" maximumFractionDigits="2" minimumFractionDigits="2"/>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                    <tr class="slds-hint-parent">
+                        <th colspan="4" class="slds-is-sortable head-back m-total-back" scope="col">Total</th>
+                        <th class="slds-is-sortable head-back m-total-back" scope="col" style="text-align:right;" data-label="Total EDI $$">
+                            <lightning:formattedNumber value="{!v.ediTotal}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                        </th>
+                        <th colspan="2" class="slds-is-sortable head-back m-total-back" scope="col" style="text-align:right;" data-label="Total Invoice $$">
+                            <lightning:formattedNumber value="{!v.invTotal}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                        </th>
+                        <th colspan="4" class="slds-is-sortable head-back m-total-back" scope="col" style="text-align:right;" data-label="Total Draft $$">
+                            <lightning:formattedNumber value="{!v.draftTotal}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                        </th>
+                        <th class="slds-is-sortable head-back m-total-back" scope="col" style="text-align:right;" data-label="Total Value $$">
+                            <lightning:formattedNumber value="{!v.valTotal}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                        </th>
+                    </tr>
+                    <tr class="slds-hint-parent">
+                        <th style="text-align:right;" colspan="11" class="slds-is-sortable head-back m-total-back m-display-none" scope="col">% of Draft</th>
+                        <th style="text-align:right;" class="slds-is-sortable head-back m-total-back" scope="col" data-label="% of Draft">
+                            <lightning:formattedNumber value="{!v.finPct}"  variant="label-hidden"  maximumFractionDigits="2" minimumFractionDigits="2"/>  
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </aura:if>
+        <!--*********End***********Modified UI by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->  
+        <!--Created By: GUNNAGYA for Ticket no.: RITM0266323-->
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem padding="around-small" size="12" mediumDeviceSize="2">
+                <div class="slds-float_left slds-p-left_xx-small">
+                    <p><b>Page {!v.PageNumber} of {!v.TotalPages}</b></p> 
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" mediumDeviceSize="8">
+                    <div class="slds-button-group slds-align_absolute-center slds-grid slds-wrap" role="group">
+                        <lightning:button class="slds-m-top_small" disabled="{!if(or(v.startPage == 0,v.totalRecords==0),true,false)}" variant="brand" aura:id="prevPage" label="Previous" onclick="{!c.handlePrev}" />&nbsp;           
+                        <lightning:button class="slds-m-top_small" disabled="{!if(or(v.PageNumber == v.TotalPages,v.totalRecords==0),true,false)}" aura:id="nextPage" variant="brand" label="Next" onclick="{!c.handleNext}"/>&nbsp;
+                        <aura:if isTrue="{!v.optionSelected == 'false'}">
+                            <lightning:button class="slds-m-top_small" variant="brand"  
+                                                label="Aggregate"
+                                                title="Aggregate"
+                                                onclick="{! c.openModel }"
+                                                />&nbsp;
+                        </aura:if>
+                        <lightning:button class="slds-m-top_small" variant="brand" label="Save" onclick="{!c.Save}"/> &nbsp;
+                        <lightning:button class="slds-m-top_small" variant="brand" label="Submit" onclick="{! c.Submit }" disabled="{!v.subDisabled}"/>
+                    </div>
+            </lightning:layoutItem>
+            <!--End Change by GUNNAGYA-->       
+        </lightning:layout>
+        
+        <!-- Added Approval History by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+        <div>
+            <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin-top:20px; background:#e1e3e5; color:#000; font-weight:bold;">
+                Approval History
+            </h3>
+            <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">Date/Time</div>
+                        </th>
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">Status</div>
+                        </th>
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">User</div>
+                        </th>
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">Approver</div>
+                        </th>        
+                        <th class="slds-is-sortable" scope="col">
+                            <div class="slds-truncate">Comments</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.approvalList}" var="step">
+                        <tr class="slds-hint-parent">
+                            <th class="slds-truncate" data-label="Date/Time"><ui:outputDateTime value="{!step.createdDate}"/></th>
+                            <td class="slds-truncate" data-label="Status"><ui:outputText value="{!step.stepStatus}" /></td>
+                            <td class="slds-truncate" data-label="User"><ui:outputText value="{!step.originalActorName}" /></td>
+                            <td class="slds-truncate" data-label="Approver"><ui:outputText value="{!step.actorName}" /></td>
+                            <td class="slds-truncate" data-label="Comments"><ui:outputText value="{!step.comments}" /></td>
+                        </tr>
+                    </aura:iteration>    
+                </tbody>
+            </table>
+        </div>
+        <!--*********End*********** Added Approval History by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+    </lightning:card>
+    <aura:if isTrue="{!v.isModalOpen}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                            onclick="{! c.closeModel }"
+                                            alternativeText="close"
+                                            variant="bare-inverse"
+                                            class="slds-modal__close"/>
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Aggregate Threshold and Payout</h1>
+                </header>
+                <div class="m-aggregate">
+                    <lightning:layout class="custom-background-LighterGray" multipleRows="true">
+                        <lightning:layoutItem size="12" mediumDeviceSize="4">
+                            <div class="agg-radio-div">
+                                <lightning:radioGroup name="radioGroup"
+                                                        label="Enter Payout As"
+                                                        options="{!v.options }"
+                                                        value="{!v.aggregatePayoutType}"
+                                                        type="radio"/>
+                            </div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" mediumDeviceSize="8">
+                            <div class="agg-cmp-div">
+                                <c:KamDataEntryAggregate masterList = "{!v.CheckedList}" pType = "{!v.aggregatePayoutType}"/>
+                            </div>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+
+    <!-- Draft Plan Clone RITM0560054 GRZ(Nikhil Verma) 24-05-2023-->
+    <aura:if isTrue="{!v.showCloneScreen}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                            onclick="{! c.closeCloneScreen}"
+                                            alternativeText="close"
+                                            variant="bare-inverse"
+                                            class="slds-modal__close"/>
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Select Existing Draft Plan</h1>
+                </header>
+                <div class="m-aggregate">
+                    <div class="slds-scrollable_y" style="height:20rem;"> 
+                        <table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+                            <thead>
+                                <tr class="slds-text-heading--label">
+                                    <th class="slds-is-sortable" scope="col">
+                                        <div class="slds-truncate">Name</div>
+                                    </th>
+                                    <th class="slds-is-sortable" scope="col">
+                                        <div class="slds-truncate">Account Name</div>
+                                    </th>
+                                    <th class="slds-is-sortable" scope="col">
+                                        <div class="slds-truncate">Market Year</div>
+                                    </th>
+                                    <th class="slds-is-sortable" scope="col">
+                                        <div class="slds-truncate">Status</div>
+                                    </th>        
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.DraftCloneRedords}" var="step">
+                                    <tr class="slds-hint-parent cloneDataRow">
+                                        <td class="slds-truncate" data-id="{!step.Distributor__r.Name}" title="{!step.Id}" onclick="{!c.handleDraftClick}" data-label="Name"><ui:outputText value="{!step.Name}"/></td>
+                                        <td class="slds-truncate" data-id="{!step.Distributor__r.Name}" title="{!step.Id}" onclick="{!c.handleDraftClick}" data-label="Account Name"><ui:outputText value="{!step.Distributor__r.Name}" /></td>
+                                        <td class="slds-truncate" data-id="{!step.Distributor__r.Name}" title="{!step.Id}" onclick="{!c.handleDraftClick}" data-label="Market Year"><ui:outputText value="{!step.MKT_Year_Name__c}" /></td>
+                                        <td class="slds-truncate" data-id="{!step.Distributor__r.Name}" title="{!step.Id}" onclick="{!c.handleDraftClick}" data-label="Status"><ui:outputText value="{!step.Status__c}" /></td>
+                                    </tr>
+                                </aura:iteration>    
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+
+</aura:component>

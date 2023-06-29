@@ -1,0 +1,340 @@
+<template>
+    <!-- For India -->
+    <template if:true={isIn}>
+        <div class="test121">
+            <template if:true={aidata}>
+                <!--mobile page-->
+                <div class="mobile_icon" onclick={openMobileNav}>≡</div>
+                <!--mobile page end-->
+                <div class="lgc-bg fulldiv">
+                    <template for:each={aidata} for:item="con" for:index="index">
+                        <div key={con.Id} class="LightTile" data-name={con.Label}>
+                            <div class="" style="position:relative;">
+                                <template if:false={noHover_on_moblie}>
+                                    <a href={con.url} class="FullLabelDiv" onmouseover={Hover} onmouseout={HoverOut} data-id={index}>
+                                        <div class={con.CategoryId} data-id="Icon" style="background-size: 1100px;
+        display: block;
+        height: 40px;
+        width: 40px;
+        margin: auto;
+        padding: 4px;
+        ">
+                                            <lightning-formatted-rich-text value={con.image}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                        <div class="Label">{con.Label}</div>
+                                    </a>
+                                </template>
+                                <template if:true={noHover_on_moblie}>
+                                    <a href={con.url} class="FullLabelDiv" onclick={responsiveClickAction} data-value={con.isChild} data-id={index}>
+    
+                                        <div class={con.CategoryId} data-id="Icon" style="background-size: 1100px;
+        display: block;
+        height: 40px;
+        width: 40px;
+        margin: auto;
+        padding: 4px;
+        ">
+                                            <lightning-formatted-rich-text value={con.image}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                        <div class="Label">{con.Label}</div>
+                                    </a>
+    
+                                </template>
+                                <template if:true={con.isChild}>
+                                    <div class="sideDiv1" data-id={index} onmouseover={sideHoveractive} onmouseout={sideHoverNotactive}>
+                                        <template if:false={hideDivonExpand}>
+                                            <template if:true={con.childTabs}>
+                                                <div>
+                                                    <a href={con.url} style="text-decoration: none;">
+                                                        <div class=" LabelHover ">{con.Label}</div>
+                                                    </a>
+                                                    <div class="DropDownIcon" onclick={DropDownHide} data-id={index}>
+                                                        <img src={downarrow}>
+                                                    </div>
+                                                    <ul class="hoverUL" data-id={index}>
+                                                        <template for:each={con.childTabs} for:item="child">
+                                                            <a data-id={child.Id} key={child.Id} href={child.url} class="hoverUL" onmouseover={HoverInChild} onmouseout={HoverOutChild}>
+                                                                <li key={child.Id} class="listItem">{child.Label}</li>
+                                                            </a>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isInExternal}>
+                        <template if:true={btnEnableIn}>
+                            <div class="surveyDiv">
+                                <a href={surveyURLIn}  class="surveyanchor" target="__blank">
+                                    <img src={surveyIcon} class="survey-img">
+                                    <p class="surveytext">Survey</p>
+                                </a>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+    <!-- For Brazil -->
+    <template if:true={isBr}>
+        <div class="test121 fixed-br">
+            <template if:true={aidata}>
+                <!--mobile page-->
+                <div class="mobile_icon" onclick={openMobileNav}>≡</div>
+                <!--mobile page end-->
+                <div class="lgc-bg fulldiv">
+                    <template for:each={aidata} for:item="con" for:index="index">
+                        <div key={con.Id} class="LightTile" data-name={con.Label}>
+                            <div class="" style="position:relative;">
+                                <template if:false={noHover_on_moblie}>
+                                    <a href={con.url} class="FullLabelDiv" onmouseover={Hover} onmouseout={HoverOut} data-id={index}>
+                                        <div class={con.CategoryId} data-id="Icon" style="background-size: 1100px;
+        display: block;
+        height: 40px;
+        width: 40px;
+        margin: auto;
+        padding: 4px;
+        ">
+                                            <lightning-formatted-rich-text value={con.image}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                        <div class="Label">{con.Label}</div>
+                                    </a>
+                                </template>
+                                <template if:true={noHover_on_moblie}>
+                                    <a href={con.url} class="FullLabelDiv" onclick={responsiveClickAction} data-value={con.isChild} data-id={index}>
+    
+                                        <div class={con.CategoryId} data-id="Icon" style="background-size: 1100px;
+        display: block;
+        height: 40px;
+        width: 40px;
+        margin: auto;
+        padding: 4px;
+        ">
+                                            <lightning-formatted-rich-text value={con.image}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                        <div class="Label">{con.Label}</div>
+                                    </a>
+                                </template>
+                                <template if:true={con.isChild}>
+                                    <div class="sideDiv1" data-id={index} onmouseover={sideHoveractive} onmouseout={sideHoverNotactive}>
+                                        <template if:false={hideDivonExpand}>
+                                            <template if:true={con.childTabs}>
+                                                <div>
+                                                    <a href={con.url} style="text-decoration: none;">
+                                                        <div class=" LabelHover ">{con.Label}</div>
+                                                    </a>
+                                                    <div class="DropDownIcon" onclick={DropDownHide} data-id={index}>
+                                                        <img src={downarrow}>
+                                                    </div>
+                                                    <ul class="hoverUL" data-id={index}>
+                                                        <template for:each={con.childTabs} for:item="child">
+                                                            <a data-id={child.Id} key={child.Id} href={child.url} class="hoverUL" onmouseover={HoverInChild} onmouseout={HoverOutChild}>
+                                                                <li key={child.Id} class="listItem">{child.Label}</li>
+                                                            </a>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isBrExternal}>
+                        <template if:true={btnEnable}>
+                            <div class="surveyDiv">
+                                <a href={surveyURL}  class="surveyanchor" target="__blank">
+                                    <img src={surveyIcon} class="survey-img">
+                                    <p class="surveytext">Pesquisa</p>
+                                </a>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <!-- For Mexico -->
+    <template if:true={isMx}>
+        <div class="test121">
+            <template if:true={aidata}>
+                <!--mobile page-->
+                <div class="mobile_icon" onclick={openMobileNav}>≡</div>
+                <!--mobile page end-->
+                <div class="lgc-bg fulldiv">
+                    <template for:each={aidata} for:item="con" for:index="index">
+                        <div key={con.Id} class="LightTile" data-name={con.Label}>
+                            <div class="" style="position:relative;">
+                                <template if:false={noHover_on_moblie}>
+                                    <a href={con.url} class="FullLabelDiv" onmouseover={Hover} onmouseout={HoverOut}
+                                        data-id={index}>
+                                        <div class={con.CategoryId} data-id="Icon" style="background-size: 1100px;
+            display: block;
+            height: 40px;
+            width: 40px;
+            margin: auto;
+            padding: 4px;
+            ">
+                                            <lightning-formatted-rich-text value={con.image}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                        <div class="Label">{con.Label}</div>
+                                    </a>
+                                </template>
+                                <template if:true={noHover_on_moblie}>
+                                    <a href={con.url} class="FullLabelDiv" onclick={responsiveClickAction}
+                                        data-value={con.isChild} data-id={index}>
+    
+                                        <div class={con.CategoryId} data-id="Icon" style="background-size: 1100px;
+            display: block;
+            height: 40px;
+            width: 40px;
+            margin: auto;
+            padding: 4px;
+            ">
+                                            <lightning-formatted-rich-text value={con.image}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                        <div class="Label">{con.Label}</div>
+                                    </a>
+                                </template>
+                                <template if:true={con.isChild}>
+                                    <div class="sideDiv1" data-id={index} onmouseover={sideHoveractive}
+                                        onmouseout={sideHoverNotactive}>
+                                        <template if:false={hideDivonExpand}>
+                                            <template if:true={con.childTabs}>
+                                                <div>
+                                                    <a href={con.url} style="text-decoration: none;">
+                                                        <div class=" LabelHover ">{con.Label}</div>
+                                                    </a>
+                                                    <div class="DropDownIcon" onclick={DropDownHide} data-id={index}>
+                                                        <img src={downarrow}>
+                                                    </div>
+                                                    <ul class="hoverUL" data-id={index}>
+                                                        <template for:each={con.childTabs} for:item="child">
+                                                            <a data-id={child.Id} key={child.Id} href={child.url}
+                                                                class="hoverUL" onmouseover={HoverInChild}
+                                                                onmouseout={HoverOutChild}>
+                                                                <li key={child.Id} class="listItem">{child.Label}</li>
+                                                            </a>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isMxExternal}>
+                        <template if:true={btnEnableMx}>
+                            <a href={surveyURLMx} class="surveyanchor" target="__blank">
+                                <div class="surveyDiv">
+                                    <img src={surveyIcon} class="survey-img">
+                                    <p class="surveytext">Encuesta</p>
+                                </div>
+                            </a>
+                        </template>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+    <!-- For Brazil -->
+    <template if:true={isCl}>
+        <div class="test121">
+            <template if:true={aidata}>
+                <!--mobile page-->
+                <div class="mobile_icon" onclick={openMobileNav}>≡</div>
+                <!--mobile page end-->
+                <div class="lgc-bg fulldiv">
+                    <template for:each={aidata} for:item="con" for:index="index">
+                        <div key={con.Id} class="LightTile" data-name={con.Label}>
+                            <div class="" style="position:relative;">
+                                <template if:false={noHover_on_moblie}>
+                                    <a href={con.url} class="FullLabelDiv" onmouseover={Hover} onmouseout={HoverOut} data-id={index}>
+                                        <div class={con.CategoryId} data-id="Icon" style="background-size: 1100px;
+        display: block;
+        height: 40px;
+        width: 40px;
+        margin: auto;
+        padding: 4px;
+        ">
+                                            <lightning-formatted-rich-text value={con.image}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                        <div class="Label">{con.Label}</div>
+                                    </a>
+                                </template>
+                                <template if:true={noHover_on_moblie}>
+                                    <a href={con.url} class="FullLabelDiv" onclick={responsiveClickAction} data-value={con.isChild} data-id={index}>
+    
+                                        <div class={con.CategoryId} data-id="Icon" style="background-size: 1100px;
+        display: block;
+        height: 40px;
+        width: 40px;
+        margin: auto;
+        padding: 4px;
+        ">
+                                            <lightning-formatted-rich-text value={con.image}>
+                                            </lightning-formatted-rich-text>
+                                        </div>
+                                        <div class="Label">{con.Label}</div>
+                                    </a>
+                                </template>
+                                <template if:true={con.isChild}>
+                                    <div class="sideDiv1" data-id={index} onmouseover={sideHoveractive} onmouseout={sideHoverNotactive}>
+                                        <template if:false={hideDivonExpand}>
+                                            <template if:true={con.childTabs}>
+                                                <div>
+                                                    <a href={con.url} style="text-decoration: none;">
+                                                        <div class=" LabelHover ">{con.Label}</div>
+                                                    </a>
+                                                    <div class="DropDownIcon" onclick={DropDownHide} data-id={index}>
+                                                        <img src={downarrow}>
+                                                    </div>
+                                                    <ul class="hoverUL" data-id={index}>
+                                                        <template for:each={con.childTabs} for:item="child">
+                                                            <a data-id={child.Id} key={child.Id} href={child.url} class="hoverUL" onmouseover={HoverInChild} onmouseout={HoverOutChild}>
+                                                                <li key={child.Id} class="listItem">{child.Label}</li>
+                                                            </a>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isClExternal}>
+                        <template if:true={btnEnableCl}>
+                            <a href={surveyURL}  class="surveyanchor" target="__blank">
+                                <div class="surveyDiv">
+                                    <img src={surveyIcon} class="survey-img">
+                                    <p class="surveytext">Encuesta</p>
+                                </div>
+                            </a>
+                        </template>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+    <!--<div class = 'buttonClass' onclick = {expandSideBar}>
+	<img src ={sidearr} class = "arrow">
+	</div>-->
+</template>

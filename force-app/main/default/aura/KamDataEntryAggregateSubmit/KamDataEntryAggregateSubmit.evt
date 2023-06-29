@@ -1,0 +1,6 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="payout" type="List"/>
+    <aura:attribute name="submitModal" type="boolean"/>
+    <aura:attribute name="rCode" type="String"/>
+
+</aura:event>

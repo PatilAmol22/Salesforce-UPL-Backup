@@ -1,0 +1,41 @@
+.THIS {
+}
+
+.THIS .BorderTextField{    
+    border: 1px solid black;
+    min-height: 22px;
+    width: 100%;
+    height: 22px;
+    border-radius: unset;
+}
+
+.THIS .rCode{
+    margin-right: 380px;
+}
+
+.THIS .rCodeP{
+    margin-right: 360px;
+}
+
+.THIS .custom-background-green {
+    background-color: #61b33b  ;
+    margin-top:0px;
+    margin-bottom:0px;
+    height:30.013px;
+}
+
+.THIS .custom-background-white{
+    background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255))
+}
+.THIS .left-align {
+    text-align: left;
+}
+.THIS .right-align {
+    text-align: right;
+}
+.THIS .center-align {
+    text-align: center; 
+}
+.THIS .right-text-align input{
+    text-align: right;
+}

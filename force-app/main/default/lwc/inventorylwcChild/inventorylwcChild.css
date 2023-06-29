@@ -1,0 +1,239 @@
+.hiddee{
+    display:none;
+    }
+    .show{
+        display: flex;
+        width:100%;  
+    }
+   .style_div{
+   padding:10px;
+   display:table; 
+   
+   /* Chnage from Grid */
+   }
+    .li-items{
+        width:9.09% ;
+        border-radius: 0 ;
+        margin-left: 0 ;
+        margin-right: 0 ;
+        flex: 1;
+        color:#59474D;
+       
+        }
+        .Ul_class{
+        display: flex;
+        width:100%;
+      
+        }
+        .style_spane{
+            padding:5px; 
+        }
+        .childli{
+            /* background-color: #59474D; */
+            width: 20%;
+            color:white;
+        }
+.hideButton{
+    display:none;
+}
+.showButton{
+    
+}
+ul{
+    background-color:#F5F5EE;
+}
+.buttonStyle{
+    font-size:13px;
+    
+}
+.specialButtonMobile{
+    display:none;
+}
+.specialButton{
+    display:grid ;
+}
+.fontClass{
+    font-size: 14px;
+    margin-top:0px;
+}
+.helperdiv{
+    background-color: #59474D;
+}
+@media only screen and (max-width: 600px) {
+    .li-items{
+        min-width: 130px;
+        word-break: break-all;
+    }
+    .buttonStyle{
+        font-size:12px;
+        width: 140px;
+        padding-left:5px;
+        padding-right: 5px;
+    }
+    .fontClass{
+        font-size: 11px;
+        margin-top:5px;
+    }
+    .childUI{
+        overflow-x: scroll;
+        margin-left: 230px;
+    }
+    .tempDiv{
+        overflow-x: scroll;
+    }
+    .childli{
+        width:230px !important;
+        /* min-width:250px !important; */
+    }
+    .helperdiv {
+        position:absolute;
+        width:230px !important;
+    }
+    .mainheadingHeight{
+        height:40px;
+    } 
+}
+@media only screen and (min-width: 600px) {
+    .li-items{
+        min-width: 130px;
+        word-break: break-all;
+    }
+    .buttonStyle{
+        font-size:13px;
+        width: 140px;
+        padding-left:10px;
+        padding-right: 10px;
+    }
+    .fontClass{
+        font-size: 13px;
+        margin-top:5px;
+    }
+    .childUI{
+        overflow-x: scroll;
+        margin-left: 230px;
+    }
+    .tempDiv{
+        overflow-x: scroll;
+    }
+    .childli{
+        width:230px  !important;
+        /* min-width:250px !important; */
+    }
+    .helperdiv {
+        position:absolute;
+        width:230px !important;
+    }
+    .mainheadingHeight{
+        height:40px;
+    } 
+}
+
+
+
+.li-items{
+    border-radius: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align:center!important;
+    flex: 1;
+}
+.li-items3{
+    border-radius: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    flex: 1;
+}
+.paddingstyle{
+    padding:10px;
+}
+.Ul_class{
+    display: flex;
+}
+@media only screen and (min-width: 900px) {
+    .fontClass{
+        font-size: 13px;
+        margin-top:0px;
+    }
+    .childUI{
+        overflow-x: none !important;
+        overflow: hidden;
+        margin-left: 250px;
+    }
+    .tempDiv{
+        overflow-x: auto !important;
+        overflow: hidden;
+    }
+    .childli{
+        width:250px  !important;
+        /* min-width:250px !important; */
+    }
+    .helperdiv {
+        width:250px !important;
+    }
+    .mainheadingHeight{
+        height:40px;
+    } 
+}
+
+
+@media only screen and (max-width: 1098px) {
+    .Ul_class {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .li-items{
+        min-width: 130px;
+        word-break: break-all;
+        width:100%;
+        border-radius: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        flex: 1;
+        /* border: 0.01px solid lightgrey */
+    }
+    
+    .li-items3{
+        border-radius: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        flex: 1;
+    } 
+    .style_div{
+        display: table;
+    }
+    .specialButton{
+        display: none;
+    }
+    .specialButtonMobile{
+        display: inline-table;
+        width:100%
+    }
+    .insideDiv{
+        width:100%
+    }
+    .childli{
+        width:30%;
+    }
+    .helperdiv {
+        width:30% ;
+    }
+    .childUI{
+        overflow-x: none;
+    }
+    .tempDiv{
+        overflow-x: auto !important;
+    }
+    .fontClass{
+        margin-top:0px;
+    }
+     .mainheadingHeight{
+        height:40px;
+    } 
+  }
+.style_div{
+    padding: 10px;
+}
+.childUI{
+    overflow-x: none;
+}

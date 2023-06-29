@@ -1,0 +1,30 @@
+<template>
+    <lightning-quick-action-panel>
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner alternative-text="Loading..." variant="brand" style="top:60px;"></lightning-spinner>
+        </div>
+        <template if:true={isTMOrAdmin}>
+            <div class="modal-height">
+                <!-- <template if:true={errorMessage}>
+                    <p class="error"> {errorMessage} </p>
+                </template>
+                <template if:true={returnMessage}>
+                    <p class="message"> {returnMessage} </p>
+                </template> -->
+                <template if:true={nonGSTOption}>
+                <lightning-radio-group
+                label="Do you want to proceed without GST?"
+                options={options}
+                value={nonGstvalue}
+                onchange={handleChange}>
+            </lightning-radio-group>
+             <template if:true={nonGstBoolean}>
+                <lightning-input type="text" class="slds-m-bottom_x-small" onchange={handleinputchange} name="gstNumber" value={gstNumber} maxlength="15" minlength="15" label="If No, Kindly enter an active GST if available to revalidate the details(Latest details will be updated on account)"></lightning-input>
+            </template>
+            <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleClick} class="slds-float_right" disabled={disableSubmit}></lightning-button>
+                </template>
+            </div>
+        </template>
+        
+    </lightning-quick-action-panel>
+    </template>

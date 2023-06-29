@@ -1,0 +1,67 @@
+.THIS.mainCSS{
+    background: white !important;
+    border: 1px solid #DDDDDD;
+    position: relative;
+    
+}
+
+.THIS .textCSS{
+    text-align: left;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-size:20px;
+}
+
+.THIS .noteclass {
+  color: rgb(136, 136, 136);
+}
+
+.THIS .borderCSS{
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    
+}
+
+.THIS .boxCSS{
+    width: 13px;
+    height: 13px;
+    background: #00BDF2 0% 0% no-repeat padding-box;
+    /*border: 1px solid #00BDF2;*/
+    opacity: 1;
+}
+
+.THIS .chartCSS{
+    color: #000000;
+    text-align: left;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-size:12px;
+    height:30px;
+}
+
+.THIS .Errors{
+    margin-bottom : 14px;
+    color: red;
+    position: relative;
+    padding-top: -24%;
+    top: -133px;
+    text-align:center;
+    padding: 5%;
+    font-size: 16px;
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 768px){
+    .THIS .hidePadding {
+        padding-left: 0px;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    .THIS .hidePadding {
+        padding-left: 0px;
+    }
+}

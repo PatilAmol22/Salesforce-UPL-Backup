@@ -1,0 +1,27 @@
+<apex:component controller="SWALTMStatusZMLController" access="global">
+    <apex:attribute type="String" name="usrZoneCode" description="Zone Code" assignTo="{!zoneCode}"/>
+    <apex:outputPanel rendered="{!SWALTMStatusList}">
+        <apex:repeat value="{!terrTMStatusMap}" var="regionKey">
+        	<b>
+            	<apex:outputText value="{!regionKey}"/>
+            </b>
+            <table style="border: 1px solid black;border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">Territory Name</th>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">Territory Code</th>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">TM Name</th>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">TM UGDN</th>
+            </tr>
+            <apex:repeat var="terr" value="{!terrTMStatusMap[regionKey]}">
+                <tr>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.Name}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.TerritoryCode__c}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.TerritoryManager__r.Name}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.UGDN__c}</td>
+                </tr>
+            </apex:repeat>
+        </table>
+            <br/>
+        </apex:repeat>
+    </apex:outputPanel>
+</apex:component>

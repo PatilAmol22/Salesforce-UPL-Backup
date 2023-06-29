@@ -1,0 +1,51 @@
+<aura:component controller="SwalLiquidationApprovalController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="ProductTerritoryId" type="Territory_Distributor__c"/>
+    <aura:attribute name="ProductFiscalYear" type="String"/>
+    <aura:attribute name="ProductMonth" type="String"/>
+    <aura:attribute name="Editable" type="Boolean" default="true" />
+	<aura:attribute name="OpeningInventoryEditable" type="Boolean" default="false" />    
+    <!--data table-->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="errors" type="Object" default="[]"/>
+    <!--<aura:attribute name="draftValues" type="Object" default="[]"/>-->
+    <aura:attribute name="UpdationStatus" type="Boolean"/>
+    <!--data table-->
+    <!-- Added by Varun Shrivastava : SCTASK0459610 -->
+    <aura:attribute name="isLiquidationValidationEnabled" type="boolean" default="false"/>
+        
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    
+    <!--loading spinner start... style=Brand Medium (blue dots)-->
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <!-- Loading spinner end-->   
+    
+    <!-- the container element determine the height of the datatable -->
+    <div class="slds-grid_align-end">
+        <div class="exampleHolder" style="height:300px;width:1400px;" >
+            <lightning:datatable aura:id="dtTable"
+                                 columns="{! v.columns }"
+                                 column-widths-mode="fixed"
+                                 data="{! v.data }"
+                                 keyField="Id"
+                                 errors="{! v.errors }"
+                                 hideCheckboxColumn="true"
+                                 oncellchange="{!c.handleSaveEdition}"
+                                 suppressBottomBar="true"
+                                 showRowNumberColumn="false"
+                                 class="slds-table slds-table_striped slds-table_bordered slds-table_col-bordered"
+                                 />
+        </div>
+    </div>
+</aura:component>

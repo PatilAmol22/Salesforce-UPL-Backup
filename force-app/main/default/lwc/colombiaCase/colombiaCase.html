@@ -1,0 +1,492 @@
+<template>
+  <div class="slds-box slds-theme_default">
+      <div class="slds-p-around_medium lgc-bg">
+          <lightning-icon
+          icon-name="standard:case"
+          size="medium"
+          label={label.case}
+          alternative-text={label.case} style="float:left; margin-right:15px;">
+  </lightning-icon>
+  <div class="page-section page-header">
+      <h2 style="margin-top:10px; font-weight:600; padding-bottom:10px; font-size:16px;">{case_number}</h2>
+  </div>
+  </div>
+
+  <div style="background:#ccc; padding:5px; color:#000; font-weight:600">{label.case_detail}</div>
+
+  <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+
+      <div class="slds-form__item" role="listitem">
+          <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+            <label class="slds-form-element__label" for="single-form-element-id-03">{label.faq_quality}<span class="star">*</span></label>
+            <div class="slds-form-element__control">
+              <lightning-combobox
+              variant="label-hidden"
+              name="Invoice"
+              value={case_record.Type}
+              placeholder={label.ph_case_type}
+              options={faqQualityOptions}
+              onchange={handleChangeCaseType} 
+              disabled={disable_type}
+              ></lightning-combobox>
+              <div class="star" if:true={faq_Quality_required}>{label.select_option}</div>
+            </div>
+            
+          </div>
+        </div>
+        
+      
+
+        <div class="slds-form__item" role="listitem">
+          <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+            <label class="slds-form-element__label" for="checkbox-unique-id-34">{label.faq_effective}<span class="star"></span></label>
+            <div class="slds-form-element__control">
+              <span class="slds-checkbox slds-checkbox_standalone">
+                <lightning-input type="checkbox" id="checkbox-unique-id-34" name="label" checked={case_record.FAQs_Effectiveness__c} onchange={handleChangefaqs_Effective} disabled={disable_faq_effective}></lightning-input>
+              </span>
+            </div>
+          </div>
+        </div>
+
+  </div>
+
+  <div class="slds-grid slds-wrap slds-gutters">
+
+        <div class="slds-form__item" role="listitem">
+          <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+            <label class="slds-form-element__label" for="single-form-element-id-04">{label.account}<span class={hide_account_star}>*</span></label>
+            <div class="slds-form-element__control">
+              <c-lookupcmp placeholder={label.ph_select_account} iconname='standard:account' multiselect=false sobject='Account' fieldname='Name,Email__c' filter={account_filter} displayfield='Name' onselected={handleAccountSelected} singleselectedrec={acc_name} onremove={handleRemoveAccount} cmpwidth='long' dependent=false disable={disable_account}></c-lookupcmp>
+              <div class="star" if:true={account_require}>{label.select_option}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="slds-form__item" role="listitem">
+          <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+            <label class="slds-form-element__label" for="single-form-element-id-05">{label.farmer_name}<span class={hide_farmer_name_star}>*</span></label>
+            <div class="slds-form-element__control">
+              <lightning-input type="text" variant="label-hidden" value={case_record.Farmer_Name__c} onchange={handleChangeFarmerName} disabled={disable_farmer_name}></lightning-input>
+              <div class="star" if:true={farmer_name_require}>{label.complete_field}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="slds-grid slds-wrap slds-gutters">
+
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+              <label class="slds-form-element__label" for="single-form-element-id-06">{label.email}<span class="star"></span></label>
+              <div class="slds-form-element__control">
+                  <lightning-input type="email" value={case_record.Email__c} onchange={handleChangeEmail} disabled={disable_email}></lightning-input>
+              </div>
+            </div>
+          </div>
+          
+          <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+              <label class="slds-form-element__label" for="single-form-element-id-07">{label.mobile_number}<span class="star">*</span></label>
+              <div class="slds-form-element__control">
+                  <!-- <lightning-input type="text" value={phone} variant="label-hidden" onchange={handleChangeMobile}></lightning-input> -->
+                  <input type='text' class="slds-input" value={case_record.Mobile_Number_col__c} onkeypress={handleChangeMobile} onkeyup={handleChangeMobile} disabled={disable_phone}></input>
+                  <div class="star" if:true={mobile_num_required}>{label.invalid_mobile}</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+      <div class="slds-grid slds-wrap slds-gutters">
+        <div class="slds-form__item" role="listitem">
+          <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+            <label class="slds-form-element__label" for="single-form-element-id-08">{label.priority_level}<span class="star">*</span></label>
+            <div class="slds-form-element__control">
+              <lightning-combobox
+              name="Normal"
+               value={case_record.Priority}
+              placeholder={label.ph_select_level}
+              variant="label-hidden"
+              options={priorityLevelOptions}
+              onchange={handleChangePriorityLevel} 
+              disabled={disable_priority}
+              ></lightning-combobox>
+              <div class="star" if:true={priority_level_required}>{label.select_option}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slds-form__item" role="listitem">
+          <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+            <label class="slds-form-element__label" for="single-form-element-id-09">{label.id_number}<span class="star">*</span></label>
+            <div class="slds-form-element__control">
+                <lightning-input type="text" variant="label-hidden" value={case_record.ID_Number__c} onkeypress={handleChangeId_Number} onkeyup={handleChangeId_Number} disabled={disable_idnumber}  autocomplete="off"></lightning-input>
+                <div class="star" if:true={id_number_required}>{label.complete_field}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    <div class="slds-grid slds-wrap slds-gutters">
+      
+      <div class="slds-form__item" role="listitem">
+      <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+        <label class="slds-form-element__label" for="single-form-element-id-09">{label.status}<span class="star">*</span></label>
+        <div class="slds-form-element__control">
+          
+          <lightning-combobox
+          name="Status"
+          value={case_record.Status}
+          placeholder={label.ph_select_status}
+          variant="label-hidden"
+          disabled={disablestatus}
+          options={statusOptions}
+          onchange={handleChangeStatus} 
+          ></lightning-combobox>
+          <div class="star" if:true={Status_required}>{label.select_option}</div>
+        </div>
+      </div>
+    </div> 
+
+    <div class="slds-form__item" role="listitem">
+      <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+        <label class="slds-form-element__label" for="single-form-element-id-04">{label.sales_reps}<span class="star">*</span></label>
+        <div class="slds-form-element__control" >
+          <c-lookupcmp placeholder={label.ph_sales_reps} iconname='standard:user' multiselect=false sobject='DistributorSalesAreaMapping__c' fieldname='Name, AccountOwner__c,Account_Owner_Name__c, Distributor__c ' filter={sales_representative_filter} onselected={handleSelesRepSelected} displayfield='Account_Owner_Name__c' singleselectedrec={Sales_Representative} onremove={handleRemoveSelesRep} cmpwidth='long' dependent=false parentvalue={acc_name} disable={disableSales_reps}></c-lookupcmp>
+          <div class="star" if:true={Sales_Representative_required}>{label.select_option}</div>
+        </div>
+      </div>
+    </div>
+   </div>
+
+
+<div style="background:#ccc; padding:5px; color:#000; font-weight:600">{label.area_detail}</div>
+
+   <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+      
+      <div class="slds-form__item" role="listitem">
+      <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+        <label class="slds-form-element__label" for="single-form-element-id-09">{label.country}<span class="star">*</span></label>
+        <div class="slds-form-element__control">
+          <lightning-combobox
+          name="Colobia"
+          value={case_record.Country__c}
+          placeholder={label.ph_select_country}
+          options={countryOptions}
+          variant="label-hidden"
+          disabled={disablecountry}
+          onchange={handleChangeCountry} 
+          ></lightning-combobox>
+          <div class="star" if:true={country_required}>{label.select_option}</div>
+        </div>
+      </div>
+    </div> 
+
+    <div class="slds-form__item" role="listitem">
+      <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+        <label class="slds-form-element__label" for="single-form-element-id-09">{label.zone}<span class="star">*</span></label>
+        <div class="slds-form-element__control">
+          <lightning-combobox
+          name="East"
+          value={case_record.Zone__c}
+          placeholder={label.ph_select_zone}
+          options={zoneOptions}
+          variant="label-hidden"
+          onchange={handleChangeZone} 
+          disabled={disable_zone}
+          ></lightning-combobox>
+          <div class="star" if:true={Zone_required}>{label.select_option}</div>
+       </div>
+      </div>
+    </div> 
+   
+  </div>
+
+  <div class="slds-grid slds-wrap slds-gutters">
+      
+      <div class="slds-form__item" role="listitem">
+      <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+        <label class="slds-form-element__label" for="single-form-element-id-09">{label.city}<span class="star">*</span></label>
+        <div class="slds-form-element__control">
+          <lightning-combobox
+          name="city"
+          value={case_record.City__c}
+          placeholder={label.ph_select_city}
+          options={cityOptions}
+          onchange={handleChangeCity} 
+          variant="label-hidden"
+          disabled={disablecity}
+          ></lightning-combobox>
+          <div class="star" if:true={City_required}>{label.select_option}</div>
+        </div>
+      </div>
+    </div> 
+
+    <div class="slds-form__item" role="listitem">
+      <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+        <label class="slds-form-element__label" for="single-form-element-id-09"></label>
+        <div class="slds-form-element__control">
+          
+         
+        </div>
+      </div>
+    </div> 
+   
+
+   </div>
+   <div if:true={show_productInformation}>
+   <div style="background:#ccc; padding:5px; color:#000; font-weight:600">{label.product_information}</div>
+  
+  
+   <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+     
+      <div class="" role="listitem">
+        <div class="slds-form-element  slds-is-editing">
+          <label class="slds-form-element__label" for="single-form-element-id-04">{label.product}<span class="star">*</span></label>
+          <div class="slds-form-element__control" >
+      <c-lookupcmp placeholder={label.ph_select_product} iconname='standard:product' multiselect=false sobject='SKU__c' fieldname='Name,Brand_Name__c,SKU__c.Product_Name__c' filter={product_filter} displayfield='Brand_Name__c' onselected={handleProductSelected} singleselectedrec={product} onremove={handleRemoveproduct} cmpwidth='small' dependent=false disable={disable_Product}></c-lookupcmp> 
+    <div class="star" if:true={product_required}>{label.select_option}</div>
+    </div>
+  </div>
+</div>
+</div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+      <div class="" role="listitem">
+        <div class="slds-form-element  slds-is-editing">
+          <label class="slds-form-element__label" for="single-form-element-id-04">{label.sku}<span class="star">*</span></label>
+          <div class="slds-form-element__control" >
+            <!-- <c-lookupcmp placeholder='Select Product' iconname='standard:product' multiselect=false sobject='Product2' fieldname='Active__c, Name, Sales_Org_Code__c' filter={product_filter} displayfield='Name' onselected={handleProductSelected} singleselectedrec={product} onremove={handleRemoveproduct} cmpwidth='small' dependent=false></c-lookupcmp>  -->
+          <c-lookupcmp placeholder={label.ph_select_sku} iconname='standard:product' multiselect=false sobject='SKU__c' fieldname='SKU_Description__c, Sales_Org_Code__c, Active__c' filter={sku_filter} displayfield='SKU_Description__c' onselected={handleSkuSelected} dependent=true  disable={disableDependentsku} singleselectedrec={sku} onremove={handleRemoveSkU} cmpwidth='small' parentvalue={product} ></c-lookupcmp>
+          <div class="star" if:true={sku_required}>{label.select_option}</div>
+    </div>
+  </div>
+</div>
+</div>
+  
+    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12 ">
+      <legend class="slds-form-element__legend slds-form-element__label label">{label.quality}</legend>
+      <lightning-input type="number" variant="label-hidden" label={label.quality} value={quality} onchange={handleChangeQuality} disabled={disable_Quality} autocomplete="off"></lightning-input>
+      <div class="star" if:true={quality_required}>{label.complete_field}</div>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12 ">
+      <legend class="slds-form-element__legend slds-form-element__label label">{label.lot_number}</legend>
+      <lightning-input variant="label-hidden" type="number" label={label.lot_number} value={lot_number} onchange={handleChangeLotnumber} disabled={disable_lotnum} autocomplete="off"></lightning-input>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12 ">
+      <legend class="slds-form-element__legend slds-form-element__label label">{label.expiration_date}</legend>
+      <lightning-input variant="label-hidden" type="date" label={label.expiration_date} value={expiration_date} onchange={handleChangeExpriration} disabled={disable_exprirationdate} autocomplete="off"></lightning-input>
+      <div class="star" if:true={expiration_date_required} >{label.select_option}</div>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+     
+      <lightning-input type="date" label={label.date_of_receiving} value={date_of_receving} onchange={handleChangeRecevingProduct} disabled={disable_receivingdate} autocomplete="off"></lightning-input>
+      <div class="star" if:true={date_of_receiving_required}>{label.select_option}</div>
+    </div>
+    
+    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12 ">
+      <legend class="slds-form-element__legend slds-form-element__label label">{label.Price}</legend>
+      <lightning-input variant="label-hidden"  label={label.Price} value={price} onchange={handleChangePrice} disabled={disable_price} autocomplete="off"></lightning-input>
+      <div class="star" if:true={price_required}>{label.select_option}</div>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12" style="margin-top:22px;">
+      <lightning-button icon-name="utility:add"  variant="brand" onclick={addProductInformation} disabled={disable_addproductInfo}></lightning-button>
+    </div>
+  
+   </div>
+  
+   <div if:true={is_lst_productInformation} class="slds-grid slds-wrap slds-gutters" style="margin-top:15px;" >
+     
+     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12 slds-scrollable_x">
+       
+       <div style="border:1px solid #ccc;">
+         <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+          
+           <thead>
+             <tr class="slds-line-height_reset" >
+    <th class="" scope="col">
+    <div class="slds-truncate" title={label.product}>{label.product}</div>
+    </th>
+    <th class="" scope="col">
+    <div class="slds-truncate" title={label.sku}>{label.sku}</div>
+    </th>
+    <th class="" scope="col">
+    <div class="slds-truncate" title={label.quality}>{label.quality}</div>
+    </th>
+    <th class="" scope="col">
+      <div class="slds-truncate" title={label.lot_number}>{label.lot_number}</div>
+    </th>
+    <th class="" scope="col">
+      <div class="slds-truncate" title={label.expiration_date}>{label.expiration_date}</div>
+    </th>
+    <th class="" scope="col">
+       <div class="slds-truncate" title={label.date_of_receiving}>{label.date_of_receiving}</div>
+    </th>
+    <th class="" scope="col">
+      <div class="slds-truncate" title={label.Price}>{label.Price}</div>
+   </th>
+    <th class="" scope="col">
+      <div class="slds-truncate" title={label.action}>{label.action}</div>
+      </th>
+    </tr>
+
+    </thead>
+    <template for:each={lst_productInformation} for:item="acc">
+    <tr class="slds-hint-parent" key={acc.id} id={acc.recId} >
+    <td data-label="Account Name">
+    <div class="slds-truncate" title={acc.productname}>{acc.productname}</div>
+    </td>
+    <td data-label="Close Date">
+    <div class="slds-truncate" title={acc.skuname}>{acc.skuname}</div>
+    </td>
+    <td data-label="Prospecting">
+    <div class="slds-truncate" title={acc.quality}>{acc.quality}</div>
+    </td>
+    <td data-label="Prospecting">
+      <div class="slds-truncate" title={acc.lot_number}>{acc.lot_number}</div>
+    </td>
+    <td data-label="Prospecting">
+      <div class="slds-truncate" title={acc.expiration_date}>{acc.expiration_date}</div>
+    </td>
+    <td data-label="Prospecting">
+      <div class="slds-truncate" title={acc.date_of_receiving}>{acc.date_of_receiving}</div>
+    </td>
+    <td data-label="Prospecting">
+      <div class="slds-truncate" title={acc.price}>{acc.price}</div>
+    </td>
+    <td data-label="Prospecting">
+    <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"   class="slds-m-left_xx-small" title="Delete" data-rowid={acc.id} onclick={handleChangeDeleteRow} disabled={disable_removeproductInfo_btn}></lightning-button-icon>
+    </td>
+    </tr>
+
+    </template>
+    </table>
+  </div>
+  </div>
+</div>
+</div>
+
+   <div style="background:#ccc; padding:5px; color:#000; font-weight:600; margin-top:15px;">{label.additional_information}</div>
+<!--    
+   <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+      <div class="slds-form__item" role="listitem">
+          <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+            <label class="slds-form-element__label" for="single-form-element-id-09">{label.additional_information}</label>
+            <div class="slds-form-element__control">
+              <lightning-textarea name="input1"></lightning-textarea>
+            </div>
+          </div>
+        </div> 
+   </div> -->
+
+   <lightning-textarea name="Additional_info" label={label.additional_information} onchange={handleAdditioninfo} value={case_record.Additional_Information__c} disabled={disable_additionalInfo}></lightning-textarea>
+
+   
+   <legend class="slds-form-element__label">{label.reason_close} <span class={hide_reason_for_close_star}>*</span></legend>
+   <lightning-textarea name="Reason_for_close" variant="label-hidden" onchange={handleReasonForClose} value={case_record.Reason_for_Closure__c} disabled={disableReasonClose}></lightning-textarea>
+   <div class="star" if:true={reason_for_close_required}>{label.complete_field}</div>
+
+   <div class="slds-grid slds-wrap slds-gutters">
+      <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+        <lightning-file-upload
+          label={label.upload_file}
+          name="fileUploader"
+          accept={acceptedFormats}
+          record-id={myRecordId}
+          onuploadfinished={handleUploadFinished}
+          multiple>
+       </lightning-file-upload>
+      </div>
+   </div>
+
+   <!-- start -->
+   <div if:true={is_files} style="border:1px solid #ccc;">
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div title="Key">{label.file_name}</div>
+                </th>
+                <th scope="col">
+                    <div title="Value">{label.file_extension}</div>
+                </th>
+                <th scope="col">
+                    <div title="Value">{label.preview}</div>
+                </th>
+                <th scope="col">
+                    <div title="Value">{label.delete1}</div>
+              </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={lst_files} for:item="keyValue">
+                <tr key={keyValue.fileid} id={keyValue.fileid} >
+                    <td>
+                        <div>{keyValue.file_name}</div>
+                    </td>
+                    <td >
+                        <div>{keyValue.file_extension}</div>
+                    </td>
+                    <td>    
+                        <!-- Using Dataset Property to get ContentDocumentId -->
+                        <lightning-button-icon data-id={keyValue.contentdocumentid} 
+                                          label={label.preview}
+                                          title={label.preview}
+                                          icon-name="action:preview"
+                                          icon-position="right"
+                                          variant="brand" 
+                                          class="slds-m-left_x-small"
+                                          value={label.preview} 
+                                          onclick={filePreview}></lightning-button-icon>
+                                         
+                    </td>
+                    <td>    
+                      <!-- Using Dataset Property to get ContentDocumentId -->
+                      <lightning-button-icon
+                                        data-docid={keyValue.contentdocumentid} 
+                                        data-linkid ={keyValue.LinkedEntityId}
+                                        data-row={keyValue.fileid}
+                                        label={label.delete1} 
+                                        title={label.delete1}
+                                        icon-name="action:delete"
+                                        icon-position="right"
+                                        variant="destructive" 
+                                        class="slds-m-left_x-small"
+                                        value={label.preview} 
+                                        onclick={createMapfileDelete}
+                                        disabled={disable_removefile_btn}
+                                        ></lightning-button-icon>
+                                       
+                  </td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+  </div>
+   <!-- end -->
+
+
+   <div class="slds-grid slds-wrap slds-gutters slds-align_absolute-center" style="margin-top:10px; border-top:1px solid #ccc; margin-bottom:20px;">
+     <lightning-button variant="brand" label={label.save} title={label.save} icon-name="utility:save" class="slds-m-left_x-small" style="margin-top:10px;" onclick={handleSaveCase} disabled={disableBtnSubmit}></lightning-button>
+     <lightning-button variant="brand-outline" label={label.cancel} title={label.cancel} icon-name="utility:close"  class="slds-m-left_x-small" style="margin-top:10px;" onclick={handleGoBack}></lightning-button>
+   </div>
+
+</div>
+
+<div  if:true={show_spinner} class="demo-only" style="height:6rem">
+  <div class="slds-spinner_container" style="position: fixed;">
+    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+      <span class="slds-assistive-text">Loading</span>
+      <div class="slds-spinner__dot-a"></div>
+      <div class="slds-spinner__dot-b"></div>
+    </div>
+  </div>
+</div>
+</template>

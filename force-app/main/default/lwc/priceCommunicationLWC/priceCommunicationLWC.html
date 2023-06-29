@@ -1,0 +1,102 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+    </template>   
+    <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" data-aura-rendered-by="23:516;a">
+        <div class="titleregular" style="margin:8px; font-size:36px; font-weight:normal;" data-aura-rendered-by="24:516;a">
+            <span class="slds-page-header_title" title={label.pricecommunition} data-aura-rendered-by="25:516;a">
+                {label.pricecommunition}
+            </span>
+        </div>
+    </div>
+    <div class="slds-m-around_medium">
+
+        <template if:true={ppcommunicationList}>
+            <template if:false={isMobile}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead style="border-top: 0;">
+                    <tr style="border-top: 0;">
+                        <th style="border-top: 0;" width="40" class="" scope="col">
+                            <div class="slds-truncate" style="color:#FF7701;font-size:14px" title={label.srno}>{label.srno}</div>
+                        </th>
+                        <th class="" scope="col" width="80%" style="border-top: 0;">
+                            <div class="slds-truncate" style="color:#FF7701;font-size:14px" title={label.description}>{label.description}</div>
+                        </th>
+                        <th class="" scope="col" width="80%" style="border-top: 0;">
+                            <div class="slds-truncate" style="color:#FF7701;font-size:14px" title={label.createdDate}>{label.createdDate}</div>
+                        </th>
+                        <th class="" scope="col" style="border-top: 0;">
+                            <div class="slds-truncate" style="color:#FF7701;font-size:14px" title={label.description}>{label.action}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={visibleppcomunication} for:item="aList">
+                        <tr key={aList.Id}>
+                            
+                            <th scope="col">
+                                <div class="text-style" style="font-size:14px">{aList.srnoCount}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="text-style" style="font-size:14px">{aList.description}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="text-style" style="font-size:14px">{aList.createdDate}</div>
+                            </th>
+                            <th scope="col">
+                                <div>
+                                    <button data-id={aList.Id} key={aList.Id} class="btn"  title={label.downloadfile} onclick={downloadfile}>{label.downloadfile}</button></div>
+                            </th>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+        <template if:true={isMobile}>
+            <template for:each={visibleppcomunication} for:item="aList">
+                <div key={aList.Id} data-id={aList.Id} onclick={downloadfile} >
+                   <article class="slds-card">
+                      <div class="slds-col slds-size_12-of-12  slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                         <div class="slds-card-half">
+                            <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                                 <div
+                                     class="slds-col slds-p-top_small slds-text-align_left slds-float_right slds-size_6-of-12">
+                                     <b>{label.srno}</b>
+                                 </div>
+                                 <div class="slds-col slds-p-top_small slds-float_left slds-size_6-of-12 ">
+                                     <b>{aList.srnoCount}</b>
+                                 </div>
+                            </div>
+                         </div>
+                      </div>
+
+                      <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                        <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                            <b>{label.description}</b>
+                        </div>
+                        <div class="slds-col slds-float_left slds-size_6-of-12">
+                            <b>{aList.description}</b>
+                        </div>
+                     </div>
+
+                     <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                        <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                            <b>{label.createdDate}</b>
+                        </div>
+                        <div class="slds-col slds-float_left slds-size_6-of-12">
+                            <b>{aList.createdDate}</b>
+                        </div>
+                     </div>
+                   </article>
+                </div>
+            </template>
+        </template>
+            <br/>
+            <c-paginator-bottom  records={ppcommunicationList} onupdate={updatePPCHandler} onselected={changeHandler2}></c-paginator-bottom>
+        </template>
+        
+        <template if:true={error}>
+            {label.somerroroccured}
+        </template>
+    </div>
+</template>

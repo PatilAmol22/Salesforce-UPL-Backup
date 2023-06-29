@@ -1,0 +1,297 @@
+<template>
+ <c-grz_header-image-cmp bgimg={backgroundimage} imglabel={Headertitle} customcss='top: 9%;'>
+</c-grz_header-image-cmp>
+<div>
+    <c-grz_bread-crumb labelone={Headertitle} linkone=''>
+    </c-grz_bread-crumb>
+</div> 
+    <div style="background-color:white; border: 1px solid #DDDDDD; padding:10px; margin-bottom: 40px;">
+        <div class="slds-grid slds-wrap slds-m-bottom_x-small">
+            <div class="searchcss slds-col slds-large-size_8-of-12 slds-medium-size_6-of-12 slds-small-size_12-of-12">
+
+
+                <div class="slds-grid slds-wrap">
+                    <div
+                        class="slds-col slds-large-size_12-of-12 slds-medium-size_12-of-12 slds-small-size_6-of-12 slds-x-small-size_12-of-12">
+                        <lightning-input variant="label-hidden" type="Search" onchange={handleKeyChange}
+                            class="srch slds-col slds-m-bottom_small search" placeholder="Search"
+                            style="width: 50%;margin-top: 19px;" value={searchKey}>
+                        </lightning-input>
+                    </div>
+
+                  
+                   
+
+                </div>
+
+
+
+            </div>
+
+            <div class="slds-col slds-large-size_4-of-12  slds-medium-size_6-of-12 slds-small-size_12-of-12">
+
+                <div class="slds-grid slds-wrap">
+                    <div style="padding-top: 25px;text-align: right;padding-right: 1%;"
+                        class="slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-small-size_1-of-12 slds-x-small-size_1-of-12">
+                        <img class="" src={filterIcon} />
+                    </div>
+                    <div class="yer slds-col slds-large-size_5-of-12 slds-medium-size_5-of-12 slds-small-size_5-of-12 slds-x-small-size_5-of-12">
+
+                        <lightning-combobox value={yearvalue} placeholder="Year" options={activedata}
+                            onchange={handleYear}>
+                        </lightning-combobox>
+                    </div>
+
+                    <div class="slds-col slds-large-size_5-of-12 slds-medium-size_5-of-12 slds-small-size_6-of-12 slds-x-small-size_6-of-12">
+                        <lightning-combobox value={monthvalue} placeholder="Month" options={monthShows}
+                            onchange={handleMonth}>
+                        </lightning-combobox>
+                    </div>
+                  
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading..." variant="brand">
+        </lightning-spinner>
+    </div>
+    <div if:false={isLoading}>
+            <div class="table-scroll" style="border: 1px solid #DDDDDD;">
+               
+               
+                <table>
+                    <thead class="componentNotoSansMedium" style="background-color: #f8f8f8;color: #888;">
+                        <tr>
+
+                            <th class="fix" style="height: 52px; min-width: 110px;" scope="col">
+                                <div style=" word-wrap:break-word;white-space:pre-wrap;" class="slds-truncate LiqWrap"
+                                    title="Brand">Brand</div>
+                            </th>
+
+
+
+                            <th class="fix1" scope="col" style="height: 52px; min-width: 110px;">
+                                <div style=" word-wrap:break-word;white-space:pre-wrap;" class="slds-truncate LiqWrap"
+                                    title="SKU Code">SKU Code</div>
+                            </th>
+                            <th class="fix1" scope="col" style="height: 52px; min-width: 110px;">
+                                <div style=" word-wrap:break-word;white-space:pre-wrap;" class="slds-truncate LiqWrap" title="SKU Description">SKU Description
+                                </div>
+                            </th>
+
+                            <th class="" scope="col" style="height: 52px; min-width: 110px; text-align: center;">
+                                <div class="slds-truncate" title="Opening Inventory">Opening <br />Inventory</div>
+                            </th>
+                            <th class="" scope="col" style="height: 52px; min-width: 110px; text-align: center;">
+                                <div class="slds-truncate" title="YTD Sales">YTD Sales</div>
+                            </th>
+
+
+
+                            <th class="" scope="col" style="height: 52px; min-width: 110px; text-align: center;">
+                                <div class="slds-truncate" title="Total Available Stock">Total Available <br />Stock
+                                </div>
+                            </th>
+
+                            <th class="" scope="col" style="height: 52px; min-width: 110px; text-align: center;">
+                                <div class="slds-truncate" title="Distributors Inventory">Distributors <br />Inventory
+                                </div>
+                            </th>
+                            <th class="" scope="col" style="height: 52px; min-width: 110px; text-align: center;">
+                                <div class="slds-truncate" title="Retailers Inventory">Retailers <br />Inventory</div>
+                            </th>
+                            <th class="" scope="col" style="height: 52px;  min-width: 110px; text-align: center;">
+                                <div class="slds-truncate" title="Total Market Inventory">Total Market <br />Inventory
+                                </div>
+                            </th>
+                            <!-- <th class="" scope="col" style="height: 40px;  min-width: 100px;">
+                <div class="slds-truncate" title="Plan YTD Aug">Plan YTD Aug</div>
+            </th>
+            <th class="" scope="col" style="height: 40px; min-width: 100px;">
+                <div class="slds-truncate" title="Product Budget">Product <br />Budget</div>
+            </th>-->
+                            <th class="" scope="col" style="height: 52px;  min-width: 110px; text-align: center;">
+                                <div class="slds-truncate" title="Liquidation YTD Aug">Liquidation <br />YTD
+                                    {monthvalue}</div>
+                            </th>
+                            <th class="" scope="col" style="height: 52px;  min-width: 110px; text-align: center;">
+                                <div class="slds-truncate" title="Liquidation YTD Aug">Liquidation % <br />YTD
+                                    {monthvalue}</div>
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <template for:each={liquidationData} for:item="liqui">
+
+                            <tr key={liqui.Id} style="font-family: NotoSansRegular; background-color:white;"
+                                class="slds-border_bottom">
+
+                                <td class="fix" style="height: 48px">
+                                    <div>{liqui.BrandName}</div>
+
+                                </td>
+
+                                <td class="fix1" style="height: 48px">
+
+                                    <div>{liqui.SKU_Code}</div>
+                                </td>
+                                <td class="fix1" style="height: 48px">
+                                
+                                    <div>{liqui.SKU_Description}</div>
+                                </td>
+                              
+                                    <td style="height: 48px" scope="col">
+                                      
+                                            <lightning-input id={liqui.openingId} data-id={liqui.openingId} class="slds-cell-wrap" 
+                                                value={liqui.OpeningInventory} disabled={currentopeningedit}
+                                                variant="label-hidden" maxlength="8"  onkeyup={handleCellChanges} onkeypress={handleCellChanges} onchange={handleopeningMethod}
+                                                 style="margin-left:10px;" >
+                                            </lightning-input>
+                                    </td>
+                             
+                             
+                                <template if:true={liqui.YTDSales}>
+                                    <td style="height: 48px" scope="col">
+                                        <div 
+                                            class="tablebordermargin disableclass slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                            {liqui.YTDSales}</div>
+                                           
+                                    </td>
+                                </template>
+                                <template if:false={liqui.YTDSales}>
+                                    <td style="height: 48px" scope="col">
+                                        <div
+                                            class="tablebordermargin disableclass slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                            0</div>
+                                    </td>
+                                </template>
+                               
+                                    <td style="height: 48px" scope="col">
+                                        <div
+                                            class="tablebordermargin disableclass slds-border_top slds-border_bottom slds-border_left slds-border_right" >
+                                            {liqui.TotalAvailablestock}</div>
+                                    </td>
+                                
+                                <td style="height: 48px" scope="col">
+                                        
+                                            <lightning-input id={liqui.Id} data-id={liqui.distId} class="slds-cell-wrap" value={liqui.DistributorsInventory}
+                                                name={liqui.submitVar} disabled={currentliquidationedit} variant="label-hidden" maxlength="8" onkeyup={handleCellChanges} onkeypress={handleCellChanges}
+                                                onchange={handleDistributorMethod} style="margin-left:10px;">
+                                            </lightning-input>
+                                    </td>
+                             
+                            
+                               
+                                    <td style="height: 48px" scope="col">
+                                       
+                                            <lightning-input id={liqui.Id} data-id={liqui.retId} class="slds-cell-wrap" value={liqui.RetailersInventory}
+                                                  disabled={currentliquidationedit} variant="label-hidden" onkeyup={handleCellChanges} maxlength="8" onkeypress={handleCellChanges}
+                                                onchange={handleRetailerMethod} style="margin-left:10px;">
+                                            </lightning-input>
+                                    </td>
+                             
+                             
+                             
+                                    <td style="height: 48px" scope="col">
+                                        <div
+                                            class="tablebordermargin disableclass slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                            {liqui.TotalMarketInventory}</div>
+                                    </td>
+                              
+                           
+                                <!-- <td style="height: 40px" scope="col">
+                        <div>{liqui.PlanYTDmonth}</div>
+                    </td>
+                     <td style="height: 40px" scope="col">
+                        <div>{liqui.ProductBudget}</div>
+                    </td>-->
+                                <template if:true={liqui.LiquidationYTDmonth}>
+                                    <td style="height: 48px" scope="col">
+                                        <div
+                                            class="tablebordermargin disableclass slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                            {liqui.LiquidationYTDmonth}</div>
+                                    </td>
+                                </template>
+                                <template if:false={liqui.LiquidationYTDmonth}>
+                                    <td style="height: 48px" scope="col">
+                                        <div
+                                            class="tablebordermargin disableclass slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                            0</div>
+                                    </td>
+                                </template>
+
+                                <template if:true={liqui.LiquidationYTDmonthpercentage}>
+                                    <td style="height: 48px" scope="col">
+                                        <div
+                                            class="tablebordermargin disableclass slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                            {liqui.LiquidationYTDmonthpercentage}</div>
+                                    </td>
+                                </template>
+                                <template if:false={liqui.LiquidationYTDmonthpercentage}>
+                                    <td style="height: 48px" scope="col">
+                                        <div
+                                            class="tablebordermargin disableclass slds-border_top slds-border_bottom slds-border_left slds-border_right">
+                                            0</div>
+                                    </td>
+                                </template>
+
+                            </tr>
+                        </template>
+
+                    </tbody>
+                </table>
+
+                <div if:true={nodata}>
+                    <p class="slds-text-align_center nodatacss" style="background-color: white;">No Liquidation Data To Display
+                    </p>
+                </div>
+            </div>
+          
+        </div>
+       
+      
+        <div class="slds-grid slds-grid_align-center">
+            <template if:false={submittedvalue}>
+                <div class="slds-col">
+                    <button class="slds-button slds-button_neutral  blueBtn" onclick={submitReport}>Submit
+                    </button>
+                    <!-- <lightning-button  variant="brand"  label="Submit" class="blueBtn" onclick={submitReport}  disabled={disableButton}> </lightning-button> -->
+                </div>
+            </template>
+            <template if:true={submittedvalue}>
+                <div class="slds-col">
+                    <button class="slds-button slds-button_neutral  greyBtn">Submit
+                    </button>
+                
+                </div>
+            </template>
+           
+           
+        </div>
+        <div class="noteclass componentNotoSansBold">
+            <b>*Note:- </b><br/>
+              <b>  1. The items listed by default on the page pertain to the current fiscal year.</b><br />
+            <b> 
+                2. Search is working on the Brand, SKU Code and SKU Description.</b><br />
+            <b> 
+                3. Liquidation Annual Plan should have current fiscal year.</b>
+        </div>
+    </div>
+
+</template>

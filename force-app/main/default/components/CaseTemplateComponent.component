@@ -1,0 +1,41 @@
+<apex:component controller="CaseTemplateController" access="global">
+    <!--<apex:attribute type="Case" name="Case" assignTo="{!caseObj}" description="Name"/>-->
+    <!-- <apex:attribute name="caseid" type="String" assignTo="{!combinedStrings}" description=""/> -->
+    <apex:attribute name="caseid" type="string" assignTo="{!combinedStrings}" description="" />
+    
+   
+
+
+      <div align="left" margin-left="30px">
+          <p>Esto fue aprobado previamente por:</p>
+        <table  cellpadding="5" cellspacing="0" style="border:1px solid #222;">
+            <tr>
+             <th class="text-center" colspan="3" style="border:1px solid #222;">{!$Label.Approval_Info} {!str}</th>
+            </tr>
+            <tr>
+                <th class="text-center" style="border:1px solid #222;">{!$Label.Approved_By}</th>
+                <th class="text-center" style="border:1px solid #222;">{!$Label.Status}</th>
+                <th class="text-center" style="border:1px solid #222;">{!$Label.Comment}</th>
+            </tr>
+      
+              <apex:repeat value="{!options}" var="option">            
+                  
+            <tr>
+            <td style="border:1px solid #222;">
+                <apex:outputText value="{!option.Actor.Name}"/><br/>
+            </td>
+            <td style="border:1px solid #222;">
+                <apex:outputText value="{!option.StepStatus}"/><br/>
+            </td>
+            <td style="border:1px solid #222;">
+                <apex:outputText value="{!option.Comments}"/><br/>
+            </td>
+             </tr>
+            </apex:repeat>
+           
+         </table>
+     
+      </div>
+   
+    
+</apex:component>

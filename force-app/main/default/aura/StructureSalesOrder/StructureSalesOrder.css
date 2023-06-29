@@ -1,0 +1,20 @@
+.THIS table{
+    bordered-collapse:collapse;
+}
+.THIS table td{
+    bordered-collapse:collapse;
+    border:1px solid #ccc;
+    font-size:11px;
+    color: #000;
+    
+}
+.THIS table th{
+    bordered-collapse:collapse;
+    border:1px solid #ccc;
+    font-size:11px;
+    color: #000;
+}
+.THIS .SIMSku {
+    background-color: #D3D3D3;
+    
+}

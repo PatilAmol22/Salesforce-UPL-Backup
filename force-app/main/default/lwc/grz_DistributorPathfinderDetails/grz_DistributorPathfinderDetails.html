@@ -1,0 +1,242 @@
+<!--*************************************************************************************************
+* Name               : Grz_DistributorPathfinderDetails                                                     
+* Apex class         : Grz_DistributorPathfinderApex
+* Test Class         : GTMOutlookTest
+* Created By         : Swaranjeet(Grazitti)   
+* Ticket Number      : RITM0504049/APPS-4788
+*************************************************************************************************-->
+
+
+<template>
+<div class="table-scroll newfontclass">
+    <div class="fix newsizeclass"> <b>{labels.OUTLOOK}</b>
+     </div>
+        <table class="slds-table_fixed-layout slds-table slds-table_bordered"
+          aria-labelledby="element-with-table-label other-element-with-table-label">
+          <thead>
+            <tr>
+              <!-- <th class="fix slds-cell-wrap fixHeader" >{label.GTM_Customer}
+               
+              </th> -->
+              <th class="slds-cell-wrap fixHeader classpadding"  scope="col" >{label.Total_Purchase_in_PY}
+              </th>
+              <th class="slds-cell-wrap fixHeader classpadding"> {label.Estimated_Growth_in_CY}
+              </th>
+              <th class="slds-cell-wrap fixHeader classpadding"> {label.Estimated_Sales_in_CY}
+               </th>
+              <th class="slds-cell-wrap fixHeader classpadding"> {label.Estimated_Growth_in_NY}
+              </th>
+              <th class="slds-cell-wrap fixHeader classpadding"> {label.Estimated_Sales_in_NY}
+              </th>
+              <th class="slds-cell-wrap fixHeader classpadding"> {label.Estimated_Growth_in_NNY}
+              </th>
+              <th class="slds-cell-wrap fixHeader classpadding"> {label.Estimated_Sales_in_NNY}
+               </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <template if:false={nodata}>
+              <template for:each={GTMOutlookDetails} for:item="GTM">
+              <tr key={GTM.Id}>
+              <!-- <td key={GTM.Id} class="fix">{GTM.customerName}</td> -->
+              <td class="classpadding slds-box">{GTM.totalCompaniesPurchesLocale}</td>
+              <td class="classpadding slds-box">
+                 {GTM.EstimatedGrowthCY}
+              </td>
+              <td class="classpadding slds-box">{GTM.confirmtotalSalesChannelCY}</td>
+              <td class="classpadding slds-box">
+                {GTM.EstimatedGrowthNY}
+              </td>
+              <td class="classpadding slds-box">{GTM.confirmtotalSalesChannelNY}</td>
+              <td class="classpadding slds-box">
+                {GTM.EstimatedGrowth2NY}
+              </td>
+              <td class="classpadding slds-box">{GTM.confirmtotalSalesChanneN2Y}</td>
+             </tr>
+            </template>
+            </template>
+            
+            <template if:true={nodata}>
+             <div class="slds-p-around_x-small fix"><b>No Data to Display</b></div>
+            </template>
+         </tbody>
+        </table>
+       
+
+      </div>
+
+      <div class="table-scroll newfontclass">
+         <div class="fix newsizeclass"> <b>{labels.COMPETITION}</b>
+        </div>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+      aria-labelledby="element-with-table-label other-element-with-table-label">
+      <thead>
+        <tr>
+         
+          <th class="fixHeader newcenterclass">{labels.Write_UPL_POSITION}
+          </th>
+          <th class="fixHeader newcenterclass">{labels.UPL_s_Share_of_Wallet1}<br/>{labels.UPL_s_Share_of_Wallet2}
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Write_the_name_of_the_1_Company}
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Indicate_the_Share_of_Wallet_of_the_1_Company1} <br/>{labels.Indicate_the_Share_of_Wallet_of_the_1_Company2} 
+           
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Write_the_name_of_the_2_Company}
+            
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Indicate_the_Share_of_Wallet_of_the_2_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_2_Company2}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Write_the_name_of_the_3_Company}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Indicate_the_Share_of_Wallet_of_the_3_Company1} <br/>{labels.Indicate_the_Share_of_Wallet_of_the_3_Company2}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Write_the_name_of_the_4_Company}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Indicate_the_Share_of_Wallet_of_the_4_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_4_Company2}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Write_the_name_of_the_5_Company}
+          
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Indicate_the_Share_of_Wallet_of_the_5_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_5_Company2}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Write_the_name_of_the_6_Company}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Indicate_the_Share_of_Wallet_of_the_6_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_6_Company2}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Write_the_name_of_the_7_Company}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Indicate_the_Share_of_Wallet_of_the_7_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_7_Company2}
+          
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Write_the_name_of_the_8_Company}
+           
+          </th>
+          <th class="fixHeader newcenterclass">{labels.Indicate_the_Share_of_Wallet_of_the_8_Company1}<br/>{labels.Indicate_the_Share_of_Wallet_of_the_8_Company2}
+           
+          </th>
+         
+        </tr>
+      </thead>
+      <tbody>
+         <template if:false={nodata12}>
+      <template for:each={gtmcompetitor} for:item="accItem" for:index="index">
+        <tr key={accItem.id}>
+      
+     
+          <td class="slds-box newcenterclass">
+           {accItem.uplposition}
+          </td>
+          <td class="slds-box newcenterclass">
+            {accItem.uplshare} 
+          </td>
+      
+
+          <td role="gridcell"   class="slds-box newcenterclass">
+            <!-- <div class="" title={accItem.Competitor1Name} style="margin-top: -15px;">
+              <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                  <lightning-combobox
+                   
+                    placeholder="Select"
+                    value={accItem.Competitor1}
+                    style="width: 193px;"
+                    data-id={accItem.id} 
+                    disabled={disableAll}
+                    data-name="Competitor_Name_1__c"
+                    onchange={handleInputChange}
+                    options={accItem.remainingOptions1}
+                  >
+                    </lightning-combobox>
+                </div>
+              </div>
+            </div> -->
+            {accItem.Competitor1Name}
+          </td>
+         
+
+          <td class="slds-box newcenterclass">
+            {accItem.Indicate1} 
+           
+          </td>
+          <td role="gridcell" class="slds-box newcenterclass">
+           {accItem.Competitor2Name}
+          </td>
+          <td class="slds-box newcenterclass">
+           {accItem.Indicate2} 
+           
+          </td>
+          <td role="gridcell" class="slds-box newcenterclass">
+           {accItem.Competitor3Name}
+          </td>
+          <td class="slds-box newcenterclass">
+           {accItem.Indicate3} 
+           
+          </td>
+          <td role="gridcell" class="slds-box newcenterclass">
+          {accItem.Competitor4Name}
+          </td>
+          <td class="slds-box newcenterclass">
+          {accItem.Indicate4}
+           
+          </td>
+          <td role="gridcell" class="slds-box newcenterclass">
+           {accItem.Competitor5Name}
+          </td>
+          <td class="slds-box newcenterclass">
+           {accItem.Indicate5} 
+          
+          </td>
+          <td role="gridcell" class="slds-box newcenterclass">
+           {accItem.Competitor6Name}
+          </td>
+          <td class="slds-box newcenterclass">
+           {accItem.Indicate6} 
+           
+          </td>
+          <td role="gridcell" class="slds-box newcenterclass">
+           {accItem.Competitor7Name}
+          </td>
+          <td class="slds-box newcenterclass">
+           {accItem.Indicate7}
+           
+          </td>
+          <td role="gridcell" class="slds-box newcenterclass">
+           {accItem.Competitor8Name}
+          </td>
+          <td class="slds-box newcenterclass">
+           {accItem.Indicate8} 
+            
+          </td>
+        
+        </tr>
+        
+      
+    </template>
+        </template>
+        <template if:true={nodata12}>
+            <div class="slds-p-around_x-small fix"><b>No Data to Display</b></div>
+          </template>
+      </tbody>
+    
+    
+    
+    </table>
+    <!-- <div if:true={showLoading} class="slds-spinner_inline spinner-padding">
+      <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass" style="position:fixed;top: 60px;"></lightning-spinner>
+    </div> -->
+  </div>
+
+    
+</template>

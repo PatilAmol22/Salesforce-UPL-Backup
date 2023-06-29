@@ -1,0 +1,68 @@
+<template>
+    <!--Approval confirmation Popup-->
+    <template if:true={showAppModal}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header" style="color: green;">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Approved Confirmation</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="color: green;">
+                    <p><b>{label.approvedConfirmationLabel}
+                    </b></p>
+                    </br>
+                    <div>
+                        <lightning-textarea name="appRemarks" required value="" label="Remarks: " onchange={handleRemarkChange}></lightning-textarea>
+                    </div>
+                    <p><b>Do you want to proceed?
+                    </b></p>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <lightning-button label="No" class="slds-m-left_x-small" onclick={closeAppModal} title="No"></lightning-button>
+                    <lightning-button variant="success" label="Yes" class="slds-m-left_x-small" onclick={submitApproved} title="Yes"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!--Reject confirmation Popup-->
+    <template if:true={showRejModal}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header" style="color: red;">
+                    <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Reject Confirmation</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3" style="color: red;">
+                    <p><b>{label.rejectedConfirmationLabel}
+                    </b></p>
+                    </br>
+                    <div>
+                        <lightning-textarea name="rejRemarks" required value="" label="Remarks: " onchange={handleRemarkChange}></lightning-textarea>
+                    </div>
+                    <p><b>Do you want to proceed?
+                    </b></p>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <lightning-button label="No" class="slds-m-left_x-small" onclick={closeRejAppModal} title="No"></lightning-button>
+                    <lightning-button variant="destructive" label="Yes" class="slds-m-left_x-small" onclick={submitReject} title="OK"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!--Show and Hide Spinner for crop table-->
+    <template if:false={hideSpinner}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+</template>

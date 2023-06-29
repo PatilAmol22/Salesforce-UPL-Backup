@@ -1,0 +1,41 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" 
+                controller="CallForRecommendation">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+     <aura:attribute name="CallIdFromRecommendationwrapper" type="String" />
+    <aura:attribute name="ListofRecommendation" type="List" />
+    
+    <aura:attribute name="viewRecommendationFlagVR" type="Boolean" default="false" />
+    <!--<aura:attribute name="followUpFlagVR" type="Boolean" default="false" />-->
+    
+    <aura:attribute name="sett" type="Boolean" default="true" />
+    <aura:attribute name="passViewFollow" type="Boolean" default="false" />
+    <aura:attribute name="passViewFollowCloseCall" type="Boolean" default="true" />
+    
+    <aura:attribute name="returnedIdVal" type="String"/>
+    <aura:attribute name="AcreArea" type="Integer" />
+    <aura:attribute name="onSaveHide" type="Boolean" default="true" />
+    <aura:attribute name="rFlagSave" type="Boolean" default="false"/>
+    
+     <aura:attribute name="MapCRParentWrapper" type="map"/>
+   <aura:attribute name="singleCall" type="String"/>
+    <aura:attribute name="recommendationFlagSave" type="Boolean" default="false"/>
+    
+    <aura:attribute name="TaskId" type="Id" description="get task from viewemp component"/>
+    
+    
+     <c:ViewRecommendation CallIdFromRecommendation="{!v.CallIdFromRecommendationwrapper}" 
+                                      viewRecommendationFlagVR="{!v.viewRecommendationFlagVR}"
+                                       
+                                      ListofRecommendation="{!v.ListofRecommendation}"
+                                      AcreArea="{!v.AcreArea}"
+                                      rFlagSave="{!v.rFlagSave}"
+                            recommendationFlagSave="{!v.recommendationFlagSave}"
+                            TaskId="{!v.TaskId}"/>
+    <!---->
+    
+        
+    
+</aura:component>

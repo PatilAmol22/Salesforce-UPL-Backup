@@ -1,0 +1,370 @@
+<template>
+
+    <div class="slds-box slds-theme_default">
+
+      <div style="background:#ccc; color:#000; padding:10px; font-weight:600;">{labels.Distributor_Shipment_Data}</div>
+    
+      <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px; margin-bottom:15px;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+          
+            <lightning-input
+                name="enter-search"
+                label={labels.Distributor}
+                type="search"
+                value={searchKeyName}
+                onchange={handleSearchKeyDistributorName}>
+            </lightning-input>
+          
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+            
+                <lightning-input
+                    autocomplete="off"
+                    name="enter-search"
+                    label={labels.Distributor_Code}
+                    value={searchKeyCode}
+                    type="search"
+                    onchange={handleSearchKeyDistributorCode}>
+                </lightning-input>
+            
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+            
+            <lightning-input
+                autocomplete="off"
+                name="enter-search"
+                label={labels.Material_Code}
+                value={searchKeyMaterialCode}
+                type="search"
+                onchange={handleSearchKeyMaterialCode}>
+            </lightning-input>
+        
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+            
+        <lightning-input
+            autocomplete="off"
+            name="enter-search"
+            label={labels.Material_Name}
+            value={searchKeyMaterialName}
+            type="search"
+            onchange={handleSearchKeyMaterialName}>
+        </lightning-input>
+    
+</div>
+
+       <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+              <lightning-combobox
+                  label={labels.Month_In_Calendar_Year}
+                  name="Month"
+                  value={searchKeyMonth}
+                  placeholder={labels.Select_Month}
+                  options={months}
+                  onchange={handleSearchKeyMonth}>
+              </lightning-combobox>
+      </div>
+
+      <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+        
+            <lightning-combobox
+                label={labels.UPL_FY}
+                name="Year"
+                value={searchKeyYear}
+                placeholder={labels.Select_Year}
+                options={Upl_Fy_Options}
+                onchange={handleSearchKeyYear}>
+            </lightning-combobox>
+      </div>
+       
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12"></div>
+      
+        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12" style="font-weight:600; margin-top:15px; float:right;"> 
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                  <label class="slds-form-element__label" for="single-form-element-id-03">{labels.Page_size}</label>
+                  <div class="slds-form-element__control">
+                <lightning-combobox
+                    name="PageSize"
+                    value={value}
+                    placeholder={labels.Select_Page_Size}
+                    options={options3}
+                    onchange={handleComboBox}>
+                </lightning-combobox>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+      </div>
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+          <span><p style="margin-left: 10px">{labels.Selected_Records} : <b style="color:red;">{recordsCount}</b></p></span>
+        </div>
+        <div class="slds-col">
+            <span>                    
+                <lightning-button label={buttonLabel}
+                                  icon-name="utility:delete"
+                                  disabled={isTrue}
+                                  variant="destructive" 
+                                  onclick={deleteAccounts}
+                                  style="margin-right: 10px;float:right"></lightning-button>
+            </span>
+        </div>
+    </div>
+
+        <div class="slds-scrollable_x" style="border:1px solid #ccc; margin-top:10px;">
+            <div style="height: 300px;">
+                <lightning-datatable key-field="id"
+                    data={Data}
+                    columns={columns}
+                    min-column-width="150"
+                    onsort={handleSortdata}
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
+                    onrowselection={getSelectedRecords}>
+                </lightning-datatable>
+
+                <template if:true={flag}>
+                    <lightning-spinner alternative-text="Loading.."></lightning-spinner>
+                </template>
+            </div>
+
+            <div class style="margin-top:15px; float:left;">
+             <p>{labels.Page} : {pageNumber} of {totalpages}</p>
+            </div>
+
+
+            <div style="margin-top:15px; margin-bottom:20px; float:right;">
+            
+            <lightning-button-group>
+                <lightning-button variant="brand" label={labels.First} onclick={handleFirst} disabled={showFirstButton}></lightning-button>
+                <lightning-button variant="brand" label={labels.Previous} onclick={handlePrevious} disabled={showFirstButton}></lightning-button>
+                <lightning-button variant="brand" label={labels.Next} onclick={handleNext} disabled={showLastButton}></lightning-button>
+                <lightning-button variant="brand" label={labels.Last} onclick={handleLast} disabled={showLastButton}></lightning-button>
+            </lightning-button-group>
+
+        </div>
+         
+
+        </div>
+
+
+
+</div>
+            <!--<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                <thead>
+                <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                <div class="slds-truncate">Distributor's Area</div>
+                </th>
+                <th class="" scope="col">
+                <div class="slds-truncate">Chemical/Ipm</div>
+                </th>
+                <th class="" scope="col">
+                <div class="slds-truncate">Sales Office For Ex-Distributor Customer</div>
+                </th>
+                <th class="" scope="col">
+                <div class="slds-truncate">Area In Ex-Distributor's Customer</div>
+                </th>
+                <th class="" scope="col">
+                <div class="slds-truncate">Sales Office Area In Distributor</div>
+                </th>
+                <th class="" scope="col">
+                <div class="slds-truncate">Upl Fy</div>
+                </th>
+                <th class="" scope="col">
+                <div class="slds-truncate">Calendar Year</div>
+                </th>
+                <th class="" scope="col">
+                <div class="slds-truncate">Month (In Calendar Year)</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Distributor</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Distributor's Office</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Region In Ex-Distributor's Customer</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Area Or District In Ex-Distributor's Customer</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Customer Category</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Ex-Distributor's Customer</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Ja Area Name</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Material Name</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Single Package Size</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Volume (Single Bottle Or Bag)</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Pesticidal Year (From Oct To Sep)</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Distributor (Before Edited)</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Material Name (Before Edited)</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Material Name and Single Pack Size</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Price Per Single Bottle/Bag</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Amount Jpy (Standard Price Base)</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Order Type</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Material Code</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Customer Address</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Ipm New</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Single Bottle/Bag Number In Case</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Customer Name Edited</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Material Name 2</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Material Name 3</div>
+                </th>
+                <th class="" scope="col">
+                 <div class="slds-truncate">Ex-Distributor's Customer Name 2</div>
+                </th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="slds-hint-parent">
+                <th data-label="Opportunity Name" scope="row">
+                <div class="slds-truncate"> Mumbai</div>
+                </th>
+                <td data-label="Account Name">
+                <div class="slds-truncate">ABC</div>
+                </td>
+                <td data-label="Close Date">
+                <div class="slds-truncate">XYZ</div>
+                </td>
+                <td data-label="Prospecting">
+                <div class="slds-truncate"></div>
+                </td>
+                <td data-label="Confidence">
+                <div class="slds-truncate"></div>
+                </td>
+                <td data-label="Amount">
+                <div class="slds-truncate">PQR</div>
+                </td>
+                <td data-label="Contact">
+                <div class="slds-truncate">2020</div>
+                </td>
+                <td>
+                 <div class="slds-truncate">April</div>
+                </td>
+                <td>
+                <div class="slds-truncate">AAA</div>
+                </td>
+                <td>
+                <div class="slds-truncate"></div>
+                </td>
+                <td>
+                <div class="slds-truncate"></div>
+                </td>
+                <td>
+                <div class="slds-truncate"></div>
+                </td>
+                <td>
+                    <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                    <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                    <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                    <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                   <div class="slds-truncate"></div>
+                   </td>
+                   <td>
+                    <div class="slds-truncate"></div>
+                    </td>
+                </tr>
+                
+                </tbody>
+                </table>-->
+
+                
+    
+</template>

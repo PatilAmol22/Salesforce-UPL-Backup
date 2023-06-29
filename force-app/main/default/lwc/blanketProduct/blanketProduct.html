@@ -1,0 +1,134 @@
+<template>
+    
+    <lightning-card title={label.Blanket_Products}>
+        <div class="slds-box">
+       <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <p style=" margin-top:5px;">{label.Sku_Blanket}</p>
+                <c-lookupcmp  multiselect="false"  placeholder={label.Select_sku} iconname='standard:product' 
+                sobject="SKU__c" fieldname="SKU_Description__c,SKU_Code__c" filter={filter} displayfield='SKU_Description__c' 
+                cmpwidth='small' dependent=false onremove={handleRemoveSKU} onselected={handleSKUChange} 
+                disable={disable_SKU}  singleselectedrec={SKUName}>
+                </c-lookupcmp>
+                <!-- <lightning-input type="search" name="skuLookup" placeholder="Select SKU" value={skuName1} onchange={onTyping} class="slds-m-left_x-small" label="SKU" style="width: 200px; height: 20px nowrap;"></lightning-input> -->
+            </div>
+                <div class="slds-col">
+                            
+                <lightning-input  type="date" name="startDate" placeholder={label.Select_Start_Date} value={startDateSku} onchange={handleStartDateChange}  label={label.Blanket_Product_Start_Date} style=" margin-top:5px;"></lightning-input></div>
+            <div class="slds-col">
+                
+                <lightning-input type="date" name="endDate" placeholder={label.Select_End_Date} value={endDateSku} onchange={handleEndDateChange}  label={label.Blanket_Product_End_Date} style="margin-top:5px;" ></lightning-input></div>
+            <div class="slds-col">
+                <p style="text-align: center;margin-top:5px;">{label.Status}</p>
+                <lightning-input  variant="label-inline" type="checkbox" name="status" placeholder="Select Status" value={bSkuStatus} style="margin-bottom:5px ;" onchange={handleStatusChange} ></lightning-input></div>
+                <div class="" style="margin-top: 25px;">
+                    <lightning-button class=""  icon-name="utility:search"  name="Search" variant="brand" onclick={searchRecords} label={label.Search_blanket}></lightning-button>
+                </div>&nbsp;&nbsp;
+                <div class="" style="margin-top: 25px;">
+                    <lightning-button class=""  icon-name="utility:close"  name="Reset" variant="brand" onclick={resetFields} label={label.Blanket_Reset}></lightning-button>
+                 </div>
+            </div>
+
+    <div class="slds-grid slds-gutters"> 
+    <div class="slds-col slds-size_2-of-12 slds-m-top_large">
+    &nbsp;&nbsp;   
+    <lightning-button variant="brand" label={label.Blanket_Download} onclick={downloadCSVFile} icon-position="right" icon-name="utility:download"  ></lightning-button>
+    </div>
+    <div class="slds-col slds-size_3-of-12">
+        <lightning-file-upload 
+        accept={acceptedFormats} 
+        onuploadfinished={uploadBlanketSkuFile} >
+    </lightning-file-upload></div>
+ </div>
+
+ <template if:true={spinner} class="demo-only" style="height:6rem;position:absolute;left: 600px;top: 149px;">
+    <div class="slds-spinner_container">
+      <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+        <span class="slds-assistive-text">{label.Loading}</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+    </div>
+</template>
+    
+ <lightning-accordion allow-multiple-sections-open  
+                      active-section-name="Instruction" style="flex-grow: unset;">
+             <lightning-accordion-section name="B" label={label.Instructions_for_uploading_CSV_file} class="acc">
+                            <ul class="slds-list_dotted">
+                                <li>{label.File_to_be_uploaded_must_be_in_CSV_format_Blanket}</li>
+                                <li>{label.No_rows_will_be_uploaded}</li>
+                                <li>{label.Please_do_not_change_combination_key}</li>
+                                <li>{label.Start_date_and_end_date_should_be_in_yyyy_mm_dd_format}</li>
+                                <li>{label.Expired_reason_is_required}</li>
+                            </ul>
+                        </lightning-accordion-section>
+</lightning-accordion>
+<br/>
+<template if:false={showData}>
+
+<c-customtypepicklist  style="height: 850px!important;"
+    data-id="table"
+    type="List" 
+    onchange={handleChange}
+    key-field="Id" 
+    data={data} 
+    columns={columns} 
+    onvalueselect={handleSelection}
+    onpicklistchanged={picklistChanged} 
+    draft-values={draftValues}
+    onsave={handleSave}
+    oncancel={handleCancel}
+    hide-checkbox-column="true"
+    sorted-direction={sortDirection}
+    sorted-by={sortBy}
+    onsort={doSorting}
+    row-number-offset={rowNumberOffset}
+    oncellchange={handleCellChange}>
+    </c-customtypepicklist>
+
+</template>
+<br/>
+<template if:false={showTable}>
+<lightning-layout class="slds-align_absolute-center" slot="footer" horizontal-align="space">
+    <lightning-layout-item  flexibility="auto">
+        <lightning-button 
+            label={label.First} 
+            icon-name="utility:jump_to_left"
+            disabled={isFirstDisable}
+            onclick={firstHandler}>   
+        </lightning-button>
+        &nbsp;
+        <lightning-layout-item flexibility="grow">
+        <lightning-button 
+            label={label.Blanket_Product_Previous_Button}
+            icon-name="utility:chevronleft"
+            disabled={isFirstDisable}
+            onclick={previousHandler}>   
+        </lightning-button>
+    </lightning-layout-item>
+    </lightning-layout-item>
+    <lightning-layout-item flexibility="auto">
+        &nbsp; {label.Page} {page} {label.of} {totalPage} &nbsp;
+    </lightning-layout-item>
+    <lightning-layout-item flexibility="auto">
+        <lightning-button 
+            label={label.Next}
+            icon-name="utility:chevronright"
+            icon-position="right"
+            disabled={isNextDisable}
+            onclick={nextHandler}>
+        </lightning-button>
+        &nbsp;
+        <lightning-button 
+            label={label.Last}
+            icon-name="utility:jump_to_right" 
+            icon-position="right"
+            disabled={isNextDisable}
+            onclick={lastHandler}>
+        </lightning-button>
+    </lightning-layout-item>
+</lightning-layout>
+</template>
+</div>
+</lightning-card>
+</template>

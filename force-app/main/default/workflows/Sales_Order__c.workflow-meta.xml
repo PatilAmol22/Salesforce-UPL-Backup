@@ -1,0 +1,4286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Alert_for_Structure_Order_Approved</fullName>
+        <description>Alert for Structure Order Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Structure_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Alert_for_Structure_Order_Rejection</fullName>
+        <description>Alert for Structure Order Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Structure_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Alert_on_New_order_creation_by_SDM_on_behalf_of_Sales_Employee</fullName>
+        <description>Alert on New order creation by SDM (on behalf of Sales Employee)</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/One_New_order_creation_by_SDM_on_behalf_of_Sales_Employee</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_CAM_Order_is_Approved</fullName>
+        <description>Approval Alert if CAM Order is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_Colombia_Order_is_Approved</fullName>
+        <description>Approval Alert if Colombia Order is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Colombia/Colombia_Sales_Order_Approved_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_Italy_Order_is_Approved</fullName>
+        <description>Approval Alert if Italy Order is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_Sales_Order_Approved_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_Italy_Order_is_Approved_to_CS</fullName>
+        <description>Approval Alert if Italy Order is Approved to CS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20003743@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20010816@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20014586@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20038257@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032994@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Approved_Notification_To_CS</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_Latam_Director_SO_is_Approved</fullName>
+        <description>Approval Alert if Latam Director SO is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Latam_Director/Latam_Director_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_Mexico_Order_is_Approved</fullName>
+        <description>Approval Alert if Mexico Order is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_Poland_SO_is_Approved</fullName>
+        <description>Approval Alert if Poland SO is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Poland/Poland_SO_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_Spain_Portugal_SO_is_Approved</fullName>
+        <description>Approval Alert if Spain &amp; Portugal SO is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Spain_Portugal/Spain_Portugal_SO_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Alert_if_Vietnam_SO_is_Approved</fullName>
+        <description>Approval Alert if Vietnam SO is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Vietnam/Approved_Sales_Order_Management</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Email_Alert_when_Mexico_order_is_Approved</fullName>
+        <description>Approval Email Alert when Mexico order is Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_SO_Appoved</template>
+    </alerts>
+    <alerts>
+        <fullName>Argentina_Email_on_Approval</fullName>
+        <description>Argentina Email on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Argentina/Argentina_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Argentina_Email_on_Rejection</fullName>
+        <description>Argentina Email on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Argentina/Argentina_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Argentina_Sales_Order_Status_Not_yet_Processed</fullName>
+        <description>Argentina Sales Order Status Not yet Processed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>20009281@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Argentina/Argentina_Sales_Order_SAP_notification</template>
+    </alerts>
+    <alerts>
+        <fullName>CAM_Email_notification_to_higher_authorities_for_every_order_placed_SAP</fullName>
+        <description>CAM-Email notification to higher authorities for every order placed(SAP)</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20004843@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20004844@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20004853@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20005331@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20006713@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20007309@uniphos.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_Sales_Order_Placed_Used_For_SAP</template>
+    </alerts>
+    <alerts>
+        <fullName>CAM_Notification_for_SAP_Order_for_Customer_Service</fullName>
+        <ccEmails>Hilda.Mendizabal@upl-ltd.com</ccEmails>
+        <ccEmails>elizabeth.fernandez@upl-ltd.com</ccEmails>
+        <ccEmails>kendal.gamboa@upl-ltd.com</ccEmails>
+        <ccEmails>Kira.Miranda@upl-ltd.com</ccEmails>
+        <ccEmails>kimberly.moya@upl-ltd.com</ccEmails>
+        <description>CAM Notification for SAP Order for Customer Service</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20011759@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20033808@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_SAP_Order_Notification_for_CST</template>
+    </alerts>
+    <alerts>
+        <fullName>CAM_SAP_Order_Notification</fullName>
+        <ccEmails>maikelly.solano@upl-ltd.com</ccEmails>
+        <description>CAM SAP Order Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20004843@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20004844@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20013891@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20013900@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_SAP_Email_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Chile_Email_Alert_on_Sales_Order_Approve</fullName>
+        <description>Chile Email Alert on Sales Order Approve at different levels</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Chile_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Chile_Email_Alert_on_Sales_Order_Reject</fullName>
+        <description>Chile Email Alert on Sales Order reject at different levels</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Sales Rep</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Chile_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Chile_SO_Approved_Email_Alert</fullName>
+        <description>Chile SO Approved Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Chile_SO_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Chile_SO_Rejected_email_Alert</fullName>
+        <description>Chile SO Rejected email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Chile_SO_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Colombia_Email_Alert_SAP_number_is_generated</fullName>
+        <description>Colombia Email Alert-SAP number is generated</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Colombia/Colombia_customer_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Approval_to_AM</fullName>
+        <description>Email Alert on Approval to AM</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Approval_Request_TO_AM_SD_CH</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Approval_to_Sales_Agent</fullName>
+        <description>Email Alert on Approval to Sales Agent</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Approval_Request_TO_AM_SD_CH</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Order_Cancellation</fullName>
+        <description>Email Alert on Order Cancellation</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>RegionalManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>TerritoryManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Email_Template_for_Notification_while_order_cancelled</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Order_Processed</fullName>
+        <description>Email Alert on Order Processed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>RegionalManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>TerritoryManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Email_Template_for_Notification_while_order_process</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Sales_Order_Approve</fullName>
+        <description>Email Alert on Sales Order Approve</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/New_Sales_Order_Approved_at_each_level_Final</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_on_Sales_Order_Rejection</fullName>
+        <description>Email Alert on Sales Order Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/New_Sales_Order_Rejected_at_each_level_Final</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Alert_to_Distributor_Tm_and_Rm_on_order_Creation</fullName>
+        <ccEmails>deepak.mandlik@skinternational.com</ccEmails>
+        <description>Email Alert to Distributor Tm and Rm on order Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>RegionalManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>TerritoryManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Uni_View/Email_Template_for_Notification_while_order_creation</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_On_Approval</fullName>
+        <description>Email On Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Argentina/Argentina_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_on_Rejection</fullName>
+        <description>Email on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Argentina/Argentina_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>India_Approval_Email_Alert</fullName>
+        <description>India Approval Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>India/India_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>India_Rejection_Email_Alert</fullName>
+        <description>India Rejection Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>India/India_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_AM_SD_CH_Approval_request_notification_to_sales_agent</fullName>
+        <description>Italy:Area Manager/SD/CH Approval request notification to sales agent</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_Approval_Notification_to_others</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Country_Head_Approval_request_notification</fullName>
+        <description>Italy:Country Head Approval request notification to others</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>Sales_Director_Mexico__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_Approval_Notification_to_others</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Country_Manager_Order_Creation_for_an_Industrial_account</fullName>
+        <ccEmails>paolo.tassani@upl-ltd.com,greta.conti@upl-ltd.com,chiara.milo@upl-ltd.com,carlo.velardi@upl-ltd.com</ccEmails>
+        <description>Italy Country Manager Order Creation for an Industrial account</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20003738@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20003743@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20010816@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20014586@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032994@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_Industrial_Order_Created_in_SAP</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_SO_SAP_Number_Email_Alert</fullName>
+        <description>Italy SO -SAP Number Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_SAP_Number_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_SO_SAP_Number_Email_Alert_To_AM</fullName>
+        <description>Italy SO -SAP Number Email Alert To AM</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_SAP_Number_Notification_To_AM</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_SO_SAP_Number_Email_Alert_To_CS</fullName>
+        <description>Italy SO -SAP Number Email Alert To CS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20003743@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20010816@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20014586@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20038257@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032994@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_SAP_Number_Notification_To_CS</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_SO_SAP_Number_Email_Alert_To_Giampaolo_Manfredi</fullName>
+        <description>Italy SO -SAP Number Email Alert To Giampaolo Manfredi</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20009480@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_SAP_Number_Notification_To_AM</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_SO_SAP_Number_Email_Alert_To_SA</fullName>
+        <description>Italy SO -SAP Number Email Alert To SA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_SAP_Number_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Director_Approval_request_notification</fullName>
+        <description>Italy:Sales Director Approval request notification to others</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_Approval_Notification_to_others</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert</fullName>
+        <description>Italy Sales Order Creation Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_Sales_Order_Creation</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert_To_CS</fullName>
+        <description>Italy Sales Order Creation Email Alert To CS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20003743@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20010816@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20014586@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20038257@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032442@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032994@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Creation_Notification_To_CS</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert_To_CS_Return_Order</fullName>
+        <description>Italy Sales Order Creation Email Alert To CS-Return Order</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20003743@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20010816@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20014586@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20038257@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032442@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032994@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/otification_To_CS_Return_Order</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert_To_Giampaolo_Manfredi</fullName>
+        <description>Italy Sales Order Creation Email Alert To Giampaolo Manfredi</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20009480@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Creation_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert_To_Lucia</fullName>
+        <description>Italy Sales Order Creation Email Alert To Lucia</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20014197@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Creation_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert_To_SA</fullName>
+        <description>Italy Sales Order Creation Email Alert To SA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Creation_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert_To_SA_Return_Order</fullName>
+        <description>Italy Sales Order Creation Email Alert To SA-Return Order</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Notification_To_SA_Return_Order</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert_for_AreaSalesManager</fullName>
+        <description>Italy Sales Order Creation Email Alert for AreaSalesManager</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Italy_SalesAreaManagerEmail__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Creation_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Italy_Sales_Order_Creation_Email_Alert_for_SalesDirector</fullName>
+        <description>Italy Sales Order Creation Email Alert for SalesDirector</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>30000059@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Creation_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Mexico_Email_On_Approval</fullName>
+        <ccEmails>nilam.bangar@skinternational.com</ccEmails>
+        <description>Mexico - Email On Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Mexico_Email_on_Rejection</fullName>
+        <ccEmails>nilam.bangar@skinternational.com</ccEmails>
+        <description>Mexico - Email on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_CAM_Customer_Service_User_on_Approval</fullName>
+        <description>Notification CAM Customer Service User on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_Sales_Order_Approved_alert_to_CS</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_CAM_Customer_Service_User_on_Rejection</fullName>
+        <description>Notification CAM Customer Service User on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>sadmin@upl.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_Sales_Order_Rejected_alert_to_CS</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_For_New_Mexico_NUMX_Customer_Service_User_on_Approval</fullName>
+        <description>Notification For New Mexico(NUMX) Customer Service User on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>NUMX_MEXICO_Customer_Service</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>20011728@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20011761@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20011818@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_SO_Approved_alert_to_CST</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_For_New_Mexico_NUMX_Customer_Service_User_on_Creation</fullName>
+        <description>Notification For New Mexico(NUMX) Customer Service User on Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>NUMX_MEXICO_Customer_Service</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>20011728@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20011761@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20011818@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_Sales_Order_Created_alert_to_CS</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_For_New_Mexico_NUMX_Customer_Service_User_on_Rejection</fullName>
+        <description>Notification For New Mexico(NUMX) Customer Service User on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>NUMX_MEXICO_Customer_Service</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>20011728@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20011761@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20011818@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_SO_Rejected_alert_to_CST</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_Mexico_Customer_Service_User_on_Approval</fullName>
+        <description>Notification Mexico Customer Service User on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>New_Mexico_Customer_service</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>New_Mexico_Customer_service_Leader</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>20004897@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20008975@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_SO_Approved_alert_to_CST</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_Mexico_Customer_Service_User_on_Creation</fullName>
+        <description>Notification Mexico Customer Service User on Creation</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>New_Mexico_Customer_service</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>New_Mexico_Customer_service_Leader</recipient>
+            <type>role</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_Sales_Order_Created_alert_to_CS</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_Mexico_Customer_Service_User_on_Rejection</fullName>
+        <description>Notification Mexico Customer Service User on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>New_Mexico_Customer_service</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <recipient>New_Mexico_Customer_service_Leader</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_SO_Rejected_alert_to_CST</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_after_24_hrs_to_India_TM</fullName>
+        <description>Notification after 24 hrs to India TM</description>
+        <protected>false</protected>
+        <recipients>
+            <field>TerritoryManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>India/India_SO_Pdng_for_Approval_alert_24_hrs</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_after_24_hrs_to_India_ZSM</fullName>
+        <description>Notification after 24 hrs to India ZSM</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SalesOfficeManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>India/India_SO_Pdng_for_Approval_alert_24_hrs</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_after_48_hrs_to_India_TM_Distributor</fullName>
+        <description>Notification after 48 hrs to India TM &amp; Distributor</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>TerritoryManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>India/India_SO_Rejctd_alert_after_48_hrs</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_on_Approval</fullName>
+        <description>Notification on Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/New_Sales_Order_Approved_at_each_level_Final</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_on_Approval1</fullName>
+        <description>Notification on Approval1</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/New_Sales_Order_Approved_at_each_level_Final</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_on_Indonesia_new_order_creation</fullName>
+        <description>Notification on Indonesia new order creation</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20003619@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>DefaultWorkflowUser</senderType>
+        <template>Indonesia/Indonesia_Sales_Order_Creation</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_on_Rejection</fullName>
+        <description>Notification on Rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/New_Sales_Order_Rejected_at_each_level_Final</template>
+    </alerts>
+    <alerts>
+        <fullName>Notification_on_Rejection1</fullName>
+        <description>Notification on Rejection1</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/New_Sales_Order_Rejected_at_each_level_Final</template>
+    </alerts>
+    <alerts>
+        <fullName>Order_Rejected_By_SAP_Email_Alert</fullName>
+        <description>Order Rejected By SAP Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Brazil_System_Administrator</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>CUSTOMER_SERVICE_ANALYST</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <field>BrazilAnalyst__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/New_Order_Rejection_by_SAP_Status_Error_from_SAP_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Paraguay_Approval_Request_Email_Notification</fullName>
+        <description>Paraguay Approval Request Email Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Paraguay/Paraguay_Bolivia_Approval_Request</template>
+    </alerts>
+    <alerts>
+        <fullName>Paraguay_Approved_Email_Notification</fullName>
+        <description>Paraguay Approved Email Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Paraguay/Paraguay_Bolivia_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Paraguay_Rejected_Email_Notification</fullName>
+        <description>Paraguay Rejected Email Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Paraguay/Paraguay_Bolivia_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Paraguay_SO_email_alert</fullName>
+        <ccEmails>vicente.bataglia@upl-ltd.com</ccEmails>
+        <ccEmails>marco.sanmartin@upl-ltd.com</ccEmails>
+        <description>Paraguay SO email alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20035001@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Paraguay/Paraguay_SO_Email_template</template>
+    </alerts>
+    <alerts>
+        <fullName>Reject_Alert_if_Latam_Director_SO_is_Rejected</fullName>
+        <description>Reject Alert if Latam Director SO is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Latam_Director/Latam_Director_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Reject_Alert_if_Vietnam_SO_is_Rejected</fullName>
+        <description>Reject Alert if Vietnam SO is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Vietnam/Rejected_Sales_Order_Management</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_CAM_Order_is_Rejected</fullName>
+        <description>Rejection Alert if CAM Order is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>CAM/CAM_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Colombia_Order_is_Rejected</fullName>
+        <description>Rejection Alert if Colombia Order is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Colombia/Colombia_Sales_Order_Rejected_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Italy_Order_is_Rejected</fullName>
+        <description>Rejection Alert if Italy Order is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_Sales_Order_Rejected_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Italy_Order_is_Rejected_To_AM</fullName>
+        <description>Rejection Alert if Italy Order is Rejected To AM</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Manager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Rejected_Notification_To_AM</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Italy_Order_is_Rejected_To_CS</fullName>
+        <description>Rejection Alert if Italy Order is Rejected To CS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20003743@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20010816@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20014586@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20038257@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30032994@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Rejected_Notification_To_CS</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Italy_Order_is_Rejected_To_Giampaolo_Manfredi</fullName>
+        <description>Rejection Alert if Italy Order is Rejected To Giampaolo Manfredi</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20009480@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Rejected_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Italy_Order_is_Rejected_To_SA</fullName>
+        <description>Rejection Alert if Italy Order is Rejected To SA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Rejected_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Italy_Order_is_Rejected_To_SA_TCPTv1</fullName>
+        <description>Rejection Alert if Italy Order is Rejected To SA TCPTv1</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Italy/Italy_SO_Rejected_Notification_To_SA</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Mexico_Order_is_Rejected</fullName>
+        <description>Rejection Alert if Mexico Order is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Poland_SO_is_rejected</fullName>
+        <description>Rejection Alert if Poland SO is rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Poland/Poland_SO_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Alert_if_Spain_Portugal_is_Rejected</fullName>
+        <description>Rejection Alert if Spain &amp; Portugal is Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Spain_Portugal/Spain_Portugal_SO_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Rejection_Email_Alert_when_mexico_order_is_rejected</fullName>
+        <description>Rejection Email Alert when mexico order is rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_SO_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>Restrict_Reprocess_Order_Email_Alert</fullName>
+        <description>Restrict Reprocess Order Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20006422@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20008679@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30006473@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Restrict_Reprocess_Order_Email_Alert</template>
+    </alerts>
+    <alerts>
+        <fullName>Restrict_Reprocess_Order_Email_Alert_Italy</fullName>
+        <ccEmails>gergana.kovatchka@upl-ltd.com</ccEmails>
+        <ccEmails>greta.conti@upl-ltd.com</ccEmails>
+        <ccEmails>chiara.milo@upl-ltd.com</ccEmails>
+        <ccEmails>customerservice.cesena@upl-ltd.com</ccEmails>
+        <description>Restrict Reprocess Order Email Alert Italy</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20006422@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20008679@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20036034@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30006473@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Restrict_Reprocess_Order_Email_Alert</template>
+    </alerts>
+    <alerts>
+        <fullName>SAP_Order_No_Notification_For_New_Mexico_NUMX_Customer_Service_User</fullName>
+        <description>(SAP Order No) Notification For New Mexico(NUMX) Customer Service User</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>New_Mexico_Customer_service</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>New_Mexico_Customer_service_Leader</recipient>
+            <type>role</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mexico/Mexico_SO_SAP_Order_No_alert_cust_Ser</template>
+    </alerts>
+    <alerts>
+        <fullName>Spain_SAP_Number_Notification</fullName>
+        <description>Spain SAP Number Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Spain_Portugal/Spain_SAP_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Turkey_Alert_order_approval</fullName>
+        <description>Turkey: Alert order approval</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Turkey/Turkey_Sales_Order_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Turkey_alert_on_rejection</fullName>
+        <description>Turkey: alert on rejection</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Turkey/Turkey_Sales_Order_Rejected</template>
+    </alerts>
+    <alerts>
+        <fullName>UK_Approved_Order_Email_Alert</fullName>
+        <description>UK Approved Order Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>United_Kingdom/Approved_Order_UK</template>
+    </alerts>
+    <alerts>
+        <fullName>UK_Rejected_Order_Email_Alert</fullName>
+        <description>UK Rejected Order Email Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>United_Kingdom/Rejected_Order_UK</template>
+    </alerts>
+    <alerts>
+        <fullName>UK_SAP_Order_No_Notification_For_Customer_Service_User</fullName>
+        <ccEmails>customerservice.gbie@upl-ltd.com</ccEmails>
+        <description>UK (SAP Order No) Notification For Customer Service User</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>United_Kingdom/UK_IE_SO_SAP_Number_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Vietnam_SAP_Notification_to_RM</fullName>
+        <description>Vietnam SAP Notification to RM</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Vietnam/Vietnam_SAP_Email_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Vietnam_SAP_Notification_to_RM_VN00</fullName>
+        <ccEmails>uyen.nguyen@upl-ltd.com,hien.nguyentcam@upl-ltd.com,  hanh.tran@upl-ltd.com,   dieu.le@upl-ltd.com,  thuy.dao@upl-ltd.com</ccEmails>
+        <description>Vietnam_SAP_Notification_to_RM_VN00</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20009851@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20030434@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20030592@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20031274@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20031476@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20031980@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Vietnam/Vietnam_SAP_Email_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Vietnam_SAP_Notification_to_RM_VN11</fullName>
+        <ccEmails>uyen.nguyen@upl-ltd.com,hien.nguyentcam@upl-ltd.com</ccEmails>
+        <description>Vietnam_SAP_Notification_to_RM_VN11</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20030592@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20031274@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Vietnam/Vietnam_SAP_Email_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Vietnam_SAP_Notification_to_RM_VN12</fullName>
+        <ccEmails>hanh.tran@upl-ltd.com</ccEmails>
+        <description>Vietnam SAP Notification to RM - VN12</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20009851@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Vietnam/Vietnam_SAP_Email_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Vietnam_SAP_Notification_to_RM_VN13</fullName>
+        <ccEmails>dieu.le@upl-ltd.com</ccEmails>
+        <description>Vietnam SAP Notification to RM - VN13</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20030434@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20031980@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Vietnam/Vietnam_SAP_Email_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Vietnam_SAP_Notification_to_RM_VN14</fullName>
+        <ccEmails>thuy.dao@upl-ltd.com</ccEmails>
+        <description>Vietnam SAP Notification to RM - VN14</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20031476@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Vietnam/Vietnam_SAP_Email_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>X48_Hrs_Notification_to_ZSM_Distributor_for_India_SO</fullName>
+        <description>48 Hrs Notification to ZSM &amp; Distributor for India SO</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>SalesOfficeManager__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>India/India_SO_Rejctd_alert_after_48_hrs</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Already_Submitted</fullName>
+        <field>Already_Submitted__c</field>
+        <literalValue>1</literalValue>
+        <name>Already Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Already_Submitted1</fullName>
+        <field>Already_Submitted__c</field>
+        <literalValue>1</literalValue>
+        <name>Already Submitted1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Already_Submitted2</fullName>
+        <field>Already_Submitted__c</field>
+        <literalValue>1</literalValue>
+        <name>Already Submitted2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Already_Submitted3</fullName>
+        <field>Already_Submitted__c</field>
+        <literalValue>1</literalValue>
+        <name>Already Submitted3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approval_Flag_Count_Brazil</fullName>
+        <field>Approval_Flag_Count_Brazil__c</field>
+        <formula>Approval_Flag_Count__c</formula>
+        <name>Approval Flag Count Brazil</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approval_Reason11</fullName>
+        <field>Approval_Reason__c</field>
+        <formula>&apos;Alteração ou Exclusão de Item do Pedido&apos;</formula>
+        <name>Approval Reason11</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approve_Brazil_SO_Approved</fullName>
+        <field>BrazilSalesOrderApproved__c</field>
+        <literalValue>1</literalValue>
+        <name>Approve Brazil SO Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approve_Order_Status</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Approve Order Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approve_Order_Sub_Status</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Auto Approved</literalValue>
+        <name>Approve Order Sub Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_Brazil_CCO_as_True</fullName>
+        <field>Approved_By_Brazil_CCO__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved By Brazil CCO as True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_GSD_as_TRUE</fullName>
+        <field>Approved_By_GSD__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved By GSD as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_REH_as_TRUE</fullName>
+        <field>Approved_By_REH__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved By REH as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_SDM_as_TRUE</fullName>
+        <description>Only When Order is approved By SDM</description>
+        <field>ApprovedBySDM__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved By SDM as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_SD_as_TRUE</fullName>
+        <field>Approved_By_SD__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved By SD as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_By_SOM_as_TRUE</fullName>
+        <field>ApprovedBySOM__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved By SOM as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_by_Latam</fullName>
+        <field>Approved_by_Latam__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved by Latam</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_by_Mkt_Ops_Manager</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by Mkt Ops Manager</literalValue>
+        <name>Approved by Mkt Ops Manager</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_by_SDM_TCPT</fullName>
+        <field>ApprovedBySDM__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved by SDM TCPT</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_by_SDM_V1000</fullName>
+        <field>ApprovedBySDM__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved by SDM V1000</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Approved_by_first_CAM_Commercial_Head</fullName>
+        <description>First level approval action for CAM (Multilevel approval)</description>
+        <field>Signed__c</field>
+        <literalValue>1</literalValue>
+        <name>Approved by first CAM Commercial Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Blank_last_update_Date_Time</fullName>
+        <field>Last_Approver_Date_Time__c</field>
+        <name>Blank last update Date/Time</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Call_Process_Builder_Flag_False</fullName>
+        <field>Call_Process_Builder_Flow__c</field>
+        <literalValue>0</literalValue>
+        <name>Call Process Builder Flag False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Check_Internal_Check_True</fullName>
+        <field>InternalApprovalCheck__c</field>
+        <literalValue>1</literalValue>
+        <name>Check Internal Check True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Check_Level_1_Approved</fullName>
+        <description>CB pallavi
+Used for Italy</description>
+        <field>Level_1_Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Check &quot;Level 1 Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Check_Level_1_Approved_as_true</fullName>
+        <description>CB pallavi
+Used for Italy</description>
+        <field>Level_1_Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Check &quot;Level 1 Approved as true&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Check_Payment_Term_Level_1_Approved</fullName>
+        <description>Created by pallavi for italy so approval</description>
+        <field>Payment_Term_Level_1_Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Check &quot;Payment Term Level 1 Approved&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Directed_sales_Brazil</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected By AVEC Manager</literalValue>
+        <name>Directed sales_Brazil</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Final_Rejection_Order_Status_Update</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Final Rejection Order Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Higlight_Field_On_Template_Approve</fullName>
+        <description>Sales Order Highlight Field On Template False</description>
+        <field>Highlight_Field_On_Template__c</field>
+        <literalValue>0</literalValue>
+        <name>Higlight Field On Template Approve</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Higlight_Field_On_Template_Approve1</fullName>
+        <field>Highlight_Field_On_Template__c</field>
+        <literalValue>0</literalValue>
+        <name>Higlight Field On Template Approve1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Higlight_Field_On_Template_Reject</fullName>
+        <description>Sakes Order Highlight Field On Template False .</description>
+        <field>Highlight_Field_On_Template__c</field>
+        <literalValue>0</literalValue>
+        <name>Higlight Field On Template Reject</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Higlight_Field_On_Template_Reject1</fullName>
+        <field>Highlight_Field_On_Template__c</field>
+        <literalValue>0</literalValue>
+        <name>Higlight Field On Template Reject1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Higlight_Field_On_Template_Reject_TCPTv1</fullName>
+        <field>Highlight_Field_On_Template__c</field>
+        <literalValue>0</literalValue>
+        <name>Higlight Field On Template Reject TCPTv1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Italy_Return_Order_Status_Change</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Italy Return Order Status Change</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Level1_Approved_TCPT_v1</fullName>
+        <field>Level_1_Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Level1 Approved TCPT v1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Level_1_Approval_Order_Status_Update</fullName>
+        <description>Approval Order Status Update</description>
+        <field>Order_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Level 1 Approval Order Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Level_1_Approved_v1000</fullName>
+        <field>Level_1_Approved__c</field>
+        <literalValue>1</literalValue>
+        <name>Level 1 Approved v1000</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Level_1_Rejection_Order_Status_Update</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Level 1 Rejection Order Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Level_2_Approval_Order_Status_Update</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Level 2 Approval Order Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Level_2_Rejection_Order_Status_Update</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Level 2 Rejection Order Status Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MaxicoSales_OrderApprovalInitiation</fullName>
+        <description>Facing issue record already submitted while creating a sales order</description>
+        <field>Tech_Mexico_Initial_Approval__c</field>
+        <literalValue>1</literalValue>
+        <name>MaxicoSales_OrderApprovalInitiation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Mexico_PriceControl_WarningNote</fullName>
+        <field>Approval_Status__c</field>
+        <literalValue>Pending@ReginalMgr</literalValue>
+        <name>Mexico_PriceControl_WarningNote</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Mexico_PriceControl_WarningNote_Director</fullName>
+        <field>Approval_Status__c</field>
+        <literalValue>Pending@Director</literalValue>
+        <name>Mexico_PriceControl_WarningNote_Director</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Mexico_PriceControl_WarningNote_Done</fullName>
+        <field>Approval_Status__c</field>
+        <literalValue>Done</literalValue>
+        <name>Mexico_PriceControl_WarningNote_Done</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Mexico_PriceControl_WarningNote_SubRegio</fullName>
+        <description>Mexico_PriceControl_WarningNote_SubRegionHead</description>
+        <field>Approval_Status__c</field>
+        <literalValue>Pending@SubRegionHead</literalValue>
+        <name>Mexico_PriceControl_WarningNote_SubRegio</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Notification_Check_on_Order_Processed</fullName>
+        <field>NotifiedallonOrderProcessed__c</field>
+        <literalValue>1</literalValue>
+        <name>Notification Check on Order Processed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Notified_Check_on_Cancellation</fullName>
+        <field>NotifiedallonOrderCancellation__c</field>
+        <literalValue>1</literalValue>
+        <name>Notified Check on Cancellation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Notified_Check_on_creation</fullName>
+        <field>NotifiedallonOrderProcessed__c</field>
+        <literalValue>1</literalValue>
+        <name>Notified Check on creation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Status_Approved</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Order Status Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Status_Approved_UK</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>Order Status Approved(UK)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Status_Pending</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Order Status Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Status_Rejected</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Order Status Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Status_Rejected_UK</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Order Status Rejected(UK)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Status_Update_TC_Pending</fullName>
+        <description>Order Status Open</description>
+        <field>Order_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Order Status Update TC Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Status_Update_TC_Reject</fullName>
+        <description>If Record Rejected Order Status will be Reject             .</description>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Order Status Update TC Reject</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Status_Update_TC_Reject1</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Order Status Update TC Reject1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Approved_By_SDM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by manager</literalValue>
+        <name>Order Sub-Status &apos;Approved By SDM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Approved_By_SOM_flag_2</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by Sales Office Manager</literalValue>
+        <name>Order Sub-Status &apos;Approved By SOM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Pending_By_BM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending By Barter Manager</literalValue>
+        <name>Order Sub Status &apos;Pending By BM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Pending_at_SD</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending for director approval</literalValue>
+        <name>Order Sub-Status &apos;Pending at SD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Pending_at_SD1</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending for director approval</literalValue>
+        <name>Order Sub-Status &apos;Pending at SD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Pending_at_SD_SP</fullName>
+        <description>Updates Order Sub Status as &apos;Pending at director&apos; when SO is created by SP and respective SOM is not present</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending for director approval</literalValue>
+        <name>Order Sub-Status &apos;Pending at SD&apos; (SP)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Pending_at_SD_cr_SOM</fullName>
+        <description>Sales Order Sub-Status set as &apos;Pending at director&apos; when the order is created by SOM and approval flag is 3</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending for director approval</literalValue>
+        <name>Order Sub-Status &apos;Pending at SD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Pending_at_SOM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending at Sales Office Manager</literalValue>
+        <name>Order Sub-Status &apos;Pending at SOM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Pending_at_SOM_SP</fullName>
+        <description>Updates Order Sub Status as &apos;Pending at director&apos; when SO is created by SP and respective SOM is present</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending at Sales Office Manager</literalValue>
+        <name>Order Sub-Status &apos;Pending at SOM&apos; (SP)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_Rejected_By_BM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected By Barter Manager</literalValue>
+        <name>Order Sub Status &apos;Rejected By BM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Sub_Status_to_AutoApproved</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Auto Approved</literalValue>
+        <name>Order Sub Status to AutoApproved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Order_Submitted_Check_False</fullName>
+        <description>update Argentina Order Submitted for Approval as FALSE</description>
+        <field>ArgentinaOrderSubmittedforApproval__c</field>
+        <literalValue>0</literalValue>
+        <name>Order Submitted Check False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SDM_Approval</fullName>
+        <field>SDM_Approval_On_Order_Item_Edit_Cancel__c</field>
+        <literalValue>0</literalValue>
+        <name>SDM Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SDM_Approval1</fullName>
+        <field>SDM_Approval_On_Order_Item_Edit_Cancel__c</field>
+        <literalValue>1</literalValue>
+        <name>SDM Approval1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SDM_Approval_On_Order_Cancellation_2</fullName>
+        <field>SDM_Approval_On_Order_Cancellation__c</field>
+        <formula>2</formula>
+        <name>SDM Approval On Order Cancellation 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SDM_Approval_On_Order_Cancellation_3</fullName>
+        <field>SDM_Approval_On_Order_Cancellation__c</field>
+        <formula>3</formula>
+        <name>SDM Approval On Order Cancellation 3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SDM_Reject</fullName>
+        <field>SDM_Rejected_OrderItem_Edit_Approval__c</field>
+        <literalValue>1</literalValue>
+        <name>SDM Reject</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SDM_Reject1</fullName>
+        <field>SDM_Rejected_OrderItem_Edit_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>SDM Reject1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SDM_Status</fullName>
+        <field>SDM_Item_Update_Cancel_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>SDM Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SDM_Status1</fullName>
+        <field>SDM_Item_Update_Cancel_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>SDM Status1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sent_for_Directors_Approval_False</fullName>
+        <description>For CAM: This field update is used for report purpose, which defines approval is pending at Jagdish Nainwal (CAM Latam Director)</description>
+        <field>Sent_for_Director_Approval_Mexico__c</field>
+        <literalValue>0</literalValue>
+        <name>Sent for Directors Approval False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Share_Community_Orders_with_Pradip_Dhoka</fullName>
+        <field>OwnerId</field>
+        <lookupValue>20032679@upl-ltd.com</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Share Community Orders with Pradip Dhoka</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SubStatus_set_to_Approved_by_SD</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by director</literalValue>
+        <name>SubStatus set to Approved by SD</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SubStatus_set_to_Pending_by_SDM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending for manager approval</literalValue>
+        <name>SubStatus set to Pending by SDM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SubStatus_set_to_Rejected_by_SD</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by director</literalValue>
+        <name>SubStatus set to Rejected by SD</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SubStatus_set_to_Rejected_by_SDM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by manager</literalValue>
+        <name>SubStatus set to Rejected by SDM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SubStatus_set_to_Rejected_by_SOM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by Sales Office Manager</literalValue>
+        <name>SubStatus set to Rejected by SOM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sub_Status_Approved_By_SOM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by Sales Office Manager</literalValue>
+        <name>Sub-Status_Approved_By_SOM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sub_Status_set_as_approved_by_REH</fullName>
+        <description>used for brazil</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by Regional Head</literalValue>
+        <name>Sub-Status set as approved by REH</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Sub_Status_set_as_rejected_by_REH</fullName>
+        <description>used for Brazil</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by Regional Head</literalValue>
+        <name>Sub-Status set as rejected by REH</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Submitted_for_Approval_is_FALSE</fullName>
+        <description>update Turkey Order Submitted for Approval = FALSE</description>
+        <field>TurkeyOrderSubmittedforApproval__c</field>
+        <literalValue>0</literalValue>
+        <name>Submitted for Approval is FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Submitted_for_Approval_is_TRUE</fullName>
+        <description>update Turkey Order Submitted for Approval = TRUE</description>
+        <field>TurkeyOrderSubmittedforApproval__c</field>
+        <literalValue>1</literalValue>
+        <name>Submitted for Approval is TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Total_Amount_for_Poland</fullName>
+        <field>Total_Amount__c</field>
+        <formula>If(ISPICKVAL(CreatedFrom__c, &apos;SFDC&apos;),Gross_Net_Value__c,
+If(AND(ISPICKVAL(CreatedFrom__c, &apos;SAP&apos;), OR(Order_Type_Code__c = &apos;ZRKC&apos;, Order_Type_Code__c = &apos;ZRPD&apos;),Total_Amount__c &gt; 0), Total_Amount__c * -1,
+Total_Amount__c)
+)</formula>
+        <name>Total Amount for Poland</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Approved_By_BM</fullName>
+        <field>ApprovedByBM__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Approved By BM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Approved_By_Brazil_CCO</fullName>
+        <field>Approved_By_Brazil_CCO__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Approved By Brazil CCO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Approved_By_REH</fullName>
+        <field>Approved_By_REH__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Approved By REH</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Approved_By_SD</fullName>
+        <field>Approved_By_SD__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Approved By SD</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Approved_By_SDM</fullName>
+        <description>uncheck Approved By SDM after every rejection action</description>
+        <field>ApprovedBySDM__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Approved By SDM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Approved_By_SOM</fullName>
+        <description>uncheck Approved By SOM after every rejection action</description>
+        <field>ApprovedBySOM__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Approved By SOM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Check_Trans_conTCPTv1</fullName>
+        <field>Check_Transport_contribution__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Check Trans conTCPTv1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Check_Transport_contribution</fullName>
+        <description>Used For Italy to uncheck Transport contribution.
+CB Pallavi</description>
+        <field>Check_Transport_contribution__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Check Transport contribution</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Colombia_Order_Sub_Approval</fullName>
+        <description>Created by pallavi for italy</description>
+        <field>Colombia_Order_Submitted_for_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck &quot;Colombia Order Sub Approval&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Different_Product_Checkbox</fullName>
+        <description>CB Pallavi</description>
+        <field>is_Different_Free_Product__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck &quot;Different Product Checkbox&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Internal_Approval_checkbox</fullName>
+        <field>InternalApprovalCheck__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Internal Approval checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Level1_Approved_TCPT_V1</fullName>
+        <field>Level_1_Approved__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Level1 Approved TCPT V1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Level1_Approved_TCPT_V10</fullName>
+        <field>Level_1_Approved__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Level1 Approved TCPT V10</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Level_1_Approved</fullName>
+        <description>CB pallavi
+used for Italy</description>
+        <field>Level_1_Approved__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck &quot;Level 1 Approved &quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Level_1_Approved_V1000</fullName>
+        <field>Level_1_Approved__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Level 1 Approved V1000</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Level_1_Approved_as_false</fullName>
+        <description>CB pallavi 
+used for Italy</description>
+        <field>Level_1_Approved__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck &quot;Level 1 Approved &quot;as false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Level_2_Approval_V1000</fullName>
+        <field>Level_1_Approved__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Level 2 Approval V1000</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_New_CAM_Auto_Approval</fullName>
+        <field>New_CAM_Auto_Approval_Check__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck New CAM Auto Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Payment_Term_Discount_Ap_TCPTv1</fullName>
+        <field>Is_Payment_Term_Discount_Approval_Italy__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Payment Term Discount Ap TCPTv1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Payment_Term_Discount_Approval</fullName>
+        <description>Used for Italy
+CB pallavi</description>
+        <field>Is_Payment_Term_Discount_Approval_Italy__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Payment Term Discount Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Payment_Term_Level_1_Approved</fullName>
+        <description>Created by pallavi for Italy</description>
+        <field>Payment_Term_Level_1_Approved__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck &quot;Payment Term Level 1 Approved&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Sent_for_Director_Approval</fullName>
+        <field>Sent_for_Director_Approval_Mexico__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Sent for Director Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Sent_for_Latam_Director_Approval</fullName>
+        <field>Sent_for_Latam_Director_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Sent for Latam Director Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Sent_for_Manager_Approval</fullName>
+        <field>Sent_for_Manager_Approval_Mexico__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Sent for Manager Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_sent_for_CCO</fullName>
+        <field>Sent_for_CCO__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck sent for CCO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_sent_for_CFO</fullName>
+        <field>Sent_for_CFO__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck sent for CFO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_sent_for_Latam_Director</fullName>
+        <field>Sent_for_Latam_Director__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck sent for Latam Director</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Approved_by_BM_as_TRUE</fullName>
+        <field>ApprovedByBM__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Approved by BM as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Argentina_Order_Submitted_for_App</fullName>
+        <description>update Argentina Order Submitted for Approval checkbox as TRUE when submitted for approval</description>
+        <field>ArgentinaOrderSubmittedforApproval__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Argentina Order Submitted for App</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Brazil_SO_Approved_as_TRUE</fullName>
+        <description>Updated Brazil Sales Order Approved as TRUE</description>
+        <field>BrazilSalesOrderApproved__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Brazil SO Approved as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Checkbox_for_Argentina_HO</fullName>
+        <description>TRUE if approved by Argentina HO</description>
+        <field>ApprovedatLevel2ArgentinaHO__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Checkbox for Argentina HO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Colombia_Ord_Sub_Checkbox_as_TRUE</fullName>
+        <description>Update Colombia Order Submitted for Approval as TRUE</description>
+        <field>Colombia_Order_Submitted_for_Approval__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Colombia Ord Sub Checkbox as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Depot_Code_for_Sales_Order</fullName>
+        <field>Depot_Code__c</field>
+        <formula>Sold_to_Party__r.Depot_Code__c</formula>
+        <name>Update Depot Code for Sales Order</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Field_as_Pending_for_Latam</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Pending for Latam</literalValue>
+        <name>Update Field as &apos;Pending for Latam&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Message_to_Blank</fullName>
+        <field>Blocked_Cancellation_Message__c</field>
+        <name>Update Message to Blank</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Approval_Date</fullName>
+        <field>Order_Approval_Date__c</field>
+        <formula>NOW()</formula>
+        <name>Update Order Approval Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_Open</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>Update Order Status as &apos;Open&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_Pending_for_SD_Italy</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Pending for SD Approval Italy</literalValue>
+        <name>Update Order Status Pending for SD Italy</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_To_Pending</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Order Status To Pending</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Open</fullName>
+        <description>On Approval, Order Status Should update as &apos;Open&apos;</description>
+        <field>Order_Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>Update Order Status as &apos;Open&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Open_TCPTv1</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>Update Order Status as &apos;Open&apos; TCPTv1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Pending</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Order Status as &apos;Pending&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Pending_UK</fullName>
+        <description>Update Order Status as &apos;Pending&apos;</description>
+        <field>Order_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Order Status as &apos;Pending&apos;(UK)</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Rejected</fullName>
+        <description>On Process rejection, Order Status Should update as &apos;Rejected&apos;</description>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Order Status as &apos;Rejected&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Rejected_Step1</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Order Status as &apos;Rejected&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Rejected_TCPTv1</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Order Status as &apos;Rejected&apos; TCPTv1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status</fullName>
+        <description>Update Order Sub-Status to &quot;Approved&quot;</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Order Sub-Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Approve_By_GSD</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by Global Sales Director</literalValue>
+        <name>Update Order Sub-Status &apos;Approve By GSD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Approve_By_SD</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by director</literalValue>
+        <name>Update Order Sub-Status &apos;Approve By SD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Approved_by_SDM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by manager</literalValue>
+        <name>Update Order Sub-Status-Approved by SDM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Approved_by_SOM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by Sales Office Manager</literalValue>
+        <name>Update Order Sub-Status-Approved by SOM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Pending_By_SD</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending for director approval</literalValue>
+        <name>Update Order Sub-Status Pending By SD</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Pending_By_SDM_1</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending for manager approval</literalValue>
+        <name>Update Order Sub Status &apos;Pending By SDM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Pending_at_GSD</fullName>
+        <description>When Brazil order is approved by REH, Order Sub-Status should be pending at GSD.</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Waiting Global Sales Director Approval</literalValue>
+        <name>Update Order Sub-Status &apos;Pending at GSD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Pending_at_REH</fullName>
+        <description>When Brazil order is approved by SD, Order Sub-Status should be pending at REH.</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Waiting Regional Head Approval</literalValue>
+        <name>Update Order Sub-Status &apos;Pending at REH&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Rejected_By_GSD</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by Global Sales Director</literalValue>
+        <name>Update Order Sub-Status Rejected By GSD</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_Rejected_By_REH</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by Regional Head</literalValue>
+        <name>Update Order Sub-Status Rejected By REH</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_as_Approved</fullName>
+        <description>For India Order: (created by Distributor) update after final approval</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Order Sub-Status as Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Sub_Status_as_Rejected</fullName>
+        <description>For India Order: (created by Distributor) update after final rejection</description>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Order Sub-Status as Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Submitted_Checkbox_as_FALSE</fullName>
+        <description>Update Brazil Order Submitted for Approval as FALSE</description>
+        <field>BrazilOrderSubmittedforApproval__c</field>
+        <literalValue>0</literalValue>
+        <name>Update Order Submitted Checkbox as FALSE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Submitted_Checkbox_as_TRUE</fullName>
+        <description>Update Brazil Order Submitted for Approval as TRUE</description>
+        <field>BrazilOrderSubmittedforApproval__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Order Submitted Checkbox as TRUE</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_PO_Number</fullName>
+        <field>PONumber__c</field>
+        <formula>RIGHT(Name , LEN(Name) - 8)</formula>
+        <name>Update PO Number</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Price_Entry_Flag_as_False</fullName>
+        <description>Used for CAM</description>
+        <field>Price_Entry_Flag__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Price Entry Flag as False</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Region_Code_and_Name_for_Brazil</fullName>
+        <field>Brazil_Region_Code_and_Name__c</field>
+        <formula>Region_Territory__r.Region__r.RegionCode__c &amp; &apos;-&apos; &amp; Region_Territory__r.Region__r.Name</formula>
+        <name>Update Region Code and Name for Brazil</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sales_Order_Amount</fullName>
+        <field>Amount__c</field>
+        <formula>Net_Amount__c</formula>
+        <name>Update Sales Order Amount</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_as_TRUE_if_Approved</fullName>
+        <field>ApprovedBySOMifSDMisNull__c</field>
+        <literalValue>1</literalValue>
+        <name>Update as TRUE if Approved</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_last_Approval_Date_Time</fullName>
+        <field>Last_Approver_Date_Time__c</field>
+        <formula>Now()</formula>
+        <name>Update last Approval Date/Time</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_the_Order_Sub_Status_fiield</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update the Order Sub Status fiield</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Updating_Created_from_for_Sap_Orde</fullName>
+        <field>CreatedFrom__c</field>
+        <literalValue>SAP</literalValue>
+        <name>Updating  &quot;Created from &quot;  for Sap Orde</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Updt_Order_Sub_Status_Rejected_By_SD</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by director</literalValue>
+        <name>Updt Order Sub-Status &apos;Rejected By SD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Updt_Order_Sub_Status_Rejected_By_SDM_1</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by manager</literalValue>
+        <name>Updt Order Sub-Status &apos;Rejected By SDM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Updt_Order_Sub_Status_Rejected_By_SOM</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by Sales Office Manager</literalValue>
+        <name>Updt Order Sub-Status &apos;Rejected By SOM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Waiting_for_REH_Approval</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Waiting Regional Head Approval</literalValue>
+        <name>Waiting for REH Approval</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>order_status_pending_v1</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>order status pending v1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>order_sub_status_rej</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by manager</literalValue>
+        <name>order sub status rej</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sub_Status_as_Approved_By_Brazil_CCO</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by Brazil CCO</literalValue>
+        <name>sub-Status as Approved By Brazil CCO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sub_Status_as_Approved_By_Global_CCO</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Approved by Global CCO</literalValue>
+        <name>sub-Status as &apos;Approved By Global CCO&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sub_Status_as_Pending_at_Brazil_CCO</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending At Brazil CCO</literalValue>
+        <name>sub-Status as Pending at Brazil CCO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sub_Status_as_Pending_at_Global_CCO</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Pending At Global CCO</literalValue>
+        <name>sub-Status as Pending at Global CCO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sub_Status_as_Rejected_By_Brazil_CCO</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by Brazil CCO</literalValue>
+        <name>sub-Status as Rejected By Brazil CCO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>sub_Status_as_Rejected_By_Global_CCO</fullName>
+        <field>OrderSubStatus__c</field>
+        <literalValue>Rejected by Global CCO</literalValue>
+        <name>sub-Status as Rejected By Global CCO</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_Cancel_Comment_to_Null</fullName>
+        <field>Cancel_Comment__c</field>
+        <name>update Cancel Comment to Null</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_SO_To_Rejected</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>update SO To Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_SO_to_Open</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>update SO to Open</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>update_field</fullName>
+        <field>SFDC_Order_Number__c</field>
+        <formula>RIGHT(Name , LEN(Name) - 8)</formula>
+        <name>update field</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>24 Hrs Notification to TM for India Distributor SO</fullName>
+        <actions>
+            <name>Notification_after_24_hrs_to_India_TM</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>1410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Notification_Reminder__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.TerritoryManager__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>It used to notify India TM when Distributor order is created and not approved by TM within 24 hrs</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>24 Hrs Notification to ZSM for India Distributor SO</fullName>
+        <actions>
+            <name>Notification_after_24_hrs_to_India_ZSM</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>1410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Notification_Reminder__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOfficeManager__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.TerritoryManager__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>It used to notify India ZSM when Distributor order is created and not approved by ZSM within 24 hrs</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>48 Hrs Notification to TM %26 Distributor for India SO</fullName>
+        <actions>
+            <name>Notification_after_48_hrs_to_India_TM_Distributor</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>1410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Notification_Reminder__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Rejection_Notification__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.TerritoryManager__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>It used to notify India TM &amp; Distributor when Distributor order is created and not approved by TM within 48 hrs</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>48 Hrs Notification to ZSM %26 Distributor for India SO</fullName>
+        <actions>
+            <name>X48_Hrs_Notification_to_ZSM_Distributor_for_India_SO</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>1410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Notification_Reminder__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Rejection_Notification__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.TerritoryManager__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOfficeManager__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>It used to notify India ZSM &amp; Distributor when Distributor order is created and not approved by ZSM within 48 hrs</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil Child Sales Order</fullName>
+        <actions>
+            <name>Approve_Brazil_SO_Approved</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Approve_Order_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Approve_Order_Sub_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5191</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Type_of_Order__c</field>
+            <operation>equals</operation>
+            <value>ORDEM FILHA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Payment_Method_Code__c</field>
+            <operation>equals</operation>
+            <value>W</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil Order Rejection by SAP</fullName>
+        <actions>
+            <name>Order_Rejected_By_SAP_Email_Alert</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Sales_Order__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Sales Order</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Status__c</field>
+            <operation>equals</operation>
+            <value>Error from SAP</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5191</value>
+        </criteriaItems>
+        <description>Order Rejection by SAP – Status (Error from SAP, Rejected)</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 1</fullName>
+        <actions>
+            <name>Alert_on_New_order_creation_by_SDM_on_behalf_of_Sales_Employee</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SOM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SDM (if Sales Office Manager is present)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;,
+    BrazilOrderSubmittedforApproval__c == TRUE,
+    Payment_Method_Code__c &lt;&gt; &apos;W&apos;,
+    CreatedById = SalesDistrictManager__c,
+    OR(ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;),
+         ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;),
+         ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;)), 
+    NOT( ISBLANK( SalesOfficeManager__c ) ) 
+   )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 10</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SOM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO (Barter) created by SP/Key Seller &amp; approved by SDM &amp; Sales Office Manager is present</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c == &apos;W&apos;, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending for manager approval&apos;), 
+NOT(ISBLANK( SalesOfficeManager__c )), 
+ApprovedBySDM__c == TRUE, 
+Approval_Flag_Count__c &gt; 1 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 11</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SOM_SP</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller, if Sales District Manager is not present &amp; Flag &gt; 1</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISBLANK( SalesDistrictManager__c), 
+Approval_Flag_Count__c &gt; 1, 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;)) 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 12</fullName>
+        <actions>
+            <name>Update_Order_Sub_Status_Pending_By_SDM_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller, if Sales District Manager is present, AP: flag logic (Flag &gt; 1) &amp; Bonif/Punct.</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+OR(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;),Approval_Flag_Count__c &gt; 1), 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+NOT(ISBLANK( SalesDistrictManager__c)), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 13</fullName>
+        <actions>
+            <name>Update_Order_Sub_Status_Pending_By_SDM_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller, if Sales District Manager is present &amp; Barter Order</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c = &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+NOT(ISBLANK( SalesDistrictManager__c )), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending By Barter Manager&apos;), 
+ApprovedByBM__c == TRUE 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 14</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SOM_SP</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller, if Sales District Manager is not present &amp; Barter Order (approved by BM)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c = &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISBLANK( SalesDistrictManager__c ), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending By Barter Manager&apos;), 
+ApprovedByBM__c == TRUE 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 15</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_By_BM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller, if Sales District Manager is not present &amp; Barter Order (on submit - not approved by BM yet)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c = &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISBLANK( SalesDistrictManager__c ), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected By Barter Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)), 
+ApprovedByBM__c == FALSE 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 16</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_By_BM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller, if Sales District Manager is present &amp; Barter Order (on submit-not approved by BM yet)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c = &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+NOT(ISBLANK( SalesDistrictManager__c )), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected By Barter Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)), 
+ApprovedByBM__c == FALSE 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 17</fullName>
+        <actions>
+            <name>Update_Order_Sub_Status_Pending_By_SDM_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order: to set Order Sub Status when SO created by SP/Key Seller, if Sales Office Manager is present/not present, Not Barter Order &amp; submitted/re-submitted</description>
+        <formula>OR(AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+NOT(ISBLANK( SalesDistrictManager__c)), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)) 
+), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISBLANK( SalesOfficeManager__c), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)) 
+), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+Approval_Flag_Count__c == 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+OR(ISPICKVAL(OrderSubStatus__c ,&apos;Draft&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;)), 
+NOT(ISBLANK(SalesDistrictManager__c)), 
+ApprovedBySDM__c == FALSE 
+), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 0, 
+NOT (ISBLANK(SalesDistrictManager__c ) ), 
+CreatedById = SalesDistrictManager__c, 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;)) 
+) 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 18</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_By_BM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order: to set Order Sub Status when SO created by SP/Key Seller, if Sales Office Manager is present/not present, Barter Order &amp; submitted/re-submitted</description>
+        <formula>OR(AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c = &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+NOT(ISBLANK( SalesOfficeManager__c)), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected By Barter Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)) 
+), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c = &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISBLANK( SalesOfficeManager__c), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected By Barter Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)) 
+))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 19</fullName>
+        <actions>
+            <name>Update_Order_Sub_Status_Pending_By_SDM_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller, if Sales Office Manager is not present &amp; Barter Order (Approved by BM)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c = &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISBLANK( SalesOfficeManager__c), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected By Barter Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending By Barter Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)), 
+ApprovedByBM__c == TRUE 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 2</fullName>
+        <actions>
+            <name>Alert_on_New_order_creation_by_SDM_on_behalf_of_Sales_Employee</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SD</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SDM 
+(if Sales Office Manager is not present), Flag = 3 &amp; SD &lt;&gt; Null</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+CreatedById = SalesDistrictManager__c, 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;), 
+ISBLANK( SalesOfficeManager__c ), 
+Approval_Flag_Count__c = 3, 
+NOT(ISBLANK(SalesDirector__c)) 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 20</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SD</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order: to set Order Sub Status when SO created by SDM, Sales Office Manager is present &amp; Approved By SOM, flag = 3</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+CreatedById = SalesDistrictManager__c, 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending at Sales Office Manager&apos;), 
+ApprovedBySOM__c == TRUE, 
+Approval_Flag_Count__c = 3, 
+NOT( ISBLANK( SalesOfficeManager__c ) ) 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 21</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_By_BM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SDM, Barter Order, flag count 3 &amp; all managers are present in hierarchy (on submit)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c = &apos;W&apos;, 
+Approval_Flag_Count__c &gt; 1, 
+CreatedById = SalesDistrictManager__c, 
+NOT(ISBLANK( SalesDistrictManager__c )), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected By Barter Manager&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;)), 
+ApprovedByBM__c == FALSE 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 22</fullName>
+        <actions>
+            <name>Update_Order_Sub_Status_Approved_by_SOM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller, SDM = NULL, Flag = 1, SOM = Present &amp; Approved by SOM</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+Approval_Flag_Count__c == 1, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISBLANK( SalesDistrictManager__c), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending at Sales Office Manager&apos;), 
+NOT(ISBLANK(SalesOfficeManager__c)), 
+ApprovedBySOMifSDMisNull__c == TRUE 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 3</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SD_SP</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller &amp; approved by SDM but Sales Office Manager is not present</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending for manager approval&apos;), 
+ISBLANK( SalesOfficeManager__c ), 
+ApprovedBySDM__c == TRUE, 
+Approval_Flag_Count__c &gt; 1 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 4</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SOM_SP</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller &amp; approved by SDM &amp; Sales Office Manager is present OR created by SP, SDM = NULL, Flag Count = 1 &amp; SOM is present</description>
+        <formula>OR(AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+Approval_Flag_Count__c == 1, 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by Sales Office Manager&apos;)), 
+ISBLANK(SalesDistrictManager__c), 
+NOT(ISBLANK(SalesOfficeManager__c))), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Pending for manager approval&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending By Barter Manager&apos;)), 
+NOT(ISBLANK( SalesOfficeManager__c )), 
+ApprovedBySDM__c == TRUE, 
+Approval_Flag_Count__c &gt; 1) 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 5</fullName>
+        <actions>
+            <name>Order_Sub_Status_Approved_By_SDM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller &amp; approved by SDM (Approval Flag 1)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+PaymentMethod__r.Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+NOT(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;)), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending for manager approval&apos;), 
+Approval_Flag_Count__c == 1, 
+ApprovedBySDM__c == TRUE 
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 6</fullName>
+        <actions>
+            <name>Order_Sub_Status_Approved_By_SOM_flag_2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SP/Key Seller &amp; approved by SOM (Approval Flag 2)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+PaymentMethod__r.Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+NOT(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;)), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending at Sales Office Manager&apos;), 
+Approval_Flag_Count__c == 2, 
+ApprovedBySOM__c == TRUE 
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 7</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SD1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>To set Order Sub Status when SO created by SP/Key Seller &amp; approved by SOM (Flag 3) OR created by SP/Key Seller, Flag 1,SDM = Null, SOM = Null OR Created by SP/Key Seller, Flag 2, SOM = Null (Approved by SDM) OR Created by SDM, SOM = Null, Flag = 2</description>
+        <formula>OR( 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+PaymentMethod__r.Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+NOT(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;)), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending at Sales Office Manager&apos;), 
+Approval_Flag_Count__c == 3, 
+ApprovedBySOM__c == TRUE 
+), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+PaymentMethod__r.Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+NOT(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;)), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Draft&apos;), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Rejected by director&apos;)), 
+Approval_Flag_Count__c == 1, 
+ISBLANK(SalesDistrictManager__c), 
+ISBLANK(SalesOfficeManager__c) 
+), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+PaymentMethod__r.Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+NOT(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;)), 
+OR(ISPICKVAL( OrderSubStatus__c ,&apos;Pending for manager approval&apos;)), 
+Approval_Flag_Count__c == 2, 
+NOT(ISBLANK(SalesDistrictManager__c)), 
+ApprovedBySDM__c == TRUE, 
+ISBLANK(SalesOfficeManager__c) 
+), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+CreatedById = SalesDistrictManager__c, 
+PaymentMethod__r.Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+NOT(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;)), 
+OR(ISPICKVAL(OrderSubStatus__c ,&apos;Draft&apos;)), 
+Approval_Flag_Count__c == 2, 
+ISBLANK(SalesOfficeManager__c) 
+), 
+AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+PaymentMethod__r.Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+NOT(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;)), 
+OR(ISPICKVAL(OrderSubStatus__c ,&apos;Draft&apos;)), 
+Approval_Flag_Count__c == 2, 
+ISBLANK(SalesDistrictManager__c), 
+ISBLANK(SalesOfficeManager__c) 
+) 
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 8</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SD_cr_SOM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO created by SOM &amp; approved by SDM (Approval Flag 3)</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+CreatedById = SalesOfficeManager__c, 
+PaymentMethod__r.Payment_Method_Code__c &lt;&gt; &apos;W&apos;, 
+NOT(ISPICKVAL(Type_of_Order__c, &apos;BONIFICAÇÃO&apos;)), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending for manager approval&apos;), 
+Approval_Flag_Count__c == 3, 
+ApprovedBySDM__c == TRUE 
+)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil SO Set Order Sub Status 9</fullName>
+        <actions>
+            <name>Order_Sub_Status_Pending_at_SD_cr_SOM</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>Used for Brazil Sales Order : to set Order Sub Status when SO (Barter) created by SP/Key Seller &amp; approved by SDM but Sales Office Manager is not present</description>
+        <formula>AND(SalesOrgCode__c == &apos;5191&apos;, 
+BrazilOrderSubmittedforApproval__c == TRUE, 
+Payment_Method_Code__c == &apos;W&apos;, 
+OR(CreatedById = OwnerId, Key_Account__c == TRUE), 
+ISPICKVAL( OrderSubStatus__c ,&apos;Pending for manager approval&apos;), 
+ISBLANK( SalesOfficeManager__c ), 
+ApprovedBySDM__c == TRUE, 
+Approval_Flag_Count__c &gt; 1 
+)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Brazil Sales Order Rejection Email Alert</fullName>
+        <actions>
+            <name>Email_Alert_on_Sales_Order_Rejection</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Status__c</field>
+            <operation>equals</operation>
+            <value>Rejected</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5191</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Remarks__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <description>Fired when Order Status is &apos;Rejected&apos; and Sales Org = &apos;Brazil&apos; and Remarks for Cancellation is blank - Added by Bhavik</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>CAM-Email notification to higher authorities for every order placed%28SAP%29</fullName>
+        <actions>
+            <name>CAM_Email_notification_to_higher_authorities_for_every_order_placed_SAP</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>The user who will being receiving the orders in SAP, has to get a notification for every order placed.</description>
+        <formula>AND(OR(SalesOrgCode__c=&apos;5320&apos;,SalesOrgCode__c=&apos;5310&apos;),ISPICKVAL(Order_Status__c,&quot;Not yet processed&quot;),NOT(ISBLANK(SAP_Order_Number__c)),ISBLANK(PRIORVALUE(SAP_Order_Number__c)))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Depot Code for Sales Order</fullName>
+        <actions>
+            <name>Update_Depot_Code_for_Sales_Order</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>true</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Indonesia Order Creation Notification</fullName>
+        <actions>
+            <name>Notification_on_Indonesia_new_order_creation</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>3 AND (1 OR 2)</booleanFilter>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>6410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>6451</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SentEmailIndonesia__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Notify user &apos;Sagin Suseno&apos; when new sales order is created for Indonesia</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Italy Email Alert for I77 - I31</fullName>
+        <active>false</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>2410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Territory_Code__c</field>
+            <operation>equals</operation>
+            <value>I31</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Territory_Code__c</field>
+            <operation>equals</operation>
+            <value>I77</value>
+        </criteriaItems>
+        <description>Created for SCTASK0399921</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Italy Return Order Status Change</fullName>
+        <actions>
+            <name>Italy_Return_Order_Status_Change</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>2410</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Status__c</field>
+            <operation>equals</operation>
+            <value>Error from SAP</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Type_Italy__c</field>
+            <operation>equals</operation>
+            <value>Return Order</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notification to all on Order Cancellation</fullName>
+        <actions>
+            <name>Email_Alert_on_Order_Cancellation</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Notified_Check_on_Cancellation</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <booleanFilter>1 AND( 2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <field>Sales_Order__c.NotifiedallonOrderCancellation__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Cancel_Reason__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Order_Cancel__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notification to all on Order Creation</fullName>
+        <actions>
+            <name>Email_Alert_to_Distributor_Tm_and_Rm_on_order_Creation</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Notified_Check_on_creation</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>true</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notification to all on Order Processed</fullName>
+        <actions>
+            <name>Email_Alert_on_Order_Processed</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Notification_Check_on_Order_Processed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Sales_Order__c.NotifiedallonOrderProcessed__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SAP_Order_Number__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Poland Total Amount Update</fullName>
+        <actions>
+            <name>Total_Amount_for_Poland</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>2941</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Share Community Orders with Pradip Dhoka</fullName>
+        <actions>
+            <name>Share_Community_Orders_with_Pradip_Dhoka</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.OwnerId</field>
+            <operation>equals</operation>
+            <value>Sharadbhai Khodifad</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>1000</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Approval Flag Brazil</fullName>
+        <actions>
+            <name>Approval_Flag_Count_Brazil</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5191</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Order Status to pending</fullName>
+        <actions>
+            <name>Update_Order_Status_To_Pending</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5631</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.CreatedFrom__c</field>
+            <operation>equals</operation>
+            <value>SFDC</value>
+        </criteriaItems>
+        <description>This workflow updates the Order Status field to &quot;Pending&quot;
+only for Argentina</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update PO Number Field for Turkey</fullName>
+        <actions>
+            <name>Update_PO_Number</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(SalesOrgCode__c = &apos;7110&apos;, ISBLANK( PONumber__c ), ISPICKVAL( CreatedFrom__c , &apos;SFDC&apos;) )</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Region Code and Name for Brazil</fullName>
+        <actions>
+            <name>Update_Region_Code_and_Name_for_Brazil</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Sales_Order__c.SalesOrgCode__c</field>
+            <operation>equals</operation>
+            <value>5191</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Sales_Order__c.Brazil_Region_Code_and_Name__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update SFDC No Field</fullName>
+        <actions>
+            <name>update_field</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>true</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Sales Order</fullName>
+        <actions>
+            <name>Update_Sales_Order_Amount</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED( Net_Amount__c )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Updating  %22Created from %22 field  for Sap Orders</fullName>
+        <actions>
+            <name>Updating_Created_from_for_Sap_Orde</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND(OR(SalesOrgCode__c == &apos;1000&apos; , SalesOrgCode__c == &apos;1210&apos;, SalesOrgCode__c == &apos;1510&apos;), $User.ProfileId == &apos;00e28000000EyZ8&apos;)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

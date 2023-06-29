@@ -1,0 +1,107 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+ <div class="slds-grid slds-wrap slds-gutters" style="background:#000; margin:0; padding:0px;">
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+      <li class="slds-item">
+        <a><b>Sobre nós</b></a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/pt/open-ag" target="_blank">OpenAg</a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/pt/vis%C3%A3o-&amp;-miss%C3%A3o" target="_blank">Visão &amp; Missão</a>
+      </li> 
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/pt/o-nosso-legado" target="_blank">O Nosso legado</a>
+      </li> 
+  </ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Productos</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pt/produtos?level_one=1&amp;level_two_select=1" target="_blank">Herbicidas</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pt/produtos?level_one=1&amp;level_two_select=2" target="_blank">Fungicidas</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pt/produtos?level_one=1&amp;level_two_select=4" target="_blank">Insecticidas</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pt/produtos?level_one=1&amp;level_two_select=11" target="_blank">Adjuvantes</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pt/produtos?level_one=1&amp;level_two_select=13" target="_blank">Biocontrol</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pt/produtos?level_one=1&amp;;level_two_select=16" target="_blank">Fisioativadores</a>
+  </li>
+</ul>
+  </div>
+    
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pt/not%C3%ADcias" target="_blank"><b>Noticias</b></a>
+  </li>
+</ul>
+</div>
+     
+     <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/pt/atualiza%C3%A7%C3%B5es-e-eventos" target="_blank"><b>Atualizacoes e eventos</b></a>
+  </li>
+</ul>
+</div>
+     
+     <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Contacte-nos</b></a>
+  </li>
+  <li class="slds-item">
+    <a>Email:comunicacion@upl-ltd.com</a>
+  </li>
+  <li class="slds-item">
+    <a>Beloura Office Park</a>
+    <a>Edificio 7 1 Quinta da Beloura,</a>
+    <a>2710-693 SINTRA</a>  
+  </li>    
+</ul>
+</div>
+    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#ff7701; padding:20px 0 10px 20px; margin:0;">    
+<ul class="slds-list_horizontal" style="float:left;">
+<li>Copyright @ UPL 2021</li>
+    <li><a href="https://www.upl-ltd.com/pt/terminos-de-servi%C3%A7o" target="_blank">Terminos de servico</a></li>
+    <li><a href="https://www.upl-ltd.com/pt/pol%C3%ADtica-de-privacidade" target="_blank">Politica de privacidad</a></li>
+</ul>
+    
+<ul class="slds-list_horizontal" style="float:right;">
+    <li style="margin-top:-5px;"><a href="https://www.youtube.com/channel/UC-hPYJT-baFrjxzhgZiZObA" target="_blank"><img src="{!$Resource.youtubeicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.facebook.com/UPLPT" target="_blank"><img src="{!$Resource.fbicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://twitter.com/UPLpt" target="_blank"><img src="{!$Resource.twittericonnew}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.linkedin.com/company/upl-ltd/" target="_blank"><img src="{!$Resource.inicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.instagram.com/uplpt/" target="_blank"><img src="{!$Resource.instaicon}"/></a></li>
+</ul>     
+</div> 
+</div>
+
+<!--
+<div class="slds-grid slds-wrap slds-gutters">    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#FF8833; text-align:center; padding:10px 0; color:#fff;">    
+    Copyright@UPL2019 &nbsp;&nbsp;&nbsp;<a href="">Term of Service</a>&nbsp;&nbsp;&nbsp; <a href="">Contact</a>&nbsp;&nbsp;&nbsp; <a href="">disclaimer</a>
+</div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+      <span>
+      <img src="{!$Resource.social}"/>
+      </span>
+    </div>    
+</div>-->
+</aura:component>

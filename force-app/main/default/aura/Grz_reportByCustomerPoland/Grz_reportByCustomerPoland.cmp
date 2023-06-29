@@ -1,0 +1,12 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    
+    <div class="slds-grid slds-wrap">
+    	<div class="slds-col slds-size_1-of-1" style="border: 1px solid blue;">
+        	<c:Grz_ReportByCustomerPolandDonut/>
+    	</div>
+        <div class="slds-col slds-size_1-of-1" style="border: 1px solid blue; padding-bottom: 5%; background-color: white;">
+            <c:grz_reportByCustomerTable/>
+        </div>
+    </div>
+	    
+</aura:component>

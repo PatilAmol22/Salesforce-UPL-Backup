@@ -1,0 +1,29 @@
+.table-scroll {
+    overflow: auto;
+  }
+  .fix{
+    position: sticky;
+    left: 0;
+    
+ }
+ .fixHeader{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f8f8f8;
+}
+.classpadding{
+  text-align: center;
+   width: 120px;
+   
+}
+.newcenterclass{
+  text-align:center;
+}
+.newfontclass{
+  height:150px; 
+  margin-top:15px;
+}
+.newsizeclass{
+  font-size:15px;
+}

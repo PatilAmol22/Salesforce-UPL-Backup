@@ -1,0 +1,106 @@
+.THIS {
+}
+
+.THIS .input{
+    min-height: 0;
+}
+.THIS .brd {
+border: 1px solid black;
+border-style: solid none solid none;
+} 
+.THIS .slds-gutters{
+    
+    padding-right: 0rem;
+    padding-left: 0rem;
+}
+
+
+
+@media screen and (max-width: 450px){
+    
+
+.THIS .slds-input{
+        width: 160% !important;
+        font-size: 10px;
+        line-height: 0px;
+        border-radius: 0rem;
+        box-sizing: border-box;
+        padding: unset;
+        text-align: right;
+    }
+    
+.THIS .slds-col{
+        
+        padding-bottom: .5rem;
+    }
+.THIS .slds-p-around_small {
+        font-size: 10px;
+    }
+.THIS .slds-page-header__title{
+        
+        font-size: 10px;
+    }
+    .THIS .slds-size_1-of-12{
+        padding-right: 0;
+        padding-left: 0;
+        word-wrap: break-word;
+        padding-left: 0;
+        
+    }
+    
+.THIS .slds-size_2-of-12{
+      word-wrap: break-word;  
+    }
+    
+.THIS .input{
+        
+        width: 160% !important;
+        font-size: 10px;
+        line-height: 0px;
+        border-radius: 0rem;
+        box-sizing: border-box;
+        text-align: right;
+        
+        
+    }
+.THIS .textarea{    
+    width: 200% !important;
+    border-radius: 0rem;
+        font-size: 10px;
+         padding-right: 0rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 0rem;
+    }
+   .THIS .select {
+    padding-right: 0rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 0rem;
+        font-size: 10px;
+        width: 160%;
+        
+    
+}
+    .THIS .uiInput--select{
+       background-image: none; 
+    }
+.THIS .slds-button_neutral{
+        padding-left: 0rem;
+        padding-right: 0rem;
+        
+    }
+.THIS .slds-button{
+        line-height: unset;
+        font-weight: unset;
+        
+        
+    }    
+    
+}
+
+@media screen and (max-width: 1100px){
+.THIS .input-select-width{
+    width: 200px;
+}
+}

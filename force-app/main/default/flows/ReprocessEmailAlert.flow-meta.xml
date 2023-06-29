@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>send_Email_alert_for_Italy</name>
+        <label>send Email alert for Italy</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <actionName>Sales_Order__c.Restrict_Reprocess_Order_Email_Alert_Italy</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>SendEmail to UPL  Admin Team when Sales Order created with error message &quot;Could not receive Message&quot;</description>
+        <name>SendEmail_to_Admin_Team_0</name>
+        <label>SendEmail to Admin Team</label>
+        <locationX>314</locationX>
+        <locationY>455</locationY>
+        <actionName>Sales_Order__c.Restrict_Reprocess_Order_Email_Alert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <description>Send Email Alert to Gergana when Italy Sales Order received error message &quot;Could not receive Message&quot;</description>
+        <name>Italy_Admin_Alert</name>
+        <label>Italy Admin Alert</label>
+        <locationX>314</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Italy_Email_Alert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SalesOrgCode__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>2410</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>send_Email_alert_for_Italy</targetReference>
+            </connector>
+            <label>Italy Email Alert</label>
+        </rules>
+        <rules>
+            <name>NON_Italy_Email_Alert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SalesOrgCode__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>2410</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SendEmail_to_Admin_Team_0</targetReference>
+            </connector>
+            <label>NON Italy Email Alert</label>
+        </rules>
+    </decisions>
+    <description>Send email alert when sales Order contains error message &quot;Could not receive Message&quot;</description>
+    <interviewLabel>ReprocessEmailAlert {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ReprocessEmailAlert</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Italy_Admin_Alert</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ErrorMessage__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Could not receive Message</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SalesOrgCode__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>5191</stringValue>
+            </value>
+        </filters>
+        <object>Sales_Order__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

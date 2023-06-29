@@ -1,0 +1,174 @@
+<!--********************************************************************************************
+* Name			    : Grz_LineItemsReportBrazil.cmp
+* Description	    : Aura component to show sales order line item data
+* Apex Controller	: Grz_ReportControllerBrazil 
+* Created Date	    : 30/08/2022 
+* JIRA      	    : APPS-1394
+* Created By	    : Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Grz_ReportControllerBrazil">
+    <aura:attribute name="datafound" type="Boolean"/>
+    <aura:attribute name="Message" type="String"/>
+    <aura:attribute name="startDate" type="String"/>
+    <aura:attribute name="pageNumber" type="Decimal" default="1"/>
+    <aura:attribute name="pageSize" type="Decimal" default="10"/>
+    <aura:attribute name="recordstart" type="Integer" default="0"/>
+    <aura:attribute name="recordend" type="Integer" default="0"/>
+    <aura:attribute name="totalpages" type="Integer" default="1"/>
+    <aura:attribute name="totalrecords" type="Integer" default="0"/>
+    <aura:attribute name="currentpagenumber" type="Integer" default="1"/>
+    <aura:attribute name="distributorValue" type="String"/>
+    <aura:attribute name="salesOrderLineItemData" type="Object"/>
+    <aura:attribute name="pagelist" type="List"/>
+    <aura:attribute name="disableFirst" type="Boolean" default="true" />
+    <aura:attribute name="disableNext" type="Boolean" default="false" />
+    <aura:attribute name="error" type="Boolean" default="true" />
+    <aura:handler name="change" value="{!v.distributorValue}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.startDate}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.endDate}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.pageNumber}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="endDate" type="String"/>
+    <aura:attribute name="subGroupValue" type="String"/>
+    <aura:attribute name="detailPageLink" type="String"/>
+    <aura:handler name="change" value="{!v.subGroupValue}" action="{!c.doInit}"/>
+
+    <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small">
+        <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small">
+            <div class="slds-col slds-size_12-of-12 filter-div slds-float_left">
+                <div class="textCSS componentNotoSansLight">Relatório de Carteira</div>
+            </div>
+        </div>
+        <div>     
+            <aura:if isTrue="{!v.datafound }">
+                <div class="table-scroll slds-p-left_small  slds-p-right_small">
+                    <div class="slds-grid slds-wrap table-width-scroll">
+                        <table class="slds-m-bottom_small addblock" >
+                            <thead class="componentNotoSansLight table-head addblock hidedata">
+                                <tr class="addblock trdata hidedata">
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="Pedido de Venda"> Pedido de Venda</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="Status do Pedido">Status do Pedido</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="Status do Item">Status do Item</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="Tipo do Pedido">Tipo do Pedido</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="Data do Pedido">Data do Pedido</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="CTC">CTC</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="Cliente">Cliente</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="Cidade">Cidade</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css addblock" scope="col">
+                                        <div class="" title="Grupo">Grupo</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css mob-p addblock" scope="col">
+                                        <div class="" title="Moeda">Moeda</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css mob-p addblock" scope="col">
+                                        <div class="" title="Produto">Produto</div>
+                                        </th>
+                                    <th class="slds-p-left_x-small table-head-css mob-p addblock" scope="col">
+                                        <div class="" title="Qtd Total">Qtd Total</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body addblock">
+                                <aura:iteration items="{!v.salesOrderLineItemData}" var="item">
+                                    <tr class="slds-border_bottom addblock trdata shadoweffect"> 
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css">
+                                            <div class="textoverflowcls"><a data-id="{!item.soId}" onclick="{!c.handleSalesOrderLineItemClick}" href="{!v.detailPageLink}" style="color: #F47920;" target="_blank">{!item.salesOrderName}</a></div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.salesOrderStatus}</div>  
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.salesOrderLineItemStatus}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.typeOfOrder}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.salesOrderCreatedDate}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.salesOrderCTC}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.customer}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.city}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.lineItemGroup}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.currncy}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls">{!item.product}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css mob-p br-mobile-view addblock table-td-css" scope="col">
+                                            <div class="textoverflowcls"><lightning:formattedNumber value="{!item.totalVolume}" maximumFractionDigits="0"/></div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <aura:set attribute="else">
+                    <p class="Errors componentNotoSansBold">Nenhum dado encontrado</p>
+                </aura:set>
+            </aura:if> 
+        </div>
+        
+        <div>
+            <lightning:layoutItem size="12" padding="around-small" class="pagination">
+                <div class="slds-align_absolute-center ">
+                    <lightning:button variant="base" 
+                                      label="Primeira" 
+                                      disabled="{!v.disableFirst}" 
+                                      onclick="{!c.handleFirst}"
+                                      class="slds-m-left_x-small">
+                    </lightning:button>
+                    <lightning:button variant="base" 
+                                      label="Anterior" 
+                                      disabled="{!v.disableFirst}"
+                                      onclick="{!c.handlePrevious}"
+                                      class="slds-m-left_x-small slds-m-right_x-small">
+                    </lightning:button>
+                    <aura:iteration items="{!v.pagelist}" var="item">
+                        <span data-id="{!item}" class="themeborder testcss slds-m-left_xx-small slds-m-right_xx-small slds-p-horizontal_x-small">
+                            <a class="{!(v.pageNumber == item) ? 'selected' : ''}" onclick="{!c.processMe}" name="{!item}" data-id="{!item}">{!item}</a>
+                        </span>
+                    </aura:iteration>
+                    <lightning:button variant="base" 
+                                      label="Próxima" 
+                                      disabled="{!v.disableNext}" 
+                                      onclick="{!c.handleNext}"
+                                      class="slds-m-left_x-small">
+                    </lightning:button>
+                    <lightning:button variant="base" 
+                                      label="Última" 
+                                      disabled="{!v.disableNext}" 
+                                      onclick="{!c.handleLast}"
+                                      class="slds-m-left_x-small">
+                    </lightning:button>
+                </div>
+            </lightning:layoutItem>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,75 @@
+<aura:component access="global"  Controller="QuickLinkController"
+                implements="forceCommunity:availableForAllPageTypes,force:appHostable,force:hasRecordId,lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasSObjectName,force:lightningQuickAction">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="quickLinkList" type="List" access="public"/>
+    <!--Added by Akhilesh-Url for quick link handling-->
+    <aura:attribute name="StdurlAddress" type="Boolean" access="public" default="false"/>
+    
+    
+    
+    <div class="slds-grid slds-wrap" style="background:#fff; margin-bottom:5px; padding:0; border-radius:5px 5px 0 0;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+            <!-- <span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px; margin-left:10px;">
+                    <lightning:icon iconName="standard:case" style="background:#34b59d;" alternative-text="note" size="medium"/>
+                </span> -->
+            <div class="titleregular" style="float:left; margin:8px; font-size:36px; font-weight:normal;">
+                <span class="slds-page-header_title" title="">{!$Label.c.Quick_Links}</span>
+            </div>
+        </div>  
+    </div>
+    <div class="" style="margin:0; padding:0; padding-bottom:11px; height:340px; overflow-y:auto">	
+        <div class="slds-grid slds-wrap">    
+            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">      
+                <ul class="slds-has-dividers_bottom slds-has-block-links_space">
+                    
+                    
+                    <aura:iteration items='{!v.quickLinkList}' var="sObj">
+                        <li class="slds-item">
+                            <!--Aura if added by Akhilesh to Handle Standard Quick-->
+                            <aura:if isTrue="{!not(v.StdurlAddress)}">
+                                <lightning:formattedUrl value="{!sObj.Custom_Link_Url__c}" target="_self" label="{!sObj.Custom_Link_Name__c}" />
+                            </aura:if>
+                            <!--<a href="{!sObj.Custom_Link_Url__c}" target="_parent">{!sObj.Custom_Link_Name__c}</a>-->
+                            <aura:if isTrue="{!v.StdurlAddress}">
+                                <aura:if isTrue="{!sObj.Standard_Link_Url__c!=null}">
+                                    <lightning:formattedUrl value="{!sObj.Standard_Link_Url__c}" target="_self" label="{!sObj.Custom_Link_Name__c}" />
+                                </aura:if>
+                            </aura:if>
+                        </li>                        
+                    </aura:iteration>
+                    
+                    
+                    
+                    
+                    
+                    <!-- <li class="slds-item">
+                        <a href="https://demo-upl.cs58.force.com/connect/s/accountledger">Account Ledger</a>
+                    </li>
+                    <li class="slds-item">
+                        <a href="https://demo-upl.cs58.force.com/connect/s/ordersummary">Order Summary</a>
+                    </li>
+                    <li class="slds-item">
+                        <a href="https://demo-upl.cs58.force.com/connect/s/invoicesummary">Invoice Summary</a>
+                    </li>
+                    <li class="slds-item">
+                        <a href="javascript:void(0);">Bill</a>
+                    </li>
+                    <li class="slds-item">
+                        <a href="javascript:void(0);">Portfolio Ages</a>
+                    </li>
+                    <li class="slds-item">
+                        <a href="javascript:void(0);">Summary Expired</a>
+                    </li>
+                    <li class="slds-item">
+                        <a href="javascript:void(0);">Payment</a>
+                    </li>
+                    <li class="slds-item">
+                        <a href="javascript:void(0);">Order</a>
+                    </li>-->
+                </ul>
+            </div>    
+        </div>
+    </div>    
+</aura:component>

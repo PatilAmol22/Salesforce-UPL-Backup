@@ -1,0 +1,657 @@
+<template>
+	<lightning-card>
+		<div class="slds-page-header">
+			<div class="slds-page-header__row">
+				<div class="slds-page-header__col-title">
+					<div class="slds-media">
+						<div class="slds-media__figure">
+							<lightning-icon icon-name="standard:account" alternative-text="Account"
+								title="Intediction Process"></lightning-icon>
+						</div>
+						<div class="slds-media__body">
+							<div class="slds-page-header__name">
+								<div class="slds-page-header__name-title">
+									<h1>
+										<template for:each={interdictionRecords} for:item="acc">
+										<span key={acc.Id} class="slds-page-header__title slds-truncate" title="Recently Viewed">{acc.Instance_Number__c}</span>
+										<span key={acc.Status__c} class="slds-page-header__title slds-truncate" title="Recently Viewed">{acc.Status__c}</span>
+										</template>
+
+									</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div if:true={showTemplateMessage}>
+   <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+           <p><b>{myOutputText}</b></p>
+         </div>
+		</div>
+
+		<template if:true={interdictionRecords}>
+			<template for:each={interdictionRecords} for:item="acc">
+				<div key={acc.Id}>
+					<div class="slds-grid slds-gutters slds-p-left_x-small">
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:12px;">
+								<lightning-input type="date" label={label.DATEOFREQUEST} name='DATE_OF_REQUEST__c' value={acc.DATE_OF_REQUEST__c}
+									onchange={onValueChange} disabled={dateofRequest}></lightning-input>
+							</div>
+						</div>
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:13px;">
+								<div class="slds-form-element__control">
+
+									<div class="form-group">
+										<div class="slds-form-element">
+											<abbr title="required" class="slds-required">*</abbr>
+											<label  class="slds-form-element__label" for="select-01">
+                                        {label.IsAnInterDiction}</label>
+											<div class="slds-form-element__control">
+												<div class="slds-select_container classdiv1" data-id="myDiv1">
+
+													<select class="slds-select  interselect" disabled={isInterdiction} data-id="test"  required name="IS_AN_INTERDICTION__c" onchange={onValueChange} >
+                                         <option value={acc.IS_AN_INTERDICTION__c} >{acc.IS_AN_INTERDICTION__c}</option>
+                                            <template for:each={interPick} for:item="pickField" >
+												
+												<option key={pickField.key} value={pickField.value}>
+                                                 {pickField.value}
+                                               </option>
+                                             
+                                             </template>
+                                          </select>
+
+												</div>
+												<template if:true={showIntError}>
+													<span class="slds-has-error">
+                                            <span role="alert" class="slds-form-element__help" >Please select the value from this field</span>
+													</span>
+												</template>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<template if:true={showFields}>
+							<div
+								class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4 slds-col slds-p-left_x-small">
+								<div class="slds-form-element" style="margin-top:13px;">
+									<div class="slds-form-element__control">
+										<lightning-input style="padding-right:10px" class="term1" type="text"
+											label={label.termNumber} name="TERM_NUMBER__c" value={acc.TERM_NUMBER__c}
+											onchange={onValueChange}   disabled={termNumber} required="true"> </lightning-input>
+										
+									</div>
+								</div>
+							</div>
+
+							<div
+								class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4 slds-col slds-p-right_x-small">
+								<div class="slds-form-element" style="margin-top:13px">
+									<div class="slds-form-element__control">
+										<lightning-input style="padding-right:10px" class="dDate" type="date"
+											label={label.DueDate} name='DUE_DATE__c' value={acc.DUE_DATE__c}
+											onchange={onValueChange} disabled={dDate} required="true"> </lightning-input>
+									</div>
+								</div>
+							</div>
+						</template>
+					</div>
+
+					<div class="slds-grid slds-gutters slds-p-left_x-small">
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:13px;">
+								<div class="form-group">
+									<div class="form-group">
+										<div class="slds-form-element">
+											<abbr title="required" class="slds-required">*</abbr>
+											<label class="slds-form-element__label" for="select-01">
+                                          {label.reason}</label>
+											<div class="slds-form-element__control">
+												<div class="slds-select_container" data-id="myDiv2">
+													<select class="slds-select reasonSel" required name="REASON__c" onchange={onValueChangeReason} disabled={Reason}>
+                                               <option value={acc.REASON__c} >{acc.REASON__c}</option>
+                                            <template for:each={ReasonPick} for:item="pickField" >
+												
+												<option key={pickField.key} value={pickField.value}>
+                                                 {pickField.value}
+                                               </option>
+                                             
+                                             </template>
+                                            </select>
+												</div>
+												<template if:true={showResError}>
+													<span class="slds-has-error">
+                                              <span role="alert" class="slds-form-element__help" >Please select the value from this field</span>
+													</span>
+												</template>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-4 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:13px;">
+								<div class="slds-form-element__control">
+									<div class="form-group">
+										<div class="slds-form-element">
+											<abbr title="required" class="slds-required">*</abbr>
+											<label class="slds-form-element__label " for="select-01">
+                                          {label.Priority}</label>
+											<div class="slds-form-element__control">
+												<div class="slds-select_container" data-id="myDiv3">
+													<select class="slds-select prioVal"  required name="PRIORITY__c" onchange={onValueChange} disabled={PriorValue}>
+                                           <option value={acc.PRIORITY__c} >{acc.PRIORITY__c}</option>
+                                            <template for:each={priorMapdata} for:item="pickField" >
+												
+												<option key={pickField.key} value={pickField.value}>
+                                                 {pickField.value}
+                                               </option>
+                                             
+                                             </template>
+                                                  
+                                                   
+                                                
+                                              
+                                            </select>
+
+												</div>
+												<template if:true={showError}>
+													<span class="slds-has-error">
+                                              <span role="alert" class="slds-form-element__help" >Please select the value from this field</span>
+													</span>
+												</template>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+					<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1"
+						style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+						{label.CUSTOMER_DETAILS}
+					</h3>
+					<div class="slds-grid slds-gutters slds-p-left_x-small">
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:12px;">
+								<lightning-input type="text" label={label.street} name="STREET__c" value={acc.STREET__c}
+									 onchange={onValueChange} disabled={street}></lightning-input>
+							</div>
+						</div>
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:13px;">
+								<div class="slds-form-element__control">
+									<lightning-input type="text" value={acc.CNPJ_CPF__c} required="true" label={label.CNPJ_CPF}
+										name="CNPJ_CPF__c" onchange={onValueChange} disabled={CNPJ}></lightning-input>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="slds-grid slds-gutters slds-p-left_x-small">
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:12px;">
+								<lightning-input type="text" label={label.Number} name="NUMBER__c" value={acc.NUMBER__c}
+									onchange={onValueChange} disabled={Number}></lightning-input>
+							</div>
+						</div>
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:13px;">
+								<div class="slds-form-element__control">
+									<lightning-input type="text"  value={acc.INSCRI_O_ESTADUAL__c}
+										label="INSCRIÇÃO ESTADUAL" name="INSCRI_O_ESTADUAL__c" onchange={onValueChange} disabled={INSCRI_O_ESTADUAL}>
+									</lightning-input>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="slds-grid slds-gutters slds-p-left_x-small">
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:12px;">
+								<lightning-input type="text" label={label.SUBURB} value={acc.SUBURB__c}
+									onchange={onValueChange} name="SUBURB__c" disabled={SUBURB}></lightning-input>
+							</div>
+						</div>
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:13px;">
+								<div class="slds-form-element__control">
+									<lightning-input type="text" required="true" label="RAZÃO SOCIAL" name="RAZ_O_SOCIAL__c"
+										value={acc.RAZ_O_SOCIAL__c} onchange={onValueChange} disabled={RAZ_O_SOCIAL}></lightning-input>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="slds-grid slds-gutters slds-p-left_x-small">
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col">
+							<div class="slds-form-element" style="margin-top:12px;">
+								<lightning-input type="text" label={label.POSTCODE} name="POSTCODE__c"
+									value={acc.POSTCODE__c} onchange={onValueChange} disabled={POSTCODE}></lightning-input>
+							</div>
+						</div>
+						<div
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:13px;">
+								<div class="slds-form-element__control">
+									<lightning-input type="text" label={label.Contact} required="true" name="CONTACT__c"
+										value={acc.CONTACT__c} onchange={onValueChange} disabled={Contact}></lightning-input>
+
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="slds-grid slds-gutters slds-p-left_x-small">
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-input type="text" value={acc.CITY__c} label={label.InterCity} name="CITY__c"
+									onchange={onValueChange} disabled={City}></lightning-input>
+
+							</div>
+						</div>
+					</div>
+					<div
+						
+							class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+							<div class="slds-form-element" style="margin-top:13px;">
+								<div class="slds-form-element__control">
+									
+				<label  class="slds-form-element__label" for="select-01">
+                                        {label.status}</label>
+											<div class="slds-form-element__control">
+												<div class="slds-select_container classdiv1" data-id="myDiv1">
+
+													<select class="slds-select" disabled data-id="test"  name="Status__c" onchange={onValueChange} >
+                                            <option value={acc.Status__c} >{acc.Status__c}</option>
+                                            <template for:each={statusPick} for:item="pickField" >
+												
+												<option key={pickField.key} value={pickField.value}>
+                                                 {pickField.value}
+                                               </option>
+                                              <!-- <template for:each={pickField.value} for:item="innerVal">
+                                               <option key={innerVal.key} value={innerVal}>
+                                                 {innerVal}
+                                               </option>
+                                              </template> -->
+                                             </template>
+                                          </select>
+												</div>
+											</div>
+								</div>
+							</div>
+						
+					</div>
+					</div>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<!-- <div class="slds-form-element__control">
+								<lightning-input type="text" label={label.InterDictionState} value={acc.STATE__c}
+									name="STATE__c" onchange={onValueChange} disabled={state}></lightning-input>
+
+							</div> -->
+								<div class="slds-form-element__control">
+
+									<div class="form-group">
+										<div class="slds-form-element">
+											<abbr title="required" class="slds-required">*</abbr>
+											<label  class="slds-form-element__label" for="select-01">
+                                        {label.InterDictionState}</label>
+											<div class="slds-form-element__control">
+												<div class="slds-select_container classdiv1" data-id="myDiv1">
+
+													<select class="slds-select  interselect" disabled={state} data-id="test"  required name="STATE__c" onchange={onValueChange} >
+                                         <option value={acc.STATE__c} >{acc.STATE__c}</option>
+                                            <template for:each={statePick} for:item="pickField" >
+												
+												<option key={pickField.key} value={pickField.value}>
+                                                 {pickField.value}
+                                               </option>
+                                             
+                                             </template>
+                                          </select>
+
+												</div>
+												<template if:true={showIntError}>
+													<span class="slds-has-error">
+                                            <span role="alert" class="slds-form-element__help" >Please select the value from this field</span>
+													</span>
+												</template>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-input type="text" aura:id="vendor" label={label.Vendor} name="Vendor__c" value={acc.Vendor__c} disabled={stepVendor} onchange={onValueChange} required="true">
+								</lightning-input>
+
+							</div>
+						</div>
+					</div>
+
+
+
+					<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1"
+						style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+						{label.LOGISTICS}
+					</h3>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-input type="date" label={label.ESTIMATEDCOLLECTIONDATE}
+									value={acc.ESTIMATED_COLLECTION_DATE__c} name="ESTIMATED_COLLECTION_DATE__c"
+									onchange={onValueChange} disabled={stepEstimate} required="true"></lightning-input>
+
+							</div>
+						</div>
+					</div>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-input type="date" label={label.DATEOFREALCOLLECTION}
+									value={acc.DATE_OF_REAL_COLLECTION__c} name="DATE_OF_REAL_COLLECTION__c"
+									onchange={onValueChange} disabled={stepDateOfReal} required="true"></lightning-input>
+
+							</div>
+						</div>
+					</div>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-input type="date" label={label.DATE_OF_SUBMISSION_TO_LOGISTICS_OPERATOR}
+									value={acc.DATE_OF_SUBMISSION_TO_LOGISTICS_OPERATOR__c} 
+									name="DATE_OF_SUBMISSION_TO_LOGISTICS_OPERATOR__c" onchange={onValueChange} disabled={stepSubmission}>
+								</lightning-input>
+
+							</div>
+						</div>
+					</div>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-input type="date" label={label.ENTRY_CLOSED} name="ENTRY_CLOSED__c"
+									value={acc.ENTRY_CLOSED__c}  onchange={onValueChange} disabled={stepEntryClosed} required="true"></lightning-input>
+
+							</div>
+						</div>
+					</div>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-textarea type="textarea" name="EMAIL_LOGISTICS_OPERATOR_Brazil__c"
+									label={label.EMAIL_LOGISTICS_OPERATOR} value={acc.EMAIL_LOGISTICS_OPERATOR_Brazil__c}
+									onchange={onValueChange} disabled={stepEmailLogistic} required="true"></lightning-textarea>
+
+							</div>
+						</div>
+					</div>
+
+					<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1"
+						style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+						{label.Legal}
+					</h3>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-textarea type="textarea" label={label.interdiction_COMMENTS}
+									 name="COMMENTS__c" value={acc.COMMENTS__c} onchange={onValueChange} disabled={stepComment} required="true">
+								</lightning-textarea>
+
+							</div>
+						</div>
+					</div>
+					<div
+						class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 slds-col slds-p-left_x-small">
+						<div class="slds-form-element" style="margin-top:13px;">
+							<div class="slds-form-element__control">
+								<lightning-textarea type="textarea" required="true" label={label.AGENT_EMAIL} name="AGENT_EMAIL_Brazil__c"
+									value={acc.AGENT_EMAIL_Brazil__c} onchange={onValueChange} disabled={stepAgent}></lightning-textarea>
+
+							</div>
+						</div>
+					</div>
+					<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1"
+						style="margin-top:20px; background:#dcedfb; color:black; font-weight:bold;">
+						<div style="display:inline; margin-top:5px; padding-right:20px; font-weight:bold;">{label.ADD_PRODUCT}
+						</div>
+						 <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small " style="float:right;" disabled={searchbutton} >
+                <lightning-button-icon icon-name="utility:add" variant="bare" size="large" alternative-text="Add" title="Add Product" onclick={addNewRow} ></lightning-button-icon>
+                <span class="slds-assistive-text">Show More</span>
+            </button> 
+					</h3>
+					<div class="slds-scrollable_x" style="margin-bottom:0px;">
+						<table class="slds-table slds-table--bordered slds-max-medium-table--stacked">
+							<thead>
+								<tr class="slds-text-heading--label">
+									<!-- <th class="slds-is-sortable" scope="col">
+        <div class="slds-truncate">{rec.index}</div>
+      </th> -->
+									<th class="slds-is-sortable" scope="col">
+										<div class="slds-truncate" style="width:170px;"><span> <abbr title="required" class="slds-required">*</abbr></span>{label.Product}</div>
+									</th>
+									<th class="slds-is-sortable" scope="col">
+										<div class="slds-truncate" style="width:170px;"><span> <abbr title="required" class="slds-required">*</abbr></span>{label.Quantity}</div>
+									</th>
+									<th class="slds-is-sortable" scope="col">
+										<div class="slds-truncate" style="width:170px;">{label.Batch}</div>
+									</th>
+									<th class="slds-is-sortable" scope="col">
+										<div class="slds-truncate" style="width:170px;">{label.Expire_Date}</div>
+									</th>
+									<th class="slds-is-sortable" scope="col">
+										<div class="slds-truncate" style="width:20px;"></div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template for:each={productData} for:item="rec" for:index="index">
+									<tr key={rec.Id} class="slds-hint-parent" label={index} data-label={index}>
+										 
+										<th  data-label="Product">
+        <!--Start-->
+        <div class="slds-form-element__control">
+          <div class="slds-combobox_container slds-has-inline-listbox">
+              <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                  <div  class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+                    <lightning-input type="text" class="fields" required="true" variant="label-hidden" name="Name" id={rec.index} data-id={rec.index}  value={rec.Name} onchange={onChangeOnProduct} onfocus={handleInputFocus} disabled={productName}></lightning-input> 
+                  </div>
+                  <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right" title="" style="margin-top:-29px; z-index:1000;">
+                      <lightning-button-Icon   icon-name="utility:search"   data-id={rec.index} class="slds-float_right" size="large" variant="bare" onclick={showProducts} disabled={searchbutton} onchange={onChangeOnProduct}></lightning-button-Icon>
+                  </span>
+                  
+              </div>
+          </div>
+      </div>
+    </th>
+										<td class="slds-truncate">
+											<lightning-input type="text" class="fields" id={rec.index}
+												key-field={rec.index}  data-id={rec.index} value={rec.Quantity__c}
+												name='Quantity__c' required="true" variant="label-hidden" onchange={onChangeOnProduct} disabled={Quantity}>
+											</lightning-input>
+										</td>
+										<td class="slds-truncate">
+											<!-- requiredIndicatorClass="{!orderItem.itemNo}" -->
+											<lightning-input type="text" class="fields" id={rec.index}  data-id={rec.id}
+												value={rec.Batch__c} name='Batch__c' variant="label-hidden"
+												onchange={onChangeOnProduct} disabled={Batch}></lightning-input>
+										</td>
+
+										<td class="slds-truncate">
+											<lightning-input type="Date" class="fields" id={rec.index}  data-id={rec.index}
+												value={rec.Expire_Date__c} name='Expire_Date__c' variant="label-hidden"
+												onchange={onChangeOnProduct}  disabled={expireDate}></lightning-input>
+										</td>
+										<td class="slds-truncate" data-label="Action">
+											<lightning-button-Icon class="icn" icon-name="utility:delete" 
+												name={rec.index} id={rec.index}  data-id={rec.index} onclick={removeRow} disabled={deleteIcon}>
+											</lightning-button-Icon>
+										</td>
+
+									</tr>
+								</template>
+							</tbody>
+						</table>
+					</div>
+					<template if:true={showFileUploader}>
+					<h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1"
+						style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold;">
+						{label.INTER_ATTACHMENTS}
+					</h3>
+					<div class="slds-box slds-p-top_small" style="background-color: white; position: relative;">
+						<template if:true={showSpinner}>
+							<lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass">
+							</lightning-spinner>
+						</template>
+
+
+
+						<lightning-file-upload label="Attach receipt" name="fileUploader" record-id={recordId}
+							onuploadfinished={handleUploadFinished} multiple>
+						</lightning-file-upload>
+						<!-- <template if:true={fileData}>
+							{fileData}
+						</template> -->
+						<br/>
+                    <div if:true={showfileForTable}>
+                    <lightning-datatable
+                        key-field="ContentDocumentId"
+                        data={filesList}
+                        hide-checkbox-column
+                        columns={columns}
+                        onrowaction={handleRowActionForFileDelete}>
+                    </lightning-datatable>
+                </div> 
+						<br/>
+
+              </div>
+					</template>
+					<template if:false={showFileUploader}>
+						<br/>
+					</template>
+
+						<footer class="slds-modal__footer">
+							
+
+
+						
+           <div slot="actions" class="slds-text-align_center">
+        <!-- <lightning-button variant="brand" label={label.Save} title="Save" onclick={handleSave} class="slds-m-left_x-small"></lightning-button> &nbsp;
+        <lightning-button variant="neutral" label={label.cancel} title="Cancel" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button> -->
+        
+        <lightning-button variant="brand" label={label.cancel} title="Cancel" onclick={handleCancel} class="slds-m-left_x-small" disabled={buttonToShow}></lightning-button>
+        <lightning-button variant="brand" label={label.Save} title="Save" type="submit" onsave={handleSave}  onclick={handleSave}  class="slds-m-left_x-small" disabled={buttonToShow}></lightning-button>
+        
+    
+    
+
+							</div>
+
+						</footer>
+					</div>
+			</template>
+
+		</template>
+	</lightning-card>
+ <template if:true={isModalOpen}>
+    <!-- Modal/Popup Box LWC starts here -->
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal--large">
+        <div class="slds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{label.Product}</h2>
+            </header>
+             
+                    <div class="slds-modal__content slds-p-around--medium">
+                      <div class="slds-box slds-theme--default">
+             <!-- <div class="slds-modal__content slds-p-around--medium">  
+               <template if:true={log}>
+            <lightning-datatable
+                key-field="Id"
+                data={log}
+                columns={COLUMNS}
+                hide-checkbox-column="true">
+            </lightning-datatable>
+        </template>  
+            </div> -->
+             <!-- <div style="max-width: fit-content">        
+        <lightning-input type="search" onblur={handleKeyChange} class="slds-m-bottom_small" label="Search" maxlength="40">  
+        </lightning-input>  
+    </div>
+          <br/>  -->
+            
+     <template if:true={showTable}>
+           <c-interdiction-Pagination-L-W-C records={log} 
+                    total-records={log.length} 
+                    show-search-box="true" 
+                    onpaginatorchange={handlePaginatorChange}>
+        </c-interdiction-Pagination-L-W-C >
+        <br/>
+     <div>
+            <lightning-datatable
+                key-field="Id"
+                 data={recordsToDisplay} 
+                            columns={COLUMNS}
+                            onrowaction={handleRowAction}
+                            hide-checkbox-column
+                           
+                               
+                          
+                           >
+            </lightning-datatable>
+     </div>
+        </template>  
+    
+</div>
+        </div>
+        
+<footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancelar</button>
+              
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+</template>

@@ -1,0 +1,86 @@
+<apex:component controller="WeatherForecastCtlr">
+    <script type = "text/javascript">
+    window.onload=function(){   
+        weekforcast();
+    };
+</script>
+     <style>
+         .hdr{
+             background-color: #143d58;
+             font-weight: bold;
+             padding: 2%;
+             border-radius: 5px;         	
+         	color: white;
+        	width:96%;"
+         }
+         .tblCol{
+            padding: 8px 10px;
+            font-family: serif;
+            font-size: 14px;
+            text-align: center;
+         }
+         body .pbBody table.list tr.headerRow td, body .pbBody table.list tr.headerRow th {
+             font-family: serif;
+             font-size: 14px;
+             color: #000;
+             font-weight: bold;
+             padding: 5px 2px 4px 5px;
+         	 border-bottom: 1px solid #111;
+             text-align: center;
+         }
+         body input.btn, body input.btnDisabled, body input.btnCancel {
+         	padding:5px 6px;
+          	border: 0;
+            margin-left: 4%;
+         }
+         .waitingSearchDiv{
+         	padding-top:5%;
+         }
+         
+    </style>
+    <apex:attribute name="accId" type="String" description="passing account Id" assignTo="{!recordId}"/>
+    <apex:form id="theFrm"> 
+        <apex:actionFunction name="weekforcast" action="{!init2}" reRender="theFrm" />
+        <apex:pageBlock id="details" >  
+            
+            <apex:actionStatus id="status" >
+                <apex:facet name="start" >
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #ffffff; height: 100%;opacity:0.35;width:100%;"> 
+                        <div class="waitingHolder" style="top:35%; width: 10%">
+                            <img class="waitingImage" src="/img/loading.gif" />
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionStatus>
+             <div class="hdr">
+                 <div style="display: inline-block;width:40%;font-size: 14px;">
+                     <img src="{!$Resource.nurturecarelogo}" width="17%"  height="14px"/>
+                    Weather Forecast
+                </div>
+                <div style="display: inline-block;width:55%;text-align: right;">
+                    <apex:commandLink value="Refresh" rendered="{!WeatherData.size > 0}" action="{!init2}" status="status" style="color:#fffdfd;text-decoration: none;" />
+                   </div>
+            </div>
+            <apex:outputPanel rendered="{!WeatherData.size > 0}" >
+                <apex:pageblockTable value="{!WeatherData}" var="w">
+                    <apex:column headerValue="Time" value="{!w.currTime}" styleClass="tblCol" />   
+                    <apex:column headerValue="Temperature(°C)" value="{!w.maxTemp}" styleClass="tblCol"/> 
+                    <apex:column headerValue="Weather" value="{!w.weather}" styleClass="tblCol" /> 
+                </apex:pageblockTable> 
+                
+                <div>
+                    <div style="padding-left:12%;">
+                        <apex:commandButton value="First" rerender="details" action="{!beginning}" disabled="{!prev}" status="status" />  
+                        <apex:commandButton value="Previous" rerender="details" action="{!previous}" status="status" disabled="{!prev}"/>  
+                        [Page {!pageNo}]
+                        <apex:commandButton value="Next" rerender="details" action="{!next}" status="status" disabled="{!nxt}"/>  
+                        <apex:commandButton value="Last" rerender="details" action="{!end}" status="status" disabled="{!nxt}"/> 
+                    </div>
+                </div>
+            </apex:outputPanel>
+            {!msg}
+           
+        </apex:pageBlock>  
+        
+    </apex:form>  
+</apex:component>

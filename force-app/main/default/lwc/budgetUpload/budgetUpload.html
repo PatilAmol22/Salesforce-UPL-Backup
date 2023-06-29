@@ -1,0 +1,81 @@
+<template>
+    <div class="slds" style="background:#fff;">
+    
+        <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold; text-align: center;">{labels.Budget_Upload_Detail}</h3>
+        
+        <lightning-card>
+    
+    <div class="slds-grid slds-gutters" style="margin:10px 0 10px 0;">
+        <div class="slds-col slds-size_2-of-12" style="margin:10px 0 10px 0;">
+            <div class="slds-form-element" style="margin-top:12px;">
+                <div class="slds-form-element__control">
+                    <lightning-combobox
+                        name="progress"
+                        label={labels.Year}
+                        value={yearValue}
+                        placeholder={labels.Select_Progress}
+                        options={YearData}
+                        onchange={handleChange}
+                        required >
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>    
+<!--
+        <div class="slds-col slds-size_2-of-12" style="margin:10px 0 10px 0;">
+            <div class="slds-form-element" style="margin-top:12px;">
+                <div class="slds-form-element__control">
+                    <lightning-combobox
+                        name="progress"
+                        label={labels.Month}
+                        value={value}
+                        placeholder={labels.Select_Progress}
+                        options={options}
+                        onchange={handleChangeMonth}
+                        required >
+                    </lightning-combobox>Quantidade
+                </div>
+            </div>
+        </div> 
+-->
+    </div>     
+                      
+                        
+                        <div style="margin:0 auto; text-align:center;">
+                            <h1 style="top:0 auto; margin-left: 15px;"><lightning-icon icon-name="standard:pricebook"></lightning-icon> &nbsp; {labels.Upload_Budget_Data_Here}</h1> 
+                            <div style="margin-left: 15px;">    
+                                <lightning-file-upload
+                                    accept={acceptedFormats}
+                                    record-id={recordIdBudget}
+                                    onuploadfinished={handleUploadFinished}
+                                    multiple>
+                                </lightning-file-upload>
+                            </div>
+                        </div>
+                    
+                        <lightning-accordion allow-multiple-sections-open class="example-accordion" active-section-name="Instruction">
+                            <lightning-accordion-section name="Instruction" label={labels.Instructions_for_uploading_Budget_CSV}>
+                                
+                                <ul class="slds-list_dotted">
+                                    <li>{labels.File_to_be_uploaded_must_be_in_CSV_format}</li>
+                                    <li>{labels.Please_follow_the_same_column_sequence_and_column_names_as_given_in_template}</li>
+                                    <li>{labels.In_the_CSV_file_please_use_numeric_values_for_the_Month_column_Use_values_be}</li>
+                                    <li>{labels.Blank_zero_0_values_are_not_accepted_for_the_Month_column_in_the_CSV}</li>
+                                    <li>{labels.Blank_values_are_not_accepted_for_the_Quantity_column_in_the_CSV_Please_use_the}}</li>
+                                    <li>{labels.Once_the_file_gets_uploaded_you_will_receive_an_email_notification}</li>
+                                </ul>
+                                
+                            </lightning-accordion-section>
+                
+                            <lightning-accordion-section name="Sample csv" label={labels.Sample_Budget_XLS_file_template}>
+                                <ul class="slds-list_dotted">
+                                <li><a href="https://upl--c.ap6.content.force.com/servlet/servlet.FileDownload?file=0150K000009n3wY">{labels.Download_Template}</a></li>
+                                    
+                                <!--<li><a href={Link}>{labels.Download_Template}</a></li> -->
+                                </ul>
+                                
+                            </lightning-accordion-section>
+                        </lightning-accordion>
+                    </lightning-card>
+    </div>
+</template>

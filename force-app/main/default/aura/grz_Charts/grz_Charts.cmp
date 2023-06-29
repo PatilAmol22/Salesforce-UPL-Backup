@@ -1,0 +1,835 @@
+<!--<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Grz_CreditDonutChart">-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Grz_CreditDonutChart">
+    
+    <aura:attribute name="ChartList" type="object"/>
+    <aura:attribute name="creditList" type="Object"/>
+    <aura:attribute name="SalesOrgPicklist" type="Object"/>
+    <aura:attribute name="response" type="Object"/>
+    <aura:attribute name="MetaMapping" type="Object"/>
+    <aura:attribute name="chartChile" type="Object"/>
+    <aura:attribute name="isInternal" type="boolean" default = "false"/>
+    <aura:attribute name="isChile" type="boolean" default="false"/>
+    <aura:attribute name="cusNumber" type="String"/>
+    <aura:attribute name="chart" type="Object"/>
+    <aura:attribute name="SalesOrgDefaultVal" type="String"/>
+    <aura:attribute name="CreditDetailList" type="List"/>
+    <aura:attribute name="showData" type="List"/>
+    <aura:attribute name="showDataNegative" type="List"/>
+    <aura:attribute name="isAutoTimer" type="boolean" default = "true"/>
+    <aura:attribute name="delay" type="Integer" default = "3"/>
+    <aura:attribute name="Utilized" type="string" default = "#FF8833"/>
+    <aura:attribute name="Pending" type="string" default = "#34B845"/>
+    <aura:attribute name="colorset" type="List"/>
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="exceeded" type="Boolean" default="false" />
+    <aura:attribute name="isIndia" type="boolean" default="false"/>
+    <aura:attribute name="isBrazil" type="boolean" default="false"/>
+    <aura:attribute name="isMexico" type="boolean" default="false"/>
+    <aura:attribute name="isArgentina" type="boolean" default="false"/>
+    <aura:attribute name="CreditSummaryLink" type="string" default = "creditdetailpage"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="Message" type="String"/>
+    <aura:attribute name="error" type="Boolean" default="true" />
+    <aura:attribute name="myBool" type="Boolean" default="true"/>  
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="valueOfSalesOrg" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />   
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}" 
+                  afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    
+    <aura:if isTrue="{!v.isIndia }">
+        <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small">
+            <div class="slds-grid slds-wrap slds-m-left_small slds-m-right_small slds-m-top_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small">
+                <div class="slds-col slds-size_12-of-12">
+                    <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_CreditSummary}</span>
+                </div>
+                
+                <div class="slds-col slds-size_12-of-12">
+                    <lightning:combobox name="picklistValue" options="{! v.options }" onchange="{! c.handleChange }" value="{! v.valueOfSalesOrg}"/>
+                </div>
+     
+            </div>
+            <aura:if isTrue="{!v.loaded }">
+               <!-- <div class="slds-grid slds-wrap  slds-m-left_small slds-m-right_small">
+                <div class="slds-col slds-size_12-of-12 componentNotoSansBold"> 
+                        	<lightning:combobox placeholder="Sales Org" value="{! v.SalesOrgDefaultVal}" options="{! v.SalesOrgPicklist }" onchange="{! c.SelectedVal }"/>
+					</div>
+                    </div>-->
+                <div class="slds-grid slds-wrap slds-m-around_small">
+                    <div class="slds-col slds-size_12-of-12"> 
+                        <div class="componentNotoSansMedium" style="font-size: 13px;">
+                            <p>{!$Label.c.Grz_TotalCreditTaken} :<span class="componentNotoSansBold">&nbsp;{!$Locale.currencyCode}&nbsp;{!v.ChartList}</span></p>
+                        </div>                  
+                    </div>
+                    <!--<div class="slds-col slds-size_6-of-12"> 
+                    <div class="componentNotoSansMedium slds-text-align_right">
+                         <span class="chartCSS slds-p-left_small slds-p-right_xx-small"><b class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!v.ChartList[0].Total}</b></span>
+                    </div>
+                </div>-->
+                </div>
+            </aura:if>  
+            <div>             
+                <div id="chartDiv">
+                    <canvas class="canCSS slds-align_absolute-center"  id="pie-chart" width="300" height="250"/>
+                </div>
+                
+                <aura:if isTrue="{!v.loaded }">
+                    <aura:if isTrue="{!v.error }">   
+                        <div class="slds-m-around_medium">
+                            <div class="borderCSS">
+                                <!--<div class="slds-grid">
+                    <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small">
+                    </div>
+                    <div class="slds-col slds-size_11-of-12 slds-grid slds-wrap Bottomcss"> 
+                        <div class="chartCSS slds-p-around_small componentNotoSansMedium slds-col slds-large-size_7-of-12 slds-medium-size_12-of-12  slds-small-size_8-of-12">
+                            <p>Credit Taken</p>
+                        </div>
+                        
+                        <div class="chartCSS slds-p-around_small componentNotoSansMedium ResCre slds-col slds-large-size_5-of-12 slds-medium-size_12-of-12 slds-small-size_4-of-12">
+                             <span class="chartCSS slds-p-left_small slds-p-right_xx-small"><b class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!v.ChartList[0].Total}</b></span>
+                        </div>
+                    </div>
+                </div>-->
+                                <aura:iteration var="eachRecord" items="{!v.creditList}" indexvar="index">
+                                    <div class="slds-grid slds-border_top" >
+                                        <!--  <div class="slds-col boxCSS slds-size_1-of-12 slds-m-around_small" style="{!'background-color:'+v.colorset[0]}"></div>-->
+                                        
+                                        <aura:if isTrue="{!or(eachRecord.name=='Crédito Utilizado',eachRecord.name=='Credit Utilized')}">
+                                            <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[0]+' ;border:1px solid'+v.colorset[0]+';'}">
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[1]+' ;border:1px solid'+v.colorset[1]+';'}"></div>
+                                            </aura:set>
+                                        </aura:if>
+                                        <div class="slds-col slds-size_11-of-12 slds-p-top_small slds-p-left_x-small slds-grid slds-wrap" > 
+                                            <!-- <p aura:id="p1" class="chartCSS  slds-p-top_xx-small slds-p-left_xx-small slds-p-bottom_xx-small componentNotoSansMedium">{!eachRecord.name}<span class="chartCSS slds-p-left_small slds-float_right slds-p-right_small"><b class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</b></span></p>-->
+                                            <div class="slds-col slds-large-size_5-of-12 slds-medium-size_12-of-12  slds-small-size_7-of-12 slds-x-small-size_12-of-12">
+                                                <p aura:id="p1" class="chartCSS slds-p-top_xx-small slds-p-bottom_xx-small componentNotoSansMedium">{!eachRecord.name}</p>
+                                            </div>
+                                            <div  class="Res slds-col slds-large-size_7-of-12 slds-medium-size_12-of-12 slds-small-size_5-of-12 slds-x-small-size_12-of-12">
+                                                <span class="chartCSS slds-p-left_x-small slds-p-right_xx-small"><span class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        
+                        
+                        <aura:set attribute="else">
+                            <p class="Errors componentNotoSansBold">{!v.Message}</p>
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:set>
+                </aura:if>
+                
+                
+                <!-- <aura:set attribute="else">
+                            <p class="Errors componentNotoSansBold">Record Not Found</p>
+                        </aura:set> -->
+                    
+                
+            </div> 
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.isBrazil }">
+        <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small br-bt">
+            <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small br-mrgn">
+                <div class="slds-col slds-size_9-of-12">
+                    <span class="textCSS br-textCSS componentNotoSansLight">{!$Label.c.Grz_CreditSummary}</span>
+                </div>
+                <div class="slds-col slds-size_3-of-12"> 
+                    <div class="componentNotoSansLight slds-text-align_right">
+                        <span class="view-btn br-view-btn"  onclick="{! c.openModel }">
+                            <!--<a href="{!v.CreditSummaryLink}" title="View Details" target="_blank">Ver tudo</a>-->
+                            Ver tudo
+                        </span>
+                    </div>
+                </div>  
+            </div>
+            <aura:if isTrue="{!v.loaded }">
+                <div class="slds-grid slds-wrap slds-m-around_small">
+                    <div class="slds-col slds-size_12-of-12"> 
+                        <div class="componentNotoSansMedium" style="font-size: 13px;">
+                            <p>{!$Label.c.Grz_TotalCreditTaken} :<span class="componentNotoSansBold">&nbsp;{!$Locale.currencyCode}&nbsp;{!v.ChartList}</span></p>
+                        </div>                  
+                    </div>
+                </div>
+            </aura:if>  
+            <div>             
+                <div>
+                    <canvas class="canCSS slds-align_absolute-center"  id="pie-chart" width="300" height="250"/>
+                </div>
+                <aura:if isTrue="{!v.loaded }">
+                    <aura:if isTrue="{!v.error }">   
+                        <div class="slds-m-around_medium">
+                            <div class="borderCSS">
+                                <aura:iteration var="eachRecord" items="{!v.creditList}" indexvar="index">
+                                    <div class="slds-grid slds-border_top" >
+                                        <!--<div class="slds-col boxCSS slds-size_1-of-12 slds-m-around_small" style="{!'background-color:'+v.colorset[0]}"></div>-->
+                                        <aura:if isTrue="{!or(eachRecord.name=='Crédito Utilizado',eachRecord.name=='Credit Utilized')}">
+                                            <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[0]+' ;border:1px solid'+v.colorset[0]+';'}">
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[1]+' ;border:1px solid'+v.colorset[1]+';'}"></div>
+                                            </aura:set>
+                                        </aura:if>
+                                        <div class="slds-col slds-size_11-of-12 slds-p-top_small slds-p-left_x-small slds-grid slds-wrap below-pad" > 
+                                            <!-- <p aura:id="p1" class="chartCSS slds-p-around_xx-small componentNotoSansMedium">{!eachRecord.name}<span class="chartCSS slds-p-left_small slds-float_right slds-p-right_small"><b class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</b></span></p>-->
+                                            <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12  slds-small-size_12-of-12">
+                                                <p aura:id="p1" class="chartCSS componentNotoSansMedium">{!eachRecord.name}</p>
+                                            </div>
+                                            <div  class="Res slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12">
+                                                <span class="chartCSS slds-p-left_x-small slds-p-right_xx-small"><span class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        
+                        <aura:set attribute="else">
+                            <p class="Errors componentNotoSansBold">{!v.Message}</p>
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:set>
+                </aura:if>
+                
+            </div> 
+        </div>
+        <aura:if isTrue="{!v.isOpen}">
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate componentNotoSansBold">Limite de Crédito</h2>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_x-small" id="modal-content-id-1">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                                <div class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1%">
+                                    <div class="slds-grid slds-wrap slds-p-bottom_x-small data-font-size componentNotoSansRegular">
+                                        <aura:iteration var="crDetail" items="{!v.CreditDetailList}" indexvar="index">
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Conta de Crédito:  </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                            <span class="">{!crDetail.creditAccount}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Limite de Crédito:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.lineLimit}"/></span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Limite Clean:  </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.cleanLimit}"/></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Vigência do Crédito:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class="">{!crDetail.nextInternalReview}</span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Garantias Liberadas:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class="">{!crDetail.guaranteeReleased}</span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                                <div class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1%">
+                                    <div class="slds-grid slds-wrap slds-p-bottom_x-small data-font-size componentNotoSansRegular">
+                                        <aura:iteration var="crDetail" items="{!v.CreditDetailList}" indexvar="index">
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Contas a Pagar:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.receivables}"/></span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Compromisso Especial:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class="">{!crDetail.specialLiabilities}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Credit exposure:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.creditExposure}"/></span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                                <div class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1%">
+                                    <div class="slds-grid slds-wrap slds-p-bottom_x-small data-font-size componentNotoSansRegular">
+                                        <aura:iteration var="crDetail" items="{!v.CreditDetailList}" indexvar="index">
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Limite Disponível:  </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.creditAvailable}"/></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Clean + Garantias Máximo até Linha:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class="">{!crDetail.cleanGuarantee}</span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                                <div class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1%">
+                                    <div class="slds-grid slds-wrap slds-p-bottom_x-small data-font-size componentNotoSansRegular">
+                                        <aura:iteration var="crDetail" items="{!v.CreditDetailList}" indexvar="index">
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <!--<footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModel }"/>
+                    </footer>-->
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+        </aura:if>
+    </aura:if>
+    
+    
+    
+    
+    
+     <aura:if isTrue="{!v.isChile }">
+        <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small br-bt">
+            <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small br-mrgn">
+                <div class="slds-col slds-size_9-of-12">
+                    <span class="textCSS br-textCSS componentNotoSansRegular">{!$Label.c.Grz_CreditSummary}</span>
+                </div>
+                <!-- <div class="slds-col slds-size_3-of-12"> 
+                    <div class="componentNotoSansLight slds-text-align_right">
+                        <span class="view-btn br-view-btn"  onclick="{! c.openModel }">
+                           
+                            Ver tudo
+                        </span>
+                    </div>
+                </div>-->
+            </div>
+            <aura:if isTrue="{!v.loaded }">
+                <div class=" slds-wrap slds-m-around_small">
+                    <aura:if isTrue="{!v.isInternal}">
+                        <div class="slds-grid" style="margin-bottom: 12px;">
+                    <div class="slds-col slds-size_10-of-12 componentNotoSansBold"> 
+                    <!--<lightning:input label=""
+                                                placeholder="Número do cliente"
+                                                aura:id="myAtt"
+                                                value='{!v.cusNumber}'
+                                                type="text"
+                                                class="slds-col slds-m-left_small slds-m-right_small margin-mob"
+                                                onchange = "{! c.handleFocus}"
+                                                style="margin-left: 0px; margin-top: -18px;">
+                        
+                      </lightning:input>-->
+                      <div class="slds-m-left_small slds-m-right_small margin-mob">
+                        <c:grz_CustomLookupCmp 
+                            objectName="Account"
+                            searchField="Name"
+                            onselectedrec = "{!c.handleFocus}">
+                        </c:grz_CustomLookupCmp>
+                      </div>
+                        </div>
+                            <div class=" slds-size_2-of-12">
+                                <button onclick="{! c.HandleCustmor}" class="slds-button slds-button_brand slds-button_icon slds-button_icon-border-filled ">
+                                    <lightning:icon iconName="utility:search" size="x-small" class="" ></lightning:icon>
+                                </button>
+                            </div>
+                    
+                        </div>
+                    </aura:if>
+                    <div class="slds-col slds-size_12-of-12"> 
+                        <div class="componentNotoSansMedium" style="font-size: 13px;">
+                            <p>{!$Label.c.Grz_TotalCreditTaken} :<span class="componentNotoSansBold">&nbsp;USD&nbsp;{!v.ChartList}</span></p>
+                        </div>                  
+                    </div>
+                </div>
+            </aura:if>  
+            <div>             
+                <div>
+                    <canvas class="canCSS slds-align_absolute-center"  id="pie-chartChile" width="300" height="250"/>
+                </div>
+                <aura:if isTrue="{!v.loaded }">
+                    <aura:if isTrue="{!v.error }">   
+                        <div class="slds-m-around_medium">
+                            <div class="borderCSS">
+                                <aura:iteration var="eachRecord" items="{!v.creditList}" indexvar="index">
+                                    <div class="slds-grid slds-border_top" >
+                                        <!--<div class="slds-col boxCSS slds-size_1-of-12 slds-m-around_small" style="{!'background-color:'+v.colorset[0]}"></div>-->
+                                        <aura:if isTrue="{!or(eachRecord.name=='Crédito Utilizado',eachRecord.name=='Credit Utilized')}">
+                                            <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[0]+' ;border:1px solid'+v.colorset[0]+';'}">
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-col boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[1]+' ;border:1px solid'+v.colorset[1]+';'}"></div>
+                                            </aura:set>
+                                        </aura:if>
+                                        <div class="slds-col slds-size_11-of-12 slds-p-top_small slds-p-left_x-small slds-grid slds-wrap below-pad" > 
+                                            <!-- <p aura:id="p1" class="chartCSS slds-p-around_xx-small componentNotoSansMedium">{!eachRecord.name}<span class="chartCSS slds-p-left_small slds-float_right slds-p-right_small"><b class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</b></span></p>-->
+                                            <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12  slds-small-size_12-of-12">
+                                                <p aura:id="p1" class="chartCSS componentNotoSansMedium">{!eachRecord.name}</p>
+                                            </div>
+                                            <div  class="Res slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12">
+                                                <span class="chartCSS slds-p-left_x-small slds-p-right_xx-small"><span class="componentNotoSansBold">USD&nbsp;{!eachRecord.value}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        
+                        <aura:set attribute="else">
+                            <p class="Errors componentNotoSansBold">{!v.Message}</p>
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:set>
+                </aura:if>
+                
+            </div> 
+        </div>
+       <!-- <aura:if isTrue="{!v.isOpen}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_small slds-hyphenate componentNotoSansBold">Limite de Crédito</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_x-small" id="modal-content-id-1">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                                <div class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1%">
+                                    <div class="slds-grid slds-wrap slds-p-bottom_x-small data-font-size componentNotoSansRegular">
+                                        <aura:iteration var="crDetail" items="{!v.CreditDetailList}" indexvar="index">
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Conta de Crédito:  </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                            <span class="">{!crDetail.creditAccount}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Limite de Crédito:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.lineLimit}"/></span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Limite Clean:  </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.cleanLimit}"/></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Vigência do Crédito:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class="">{!crDetail.nextInternalReview}</span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Garantias Liberadas:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class="">{!crDetail.guaranteeReleased}</span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                                <div class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1%">
+                                    <div class="slds-grid slds-wrap slds-p-bottom_x-small data-font-size componentNotoSansRegular">
+                                        <aura:iteration var="crDetail" items="{!v.CreditDetailList}" indexvar="index">
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Contas a Pagar:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.receivables}"/></span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-p-left_x-small hidePadding borderleft">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Credit exposure:  </span>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.creditExposure}"/></span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+                                <div class="slds-border_right slds-border_left slds-border_bottom slds-border_top " style="padding: 1%">
+                                    <div class="slds-grid slds-wrap slds-p-bottom_x-small data-font-size componentNotoSansRegular">
+                                        <aura:iteration var="crDetail" items="{!v.CreditDetailList}" indexvar="index">
+                                            <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                                            <span>Limite Disponível:  </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                                        <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                                            <span class=""><lightning:formattedNumber value="{!crDetail.creditAvailable}"/></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            
+        </aura:if>-->
+    </aura:if>
+    
+    
+    
+    <aura:if isTrue="{!v.isMexico }">
+        <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small br-bt">
+            <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_small slds-border_bottom br-mrgn">
+                <div class="slds-col slds-size_9-of-12">
+                    <span class="textCSS componentNotoSansLight">{!$Label.c.Grz_CreditSummary}</span>
+                </div>
+                <div class="slds-col slds-size_3-of-12"> 
+                    
+                </div>  
+            </div>
+             <aura:if isTrue="{!v.exceeded}">
+                <div class="slds-grid slds-wrap slds-m-around_small">
+                    <div class="slds-col slds-size_10-of-12"> 
+                       <div class = "marquee componentNotoSansMedium">
+                            <p>Límite de crédito excedido </p>
+                       </div>
+                    </div>
+                </div>                              
+            </aura:if>
+            <aura:if isTrue="{!v.loaded }">
+                <div class="slds-grid slds-wrap slds-m-around_small">
+                    <div class="slds-col slds-size_12-of-12"> 
+                        <div class="componentNotoSansMedium" style="font-size: 13px;">
+                            <p>{!$Label.c.Grz_TotalCreditTaken} :<span class="componentNotoSansBold">&nbsp;{!$Locale.currencyCode}&nbsp;{!v.ChartList}</span></p>
+                        </div>                  
+                    </div>
+                </div>
+                
+            </aura:if>  
+           
+            <div>             
+                <div>
+                    <canvas class="canCSS slds-align_absolute-center"  id="pie-chart" width="300" height="230"/>
+                </div>
+                <aura:if isTrue="{!v.loaded }">
+                    <aura:if isTrue="{!v.error }">   
+                        <div class="slds-m-around_medium">
+                            <div class="borderCSS">
+                                <aura:iteration var="eachRecord" items="{!v.creditList}" indexvar="index">
+                                    <div class="slds-grid slds-border_top" >
+                                        <!--<div class="slds-col mx-boxCSS slds-size_1-of-12 slds-m-around_small" style="{!'background-color:'+v.colorset[0]}"></div>-->
+                                        <aura:if isTrue="{!or(eachRecord.name=='Crédito Utilizado',eachRecord.name=='Credit Utilized')}">
+                                            <div class="slds-col mx-boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[0]+' ;border:1px solid'+v.colorset[0]+';'}">
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-col mx-boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[1]+' ;border:1px solid'+v.colorset[1]+';'}"></div>
+                                            </aura:set>
+                                        </aura:if>
+                                        <div class="slds-col slds-size_11-of-12 slds-p-top_small slds-p-left_x-small slds-grid slds-wrap below-pad" > 
+                                            <!-- <p aura:id="p1" class="chartCSS slds-p-around_xx-small componentNotoSansMedium">{!eachRecord.name}<span class="chartCSS slds-p-left_small slds-float_right slds-p-right_small"><b class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</b></span></p>-->
+                                            <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12  slds-small-size_6-of-12 slds-x-small-size_12-of-12">
+                                                <p aura:id="p1" class="chartCSS componentNotoSansMedium">{!eachRecord.name}</p>
+                                            </div>
+                                            <div  class="Res slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-small-size_6-of-12 slds-x-small-size_12-of-12">
+                                                <span class="chartCSS slds-p-left_x-small slds-p-right_xx-small"><span class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_medium slds-p-right_medium noteclass componentNotoSansBold">
+                            <b>*Nota:- Al pasar el gráfico por encima, solo mostramos el valor de entero positivo.</b>
+            			</div>
+                        <aura:set attribute="else">
+                            <p class="Errors componentNotoSansBold">{!v.Message}</p>
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:set>
+                </aura:if>
+                
+            </div> 
+        </div>
+     </aura:if>
+    
+
+     <aura:if isTrue="{!v.isArgentina }">
+        <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small br-bt">
+            <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_small slds-border_bottom br-mrgn">
+                <div class="slds-col slds-size_9-of-12">
+                    <span class="textCSS componentNotoSansRegular">{!$Label.c.Grz_CreditSummary}</span>
+                </div>
+                <div class="slds-col slds-size_3-of-12"> 
+                    
+                </div>  
+            </div>
+             <aura:if isTrue="{!v.exceeded}">
+                <div class="slds-grid slds-wrap slds-m-around_small">
+                    <div class="slds-col slds-size_10-of-12"> 
+                       <div class = "marquee componentNotoSansMedium">
+                            <p>Límite de crédito excedido </p>
+                       </div>
+                    </div>
+                </div>                              
+            </aura:if>
+            <aura:if isTrue="{!v.loaded }">
+                <div class="slds-grid slds-wrap slds-m-around_small">
+                    <div class="slds-col slds-size_12-of-12"> 
+                        <div class="componentNotoSansMedium" style="font-size: 13px;">
+                            <p>{!$Label.c.Grz_TotalCreditTaken} :<span class="componentNotoSansBold">&nbsp;{!$Locale.currencyCode}&nbsp;{!v.ChartList}</span></p>
+                        </div>                  
+                    </div>
+                </div>
+                
+            </aura:if>  
+           
+            <div>             
+                <div>
+                    <canvas class="canCSS slds-align_absolute-center"  id="pie-chart" width="300" height="230"/>
+                </div>
+                <aura:if isTrue="{!v.loaded }">
+                    <aura:if isTrue="{!v.error }">   
+                        <div class="slds-m-around_medium">
+                            <div class="borderCSS">
+                                <aura:iteration var="eachRecord" items="{!v.creditList}" indexvar="index">
+                                    <div class="slds-grid slds-border_top" >
+                                        <!--<div class="slds-col mx-boxCSS slds-size_1-of-12 slds-m-around_small" style="{!'background-color:'+v.colorset[0]}"></div>-->
+                                        <aura:if isTrue="{!or(eachRecord.name=='Crédito Utilizado',eachRecord.name=='Credit Utilized')}">
+                                            <div class="slds-col mx-boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[0]+' ;border:1px solid'+v.colorset[0]+';'}">
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-col mx-boxCSS slds-size_1-of-12 slds-m-top_medium slds-m-left_small" style="{!'background-color:'+v.colorset[1]+' ;border:1px solid'+v.colorset[1]+';'}"></div>
+                                            </aura:set>
+                                        </aura:if>
+                                        <div class="slds-col slds-size_11-of-12 slds-p-top_small slds-p-left_x-small slds-grid slds-wrap below-pad" > 
+                                            <!-- <p aura:id="p1" class="chartCSS slds-p-around_xx-small componentNotoSansMedium">{!eachRecord.name}<span class="chartCSS slds-p-left_small slds-float_right slds-p-right_small"><b class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</b></span></p>-->
+                                            <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12  slds-small-size_6-of-12 slds-x-small-size_12-of-12">
+                                                <p aura:id="p1" class="chartCSS componentNotoSansMedium">{!eachRecord.name}</p>
+                                            </div>
+                                            <div  class="Res slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-small-size_6-of-12 slds-x-small-size_12-of-12">
+                                                <span class="chartCSS slds-p-left_x-small slds-p-right_xx-small"><span class="componentNotoSansBold">{!$Locale.currencyCode}&nbsp;{!eachRecord.value}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_medium slds-p-right_medium noteclass componentNotoSansBold">
+                            <b>*Nota:- Al pasar el gráfico por encima, solo mostramos el valor de entero positivo.</b>
+            			</div>
+                        <aura:set attribute="else">
+                            <p class="Errors componentNotoSansBold">{!v.Message}</p>
+                        </aura:set>
+                    </aura:if>
+                    <aura:set attribute="else">
+                        <lightning:spinner alternativeText="Loading" />
+                    </aura:set>
+                </aura:if>
+                
+            </div> 
+        </div>
+     </aura:if>
+</aura:component>

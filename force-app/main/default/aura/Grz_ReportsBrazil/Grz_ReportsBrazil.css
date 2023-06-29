@@ -1,0 +1,152 @@
+.THIS.custommcss {
+    background-color: white;
+    margin-top: -2%;
+    padding: 1%;
+}
+.THIS .report-filter{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.THIS .r-date-filter{
+    display: flex;
+}
+.THIS .head-font{
+    font-size:20px;
+}
+.THIS .parent-filter{
+    width:39%;
+}
+.THIS.main-div-graph{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom:3%;
+}
+.THIS.main-case-div{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2%;
+    margin-left: 8px;
+    padding-right: 3%;
+}
+.THIS.main-div-report{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 3%;
+}
+.THIS.main-product-div{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom:2%;
+    margin-left: 8px;
+    padding-right: 3%;
+}
+.THIS.graph-div{
+    width: 100%;
+    margin-bottom: 3%;
+}
+.THIS .invoice-div{
+    width: 100%;
+}
+.THIS .credit-div{
+    width: 31%;
+}
+.THIS .casetype-div{
+    width:49% !important;
+}
+.THIS .casestatus-div{
+    width:49% !important;
+}
+.THIS .productcategory-div{
+    width:49% !important;
+}
+.THIS.invoice-div{
+    margin-bottom: 4%;
+}
+@media only screen and (max-width: 1024px){
+    .THIS.main-div-graph{
+        margin-top: 0;
+        margin-left: 0;
+        padding-right: 0;
+    }
+    .THIS.main-case-div{
+        margin-left: 0;
+        padding-right: 0;
+    }
+    .THIS.main-product-div{
+        margin-bottom:3%;
+        margin-left: 0;
+        padding-right: 0;
+    }
+    .THIS.custommcss {
+        margin-left: 0% !important;
+        margin-right: 0% !important;
+    }
+    .THIS .parent-filter{
+        width:55%;
+    }
+    
+}
+@media only screen and (max-width: 768px){
+    .THIS .report-filter{
+        display: block;
+    }
+    .THIS .r-date-filter{
+        width:100%;
+    }
+    .THIS .date-width{
+        width:50%;
+    }
+    .THIS .parent-filter{
+        width: 100%;
+        padding-left: 0;
+    }
+    .THIS.main-case-div{
+        display: block;
+    }
+    .THIS.main-product-div{
+        display: block;
+    }
+    .THIS .casetype-div{
+        width:100% !important;
+    }
+    .THIS .casestatus-div{
+        margin-top:2%;
+        width:100% !important;
+    }
+    .THIS .productcategory-div{
+        width:100% !important;
+    }
+    .THIS .invoicebrand-div{
+        width:100% !important;
+        margin-top:2%;
+    }
+    
+}
+@media only screen and (max-width: 767px){
+    .THIS.main-div-graph{
+        display: block;
+    }
+    .THIS .graph-div{
+        width: 100%;
+    }
+    .THIS .credit-div{
+        margin-top:2%;
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 319px){
+    .THIS .r-date-filter{
+        display:block;
+    }
+    .THIS .date-width{
+        width:100%;
+        padding-left: 0;
+    }
+}

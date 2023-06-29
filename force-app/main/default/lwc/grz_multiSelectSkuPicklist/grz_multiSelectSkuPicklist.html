@@ -1,0 +1,51 @@
+<template>
+     
+    <!-- Start Header Label Passed from Parent -->
+    <template if:true={label}>
+        <label class="slds-form-element__label" style="font-weight: 700;">{label}</label>
+        <template if:false={disabled}>
+            <lightning-icon class="slds-input__icon" icon-name="utility:clear" style="cursor: pointer;" size="x-small" onclick={handleClearOptions} title={labels.ClearAllOptions} alternative-text="downicon"></lightning-icon>
+        </template>
+    </template>
+    <!-- End Header Label Passed from Parent -->
+    <div class="slds-combobox_container" onmouseleave={handleBlur}>
+        <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox" onmouseleave={handleMouseOut} onmouseenter={handleMouseIn}>
+            <!-- Search Input -->
+            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                <lightning-input disabled={disabled} class="inputBox" placeholder={placeholderLabel} onclick={showOptions} onkeyup={filterOptions} value={searchString} auto-complete="off" variant="label-hidden" id="combobox-id-1" ></lightning-input>
+                <lightning-icon class="slds-input__icon" icon-name="utility:down" size="x-small" alternative-text="downicon"></lightning-icon>
+            </div>
+            <!-- Dropdown List -->
+            <template if:true={showDropdown}>
+                <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" style="margin-top:0px !important">
+                    <ul class="slds-listbox slds-listbox_vertical recordListBox" role="presentation">
+                        <template if:false={noResultMessage} >
+                            <template for:each={optionData} for:item="option">
+                                <template if:true={option.isVisible}>
+                                    <li key={option.value} data-id={option.value} onmousedown={selectItem} style ="display: flex; cursor: pointer; font-weight: 600;" class="slds-listbox__item eachItem displayflexcss">
+                                        <template if:true={option.selected}>
+                                            <lightning-icon icon-name="utility:check" style="padding-top: 2px; padding-left: 7px;" size="x-small" alternative-text="icon" ></lightning-icon>
+                                        </template>
+                                        <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{option.label}</span>
+                                    </li>
+                                </template>
+                            </template>
+                        </template>
+                        <template if:true={noResultMessage} >
+                            <li class="slds-listbox__item">
+                                <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{noResultMessage}</span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+        </div>
+    </div>
+    <!-- Multi Select Pills -->
+    <!--<template for:each={optionData} for:item="option">
+        <template if:true={option.selected}>
+            <lightning-pill key={option.value} class="slds-m-around_xx-small" name={option.value} label={option.label} onremove={closePill} icon-name="custom:custom11"></lightning-pill>
+        </template>
+    </template>-->
+ 
+</template>

@@ -1,0 +1,192 @@
+<template>
+    <div class="mainCSS slds-p-bottom_xx-small">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-large-size_12-of-12 slds-p-left_small slds-p-right_small">
+                <div class="slds-m-bottom_small slds-p-bottom_x-small slds-p-top_x-small slds-border_bottom">
+                    <div>
+                        <span class="textCSS componentNotoSansLight">{label.updateLabel}</span>
+                        <template if:true={isBr}>
+                            <a href="https://www.upl-ltd.com/br/acontece" class="componentNotoSansLight slds-p-top_x-small aCSS linkClass slds-float_right" target="_blank">{label.viewLabel}</a>
+                        </template>
+                        <template if:true={isInd}>
+                            <a href="https://www.upl-ltd.com/in/news" class="componentNotoSansLight slds-p-top_x-small aCSS linkClass slds-float_right" target="_blank">{label.viewLabel}</a>
+                        </template>
+                        <template if:true={isMx}>
+                            <a href="https://www.upl-ltd.com/mx/Noticias" class="componentNotoSansLight slds-p-top_x-small aCSS linkClass slds-float_right" target="_blank">{label.viewLabel}</a>
+                        </template>
+                        <template if:true={isAr}>
+                            <a href="https://www.upl-ltd.com/ar/Noticias" class="componentNotoSansLight slds-p-top_x-small aCSS linkClass slds-float_right" target="_blank">{label.viewLabel}</a>
+                        </template>
+                    </div>
+                </div>
+                <div if:true={IsInternalUser}>
+                    <template for:each={data} for:item="item" for:index="index">
+                        <div key={item} class="slds-grid slds-wrap slds-p-bottom_medium" style="position: relative; width: 100%;">
+                            <div class="slds-col slds-large-size_12-of-12">
+                                <div key={item} class = "">
+                                    <img src={item.bgimg} class="imagecls2">
+                                    <div class="slds-p-around_x-small">
+                                        <p class={newsClass3} title={item.titlehover}>{item.title}</p>
+                                        <template if:false={item.link}>
+                                            <p class={newsClass1} style="min-height: 125px;">{item.description}</p>
+                                        </template>
+                                        <template if:true={item.link}>
+                                            <p class={newsClass2} style="min-height: 100px;">{item.description}</p>
+                                            <a href={item.link} target="_blank">
+                                                <div class="slds-float_left slds-p-top_medium descClass slds-p-around_x-small componentNotoSansLight">{label.learnMore}
+                                                    <img src={whitearrowimage} style="height: 10px;" class="slds-p-left_xx-small">
+                                                </div>
+                                            </a>
+                                        </template>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div if:false={IsInternalUser} class = "">
+                    <template if:true={isInd}>
+                        <div class="slds-grid slds-wrap" style="position: relative;width: 100%;">
+                            <div class="slds-col slds-large-size_12-of-12">
+                                <img src={newsBgImg} class="image">
+                                <div class="slds-p-around_x-small">
+                                    <p class="titleClass componentNotoSansBold slds-p-around_x-small">{titleData}</p>
+                                    <p class="descClass slds-p-around_xx-small borderClass" style="min-height: 105px;">{descData}</p>
+                                    <a href={linkData} target="_blank">
+                                        <div class="slds-float_left slds-p-top_medium descClass slds-p-around_xx-small componentNotoSansLight">{label.learnMore}
+                                            <img src={whitearrowimage} style="height: 10px;" class="slds-p-left_xx-small">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isBr}>
+                        <template for:each={data} for:item="item" for:index="index">
+                            <div key={item} class="slds-grid slds-wrap slds-p-bottom_medium" style="position: relative; width: 100%;">
+                                <div class="slds-col slds-large-size_12-of-12">
+                                    <div key={item} class = "">
+                                        <img src={item.bgimg} class="imagecls2">
+                                        <div class="slds-p-around_x-small">
+                                            <p class="titleClass componentNotoSansBold slds-p-around_xx-small" title={item.titlehover}>{item.title}</p>
+                                            <template if:false={item.link}>
+                                                <p class="descClass slds-p-around_xx-small" style="min-height: 125px;">{item.description}</p>
+                                            </template>
+                                            <template if:true={item.link}>
+                                                <p class="descClass slds-p-around_xx-small borderClass" style="min-height: 100px;">{item.description}</p>
+                                                <a href={item.link} target="_blank">
+                                                    <div class="slds-float_left slds-p-top_medium descClass slds-p-around_x-small componentNotoSansLight">{label.learnMore}
+                                                        <img src={whitearrowimage} style="height: 10px;" class="slds-p-left_xx-small">
+                                                    </div>
+                                                </a>
+                                            </template>                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+
+                    <template if:true={isMx}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-small-size_12-of-12 slds-large-size_6-of-12 slds-p-right_small paddingbottomMob hidepaddingright">
+                                <div class="slds-grid slds-wrap" style="position: relative;width: 100%;">
+                                    <div class="slds-col slds-large-size_12-of-12">
+                                        <img src={newsBgImg} class="image">
+                                        <div class="slds-p-around_x-small">
+                                            <p class="titleClass componentNotoSansBold slds-p-around_x-small">{titleData}</p>
+                                            <template if:false={linkData}>
+                                                <p class="descClass slds-p-around_xx-small" style="min-height: 125px;">{descData}</p>
+                                            </template>
+                                            <template if:true={linkData}>
+                                                <p class="descClass slds-p-around_xx-small borderClass" style="min-height: 105px;">{descData}</p>
+                                                <a href={linkData} target="_blank">
+                                                    <div class="slds-float_left slds-p-top_medium descClass slds-p-around_xx-small componentNotoSansLight">{label.learnMore}
+                                                        <img src={whitearrowimage} style="height: 10px;" class="slds-p-left_xx-small">
+                                                    </div>
+                                                </a>
+                                            </template>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-small-size_12-of-12 slds-large-size_6-of-12 paddingbottomMob">
+                                <div class="slds-grid slds-wrap" style="position: relative;width: 100%;">
+                                    <div class="slds-col slds-large-size_12-of-12">
+                                        <img src={newsBgImg2} class="image">
+                                        <div class="slds-p-around_x-small">
+                                            <p class="titleClass componentNotoSansBold slds-p-around_x-small">{titleData1}</p>
+                                            <template if:false={linkData1}>
+                                                <p class="descClass slds-p-around_xx-small" style="min-height: 125px;">{descData1}</p>
+                                            </template>
+                                            <template if:true={linkData1}>
+                                                <p class="descClass slds-p-around_xx-small borderClass" style="min-height: 105px;">{descData1}</p>
+                                                <a href={linkData1} target="_blank">
+                                                    <div class="slds-float_left slds-p-top_medium descClass slds-p-around_xx-small componentNotoSansLight">{label.learnMore}
+                                                        <img src={whitearrowimage} style="height: 10px;" class="slds-p-left_xx-small">
+                                                    </div>
+                                                </a>
+                                            </template>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                   
+                    <template if:true={isAr}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-small-size_12-of-12 slds-large-size_12-of-12 slds-p-bottom_small paddingbottomMob hidepaddingright">
+                                <div class="slds-grid slds-wrap" style="position: relative;width: 100%;">
+                                    <div class="slds-col slds-large-size_12-of-12">
+                                        <img src={newsBgImg} class="image">
+                                        <div class="slds-p-around_x-small">
+                                            <p class="titleClass componentNotoSansBold slds-p-around_x-small bgblack">{titleData}</p>
+                                            <template if:false={linkData}>
+                                                <p class="descClass slds-p-around_xx-small bgblack" style="min-height: 125px;">{descData}</p>
+                                            </template>
+                                            <template if:true={linkData}>
+                                                <p class="descClass slds-p-around_xx-small borderClass bgblack" style="min-height: 105px;">{descData}</p>
+                                                <a href={linkData} target="_blank">
+                                                    <div class="slds-float_left slds-p-top_medium descClass slds-p-around_xx-small componentNotoSansLight">{label.learnMore}
+                                                        <img src={whitearrowimage} style="height: 10px;" class="slds-p-left_xx-small">
+                                                    </div>
+                                                </a>
+                                            </template>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-small-size_12-of-12 slds-large-size_12-of-12 paddingbottomMob">
+                                <div class="slds-grid slds-wrap" style="position: relative;width: 100%;">
+                                    <div class="slds-col slds-large-size_12-of-12">
+                                        <img src={newsBgImg2} class="image">
+                                        <div class="slds-p-around_x-small">
+                                            <p class="titleClass componentNotoSansBold slds-p-around_x-small bgblack">{titleData1}</p>
+                                            <template if:false={linkData1}>
+                                                <p class="descClass slds-p-around_xx-small bgblack" style="min-height: 125px;">{descData1}</p>
+                                            </template>
+                                            <template if:true={linkData1}>
+                                                <p class="descClass slds-p-around_xx-small borderClass bgblack" style="min-height: 105px;">{descData1}</p>
+                                                <a href={linkData1} target="_blank">
+                                                    <div class="slds-float_left slds-p-top_medium descClass slds-p-around_xx-small componentNotoSansLight">{label.learnMore}
+                                                        <img src={whitearrowimage} style="height: 10px;" class="slds-p-left_xx-small">
+                                                    </div>
+                                                </a>
+                                            </template>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+               
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</template>

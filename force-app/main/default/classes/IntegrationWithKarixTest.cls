@@ -1,0 +1,386 @@
+@isTest
+Public class IntegrationWithKarixTest {
+    Public static testMethod void testingMmethods(){
+        IntegrationWithKarix.Response res = new IntegrationWithKarix.Response();
+        IntegrationWithKarix.Status st = new IntegrationWithKarix.Status();
+        st.code ='200';
+        st.description = 'Success';
+        res.ackid ='123456789hfiu';
+        res.resTime ='ytgdg';
+        res.res ='rqygf';
+        res.status = st;
+        Profile prof = [select id from profile where name='UPL Call Expert'];
+        User usr = new User(LastName = 'Krishnan',
+                            FirstName='Sujin',
+                            Alias = 'Sujin',
+                            Email = 'abc@sfdc.com',
+                            Username = 'sujinkrishnnan2908199311123@sfdc.com',
+                            ProfileId = prof.id,
+                            TimeZoneSidKey = 'GMT',
+                            LanguageLocaleKey = 'en_US',
+                            EmailEncodingKey = 'UTF-8',
+                            LocaleSidKey = 'en_US'
+                           ); 
+        
+        system.runAs(usr){
+            Sales_Org__c SO = new Sales_Org__c();
+            so.name = 'TestFin';
+            so.Sales_Org_Code__c = '1000';
+            insert so;
+            
+            Product2 p = new product2();
+            //P.RecordTypeId= '';
+            p.name = 'testproduct';
+            p.Sales_Org__c = SO.ID;
+            p.Combination_Key__c = '123';
+            // p.Sales_Org_Code__c = 1000;
+            insert p;
+            Promotional_Product__c pp1 = new Promotional_Product__c();
+            pp1.Name = 'Testabc1';
+            pp1.Product_Name__c = p.id;
+            pp1.Current_Month__c = TRUE;
+            pp1.Month__c = 'Jan';
+            pp1.Financial_Year__c = '2020';
+            insert pp1;
+            
+            String farmerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Farmer').getRecordTypeId();
+            string caseRecordType  =  Schema.SObjectType.Case.getRecordTypeInfosByName().get('AKC General Case').getRecordTypeId();
+            Account acc = new Account( FirstName = 'test',Promotional_Product__c = pp1.id,LastName = 'test',PersonMobilePhone='9869457812',RecordTypeId = farmerRecordTypeId,Decision_Maker__pc = 'Yes',Crops_Cultivated__pc = 'Fruits/Vegetables',PersonBirthdate = Date.newInstance(1990, 09, 11),Mobile__c = '9869457812',What_is_your_highest_education_attained__pc = 'Illiterate',Using_Smart_Phone__c = 'No');
+            insert acc; 
+            
+            Case casobj = new Case(
+                AccountId  = acc.Id,
+                RecordTypeId = caseRecordType,
+                // Contact Name
+                Sent_to_ZM__c = false,                                                // Sent to ZM
+                Status = 'New',                                                    // Status
+                Type = 'Mandi price',                                                      // Type
+                Crop_pick__c = 'Brinjal',                                              // Crop
+                Sub_Query__c = 'Mandi price',                                              // Sub Query
+                //DAS__c = '60',                                                        // DAS
+                Origin = 'Call-Inbound',                                              // Case Origin
+                Croplist_is_Already_Updated__c = true,                               // Croplist is Already Updated
+                Override__c = false,                                                  // Override Season
+                Subject = 'Brinjal - Insect - Insect',                                // Subject
+                Description = 'Buldhana\tSales Officer (Sandeep Raut - 7720091449)',  // Description
+                Issue_Enquiry__c = '\n',                                              // Issue Enquiry
+                // ClosedDate = Datetime.valueOf('20-1-2016 3:05 PM:00'),                // Date/Time Closed
+                Priority = 'Medium',                                                  // Priority
+                PriorPromotion__c = true,
+                Cross_selling_Opportunity__c = 'Opportunity Available',
+                Call_Stage_at_which_the_call_closed__c = 'Product recommendation given',
+                purcahsedtherecommendedprodouct__c = 'Yes',
+                Rateyourexperienceonscaleof15__c = '3 - Neutral',
+                Treatment__c = 'Preventive',
+                Insect_General_Case__c ='Aphids',
+                Product_Recommended_1_gc__c = 'Amigo',
+                Dose_1_gc__c ='150',
+                Measure_1_gc__c = 'Ml Per Acre',
+                CaseOwner__c='RCM'
+            );
+            insert casobj;
+            //IntegrationWithKarix.createSMSHistory('acc.id','1234567892','testing...',res);
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator1());
+            IntegrationWithKarix.sendSMS(' testing','4652465421','acc.id','UPLLTD');
+            //IntegrationWithKarix.sendSMS(' testing','4652465421','casobj.id');
+            Test.stopTest();
+        }
+    }
+    Public static testMethod void testingMmethods1(){
+        IntegrationWithKarix.Response res = new IntegrationWithKarix.Response();
+        IntegrationWithKarix.Status st = new IntegrationWithKarix.Status();
+        st.code ='200';
+        st.description = 'Success';
+        res.ackid ='123456789hfiu';
+        res.resTime ='ytgdg';
+        res.res ='rqygf';
+        res.status = st;
+        Profile prof = [select id from profile where name='UPL Call Expert'];
+        User usr = new User(LastName = 'Krishnan',
+                            FirstName='Sujin',
+                            Alias = 'Sujin',
+                            Email = 'abc@sfdc.com',
+                            Username = 'sujinkrishnnan2908199311123@sfdc.com',
+                            ProfileId = prof.id,
+                            TimeZoneSidKey = 'GMT',
+                            LanguageLocaleKey = 'en_US',
+                            EmailEncodingKey = 'UTF-8',
+                            LocaleSidKey = 'en_US'
+                           ); 
+        
+        system.runAs(usr){
+            Sales_Org__c SO = new Sales_Org__c();
+            so.name = 'TestFin';
+            so.Sales_Org_Code__c = '1000';
+            insert so;
+            
+            Product2 p = new product2();
+            //P.RecordTypeId= '';
+            p.name = 'testproduct';
+            p.Sales_Org__c = SO.ID;
+            p.Combination_Key__c = '123';
+            // p.Sales_Org_Code__c = 1000;
+            insert p;
+            Promotional_Product__c pp1 = new Promotional_Product__c();
+            pp1.Name = 'Testabc1';
+            pp1.Product_Name__c = p.id;
+            pp1.Current_Month__c = TRUE;
+            pp1.Month__c = 'Jan';
+            pp1.Financial_Year__c = '2020';
+            insert pp1;
+            
+            String farmerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Farmer').getRecordTypeId();
+            string caseRecordType  =  Schema.SObjectType.Case.getRecordTypeInfosByName().get('AKC General Case').getRecordTypeId();
+            Account acc = new Account( FirstName = 'test',Promotional_Product__c = pp1.id,LastName = 'test',PersonMobilePhone='9869457812',RecordTypeId = farmerRecordTypeId,Decision_Maker__pc = 'Yes',Crops_Cultivated__pc = 'Fruits/Vegetables',PersonBirthdate = Date.newInstance(1990, 09, 11),Mobile__c = '9869457812',What_is_your_highest_education_attained__pc = 'Illiterate',Using_Smart_Phone__c = 'No');
+            insert acc; 
+            
+            Case casobj = new Case(
+                AccountId  = acc.Id,
+                RecordTypeId = caseRecordType,
+                // Contact Name
+                Sent_to_ZM__c = false,                                                // Sent to ZM
+                Status = 'New',                                                    // Status
+                Type = 'Mandi price',                                                      // Type
+                Crop_pick__c = 'Brinjal',                                              // Crop
+                Sub_Query__c = 'Mandi price',                                              // Sub Query
+                //DAS__c = '60',                                                        // DAS
+                Origin = 'Call-Inbound',                                              // Case Origin
+                Croplist_is_Already_Updated__c = true,                               // Croplist is Already Updated
+                Override__c = false,                                                  // Override Season
+                Subject = 'Brinjal - Insect - Insect',                                // Subject
+                Description = 'Buldhana\tSales Officer (Sandeep Raut - 7720091449)',  // Description
+                Issue_Enquiry__c = '\n',                                              // Issue Enquiry
+                // ClosedDate = Datetime.valueOf('20-1-2016 3:05 PM:00'),                // Date/Time Closed
+                Priority = 'Medium',                                                  // Priority
+                PriorPromotion__c = true,
+                Cross_selling_Opportunity__c = 'Opportunity Available',
+                Call_Stage_at_which_the_call_closed__c = 'Product recommendation given',
+                purcahsedtherecommendedprodouct__c = 'Yes',
+                Rateyourexperienceonscaleof15__c = '3 - Neutral',
+                Treatment__c = 'Preventive',
+                Insect_General_Case__c ='Aphids',
+                Product_Recommended_1_gc__c = 'Amigo',
+                Dose_1_gc__c ='150',
+                Measure_1_gc__c = 'Ml Per Acre',
+                CaseOwner__c='RCM'
+            );
+            insert casobj;
+            //IntegrationWithKarix.createSMSHistory('acc.id','1234567892','testing...',res);
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator1());
+            //IntegrationWithKarix.sendSMS(' testing','4652465421','acc.id');
+            IntegrationWithKarix.sendSMS(' testing','4652465421','casobj.id','UPLLTD');
+            IntegrationWithKarix.sendSMS(' testing','4652465421','casobj.id','Nurture');
+            casobj.status = 'Closed';
+            update casobj;
+            IntegrationWithKarix.sendSMS(' testing','4652465421','casobj.id','Nurture');
+            Test.stopTest();
+        }
+    }
+    
+     Public static testMethod void testingMmethods2(){
+        IntegrationWithKarix.Response res = new IntegrationWithKarix.Response();
+        IntegrationWithKarix.Status st = new IntegrationWithKarix.Status();
+        st.code ='200';
+        st.description = 'Success';
+        res.ackid ='123456789hfiu';
+        res.resTime ='ytgdg';
+        res.res ='rqygf';
+        res.status = st;
+        Profile prof = [select id from profile where name='SWAL Call Expert'];
+        User usr = new User(LastName = 'Krishnan',
+                            FirstName='Sujin',
+                            Alias = 'Sujin',
+                            Email = 'abc@sfdc.com',
+                            Username = 'sujinkrishnnan2908199311123@sfdc.com',
+                            ProfileId = prof.id,
+                            TimeZoneSidKey = 'GMT',
+                            LanguageLocaleKey = 'en_US',
+                            EmailEncodingKey = 'UTF-8',
+                            LocaleSidKey = 'en_US'
+                           ); 
+        
+        system.runAs(usr){
+            Sales_Org__c SO = new Sales_Org__c();
+            so.name = 'TestFin';
+            so.Sales_Org_Code__c = '1000';
+            insert so;
+            
+            Product2 p = new product2();
+            //P.RecordTypeId= '';
+            p.name = 'testproduct';
+            p.Sales_Org__c = SO.ID;
+            p.Combination_Key__c = '123';
+            // p.Sales_Org_Code__c = 1000;
+            insert p;
+            Promotional_Product__c pp1 = new Promotional_Product__c();
+            pp1.Name = 'Testabc1';
+            pp1.Product_Name__c = p.id;
+            pp1.Current_Month__c = TRUE;
+            pp1.Month__c = 'Jan';
+            pp1.Financial_Year__c = '2020';
+            insert pp1;
+            
+            String farmerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('SWAL Farmer').getRecordTypeId();
+            string caseRecordType  =  Schema.SObjectType.Case.getRecordTypeInfosByName().get('SWAL General Case').getRecordTypeId();
+            Account acc = new Account( FirstName = 'test',Promotional_Product__c = pp1.id,LastName = 'test',PersonMobilePhone='9869457812',RecordTypeId = farmerRecordTypeId,Decision_Maker__pc = 'Yes',Crops_Cultivated__pc = 'Fruits/Vegetables',PersonBirthdate = Date.newInstance(1990, 09, 11),Mobile__c = '9869457812',What_is_your_highest_education_attained__pc = 'Illiterate',Using_Smart_Phone__c = 'No');
+            insert acc; 
+            
+            Case casobj = new Case(
+                AccountId  = acc.Id,
+                RecordTypeId = caseRecordType,
+                // Contact Name
+                Sent_to_ZM__c = false,                                                // Sent to ZM
+                Status = 'New',                                                    // Status
+                Type = 'Mandi price',                                                      // Type
+                Crop_pick__c = 'Brinjal',                                              // Crop
+                Sub_Query__c = 'Mandi price',                                              // Sub Query
+                //DAS__c = '60',                                                        // DAS
+                Origin = 'Call-Inbound',                                              // Case Origin
+                Croplist_is_Already_Updated__c = true,                               // Croplist is Already Updated
+                Override__c = false,                                                  // Override Season
+                Subject = 'Brinjal - Insect - Insect',                                // Subject
+                Description = 'Buldhana\tSales Officer (Sandeep Raut - 7720091449)',  // Description
+                Issue_Enquiry__c = '\n',                                              // Issue Enquiry
+                // ClosedDate = Datetime.valueOf('20-1-2016 3:05 PM:00'),                // Date/Time Closed
+                Priority = 'Medium',                                                  // Priority
+                PriorPromotion__c = true,
+                Cross_selling_Opportunity__c = 'Opportunity Available',
+                Call_Stage_at_which_the_call_closed__c = 'Product recommendation given',
+                purcahsedtherecommendedprodouct__c = 'Yes',
+                Rateyourexperienceonscaleof15__c = '3 - Neutral',
+                Treatment__c = 'Preventive',
+                Insect_General_Case__c ='Aphids',
+                Product_Recommended_1_gc__c = 'Amigo',
+                Dose_1_gc__c ='150',
+                Measure_1_gc__c = 'Ml Per Acre',
+                CaseOwner__c='RCM'
+            );
+            insert casobj;
+            //IntegrationWithKarix.createSMSHistory('acc.id','1234567892','testing...',res);
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator1());
+            IntegrationWithKarix.sendSMSforSWAL(' testing','4652465421','acc.id');
+            //IntegrationWithKarix.sendSMS(' testing','4652465421','casobj.id');
+            Test.stopTest();
+        }
+    }
+    Public static testMethod void testingMmethods3(){
+        IntegrationWithKarix.Response res = new IntegrationWithKarix.Response();
+        IntegrationWithKarix.Status st = new IntegrationWithKarix.Status();
+        st.code ='200';
+        st.description = 'Success';
+        res.ackid ='123456789hfiu';
+        res.resTime ='ytgdg';
+        res.res ='rqygf';
+        res.status = st;
+        Profile prof = [select id from profile where name='SWAL Call Expert'];
+        User usr = new User(LastName = 'Krishnan',
+                            FirstName='Sujin',
+                            Alias = 'Sujin',
+                            Email = 'abc@sfdc.com',
+                            Username = 'sujinkrishnnan2908199311123@sfdc.com',
+                            ProfileId = prof.id,
+                            TimeZoneSidKey = 'GMT',
+                            LanguageLocaleKey = 'en_US',
+                            EmailEncodingKey = 'UTF-8',
+                            LocaleSidKey = 'en_US'
+                           ); 
+        
+        system.runAs(usr){
+            Sales_Org__c SO = new Sales_Org__c();
+            so.name = 'TestFin';
+            so.Sales_Org_Code__c = '1000';
+            insert so;
+            
+            Product2 p = new product2();
+            //P.RecordTypeId= '';
+            p.name = 'testproduct';
+            p.Sales_Org__c = SO.ID;
+            p.Combination_Key__c = '123';
+            // p.Sales_Org_Code__c = 1000;
+            insert p;
+            Promotional_Product__c pp1 = new Promotional_Product__c();
+            pp1.Name = 'Testabc1';
+            pp1.Product_Name__c = p.id;
+            pp1.Current_Month__c = TRUE;
+            pp1.Month__c = 'Jan';
+            pp1.Financial_Year__c = '2020';
+            insert pp1;
+            
+            String farmerRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('SWAL Farmer').getRecordTypeId();
+            string caseRecordType  =  Schema.SObjectType.Case.getRecordTypeInfosByName().get('SWAL General Case').getRecordTypeId();
+            Account acc = new Account( FirstName = 'test',Promotional_Product__c = pp1.id,LastName = 'test',PersonMobilePhone='9869457812',RecordTypeId = farmerRecordTypeId,Decision_Maker__pc = 'Yes',Crops_Cultivated__pc = 'Fruits/Vegetables',PersonBirthdate = Date.newInstance(1990, 09, 11),Mobile__c = '9869457812',What_is_your_highest_education_attained__pc = 'Illiterate',Using_Smart_Phone__c = 'No');
+            insert acc; 
+            
+            Case casobj = new Case(
+                AccountId  = acc.Id,
+                RecordTypeId = caseRecordType,
+                // Contact Name
+                Sent_to_ZM__c = false,                                                // Sent to ZM
+                Status = 'New',                                                    // Status
+                Type = 'Mandi price',                                                      // Type
+                Crop_pick__c = 'Brinjal',                                              // Crop
+                Sub_Query__c = 'Mandi price',                                              // Sub Query
+                //DAS__c = '60',                                                        // DAS
+                Origin = 'Call-Inbound',                                              // Case Origin
+                Croplist_is_Already_Updated__c = true,                               // Croplist is Already Updated
+                Override__c = false,                                                  // Override Season
+                Subject = 'Brinjal - Insect - Insect',                                // Subject
+                Description = 'Buldhana\tSales Officer (Sandeep Raut - 7720091449)',  // Description
+                Issue_Enquiry__c = '\n',                                              // Issue Enquiry
+                // ClosedDate = Datetime.valueOf('20-1-2016 3:05 PM:00'),                // Date/Time Closed
+                Priority = 'Medium',                                                  // Priority
+                PriorPromotion__c = true,
+                Cross_selling_Opportunity__c = 'Opportunity Available',
+                Call_Stage_at_which_the_call_closed__c = 'Product recommendation given',
+                purcahsedtherecommendedprodouct__c = 'Yes',
+                Rateyourexperienceonscaleof15__c = '3 - Neutral',
+                Treatment__c = 'Preventive',
+                Insect_General_Case__c ='Aphids',
+                Product_Recommended_1_gc__c = 'Amigo',
+                Dose_1_gc__c ='150',
+                Measure_1_gc__c = 'Ml Per Acre',
+                CaseOwner__c='RCM'
+            );
+            insert casobj;
+            //IntegrationWithKarix.createSMSHistory('acc.id','1234567892','testing...',res);
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator1());
+            //IntegrationWithKarix.sendSMS(' testing','4652465421','acc.id');
+            IntegrationWithKarix.sendSMSforSWAL(' testing','4652465421','casobj.id');
+            Test.stopTest();
+        }
+    }
+    Public static testMethod void testingMmethods4(){
+        IntegrationWithKarix.Response res = new IntegrationWithKarix.Response();
+        IntegrationWithKarix.Status st = new IntegrationWithKarix.Status();
+        st.code ='200';
+        st.description = 'Success';
+        res.ackid ='123456789hfiu';
+        res.resTime ='ytgdg';
+        res.res ='rqygf';
+        res.status = st;
+        Profile prof = [select id from profile where name='UPL Call Expert'];
+        User usr = new User(LastName = 'Puri',
+                            FirstName='Aashima',
+                            Alias = 'Aashi',
+                            Email = 'abc@sfdc.com',
+                            Username = 'aashimapuri@sfdc.com',
+                            ProfileId = prof.id,
+                            TimeZoneSidKey = 'GMT',
+                            LanguageLocaleKey = 'en_US',
+                            EmailEncodingKey = 'UTF-8',
+                            LocaleSidKey = 'en_US'
+                           ); 
+        insert usr;
+        system.runAs(usr){
+            Test.startTest();
+            System.debug('user id'+usr.Id);
+            Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator1());
+            IntegrationWithKarix.sendSMS('Grazitti testing','4652465421','usr.id','UPLLTD');
+            Test.stopTest();
+        }
+    }
+}

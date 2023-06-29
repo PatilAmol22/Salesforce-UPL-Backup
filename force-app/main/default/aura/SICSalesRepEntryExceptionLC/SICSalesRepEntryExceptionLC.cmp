@@ -1,0 +1,73 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" 
+                access="global" 
+                controller = "SICSalesRepEntry">
+    
+      <!-- Attribute -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="FileName" type="string" />
+    <aura:attribute name="doc" type="string" />
+    <aura:attribute name="ShowSampleTemplate" type="boolean" default="false"/>
+    <aura:attribute name="ShowFileName" type="boolean" default="false"/>
+    <aura:attribute name="ShowOption" type="boolean" default="false"/>
+    <aura:attribute name="User" type="Object" />
+    <aura:attribute name="ShowComponent" type="boolean" default="false"/>
+    <aura:attribute name="ActiveSection" type="string"/>
+    
+    <!-- -->
+     <lightning:card>
+            
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto"  size="4">
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="4">
+                    
+                </lightning:layoutItem>   
+                <lightning:layoutItem flexibility="auto"  size="4"> 
+                    
+                        <a href="{!v.doc}" >{!$Label.c.Sample_Template}</a>
+                    
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto"  size="4">
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto" size="4">
+                    <lightning:input aura:id="fileId" 
+                                     type="file" 
+                                     name="file" 
+                                     multiple="false" 
+                                     onchange="{!c.fileSelected}"/> 
+                    <aura:if isTrue="{!v.ShowFileName}">
+                        <ui:outputText aura:id="filename" value="{!v.FileName}"></ui:outputText>
+                    </aura:if>
+                    <ui:outputText aura:id="ErrorFile" class="error-text slds-hide"  value="{!$Label.c.CompleteThisField}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="4">           
+                    
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto"  size="5" >
+                    
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="2" >
+                    <lightning:button label="{!$Label.c.SIC_Submit}" 
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.onFileUploaded}"/>   
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="auto"  size="5" >
+                    
+                </lightning:layoutItem>
+            </lightning:layout>
+         <lightning:layout>
+        
+         
+         </lightning:layout>
+            
+            
+            
+        </lightning:card>
+    
+	
+</aura:component>

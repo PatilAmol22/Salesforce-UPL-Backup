@@ -1,0 +1,266 @@
+<template>
+    <c-grz_header-image-cmp bgimg={backgroundimage} imglabel={Headertitle} customcss='top: 9%;'>
+    </c-grz_header-image-cmp>
+    <div>
+        <c-grz_bread-crumb labelone={Headertitle} linkone=''>
+        </c-grz_bread-crumb>
+    </div>
+    <template if:true={isSpinner}>
+        <div class="">
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <div class="slds-grid">
+        <div class="">
+            <div class="list-title componentNotoSansBold">{Headertitle}</div>
+        </div>
+        <template if:false={nodata}>
+            <div class="slds-col_bump-left slds-p-right_small">
+                    <div class="download-div">
+                        <span class="componentNotoSansBold">
+                            <a href={SalesOrderpdfURL} download="Ordenes de venta.pdf" target="_blank" onclick={SalesOrderPDF}>
+                                <button class="dwnld-btn"><span class="download-icon">
+                                    <img src={downloadIcon} style="height:15px; width:15px;" /></span><span>{DownloadPDF}</span>
+                                </button>
+                            </a>
+                        </span>
+                    </div>
+                    <!--<div class="download-div">
+                        <span class="componentNotoSansBold">
+                            <a href={SalesOrderxlsURL} download="ordenes de venta.xls" target="_blank" onclick={SalesOrderXLS}>
+                                <button class="dwnld-btn"><span class="download-icon">
+                                    <img src={downloadIcon} style="height:15px; width:15px;" /></span><span>Download XLS</span>
+                                </button>
+                            </a>
+                        </span>
+                    </div>-->
+            </div>
+            <div class="">
+                <div class="download-div">
+                    <span class="componentNotoSansBold">
+                        <a href={SalesOrderxlsURL} download="Ordenes de venta.xls" target="_blank" onclick={SalesOrderXLS}>
+                            <button class="dwnld-btn"><span class="download-icon">
+                                <img src={downloadIcon} style="height:15px; width:15px;" /></span><span>{DownloadXLS}</span>
+                            </button>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </template>
+
+    </div>
+    <!-- Block For Filter And Tabel -->
+    <div class="component-block">
+        <!-- Sales Order Filters -->
+        <div class="filter-section slds-m-right_small">
+            <div class="left-filter">
+                <div class="search-filter">
+                    <div class="search-box">
+                        <lightning-input variant="label-hidden" onkeypress={handleKeyChange}
+                            class="slds-col slds-m-bottom_small slds-m-left_small mrg-tp" placeholder="Orden de búsqueda"
+                            value={searchKey}>
+                        </lightning-input>
+                        <span if:true={searchKey} class="close-icon">
+                            <lightning-icon size="x-small" icon-name="utility:close" onclick={clearClick}>
+                            </lightning-icon>
+                        </span>
+                    </div>
+                    <div class="slds-p-left_x-small search-btn mrg-tp">
+                        <button onclick={buttonClick}
+                            class="slds-button slds-button_brand slds-button_icon slds-button_icon-border-filled ">
+                            <lightning-icon icon-name="utility:search" size="x-small" class=""></lightning-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="year-filter">
+                    <!-- <lightning-combobox value={onLoadFiscalYear} 
+                                            label = "Ano"
+                                            placeholder="Yearly Data" 
+                                            options={fiscalYearOptions} 
+                                            onchange={handleFiscalYearChange}>
+                        </lightning-combobox> -->
+                    <div class="slds-p-left_small mobile-font-date date-width pad-l">
+                        <lightning-input placeholder="Fecha de inicio" label="Fecha de inicio" type="date" date-style="short"
+                            value={startDate} min={fiscalyearStartDate} max={fiscalyearEndDate}
+                            onchange={startDateChange}></lightning-input>
+                        <!--<lightning-input  type="date" value={contractStartDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={startDateChange}></lightning-input> -->
+                    </div>
+                    <div class="slds-p-left_small mobile-font-date date-width">
+                        <lightning-input placeholder="Fecha final" label="Fecha final" type="date" value={endDate} date-style="short"
+                            min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={endDateChange}>
+                        </lightning-input>
+                        <!--<lightning-input  type="date" value={contractEndDate} min={fiscalyearStartDate} max={fiscalyearEndDate} onchange={endDateChange}></lightning-input> -->
+                    </div>
+                </div>
+            </div>
+            <div class="right-filter">
+                <div class="date-filter">
+                    <lightning-combobox value={datevalue} label="Ordenar por Fecha"
+                        placeholder="Sort By Created Date" options={dateoptions} onchange={handleChangeDate}>
+                    </lightning-combobox>
+                </div>
+                <div class="type-filter">
+                    <lightning-combobox value={value} placeholder="Sort By Order Status"
+                        label="Ordenar por Estado" options={picValueOptions} onchange={handleChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+        </div>
+        <!-- <div class=" main-2l-filter">
+            <div class="invoice-filter slds-p-left_small">
+                <lightning-combobox label="Classificar Por Status do Pedido" value={invoicevalue}
+                    placeholder="Classificar Por Status do Pedido" options={invoiceoptions}
+                    onchange={handleChangeinvoice}>
+                </lightning-combobox>
+            </div>
+           <template if:true={isParentBr}>
+                <div class="parent-filter slds-p-left_small">
+                    <lightning-combobox label="Cliente" value={distributorValue} placeholder="Cliente"
+                        options={distributorOptionsBr} onchange={handleDistributor}>
+                    </lightning-combobox>
+                </div>
+            </template>
+        </div>-->
+        <!-- Sales Order List Table Section -->
+        <div if:false={isLoading}>
+            <template if:false={isMobile}>
+                <div class="table-scroll slds-p-left_small  slds-p-right_small">
+                    <div class="slds-grid slds-wrap table-width-scroll">
+                        <table class="slds-m-bottom_small">
+                            <thead class="componentNotoSansLight table-head">
+                                <tr>
+                                    <th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Orden de venta">Orden de venta</div>
+                                    </th>
+                                    <!--<th class="slds-p-left_x-small table-head-css" scope="col"> 
+                                        <div class="slds-truncate" title="Pedido de Venda SAP">Pedido de Venda SAP</div>
+                                    </th>-->
+                                    <th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Estado de la orden">Estado de la orden</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Fecha de creación">Fecha de creación</div>
+                                    </th>
+                                    <!-- <th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="CTC">CTC</div>
+                                    </th> -->
+                                    <th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Cliente">Cliente</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Ciudad">Ciudad</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Moneda">Moneda</div>
+                                    </th>
+                                    <th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Monto">Monto</div>
+                                    </th>
+                                    <!--<th class="slds-p-left_x-small table-head-css" scope="col">
+                                        <div class="slds-truncate" title="Tipo de orden">Tipo de orden</div>
+                                    </th>-->
+                                </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                <template for:each={salesOrderList} for:item="Sorder">
+                                    <tr key={Sorder.Id} class="slds-border_bottom">
+                                    <template if:true={Sorder.SAPOrderNumber}>
+                                        <td class="slds-p-left_x-small table-body-css">
+                                            <a data-value={Sorder.Id} onclick={handleOrderDetail} href={detailPageLink} target="_blank"
+                                                class="order-link">{Sorder.SAPOrderNumber}</a>
+                                        </td>
+                                    </template>
+                                    <template if:false={Sorder.SAPOrderNumber}>
+                                        <td class="slds-p-left_x-small table-body-css">
+                                            <a data-value={Sorder.Id} onclick={handleOrderDetail} href={detailPageLink} target="_blank"
+                                                class="order-link">{Sorder.SFDCOrderNumber}</a>
+                                        </td>
+                                    </template>
+                                        <td class="slds-p-left_x-small table-body-css" scope="col">
+                                            <div>{Sorder.OrderStatus}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css" scope="col">
+                                            <div>{Sorder.CreatedDate}</div>
+                                        </td>
+                                        <!-- <td class="slds-p-left_x-small table-body-css" scope="col">
+                                            <div>{Sorder.SalesRepName}</div>
+                                        </td> -->
+                                        <td class="slds-p-left_x-small table-body-css" scope="col">
+                                            <div>{Sorder.SoldToPartyName}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css" scope="col">
+                                            <div>{Sorder.City}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css" scope="col">
+                                            <div>{Sorder.CurrencyMexico}</div>
+                                        </td>
+                                        <td class="slds-p-left_x-small table-body-css" scope="col">
+                                            <div>
+                                                <lightning-formatted-number value={Sorder.Amount} minimum-fraction-digits="2"></lightning-formatted-number>
+                                            </div>
+                                        </td>
+                                        <!--<td class="slds-p-left_x-small table-body-css" scope="col">
+                                            <div>{Sorder.OrderType}</div>
+                                        </td>-->
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            <template if:true={isMobile}>
+                <template if:true={salesOrderList}>
+                    <c-responsive-card country='Mexico' columns={orderColumn} table-data={salesOrderList} onshow={handleOrderDetail}></c-responsive-card>
+                </template>
+            </template>
+         
+            <!-- No Data Error -->
+            <div if:true={nodata}>
+                <p class="slds-text-align_center nodatacss">No hay datos de pedidos de venta para mostrar.</p>
+            </div>
+            <!--<template if:false={nodata}>
+                <div class="download-div">
+                    <span class="componentNotoSansBold slds-m-right_medium">
+                        <a href={SalesOrderpdfURL} download="ordenes de venta.pdf" target="_blank"
+                            onclick={SalesOrderPDF}><button class="dwnld-btn"><span class="download-icon"><img
+                                        src={downloadIcon} style="height:15px; width:15px;" /></span><span>Download
+                                    PDF</span></button></a>
+                    </span>
+                    <span class="componentNotoSansBold">
+                        <a href={SalesOrderxlsURL} download="ordenes de venta.xls" target="_blank"
+                            onclick={SalesOrderXLS}><button class="dwnld-btn"><span class="download-icon"><img
+                                        src={downloadIcon} style="height:15px; width:15px;" /></span><span>Download
+                                    XLS</span></button></a>
+                    </span>
+                </div>
+            </template>-->
+        </div>
+        <div if:true={isLoading} class="slds-is-relative" style="z-index: 5;">
+            <lightning-spinner alternative-text="Loading..." variant="brand" class="spinner-css"></lightning-spinner>
+        </div>
+    </div>
+    <!-- Pagination Values -->
+    <lightning-layout-item size="12" padding="around-small">
+        <div class="slds-align_absolute-center">
+            <lightning-button variant="base" label="Primero" disabled={disableFirst} onclick={handleFirst}
+                class="slds-m-left_x-small">
+            </lightning-button>
+            <lightning-button variant="base" label="Anterior" disabled={disableFirst} onclick={handlePrevious}
+                class="slds-m-left_x-small slds-m-right_x-small">
+            </lightning-button>
+            <template for:each={pagelist} for:item="item" for:index="index">
+                <span key={item} data-id={item}
+                    class="themeborder testcss slds-m-left_xx-small slds-m-right_xx-small slds-p-horizontal_x-small">
+                    <a class="testcss" onclick={processMe} name={item} data-id={item}>{item}</a>
+                </span>
+            </template>
+            <lightning-button variant="base" label="próximo" disabled={disableNext} onclick={handleNext}
+                class="slds-m-left_x-small">
+            </lightning-button>
+            <lightning-button variant="base" label="ultimo" disabled={disableNext} onclick={handleLast}
+                class="slds-m-left_x-small">
+            </lightning-button>
+        </div>
+    </lightning-layout-item>
+</template>

@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_Notification_to_CST</fullName>
+        <description>Email Notification to CST</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Brazil_Customer_Service_Team</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/SOR_Email_template_for_LG_CS_QT</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Notification_to_LG</fullName>
+        <description>Email Notification to LG</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20011835@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20031437@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20034339@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30028186@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/SOR_Email_template_for_LG_CS_QT</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Notification_to_Process_Completion</fullName>
+        <description>Email Notification to Process Completion</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <recipient>Brazil_Customer_Service_Team</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>20004717@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20011835@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20034339@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20035962@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30028186@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30031753@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/SOR_Process_Completion_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_Notification_to_QT</fullName>
+        <description>Email Notification to QT</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>20004717@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>20035962@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>30031753@upl-ltd.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/SOR_Email_template_for_LG_CS_QT</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_alert_if_SOR_Approved</fullName>
+        <description>Email alert if SOR Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/SOR_Approved_Email_Template</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_alert_if_SOR_Rejected</fullName>
+        <description>Email alert if SOR Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/SOR_Rejected_Email_Template</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Approved_by_Region_Finance_Head</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Approved by Region Finance Head</literalValue>
+        <name>Approved by Region Finance Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Blank_Proceed_with_Return</fullName>
+        <field>Proceed_with_Return__c</field>
+        <name>Blank Proceed with Return</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Check_Recall_Approval_Checkbox</fullName>
+        <field>Recall_Approval__c</field>
+        <literalValue>1</literalValue>
+        <name>Check Recall Approval Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Rejected_by_Region_Finance_Head</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected by Region Finance Head</literalValue>
+        <name>Rejected by Region Finance Head</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_Open</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>Status Open</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Status_Rejected</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Status Rejected</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Call_Approval_Process</fullName>
+        <field>Call_RSO_Approval_Process__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Call Approval Process</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Uncheck_Recall_Approval_Checkbox</fullName>
+        <field>Recall_Approval__c</field>
+        <literalValue>0</literalValue>
+        <name>Uncheck Recall Approval Checkbox</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_Status_as_Recall</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Recall</literalValue>
+        <name>Update Order Status as &apos;Recall&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Order_status_Appro</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>Update Order status &apos;Appro&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Return_Order_Status_As_Submitted</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Pending For Approval</literalValue>
+        <name>Update Return Order Status As Submitted</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_as_Pending</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Pending</literalValue>
+        <name>Update Status as &apos;Pending&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_Approved_by_Ct</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Approved By Credit Team</literalValue>
+        <name>Update Sub Status as &apos;Approved by Ct&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_Status_as_Approved_by_LM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Approved By Logistic Manager</literalValue>
+        <name>Update Sub Status as &apos;Approved by LM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Approved_By_OM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Approved By Operational Manager</literalValue>
+        <name>Update Sub status &apos;Approved By OM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Approved_By_QT</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Approved By Quality Team</literalValue>
+        <name>Update Sub status &apos;Approved By QT&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Approved_By_SD</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Approved By Sales Director</literalValue>
+        <name>Update Sub status &apos;Approved By SD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Approved_By_Supply_D</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending At CCO</literalValue>
+        <name>Update Sub status &apos;Approved By Supply D&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Pending_At_QT</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending At Quality Manager</literalValue>
+        <name>Update Sub status &apos;Pending At QT&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Pending_At_SD</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending At Sales Director</literalValue>
+        <name>Update Sub status &apos;Pending At SD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Pending_At_SDM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending At Sales District Manager</literalValue>
+        <name>Update Sub status &apos;Pending At SDM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Pending_At_SMM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending At Slow Moving Manager</literalValue>
+        <name>Update Sub status &apos;Pending At SMM</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Pending_At_SOM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending At Sales Office Manager</literalValue>
+        <name>Update Sub status &apos;Pending At SOM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Pending_At_Supply_Di</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending At Supply Director</literalValue>
+        <name>Update Sub status &apos;Pending At Supply Di&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Pending_at_BC</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending At Book Collection</literalValue>
+        <name>Update Sub status &apos;Pending at BC&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Pending_at_RF_Head</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Pending at Region Finance Head</literalValue>
+        <name>Update Sub status &apos;Pending at RF Head&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_CCO</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By CCO</literalValue>
+        <name>Update Sub status &apos;Rejected By CCO&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_CFO</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By CFO</literalValue>
+        <name>Update Sub status &apos;Rejected By CFO&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_CT</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Credit Team</literalValue>
+        <name>Update Sub status &apos;Rejected By CT&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_IT</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Inspection Team</literalValue>
+        <name>Update Sub status &apos;Rejected By IT&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_IT_Team</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Inspection Team</literalValue>
+        <name>Update Sub status &apos;Rejected By IT Team&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_LM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Logistic Manager</literalValue>
+        <name>Update Sub status &apos;Rejected By LM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_OM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Operational Manager</literalValue>
+        <name>Update Sub status &apos;Rejected By OM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_QT</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Quality Team</literalValue>
+        <name>Update Sub status &apos;Rejected By QT&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_SD</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Sales Director</literalValue>
+        <name>Update Sub status Rejected By SD&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_SDM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Sales District Manager</literalValue>
+        <name>Update Sub status &apos;Rejected By SDM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_SMM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Slow Moving Manager</literalValue>
+        <name>Update Sub status &apos;Rejected By SMM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_SOM</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Sales Office Manager</literalValue>
+        <name>Update Sub status &apos;Rejected By SOM&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sub_status_Rejected_By_Supply_D</fullName>
+        <field>Sub_Status__c</field>
+        <literalValue>Rejected By Supply Director</literalValue>
+        <name>Update Sub status &apos;Rejected By Supply D&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_as_Open</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Open</literalValue>
+        <name>Update status as &apos;Open&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_status_as_Rejected</fullName>
+        <field>Order_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>Update Status as &apos;Rejected&apos;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

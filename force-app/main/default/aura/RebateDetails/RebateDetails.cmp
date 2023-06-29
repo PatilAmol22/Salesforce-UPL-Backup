@@ -1,0 +1,829 @@
+<aura:component controller="BRRebateModule" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}" />-->
+    
+    <aura:attribute name="Goaldata" type="Object"/>
+    <aura:attribute name="Actualdata" type="Object"/>
+    <aura:attribute name="GrowthAnalysisVSPreviousYear" type="Object"/>
+    <aura:attribute name="PamProductList" type="List"/>
+    <aura:attribute name="TotalPP" type="Object"/>
+    <aura:attribute name="OtherProduct" type="Object"/>
+    <aura:attribute name="totalProduct" type="Object"/>
+    <aura:attribute name="showHome" type="boolean" default="true"/>
+    <aura:attribute name="showDetail" type="boolean" default="false"/>
+    <aura:attribute name="ProductCategory" type="List"/><!-- added by diwansh -->
+    <aura:attribute name="myTotalMap" type="Map" />
+    <aura:attribute name="valueMap" type="List"/>
+    <aura:attribute name="ContractHeader" type="Object"/>
+    <aura:attribute name="LastYear" type="String"/>
+    <aura:attribute name="AdjacentYear" type="String"/>
+    <aura:handler name="change" value="{!v.ContractHeader}" action="{!c.doInit}"/>
+    <aura:attribute name="LoadingBalls" type="Boolean" default="True"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <aura:if isTrue="{!v.LoadingBalls}">
+        
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>  
+    
+    
+    
+    
+    <lightning:card>
+        <aura:set attribute="title">
+         </aura:set>   
+             <lightning:layout>
+            <lightning:layoutItem size="12" padding="around-small">
+                <div class="slds-align_absolute-center">
+                    <lightning:button label="{!$Label.c.REB_Back}" title="Back" onclick="{! c.Back }"/>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+            
+            <lightning:layout>
+                <lightning:layoutItem size="12" padding="horizontal-medium">
+                    <div class="slds-align_absolute-center">
+                    <b>{!$Label.c.REB_Progress}</b>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        
+        <lightning:layout>
+            <lightning:layoutItem size="3" ><!-- padding="around-small" -->
+                <div class="slds-p-left_x-small">
+                <b> {!$Label.c.RebateContract}</b>:  {!v.ContractHeader.Contract}
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b> {!$Label.c.RebateWFStatus}</b>:  {!v.ContractHeader.Status}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b>{!$Label.c.RebateCurrency}</b>: {!v.ContractHeader.curr}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b>Status</b>: {!v.ContractHeader.pStatus}
+            </lightning:layoutItem>
+        </lightning:layout>
+       
+        
+        <lightning:layout>
+            <lightning:layoutItem size="3" >
+                <div class="slds-p-left_x-small">
+                <b>{!$Label.c.RebateDistributor}</b>:  {!v.ContractHeader.DistributorCode} - {!v.ContractHeader.Distributor}
+                </div>
+                </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b>{!$Label.c.RebateType}</b>: {!v.ContractHeader.Type}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b>{!$Label.c.RebateCategoryName}</b>: {!v.ContractHeader.Category_Name}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b>{!$Label.c.RebateValidity}</b>: {!v.ContractHeader.Initial_date} até {!v.ContractHeader.Final_date} 
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        <lightning:layout>
+            <lightning:layoutItem size="3" >
+                <div class="slds-p-left_x-small">
+                <b>{!$Label.c.Rebate}</b>: {!v.ContractHeader.Director}
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b>{!$Label.c.RebateBU}</b>: {!v.ContractHeader.BU}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b>{!$Label.c.RebateRegionalName}</b>: {!v.ContractHeader.Branch}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" >
+                <b>{!$Label.c.RebateSalesRep}</b>: {!v.ContractHeader.CTC}
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        <br/>
+        
+        <lightning:layout>
+            <lightning:layoutItem size="1" >
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="3" class="custom_font_small custom-background-green slds-text-body_small slds-border_left slds-border_bottom slds-border_right slds-border_top" padding="horizontal-medium">
+                {!$Label.c.REB_Table_One}
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="4" class="custom_font_small custom-background-green slds-text-body_small slds-border_left slds-border_bottom slds-border_right slds-border_top" padding="horizontal-medium">
+                {!$Label.c.REB_Table_Two}
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="3" class="custom_font_small custom-background-green slds-text-body_small slds-border_left slds-border_bottom slds-border_right slds-border_top" padding="horizontal-medium">
+                {!$Label.c.REB_Table_Three}
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+        </lightning:layout>
+        <br/>
+        <lightning:layout>
+            <lightning:layoutItem size="1"  padding="horizontal-medium">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3"  >
+                <table style="width:100%;" border="1">
+                        <tr>
+                            <th style="width:30%;background-color: #a9d08e;text-align: center;" >
+                               {!$Label.c.REB_Goals}&nbsp; {!v.LastYear}
+                            </th>
+                            
+                            <th style="width:35%;background-color: #f4b084;text-align: center;">
+                               {!$Label.c.REB_Actual}&nbsp;{!v.LastYear}
+                                
+                            </th>
+                            <th style="width:35%;text-align: center;">
+                               {!$Label.c.REB_Attainment}
+                                 
+                            </th>
+                            
+                        </tr>
+                        
+                            <tr>
+                                <td style="width:30%;text-align: right;padding-right: 5px;">
+                                   <lightning:formattedNumber value="{!v.Goaldata.GoalsCY}" minimumFractionDigits="2"/>
+                                </td>
+                                
+                                <td style="width:35%;text-align: right;padding-right: 5px;">
+                                  <lightning:formattedNumber value="{!v.Goaldata.ActualCY}" minimumFractionDigits="2"/>  
+                                </td>
+                                <td style="width:35%;text-align: right;padding-right: 5px;">
+                                  <lightning:formattedNumber value="{!v.Goaldata.Attainment}" minimumFractionDigits="2"/>
+                                </td>
+                                
+                            </tr>
+                       
+                        
+                    </table>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="4"  padding="horizontal-medium">
+                
+                 <table style="width:100%;" border="1">
+                        <tr>
+                            <th style="width:30%;background-color: #a9d08e;text-align: center;" >
+                               {!$Label.c.REB_Real}
+                            </th>
+                            
+                            <th style="width:35%;background-color: #f4b084;text-align: center;">
+                               {!$Label.c.REB_Returns}
+                                
+                            </th>
+                            <th style="width:35%;text-align: center;">
+                               % {!$Label.c.REB_Returns}
+                                 
+                            </th>
+                            
+                        </tr>
+                        
+                            <tr>
+                                <td style="width:30%;text-align: right;padding-right: 5px;">
+                                   <lightning:formattedNumber value="{!v.Actualdata.Real}" minimumFractionDigits="2"/>
+                                </td>
+                                
+                                <td style="width:35%;text-align: right;padding-right: 5px;">
+                                  <lightning:formattedNumber value="{!v.Actualdata.Returns}" minimumFractionDigits="2"/>
+                                </td>
+                                <td style="width:35%;text-align: right;padding-right: 5px;">
+                                  {!v.Actualdata.PercntReturns}
+                                </td>
+                                
+                            </tr>
+                       
+                        
+                    </table>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3"  >
+                <table style="width:100%;" border="1" >
+                        <tr>
+                            <th style="width:30%;background-color: #a9d08e;text-align: center;" >
+                              {!$Label.c.REB_Actual}&nbsp; {!v.AdjacentYear}
+                            </th>
+                            
+                            <th style="width:35%;background-color: #f4b084;text-align: center;">
+                               {!$Label.c.REB_Actual}&nbsp; {!v.LastYear} 
+                                
+                            </th>
+                            <th style="width:35%;text-align: center;">
+                              {!$Label.c.REB_Growth}
+                                 
+                            </th>
+                            
+                        </tr>
+                        
+                            <tr>
+                                <td style="width:30%;text-align: right;padding-right: 5px;">
+                                  <lightning:formattedNumber value="{!v.GrowthAnalysisVSPreviousYear.Actual_LY}" minimumFractionDigits="2"/>
+                                </td>
+                                
+                                <td style="width:35%;text-align: right;padding-right: 5px;">
+                                  <lightning:formattedNumber value="{!v.GrowthAnalysisVSPreviousYear.Actual_TY}" minimumFractionDigits="2"/>
+                                </td>
+                                <td style="width:35%;text-align: right;padding-right: 5px;">
+                                  {!v.GrowthAnalysisVSPreviousYear.Growth}
+                                </td>
+                                
+                            </tr>
+                       
+                        
+                    </table>
+            </lightning:layoutItem>
+            
+            
+            <lightning:layoutItem size="1"  padding="horizontal-medium">
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        <br/>
+        <!--
+        <lightning:layout>
+            <lightning:layoutItem size="1"  padding="horizontal-medium">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="custom-background-bottle-green slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!$Label.c.REB_Goals}&nbsp; {!v.LastYear}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="custom-background-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!$Label.c.REB_Actual}&nbsp;{!v.LastYear}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!$Label.c.REB_Attainment} 
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1"  class="custom-background-bottle-green slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium" >
+                {!$Label.c.REB_Real}
+             </lightning:layoutItem>
+            <lightning:layoutItem size="1"  class="custom-background-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium" >
+                {!$Label.c.REB_Returns}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1"  class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                % {!$Label.c.REB_Returns}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1"   padding="horizontal-medium">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="custom-background-bottle-green slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!$Label.c.REB_Actual}&nbsp; {!v.AdjacentYear}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="custom-background-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                 {!$Label.c.REB_Actual}&nbsp; {!v.LastYear} 
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-medium">
+                {!$Label.c.REB_Growth}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1"  padding="horizontal-medium">
+            </lightning:layoutItem>
+            
+            
+        </lightning:layout>
+        
+        <lightning:layout>
+            <lightning:layoutItem size="1"  padding="horizontal-medium">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+            <lightning:formattedNumber value="{!v.Goaldata.GoalsCY}" minimumFractionDigits="2"/>
+
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+            <lightning:formattedNumber value="{!v.Goaldata.ActualCY}" minimumFractionDigits="2"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+             <lightning:formattedNumber value="{!v.Goaldata.Attainment}" minimumFractionDigits="2"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <lightning:formattedNumber value="{!v.Actualdata.Real}" minimumFractionDigits="2"/>
+             </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <lightning:formattedNumber value="{!v.Actualdata.Returns}" minimumFractionDigits="2"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!v.Actualdata.PercntReturns}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1"   padding="horizontal-medium">
+            
+
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+            <lightning:formattedNumber value="{!v.GrowthAnalysisVSPreviousYear.Actual_TY}" minimumFractionDigits="2"/>
+
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                 <lightning:formattedNumber value="{!v.GrowthAnalysisVSPreviousYear.Actual_LY}" minimumFractionDigits="2"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left" padding="horizontal-medium">
+                {!v.GrowthAnalysisVSPreviousYear.Growth}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1"  padding="horizontal-medium">
+            </lightning:layoutItem> 
+            
+            
+        </lightning:layout> -->
+        <br/>
+        <!--
+        
+        <lightning:layout>
+            <lightning:layoutItem size="1"  padding="horizontal-medium">   
+            </lightning:layoutItem>
+                                <lightning:layoutItem size="10" class="custom_font_smallxx custom-background-green slds-text-body_small slds-align_absolute-center slds-border_left slds-border_bottom slds-border_right slds-border_top" padding="horizontal-medium">
+          
+                {!$Label.c.REB_Table_Three}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="5">
+                
+                
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        <br/>
+        <lightning:layout>
+            
+            <lightning:layoutItem size="4.5"  padding="horizontal-medium">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="custom-background-bottle-green slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!$Label.c.REB_Actual}&nbsp; {!v.AdjacentYear}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="custom-background-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!$Label.c.REB_Actual}&nbsp; {!v.LastYear}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!$Label.c.REB_Growth}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1"  padding="horizontal-medium">
+                
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3"  padding="horizontal-medium">
+                
+                
+            </lightning:layoutItem>
+            
+            
+        </lightning:layout> 
+        
+        <lightning:layout>
+            
+            <lightning:layoutItem size="4"  padding="horizontal-medium">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+            <lightning:formattedNumber value="{!v.GrowthAnalysisVSPreviousYear.Actual_TY}" minimumFractionDigits="2"/>
+
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                 <lightning:formattedNumber value="{!v.GrowthAnalysisVSPreviousYear.Actual_LY}" minimumFractionDigits="2"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                {!v.GrowthAnalysisVSPreviousYear.Growth}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1"  padding="horizontal-medium">
+                
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3"  padding="horizontal-medium">
+                
+                
+            </lightning:layoutItem>
+            
+            
+        </lightning:layout>-->
+        <br/>
+        <!-- ends -->
+        
+        <!--<aura:iteration items="{!v.ProductCategory}" var="pC">-->
+        <aura:iteration items="{!v.valueMap}" var="pC">
+            <br />
+            <aura:if isTrue="{!and(notequals(pC,'outros'))}">
+                
+                <lightning:layout> 
+                    
+                    <lightning:layoutItem size="10" class="custom_font_small custom-background-green slds-text-body_small slds-align_absolute-center slds-border_left slds-border_bottom slds-border_right slds-border_top" padding="horizontal-medium">
+                        
+                        {!$Label.c.REB_PRODUTOS}&nbsp; {!pC}
+                        <!--PRODUTOS PAM --> 
+                        
+                    </lightning:layoutItem>
+                    
+                    
+                    
+                </lightning:layout>
+                <br/>
+                <lightning:layout>
+                    
+                    <lightning:layoutItem size="8">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="custom-background-yellow slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b> {!$Label.c.REB_Yellow_Section} </b>
+                    </lightning:layoutItem>
+                    
+                    
+                </lightning:layout>
+                <lightning:layout>
+                    
+                    <lightning:layoutItem size="1">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-green slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Goals}</b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Real}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Returns}</b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Reach}</b>   
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-orange custom-background-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Real}</b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1">
+                    </lightning:layoutItem>
+                    
+                    
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem size="1">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Product_Group}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-green slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-green slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-black slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume} (%)</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-light-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="1">
+                    </lightning:layoutItem>    
+                </lightning:layout>
+                <aura:iteration items="{!v.PamProductList}" var="item">
+                    <aura:if isTrue="{!and(equals(pC,item.Product_Category__c))}">
+                        <lightning:layout>
+                            <lightning:layoutItem size="1">
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                {!item.Brand_Name__c}
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <!-- {!item.Goals_Volume} -->
+                               <lightning:formattedNumber value="{!item.Volume__c}" minimumFractionDigits="2"/> 
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left pad"  padding="">
+                                <!-- {!item.Goals_Value} -->
+                                <!-- {!item.Actual_Value__c}-->
+                                <lightning:formattedNumber value="{!item.Value__c}" minimumFractionDigits="2"/>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <lightning:formattedNumber value="{!item.Actual_Volume__c}" minimumFractionDigits="2"/>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <lightning:formattedNumber value="{!item.Actual_Value__c}" minimumFractionDigits="2"/>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <lightning:formattedNumber value="{!item.Returns_Volume__c}" minimumFractionDigits="2"/>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <lightning:formattedNumber value="{!item.Returns_Value__c}" minimumFractionDigits="2"/>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <lightning:formattedNumber value="{!item.Attainment_Volume__c}" minimumFractionDigits="2"/>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <lightning:formattedNumber value="{!item.Net_Volume__c}" minimumFractionDigits="2"/>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <lightning:formattedNumber value="{!item.Net_Value__c}" minimumFractionDigits="2"/>
+                                
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem size="1">
+                            </lightning:layoutItem>
+                            
+                        </lightning:layout>
+                    </aura:if> 
+                    
+                </aura:iteration>
+                
+                
+                
+                <lightning:layout>
+                    <lightning:layoutItem size="1">
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <c:mapEntryChild map="{!v.myTotalMap}" key="{!pC}"/>
+            </aura:if>
+            
+            <!-- <lightning:layout>
+                 
+             <lightning:layoutItem size="1">
+             </lightning:layoutItem>
+             
+             <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           <b>Total PAM</b>
+             </lightning:layoutItem>
+          <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           
+         
+              
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           
+                 
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Real_Volume}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Real_Value}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Returns_Volume}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Returns_Value}
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Reach_Volume_Percnt}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+          {!v.TotalPP.Reach_Real_Volume}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Reach_Real_Value}
+             </lightning:layoutItem>
+             
+          <lightning:layoutItem size="1">
+             </lightning:layoutItem>
+             
+         </lightning:layout>
+           -->
+            
+        </aura:iteration>
+        
+        
+        <br />
+        <br />
+        <!--    
+         <lightning:layout>
+             <lightning:layoutItem size="1">
+             </lightning:layoutItem>
+             
+             <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           <b>Total PAM</b>
+             </lightning:layoutItem>
+          <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Goals_Volume}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Goals_Value}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Real_Volume}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Real_Value}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Returns_Volume}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Returns_Value}
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Reach_Volume_Percnt}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+          {!v.TotalPP.Reach_Real_Volume}
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+           {!v.TotalPP.Reach_Real_Value}
+             </lightning:layoutItem>
+             
+          <lightning:layoutItem size="1">
+             </lightning:layoutItem>
+             
+         </lightning:layout>-->
+        <br/>  
+        
+        <lightning:layout>
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="10" class="color-red">
+      			{!$Label.c.REB_Others_Text}
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+        </lightning:layout>
+        <br/>
+        <lightning:layout>
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <b>Outros Produtos</b>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <lightning:formattedNumber value="{!v.OtherProduct.Goals_Volume}" minimumFractionDigits="2"/>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <lightning:formattedNumber value="{!v.OtherProduct.Goals_Value}" minimumFractionDigits="2"/>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <lightning:formattedNumber value="{!v.OtherProduct.Real_Volume}" minimumFractionDigits="2"/>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <lightning:formattedNumber value="{!v.OtherProduct.Real_Value}" minimumFractionDigits="2"/>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <lightning:formattedNumber value="{!v.OtherProduct.Returns_Volume}" minimumFractionDigits="2"/>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <lightning:formattedNumber value="{!v.OtherProduct.Returns_Value}" minimumFractionDigits="2"/>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" >
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" >
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" >
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        <lightning:layout>
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <b>Totals</b>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+               <b><lightning:formattedNumber value="{!v.totalProduct.Goals_Volume}" minimumFractionDigits="2"/></b>
+                <!--<ui:outputText format=".00" value="{!v.totalProduct.Goals_Volume}"/> -->
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-light-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+               <b><lightning:formattedNumber value="{!v.totalProduct.Goals_Value}" minimumFractionDigits="2"/></b>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <b><lightning:formattedNumber value="{!v.totalProduct.Real_Volume}" minimumFractionDigits="2"/></b>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-light-pink slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <b><lightning:formattedNumber value="{!v.totalProduct.Real_Value}" minimumFractionDigits="2"/></b>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <b><lightning:formattedNumber value="{!v.totalProduct.Returns_Volume}" minimumFractionDigits="2"/></b>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" class="align-right custom-background-sky-blue slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                <b><lightning:formattedNumber value="{!v.totalProduct.Returns_Value}" minimumFractionDigits="2"/></b>
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" >
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" >
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1" >
+                
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        <br/>
+        <!-- commented by diwansh
+         <lightning:layout>
+             
+             <lightning:layoutItem size="3"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="6" class="custom-background-green slds-text-body_small slds-align_absolute-center slds-border_left slds-border_bottom slds-border_right slds-border_top" padding="horizontal-medium">
+                 Análise Crescimento VS Ano Anterior
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="3"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+             
+             
+         </lightning:layout>
+         <br/>
+         <lightning:layout>
+             
+             <lightning:layoutItem size="3"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="custom-background-bottle-green slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                  Actual 2017
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1" class="custom-background-orange slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                  Actual 2018
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                  Growth
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="3"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+             
+             
+         </lightning:layout>
+         
+           <lightning:layout>
+             
+             <lightning:layoutItem size="3"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                  {!v.GrowthAnalysisVSPreviousYear.Actual_TY}
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                  {!v.GrowthAnalysisVSPreviousYear.Actual_LY}
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1" class="align-right slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                  {!v.GrowthAnalysisVSPreviousYear.Growth}
+             </lightning:layoutItem>
+              <lightning:layoutItem size="1"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+             <lightning:layoutItem size="3"  padding="horizontal-medium">
+                 
+                 
+             </lightning:layoutItem>
+             
+             
+         </lightning:layout> -->
+        <br/>
+        
+        <lightning:layout>
+            <lightning:layoutItem size="12" padding="around-small">
+                <div class="slds-align_absolute-center">
+                    <lightning:button label="{!$Label.c.REB_Back}" title="Back" onclick="{! c.Back }"/>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+</aura:component>

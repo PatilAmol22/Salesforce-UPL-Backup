@@ -1,0 +1,137 @@
+.head-font{
+    font-size:20px;
+}
+.report-head{
+    display: flex;
+}
+.component-block {
+    background-color: white;
+    min-height: 500px;
+    margin-top: 3%;
+    border: 1px solid #ddd;
+  }
+  .filter-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1%;
+  }
+  .parent-filter {
+    margin-bottom: 1%;
+    width: 39.5%;
+  }
+  .iconclr{
+    cursor:pointer;
+  }
+  .main-2l-filter{
+    display: flex;
+  }
+  .invoice-filter{
+    width: 20.5%;
+  }
+  .left-filter {
+    display: flex;
+    justify-content: space-between;
+    width: 59%;
+  }
+  .right-filter {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+  }
+  .year-filter {
+    width: 64%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .search-filter {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .date-filter {
+    width: 49%;
+  }
+  .type-filter {
+    width: 49%;
+  }
+  .search-box {
+    width: 100%;
+    position: relative;
+  }
+  .close-icon {
+    position: absolute;
+    top: 43%;
+    right: 2%;
+  }
+  .mrg-tp {
+    margin-top: 24px;
+  }
+  .search-btn {
+    width: 0%;
+  }
+  .nodatacss {
+    margin-top: 10%;
+  }
+  .table-head {
+    background-color: #e1dcdc;
+    color: #888;
+  }
+  .table-head-css {
+    height: 40px;
+  }
+  .table-body {
+    color: black;
+  }
+  .table-body-css {
+    height: 40px;
+  }
+  .order-link {
+    color: #f47920;
+    text-decoration: none;
+  }
+  .table-scroll {
+    overflow-x: auto;
+    margin-top: 2%;
+  }
+  .table-scroll::-webkit-scrollbar {
+    width: 0;
+  }
+  .table-width-scroll {
+    width: 100%;
+  }
+  .spinner-css {
+    margin-top: 10%;
+  }
+  @media only screen and (max-width: 1024px) {
+    .table-width-scroll {
+      width: 120%;
+    }
+  }
+  @media only screen and (max-width: 1023px) {
+    .left-pad{
+      padding-left: 0;
+    }
+  }
+  @media only screen and (max-width: 810px) {
+    .table-width-scroll {
+      width: 140%;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .table-width-scroll {
+      width: 150%;
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .pd-zero{
+      padding-left: 0;
+    }
+    .table-width-scroll {
+      width: 120%;
+    }
+  }
+  @media only screen and (max-width: 475px) {
+    .table-width-scroll {
+      width: 260%;
+    }
+  }

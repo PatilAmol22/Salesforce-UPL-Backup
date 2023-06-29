@@ -1,0 +1,5 @@
+<aura:component  controller="Mexico_Approval_Notes" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute type="string" name="notes" ></aura:attribute>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> 
+    <div style="color: red;" ><b>{!v.notes}</b></div>
+</aura:component>

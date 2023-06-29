@@ -1,0 +1,177 @@
+<template>
+   
+    <lightning-accordion allow-multiple-sections-open class="example-accordion slds-grid slds-gutters"
+        active-section-name={activeSections}>
+        <lightning-accordion-section name="General information" label="General information" style="background-color: rgb(250, 246, 246);">
+
+            <lightning-layout multiple-rows style="color:black !important;background-color: white ">
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+                    <lightning-input type="text" label="Company" value={companyName} class="company"
+                                onchange={handleGeneralInformationChange} ></lightning-input>
+                            <lightning-input type="text" label="Street" value={Street} class="Street"
+                                onchange={handleGeneralInformationChange}></lightning-input>
+                </lightning-layout-item>
+                
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                            large-device-size="4">
+                            <lightning-input type="text" label="Postcode/City:" value={Postcode} class="Postcode/City"
+                            onchange={handleGeneralInformationChange} ></lightning-input>
+                        <lightning-input type="text" label="State:" value={State} class="State"
+                            onchange={handleGeneralInformationChange}></lightning-input>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                            large-device-size="4">
+                            <lightning-input type="text" label="Contact Person Company / Telephone:" value={Telephone} class="Telephone"
+                            onchange={handleGeneralInformationChange} ></lightning-input>
+                        <lightning-input type="text" label="Editing staff:" value={EditingStaff} class="EditingStaff"
+                            onchange={handleGeneralInformationChange}></lightning-input>
+                            <lightning-input type="text" label="Visits on:" value={Visitson} class="Visiton"
+                            onchange={handleGeneralInformationChange}></lightning-input>
+                        </lightning-layout-item>
+                    
+            </lightning-layout>
+
+        </lightning-accordion-section>
+
+
+        <lightning-accordion-section name="Product information" label="Product information" style="background-color: rgb(250, 246, 246);">
+            <lightning-layout multiple-rows style="color:black !important;background-color: white ">
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+                    <lightning-input type="text" label="Product:" value={Product} class="Product"
+                                onchange={handleProductInformationChange} ></lightning-input>
+                            <lightning-input type="text" label="Charge:" value={Charge} class="Charge"
+                                onchange={handleProductInformationChange}></lightning-input>
+                </lightning-layout-item>
+                
+                        <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                            large-device-size="4">
+                            <lightning-input type="text" label="Bought at:/ Dealer/ Wholesaler:" value={broughtAt} class="broughtAt"
+                            onchange={handleProductInformationChange} ></lightning-input>
+                        <lightning-input type="text" label="Invoice available:/ Copy of invoice received:" value={InvoiceAvaialble} class="InvoiceAvaialble"
+                            onchange={handleProductInformationChange}></lightning-input>
+                        </lightning-layout-item>
+                        </lightning-layout>
+</lightning-accordion-section>
+<lightning-accordion-section name="Treatments" label="Treatments" style="background-color: rgb(250, 246, 246);">
+                  
+   
+        <div class="slds-float_right slds-p-bottom_small">
+            <h1 class="slds-page-header__title">Add Row
+                <lightning-button-icon icon-name="utility:add"  size="large" variant="bare" alternative-text="Add" onclick={addRow} style="color: black;"> </lightning-button-icon>
+            </h1>
+        </div>
+        <div class="container-fluid">        
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+                <thead>
+                    <tr class="slds-text-title_caps">
+                       
+                        <th scope="col">
+                            <div class="slds-truncate" title="Date Treatment">Date Treatment:</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Crop type (BBCH)">Crop type (BBCH)</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Application rate">Application rate</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Mixing partner/ spraying sequence">Mixing partner/ spraying sequence</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Water quantity">Water quantity</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Action">Action</div>
+                        </th>
+                    </tr>
+                </thead>   
+                <tbody>      
+                    
+                    <template for:each={treatmentList} for:item="acc" for:index="indx">
+                        <tr key={acc.key} id={acc.key}> 
+                                                                            
+                            <td>
+                                <lightning-input type='date' data-id={indx} variant="label-hidden" label="Date" value={acc.Date} onchange={handleTreatmentChange}></lightning-input>                               
+                            </td>
+                            <td>
+                                <lightning-input data-id={indx} variant="label-hidden" label="Crop Type" value={acc.CropType} onchange={handleTreatmentChange}></lightning-input>                        
+                            </td>
+                            <td>
+                                <lightning-input data-id={indx} variant="label-hidden" label="Application Rate" value={acc.applicationRate} onchange={handleTreatmentChange}></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-input data-id={indx} variant="label-hidden" label="Mixing partner" value={acc.partner} onchange={handleTreatmentChange}></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-input data-id={indx} variant="label-hidden" label="Water quantity" value={acc.waterQuantity} onchange={handleTreatmentChange}></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-button-icon icon-name="utility:delete"
+																		  data-id={indx}       
+																		  alternative-text="Delete"     
+																		  class="slds-m-left_xx-small"
+																		  onclick={removeRow} 
+																		  title="Delete"></lightning-button-icon>
+                            </td>
+                        </tr>
+                    </template>
+                     
+                </tbody>
+            </table>
+           
+        </div>
+    
+</lightning-accordion-section>
+<lightning-accordion-section name="Others" label="Others" style="background-color: rgb(250, 246, 246);">
+    
+    <lightning-layout multiple-rows style="color:black !important;background-color: white ">
+        
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+                    <lightning-textarea name="stageweed" label="Stage Weeds" ></lightning-textarea>
+                
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+                    <lightning-textarea name="comment" label="Comments" ></lightning-textarea>
+                
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4"
+                    large-device-size="4">
+                    <lightning-textarea name="claimsComplaint" label="What are the claims of the complainant" ></lightning-textarea>
+                
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="6"
+                    large-device-size="6">
+                    <lightning-input title="" type="file" onchange={onFileUpload}  name="uploadFile"  label="What is objected to">  
+                    </lightning-input> 
+                    
+                
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="6"
+                    large-device-size="6">
+                    <lightning-input title="" type="file" onchange={onFileUpload}  name="uploadFile"  label="Please enclose a copy of the invoice, photos and possibly a label of the product.">  
+                    </lightning-input> 
+                    </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="12"
+large-device-size="12">
+<lightning-button variant="success" label="Save Cases" title="Save Cases" onclick={handleSaveCases}
+class="slds-p-horizontal_small slds-float_right">
+</lightning-button>
+<lightning-button variant="brand" label="Cancel" title="Cancel" onclick={handleCancel}
+class="slds-p-horizontal_small slds-float_right">
+</lightning-button>
+
+
+</lightning-layout-item>
+
+               </lightning-layout>
+</lightning-accordion-section>
+ </lightning-accordion>
+          
+</template>

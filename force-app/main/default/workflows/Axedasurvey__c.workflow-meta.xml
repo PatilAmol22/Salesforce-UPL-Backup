@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Call_2_Field_Update</fullName>
+        <field>Call_2_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Call 2 Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Call_3_Field_Update</fullName>
+        <field>Call_3_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Call 3 Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Call_4_Field_Update</fullName>
+        <field>Call_4_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Call 4 Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Call_5_Field_Update</fullName>
+        <field>Call_5_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Call 5 Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Call_6_Field_Update</fullName>
+        <field>Call_6_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Call 6 Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Call_7_Field_Update</fullName>
+        <field>Call_7_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Call 7 Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Call_8_Field_Update</fullName>
+        <field>Call_8_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Call 8 Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Call_9_Field_Update</fullName>
+        <field>Call_9_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Call 9 Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Field_1_Update</fullName>
+        <field>Call_1_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Field 1 Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Call 1 date</fullName>
+        <actions>
+            <name>Field_1_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR( ISBLANK( Call_1_Date__c ),  NOT(ISBLANK(TEXT(C1_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C1_Coverage_Observation_for_Aphids__c))), NOT(ISBLANK(TEXT(C1_Coverage_Observation_for_Thrips__c))), NOT(ISBLANK(TEXT(C1_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(TEXT(C1_Coverage_Observation_American_Bolworm__c))), NOT(ISBLANK(TEXT(C1_Coverage_Observation_for_Pink_Bolworm__c))), NOT(ISBLANK(TEXT(C1_Coverage_Observation_Cotton_Leafworm__c))), NOT(ISBLANK(TEXT(C1_Coverage_Observation_for_Other_Pest__c))),  NOT(ISBLANK(TEXT(Cotton_Sowing_Date__c	))), NOT(ISBLANK(TEXT(Acreage__c))), NOT(ISBLANK(C1_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Call 2 date</fullName>
+        <actions>
+            <name>Call_2_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  ISBLANK( Call_2_Date__c ),  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR(  NOT(ISBLANK(TEXT(C2_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C2_Coverage_Observation_for_Aphids__c	))), NOT(ISBLANK(TEXT(C2_Coverage_Observation_for_Thrips__c	))), NOT(ISBLANK(TEXT(C2_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(C2_Used_any_Product_for_Remedy__c)), NOT(ISBLANK(TEXT(C2_Coverage_ObservationAmericanBollworm__c))), NOT(ISBLANK(TEXT(C2_Coverage_Observation_Pink_Bollworm__c))), NOT(ISBLANK(TEXT(C2_Coverage_Observation_Cotton_Leafworm__c	))),  NOT(ISBLANK(TEXT(C2_Coverage_Observation_for_Other_Pest__c))), NOT(ISBLANK(C2_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Call 3 date</fullName>
+        <actions>
+            <name>Call_3_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  ISBLANK( Call_3_Date__c ),  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR(  NOT(ISBLANK(TEXT(C3_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C3_Coverage_Observation_for_Aphids__c))), NOT(ISBLANK(TEXT(C3_Coverage_Observation_for_Thrips__c))), NOT(ISBLANK(TEXT(C3_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(C3_Used_any_Product_for_Remedy__c)), NOT(ISBLANK(TEXT(C3_Coverage_Observation_American_Bolworm__c))), NOT(ISBLANK(TEXT(C3_Coverage_Observation_for_Pink_Bolworm__c))), NOT(ISBLANK(TEXT(C3_Coverage_Observation_Cotton_Leafworm__c	))),  NOT(ISBLANK(TEXT(C3_Coverage_Observation_for_Other_Pest__c))), NOT(ISBLANK(C3_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Call 4 date</fullName>
+        <actions>
+            <name>Call_4_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  ISBLANK( Call_4_Date__c ),  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR(  NOT(ISBLANK(TEXT(C4_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C4_Coverage_Observation_for_Aphids__c))), NOT(ISBLANK(TEXT(C4_Coverage_Observation_for_Thrips__c))), NOT(ISBLANK(TEXT(C4_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(C4_Used_any_Product_for_Remedy__c)), NOT(ISBLANK(TEXT(C4_Coverage_Observation_American_Bolworm__c))), NOT(ISBLANK(TEXT(C4_Coverage_Observation_for_Pink_Bolworm__c))), NOT(ISBLANK(TEXT(C4_Coverage_Observation_Cotton_Leafworm__c	))),  NOT(ISBLANK(TEXT(C4_Coverage_Observation_for_Other_Pest__c))), NOT(ISBLANK(C4_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Call 5 date</fullName>
+        <actions>
+            <name>Call_5_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  ISBLANK( Call_5_Date__c ),  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR(  NOT(ISBLANK(TEXT(C5_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C5_Coverage_Observation_for_Aphids__c))), NOT(ISBLANK(TEXT(C5_Coverage_Observation_for_Thrips__c))), NOT(ISBLANK(TEXT(C5_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(C5_Used_any_Product_for_Remedy__c)), NOT(ISBLANK(TEXT(C5_Coverage_Observation_American_Bolworm__c))), NOT(ISBLANK(TEXT(C5_Coverage_Observation_for_Pink_Bolworm__c))), NOT(ISBLANK(TEXT(C5_Coverage_Observation_Cotton_Leafworm__c	))),  NOT(ISBLANK(TEXT(C5_Coverage_Observation_for_Other_Pest__c))), NOT(ISBLANK(C5_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Call 6 date</fullName>
+        <actions>
+            <name>Call_6_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  ISBLANK( Call_6_Date__c ),  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR(  NOT(ISBLANK(TEXT(C6_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C6_Coverage_Observation_for_Aphids__c))), NOT(ISBLANK(TEXT(C6_Coverage_Observation_for_Thrips__c))), NOT(ISBLANK(TEXT(C6_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(C6_Used_any_Product_for_Remedy__c)), NOT(ISBLANK(TEXT(C6_Coverage_Observation_American_Bolworm__c))), NOT(ISBLANK(TEXT(C6_Coverage_Observation_for_Pink_Bolworm__c))), NOT(ISBLANK(TEXT(C6_Coverage_Observation_Cotton_Leafworm__c	))),  NOT(ISBLANK(TEXT(C6_Coverage_Observation_for_Other_Pest__c))), NOT(ISBLANK(C6_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Call 7 date</fullName>
+        <actions>
+            <name>Call_7_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  ISBLANK( Call_7_Date__c ),  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR(  NOT(ISBLANK(TEXT(C7_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C7_Coverage_Observation_for_Aphids__c))), NOT(ISBLANK(TEXT(C7_Coverage_Observation_for_Thrips__c))), NOT(ISBLANK(TEXT(C7_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(C7_Used_any_Product_for_Remedy__c)), NOT(ISBLANK(TEXT(C7_Coverage_Observation_American_Bolworm__c))), NOT(ISBLANK(TEXT(C7_Coverage_Observation_for_Pink_Bolworm__c))), NOT(ISBLANK(TEXT(C7_Coverage_Observation_Cotton_Leafworm__c	))),  NOT(ISBLANK(TEXT(C7_Coverage_Observation_for_Other_Pest__c))), NOT(ISBLANK(C7_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Call 8 date</fullName>
+        <actions>
+            <name>Call_8_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  ISBLANK( Call_8_Date__c ),  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR(  NOT(ISBLANK(TEXT(C8_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C8_Coverage_Observation_for_Aphids__c))), NOT(ISBLANK(TEXT(C8_Coverage_Observation_for_Thrips__c))), NOT(ISBLANK(TEXT(C8_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(C8_Used_any_Product_for_Remedy__c)), NOT(ISBLANK(TEXT(C8_Coverage_Observation_American_Bolworm__c))), NOT(ISBLANK(TEXT(C8_Coverage_Observation_for_Pink_Bolworm__c))), NOT(ISBLANK(TEXT(C8_Coverage_Observation_Cotton_Leafworm__c	))),  NOT(ISBLANK(TEXT(C8_Coverage_Observation_for_Other_Pest__c))), NOT(ISBLANK(C8_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Call 9 date</fullName>
+        <actions>
+            <name>Call_9_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND (  ISBLANK( Call_9_Date__c ),  OR(  RecordType.Name = &apos;Axeda Initiative Survey&apos;,  RecordType.Name = &apos;Pest Risk - Process&apos; ), OR(  NOT(ISBLANK(TEXT(C9_Coverage_Observation_for_Jassids__c))),  NOT(ISBLANK(TEXT(C9_Coverage_Observation_for_Aphids__c))), NOT(ISBLANK(TEXT(C9_Coverage_Observation_for_Thrips__c))), NOT(ISBLANK(TEXT(C9_Coverage_Observation_for_WhiteFly__c))), NOT(ISBLANK(C9_Used_any_Product_for_Remedy__c)), NOT(ISBLANK(TEXT(C9_Coverage_Observation_American_Bolworm__c))), NOT(ISBLANK(TEXT(C9_Coverage_Observation_for_Pink_Bolworm__c))), NOT(ISBLANK(TEXT(C9_Coverage_Observation_Cotton_Leafworm__c	))),  NOT(ISBLANK(TEXT(C9_Coverage_Observation_for_Other_Pest__c))), NOT(ISBLANK(C9_Other_Pests__c)) ) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Pest Survey</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Axedasurvey__c.Call_2_Status__c</field>
+            <operation>equals</operation>
+            <value>closed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Axedasurvey__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Pest Risk - Process</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,446 @@
+<aura:component controller="CallForRecommendation" 
+                implements="force:hasRecordId,flexipage:availableForRecordHome,force:appHostable" 
+                access="global" >
+    
+    <!--init handler event call "initialize" function on component load and fetch picklist values-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    
+    <!--****************************************************-->
+    <!--start-->
+    <!-- aura attributes-->  
+    <aura:attribute name="listControllingValues" type="list" default="['']" description="to store controller field values"/>
+    
+    <aura:attribute name="listDependingValues" type="list" default="['']" description="to store dependent field values"/>
+    <aura:attribute name="listDependingValues1" type="list" default="['']" description="to store dependent field values"/>
+    <aura:attribute name="listDependingValues2" type="list" default="['']" description="to store dependent field values"/>
+    <aura:attribute name="listDependingValues3" type="list" default="['']" description="to store dependent field values"/>
+    <aura:attribute name="depnedentFieldMap" type="map" description="map to store dependent values with controlling value"/>
+       <aura:attribute name="bDisabledDependentFld" type="boolean" default="true"/> 
+    
+    
+    <aura:attribute name="objDetail" type="contact" default="{'sobjectType' : 'Recommendations__c'}"/>
+    <aura:attribute name="controllingFieldAPI" type="string" default="Product__c" description="store field API name of Controller field"/>
+    <aura:attribute name="dependingFieldAPI" type="string" default="Dosage__c" description="store field API name of dependent field"/>
+    <aura:attribute name="dependingFieldAPIDU" type="string" default="DosageUnit__c" description="store field API name of another dependent field"/>
+    
+    <aura:attribute name="listDependingValuesDU" type="list" default="['']" description="to store ANOTHER dependent field values"/>
+    <aura:attribute name="listDependingValuesDU1" type="list" default="['']" description="to store ANOTHER dependent field values"/>
+    <aura:attribute name="listDependingValuesDU2" type="list" default="['']" description="to store ANOTHER dependent field values"/>
+    <aura:attribute name="listDependingValuesDU3" type="list" default="['']" description="to store ANOTHER dependent field values"/>
+    <aura:attribute name="depnedentFieldMapDU" type="map" description="map to store ANOTHER dependent values with controlling value"/>
+   
+    
+    <aura:attribute name="bDisabledDependentFldDU" type="boolean" default="true"/>
+    
+    <!--end-->
+    <!--****************************************************-->
+    
+    
+    
+    
+    
+    <!--Declare Attributes--> 
+    <aura:attribute name="objInfo" type="Sobject" default="{sobjectType : 'Call__c'}" />
+    <aura:attribute name="objInfo1" type="Sobject" default="{sobjectType : 'Recommendations__c'}" />
+    <aura:attribute name="Disease" type="List" default="[]"/>
+    <aura:attribute name="dvalues" type="List" default="[]"/>
+    <aura:attribute name="Insect" type="List" default="[]"/>
+    <aura:attribute name="ivalues" type="List" default="[]"/>
+    <aura:attribute name="Pgr" type="List" default="[]"/>
+    <aura:attribute name="pvalue" type="String" />
+    <aura:attribute name="Weed" type="List" default="[]"/>
+    <aura:attribute name="wvalue" type="String" />
+    <aura:attribute name="Product" type="List" default="[]"/>
+    <aura:attribute name="provalue1" type="String" />
+    <aura:attribute name="provalue2" type="String" />
+    <aura:attribute name="provalue3" type="String" />
+    <aura:attribute name="provalue4" type="String" />
+    <aura:attribute name="provalue" type="List" />
+    <aura:attribute name="Dosage" type="String" default=""/>
+    <aura:attribute name="dovalue" type="String" />
+    
+    <aura:attribute name="Dose" type="List" default="[]"/>
+    <aura:attribute name="DosageUnit" type="List" default="[]"/>
+    <aura:attribute name="douvalue1" type="String" />
+    <aura:attribute name="douvalue2" type="String" />
+    <aura:attribute name="douvalue3" type="String" />
+    <aura:attribute name="douvalue4" type="String" />
+    <aura:attribute name="douvalue" type="List" />
+    <aura:attribute name="p1dosage" type="Integer" />
+    <aura:attribute name="p2dosage" type="Integer" />
+    <aura:attribute name="p3dosage" type="Integer" />
+    <aura:attribute name="p4dosage" type="Integer" />
+    <aura:attribute name="pdosage" type="List" />
+    <aura:attribute name="callid" type="String" description="Bound attribute to cid in CreateEmp Component"/>
+    <aura:attribute name="recommendationFlagSaveCFR" type="Boolean" default="false" />
+    <aura:attribute name="viewRecommendationFlagCFR" type="Boolean" default="false" />
+    <aura:attribute name="req1" type="Boolean" default="false" />
+    <aura:attribute name="req2" type="Boolean" default="false" />
+    <aura:attribute name="req3" type="Boolean" default="false" />
+    <aura:attribute name="req4" type="Boolean" default="false" />
+    <aura:attribute name="truthy" type="Boolean" default="false"/>
+    <aura:attribute name="isChecked" type="Boolean" default="false"/>
+    <aura:attribute name="returnedEmp" type="String" default="a5QO0000000DC6JMAW"/>
+    <aura:attribute name="CreateCallRecord" type="Call__c" default="'sobjectType': 'Call__c',
+                                                                    'PestInfestation__c': '',
+                                                                    'Disease__c': '',
+                                                                    'Insect__c': '',
+                                                                    'PGR__c': '',
+                                                                    'Weed__c': '',}" />
+    <aura:attribute name="EmpanelmentId" type="String" />
+    <aura:attribute name="CreateRecommendation" type="Recommendations__c" default="'sobjectType': 'Recommendations__c',
+                                                                                   'Product__c': '',
+                                                                                   'Dosage__c': '',
+                                                                                   'DosageUnit__c': '',}"/>
+    <aura:attribute name="DateSow" type="date" />
+    <aura:attribute name="maxDatePest" type="Date" description="Date of sowing cannot be greater than today"/>
+    <aura:attribute name="minDatePest" type="Date" description="Date of sowing cannot be less than date of sowing"/>
+    
+    <aura:attribute name="pdate" type="date" />
+    
+    <aura:attribute name="alertError" type="String"  description="An error message if invalid entries"/>
+    <aura:attribute name="alertErrorBoolean" type="Boolean" default="false"/>
+    <aura:attribute name="FarmerId" type="Id"/>
+    <aura:attribute name="AccountSt" type="String"/>
+    <aura:attribute name="crop" type="String"/>
+    <aura:attribute name="FarmerState" type="String"/>
+    
+    <aura:attribute name="MapCR" type="map"/>
+    <aura:attribute name="lstCR" type="List"/>
+    
+    <aura:attribute name="mapCallRecommendations" type="map"/>
+    <!--!!For Next Call!!-->
+    <aura:attribute name="vRFlag" type="Boolean" default="false"/>
+    <aura:attribute name="rFlagSave" type="Boolean" default="false"/>
+    <aura:attribute name="setFalse" type="Boolean" default="true"/>
+    
+    
+    
+    <!-- adde by swapnil-->
+    <aura:html tag="style">.toastMessage.forceActionsText{
+        white-space : pre-line !important;
+        }</aura:html>
+    
+    <!-- -->
+    
+    <!--set from helper-->
+    <aura:attribute name="ListofRecommendation" type="List" />
+    <!--DISPLAY EMPANELMENT SECTION AS READ ONLY FOR THIS COMPONENT-->
+    <article class="slds-card">
+        <div class="slds-card__body slds-card__body_inner">
+            <!--DISPLAY CALL SECTION AS READ/WRITE FOR THIS COMPONENT-->
+            <div class="slds-p-top_x-small">
+                <lightning:formattedText value="Call " />
+                
+                <!-- lightning input component -->
+                <lightning:input type="checkbox" 
+                                 name="anypestinfection" 
+                                 label="Any pest infestation observed?"
+                                 aura:id="AnyPestInfestation"
+                                 onchange="{!c.handlecheckbox}"
+                                 checked="{!v.isChecked}"/><!--class="slds-p-top_x-large"-->
+                <br/>
+                <aura:if isTrue="{!v.truthy}">
+                    <lightning:input aura:id = "PestDateObserved"
+                                     type="date" 
+                                     name="input1" 
+                                     label="Pest infestation observed date ?"
+                                     placeholder="Select an Option" 
+                                     value="{! v.pdate}"
+                                     max="{!v.maxDatePest}"
+                                     min="{!v.minDatePest}"/>
+                    
+                    <!--<div class="slds-p-top_x-large">-->
+                    <!-- lightning input component -->
+                    <br/>
+                    <lightning:formattedText value="If Yes, select the type of Pest?" />
+                    <lightning:dualListbox name="diseases"
+                                           label= "Select Disease"
+                                           sourceLabel="Available"
+                                           selectedLabel="Selected"
+                                           fieldLevelHelp="Select disease observed"
+                                           options="{!v.Disease}"
+                                           onchange="{!c.handleDisease}"
+                                           value="{! v.dvalues}"/>
+                    <!--</div>-->
+                    <!--<div class="slds-p-top_x-large">-->
+                    <lightning:dualListbox name="insects"
+                                           label= "Select Insect"
+                                           sourceLabel="Available"
+                                           selectedLabel="Selected"
+                                           fieldLevelHelp="Select insect observed"
+                                           options="{!v.Insect}"
+                                           onchange="{!c.handleInsect}"
+                                           accesskey="F"
+                                           value="{! v.ivalues}"/>
+                    <!--</div> -->
+                    <lightning:combobox name="pgr" label="PGR" placeholder="Select an Option" 
+                                        options="{! v.Pgr }" onchange="{! c.handlePgr }" value="{! v.pvalue}"/>
+                    
+                    <lightning:combobox name="weed" label="Weed" placeholder="Select an Option" 
+                                        options="{! v.Weed }" onchange="{! c.handleWeed }" value="{! v.wvalue}"/>
+                    <br/>
+                    <div class="slds-button slds-float_right">
+                        <lightning:button variant="brand"
+                                          name="cancelRecommendation"
+                                          label="Recommend Products"
+                                          onclick="{!c.doRecommendation}"
+                                          /> &nbsp;
+                    </div>    
+                    <br/>
+                    
+                </aura:if>
+                <br/>
+                <aura:if isTrue="{!v.alertErrorBoolean}">
+                    <div class="recordError">
+                        <ui:message title="Error" severity="error" closable="true">
+                            {!v.alertError}
+                        </ui:message>
+                    </div>
+                </aura:if>
+                
+                <br/>
+                <br/>
+                <br/>
+                <div>
+                    <c:HeaderComponent Tagline="Recommendation 1"/>
+                    <!--<lightning:formattedText value="Recommendation 1" />-->
+                    
+                    <!--start-->
+                    <!--Controlling Field-->
+                    <div onkeyup="{!c.formPress}">
+                    <lightning:layoutItem size="12" padding="around-small">    
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="controllerFld1"
+                                          value="{!v.provalue1}"
+                                          label="Product"
+                                          onchange="{!c.onControllerFieldChange}"
+                                          required="true"
+                                          messageWhenValueMissing = "Please select at least 1 product">
+                            <aura:iteration items="{!v.listControllingValues}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    </div>
+                    <!--Dependent 1-->
+                    <!--Dependent Field-->
+                    
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="dependentFld1"
+                                          value="{!v.p1dosage}"
+                                          label="Dosage"
+                                          onchange="{!c.handleDose}"
+                                          required="{!v.req1}"
+                                          disabled="{!v.bDisabledDependentFld}">
+                            <aura:iteration items="{!v.listDependingValues}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <!--Dependent 2-->
+                    <!--Dependent Field-->
+                    
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="dependentFldDU1"
+                                          value="{!v.douvalue1}"
+                                          label="DosageUnit"
+                                          onchange="{!c.handleDosage}"
+                                          required="{!v.req1}"
+                                          disabled="{!v.bDisabledDependentFldDU}">
+                            <aura:iteration items="{!v.listDependingValuesDU}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    
+                    <!--end-->
+                     
+                </div>
+                <br/>
+                <div>
+                    <c:HeaderComponent Tagline="Recommendation 2"/>
+                    <!--<lightning:formattedText value="Recommendation 2" /><br/>-->
+                    <!--start-->
+                    <!--Controlling Field-->
+                    <div onkeyup="{!c.formPressSecond}">
+                    <lightning:layoutItem size="12" padding="around-small">    
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="controllerFld2"
+                                          value="{!v.provalue2}"
+                                          label="Product"
+                                          onchange="{!c.onControllerFieldChange1}"
+                                          required="false"
+                                          messageWhenValueMissing = "Please select at least 1 product">
+                            <aura:iteration items="{!v.listControllingValues}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    </div>
+                    <!--Dependent 1-->
+                    <!--Dependent Field-->
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="dependentFld2"
+                                          value="{!v.p2dosage}"
+                                          label="Dosage"
+                                          onchange="{!c.handleDose}"
+                                          required="{!v.req2}"
+                                          disabled="{!v.bDisabledDependentFld}">
+                            <aura:iteration items="{!v.listDependingValues1}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <!--Dependent 2-->
+                    <!--Dependent Field-->
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="dependentFldDU2"
+                                          value="{!v.douvalue2}"
+                                          label="DosageUnit"
+                                          onchange="{!c.handleDosage}"
+                                          required="{!v.req2}"
+                                          disabled="{!v.bDisabledDependentFldDU}">
+                            <aura:iteration items="{!v.listDependingValuesDU1}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <!--end-->
+                     
+                    
+                </div>
+                <br/>
+                <div>
+                    <c:HeaderComponent Tagline="Recommendation 3"/>
+                    <!--<lightning:formattedText value="Recommendation 3" /><br/>-->
+                    <!--start-->
+                    <!--Controlling Field-->
+                    <div onkeyup="{!c.formPressThird}">
+                    <lightning:layoutItem size="12" padding="around-small">    
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="controllerFld3"
+                                          value="{!v.provalue3}"
+                                          label="Product"
+                                          onchange="{!c.onControllerFieldChange2}"
+                                          required="false"
+                                          messageWhenValueMissing = "Please select at least 1 product">
+                            <aura:iteration items="{!v.listControllingValues}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    </div>
+                    <!--Dependent 1-->
+                    <!--Dependent Field-->
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="dependentFld3"
+                                          value="{!v.p3dosage}"
+                                          label="Dosage"
+                                          onchange="{!c.handleDose}"
+                                          required="{!v.req3}"
+                                          disabled="{!v.bDisabledDependentFld}">
+                            <aura:iteration items="{!v.listDependingValues2}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <!--Dependent 2-->
+                    <!--Dependent Field-->
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="dependentFldDU3"
+                                          value="{!v.douvalue3}"
+                                          label="DosageUnit"
+                                          onchange="{!c.handleDosage}"
+                                          required="{!v.req3}"
+                                          disabled="{!v.bDisabledDependentFldDU}">
+                            <aura:iteration items="{!v.listDependingValuesDU2}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <!--end-->
+                     
+                    
+                </div>
+                <br/>
+                <div>
+                    <c:HeaderComponent Tagline="Recommendation 4"/>
+                    <!--<lightning:formattedText value="Recommendation 4" /><br/>-->
+                    <!--start-->
+                    <!--Controlling Field-->
+                    <div onkeyup="{!c.formPressFourth}">
+                    <lightning:layoutItem size="12" padding="around-small">    
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="controllerFld4"
+                                          value="{!v.provalue4}"
+                                          label="Product"
+                                          onchange="{!c.onControllerFieldChange3}"
+                                          required="false"
+                                          messageWhenValueMissing = "Please select at least 1 product">
+                            <aura:iteration items="{!v.listControllingValues}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    </div>
+                    <!--Dependent 1-->
+                    <!--Dependent Field-->
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="dependentFld4"
+                                          value="{!v.p4dosage}"
+                                          label="Dosage"
+                                          onchange="{!c.handleDose}"
+                                          required="{!v.req4}"
+                                          disabled="{!v.bDisabledDependentFld}">
+                            <aura:iteration items="{!v.listDependingValues3}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <!--Dependent 2-->
+                    <!--Dependent Field-->
+                    <lightning:layoutItem size="12" padding="around-small">
+                        <lightning:select aura:id = "inputRecommendation"
+                                          name="dependentFldDU4"
+                                          value="{!v.douvalue4}"
+                                          label="DosageUnit"
+                                          onchange="{!c.handleDosage}"
+                                          required="{!v.req4}"
+                                          disabled="{!v.bDisabledDependentFldDU}">
+                            <aura:iteration items="{!v.listDependingValuesDU3}" var="val">
+                                <option value="{!val}">{!val}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                    <!--end-->
+                     
+                      
+                </div>
+                <br/>
+                <div class="slds-button-group slds-float_right" role="group">
+                    <lightning:button variant="brand"
+                                      name="saveRecommendation"
+                                      label="Save"
+                                      onclick="{!c.doSave}"
+                                      />  &nbsp;
+                    <lightning:button variant="brand"
+                                      name="cancelRecommendation"
+                                      label="Cancel"
+                                      onclick="{!c.doCancel}"
+                                      /> &nbsp;
+                    
+                    
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </article>
+</aura:component>

@@ -1,0 +1,100 @@
+.outerDiv {
+  padding-left: 10%;
+  padding-right: 5%;
+}
+.heading {
+  margin-bottom: 2%;
+  font-size: 26px;
+}
+.p-inner-div {
+  padding-right: 5%;
+}
+.p-arrow-span,
+.v-arrow-span {
+  float: right;
+}
+.Next1,
+.Next {
+  margin-left: 10px;
+}
+.p-image-div {
+  position: relative;
+}
+.image,
+.videoSize {
+  width: 100%;
+  height: 330px;
+}
+.p-logo-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.nameClass {
+  font-size: 40px;
+  color: #fff;
+  position: absolute;
+  top: 30%;
+  left: 5%;
+}
+.dataDiv {
+  background-color: #333;
+  opacity: 0.7;
+  width: 100%;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  padding: 1%;
+}
+.knowMoreButton {
+  float: right;
+}
+@media only screen and (max-width: 1024px) {
+  .outerDiv {
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+}
+@media only screen and (max-width: 820px) {
+  .heading {
+    font-size: 20px;
+  }
+  .nameClass{
+    font-size: 25px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .p-inner-div{
+    padding-right: 0;
+  }
+  .heading{
+    margin-bottom: 1%;
+    font-size: 26px;
+  }
+  .nameClass{
+    font-size: 45px;
+  }
+  .video-m-top{
+    margin-top: 3%;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .heading{
+    font-size: 20px;
+  }
+  .nameClass{
+    font-size: 30px;
+  }
+  .image,
+  .videoSize {
+    height: 250px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .nameClass{
+    font-size: 22px;
+  }
+  .p-logo-img{
+    height: 55px;
+  }
+}

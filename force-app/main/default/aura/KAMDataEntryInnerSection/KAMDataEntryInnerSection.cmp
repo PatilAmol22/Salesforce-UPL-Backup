@@ -1,0 +1,58 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="PayoutList" type="List" />
+    <aura:attribute name="PayoutDisplayList" type="List" />
+    <aura:attribute name="PayoutDelList" type="List" />
+    <aura:attribute name="draftQty" type="Decimal"/>
+    <aura:attribute name="productPrice" type="Decimal"/>
+    <aura:attribute name="rCode" type="String"/>
+    <aura:attribute name="pType" type="String"/>
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:attribute name="freeze" type="boolean"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="KAMDataEntryDynamicRowRemove" event="c:KAMDataEntryDynamicRowRemove" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="KAMDataEntryDynamicRowAdd" event="c:KAMDataEntryDynamicRowAdd" action="{!c.addNewRow}"/>
+    <aura:handler name="KAMDataEntryDynamicRowPayout" event="c:KAMDataEntryDynamicRowPayout" action="{!c.ApplyChanges}"/>
+	<aura:registerEvent name="KAMDataEntryDynamicRowPayoutList" type="c:KAMDataEntryDynamicRowPayoutList"/>
+	
+    
+    <lightning:layout horizontalAlign="center">
+        <lightning:layoutItem class="center-align slds-p-top_small" size="2">
+            <b>Tier</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="center-align slds-p-top_small" size="2">
+            <b>Threshold Qty</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="center-align slds-p-top_small" size="2">
+            <b>Qty as %</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="center-align slds-p-top_small" size="2">
+            <b>Payout Per unit $</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="center-align slds-p-top_small" size="2">
+            <b>Payout Per unit %</b>
+        </lightning:layoutItem>
+        <lightning:layoutItem class="slds-p-top_small" size="2">
+            <b></b>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <br/>
+    <aura:iteration items="{!v.PayoutList}" var="item" indexVar="ppindex">
+        <c:KAMDataEntryDynamicRow frezzein="{!v.freeze}" payoutWrapper="{!item}" pType="{!v.pType}" payout="{!item.payout}" threshold="{!item.threshold}" quantity="{!item.quantity}" Tier="{!item.Tier}" rowIndex="{!ppindex}" draftQty="{!v.draftQty}" productPrice="{!v.productPrice}" totalItems="{!v.PayoutList.length}"/>
+    </aura:iteration>
+    <lightning:layout   multipleRows="true">
+         <lightning:layoutItem class="slds-align_absolute-center slds-p-top_small"  size="4" mediumDeviceSize="6">
+           Reason Code :
+        </lightning:layoutItem>
+        <lightning:layoutItem class="slds-align_absolute-left slds-p-bottom_small"  size="8" mediumDeviceSize="6">
+            <lightning:select name="ReasonCode" label="Reason Code : " variant="label-hidden" value="{!v.rCode}" disabled="{!v.freeze}">
+                <!--Modified by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+                <option value="Competitive Response">Competitive Response</option>
+                <option value="Early Stocking">Early Stocking</option>
+                <option value="Growth">Growth</option>
+                <option value="Growth">SG&amp;A Expense</option>
+                <option value="Other">Other</option>
+                <!--***************End*************** by GRZ(Nikhil Verma) RITM0478313 03-01-2023-->
+            </lightning:select>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

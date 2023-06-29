@@ -1,0 +1,26 @@
+<template>
+    <!--Custom Carousel Implementation with all feature-->
+    <div class="slds-is-relative container">
+        <template for:each={slidesData} for:item="item">
+            <div key= {item.slideIndex} class = {item.cardClass} >
+                <img data-id="imgHeightGen" src={item.Image_Icon} class ="carousal-img"/>
+                <!-- Change by Aashima(Grazitti) for RITM0517576 7 march 2023-->
+                <template if:true={isIndia}>
+                <div class="details">
+                    <div style="font-size: small;font-weight: bold;">Toll Free Number : 99-204-22-111</div>
+                    <div style="font-size: small;font-weight: bold;">Timings : 9AM to 6PM</div>
+                    <div style="font-size: small;font-weight: bold;">Working Days : Monday to Friday</div>
+                </div>
+            </template>
+                <div class ="text-section">
+                    <div data-id="testFontGen" class="label-div">{item.Label}</div>
+                    <div class="description-div">{item.Description}</div>
+                </div>
+            </div>
+        </template>
+        <template if:true={showArrow}>
+            <a class="prev" onclick={backSlide}><img src={leftIcon} alt="left" class="expIcon"></a>
+            <a class="next" onclick={forwardSlide}><img src={rightIcon} alt="right" class="expIcon"></a>
+        </template>
+    </div>
+</template>

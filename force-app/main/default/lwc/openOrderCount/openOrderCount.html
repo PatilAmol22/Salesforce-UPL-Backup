@@ -1,0 +1,24 @@
+<template>
+    <div style="padding:15px;background:#f54904;margin:0 auto;">
+        <p style="font-family:myfontlight; font-size:28px; color:black;margin-bottom:10px;">{label.Open_Order_By_Status}</p>
+        <div class="slds-grid slds-gutters slds-wrap">
+                
+        <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12 pending" style="padding:10px 0 10px 0;text-align:center;background:#fff;opacity:0.8;margin:0 15px 0 25px;">
+            <span style="font-family:myfontregular; font-size:16px; color:#f54904;">
+                {label.Completed}
+            </span><br/>
+            <span style="font-family:myfontregular; font-size:28px; color:black;">
+                {completelyProcessed}
+            </span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12 pending" style="padding:10px 0 10px 0;text-align:center;background:#fff;opacity:0.8;margin:0 10px;">
+            <span style="font-family:myfontregular; font-size:16px; color:#f54904;">
+                {label.Not_Delivered}
+            </span><br/>
+            <span style="font-family:myfontregular; font-size:28px; color:black;">
+                {notYetProcessed}
+            </span>
+        </div>
+    </div>
+    </div>
+</template>

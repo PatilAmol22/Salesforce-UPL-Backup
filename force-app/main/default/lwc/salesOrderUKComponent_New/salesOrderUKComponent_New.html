@@ -1,0 +1,178 @@
+<template>
+    <template if:true={isUKData}>
+    <div class="bacckgroundcolor">
+    <div class="slds-page-header">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-has-flexi-truncate slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="standard:orders" size="large"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-heading--label">{labelheadername}</p>
+                        <template if:false={isView}>
+                            <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">{label.Raise_Sales_Order}</h1>
+                        </template>
+                         <template if:true={orderNumber}>
+                            <div>{label.Order_Number_UK}. {orderNumber}</div>
+                        </template>
+                        <template if:true={sapNumber}>
+                            <div style="font-weight:bold;">{label.SAP_Order_Number_UK}. {sapNumber}</div>
+                        </template>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={isloaderReq}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+
+    <template if:true={isordersaved} class="myClass2">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header" style="padding: 0px;">
+                      <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelFinalModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <!--h1 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">{sucessheader}</h1-->
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content" id="modal-content-id-2" style="text-align: center;">
+                    <div style="background-color: #f9fbfe; padding-top:10px">
+                        <h1 class="slds-text-heading_medium slds-hyphenate slds-p-around_medium" style="font-weight:bold; font-size: 24px">{sucessheader}</h1>
+                        <img src={orderSuccessImage}/>
+                    </div>
+                    <div class="slds-p-around_medium" style="text-align: center;">{successContent}</div>                   
+                    
+                  
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <div style="text-align: center; margin:15px">
+                    <template if:false={issalesorederscreen}>
+                    <lightning-button onclick={refrshpage} data-type="onSalesorder" label={label.Go_to_Sales_order_UK}  icon-name="utility:back" title="Cancel"></lightning-button>
+                </template>
+                    <lightning-button variant="brand" class="slds-p-around_medium" onclick={refrshpage} data-type="onplaceorder" label={successbuttontext} icon-name="utility:add" title="Yes"></lightning-button>
+            </div>
+        </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+                 
+    </template>
+
+    <template if:true={isConfirm} class="myClass">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">{modalheader}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                    {modalMessage}
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={cancelModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={methodtoconfirm} data-type="Confrim" title="Yes">Yes</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+                 
+    </template>
+
+<div class="margin_top gridclass">{label.Order_TypeUK}: <b>{label.Normal_Type_Uk}</b></div>
+
+    <template if:true={Step1}>
+        <template if:true={DistributorDatas}>
+            <div class="gridclass margin_top">
+                    <ul  class=" Ul_class slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered">
+                        <li class="li-items"><div class="style_div">{label.Account_Name_uk} <b>{DistributorDatas.distributorName}</b></div></li>
+                        <li class="slds-border_left slds-border_right li-items"><div class="style_div">{label.SAP_Code_UK} <b>{DistributorDatas.sapCode}</b></div></li>
+                        <li class="li-items"><div class="style_div">{label.Total_Credit_Limit_UK} <b><template if:true={DistributorDatas.creditLimit}><lightning-formatted-number value={DistributorDatas.creditLimit} format-style="currency" currency-code={currencycodename}></lightning-formatted-number></template><template  if:false={DistributorDatas.creditLimit}>-</template></b></div></li>
+                  
+                        <li class="li-items"><div class="style_div">{label.Internal_Credit_Limit_UK} <b><template if:true={DistributorDatas.internalCredit}><lightning-formatted-number value={DistributorDatas.internalCredit} format-style="currency" currency-code={currencycodename}></lightning-formatted-number></template><template if:false={DistributorDatas.internalCredit}>-</template></b></div></li>
+                        <li class="slds-border_left slds-border_right li-items"><div class="style_div">{label.Credit_Limit_Used_UK} <b><template if:true={DistributorDatas.creditUsed}><lightning-formatted-number value={DistributorDatas.creditUsed} format-style="currency" currency-code={currencycodename}></lightning-formatted-number></template><template if:false={DistributorDatas.creditUsed}>-</template></b></div></li>
+                        <li class="li-items" style="background-color: aliceblue;"><div class="style_div">{label.Credit_Limit_Balanced_Uk} <b><template if:true={DistributorDatas.creditBalance}><lightning-formatted-number value={DistributorDatas.creditBalance} format-style="currency" currency-code={currencycodename}></lightning-formatted-number></template><template if:false={DistributorDatas.creditBalance}>-</template></b></div></li>
+                   
+                        <li class="li-items"><div class="style_div">{label.Total_outstanding_UK} <b><template if:true={DistributorDatas.paymentOutstanding}><lightning-formatted-number value={DistributorDatas.paymentOutstanding} format-style="currency" currency-code={currencycodename}></lightning-formatted-number></template><template if:false={DistributorDatas.paymentOutstanding}>-</template></b></div></li>
+                        <li class="slds-border_left slds-border_right li-items" style="background-color: antiquewhite;"><div class="style_div">{label.Net_Overdue_UK} <b><template if:true={DistributorDatas.netOverdue}><lightning-formatted-number value={DistributorDatas.netOverdue} format-style="currency" currency-code={currencycodename}></lightning-formatted-number></template><template if:false={DistributorDatas.netOverdue}>-</template></b></div></li>
+                        <li class="li-items"></li>
+                    </ul>    
+            </div>
+        </template>
+        
+    </template>
+
+
+    <div class="gridclass margin_top" data-type="addproduct" onclick={ismoduleclick} >
+        <c-sales-order-u-k-add-product-component-new objectname={objectName} recordid={recordId} currencycodesymbol={currencycode} onmycartnotempty={handleCustomEvent} onmycartempty={handleCustomEventempty}></c-sales-order-u-k-add-product-component-new>
+    </div>
+    <div class="gridclass margin_top myClass" data-type="shipdetails" onclick={ismoduleclick}>
+        <template if:true={shippingLocationData}>
+            <template if:true={incoTermData}>
+                <template if:true={incoTermCipID}>
+                    <c-sales-order-shipping-address-component objectname={objectName} salesorederdata={salesOrederData} recordid={recordId}  onclickoncombo={handleshipEvent} shippingloclist={shippingLocationData} incotermlist={incoTermData} incodefaultvalue={incoTermCipID}></c-sales-order-shipping-address-component>
+
+                </template>
+            </template>
+        </template>
+    </div>
+    <div class="gridclass margin_top" data-type="ponumber" onclick={ismoduleclick}>
+        <c-sales-order-uk-po-component objectname={objectName} recordid={recordId} salesorederdata={salesOrederData}></c-sales-order-uk-po-component>
+    </div>
+
+
+   
+    <template if:true={isauditvisible}>
+        <div class="gridclass margin_top" data-type="aprovalbox"  onclick={ismoduleclick}>
+        <div class={divclass} >
+        <h3 class={textclass} style="padding:10px; font-weight:bold;">
+            {label.Approval_History_Uk} 
+        </h3>
+        <div class="margin_top gridclass" style="margin-bottom:10px; border:1px solid rgb(245,245,238)">
+            <template if:true={auditData}>
+                <lightning-datatable
+                    key-field="Id"
+                    class="datatable"
+                    data={auditData}
+                    hide-checkbox-column="true"
+                    columns={columns}
+                    >
+                </lightning-datatable>
+            </template>
+        </div>
+    </div>
+    </div>
+    </template>
+
+
+    <div class="margin_top margin_bottom slds-align_absolute-center slds-m-bottom_small">
+        <lightning-button variant="brand" label={label.Save_as_Draft_Header_UK} title="Save as Draft" icon-name="utility:save" class="slds-m-left_x-small" onclick={methodtoconfirm} data-type="draft" disabled={isdisabledbutton}></lightning-button>
+        <lightning-button variant="brand" label={label.Confirm_UK} title={label.Confirm_UK} icon-name="utility:check"  class="slds-m-left_x-small" onclick={methodtoconfirm} disabled={isdisabledbutton} data-type="openconfirm"></lightning-button>
+        <template if:true={isView}>
+            <lightning-button variant="brand" label={label.Edit_UK} title="Edit" icon-name="utility:check"  class="slds-m-left_x-small" onclick={methodtoEdit} disabled={isdisabledEdit} data-type="openconfirm"></lightning-button>
+        </template>
+
+    </div>
+</div>
+</template>
+<template if:false={isUKData}>
+    <div style="Padding:10px; ">This is not UK or IE customer</div>
+</template>
+</template>

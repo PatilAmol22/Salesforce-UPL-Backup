@@ -1,0 +1,398 @@
+<template>
+<template if:false={showdeclaration}>
+<template if:true={isSpinner}>
+    <div class="spinner" title="">
+        <lightning-spinner class="slds-is-fixed" alternative-text="Loading" variant="brand" size="medium" title=""></lightning-spinner>
+    </div>
+</template>
+
+<div class="list-title componentNotoSansMedium" title=""><span>{Headertitle}</span></div> 
+
+<div if:false={isExternal} class="slds-m-bottom_large component-block" title="">
+    <div class="slds-grid slds-wrap slds-p-bottom_medium" title="">  
+        <div  title="" class="Year slds-col slds-x-small-size_12-of-12 slds-small-size_6-of-12 slds-medium-size_4-of-12 slds-large-size_3-of-12 slds-size_6-of-12 slds-p-left_small slds-p-right_small">
+            
+            <lightning-input title="" name="enter-search"
+                placeholder={ArSearchLabel} 
+                value = {searchKeyBar}
+                type="search"
+                class="slds-col margin-mob"
+                onchange = {onChangeSearch}>
+            </lightning-input>
+        </div>      
+        <div title="" class="slds-col slds-x-small-size_12-of-12 slds-small-size_4-of-12 slds-medium-size_3-of-12 slds-large-size_2-of-12 slds-size_12-of-12 slds-p-right_small mobButtoncss">
+                <button class="buttonClass componentNotoSansBold" disabled={disableButton} onclick={handleCustomerData}>Obtener registros</button>
+        </div>
+    </div>
+</div>
+
+<div if:true={isDataNull}  class="slds-m-bottom_large component-block download-div">
+    <!--<div class="list-title slds-p-left_small componentNotoSansMedium"><span style="font-size: 20px;">Declaración del libro mayor</span></div>-->
+    <div title="" class="slds-grid slds-wrap slds-p-bottom_medium">           
+        </div>
+    <div title="" if:true={isLoading} class="slds-is-relative">
+        <lightning-spinner alternative-text="Loading..." variant="brand" class="spinner-css"></lightning-spinner>
+    </div>
+    <div title="" class="download-div slds-text-align_right">
+        <lightning-input title="" class="slds-m-right_medium declareSoldProduct" type="checkbox" label="Declare the Sold Product" onchange={handleDeclarationChange}  ></lightning-input>
+</div>
+<template if:false={declarationRequired}>
+    <div >
+        
+        
+        <div class="download-div slds-text-align_right">
+
+            
+            <span class="componentNotoSansBold slds-m-right_medium">
+                
+                <a href={ARpdfURL}  title="" download="Stock productos UPL.pdf" target="_blank" onclick={LedgerPDF}><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon} style="height:15px; width:15px;"/></span><span>{DownloadPDF}</span></button></a> 
+            </span>
+            <!--span class="componentNotoSansBold">
+                <a href={ARxlsURL}  download="Declaración del libro mayor.xls" target="_blank" onclick={LedgerXLS}><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon} style="height:15px; width:15px;"/></span><span>{DownloadXLS}</span></button></a> 
+            </span-->
+        </div> 
+        <!--div style="max-height: 600px;">
+            <lightning-datatable
+                    key-field="MaterialDescription"
+                    hide-default-actions="true"
+                    data={ledgerRecords}
+                    resize-column-disabled="true"	
+                    hide-checkbox-column="true"	    
+                    columns={columns}>
+            </lightning-datatable>
+        </div-->
+           <!--Made styling changes By Nishi to make it mobile responsive-->
+            <div class="table-head-div">
+                <table class="slds-m-right_small" >
+                    <thead class="table-head">
+                        <tr>
+                            <th class="tabledatacss table-head-css colWidth4" scope="col">
+                                <div title="Producto">Producto</div>   
+                            </th>
+                            <th class="tabledatacss table-head-css colWidth3" scope="col">
+                                <div title="Lote">Lote</div>
+                            </th>
+                            <th class="tabledatacss table-head-css colWidth3" scope="col">
+                                <div title="Cantidad">Cantidad</div>
+                            </th>
+                            <th class="tabledatacss table-head-css colWidth3" scope="col">
+                                <div title="Expiry Date">Expiry Date</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="table-data-scroll tabel-h">
+                        <table class="slds-m-bottom_small scbar-width">
+                            <tbody class="table-body">
+                                <template for:each={ledgerRecords} for:item="arPayload">
+                                    <tr key={arPayload.Payment_Reference} class="slds-border_bottom bgcolormobile"> 
+                                        <td class="table-body-css tabledatacss mx-mobile-view mobile-header mobileTitles1 colWidth4" scope="col">
+                                            <div title="" class="textoverflowcls">{arPayload.MaterialDescription}</div>
+                                        </td>
+                                        <td class="table-body-css tabledatacss mx-mobile-view mobileTitles1 colWidth3" scope="col">
+                                            <div title="" class="textoverflowcls">{arPayload.BatchNo}</div>
+                                        </td>
+                                        <td class="table-body-css tabledatacss mx-mobile-view mobileTitles1 colWidth3" scope="col">
+                                            <div title="" class="textoverflowcls">{arPayload.UnrestrictedInventory}</div>
+                                        </td>
+                                        <td class="table-body-css tabledatacss mx-mobile-view mobileTitles1 colWidth3" scope="col">
+                                            <div title="" class="textoverflowcls">{arPayload.Expirydate}</div>
+                                        </td>
+                                        
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+            </div>
+        </template>
+<template if:true={declarationRequired}>
+    <div >
+        
+        <div class="download-div slds-text-align_right">
+              
+                <template if:false={isEdit}>
+            <div class="slds-float_right slds-m-right_medium" >
+                <lightning-input title="" label="LP Number" value={LPNumberValue} onchange={handleLPNumber} required variant="brand" pattern="[0-9A-Za-z]*"> </lightning-input>
+            </div>
+        </template>  
+            <template if:true={isEdit}>
+                <div class="slds-float_right slds-m-right_medium" >
+                    <lightning-input title="" label="LP Number" value={LPNumberValue} onchange={handleLPNumber} required variant="brand" disabled> </lightning-input>
+                </div>
+                </template>
+
+                <div title="" class='slds-float_right slds-m-right_medium'>
+                    <lightning-combobox
+                    name="Payment Term"
+                    label="Payment Term"
+                    placeholder="Choose Payment Term"
+                    value={PaymentTermValue}
+                    onchange={handlePaymentTermChange}
+                    options={paymentTermOptions}
+                    required
+                    class="paymentTerm"
+                    variant="brand"
+                    id="payment">
+                
+                </lightning-combobox>
+                </div>
+
+                <div class='slds-float_right slds-m-right_medium'>
+                    <lightning-combobox
+                    title=""
+                    name="Payment Method"
+                    label="Payment Method"
+                    placeholder="Choose Payment Method"
+                    value={paymentMethodValue}
+                    onchange={handlePaymentMethodChange}
+                    options={paymentTermMap}
+                    required
+                    
+                    variant="brand"
+                >
+                </lightning-combobox> 
+                </div>
+          
+            <div class='slds-float_right slds-m-right_medium ' >
+                
+                <lightning-input title="" type="file" onchange={onFileUpload}  name="uploadFile"  label="Upload File">  
+                </lightning-input> 
+                <div >
+               <p style="color: red;">{fileName} </p>
+            
+            
+        </div>
+                    
+                
+            </div>
+            <div title="" class='slds-float_right slds-m-right_medium ' >
+                
+                <template if:true={selectedoptionARG}>
+                    <lightning-input type="currency" label="Exchange Rate:" value={exchangerateValue}  onchange={handleExchangeRate} pattern="[0-9]*[,]{0,1}[0-9]*"> </lightning-input>
+                                
+                </template> 
+                
+            </div>
+
+            <div title="" class='slds-float_right slds-m-right_medium ' >
+                <div>
+                    <lightning-radio-group name="radioGroup"
+                    label="Currency"
+                    options={options}
+                    value={value}
+                    type="radio"
+                    onchange={handleCurrencyChange}
+                    required
+                    title=""></lightning-radio-group>
+                
+                
+            </div>
+            
+            
+        </div>
+    </div>
+                    <!--Made styling changes By Nishi to make it mobile responsive-->
+                    <div class="table-head-div">
+                        <table class="slds-m-right_small table-head-width" >
+                            <thead class="componentNotoSansLight table-head">
+                                <tr>
+                                    <th class="tabledatacss table-head-css colWidth4" scope="col">
+                                        <div title="Producto">Producto</div>   
+                                    </th>
+                                   
+                                    <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                        <div title="Lote">Lote</div>
+                                    </th>
+                                    <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                        <div title="Cantidad">Cantidad</div>
+                                    </th>
+                                    <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                        <div title="Available Qty">Available Qty</div>
+                                    </th>
+                                    <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                        <div title="Expiry Date">Expiry Date</div>
+                                    </th>
+                                   
+                                    <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                        <div title="UOM">UOM</div>
+                                    </th>
+                                    <th class="tabledatacss table-head-css colWidth1 colWidth2" scope="col">
+                                        <div title="QTY Sold">QTY Sold</div>
+                                    </th>
+                                    <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                        <div title="Net Price">Net Price</div>
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="table-data-scroll tabel-h">
+                                <table class="slds-m-bottom_small scbar-width">
+                                    <tbody class="table-body">
+                                        <template for:each={recordtodisplay} for:item="arPayload">
+                                            <tr key={arPayload.lote} class="slds-border_bottom bgcolormobile"> 
+                                                <td class="table-body-css product tabledatacss mx-mobile-view mobile-header mobileTitles2 colWidth4" scope="col" data-index={index}>
+                                                    <div class="textoverflowcls">
+                                                        <lightning-formatted-text title="" value={arPayload.product}>
+                                                        </lightning-formatted-text>
+                                                    </div>
+                                                </td>
+                                            
+                                                <td class="table-body-css lote tabledatacss mx-mobile-view mobileTitles2 colWidth1" scope="col" data-index={index} >
+                                                    <div class="textoverflowcls">
+                                                    <lightning-formatted-text title=""  value={arPayload.lote}  >
+                                                    </lightning-formatted-text>
+                                                    </div>
+                                                </td> 
+                                                <td class="table-body-css qty tabledatacss mx-mobile-view mobileTitles2 colWidth1" scope="col" data-index={index}>
+                                                    <div class="textoverflowcls">
+                                                    <lightning-formatted-text title="" value={arPayload.quantity}  >
+                                                    </lightning-formatted-text>
+                                                    </div>
+                                                </td>
+                                                <td class="table-body-css tabledatacss mx-mobile-view mobileTitles2 colWidth1" scope="col" data-index={index}>
+                                                    <div class="textoverflowcls">
+                                                        <lightning-formatted-number title="" value={arPayload.availableQty}  >
+                                                        </lightning-formatted-number>
+                                                    <!-- <lightning-formatted-text value={arPayload.availableQty}  >
+                                                    </lightning-formatted-text> -->
+                                                    </div>
+                                                </td>
+                                                <td class="table-body-css qty tabledatacss mx-mobile-view mobileTitles2 colWidth1" scope="col" data-index={index}>
+                                                    <div class="textoverflowcls">
+                                                    <lightning-formatted-text title="" value={arPayload.expiryDate}  >
+                                                    </lightning-formatted-text>
+                                                    </div>
+                                                </td>
+
+                                                
+                                                
+                                                <td class="table-body-css uom tabledatacss mx-mobile-view mobileTitles2 colWidth1" scope="col" data-index={index}>
+                                                    <div class="textoverflowcls">
+                                                    <lightning-formatted-text title="" value={arPayload.uom}  >
+                                                    </lightning-formatted-text>
+                                                    </div>
+                                                </td>
+                                                <td class="table-body-css qtysold tabledatacss mx-mobile-view mobileTitles2 colWidth1" scope="col" data-index={index}>
+                                                    <div class="textoverflowcls">
+                                                       
+                                                    <lightning-input title="" data-detail={arPayload.lote}  name={arPayload.lote} data-element={arPayload.lote} type="currency"  label="QTY Sold:"   value={arPayload.quantitySold} id={arPayload.lote} onfocusout={handleKeyUp} pattern="[0-9]*[,]{0,1}[0-9]*"   variant="label-hidden"  onchange={handleQTYSoldChange} class="qtySold" data-id={arPayload.lote}> </lightning-input>
+                                                   
+                                                </div>
+                                                </td>
+                                                <td class="table-body-css netprice tabledatacss mx-mobile-view mobileTitles2 colWidth1" scope="col" data-index={index}>
+                                                    <div class="textoverflowcls">
+                                                    <lightning-input title=""  type="currency" label="Net Price:" value={arPayload.netPrice}  pattern="[0-9]*[,]{0,1}[0-9]*" id={arPayload.lote} variant="label-hidden" onchange={handleNetPriceChange}  > </lightning-input>
+                                                        </div>
+                                                </td>
+                                                
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                        
+                    <div class="slds-float_right submitBtn">
+                        <lightning-button title="Save" onclick={saveUpload} name="saveNew"  label="Save and Upload " style="margin-top: 5px;" variant="brand">
+                        </lightning-button>
+                    </div>
+                    <div class='slds-float_right slds-m-right_medium addRowBtn'>
+                        <lightning-button title="Save" label='Save and New' name='saveUpload'  slot="actions" onclick={saveNew} style="margin-top: 10px;" variant="brand">
+                        </lightning-button>
+                    </div>
+                    <div class='slds-float_right slds-m-right_medium addRowBtn'>
+                        <lightning-button title="Draft" label='Go To Draft' name='Go To Draft'  slot="actions" onclick={draftDeclaration} style="margin-top: 10px;" variant="brand">
+                        </lightning-button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    
+            <!-- No Data Error -->
+    <div if:true={nodata}>
+            <p class="slds-text-align_center nodatacss" title="">{message}</p>
+    </div>
+    <div if:false={isSuccess}>
+        <p class="slds-text-align_center nodatacss" title="">Error en SAP</p>
+    </div>
+</div>
+<div if:false={isDataNull} class="slds-box slds-theme_shade slds-theme_alert-texture" title="">
+    <strong>{message2show}</strong>
+</div>
+</template>
+<template if:true={showdeclaration}>
+    <div class="table-head-div">
+        <!--Made styling changes By Nishi to make it mobile responsive-->
+                <table class="slds-m-right_small table-head-width" >
+                    <thead class="componentNotoSansLight table-head">
+                        <tr>
+                            <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                <div title="Producto">No of Declaration</div>   
+                            </th>
+                            <th class="tabledatacss table-head-css colWidth2" scope="col">
+                                <div title="Lote">Total Amount</div>
+                            </th>
+                            <th class="tabledatacss table-head-css colWidth2" scope="col">
+                                <div title="LP Number">LP Number</div>
+                            </th>
+                            <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                <div title="Edit Declaration">Edit Declaration</div>
+                            </th>
+                            <th class="tabledatacss table-head-css colWidth1" scope="col">
+                                <div title="Delete Declaration">Delete Declaration</div>
+                            </th>
+                            <th class="tabledatacss table-head-css colWidth4" scope="col">
+                                <div title="Uploaded File">Uploaded File </div>
+                            </th>
+                           
+                            
+                        </tr>
+                    </thead>
+                </table>
+                <div class="table-data-scroll tabel-h">
+                        <table class="slds-m-bottom_small scbar-width">
+                            <tbody class="table-body">
+                                <template for:each={mapData} for:item="arPayload">
+                                    <tr key={arPayload.key} class="slds-border_bottom bgcolormobile"> 
+                                        <td class="tabledatacss table-body-css mx-mobile-view mobile-header mobileTitles3 colWidth1" scope="col" >
+                                            <div title="" class="textoverflowcls">{arPayload.key}</div>
+                                        </td>
+                                        <td class="tabledatacss table-body-css mx-mobile-view mobileTitles3 colWidth2" scope="col" >
+                                            <div title="" class="textoverflowcls">{arPayload.value.Total_Amount__c}</div>
+                                        </td>
+                                        <td class="tabledatacss table-body-css mx-mobile-view mobileTitles3 colWidth2" scope="col" >
+                                            <div title="" class="textoverflowcls">{arPayload.value.LP_Number__c}</div>
+                                        </td>
+                                        <td class="tabledatacss table-body-css mx-mobile-view mobileTitles3 colWidth1" scope="col" >
+                                            <lightning-button title=""  onclick={editDeclaration} name={arPayload.key} id={arPayload.value.LP_Number__c} label="Edit" style="margin-top: 5px;" variant="brand">
+                                            </lightning-button>
+                                        </td>
+                                        <td class="tabledatacss table-body-css mx-mobile-view mobileTitles3 colWidth1" scope="col" >
+                                            <lightning-button title="" onclick={deleteDeclaration} name={arPayload.key} id={arPayload.value.LP_Number__c} label="delete" style="margin-top: 5px;" class variant="brand">
+                                            </lightning-button>
+                                        </td>
+                                        <td class="tabledatacss table-body-css mx-mobile-view mobileTitles3 colWidth4" scope="col" >
+                                            <div title="" class="textoverflowcls">{arPayload.value.File_Name__c}</div>
+                                        </td>
+
+                                       
+                                        
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+            <div class=" slds-align_absolute-center submitBtn">
+                <lightning-button title="Back"  onclick={backButton} name="Back"  label="Back" style="margin-top: 5px;" variant="brand">
+                </lightning-button>
+                <lightning-button title="Submit"  onclick={onSubmit} name="Submit"  label="Submit" style="margin-top: 5px;margin-left: 5px;" variant="brand">
+                </lightning-button>
+               
+            </div>
+</template>
+</template>
+
+</template>

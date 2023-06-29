@@ -1,0 +1,121 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+ <div class="slds-grid slds-wrap slds-gutters" style="background:#000; margin:0; padding:0px;">
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+      <li class="slds-item">
+        <a><b>Quiénes Somos</b></a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/es/Misi%C3%B3n-Corporativa" target="_blank">Mision Corporativa</a>
+      </li>
+      <li class="slds-item">
+        <a href="https://www.upl-ltd.com/es/Nuestro-Legado" target="_blank">Nuestro Legado</a>
+      </li> 
+  </ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Productos</b></a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=1" target="_blank">Herbicidas</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=2" target="_blank">Fungicidas</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=3" target="_blank">Regulardores De Crecimiento</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=4" target="_blank">Insecticidas</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=6" target="_blank">Micronutrientes Y Foliares</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=9" target="_blank">Tratamientos De Semillas</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=12" target="_blank">Fisioactivadores</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=13" target="_blank">Biocontrol</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=14" target="_blank">Bioestimulantes, Nutrientes Y Otros</a>
+  </li>
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Productos?level_one=1&amp;level_two_select=16" target="_blank">Coadyuvantes</a>
+  </li>
+</ul>
+  </div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/cultivos" target="_blank"><b>Cultivos</b></a>
+  </li>
+</ul>
+</div>
+    
+  <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Noticias" target="_blank"><b>Noticias</b></a>
+  </li>
+</ul>
+</div>
+     
+     <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a href="https://www.upl-ltd.com/es/Eventos" target="_blank"><b>Eventos</b></a>
+  </li>
+</ul>
+</div>
+     
+     <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="margin-top:20px; margin-bottom:20px;">
+  <ul class="slds-has-block-links_space" style="font-size:12px; color:#fff;">
+  <li class="slds-item">
+    <a><b>Contacto</b></a>
+  </li>
+  <li class="slds-item">
+    <a>Email:iberia@upl-ltd.com</a>
+  </li>
+  <li class="slds-item">
+    <a>Teléfono: + 901 900 040</a>
+  </li>    
+</ul>
+</div>
+    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#ff7701; padding:20px 0 10px 20px; margin:0;">    
+<ul class="slds-list_horizontal" style="float:left;">
+<li>UPL Iberia S.A. Todos los derechos reservados</li>
+    <li><a href="https://www.upl-ltd.com/es/T%C3%A9rminos-de-uso" target="_blank">Terminos de uso</a></li>
+    <li><a href="https://www.upl-ltd.com/es/Pol%C3%ADtica-de-privacidad" target="_blank">Politica de privacidad</a></li>
+</ul>
+    
+<ul class="slds-list_horizontal" style="float:right;">
+    <li style="margin-top:-5px;"><a href="https://www.youtube.com/channel/UCAqUgepg2wdQ785-OtS1BUQ" target="_blank"><img src="{!$Resource.youtubeicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.facebook.com/UPLIberiaOpenAg" target="_blank"><img src="{!$Resource.fbicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://twitter.com/UPL_Iberia" target="_blank"><img src="{!$Resource.twittericonnew}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.linkedin.com/company/upl-ltd/" target="_blank"><img src="{!$Resource.inicon}"/></a></li>
+    <li style="margin-top:-5px;"><a href="https://www.instagram.com/upl_iberia/" target="_blank"><img src="{!$Resource.instaicon}"/></a></li>
+</ul>     
+</div> 
+</div>
+
+<!--
+<div class="slds-grid slds-wrap slds-gutters">    
+<div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#FF8833; text-align:center; padding:10px 0; color:#fff;">    
+    Copyright@UPL2019 &nbsp;&nbsp;&nbsp;<a href="">Term of Service</a>&nbsp;&nbsp;&nbsp; <a href="">Contact</a>&nbsp;&nbsp;&nbsp; <a href="">disclaimer</a>
+</div>
+    <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+      <span>
+      <img src="{!$Resource.social}"/>
+      </span>
+    </div>    
+</div>-->
+</aura:component>

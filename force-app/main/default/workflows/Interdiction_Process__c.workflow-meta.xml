@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_Alert_For_Interdiction_Customer</fullName>
+        <description>Email Alert For  Interdiction Customer</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Customer_Service_Interdiction</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Interdiction_Notification_To_Customer_Group</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_alert_for_Interdiction_Legal</fullName>
+        <description>Email alert for Interdiction Legal</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Legal</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Notiffication_for_Logistic_group</template>
+    </alerts>
+    <alerts>
+        <fullName>Email_alert_for_logistic_groups</fullName>
+        <description>Email alert for logistic groups</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Logistics</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Notiffication_for_Logistic_group</template>
+    </alerts>
+    <alerts>
+        <fullName>Interdiction_notification_to_Purchasing</fullName>
+        <description>Interdiction notification to Purchasing</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Purchasing</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Notiffication_for_Logistic_group</template>
+    </alerts>
+    <alerts>
+        <fullName>interdictionNotificationToAll</fullName>
+        <description>interdictionNotificationToAll</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Customer_Service_Interdiction</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <recipient>Logistics</recipient>
+            <type>group</type>
+        </recipients>
+        <recipients>
+            <recipient>Purchasing</recipient>
+            <type>group</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Brazil/Notification_to_all_groups_on_Interdiction_process_completion</template>
+    </alerts>
+</Workflow>

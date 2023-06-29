@@ -1,0 +1,43 @@
+<template>
+    <template if:true={showSpinner}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+    <lightning-card variant="Narrow" icon-name="standard:file" title="File Upload">
+<div class="slds-grid slds-wrap">
+     <div class="slds-col slds-size_1-of-3">
+         <!--<p class="slds-var-p-horizontal_small">-->
+           <div class="slds-var-p-horizontal_small">
+            <lightning-file-upload 
+                accept={acceptedFormats} 
+                label="Attach CSV File"
+                onuploadfinished={handleUploadFinished}
+                variant="label-hidden">
+            </lightning-file-upload>
+            <div style="height:20px;">&nbsp;</div>
+            <template if:true={displayFileName}>
+                <template for:each={uploadedFiles} for:item="files">
+                    <p key={files.documentId}><strong>Uploaded File Name : </strong>{files.name} </p>
+                </template>
+               
+            </template>
+        </div> 
+         <!--</p>-->
+    </div>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning-button  label="Send SMS" disabled={sendSMSbuttonDisable} alternative-text="send Sms" onclick={sendSms}></lightning-button>                    
+
+    </div>
+</div>
+<div style="height:30px;">&nbsp;</div>
+<div class="slds-p-left_medium slds-border_top slds-border_right slds-border_bottom slds-border_left slds-border_bottom slds-p-right_medium">
+   <strong> Instructions</strong>
+   <ul class="slds-list_dotted">
+     <li>File to be uploaded must be in csv format (Save file in csv format).</li>
+     <li>Please Keep the Mobile number in the 1 st column and Language in the second Column </li>
+     
+   </ul>
+</div>
+</lightning-card>
+</template>

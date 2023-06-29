@@ -1,0 +1,240 @@
+<template>
+
+  <template if:true={detailsData}>
+
+    <template if:true={detailsData.errorHeader}>
+      <div class="slds-box slds-theme_warning slds-theme_alert-texture">{detailsData.errorHeaderMsg}</div>
+  </template>
+
+  <template if:false={detailsData.errorHeader}>
+    <template if:false={detailsData.error}>
+    <div style = "background:white;padding:10px;" class="slds-is-relative">
+        <div if:true={isLoaded}>
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+        <div class="slds-grid slds-wrap" style="padding:10px;border: 1px solid grey">
+            <div class="slds-col slds-size_6-of-12" style="padding-right: 10px;">
+                <div class="slds-page-header slds-page-header_record-home">
+                    <div class="slds-page-header__row">
+                      <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                          <div class="slds-media__figure">
+                            <span class="slds-icon_container">
+                                <lightning-icon icon-name="standard:work_order"></lightning-icon>
+
+                            </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                              <div class="slds-page-header__name-title">
+                                <h1>
+                                  <span>Sales Order Info:</span>
+                                  <span class="slds-page-header__title slds-truncate" >{detailsData.salesOrdername}</span>
+                                </h1>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap" style="padding-top: 10px;font-weight: 500">
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Sales Order No :</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px"> {detailsData.salesOrdername}</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Sales Org :</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px"> {detailsData.salesOrgName}</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Customer Name :</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px"> {detailsData.customerName}</div>
+                    <div class="slds-col slds-size_6-of-12">Customer Code :</div>
+                    <div class="slds-col slds-size_6-of-12"> {detailsData.customerCode}</div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <div class="slds-page-header slds-page-header_record-home">
+                    <div class="slds-page-header__row">
+                      <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                          <div class="slds-media__figure">
+                            <span class="slds-icon_container">
+                                <lightning-icon icon-name="standard:code_set" alternative-text="Event" title="Event"></lightning-icon>
+
+                            </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                              <div class="slds-page-header__name-title">
+                                <h1>
+                                  <span>Invoice Info:</span>
+                                  <span class="slds-page-header__title slds-truncate" >{detailsData.InvoiceName}</span>
+                                </h1>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                          <div class="slds-page-header__control">
+                            <ul class="slds-button-group-list">
+                              <li>
+                                <button class="slds-button slds-button_neutral">Edit</button>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div-->
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap" style="padding-top: 10px;font-weight: 500">
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px">Invoice No :</div>
+                    <div class="slds-col slds-size_6-of-12" style="padding-bottom: 5px"> {detailsData.InvoiceName}</div>
+                    <div class="slds-col slds-size_6-of-12">Billing Doc No :</div>
+                    <div class="slds-col slds-size_6-of-12"> {detailsData.billingDocNum}</div>
+                    <div class="slds-col slds-size_6-of-12"></div>
+                    <div class="slds-col slds-size_6-of-12"></div>
+                </div>
+                <!-- <div>Invoice No : {detailsData.InvoiceName}</div>
+                <div>Billing Doc No : {detailsData.billingDocNum}</div> -->
+            </div>
+        </div>
+
+        <div class="slds-grid slds-wrap" style="padding:10px;border: 1px solid grey;margin-top: 15px">
+            <div class="slds-page-header slds-page-header_record-home" style=" width: 100%;margin-bottom:12px;">
+                <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container">
+                            <lightning-icon icon-name="standard:code_set_bundle"></lightning-icon>
+
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                        <div class="slds-page-header__name-title">
+                            <h1>
+                                <span style="font-size: 21px;
+                                font-weight: 700;">Invoice Line Items :</span></h1>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-media__body" style="padding-left: 35%;">
+                      <div class="slds-page-header__name">
+                        <div class="slds-page-header__name-title">
+                          <lightning-combobox style="min-width: 310px;max-width: 300px;"
+                          name="progress"
+                          label="Sales Return Reason :"
+                          value={orderreasonval}
+                          disabled
+                          placeholder="No Order Reason"
+                          options={detailsData.picks}
+                          onchange={handleChange} 
+                          dropdown-alignment="bottom-left">
+                        </lightning-combobox>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div style="min-height: 300px;width: 100%;">
+                <lightning-datatable
+                        key-field="id"
+                        hide-checkbox-column
+                        show-row-number-column
+                        onsave={handleSave}
+                        draft-values={draftValues}
+                        data={data}
+                        errors={errors}
+                        columns={columns}
+                         oncellchange={handleEditCellChange}>
+                </lightning-datatable>
+            </div>
+        </div>
+    </div>
+    </template>
+    <template if:true={detailsData.error}>
+        <div style="padding:10px;background: white;">
+        <div class="error">{detailsData.errorMsg}</div>
+        </div>
+    </template>
+
+</template>
+</template>
+
+    <template if:true={isShowModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      
+        <!-- modal header start -->
+        <template if:false={showToast}>
+          <div class="slds-modal__container">
+          <header class="slds-modal__header">
+             <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                <lightning-icon icon-name="utility:close"
+                   alternative-text="close"
+                   variant="inverse"
+                   size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+             </button> -->
+             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Return Order</h2>
+          </header>
+      
+          <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <p>
+              <b> {confirmmsg}</b>
+              <template if:true={mmList}>
+               <template for:each={mmList} for:item="aa">
+                 <p key={aa}>
+                 -> {aa}</p>
+               </template>
+              </template>
+             </p>
+          </div>
+
+          <!-- modal footer start-->
+          <footer class="slds-modal__footer">
+             <button class="slds-button slds-button_brand" onclick={submit}>Submit</button>
+             <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+          </footer>
+          </div>
+       </template>
+
+       <template if:true={showToast}>
+        <div class="slds-modal__container">
+        <header class={sldsThemeH}>
+           <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+              <lightning-icon icon-name="utility:close"
+                 alternative-text="close"
+                 variant="inverse"
+                 size="small" ></lightning-icon>
+              <span class="slds-assistive-text">Close</span>
+           </button> -->
+           <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">{errorTitle}</h2>
+        </header>
+    
+        <!-- modal body start -->
+        <div class={sldsThemeB} id="modal-content-id-4">
+              <p>{errorMsg}</p>
+              <template if:true={showVfMsg}>
+                <p>{vfMsg1}</p>
+                <p>{vfMsg2}</p>
+              </template>
+        </div>
+
+        <!-- modal footer start-->
+        <footer class="slds-modal__footer">
+           <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Close</button>
+        </footer>
+        </div>
+     </template>
+       
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+ </template>
+
+</template>

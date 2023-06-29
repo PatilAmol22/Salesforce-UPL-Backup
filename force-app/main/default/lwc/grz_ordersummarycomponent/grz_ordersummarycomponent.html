@@ -1,0 +1,315 @@
+<!--********************************************************************************************
+* Name			    : grz_OrderSummaryComponent.html
+* Description	    : LWC component to dispaly lates 5 sales order in home page in Customer community
+* Apex Controller	: grz_SalesOrderSummary 
+* LastModefied Date	: 28/07/2022 
+* Created By	    : Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<template>
+    <!--============================For UPL India Community Users ===========================-->
+    <template if:true={isIn}>
+        <div if:true={SalesData} data-id="SalesDataMain-div">
+            <div class="slds-p-bottom_medium">
+                <div class="slds-grid slds-wrap slds-p-left_xxx-small fontTitleClr" style="border-radius: 3px; border: 1px solid #e5e5e5; background-color: white; padding: 3px;">
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_5-of-12">
+                        <span ><span class="componentNotoSansBold">From Date </span>:{fiscalYearStartDate}</span>
+                    </div>
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_7-of-12">
+                        <span><span class="componentNotoSansBold paddingclass" >To Date </span>:{fiscalYearEndDate}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <template iterator:it={SalesData}>
+                <div  key={it.value.Id}  class="slds-p-bottom_small"> 
+                    <div data-id={it.value.CountId} class = "divstyle shadoweffect">      
+                        <div class="slds-grid slds-wrap slds-p-left_small slds-p-top_small slds-p-bottom_xx-small">
+                            <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 borderclr">
+                                <img data-id="tab-1" src={orderIcon} alt="Order Summary" class="slds-p-top_x-small slds-p-bottom_x-small imgpadding">
+                            </div>
+                            <div class="slds-col slds-x-small-size_9-of-12 slds-medium-size_10-of-12 slds-large-size_11-of-12 slds-p-left_small">
+                                <div class="slds-grid slds-wrap slds-p-top_x-small orderIddivpadding">
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-top_xxx-small">
+                                        <div class="textoverflowcls">
+                                            <span class="fontTitleClr" style="display: inline-block;">Order ID </span>
+                                            <a class="slds-p-left_xx-small fontTextClr" onclick={navigateToRecordView} href={detailPageLink} name={it.value.Id} title="View SalesOrder" target="_blank">  
+                                                :{it.value.SAPOrderNumber}
+                                            </a>
+                                        </div>      
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-top_xxx-small">
+                                        <div>
+                                            <span class="fontTitleClr paddingclass2">Total </span>
+                                            <span if:true={it.value.OrderAmount} class="fontTitleClr ">:INR &nbsp;{it.value.OrderAmount}</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 borderleft">
+                                        <div class="slds-p-left_small slds-p-top_xxx-small slds-p-bottom_xx-small hidePaddingleft">
+                                            <span class="fontlableClr paddingclass1">Date </span>
+                                            <span class="fontlableClr ">
+                                                :{it.value.OrderDate}
+                                            </span>
+                                        </div>    
+                                        <div class="slds-p-left_small slds-text-align_center hidePaddingleft status" style={it.value.StatusColor}>
+                                            <span class="slds-p-around_xxx-small">{it.value.Status}</span>
+                                        </div>  
+                                    </div>                  
+                                </div>
+                            </div>
+                        </div>
+                        <div data-id={it.value.Id} data-name="childdiv" class="slds-grid slds-wrap slds-p-left_small slds-p-top_x-small slds-p-bottom_x-small slds-p-right_small my-menu1">
+                            <template iterator:it={it.value.children}>
+                                <div key={it.value.Id} class="slds-col slds-size_1-of-12 onmobileViewHide">
+                                </div>                   
+                                    <div key={it.value.Id} class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_11-of-12 slds-p-top_xx-small slds-p-bottom_x-small divbordertop">
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-x-small-size_11-of-12 slds-medium-size_11-of-12 slds-large-size_11-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_8-of-12 slds-large-size_6-of-12 slds-p-right_xx-small productpadding textoverflowcls">
+                                                        <span class="fontlableClr">Product: </span>
+                                                        <span class="fontlableClr" title={it.value.Description}>{it.value.Description}</span>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_4-of-12 slds-large-size_3-of-12 textoverflowcls">
+                                                        <span class="fontlableClr">Quantity: </span>
+                                                        <span class="fontlableClr" title={it.value.Quantity}>{it.value.Quantity}</span>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12 textoverflowcls">
+                                                        <span class="slds-p-left_xx-small fontlableClr hidepaddingleftvalue">Price: </span>
+                                                        <span if:true={it.value.Price} class="fontlableClr" title={it.value.Price}>INR &nbsp;{it.value.Price}</span> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                                <div if:true={it.first} class="slds-p-top_xxx-small pointer">
+                                                    <div if:true={it.value.ShowIcon}>
+                                                        <lightning-icon data-name={it.value.SalesOrderId} data-id={it.value.CountId} icon-name="utility:chevrondown" class="slds-float_right iconborder" alternative-text="add" size="x-small" onclick={openSubMenu}></lightning-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                       
+                                    </div>
+                            </template>
+                        </div>
+                    </div> 
+                </div>
+            </template>
+        </div>
+        <div if:true={nodata}>
+            <p class="slds-text-align_center nodatacss" style="background-color: white;">No Sales Orders Data To Display</p>
+        </div>
+    </template>
+    <!--========================================= For UPL Brazil Community Users ================================================-->
+    <template if:true={isBr}>
+        <div if:true={SalesData} data-id="SalesDataMain-div">
+            <template iterator:it={SalesData}>
+                <div  key={it.value.Id}  class="slds-p-bottom_small"> 
+                    <div data-id={it.value.CountId} class = "divstyle">    
+                        <!--GRZ(Swaranjeet) : APPS-947 PO & Delivery Date :30-08-2022-->  
+                        <div class="slds-grid slds-wrap slds-p-left_small slds-p-top_small slds-p-bottom_small shadoweffect">
+                            <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 borderclr">
+                                <img data-id="tab-1" src={orderIcon} alt="Order Summary" class="slds-p-top_x-small slds-p-bottom_x-small imgpadding">
+                            </div>
+                            <div class="slds-col slds-x-small-size_9-of-12 slds-medium-size_10-of-12 slds-large-size_11-of-12 slds-p-left_small">
+                                <div class="slds-grid slds-wrap slds-p-top_x-small orderIddivpadding">
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-top_xxx-small">
+                                        <div class="textoverflowcls">
+                                            <span class="fontTitleClr" style="display: inline-block;">Pedido: </span>
+                                            <a class="slds-p-left_xx-small fontTextClr" onclick={navigateToRecordViewBr} href={detailPageLink} name={it.value.Id} title="View SalesOrder" target="_blank">  
+                                                {it.value.SAPOrderNumber}
+                                            </a>
+                                        </div>
+                                        <!--<div class="slds-p-top_x-small">
+                                            <span class="fontTitleClr">Sold to: </span>
+                                            <span class="fontTitleClr">{it.value.SoldtoParty}</span>
+                                        </div>-->    
+                                        <div class="slds-p-top_x-small slds-p-right_x-small">
+                                            <span class="fontTitleClr">Tipo do Pedido: </span>
+                                            <span class="fontlableClr">{it.value.TypeofOrder}</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-top_xxx-small">
+                                        <div>
+                                            <span class="fontTitleClr">Valor Total: </span>
+                                            <span class="fontlableClr"><lightning-formatted-number value={it.value.TotalValue} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                        </div>
+                                        <div class="slds-p-top_x-small orderIddivpadding">
+                                            <span class="fontTitleClr">Cidade: </span>
+                                            <span class="fontlableClr">{it.value.CityBr}</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 borderleft">
+                                        <div class="slds-p-left_small slds-p-top_xxx-small slds-p-bottom_xx-small hidePaddingleft">
+                                            <span class="fontlableClr">Data: </span><!--GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+                                            <span class="fontlableClr">
+                                                {it.value.CreatedDate}
+                                            </span>
+                                        </div>    
+                                        <!--<div class="slds-p-left_small slds-p-top_xxx-small slds-p-bottom_xx-small hidePaddingleft">
+                                            <span class="fontlableClr">Type: </span>
+                                            <span class="fontlableClr">{it.value.TypeofOrder}</span>
+                                        </div>-->
+                                        <div class="slds-p-left_small slds-text-align_center hidePaddingleft status" style={it.value.StatusColor}>
+                                            <span class="slds-p-around_xxx-small">{it.value.Status}</span>
+                                        </div> 
+                                    </div>                  
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div data-id={it.value.Id} data-name="childdiv" class="slds-grid slds-wrap slds-p-left_small slds-p-top_x-small slds-p-bottom_x-small slds-p-right_small my-menu1">
+                            <template iterator:it={it.value.children}>
+                                <div key={it.value.Id} class="slds-col slds-size_1-of-12 onmobileViewHide"></div>                   
+                                    <div key={it.value.Id} class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_11-of-12 slds-p-top_xx-small slds-p-bottom_x-small divbordertop">
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-x-small-size_11-of-12 slds-medium-size_11-of-12 slds-large-size_11-of-12">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12 slds-p-right_xx-small productpadding textoverflowcls">
+                                                        <span class="fontlableClr">Produto: </span>
+                                                        <span class="fontlableClr" title={it.value.Description}>{it.value.ProductName}</span>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12 textoverflowcls">
+                                                        <span class="fontlableClr">Quantidade: </span>
+                                                        <span class="fontlableClr" title={it.value.Quantity}>{it.value.Quantity}</span>
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12 textoverflowcls">
+                                                        <span class="slds-p-left_xx-small fontlableClr hidepaddingleftvalue">Preço Unitário: </span>
+                                                        <span if:true={it.value.Price} class="fontlableClr" title={it.value.Price}>{it.value.Price}</span> 
+                                                    </div>
+                                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12 textoverflowcls">
+                                                        <span class="slds-p-left_xx-small fontlableClr hidepaddingleftvalue">Valor: </span>
+                                                        <span if:true={it.value.Price} class="fontlableClr" title={it.value.Price}>{it.value.TotalPrice}</span> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-x-small-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                                <div if:true={it.first} class="slds-p-top_xxx-small pointer">
+                                                    <div if:true={it.value.ShowIcon}>
+                                                        <lightning-icon data-name={it.value.SalesOrderId} data-id={it.value.CountId} icon-name="utility:chevrondown" class="slds-float_right iconborder" alternative-text="add" size="x-small" onclick={openSubMenu}></lightning-icon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                        
+                                    </div>
+                            </template>
+                        </div>-->
+                    </div> 
+                </div>
+            </template>
+        </div>
+        <div if:true={nodata}>
+            <p class="slds-text-align_center nodatacss" style="background-color: white;">Não há dados do pedido de vendas para exibir</p>
+        </div>
+    </template>
+
+    <!--========================================= For UPL Chile Community Users ================================================-->
+    <template if:true={isCl}>
+        <div if:true={SalesData} data-id="SalesDataMain-div">
+            <template iterator:it={SalesData}>
+                <div  key={it.value.Id}  class="slds-p-bottom_small"> 
+                    <div data-id={it.value.CountId} class = "divstyle">      
+                        <div class="slds-grid slds-wrap slds-p-left_small slds-p-top_small slds-p-bottom_small">
+                            <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 borderclr">
+                                <img data-id="tab-1" src={orderIcon} alt="Order Summary" class="slds-p-top_x-small slds-p-bottom_x-small imgpadding">
+                            </div>
+                            <div class="slds-col slds-x-small-size_9-of-12 slds-medium-size_10-of-12 slds-large-size_11-of-12 slds-p-left_small">
+                                <div class="slds-grid slds-wrap slds-p-top_x-small orderIddivpadding">
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-top_xxx-small">
+                                        <div class="textoverflowcls">
+                                            <span class="fontTitleClr" style="display: inline-block;">Pedido: </span>
+                                            <a class="slds-p-left_xx-small fontTextClr" onclick={navigateToRecordViewBr} href={detailPageLink} name={it.value.Id} title="View SalesOrder" target="_blank">  
+                                                {it.value.SAPOrderNumber}
+                                            </a>
+                                        </div>
+                                        <!--<div class="slds-p-top_x-small">
+                                            <span class="fontTitleClr">Sold to: </span>
+                                            <span class="fontTitleClr">{it.value.SoldtoParty}</span>
+                                        </div>-->    
+                                        <div class="slds-p-top_x-small slds-p-right_x-small">
+                                            <span class="fontTitleClr">PO Número: </span>
+                                            <span class="fontlableClr">{it.value.TypeofOrder}</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-top_xxx-small">
+                                        <div>
+                                            <span class="fontTitleClr">Valor Total: </span>
+                                            <span class="fontlableClr"><lightning-formatted-number value={it.value.TotalValue} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                        </div>
+                                        <div class="slds-p-top_x-small orderIddivpadding">
+                                            <span class="fontTitleClr">Ciudad Destino: </span>
+                                            <span class="fontlableClr">{it.value.CityBr}</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 borderleft">
+                                        <div class="slds-p-left_small slds-p-top_xxx-small slds-p-bottom_xx-small hidePaddingleft">
+                                            <span class="fontlableClr">Fecha: </span>
+                                            <span class="fontlableClr">
+                                                {it.value.CreatedDate}
+                                            </span>
+                                        </div>    
+                                        <!--<div class="slds-p-left_small slds-p-top_xxx-small slds-p-bottom_xx-small hidePaddingleft">
+                                            <span class="fontlableClr">Type: </span>
+                                            <span class="fontlableClr">{it.value.TypeofOrder}</span>
+                                        </div>-->
+                                        <div class="slds-p-left_small slds-text-align_center hidePaddingleft status" style={it.value.StatusColor}>
+                                            <span class="slds-p-around_xxx-small">{it.value.Status}</span>
+                                        </div> 
+                                    </div>                  
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </template>
+        </div>
+        <div if:true={nodata}>
+            <p class="slds-text-align_center nodatacss" style="background-color: white;">No hay orden de venta para mostrar</p>
+        </div>
+    </template>
+
+    <template if:true={isMx}>
+         <div if:true={SalesData} data-id="SalesDataMain-div">
+            <template iterator:it={SalesData}>
+                <div  key={it.value.Id}  class="slds-p-bottom_small"> 
+                    <div data-id={it.value.CountId} class = "divstyle slds-p-bottom_small">      
+                        <div class="slds-grid slds-wrap slds-p-left_small slds-p-top_small slds-p-bottom_xx-small">
+                            <div class="slds-col slds-x-small-size_2-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 borderclr">
+                                <img data-id="tab-1" src={orderIcon} alt="Order Summary" class="slds-p-top_x-small slds-p-bottom_x-small imgpadding">
+                            </div>
+                            <div class="slds-col slds-x-small-size_9-of-12 slds-medium-size_10-of-12 slds-large-size_11-of-12 slds-p-left_small">
+                                <div class="slds-grid slds-wrap slds-p-top_x-small orderIddivpadding">
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-top_xxx-small">
+                                        <div class="textoverflowcls">
+                                            <span class="fontTitleClr" style="display: inline-block;">Solicitar ID: </span>
+                                            <a class="slds-p-left_xx-small fontTextClr" onclick={navigateToRecordView} href={detailPageLink} name={it.value.Id} title="View SalesOrder" target="_blank">  
+                                                {it.value.SAPOrderNumber}
+                                            </a>
+                                        </div>      
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 slds-p-top_xxx-small">
+                                        <div>
+                                            <span class="fontTitleClr paddingclass2">Total: </span>
+                                            <span if:true={it.value.OrderAmount} class="fontTitleClr ">MXN &nbsp;{it.value.OrderAmount}</span>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_4-of-12 borderleft">
+                                        <div class="slds-p-left_small slds-p-top_xxx-small slds-p-bottom_xx-small hidePaddingleft">
+                                            <span class="fontlableClr paddingclass1">Fecha: </span>
+                                            <span class="fontlableClr ">
+                                                {it.value.OrderDate}
+                                            </span>
+                                        </div>    
+                                        <div class="slds-p-left_small slds-text-align_center hidePaddingleft status" style={it.value.StatusColor}>
+                                            <span class="slds-p-around_xxx-small">{it.value.Status}</span>
+                                        </div>  
+                                    </div>                  
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </template>
+        </div> 
+        <div if:true={nodata}>
+            <p class="slds-text-align_center nodatacss" style="background-color: white;">No hay datos de órdenes de venta para mostrar</p>
+        </div>
+    </template>
+</template>

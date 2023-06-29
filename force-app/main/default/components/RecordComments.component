@@ -1,0 +1,7 @@
+<apex:component controller="RecordApprovalReject" access="global">
+    <apex:attribute name="recordId" assignTo="{!recId}" type="String" description="Id of the cont"/> 
+    
+    {!ApprovalSteps} 
+    <!--<b>Account Link</b>:        <apex:outputLink value="{!URL}" title="Contact">Click to view account</apex:outputLink>-->
+             
+</apex:component>

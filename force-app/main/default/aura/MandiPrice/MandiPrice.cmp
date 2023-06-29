@@ -1,0 +1,98 @@
+<aura:component controller="MandiController" implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global">
+    <aura:attribute name="allData" type="List" />
+    <aura:attribute name="filteredData" type="List" />
+    <aura:attribute name="tableData" type="List" />
+    <aura:attribute name="columns" type="Object[]" />
+    <aura:attribute name="pageSize" type="Integer" default="10" />
+    <aura:attribute name="pageSizeOptions" type="Integer[]" default="10,15,20,25,50" />
+    <aura:attribute name="currentPageNumber" type="Integer" default="1" />
+    <aura:attribute name="totalPages" type="Integer" default="1" />
+    <aura:attribute name="searchPhrase" type="String" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="isError" type="Boolean" default="true" />
+    <aura:attribute name="StateName" type="String" />
+    <aura:attribute name="DistrictName" type="String" />
+    
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    <aura:if isTrue="{!v.isError}">
+        
+        <lightning:card variant="base">
+            <div class="hdr" style="background-color: #083357;color: aliceblue;border-radius: 6px;padding:1%;">
+            <div style="display: inline-block;width:40%;font-size: 14px;">
+                <img src="{!$Resource.nurturecarelogo}" style="width:22%" />
+            Mandi Price
+            </div>
+            <div style="display: inline-block;width:60%;text-align: right;">
+                <lightning:buttonIcon onclick="{!c.doInit}" iconName="utility:refresh" variant="border-filled" alternativeText="reload"/>
+               </div>
+        </div>
+            <div class="slds-grid slds-p-bottom_small">
+                <div class="slds-col">
+                    <lightning:select  value="{! v.pageSize }" onchange="{! c.onPageSizeChange }">
+                        <aura:iteration items="{! v.pageSizeOptions }" var="opt">
+                            <option text="{! opt }"></option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+                <div class="slds-col">
+                    <lightning:input  placeholder="Search Phrase" type="search" value="{! v.searchPhrase }" onchange="{! c.onChangeSearchPhrase }" />
+                </div>
+                <div class="slds-col" style="padding-top:5%">
+                    <lightning:button   label="Search" variant="neutral" onclick="{! c.handleSearch }" />
+                </div>
+                
+                
+            </div>
+            <lightning:datatable
+                                 aura:id="table"
+                                 columns="{!v.columns }"
+                                 data="{!v.tableData }"
+                                 hideCheckboxColumn="true"
+                                 keyField="Id" />
+        </lightning:card>
+        <div >
+            <div style="text-align: center;">
+                <span class="slds-var-p-horizontal_x-small">
+                    Page {! (v.currentPageNumber) } of {! (v.totalPages) }
+                </span>
+                <!--<span class="slds-var-p-horizontal_x-small">
+                    Total records: {! (v.filteredData.length) }
+                </span>-->
+            </div>
+            <div>
+                <lightning:button
+                                  label="First"
+                                  iconName="utility:left"
+                                  iconPosition="left"
+                                  onclick="{! c.onFirst }"
+                                  disabled="{! v.currentPageNumber == 1 }" />
+                <lightning:button
+                                  label="Previous"
+                                  iconName="utility:chevronleft"
+                                  iconPosition="left"
+                                  onclick="{! c.onPrev }"
+                                  disabled="{! v.currentPageNumber == 1 }" />
+                
+                <lightning:button
+                                  label="Next"
+                                  iconName="utility:chevronright"
+                                  iconPosition="right"
+                                  onclick="{! c.onNext }"
+                                  disabled="{! v.currentPageNumber == v.totalPages }" />
+                <lightning:button
+                                  label="Last"
+                                  iconName="utility:right"
+                                  iconPosition="right"
+                                  onclick="{! c.onLast }"        
+                                  disabled="{! v.currentPageNumber == v.totalPages }" />
+            </div>
+            
+        </div>
+        <aura:set attribute="else">
+            <div class="slds-text-align_center">Something went wrong. Contact administrator.</div>
+        </aura:set>
+    </aura:if>
+    <aura:if isTrue="{!v.isLoading}">
+        <lightning:spinner variant="brand" alternativeText="Loading" />
+    </aura:if>
+</aura:component>

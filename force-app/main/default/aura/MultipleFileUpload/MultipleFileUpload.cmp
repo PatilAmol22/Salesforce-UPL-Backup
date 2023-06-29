@@ -1,0 +1,35 @@
+<aura:component controller = "CompetitorPriceController">
+   
+ <!-- 'parentId' Aura Attribute for store the Id for Parent Record where we are attach our file -->  
+   <aura:attribute name="parentId" type="Id" access="public" />
+   <aura:attribute name="hideImageBox" type="Boolean" default="false" access="public" />
+   <aura:attribute name="ImgFileSize" type="Integer" default="0" access="public" />
+    <aura:attribute name="ImgFileName" type="string" default="" access="public" />
+
+ <!-- 'showLoadingSpinner' attribute for show/hide the uploading image and msg in aura:if-->
+   <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+     <aura:attribute name="selectedFile" type="Object[]" default="false" />
+     <aura:method name="ResetImages" action="{!c.clearImages}" access="public"></aura:method>  <!-- Added By Nik to reset images on Report type change...02/05/2019 -->
+    <aura:method name="SaveAttachments" action="{!c.doSave}" access="public">
+        <aura:attribute name="RecordId" type="Id" />
+        <aura:attribute name="imgDisable" type="Boolean" default="true" />
+        <aura:attribute name="imagelabel" type="string" />
+        <aura:attribute name="reportingType" type="string" />  <!-- added by Nikhil on 08/04/2019.... -->
+    </aura:method>
+ <!-- 'fileName' attribute for display the selected file name -->  
+   <aura:attribute name="fileName" type="String[]" default="No File Selected.." />
+ <!-- Lightning Input with file type and on file change call the 'handleFilesChange' controller --> 
+   <ui:scrollerWrapper class="scrollerSize">
+    <lightning:input aura:id="fileId" disabled="{!v.hideImageBox}"  onchange="{!c.handleFilesChange}" type="file" name="file" accept=".jpeg,.jpg,.png"  multiple="true"/>
+   </ui:scrollerWrapper>
+       <aura:iteration items="{!v.fileName}" var="item">
+    <div class="slds-text-body_small slds-text-color_success">{!item}</div>
+   </aura:iteration>
+ <!--use aura:if for show-hide the loading spinner image--> 
+   <aura:if isTrue="{!v.showLoadingSpinner}">
+      <div class="slds-text-body_small slds-text-color_default">Uploading... 
+         <img src="/auraFW/resources/aura/images/spinner.gif" class="spinner-img" alt="Loading"/>
+      </div>
+   </aura:if>
+ <br/>
+</aura:component>

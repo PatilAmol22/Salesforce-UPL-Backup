@@ -1,0 +1,214 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="InventoryPOG" access="global" >
+    
+    <ltng:require styles="{!$Resource.popupCSS}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="InventoryPOGDetails" type="List"/>
+    <!-- spinner attributes -->
+    <aura:handler event="aura:waiting" action="{!c.handleShowSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.handleHideSpinner}"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <!-- ends -->    
+    <!-- attribute for pagination -->
+    <aura:attribute name="FliterList" type="List"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="startPage" type="Integer"/>
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="20"/>
+    <aura:attribute name="TotalPages" type="Integer"/>
+    <aura:attribute name="PageNumber" type="Integer"/>
+    <aura:attribute name="customerId" type="String" default="0011y000005pXF1AAM"/>
+    <!--<aura:attribute name="customerId" type="String" default="0011y000005qWLQAA2"/>-->
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="CurrentDate" type="Date" />
+    <aura:attribute name="CurrentCampaign" type="String" />
+    <aura:attribute name="startDate" type="Date" />
+    <aura:attribute name="endDate" type="Date" />
+    <aura:attribute name="Columndisable" type="Boolean" default="false"/>
+    <aura:attribute name="CampaignDetails" type="Object"/>
+    <aura:attribute name="CustomerName" type="String" />
+    <aura:attribute name="ViewDate" type="Date" />
+    <aura:attribute name="CurrentYr" type="Date" />
+    <aura:attribute name="LastYr" type="Date" />
+    <aura:attribute name="LastYr2" type="Date" />
+    <body class="bgColor slds-scrollable_x" >
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner alternativeText="Loading, Please Wait..." title="Loading, Please Wait..." variant="brand" size="large"/>
+        </aura:if>     
+        <div class="slds-page-header">
+            <!-- LAYOUT GRID -->
+            <div class="slds-grid">
+                <!-- GRID COL -->
+                <div class="slds-col slds-has-flexi-truncate">
+                    <!-- HEADING AREA -->
+                    <p class="slds-text-title_caps slds-line-height_reset"></p><br />
+                    <h1 class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate"  title="My Inventory(POG)">{!v.CustomerName}</h1>
+                    <br />
+                    <div class ="slds-grid slds-wrap">
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-12">
+                            <div>   
+                                <lightning:input
+                                                 aura:id="enter-search"
+                                                 name="enter-search"
+                                                 label="{!$Label.c.POG_Search}"
+                                                 type="search"
+                                                 onchange="{!c.handleSearchSKUDescription}"
+                                                 />
+                                
+                            </div> 
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-small-size--0-of-2 slds-medium-size--8-of-12">
+                            <!-- blank -->
+                        </div>
+                        
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-12">
+                            <lightning:input type="date" aura:id="datePicker" name="datePicker" label="{!$Label.c.POG_Date}" value="{!v.today}" min="2018-01-01" max="{!v.CurrentDate}" onchange="{!c.onChangeDate}"/>
+                        <!-- min="{!v.ViewDate}" -->
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-12">
+                            <lightning:select aura:id="PageSize" onchange="{!c.onChangePageSize}" name="select1" variant="label-inline" label="{!$Label.c.POG_Number}" >
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </lightning:select>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-max-medium-table--stacked-horizontal"
+               role="grid">
+            <thead>
+                <tr>
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap slds-size_2-of-12" scope="col">
+                        <b>{!$Label.c.POG_SKU_Name}</b>
+                    </th>
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.POG_UOM}</b>
+                    </th>
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.POG_Campaign}</b>
+                    </th>
+                    <!--POG_Stock_Pending_Last_Campaign-->
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b> {!$Label.c.Inventory_Product_Campaign}</b>
+                    </th>
+                    
+                   <!-- Commented for RITM0255509
+                    Stock_pending_end_prev_product_campaign
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.Inventory_Product_Campaign + ' ' + v.LastYr2 + ' - ' +v.LastYr}</b>
+                    </th> 
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.POG_Quantity_Sold_Last_Campaign}</b>
+                    </th>
+                      <th class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.POG_Stock_at_Farm_Last_Campaign}</b>
+                    </th>
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.POG_Quantity_Sold_Current_Campaign}</b>
+                    </th>
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.POG_Marketing_Load_Current_Campaign}</b>
+                    </th>
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.POG_Quantity_Sold_Last_Fiscal}</b>
+                    </th>
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.POG_Quantity_Sold_Current_Fiscal}</b>
+                    </th>
+                    <th role="gridcell" class="slds-is-sortable slds-cell-wrap" scope="col">
+                        <b>{!$Label.c.Destruction_previous_product_campaign}</b>
+                    </th> -->
+           
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.PaginationList}" var="item" indexVar="index">
+                    
+                    <tr class="slds-hint-parent">
+                        <td role="gridcell" class="slds-cell-wrap" data-label="SKU Name">
+                            <div class="">{!item.SKU_Name}</div>	
+                        </td>
+                        <td role="gridcell" class="slds-cell-wrap" data-label="UOM">
+                            <div class="">{!item.Unit}</div>
+                        </td>
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Product Campaign">
+                            <div class="">{!item.Product_Campaign}</div>
+                        </td>
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Stock Pending Last Campaign">
+                            <div class=""><lightning:input type="number" label="{!index}" variant="label-hidden" updateOn="onchange"  onchange="{!c.UpdateQuantity}" value="{!item.Stock_Pending_Last_Campaign}" /></div>
+                        </td>
+                        <!-- Commented for RITM0255509
+                               disabled="{!v.Columndisable}"
+                          <td role="gridcell" class="slds-cell-wrap" data-label="Stock_pending_end_prev_product_campaign">
+                            <div class=""><lightning:input  type="number" label="{!index}" variant="label-hidden" updateOn="onchange" onchange="{!c.UpdateStockPendingPrev}" value="{!item.Stock_pending_end_prev_product_campaign }"/></div>
+                        </td> 
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Quantity Ordered Last Campaign">
+                            <div class=""><lightning:input type="number" label="{!index}" variant="label-hidden" onblur="{!c.UpdateQuantity}" value="{!item.Quantity_Ordered}" disabled="true" /></div>
+                        </td>
+
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Stock at Farm Last Campaign">
+                            <div class=""><lightning:input type="number" label="{!index}" variant="label-hidden" updateOn="onchange" onchange="{!c.UpdateSAFLC}" value="{!item.Stock_at_Farm_Last_Campaign}" disabled="{!v.Columndisable}" /></div>
+                        </td>
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Quantity Sold - Current Campaign">
+                            <div class=""><lightning:input type="number" label="{!index}" variant="label-hidden" onblur="{!c.UpdateQuantity}" value="{!item.Quantity_Sold_Current_Campaign}" disabled="true" /></div>
+                        </td>
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Marketing Load - Current Campaign">
+                            <div class=""><lightning:input type="number" label="{!index}" variant="label-hidden" onblur="{!c.UpdateQuantity}" value="{!item.Marketing_Load}" disabled="true" /></div>
+                        </td>
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Quantity Sold - Last Fiscal">
+                            <div class=""><lightning:input type="number" label="{!index}" variant="label-hidden" onblur="{!c.UpdateQuantity}" value="{!item.Quantity_Sold_Last_Fiscal}" disabled="true" /></div>
+                        </td>
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Quantity Sold - Current Fiscal">
+                            <div class=""><lightning:input type="number" label="{!index}" variant="label-hidden" onblur="{!c.UpdateQuantity}" value="{!item.Quantity_Sold_Current_Fiscal}" disabled="true" /></div>
+                        </td>
+                        <td role="gridcell" class="slds-cell-wrap" data-label="Destruction_previous_product_campaign">
+                            <div class=""><lightning:input type="number" label="{!index}" variant="label-hidden" value="{!item.Destruction_previous_product_campaign}" disabled="true" /></div>
+                        </td> -->
+                    </tr>
+                </aura:iteration>
+                
+            </tbody>
+        </table>
+        
+        
+        
+        
+        
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small" size="2">
+                <div class="slds-float_left slds-p-left_xx-small">
+                    <p class="slds-page-header__title">Page {!v.PageNumber} of {!v.TotalPages}</p> 
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="8">
+                <div class="slds-align_absolute-center">  
+                    <lightning:buttonGroup >
+                        <!-- <div class="slds-page-header" role="banner"> -->
+                        
+                        <lightning:button disabled="{!v.startPage == 0}" variant="brand" aura:id="prevPage" label="{!$Label.c.SIC_Prev}" onclick="{!c.handlePrev}" />            
+                        <!--      <lightning:button disabled="{!v.endPage >= v.totalRecords}" aura:id="nextPage" variant="brand" label="{!$Label.c.SIC_Next}" onclick="{!c.handleNext}"/> -->
+                        <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="{!$Label.c.SIC_Next}" onclick="{!c.handleNext}"/>
+                        <!--  </div> -->
+                        <!-- <p class="slds-page-header__title">{!v.RecordStart}-{!v.RecordEnd} of {!v.totalRecords} | Page {!v.PageNumber} of {!v.TotalPages}</p> -->
+                        
+                    </lightning:buttonGroup>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="2">
+                
+            </lightning:layoutItem>
+        </lightning:layout> 
+        
+    </body>
+</aura:component>

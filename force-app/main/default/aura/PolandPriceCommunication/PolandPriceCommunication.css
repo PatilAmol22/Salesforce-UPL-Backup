@@ -1,0 +1,24 @@
+.THIS {
+}
+.THIS textarea {
+	border: 1px solid #dce4ec;
+    border-radius: 4px;
+    width: 500px;
+}
+.THIS label {
+  font-size: 15px;
+  display: inline-block;
+}
+.THIS .mySendEmailCheckbox{
+    display: inline-block;
+    float: left;
+    margin:3px;
+    padding:5px;
+    font-size:10px;
+}
+.THIS .slds-dueling-list__column_responsive {
+    min-width: 90%;
+}
+.THIS .slds-dueling-list__column_responsive .slds-dueling-list__options {
+    min-width: 90%;
+}

@@ -1,0 +1,363 @@
+<template >
+
+    <template if:true={isloaderReq}>
+        <!--div class="forceModalSpinner">
+            <div class="modal-glass">&nbsp;</div>
+            <div class="indicatorContainer forceInlineSpinner" aria-hidden="false" role="alert">
+                <div class="forceDotsSpinner">
+                    <div class="slds-spinner_large slds-spinner slds-spinner_brand " role="status">
+                        <span class="slds-assistive-text">Loading...</span>
+                        <div class="slds-spinner__dot-a">
+                        </div>
+                        <div class="slds-spinner__dot-b">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div-->
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+
+    <div class={divclass}>
+    <div class={textclass} style="padding:10px; font-weight:bold;  font-size: medium;" >{label.Add_Product_UK}</div>
+    <template if:true={openAllskuproduct}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="text-align: left; font-weight:bold;">{label.Products_Uk}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid slds-gutters" >
+                        <div class="slds-col slds-size_3-of-5"> 
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                    <lightning-icon size="x-small" class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" icon-name="utility:search"></lightning-icon>
+                                    <lightning-input variant="label-hidden" onchange={handleKeyChange} placeholder={label.Search_Sku_UK}  class = "slds-m-bottom_small slds-button__icon_inverse-hint" label="Search"></lightning-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col_bump-left slds-col slds-size_2-of-5">
+                            <div style="display: flex;" class="slds-col_bump-left">
+                                <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">Items per page</label>
+                                <lightning-combobox
+                                style="width: 54%"
+                                variant="label-hidden"
+                                value={value}
+                                options={options}
+                                onchange={handleChange2} >
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <template if:true={skuData}>
+                        <div class="myTable">
+                        <lightning-datatable
+                            key-field="Id"
+                            class="slds-table_col-bordered"
+                            data={skuData}
+                            hide-checkbox-column="true"
+                            columns={columns}
+                            onrowaction={handleRowActions}
+                            draft-values={draftValues}>
+                        </lightning-datatable>
+                    </div>
+                    </template>
+                    <template if:false={founddata}>
+                        <div class="slds-p-around_medium" style="text-align: center;font-weight:bold;">"No results found.</div>
+                    </template>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer slds-grid slds-grid_align-spread">
+                    <div>
+                        <lightning-layout-item flexibility="auto" class="slds-col" style="font-weight:bold;">
+                            {label.Showing_Page_UK} {page} of {totalPage}
+                        </lightning-layout-item>
+                    </div>
+                    <div class="slds-col">
+                    <!--button class="slds-button slds-button_neutral" onclick={cancelModal} title="Cancel">Cancel</button-->
+                    <lightning-button icon-name="utility:back" onclick={handlePrev}  label={label.Previous_Uk} title="Prev" style="margin-right: 15px;" disabled={isprevdisable}></lightning-button>
+                    <lightning-button icon-name="utility:forward" icon-position="right" variant="brand" label={label.Next_Uk} title="Next" onclick={handleNext} disabled={isnextdisable}></lightning-button>
+                    <!--button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button-->
+                </div>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+                 
+    </template>
+
+
+
+<!--MultiplesofModal-->
+    <template if:true={warningMessage}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">{Headermessage}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    {warningMessage}
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={cancelModal} title="Cancel">Cancel</button>
+                    <!--button class="slds-button slds-button_brand" onclick={submitDetails} title="Yes">Yes</button-->
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+                 
+    </template>
+    
+    <!--DELETEWarning-->
+    <template if:true={warningdeleteMessage}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Cancel</span>
+                    </button>
+                    <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">{label.Delete_UK}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                    {label.DeletecontentUK}
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={cancelModal} title="Cancel">No</button>
+                    <button class="slds-button slds-button_brand" onclick={deleteOrderLineItemmethod} title="Yes">Yes</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+                 
+    </template>
+
+    <h2 class="margin_top" style="font-weight:bold;">{label.ADD_A_NEW_PRODUCT_UK}</h2>
+
+        <div class="slds-form-element margin_top" style="width:50%">
+            <label class="slds-form-element__label" for="text-input-id-1" id="fixed-text-label1"  style="font-weight:bold;"><span class="slds-required">*</span>{label.SKU_UK}</label>
+            <div class="slds-form-element__control">
+                <div>
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" onclick={openPriceDeatilsPopUp}>
+                            <lightning-input
+                                         variant="label-hidden"
+                                          placeholder={label.Search_Sku_UK} 
+                                          value={skuBrand}
+                                          aria-disabled="false"></lightning-input>
+                        </div>
+                        <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right marginIcon"  style=" z-index:1000;" title={skuBrand}>
+                            <lightning-button-icon style="padding: 5px;" aura:id="itemsel" icon-name="utility:search" onclick={openPriceDeatilsPopUp} class="slds-float_right"  size="medium" variant="bare" alternative-text="search"  disabled={isdisabledtrue}></lightning-button-icon><!--disabled="{!v.disableSelect}"-->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            <div class="margin_top">
+                    <ul style=" width:100%" class=" Ul_class slds-table slds-table_bordered slds-border_left slds-border_right slds-table_col-bordered">
+                        <li class="li-items"><div class="style_div"><label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.UOM_UK}: </label>{skuSelectedRowData.UOM}</div></li>
+                        <li class="slds-border_left li-items"><div class="style_div"><label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Qty_UOM_Box_UK}: </label><lightning-formatted-number value={skuSelectedRowData.multipleOf}></lightning-formatted-number></div></li>
+                        <li class="slds-border_left li-items"><div class="style_div"><label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Net_Base_Price_UOM_UK}: </label><lightning-formatted-number value={skuSelectedRowData.materialPrice} format-style="currency" currency-code={currencycode}></lightning-formatted-number></div></li>
+                        <!--li class="slds-border_left li-items"><div class="style_div"><label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Net_Unit_Price_UK}: </label><lightning-formatted-number value={unitPrice} format-style="currency" currency-code={currencycode}></lightning-formatted-number></div></li-->
+                        <li class="slds-border_left  li-items"><div class="style_div"><label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Approx_Stock_Quantity_UK}: </label><lightning-formatted-number value={skuSelectedRowData.approxStock}></lightning-formatted-number></div></li>
+                        <li class="slds-border_left li-items" style="background-color: #DCDCDC;" ><div class="style_div"><label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Net_Total_Price_UK}: </label><lightning-formatted-number value={totalPrice} format-style="currency" currency-code={currencycode}></lightning-formatted-number></div></li>
+                    </ul>
+            </div>
+                <div>
+                    <ul style=" width:100%" class=" Ul_class3">
+                        <li class="li-items3 paddingstyle">
+                            <label class="slds-form-element__label" for="text-input-id-1" id="fixed-text-label2"  style="font-weight:bold;"><span class="slds-required">*</span>{label.Quantity_UK}</label>
+                            <template if:true={ismultipleofreq}><lightning-helptext content={helptext}></lightning-helptext>
+                            </template>
+                        <lightning-input type="number" class='lightningaddproduct' name="input1" variant="label-hidden" min="1" message-when-range-underflow="Quantity should be greater than 0."  label="Quantity" value={skuSelectedRowData.qty} required message-when-value-missing="Please complete this required field" data-name="quantity" onchange={handlechange} disabled={isdiabled} placeholder={multipleOf} step="0.01" onblur={checkValidationOnBlur}></lightning-input>
+                        </li>
+
+                        <!-- Start SKI(Nik) : #CR152 : PO And Delivery Date : 07-09-2022 -->
+                        <template if:true={showDelDate}>
+                            <li class="li-items3 paddingstyle">
+                                <label class="slds-form-element__label" for="text-input-id-5" style="font-weight:bold;"><template if:true={isDelDateReq}><span class="slds-required">*</span></template>{label.CustomerDeliveryDate}</label>
+                                <lightning-input type="date" class='lightningaddproduct' variant="label-hidden" name="input5" label="Delivery Date" data-name="delvryDate" formatter="dd/MM/yyyy" value={skuSelectedRowData.deliveryDate} onchange={handleDelvryDateChange} message-when-value-missing="Please complete this required field" disabled={isdiabled} required={isDelDateReq}></lightning-input>
+                            </li>
+                        </template>
+                        <!-- End SKI(Nik) : #CR152 : PO And Delivery Date : 07-09-2022 -->
+
+                        <li class=" li-items3 paddingstyle">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label paddinglabel" for="text-input-id-1" id="fixed-text-label"  style="font-weight:bold; ">{label.Per_Unit_Discount_Value_UK}</label>
+                                <div class="slds-form-element__control slds-input-has-fixed-addon">
+                                  <span class="slds-form-element__addon" id="fixed-text-addon-pre">{currencycodesymbol}</span>
+                                  <lightning-input variant="label-hidden" class='lightningaddproduct' type="number" min="0" placeholder="0" value={skuSelectedRowData.discountvalue} data-name="discount" onchange={handlechange} aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post" message-when-range-overflow={label.Discount_Error_UK} disabled={isdiabled} step="0.01" onblur={checkValidationOnBlur}></lightning-input>
+                                  <!--input type="number" id="text-input-id-1" placeholder="0" value={skuSelectedRowData.discountvalue} data-name="discount" onchange={handlechange} aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post" class="slds-input" disabled={isdiabled}/-->
+                                </div>
+                              </div>                        
+                        </li>
+                        <li class="  li-items3 paddingstyle">
+                            <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;"><span class="slds-required">*</span>{label.Delivery_Date_UK}</label>
+                            <lightning-input type="date" class='lightningaddproduct' variant="label-hidden" name="input8" label="Delivery Date" data-name="shipDate" formatter="dd/MM/yyyy" value={skuSelectedRowData.shipDate} onchange={handlechange} required message-when-value-missing="Please complete this required field" onblur={onblurvatidatedate} disabled={isdiabled}></lightning-input>
+                        </li>
+                        <li class=" li-items3 li-comment-item paddingstyle">
+                            <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Comment_UK}</label>
+                            <lightning-input type="text" class='lightningaddproduct' variant="label-hidden" label="Comment" data-name="comment" onchange={handlechange} value={skuSelectedRowData.personalNotes} placeholder="Type here..." disabled={isdiabled}></lightning-input>
+                        </li>
+                         </ul>
+                   
+        </div>
+
+        <div class="margin_top margin_bottom">
+            <lightning-button variant="brand" label={label.Add_Products_UK} title="Next action" icon-name="utility:add" class="margin_top" onclick={onAddProductCart} disabled={isdiabled}></lightning-button>
+        </div>
+
+<!--Order List UI-->
+<template if:true={hasitem}>
+    <div>
+        <div class="slds-border_top margin_border"></div>
+        <div  class="textsize" style="display: inline-block; width:100%">
+            <h2 class="margin_top" style="font-weight:bold;">{label.ORDER_SUMMARY_UK} ({itemsLength} ITEMS)</h2>
+            <div  class="changedivdisplay" style="float:right;">
+                <div class="marginright" style="border:1px solid lightgrey; border-radius: 0.2rem; padding:5px; align-self: center">
+                    {label.Order_Quantity_UK}: {Quantitynew}
+                </div>
+                <!--div class="slds-box slds-box_x-small">
+                    <p>Order Quantity: {savedcartproducts.Net_QuantityLiters}/{savedcartproducts.Net_QuantityKgs}</p>
+                  </div-->
+                  <div style="display: inline-flex; float: right;">
+                  <lightning-button data-type="all" onclick={opendeletepopup} variant="destructive" label="Clear All" title="Delete action with destructive variant" icon-name="utility:delete" class="slds-m-left_x-small slds-m-right_x-small"  disabled={isdisabledtrue}></lightning-button>
+                  <div style="border:1px solid lightgrey; border-radius: 0.2rem; padding:5px; align-self: center" class="boxbackground">
+                    {label.Order_Total_UK}: <lightning-formatted-number value={savedcartproducts.Net_Amount} format-style="currency" currency-code={currencycode}></lightning-formatted-number>
+                    <!--button title="Looks like a link" type="button" class="slds-button " style="color: black; padding-left:2px;padding-right:2px"></button-->
+                </div>
+            </div>
+            </div>
+           
+        </div>
+        <div class='margin_top'>
+            <template if:true={showLineItemResult}>
+                <template for:each={showLineItemResult} for:item="lineitem" for:index="indexed">
+            <ul key={lineitem.oliId}  class="tab_ul">
+                <li class="li-items2 li_new slds-border_right liwidth" >
+                        <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.SKU_UK}</label>
+                        <div>{lineitem.skuName} {lineitem.skucode}</div>
+                </li>
+                <li class="li-items2 li_new slds-border_right liwidth2 " >
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;"> {label.UOM_UK}</label>
+                    <div>{lineitem.UOM}</div>
+                </li>
+                <li class="li-items2 li_new slds-border_right liwidth2" >
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;"> {label.Qty_UOM_Box_UK}</label>
+                    <div> <lightning-formatted-number value={lineitem.multipleOf}></lightning-formatted-number></div>
+                </li>
+                <li class="li-items2 li_new slds-border_right liwidth" >
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;"> {label.Base_Price_UOM_UK}</label>
+                    <div><lightning-formatted-number value={lineitem.materialPrice} format-style="currency" currency-code={currencycode}></lightning-formatted-number></div>
+                </li>
+                <!--li class="li-items2 li_new slds-border_right liwidth2" >
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;"> {label.Net_Unit_Price_UK}</label>
+                    <div><lightning-formatted-number value={lineitem.unitValue} format-style="currency" currency-code={currencycode}></lightning-formatted-number></div>
+                </li-->
+                
+                <li class="li-items2 li_new slds-border_right liwidth">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;"> {label.Quantity_UK}</label>
+                    <!--div>{lineitem.qty}</div-->
+                    <lightning-input class={lineitem.oliId} step="0.01" type="number" data-id={lineitem.oliId} min="1" message-when-range-underflow="Quantity should be greater than 0." data-name="Quantity" data-index={indexed} variant="label-hidden" onblur={updateOnblur} placeholder="0" value={lineitem.qty} aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post"  disabled={isdisabledField} required></lightning-input>
+                </li>
+
+                <!-- Start SKI(Nik) : #CR152 : PO And Delivery Date : 07-09-2022 -->
+                <template if:true={showDelDate}>
+                    <li class="li-items2 li_new slds-border_right liwidth">
+                        <label class="slds-form-element__label" for="text-input-id-15" style="font-weight:bold;"><template if:true={isDelDateReq}><span class="slds-required">*</span></template>{label.CustomerDeliveryDate}</label>
+                        <lightning-input type="date" data-id={lineitem.oliId} class='lightningaddproduct' data-index={indexed} variant="label-hidden" name="input5" label="Delivery Date" data-name="delivryDate"  value={lineitem.deliveryDate}  onchange={validateDelvryDate} message-when-value-missing="Please complete this required field" disabled={isdisabledField} required={isDelDateReq}></lightning-input>
+                    </li>
+                </template>
+                <!-- End SKI(Nik) : #CR152 : PO And Delivery Date : 07-09-2022 -->
+                
+                <li class="li-items2 li_new slds-border_right liwidth">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;   padding-right: 0px;"> {label.Per_Unit_Discount_Value_UK}</label>
+                    <!--lightning-helptext content={label.Per_Unit_Discount_Value_UK}></lightning-helptext-->
+                    <!--div>{lineitem.discountvalue}</div-->
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control slds-input-has-fixed-addon">
+                          <span class="slds-form-element__addon" >{currencycodesymbol}</span>
+                          <lightning-input class={lineitem.oliId} step="0.01" data-id={lineitem.oliId} type="number" min="0" message-when-range-underflow="Discount should not be in negative." data-name="Discount" data-index={indexed} variant="label-hidden" onblur={updateOnblur}  placeholder="0" value={lineitem.discountvalue} aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post" message-when-range-overflow={label.Discount_Error_UK}   disabled={isdisabledField}></lightning-input>
+                        </div>
+                      </div>
+                </li>
+                <li class="li-items2 li_new slds-border_right liwidth" >
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;"> {label.Delivery_Date_UK}</label>
+                    <!--div>{lineitem.shipDate}</div-->
+                    <template if:true={lineitem.shipDate}>
+                        <lightning-input class={lineitem.oliId} type="date" data-id={lineitem.oliId} data-name="Deliverydate" data-index={indexed} variant="label-hidden" onblur={updateOnblur} formatter="dd/MM/yyyy" value={lineitem.shipDate} min={currentdate} message-when-range-underflow={label.Date_of_Shipment_cannot_be_less_than_today_UK} aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post"   disabled={isdisabledField}></lightning-input>
+                    </template>
+                </li>
+                <li class="li-items2 li_new slds-border_right liwidth3">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;"> {label.Comment_UK}</label>
+                    <!--div>{lineitem.personalNotes}</div-->
+                    <lightning-input class={lineitem.oliId} data-id={lineitem.oliId} data-name="comment" variant="label-hidden" data-index={indexed} onblur={updateOnblur} value={lineitem.personalNotes} aria-labelledby="fixed-text-label fixed-text-addon-pre fixed-text-addon-post"   disabled={isdisabledField}></lightning-input>                    
+                </li>
+                <li class="li-items2 li_new slds-border_right liwidth4" >
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-weight:bold;">{label.Total_UK}</label>
+                    <div><lightning-formatted-number value={lineitem.netPrice} format-style="currency" currency-code={currencycode}></lightning-formatted-number></div>
+                </li>
+                <li class="li-items2 delete_Li">
+                    <!--lightning-button variant="base" label="" title="Download action with base variant" icon-name="utility:delete" class="slds-m-left_x-small"></lightning-button-->
+                    <!--lightning-button-icon icon-name="utility:delete" variant="bare" size="small" style="color:#dd0a0a"  alternative-text="delete Item" class="slds-align_absolute-center icn" data-order={lineitem.oliId} data-type="single" onclick={deleteOrderLineItemmethod}></lightning-button-icon-->
+                        <template if:true={isdisabledtrue}>
+                            <div   data-order={lineitem.oliId}  data-type="single" >
+                            <svg focusable="false" data-key="delete" aria-hidden="true" viewBox="0 0 52 52" class="slds-icon slds-icon_small" style="fill: rgb(177, 177, 172)"><g><g><path d="M45.5 10H33V6c0-2.2-1.8-4-4-4h-6c-2.2 0-4 1.8-4 4v4H6.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5h39c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5zM23 7c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v3h-6V7zM41.5 20h-31c-.8 0-1.5.7-1.5 1.5V45c0 2.8 2.2 5 5 5h24c2.8 0 5-2.2 5-5V21.5c0-.8-.7-1.5-1.5-1.5zM23 42c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v14zm10 0c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v14z"></path></g></g></svg>
+                        </div>
+                        </template>
+                        <template if:false={isdisabledtrue}>
+                            <div style="cursor: pointer;"  data-order={lineitem.oliId}  data-type="single" onclick={opendeletepopup}>
+                            <svg focusable="false" data-key="delete" aria-hidden="true" viewBox="0 0 52 52" class="slds-icon slds-icon_small" style="fill: #dd0a0a;"><g><g><path d="M45.5 10H33V6c0-2.2-1.8-4-4-4h-6c-2.2 0-4 1.8-4 4v4H6.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5h39c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5zM23 7c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v3h-6V7zM41.5 20h-31c-.8 0-1.5.7-1.5 1.5V45c0 2.8 2.2 5 5 5h24c2.8 0 5-2.2 5-5V21.5c0-.8-.7-1.5-1.5-1.5zM23 42c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v14zm10 0c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v14z"></path></g></g></svg>
+                            </div>
+                        </template>
+                </li>
+            </ul>
+            <div  key={lineitem.oliId} class="delete_Ui">
+                <template if:true={isdisabledtrue}>
+                <div class="deletebackground" style="text-align: center"  data-type="single">
+                    <svg focusable="false" data-key="delete" aria-hidden="true" viewBox="0 0 52 52" class="slds-icon slds-icon_small" style="fill: rgb(177, 177, 172);"><g><g><path d="M45.5 10H33V6c0-2.2-1.8-4-4-4h-6c-2.2 0-4 1.8-4 4v4H6.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5h39c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5zM23 7c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v3h-6V7zM41.5 20h-31c-.8 0-1.5.7-1.5 1.5V45c0 2.8 2.2 5 5 5h24c2.8 0 5-2.2 5-5V21.5c0-.8-.7-1.5-1.5-1.5zM23 42c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v14zm10 0c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v14z"></path></g></g></svg>Delete
+                </div>
+            </template>
+            <template if:false={isdisabledtrue}>
+                <div class="deletebackground" style="cursor: pointer; text-align: center"  data-order={lineitem.oliId}  data-type="single" onclick={opendeletepopup}>
+                    <svg focusable="false" data-key="delete" aria-hidden="true" viewBox="0 0 52 52" class="slds-icon slds-icon_small" style="fill: #dd0a0a;"><g><g><path d="M45.5 10H33V6c0-2.2-1.8-4-4-4h-6c-2.2 0-4 1.8-4 4v4H6.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5h39c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5zM23 7c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v3h-6V7zM41.5 20h-31c-.8 0-1.5.7-1.5 1.5V45c0 2.8 2.2 5 5 5h24c2.8 0 5-2.2 5-5V21.5c0-.8-.7-1.5-1.5-1.5zM23 42c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v14zm10 0c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v14z"></path></g></g></svg>Delete
+                </div>
+            </template>
+            </div>
+        </template>
+        <template if:true={isviewmore}>
+            <div class="slds-m-bottom_small" style="text-align: center;"><lightning-button label={ViewName} data-type={ViewName} onclick={handleView} icon-name="utility:refresh" variant="brand"></lightning-button></div>
+        </template>
+    </template>
+        </div>
+    </div>
+</template>
+    </div>
+</template>

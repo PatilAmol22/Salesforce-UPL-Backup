@@ -1,0 +1,89 @@
+<!--********************************************************************************************
+* Name			: grz_CreditSummaryInternal.html
+* Description	: LWC component for Internal Users to display Credit Summary                              
+* Created Date	: 23/05/2022
+* Created By	: Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<template>
+    <lightning-quick-action-panel header={labels.creditSummary}>
+        <div if:true={isLoading} class="slds-is-relative">
+            <lightning-spinner alternative-text="Loading..." variant="brand" style="top:60px;"></lightning-spinner>
+        </div>
+        <div class="modal-height">
+            <template if:true={errorMessage}>
+                <p class="error"> {errorMessage} </p>
+            </template>
+            <br>
+            <!-- for RITM0579566 SA GRZ(Nikhil Verma) 26-06-2023-->
+            <template if:true={salesArea}>
+                <div class="slds-m-bottom_small">
+                    <lightning-combobox
+                        value={salesArea}
+                        placeholder="Sales Area"
+                        options={salesAreaOptions}
+                        onchange={handleSalesAreaOption}>
+                    </lightning-combobox> 
+                </div>
+            </template>
+            <!-- END for RITM0579566 SA GRZ(Nikhil Verma) 26-06-2023-->
+            <template if:true={creditData}>
+                <table class="slds-m-bottom_small" >
+                    <thead class="componentNotoSansLight table-head">
+                        <tr>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div>{labels.creditLimit}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div>{labels.usedLimit}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div>{labels.balanceLimit}</div>
+                            </th>
+                            <th class="slds-p-left_small table-head-css" scope="col">
+                                <div>{labels.percentageUsed}</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <template for:each={creditData} for:item="data">
+                            <tr key={data} class="slds-border_bottom">
+                                <td class="slds-p-left_small table-body-css" scope="col">
+                                    <div>
+                                        <lightning-formatted-number value={data.CreditLimit} minimum-fraction-digits="2"></lightning-formatted-number>
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_small table-body-css" scope="col">
+                                    <div>
+                                        <lightning-formatted-number value={data.CreditExposure} minimum-fraction-digits="2"></lightning-formatted-number>
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_small table-body-css" scope="col">
+                                    <div>
+                                        <lightning-formatted-number value={data.BalanceLimit} minimum-fraction-digits="2"></lightning-formatted-number>
+                                    </div>
+                                </td>
+                                <td class="slds-p-left_small table-body-css" scope="col">
+                                    <div>{data.Percentage} %</div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+        <template if:true={creditData}>
+            <div slot="footer" style="text-align: center;">
+                <a onclick={pdfDownloadClick}>
+                    <lightning-icon icon-name="doctype:pdf" 
+                                    size="medium">
+                    </lightning-icon>
+                </a>
+                <a onclick={xlsDownloadClick} style="margin-left: 3%;">
+                    <lightning-icon icon-name="doctype:excel" 
+                                    size="medium">
+                    </lightning-icon>
+                </a>
+            </div>
+        </template>
+      </lightning-quick-action-panel>
+</template>

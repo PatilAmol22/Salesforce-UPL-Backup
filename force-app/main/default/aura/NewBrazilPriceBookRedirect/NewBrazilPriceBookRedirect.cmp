@@ -1,0 +1,36 @@
+<aura:component controller="NewBrazilPriceBookController" 
+implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction,force:hasRecordId" access="global">
+	<aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" action="{!c.doInit}"  value="{!this}"/>
+    
+    <aura:attribute name="showSpinner1" type="boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.showSpinner1}">
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+     <!--###### MODAL BOX Start From Here ######--> 
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+          <div class="slds-modal__container">
+            <!-- ###### MODAL BOX HEADER Part Start From Here ######  style=" max-width: 70rem !important;width:65% !important;"-->
+           
+            <!--###### MODAL BOX BODY Part Start From Here ######-->
+            <div class="slds-modal__content slds-p-around--medium">
+              <div class="slds-scrollable--y" width="100%" style="margin-bottom:0;">
+              
+                <div class="slds-text-body_small slds-text-color_default" align="center">{!$Label.c.Please_wait} 
+                   <img src="/auraFW/resources/aura/images/spinner.gif" class="spinner-img" alt="Loading"/>
+                </div>
+                
+               </div>
+            </div>
+            <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+            
+          </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+     </aura:if>
+    
+    
+    
+    
+</aura:component>

@@ -1,0 +1,325 @@
+<!--********************************************************************************************
+* Name			    : grz_SalesOrderDetailBrazil.html
+* Description	    : LWC component to display sales order details for Brazil Community
+* Apex Controller	: Grz_ProductDetailClassBrazil 
+* LastModefied Date	: 28/07/2022 
+* Created By	    : Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<template>
+    <c-grz_header-image-cmp bgimg={backgroundimage} imglabel='Pedido de Vendas - Detalhes' customcss='top: 9%;'></c-grz_header-image-cmp>
+    <div class="bread-crumb-cls">
+        <c-grz_bread-crumb labelone='Pedidos de Venda' labeltwo='Pedido de Vendas - Detalhes' linkone='/uplpartnerportal/s/salesordershome' linktwo=''>
+        </c-grz_bread-crumb>
+    </div>
+    <template if:true={isSpinner}>
+        <div class="">
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <div class="slds-grid" style="margin-top:-1%">
+        <img  src={ordericon} class="order-icon">
+        <div class="slds-text-title_bold slds-m-top_small slds-m-left_small slds-m-bottom_small componentNotoSansBold odr-size">Pedido de Venda :  
+            <template if:true={SAPOrderNo}>
+                <span class="slds-p-left_xx-small">{SFDCOrderNo}</span> 
+            </template>
+            <template if:false={SAPOrderNo}>
+                <span class="slds-p-left_xx-small">{SFDCOrderNo}</span>  
+            </template>
+        </div>
+    </div>
+    <template if:true={desktopTracker}>
+        <div class="bar-scroll">
+            <div class="status-bar">
+                <lightning-progress-indicator current-step={invoiceValue} type="path" variant="base">
+                    <template for:each={allInvoiceOptions} for:item="step">
+                        <lightning-progress-step key={step.label} label={step.label} value={step.value}></lightning-progress-step>
+                    </template>
+                </lightning-progress-indicator>
+            </div>
+        </div>
+    </template>
+    <!--GRZ(Swaranjeet) : APPS-947 PO & Delivery Date :30-08-2022-->
+    <template if:true={mobileTracker}>
+        <div class="statusMargin">
+            <ul class="progress">
+                <template for:each={allInvoiceOptions} for:item="step" for:index="index">
+                    <li key={step.label} class="pathli">
+                        <div class="node grey"></div>
+                        <p class="pathValue">{step.label}</p>
+                    </li>
+                    <li key={step.label} class="pathli">
+                        <div class="divider grey"></div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </template>
+    <!-- Order Details New View-->
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-large-size_12-of-12 hidePadding hidetabPadding">
+            <div class="slds-border_right slds-m-bottom_large slds-border_left slds-border_bottom slds-border_top " style="padding: 1.5%; background-color: white;margin-top: 2%;">
+                <div class="borderbottom headingClass componentNotoSansBold detail-size">Detalhes do Pedido</div>
+                <div class="slds-grid slds-wrap slds-p-top_medium slds-p-bottom_x-small data-font-size componentNotoSansMedium">
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Pedido:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{SFDCOrderNo}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Tipo de Pedido:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                    <span class="">{orderType}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Data do Pedido:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{orderDate}</span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Ordem Interna SAP:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{SAPOrderNo}</span>
+                                </div> 
+                            </div>
+                            <!--GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Download do Pedido:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <a href={soUrl} download="Pedidos de Venda.pdf" target="_blank">
+                                        <lightning-icon icon-name="doctype:pdf" 
+                                                        size="small" 
+                                                        class="iconclr">
+                                        </lightning-icon>
+                                    </a>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-x-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-p-left_medium hidePadding borderleft">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Valor Total:  </span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class=""><lightning-formatted-number value={orderTotal} minimum-fraction-digits="0"></lightning-formatted-number></span>
+                                </div> 
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Moeda:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">                                                
+                                    <span class="">{crncy}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Condição de Pagamento:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{paymentTerm}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Cliente:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{soldToParty}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>Cidade:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{city}</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small orderDataClass">
+                                    <span>CTC:  </span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-x-small-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-p-top_xxx-small slds-p-bottom_x-small">
+                                    <span class="">{repName}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Product Table -->
+    <div class="product-table-scroll">
+        <div class="product-table-width slds-border_right slds-m-bottom_x-large slds-border_left slds-border_bottom slds-p-right_large slds-border_top">
+            <div style="font-size: medium;" class="slds-m-top_small slds-m-left_small slds-m-bottom_small componentNotoSansBold">Produtos</div>
+            <table class="slds-m-left_small  slds-m-right_small slds-m-bottom_small" >
+                <thead class="p-table-head componentNotoSansLight">
+                    <tr>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Código do Produto">Código do Produto</div>
+                        </th>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Nome do Produto">Nome do Produto</div>
+                        </th>                   
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Quantidade">Quantidade</div>
+                        </th>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="UM">UM</div>
+                        </th>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Preço Unitário">Preço Unitário</div>
+                        </th>
+                        <th class="slds-p-left_x-small p-table-head-css" scope="col">
+                            <div class="slds-truncate" title="Valor">Valor</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="p-table-body">
+                    <template for:each={lineitemdata} for:item="lineitem">
+                        <!--GRZ(Swaranjeet) : APPS-947 PO & Delivery Date :30-08-2022-->
+                        <tr key={lineitem.Id} class="slds-border_bottom componentNotoSansRegular shadoweffect">
+                            <!--GRZ(Swaranjeet) : APPS-947 PO & Delivery Date :30-08-2022-->
+                            <td class="slds-p-left_x-small p-table-body-css br-mobile-view">
+                                <div class="textoverflowcls">{lineitem.skuCode}</div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css br-mobile-view" scope="col">
+                                <div class="textoverflowcls">{lineitem.productName}</div>
+                            </td>                              
+                            <td class="slds-p-left_x-small p-table-body-css br-mobile-view" scope="col">
+                                <div class="textoverflowcls"><lightning-formatted-number value={lineitem.quantity} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css br-mobile-view" scope="col">
+                                <div class="textoverflowcls">{lineitem.uom}</div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css br-mobile-view" scope="col">
+                                <div class="textoverflowcls"><lightning-formatted-number value={lineitem.unitPrice} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                            </td>
+                            <td class="slds-p-left_x-small p-table-body-css br-mobile-view" scope="col">
+                                <div class="textoverflowcls"><lightning-formatted-number value={lineitem.totalValue} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div if:true={nodata}>
+                <p class="slds-text-align_center nodatacss">Nenhum produto para exibir</p>
+            </div>
+        </div>
+    </div>
+    <!-- Invoice Table -->
+    <div class="invoice-table-scroll">
+        <div class="invoice-table-width slds-border_right slds-m-bottom_x-large slds-border_left slds-border_bottom slds-p-right_large slds-border_top">
+            <div style="font-size: medium;" class="componentNotoSansBold slds-m-top_small slds-m-left_small slds-m-bottom_small">Notas Fiscais</div>
+                <table class="slds-m-left_small slds-m-right_small slds-m-bottom_small">
+                    <thead class="i-table-head componentNotoSansLight">
+                        <tr>
+                            <th class="slds-p-left_x-small i-table-head-css" scope="col">
+                                <div class="slds-truncate" title="Nota Fiscal">Nota Fiscal</div>
+                            </th>
+                            <th class="slds-p-left_x-small i-table-head-css" scope="col">
+                                <div class="slds-truncate" title="Data de Emissão">Data de Emissão</div>
+                            </th>
+                            <th class="slds-p-left_x-small i-table-head-css" scope="col">
+                                <div class="slds-truncate" title="Valor Total">Valor Total</div>
+                            </th>
+                            <th class="slds-p-left_x-small i-table-head-css" scope="col">
+                                <div class="slds-truncate" title="Status">Status</div>
+                            </th>
+                            <th class="slds-p-left_x-small i-table-head-css" scope="col" style="text-align: center;">
+                                <div class="slds-truncate" title="Download DANFe">Download DANFe</div>
+                            </th>
+                            <th class="slds-p-left_x-small i-table-head-css" scope="col" style="text-align: center;">
+                                <div class="slds-truncate" title="Download NF-e XML">Download NF-e XML</div>
+                            </th>
+                        </tr>
+                    </thead>
+                        <tbody class="i-table-body">
+                            <template if:true = {invoicesarray}>
+                                <template for:each={invoicesarray} for:item="invoice">
+                                    <!--GRZ(Swaranjeet) : APPS-947 PO & Delivery Date :30-08-2022-->
+                                    <tr key={invoice.ivId} class="slds-border_bottom componentNotoSansRegular shadoweffect">
+                                        <!--GRZ(Swaranjeet) : APPS-947 PO & Delivery Date :30-08-2022-->
+                                    <td class="slds-p-left_x-small i-table-body-css i-br-mobile-view" scope="col">
+                                        <a class="textoverflowcls" data-value={invoice.ivId} onclick={handleOrderDetail} href={detailPageLink} style="color: #F47920;" target="_blank">{invoice.billingDocNumber}</a>
+                                    </td>
+                                    <td class="slds-p-left_x-small i-table-body-css i-br-mobile-view" scope="col">
+                                        <div class="textoverflowcls"> {invoice.billingDate}</div>
+                                    </td>
+                                    <td class="slds-p-left_x-small i-table-body-css i-br-mobile-view" scope="col">
+                                        <div class="textoverflowcls"><lightning-formatted-number value={invoice.totalAmount} minimum-fraction-digits="0"></lightning-formatted-number></div>
+                                    </td>
+                                    <td class="slds-p-left_x-small i-table-body-css i-br-mobile-view" scope="col">
+                                        <div class="textoverflowcls">{invoice.billingStatus}</div>
+                                    </td>
+                                    <td class="slds-p-left_x-small incentercss i-table-body-css i-br-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-icon icon-name="doctype:pdf" 
+                                                            data-value={invoice.ivId}
+                                                            onclick = {downldFilePdf}
+                                                            size="small" 
+                                                            class="iconclr">
+                                            </lightning-icon>
+                                        </div>
+                                    </td>
+                                    <td class="slds-p-left_x-small incentercss i-table-body-css i-br-mobile-view" scope="col">
+                                        <div class="textoverflowcls">
+                                            <lightning-icon icon-name="doctype:xml" 
+                                                            data-value={invoice.ivId}
+                                                            onclick = {downldFileXml}
+                                                            size="small" 
+                                                            class="iconclr">
+                                            </lightning-icon>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+            </table>
+            <div if:true={noinvoice}>
+                <p class="slds-text-align_center nodatacss" style="background-color: white;">Nenhuma fatura para exibir</p>
+            </div>
+        </div>
+    </div>
+</template>

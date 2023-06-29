@@ -1,0 +1,50 @@
+.THIS .parent-base-img{
+    background-image : url('/resource/Grz_Resourse/Grz_Resourse/Images/FooterBackgroundImage.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0px -12px;
+}
+.THIS .scroll-show{
+    display:none;
+}
+.THIS .parent-footer-padding{
+    padding: 5% 6% 5% 9%;
+}
+@media only screen and (max-width: 1024px) {
+    .THIS .parent-footer-padding{
+        padding: 40px 5% 40px 2%;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .THIS .parent-footer-padding{
+        padding: 40px 5% 40px 2%;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .THIS .normal-show{
+        display:none;
+    }
+    .THIS .scroll-show{
+        display:block;
+    }
+    .THIS .wrapper{
+        display:flex;
+        overflow-x: auto;
+    }
+    .THIS .wrapper::-webkit-scrollbar{
+        width:0px;
+    }
+    .THIS .parent-footer-padding{
+        padding: 8% 3% 4% 5%;
+    }
+    .THIS .item{
+        min-width:75%;
+        padding-right:20px;
+    }
+}
+@media only screen and (max-width: 375px){
+    .THIS .parent-footer-padding {
+        padding: 40px 3% 20px 5%;
+    }
+    
+}

@@ -1,0 +1,17 @@
+<aura:component implements="lightning:actionOverride,lightning:isUrlAddressable" controller="OverrideNewButtonController" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    <aura:attribute name="userInfo" type="User"/>
+    <aura:if isTrue="{!v.userInfo.Country =='France'}">
+        <div>
+            <!-- Call New LWC component to capture competitor information -->
+          <!--   <c:compTrackingCreateRecord ></c:compTrackingCreateRecord>-->
+            <c:competitiontrackinglwc ></c:competitiontrackinglwc>
+        </div>
+        <aura:set attribute="else">
+            <!--There will call Existing competitor price component-->
+            <c:CompetitorPrice ></c:CompetitorPrice>
+         </aura:set>   
+    </aura:if>
+  
+   
+</aura:component>

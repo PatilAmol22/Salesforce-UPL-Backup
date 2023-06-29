@@ -1,0 +1,126 @@
+.markeeClass{
+    font-size: smaller;
+}
+.modal-height{
+    min-height: 200px;
+    
+}
+.slds-modal__container{
+    width: 70%;
+    max-width: 70rem;
+}
+.headerClass{
+    font-weight: bold;
+    font-size: large;
+}
+.borderClass{
+    border: solid 1px lightgrey;
+    padding: 1%;
+}
+.heightClass{
+    min-height: 210px;
+}
+.greyBorder{
+    border: solid 1px lightgrey;
+}
+.centerClass{
+    text-align: center;
+}
+.totalInputClass{
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.hideSectionMobileView{
+    display: none!important;
+}
+
+.deletebtn {
+	cursor: pointer;
+    display: contents;
+}
+
+.wordbreakClass{
+    word-wrap: break-word!important;        
+}
+.customerPhotoSection{
+    display: flex;
+    justify-content: end;
+}
+@media screen and (max-width: 992px) {
+    div[data-id=wrapOnPhone]{
+        word-wrap: break-word!important; 
+        max-width: 100%;
+    }
+}
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+    div[data-id=wrapOnPhoneGST] > p{
+        display: inline-block!important;
+        word-break: break-word!important;
+        width: 100%;
+    }
+    
+    .photoDel{
+        margin-top: 3%!important;
+    }  
+    .ipadInput{
+        padding-top: 4.5%;
+    }
+    .totalInputMobile{
+        position: relative!important;
+        right: 2%!important;
+    }
+    .totalInputMobile1{
+        position: relative!important;
+        right: 5%!important;
+    }
+    .totalInput1{
+        position: relative!important;
+        right: 6%!important;
+    }
+    .ipadResponsive{
+        margin-top:  4%!important;;
+    }
+    
+  }
+  @media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
+    div[data-id=wrapOnPhoneGST] > p{
+        display: inline-block!important;
+        word-break: break-word!important;
+        width: 100%;
+    }
+    div[data-id=wrapOnPhone]{
+        display: inline-block!important;
+        word-break: break-word!important;
+        width: 100%;
+    }
+  }
+
+@media screen and (max-width: 480px) {
+    /*480*/
+    div[data-id=wrapOnPhoneGST] > p{
+        word-wrap: break-word!important; 
+    }
+    .totalInputMobile{
+        position: relative!important;
+        left: -3.5%!important;
+    }
+    .totalInputMobile1{
+        position: relative!important;
+        left: -4.5%!important;
+    }
+    .totalInput1{
+        position: relative!important;
+        left: -4.5%!important;
+    }
+    .upForMobile{
+        padding-bottom: 4%;
+        
+    }
+    .deletebtn > lightning-file-upload{
+        padding-bottom: 4%;
+    }
+    .photoDel{
+        padding-top: 2rem!important;
+    }  
+}

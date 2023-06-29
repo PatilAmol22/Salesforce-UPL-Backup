@@ -1,0 +1,856 @@
+<aura:component controller="BRRebateModule1" implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+   <!--component for the rebate calculation and displaying relevant details
+	    Gurubaksh Grewal(Grazitti) (RITM0534476)
+	 	15-03-23-->
+    <aura:attribute name="Goaldata" type="Object"/>
+    <aura:attribute name="Actualdata" type="Object"/>
+    <aura:attribute name="GrowthAnalysisVSPreviousYear" type="Object"/>
+    <aura:attribute name="PamProductList" type="List"/>
+    <aura:attribute name="resultG" type="List"/>
+    <aura:attribute name="TotalG" type="Object"/>
+    <aura:attribute name="TotalPP" type="Object"/>
+    <aura:attribute name="contract" type="Object"/>
+    <aura:attribute name="OtherProduct" type="Object"/>
+    <aura:attribute name="realizado" type="Object"/>
+    <aura:attribute name="carteira" type="Object"/>
+    <aura:attribute name="novas" type="Object"/>
+    <aura:attribute name="metas" type="Object"/>
+    <aura:attribute name="estimativa" type="Object"/>
+    <aura:attribute name="ating" type="Object"/>
+    <aura:attribute name="totalProduct" type="Object"/>
+    <aura:attribute name="isOrg" type="boolean" default="true"/>
+    <aura:attribute name="valid" type="boolean" default="true"/>
+    <aura:attribute name="showHome" type="boolean" default="true"/>
+        <aura:attribute name="showCalculator" type="boolean" default="false"/>
+        <aura:attribute name="confirm" type="boolean" default="false"/>
+        <aura:attribute name="isError" type="boolean" default="true"/>
+
+    <aura:attribute name="ProductCategory" type="List"/><!-- added by diwansh -->
+    <aura:attribute name="myTotalMap" type="Map" />
+    <aura:attribute name="valueMap" type="List"/>
+    <aura:attribute name="ContractHeader" type="Object"/>
+    <aura:attribute name="BU" type="String"/>
+    <aura:attribute name="width" type="String" default="font-size:10px;width:150%;"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--aura:handler name="change" value="{!v.ContractHeader}" action="{!c.doInit}"/-->
+    <aura:attribute name="LoadingBalls" type="Boolean" default="True"/>
+    <aura:attribute name="plainIp" type="Boolean" default="false"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/> 
+    <aura:registerEvent name="dataTransfer" type="c:RebateEvent"/>
+    <aura:if isTrue="{!v.LoadingBalls}">
+        
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>  
+    
+    
+     
+    <div style="{!v.width}">
+        <aura:if isTrue="{!!v.LoadingBalls}">
+    <lightning:card>
+        <aura:set attribute="title">
+            <aura:if isTrue="{!!isError}">     <lightning:button class="slds-no-print" variant="destructive" label="Download as PDF" title="Download as PDF" onclick="{! c.handleClick }"/>
+            <!--lightning:button class="slds-no-print" variant="destructive" label="Download as CSV" title="Download as CSV" onclick="{! c.exportCsv }"/-->
+            </aura:if>
+         <aura:if isTrue="{!v.isOrg}">   	<lightning:button class="slds-no-print" label="{!$Label.c.REB_Back}" title="Back" onclick="{! c.Back1 }"/>
+            </aura:if>
+         </aura:set>   
+    <aura:if isTrue="{!!isError}">        
+        <div class="slds-box slds-theme_shade slds-theme_alert-texture">
+  
+    <strong>ATENÇÃO:</strong>
+            <p>Valores de rebate são apenas uma simulação. O atingimento de 100% da meta geral é obrigatório e o rebate só será pago sobre os produtos que tiverem atingido 80% de sua meta de volume. O pagamento de rebate também depende do cumprimento de todas as regras do Programa (como limite de devoluções, pagamentos pontuais e atingimento de POG, por exemplo).
+<br/>
+Devido à natureza da Simulação com atualizações diárias de Realizado e Carteira, não é possível salva-la. Por isso, imprima o PDF antes de sair.</p>
+            <p>O valor de Rebate poderá sofrer alterações durante a apuração devido às regras do Programa e essas alterações não estarão refletidas nesta simulação.
+            </p>
+</div><br/>
+        <lightning:layout>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                    <b>{!v.contract.Name}</b> </lightning:layoutItem>    
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+            		<lightning:formattedDateTime  value="{!v.contract.Start_Date__c}" year="numeric" month="numeric" day="numeric"  /> to <lightning:formattedDateTime  value="{!v.contract.End_Date__c}" year="numeric" month="numeric" day="numeric"  />
+					</lightning:layoutItem>
+                
+                
+                <lightning:layoutItem size="2" >
+                    
+                       </lightning:layoutItem>
+                
+                
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>BU</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                     {!v.contract.Region__r.Zone__r.Name}  </lightning:layoutItem>
+                
+                <lightning:layoutItem size="2">
+                      </lightning:layoutItem>
+                
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>REALIZADO</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                    <lightning:formattedNumber value="{!v.realizado}" maximumFractionDigits="2"/>    </lightning:layoutItem>
+                   
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>META</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                 <lightning:formattedNumber value="{!v.metas}" maximumFractionDigits="2"/>       </lightning:layoutItem>
+                   
+                    
+                </lightning:layout>
+        
+        <lightning:layout>
+                    
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>PROGRAMA</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                 {!v.contract.Type__c}      </lightning:layoutItem>
+                
+                <lightning:layoutItem size="2">
+                       </lightning:layoutItem>
+                
+                
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>REGIONAL</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                  {!v.contract.Region_Name__c}     </lightning:layoutItem>
+                
+                <lightning:layoutItem size="2">
+                      </lightning:layoutItem>
+                
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>CARTEIRA</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+               <lightning:formattedNumber value="{!v.carteira}" maximumFractionDigits="2"/>        </lightning:layoutItem>
+                   
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>ESTIMATIVA</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                  <lightning:formattedNumber value="{!v.estimativa}" maximumFractionDigits="2"/>     </lightning:layoutItem>
+                   
+                    
+                </lightning:layout>
+            <lightning:layout>
+                    
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>CLASSIFICAÇÃO</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                   {!v.contract.Category_Name__c}    </lightning:layoutItem>
+                
+                <lightning:layoutItem size="2">
+                       </lightning:layoutItem>
+                
+                
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>CTC</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                   {!v.contract.Sales_Rep__c}    </lightning:layoutItem>
+                
+                <lightning:layoutItem size="2">
+                      </lightning:layoutItem>
+                
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>NOVAS NEG / DEV</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                 <lightning:formattedNumber value="{!v.novas}" maximumFractionDigits="2"/>      </lightning:layoutItem>
+                   
+                <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>ATINGIMENTO</b></lightning:layoutItem>
+                <lightning:layoutItem size="1" class=" custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                 <lightning:formattedNumber value="{!v.ating}" style="percent" maximumFractionDigits="2"/>      </lightning:layoutItem>
+                   
+                    
+                </lightning:layout>
+        <br/>
+         <lightning:layout>
+                    
+                    <lightning:layoutItem size="1" class="custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>CLASSIFICAÇÃO</b>
+                    </lightning:layoutItem>
+                <lightning:layoutItem size="11" class="slds-align_absolute-center custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                    <b> GRUPO {!v.contract.Distributor_Name__c}</b>      
+             </lightning:layoutItem>
+        </lightning:layout>
+                <lightning:layout>
+                    <br/>
+                    <lightning:layoutItem size="8">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-yellow slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                          <b> Rebate </b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="custom-background-yellow slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b> {!$Label.c.REB_Yellow_Section} </b>
+                    </lightning:layoutItem>
+                    
+                    
+                </lightning:layout>
+        <lightning:layout>
+                    
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>Grupo de Produto</b></lightning:layoutItem>
+                   <lightning:layoutItem size="1" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b >Metas</b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Real</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b >Devoluções</b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Carteira</b>   
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b >Cancelar Carteira</b>  
+                    </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="3" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="3" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Novas Negociações</b>  
+                    </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="3" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b >Novas Devoluções</b>  
+                    </lightning:layoutItem>
+                             <lightning:layoutItem size="2">
+                    
+                    </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="4" >
+                       <lightning:layout>
+                           <lightning:layoutItem size="4" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium"><b >%</b></lightning:layoutItem>
+                           <lightning:layoutItem size="8" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium"><b >Valor</b></lightning:layoutItem>
+                                  
+                                 </lightning:layout>
+                    </lightning:layoutItem>
+                    
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="3" class="custom-background-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="2">
+                            <lightning:layout>  
+                                <lightning:layoutItem size="12">
+                    
+                    </lightning:layoutItem>
+                    
+                             </lightning:layout>
+                             </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="10" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <lightning:layout>  
+                   <lightning:layoutItem size="6" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b >Metas</b> </lightning:layoutItem>
+                            
+                                 <lightning:layoutItem size="6" class="slds-align_absolute-center custom-background-bottle-50 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                     <b >Real</b>
+                           </lightning:layoutItem>
+                            
+                                 </lightning:layout>
+                                  
+                             
+                             </lightning:layoutItem>
+                    
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    
+                    
+                    
+                </lightning:layout>
+    
+        <aura:iteration items="{!v.valueMap}" var="pC">
+                            <c:mapEntryChildRC resultG="{!v.resultG}" key="{!pC}"/>
+
+        </aura:iteration> 
+              <lightning:layout>
+                    
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b class="slds-float_right">TOTAL GERAL</b></lightning:layoutItem>
+                   <lightning:layoutItem size="1" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b  class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.Value__c}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.Actual_Value__c}" maximumFractionDigits="2"/></b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b  class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.Returns_Value__c}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.OO_Value__c}" maximumFractionDigits="2"/></b>   
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b  class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.CO_Value__c}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="3" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="3" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.nn}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="3" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b  class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.nd}" maximumFractionDigits="2"/></b>  
+                    </lightning:layoutItem>
+                            <lightning:layoutItem size="2">
+                    
+                    </lightning:layoutItem>
+                                                 <lightning:layoutItem size="4" >
+                       <lightning:layout>
+                       <lightning:layoutItem size="12" class="slds-align_absolute-center custom-background-bottle-40 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b  class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.per1}" maximumFractionDigits="2"/></b>  
+                           </lightning:layoutItem>
+                        </lightning:layout>
+                    </lightning:layoutItem>
+
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="3" class="custom-background-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="2">
+                            <lightning:layout>  
+                                <lightning:layoutItem size="12">
+                    
+                    </lightning:layoutItem>
+                    
+                             </lightning:layout>
+                             </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="10" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <lightning:layout>  
+                   <lightning:layoutItem size="6" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b  class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.bva}" maximumFractionDigits="2"/></b> </lightning:layoutItem>
+                            
+                                 <lightning:layoutItem size="6" class=" custom-background-bottle-90 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                     <b  class="slds-float_right"><lightning:formattedNumber value="{!v.TotalG.cva}" maximumFractionDigits="2"/></b>
+                           </lightning:layoutItem>
+                            
+                                 </lightning:layout>
+                                  
+                             
+                             </lightning:layoutItem>
+                    
+                        </lightning:layout> 
+                    </lightning:layoutItem>
+                    
+                    
+                    
+                </lightning:layout>
+      
+            <br />
+        
+        <aura:iteration items="{!v.valueMap}" var="pC">
+            <br />
+            <aura:if isTrue="{!and(notequals(pC,'outros'))}">
+                
+                <lightning:layout> 
+                    
+                    <lightning:layoutItem  size="12" class="custom_font_small custom-background-green slds-text-body_small slds-align_absolute-center slds-border_left slds-border_bottom slds-border_right slds-border_top" padding="horizontal-medium">
+                        
+                        <span style="font-weight:800;"> Produtos&nbsp; {!pC}</span>
+                        <!--PRODUTOS PAM --> 
+                        
+                    </lightning:layoutItem>
+                    
+                    
+                    
+                </lightning:layout>
+                <br/>
+                <lightning:layout>
+                    
+                    <lightning:layoutItem size="9">
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3" class="custom-background-yellow slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b> {!$Label.c.REB_Yellow_Section} </b>
+                    </lightning:layoutItem>
+                    
+                    
+                </lightning:layout>
+                <lightning:layout>
+                    
+                    <lightning:layoutItem size="1">
+                        <lightning:layout>
+                         <lightning:layoutItem size="5"> 
+                             
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="7" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Rebate</b>  
+                    </lightning:layoutItem>
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Goals}</b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Real}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Returns}</b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-20 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Carteira</b>   
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1" class="custom-background-bottle-20 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Cancelar Carteira</b>  
+                    </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="3" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="6" class="custom-background-bottle-30 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Novas Negociações</b>  
+                    </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="6" class="custom-background-bottle-30 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Novas Devoluções</b>  
+                    </lightning:layoutItem>
+                    
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="3" class="custom-background-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="2" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                            <lightning:layout>  
+                   <lightning:layoutItem size="12" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>Atingimento</b></lightning:layoutItem>
+                             </lightning:layout>
+                             </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="10" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <lightning:layout>  
+                   <lightning:layoutItem size="6" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>Metas</b> </lightning:layoutItem>
+                            
+                                 <lightning:layoutItem size="6" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                     <b>Real</b>
+                           </lightning:layoutItem>
+                            
+                                 </lightning:layout>
+                                  
+                             
+                             </lightning:layoutItem>
+                    
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    
+                    
+                    
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem size="1" >
+                        
+                         <lightning:layout>
+                         <lightning:layoutItem size="5" class="custom-background-gray slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium"> 
+                           <b>{!$Label.c.REB_Product_Group}</b>  
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="7" >
+                       
+                <lightning:layout>
+                    
+                    <lightning:layoutItem size="5" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>%</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="7" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    
+                    
+                </lightning:layout> 
+                    </lightning:layoutItem>
+                        </lightning:layout>
+                        
+                        
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1">
+                    <lightning:layout>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    </lightning:layout>
+                        </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="1">
+                    <lightning:layout>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    </lightning:layout>
+                        </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="1">
+                    <lightning:layout>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    </lightning:layout>
+                        </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="1">
+                    <lightning:layout>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-20 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-20 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    </lightning:layout>
+                        </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="1">
+                    <lightning:layout>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-20 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" class="custom-background-bottle-20 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    </lightning:layout>
+                        </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="3">
+                    <lightning:layout>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-30 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-30 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Preço</b>
+                    </lightning:layoutItem>
+                        <lightning:layoutItem size="2" class="custom-background-bottle-30 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-30 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>{!$Label.c.REB_Volume}</b>
+                    </lightning:layoutItem>
+                        <lightning:layoutItem size="2" class="custom-background-bottle-30 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Preço</b>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-30 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <b>Valor</b>
+                    </lightning:layoutItem>
+                    </lightning:layout>
+                        </lightning:layoutItem>
+                    
+                    
+                                        <lightning:layoutItem size="3" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="2" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                            <lightning:layout>  
+                   <lightning:layoutItem size="12" class="custom-background-bottle-31 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>Volume(%)</b></lightning:layoutItem>
+                             </lightning:layout>
+                             </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="10" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <lightning:layout>  
+                   <lightning:layoutItem size="3" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>Volume</b> </lightning:layoutItem>
+                            
+                                 <lightning:layoutItem size="3" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                     <b>Valor</b>
+                           </lightning:layoutItem>
+                           
+                   <lightning:layoutItem size="3" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <b>Volume</b> </lightning:layoutItem>
+                            
+                                 <lightning:layoutItem size="3" class="custom-background-bottle-10  slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                     <b>Valor</b>
+                           </lightning:layoutItem>
+                            
+                                 </lightning:layout>
+                                  
+                             
+                             </lightning:layoutItem>
+                    
+                        </lightning:layout>
+                    </lightning:layoutItem>
+
+                    
+                    
+                </lightning:layout>
+                <aura:iteration items="{!v.PamProductList}" var="item">
+                    <aura:if isTrue="{!and(equals(pC,item.Product_Category__c))}">
+                        <lightning:layout>
+                            <lightning:layoutItem size="1" >
+                                
+                              
+                         <lightning:layout>
+                         <lightning:layoutItem size="5" class="slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium"> 
+                          {!item.Brand_Name__c}
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="7" >
+                       
+                <lightning:layout>
+                    
+                    <lightning:layoutItem size="5" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <lightning:formattedNumber value="{!item.Rebate_Percent}"  maximumFractionDigits="2"/>%
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="7" class="custom-background-bottle-10 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <lightning:formattedNumber value="{!item.per1}"  maximumFractionDigits="2"/>
+                    </lightning:layoutItem>
+                    
+                    
+                </lightning:layout> 
+                    </lightning:layoutItem>
+                        </lightning:layout>
+                        
+                        
+                    </lightning:layoutItem>
+                    
+                            <lightning:layoutItem size="1">
+                                <lightning:layout>
+                            <lightning:layoutItem size="6" class="align-right custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <!-- {!item.Goals_Volume} -->
+                                
+                                <aura:if isTrue="{!and(equals(item.Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.Volume__c}" maximumFractionDigits="3"/> </aura:set></aura:if>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" class="align-right custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left pad"  padding="horizontal-medium">
+                                <!-- {!item.Goals_Value} -->
+                                <!-- {!item.Actual_Value__c}-->
+                                <aura:if isTrue="{!and(equals(item.Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                                
+                            </lightning:layoutItem>
+                                </lightning:layout>
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem size="1">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="6" class="align-right custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                        <aura:if isTrue="{!and(equals(item.Actual_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.Actual_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" class="align-right custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <aura:if isTrue="{!and(equals(item.Actual_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.Actual_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                                
+                            </lightning:layoutItem>
+                            
+                                </lightning:layout>
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem size="1">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="6" class="align-right custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                        <aura:if isTrue="{!and(equals(item.Returns_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.Returns_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" class="align-right custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <aura:if isTrue="{!and(equals(item.Returns_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.Returns_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                                
+                            </lightning:layoutItem>
+                            
+                                </lightning:layout>
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem size="1">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="6" class="align-right custom-background-bottle-22 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                        <aura:if isTrue="{!and(equals(item.OO_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.OO_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if>
+                                
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="6" class="align-right custom-background-bottle-22 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                <aura:if isTrue="{!and(equals(item.OO_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.OO_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                                
+                            </lightning:layoutItem>
+                            
+                                </lightning:layout>
+                            </lightning:layoutItem>
+                            
+                            <lightning:layoutItem size="1">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="6" class="align-right custom-background-bottle-22 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                       
+                                    <aura:if isTrue="{!v.valid}">
+                                        <aura:if isTrue="{!!v.plainIp}">        <ui:inputNumber  change="{!c.changeObj}" value="{!item.CO_Volume__c}" /></aura:if>
+                                        <aura:if isTrue="{!v.plainIp}"><aura:if isTrue="{!and(equals(item.CO_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.CO_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if></aura:if>
+                                        </aura:if>
+                                        
+                                        <aura:if isTrue="{!!v.valid}">
+                                        <aura:if isTrue="{!and(equals(item.CO_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.CO_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if>
+                                        </aura:if>
+                                    
+                                    </lightning:layoutItem>
+                            <lightning:layoutItem size="6" class="align-right custom-background-bottle-22 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+								<aura:if isTrue="{!v.valid}">
+                                <aura:if isTrue="{!!v.plainIp}">        <ui:inputNumber change="{!c.changeObj}" value="{!item.CO_Value__c}" /></aura:if>
+                                <aura:if isTrue="{!v.plainIp}">
+                                    <aura:if isTrue="{!and(equals(item.CO_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.CO_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                                </aura:if>    
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!!v.valid}">
+                                <aura:if isTrue="{!and(equals(item.CO_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.CO_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                                </aura:if>
+                                    </lightning:layoutItem>
+                            
+                                </lightning:layout>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="3">
+                    <lightning:layout>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-31 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+						<aura:if isTrue="{!v.valid}">
+                        <aura:if isTrue="{!!v.plainIp}">        <ui:inputNumber  change="{!c.changeObj}" value="{!item.NN_Volume__c}" /></aura:if>
+                        <aura:if isTrue="{!v.plainIp}">
+                            <aura:if isTrue="{!and(equals(item.NN_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.NN_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if>
+                        </aura:if>   
+                        </aura:if>
+                        <aura:if isTrue="{!!v.valid}">
+                        <aura:if isTrue="{!and(equals(item.NN_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.NN_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if>
+                        </aura:if>
+                        
+                        </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-31 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+						<aura:if isTrue="{!v.valid}">
+                        <aura:if isTrue="{!!v.plainIp}">        <ui:inputNumber change="{!c.changeObj}" value="{!item.NN_Value__c}" /></aura:if>
+                        <aura:if isTrue="{!v.plainIp}"><aura:if isTrue="{!and(equals(item.NN_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.NN_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                        </aura:if>  
+                        </aura:if>
+                        <aura:if isTrue="{!!v.valid}">
+                        <aura:if isTrue="{!and(equals(item.NN_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.NN_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                        </aura:if>
+                        
+                        </lightning:layoutItem>
+                        
+                        
+                        <lightning:layoutItem size="2" class="custom-background-bottle-31 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                            <aura:if isTrue="{!and(equals(item.nn,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.nn}" maximumFractionDigits="2"/></aura:set></aura:if>
+                                
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-31 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+						<aura:if isTrue="{!v.valid}">
+                        <aura:if isTrue="{!!v.plainIp}">        <ui:inputNumber  change="{!c.changeObj}" value="{!item.ND_Volume__c}" /></aura:if>
+                        <aura:if isTrue="{!v.plainIp}">
+                            <aura:if isTrue="{!and(equals(item.ND_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.ND_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if>
+                        </aura:if>  
+                        </aura:if>
+                        <aura:if isTrue="{!!v.valid}"><aura:if isTrue="{!and(equals(item.ND_Volume__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.ND_Volume__c}" maximumFractionDigits="3"/></aura:set></aura:if>
+                        </aura:if>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2" class="custom-background-bottle-31 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+							<aura:if isTrue="{!v.valid}">
+                            <aura:if isTrue="{!!v.plainIp}">        <ui:inputNumber change="{!c.changeObj}" value="{!item.ND_Value__c}" /></aura:if>
+                            <aura:if isTrue="{!v.plainIp}">
+                                <aura:if isTrue="{!and(equals(item.ND_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.ND_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                            </aura:if>                    
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!!v.valid}">
+                            <aura:if isTrue="{!and(equals(item.ND_Value__c,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.ND_Value__c}" maximumFractionDigits="2"/></aura:set></aura:if>
+                            </aura:if>
+                        </lightning:layoutItem>
+                    <lightning:layoutItem size="2" class="custom-background-bottle-31 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                        <aura:if isTrue="{!and(equals(item.nd,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.nd}" maximumFractionDigits="2"/></aura:set></aura:if>
+                                
+                    </lightning:layoutItem>
+                    </lightning:layout>
+                        </lightning:layoutItem>
+                    
+                            
+                                   <lightning:layoutItem size="3" class="custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                         <lightning:layout>
+                        <lightning:layoutItem size="2" class="custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                            <lightning:layout>  
+                   <lightning:layoutItem size="12" class="custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <aura:if isTrue="{!and(equals(item.vPercent,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.vPercent}" style="percent" maximumFractionDigits="2"/></aura:set></aura:if>
+                     </lightning:layoutItem>
+                             </lightning:layout>
+                             </lightning:layoutItem>
+                    
+                             <lightning:layoutItem size="10" class="custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <lightning:layout>   
+                   <lightning:layoutItem size="3" class="custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <aura:if isTrue="{!and(equals(item.bvo,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.bvo}" maximumFractionDigits="3"/></aura:set></aura:if>
+                      </lightning:layoutItem>
+                            
+                                 <lightning:layoutItem size="3" class="custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                     <aura:if isTrue="{!and(equals(item.bva,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.bva}" maximumFractionDigits="2"/></aura:set></aura:if>
+                     
+                           </lightning:layoutItem>
+                           
+                   <lightning:layoutItem size="3" class="custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                       <aura:if isTrue="{!and(equals(item.cvo,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.cvo}" maximumFractionDigits="3"/></aura:set></aura:if>
+                      </lightning:layoutItem>
+                            
+                                 <lightning:layoutItem size="3" class="custom-background-bottle-12 slds-border_top slds-border_right slds-border_bottom slds-border_left"  padding="horizontal-medium">
+                                     <aura:if isTrue="{!and(equals(item.cva,0))}">-<aura:set attribute="else"><lightning:formattedNumber value="{!item.cva}" maximumFractionDigits="2"/></aura:set></aura:if>
+                     
+                           </lightning:layoutItem>
+                            
+                                 </lightning:layout>
+                                  
+                             
+                             </lightning:layoutItem>
+                    
+                        </lightning:layout>
+                    </lightning:layoutItem>
+
+                    
+                            
+                        </lightning:layout>
+                    </aura:if> 
+                    
+                </aura:iteration>
+                
+                 
+             
+                <c:mapEntryChildRC1 resultG="{!v.resultG}" key="{!pC}"/>
+            </aura:if>
+            
+            
+        </aura:iteration>
+        
+        
+        <br />
+        <br />
+        <br/>  
+        
+        <aura:if isTrue="{!v.isOrg}">
+        <lightning:layout>
+            <lightning:layoutItem size="12" padding="around-small">
+                <div class="slds-align_absolute-center slds-no-print">
+                    <lightning:button class="slds-no-print" label="{!$Label.c.REB_Back}" title="Back" onclick="{! c.Back1 }"/>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        </aura:if>
+        </aura:if>
+    </lightning:card>
+        </aura:if> </div>
+    
+    <aura:if isTrue="{!v.confirm}">
+    
+        <div class="demo-only" style="height:24rem">
+  <section role="dialog" tabindex="0" aria-modal="true" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal_prompt">
+    <div class="slds-modal__container">
+      <div class="slds-modal__header slds-theme_error slds-theme_alert-texture">
+        <h1 class="slds-text-heading_medium" id="prompt-heading-id">Confirmação</h1>
+      </div>
+      <div class="slds-modal__content slds-p-around_medium" id="prompt-message-wrapper">
+        <p>Tem certeza que deseja sair?</p>
+      </div>
+      <div class="slds-modal__footer slds-theme_default">
+        <lightning:button class="slds-no-print" label="Não" title="Não" onclick="{! c.Back1 }"/>
+        <lightning:button class="slds-no-print" label="Sim" title="Sim" onclick="{! c.Back }"/>
+        </div>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</div>
+        
+    </aura:if>
+</aura:component>

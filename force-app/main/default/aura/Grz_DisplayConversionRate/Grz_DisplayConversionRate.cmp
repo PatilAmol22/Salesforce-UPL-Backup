@@ -1,0 +1,22 @@
+<!--********************************************************************************************
+* Name			    : Grz_DisplayConversionRate.cmp
+* Description	    : Aura component to display Conversion rate 
+* Apex Controller	: Grz_ShowConversionRateClass 
+* LastModefied Date	: 14/10/2022 
+* Created By	    : Swaranjeet (Grazitti)
+* **********************************************************************************************-->
+<aura:component implements="force:appHostable,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+	     
+    <aura:attribute name="conversionValue" type="Decimal"/>
+<!-- Changes by Aashima(Grazitti) for APPS-2299 14Oct22 -->
+    <!-- Changes by Aashima(Grazitti) for APPS-2531 21Oct22 -->
+   <div class="slds-grid">
+    	<div class="slds-col slds-size_1-of-1 box">
+            <!--span style="font-family:myfontregular; font-size:16px; color:#f54904;">Conversion Rate</span><br/-->
+            <span style="font-family:myfontregular; font-size:16px; color:#f54904;">{!$Label.c.Grz_ColombiaTRMLabel}</span><br/>
+            	<span style="font-family:myfontregular; font-size:25px; color:#000;">1 USD = {!$Label.c.Grz_ColombiaConversionRateToUSD} COP</span>		
+      </div>    
+    </div>
+      
+     
+</aura:component>

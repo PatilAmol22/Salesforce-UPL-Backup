@@ -1,0 +1,23 @@
+<template>
+    <!--<img src={bgimg} style="height:113px; width: 100%; margin-top: -35px;">
+    <div class="text-section" style = {customcss} >
+        <b>{imglabel}</b>
+    </div>-->
+
+    <div class="banner-div">
+        <img src={bgimg} class="banner-img"/>
+        <div class="banner-text componentNotoSansBold">
+            {imglabel}
+        </div>
+        <!-- RITM0575970 Grz(Nikhil Verma) 21-06-2023-->
+        <template if:true={isIndia}>
+            <div class="details componentNotoSansLight">
+                <div style="font-size: small;">Toll Free Number : 99-204-22-111</div>
+                <div style="font-size: small;">Timings : 9AM to 6PM</div>
+                <div style="font-size: small;">Working Days : Monday to Friday</div>
+            </div>
+        </template>
+        <!-- End------RITM0575970 Grz(Nikhil Verma) 21-06-2023-->
+    </div>
+    
+</template>

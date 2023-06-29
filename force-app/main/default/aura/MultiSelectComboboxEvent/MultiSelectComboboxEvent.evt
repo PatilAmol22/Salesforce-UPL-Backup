@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="SelectedDistributor" type="List"/>
+    <aura:attribute name="count" type="integer"/>
+</aura:event>

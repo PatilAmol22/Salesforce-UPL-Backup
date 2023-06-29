@@ -1,0 +1,10 @@
+.THIS .mainClass {
+    
+    Position:"Center"    ;
+    margin:50px;
+}
+.THIS .resultList {
+    
+    Position:"absolute";
+    Height:90px;
+}

@@ -1,0 +1,215 @@
+<template>
+<div class="slds-grid slds-wrap headingCss">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <!--<h1 style="float:left; margin:8px;">
+                        <span class="slds-page-header__title" title={labels.POGReportLabel}>{labels.POGReportLabel}</span>
+                </h1>-->
+        </div>
+        <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 slds-large-size_12-of-12 headingCss">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-p-right_small">
+                        <!--<p style="font-weight:700; margin-top:5px;">{labels.Distributor}</p>-->
+                        <!-- <c-liquidationlookupcmps placeholder={labels.Distributor} iconname='standard:product' multiselect=false sobject='DistributorSalesAreaMapping__c' fieldname='count( Id), Distributor__c,Distributor__r.Name,Distributor__r.SAP_code__c' filter={distributor_filter} displayfield='Distributor_Name__c' onselected={handleChangeDistributor} singleselectedrec={distributorName} onremove={handleRemoveDistributor} cmpwidth='small' dependent=false disable={disable_distributor} ispoland=true></c-liquidationlookupcmps> -->
+                        <c-grz_multi-select-account-picklist multi-select="true" onselectoptionaccount={handleSelectAccountOptionList}  label={labels.Distributor} selected-value={selectedValue} sobject='DistributorSalesAreaMapping__c' fieldname='count( Id), Distributor__c,Distributor__r.Name,Distributor__r.SAP_code__c' filter={distributor_filter} displayfield='Distributor_Name__c'></c-grz_multi-select-account-picklist>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-p-right_small">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Year}</p>
+                                <lightning-combobox style="margin-top: -19px;"
+                                name={labels.Year}
+                                value={year} 
+                                placeholder={labels.Select_Year} 
+                                disabled={disable_year}
+                                options={yearOptionRemoveCurrent} onchange={handleChangeYear}>
+                                </lightning-combobox>
+                </div> 
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-p-right_small">
+                        <p style="font-weight:700; margin-top:5px;">{labels.Quarter}</p>
+                                <lightning-combobox style="margin-top: -19px;"
+                                name={labels.Quarter}  
+                                value={quarter} 
+                                placeholder={labels.Quarter} 
+                                disabled={disable_quarter}
+                                options={quarterOption} onchange={handleChangeQuarter} onfocus={handleOnfocus}>
+                                </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12 slds-text-align_right" style="margin-top:25px">
+                        <lightning-input data-id="checkbox" class="slds-p-left_xx-large" type="checkbox" checked={ischecked} label={labels.ExcludeEmptyStock} onchange={handleChange} ></lightning-input>
+                </div>
+        </div>
+
+        <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 slds-large-size_12-of-12 headingCss slds-p-top_small slds-p-bottom_small">
+                <div class="slds-col slds-large-size_3-of-12 slds-p-right_small">
+                        <c-grz_multi-select-brand-picklist multi-select="true" onselectoptionsku={handleSelectSKUOptionList}  selected-value={selectedValue} label={labels.Grz_SelectBrand}></c-grz_multi-select-brand-picklist>
+                </div>
+
+                <div class="slds-col slds-large-size_3-of-12 slds-p-right_small">
+                        <c-grz_multi-select-pick-list multi-select="true" onselectoption={handleSelectOptionList} options={options} selected-value={selectedValue} label={labels.MultiSelectPicklistLabel}></c-grz_multi-select-pick-list>
+                </div>      
+        </div>
+
+        <div class="slds-grid slds-wrap slds-col slds-size_1-of-1 slds-large-size_12-of-12" style="background:#D3D3D3; padding-bottom: 10px; padding-left: 10px">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+                        <lightning-input
+                        style="margin-top: 10px;"
+                        name={labels.Search}
+                        label={labels.Search}
+                        value={search_str}
+                        placeholder={labels.Search}
+                        type="search"
+                        variant="label-hidden"
+                        onchange={handlesearch}
+                        ></lightning-input>
+                        </div> 
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_10-of-12 slds-p-top_small">
+                        <div if:true={isVisiblePDFandXLS} class="download-div slds-text-align_right slds-p-right_small">
+                                <span class="componentNotoSansBold slds-m-right_xx-small">
+                                        <a onclick={downloadPDF} target="_blank" ><button class="dwnld-btn"><span class="download-icon">
+                                                <!--<img src={downloadIcon} style="height:15px; width:15px;"/>-->
+                                                <lightning-icon class="slds-p-right_xx-small" icon-name="utility:preview" alternative-text={labels.DownloadPDF} size="x-small" title={labels.DownloadPDF}></lightning-icon>
+                                        </span><span>{labels.DownloadPDF}</span></button></a> 
+                                </span>
+                                <span class="componentNotoSansBold">
+                                        <a onclick={downloadXLS} download="POGReport.xls" target="_blank" ><button class="dwnld-btn"><span class="download-icon"><img src={downloadIcon} style="height:15px; width:15px;"/></span><span>{labels.DownloadXLS}</span></button></a> 
+                                </span>
+                        </div>
+                </div>
+
+        </div>
+
+        <div if:true={spinner} class="slds-is-relative" style="position: absolute; right: 50%;padding-top: 34%;">
+                <lightning-spinner alternative-text="Loading..." variant="brand" class="spinner-css"></lightning-spinner>
+        </div>
+
+        <div style="overflow-y:scroll" if:true={liquidation_found}>
+             <div class="tableCss">
+                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_col-bordered slds-table_resizable-cols table_fixed" role="grid">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                                <template for:each={columns} for:item="item">
+                                        <th data-id={item.fieldName} key={item.Id}  style="height: 45px;" id={item.Id}
+                                                class="th_fixed displayColumnCss" scope="col">
+                                                <div class="slds-truncate slds-cell-wrap" style="text-align: center;max-width: 275px;min-width: 100px;">{item.label} 
+                                                <span if:true={item.sortable} style="margin-left: 10px;">
+                                                        <lightning-icon style="display: inline;text-align: right; cursor: pointer;" icon-name="utility:sort" data-fieldname={item.fieldName}
+                                                        alternative-text="sort" onclick={handlesortData} size="x-small" title=""></lightning-icon>
+                                                </span>
+                                                </div>
+                                        </th>
+                                </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={liquidation_data} for:item="item">
+                                
+                                        <tr class="slds-hint-parent tr_fixed" key={item.Brand}>
+                                        <td key={item.Brand} data-id="Brand" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.Brand}
+                                                </div>
+                                        </td>
+                                        
+                                        <td key={item.Brand} data-id="Opening_inventory" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.Opening_inventory}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="OpeningInventoryPLN" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.OpeningInventoryPLN}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="YTD_sales" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.YTD_sales}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="YTD_SalesPLN" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.YTD_SalesPLN}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="Total_Available_Stock" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.Total_Available_Stock}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="TotalAvailableStockPLN" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.TotalAvailableStockPLN}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="Distributor_Inventory" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.Distributor_Inventory}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="DistributorInventoryPLN" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.DistributorInventoryPLN}
+                                                </div>
+                                        </td>
+                                        <!--<td key={item.Id}>
+                                                <div id={item.Id} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.Plan_for_the_Quarter}
+                                                </div>
+                                        </td>-->
+                                        <td key={item.Brand} data-id="Liquidation_YTD" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.Liquidation_YTD}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="Liquidation_YTD_PLN" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.Liquidation_YTD_PLN}
+                                                </div>
+                                        </td>
+                                        <td key={item.Brand} data-id="Liquidation_percentage_YTD" class="displayColumnCss">
+                                                <div id={item.Brand} 
+                                                class="slds-cell-wrap"
+                                                onchange={handleChange}
+                                                style="margin-left:10px;">{item.Liquidation_percentage_YTD}
+                                                </div>
+                                        </td>
+                                        <!--<td key={item.Id} class={hide_col}>
+                                                <div id={item.Id} 
+                                                class="slds-cell-wrap"
+                                                style="margin-left:10px;">{item.Plan_for_the_Next_Quarter}
+                                                </div>
+                                                
+                                        </td>-->
+                                </tr> 
+                        </template>
+                    </tbody>
+               </table>
+       </div>
+    </div>
+</div>
+
+<div if:false={liquidation_found}>
+        <lightning-card>
+                <b><p style="text-align:center">{labels.no_data}</p></b>
+        </lightning-card>
+</div>
+
+<!--<template if:true={spinner} class="demo-only" style="height:6rem;position:absolute;left: 600px;top: 149px;">
+        <div class="slds-spinner_container">
+        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+        <span class="slds-assistive-text">{labels.loading}</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+        </div>
+        </div>
+</template>-->
+
+</template>

@@ -1,0 +1,34 @@
+.THIS .my-select select {
+    background: transparent !important;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid #333;
+    border-radius: 0px;
+    font-size: 1.125rem;
+    font-weight: 800;
+  }
+  .THIS .my-multi-select {
+    height: 70px !important;
+  }
+  /*Changes for TaskSCTASK0737712. Please confirm.*/
+.THIS .tableFixHead th {top: 0; bottom: 0; background: white; z-index: 1; position: sticky !important;padding: 10px 16px; 
+        background-color: #5583C5; color:#fff; font-weight: bold; border:0;}
+
+/*Changes for TaskSCTASK0737712. Please confirm.*/
+.THIS .tableFixHead thead {
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 2;
+}
+
+  .THIS thead {
+    position: sticky !important;
+    top: 0 !important;
+  }
+
+  .THIS .uiInput--checkbox input, .THIS input.uiInput--checkbox {
+    display: inline-block !important;
+    margin-left: 5px;
+  }

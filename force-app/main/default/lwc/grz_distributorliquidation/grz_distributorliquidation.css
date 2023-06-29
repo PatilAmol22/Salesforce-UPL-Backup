@@ -1,0 +1,165 @@
+.blueBtn {
+  border-radius: 0%;
+  background-color: #00bdf2;
+  border-color: #00bdf2;
+  color: #ffffff;
+  font-weight: bold;
+  margin-top: 18px;
+  width: 100%;
+}
+.greyBtn {
+  border-radius: 0%;
+  background-color:  rgb(233,234,236);
+  border-color:  rgb(233,234,236);
+  color: #ffffff;
+  font-weight: bold;
+  margin-top: 18px;
+  width: 100%;
+  cursor:default;
+}
+
+.sRepwidth{
+  min-width: 275px;
+}
+.disableclass{
+ cursor: no-drop;
+   
+background-color: rgb(233,234,236);
+}
+.nodatacss{
+  text-align: center;
+    border-radius: 4px;
+    opacity: 1;
+    background-color: white;
+    padding: 2%;
+}
+.tablebordermargin{
+  padding-top: 5%;
+    margin-right: 22px;
+    margin-left: 26px;
+    padding-bottom: 5%;
+}
+.yer{
+  padding-right: 6px;
+}
+.noteclass{
+  color: rgb(136, 136, 136);
+}
+.table-scroll {
+  overflow: auto;
+    max-height: 350px;
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+
+.table-scroll-Rep{
+  overflow: auto;
+  max-height: 350px;
+}
+
+.fix{
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    background: #f8f8f8;
+    text-align: left !important;
+    padding-left:10px;
+    font-weight: bold;
+    
+ }
+ .ShowRepfix{
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    background: #f8f8f8;
+   
+    padding-left:10px;
+    font-weight: bold;
+    
+ }
+
+ .fix1{
+    position: sticky;
+    left: 110px;
+    z-index: 4;
+    background: #f8f8f8;
+    text-align: left !important;
+    padding-left:10px;
+     font-weight: bold;
+ }
+
+
+ .table-scroll-Rep td {
+text-align: center;
+}
+
+ .table-scroll td {
+text-align: center;
+}
+.reportHeader{
+  text-align: center;
+  background-color: #F7F7F7;
+  min-height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 5px 0px 5px;
+
+}
+
+@media only screen and (max-width: 685px) {
+.reportHeader{
+  padding-top: 0px;
+
+}
+}
+@media only screen and (max-width: 1023px) {
+.srch{
+  width:80% !important;
+
+}
+}
+
+@media only screen and (max-width: 767px) {
+.srch{
+  width:100% !important;
+
+}
+
+.showHide{
+padding-right: 6px;
+}
+
+.search{
+  margin-left: 0px !important;
+}
+
+}
+
+@media only screen and (max-width: 479px) {
+
+.showHide{
+padding-right: 0px !important;
+}
+
+.fix{
+  min-width: 0px;
+    max-width: 100px;
+    word-wrap:break-word;white-space:pre-wrap;
+ }
+
+ .fix1{
+    max-width: 100px;
+    left: 110px;
+    word-wrap:break-word;white-space:pre-wrap;
+ }
+
+ .LiqWrap{
+  word-wrap:break-word;white-space:pre-wrap;
+}
+
+.sRepwidth{
+  max-width: 210px !important;
+  min-width: 210px !important;
+}
+
+}

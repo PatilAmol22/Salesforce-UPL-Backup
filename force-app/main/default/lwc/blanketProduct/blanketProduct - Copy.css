@@ -1,0 +1,8 @@
+.slds-box{
+ border:2px solid rgb(11, 121, 155);
+ padding:10 10;
+ margin:20px;
+}
+.myTable table>thead .slds-cell-fixed.slds-has-button-menu, .myTable table>thead .slds-cell-fixed.slds-has-button-menu:hover{
+    background: antiquewhite;
+  }

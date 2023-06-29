@@ -1,0 +1,426 @@
+<template>
+    <div class = "grz-footer">
+        <div class="slds-grid slds-wrap footerStyle mobile-view-about-section componentNotoSansLight">
+            <template for:each={data} for:item="footerItem">
+                <div key={footerItem.Id} class="slds-col slds-large-size_2-of-12 slds-medium-size_2-of-12 slds-x-small-size_12-of-12 width-tab-view">
+                    <ul class="slds-m-left_medium tabview">
+                        <li class="slds-m-top_small">
+                            <b><a href={footerItem.URL} target="__blank" class ={footerItem.urlCss}>{footerItem.Name}</span></a></b>
+                            <template if:true={footerItem.showArrow}>
+                                <lightning-icon data-name={footerItem.Name} icon-name="utility:chevrondown" data-row-id={footerItem.Id} class="displaydiv slds-float_right slds-p-right_small" alternative-text="add" size="x-small" onclick={openSubMenu}></lightning-icon>                   
+                            </template>
+                            <ul class="hide-child" data-id={footerItem.Name}>
+                                                                
+                                <template for:each={footerItem.children} for:item="child">
+                                    <template if:true = {child.Border}>
+                                        <div key={child.Id} class = "sborder_bottom" >
+                                            <li key={child.Id} class="slds-m-top_small">
+                                                <a href={child.URL} target="__blank" class ={child.urlCss}>{child.Name}</a>
+                                            </li>
+                                            <hr/>
+                                        </div>
+                                                                     
+                                    </template>
+                                    <template if:false = {child.Border}>
+                                    <li key={child.Id} class="slds-m-top_small">
+                                        <a href={child.URL} target="__blank" class ={child.urlCss}>{child.Name}</a>
+                                    </li>
+                                </template>
+                                        
+                                </template>
+                                
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </template>
+        </div>
+        <div class="slds-grid slds-wrap divbgColor big-view">
+            <div class="slds-col slds-size_6-of-12 footer-left-text">
+                <template if:true={isBr}>
+                    <ul class="slds-p-around_large contentStyle">
+                        <li class="slds-p-left_medium lipaddincls text-white">Copyright © UPL {currentYear}</li>
+                    </ul>
+                </template>
+                <template if:true={isCl}>
+                    <ul class="slds-p-around_large contentStyle">
+                        <li class="slds-p-left_medium lipaddincls text-white">Derechos Reservados @ UPL {currentYear}</li>
+                        <!--<li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/cl/T%C3%A9rminos-de-servicio" target="__blank" class = "decoration">Términos de servicios</a></li>
+                        <li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/cl/Pol%C3%ADticde-privacidad" target="__blank" class = "decoration">Aviso de privacidad</a></li>
+                        <li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/suppliers" target="__blank" class = "decoration">Proveedores</a></li>-->
+                    
+                    </ul>
+                </template>
+                <template if:true={isIn}>
+                    <ul class="slds-p-around_large contentStyle">
+                        <li class="slds-p-left_medium lipaddincls text-white">Copyright © UPL {currentYear}</li>
+                        <li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/in/terms-of-service" target="__blank" class = "decoration">Terms of Service</a></li>
+                        <li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/in/privacy-policy" target="__blank" class = "decoration">Privacy Policy</a></li>
+                        <li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/in/sitemap" target="__blank" class = "decoration">Sitemap</a></li>
+                    </ul>
+                </template>
+                <template if:true={isMX}>
+                    <ul class="slds-p-around_medium contentStyle">
+                        <li class=" lipaddincls text-white">Derechos Reservados © UPL {currentYear}</li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/mx/T%C3%A9rminos-del-Servicio" target="__blank" class = "decoration">Términos del Servicio</a></li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/mx/Pol%C3%ADtica-de-Privacidad" target="__blank" class = "decoration">Política de Privacidad</a></li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/suppliers" target="__blank" class = "decoration">Proveedores</a></li>
+                    </ul>
+                </template>
+    
+                <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+                <template if:true={isAR}>
+                    <ul class="slds-p-around_medium contentStyle">
+                        <li class=" lipaddincls text-white">Derechos Reservados {currentYear}</li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/ar/T%C3%A9rminos-del-Servicio" target="__blank" class = "decoration">Términos del Servicio</a></li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/ar/Pol%C3%ADtica-de-Privacidad" target="__blank" class = "decoration">Política de Privacidad</a></li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/suppliers" target="__blank" class = "decoration">Proveedores</a></li>
+                    </ul>
+                </template>
+                
+            </div>
+            <div class="slds-col slds-size_6-of-12 slds-text-align--center">
+                <ul class="slds-p-top_medium iconStyle">
+                    <li class="liborder y-tube">
+                        <template if:true={isCl}>
+                            <a href="https://www.youtube.com/channel/UCV_lx3bSJrch3cKERs2KfzQ" target="__blank">
+                                <img src={youtube} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isIn}>
+                            <a href="https://www.youtube.com/channel/UCrKOf13Gl4xOF_ooDLcoedg" target="__blank">
+                                <img src={youtube} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isBr}>
+                            <a href="https://www.youtube.com/channel/UC4TWpqUEtKY62nqB2Ox9yfQ" target="__blank">
+                                <img src={youtube} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isMX}>
+                            <a href="https://www.youtube.com/channel/UC2JBZryh2HeE9p-G9qTDwXg" target="__blank">
+                                <img src={youtube} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+    
+                        <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+                        <template if:true={isAR}>
+                            <a href="https://www.youtube.com/channel/UC-t_kHL5S-6yKJAIOrOv0oA" target="__blank">
+                                <img src={youtube} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+                    </li>
+                    <li class="slds-m-left_large liborder fb">
+                        <template if:true={isIn}>
+                            <a href="https://www.facebook.com/UPLInd/" target="__blank">
+                                <img src={facebook} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isBr}>
+                            <a href="https://www.facebook.com/brasilupl/" target="__blank">
+                                <img src={facebook} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isMX}>
+                            <a href="https://www.facebook.com/uplagro.mexico" target="__blank">
+                                <img src={facebook} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isCl}>
+                            <a href="https://www.facebook.com/uplagro.chile" target="__blank">
+                                <img src={facebook} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+    
+                        <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+                        <template if:true={isAR}>
+                            <a href="https://www.facebook.com/uplargentina/?fref=ts" target="__blank">
+                                <img src={facebook} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+                    </li>
+                    <template if:true={isIn}>
+                        <li class="slds-m-left_large liborder twiter">
+                            <a href="https://twitter.com/uplltd" target="__blank">
+                                <img src={twiter} alt="twiter" class="expIcon">
+                            </a>
+                        </li>
+                    </template>
+                    <template if:true={isCl}>
+                        <li class="slds-m-left_large liborder twiter">
+                            <a href="https://www.twitter.com/uplagro_chile" target="__blank">
+                                <img src={twiter} alt="twiter" class="expIcon">
+                            </a>
+                        </li>
+                    </template>
+                    <template if:true={isMX}>
+                        <li class="slds-m-left_large liborder twiter">
+                            <a href="https://twitter.com/uplagro_mexico" target="__blank">
+                                <img src={twiter} alt="twiter" class="expIcon">
+                            </a>
+                        </li>
+                    </template>
+    
+                    <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+                    <template if:true={isAR}>
+                        <li class="slds-m-left_large liborder twiter">
+                            <a href="https://twitter.com/UPLArgentina?lang=es" target="__blank">
+                                <img src={twiter} alt="twiter" class="expIcon">
+                            </a>
+                        </li>
+                    </template>
+    
+                    <li class="slds-m-left_large liborder linkdin">
+                        <a href="https://www.linkedin.com/company/upl-ltd/" target="__blank">
+                            <img src={linkdin} alt="linkdin" class="expIcon">
+                        </a>
+                    </li>
+    
+                        <li class="slds-m-left_large liborder insta">
+                        <template if:true={isIn}>
+                            <a href="https://www.instagram.com/upl_global/" target="__blank">
+                                <img src={instagram} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isBr}>
+                            <a href="https://www.instagram.com/uplbr/" target="__blank">
+                                <img src={instagram} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isMX}>
+                            <a href="https://www.instagram.com/uplagro_mexico" target="__blank">
+                                <img src={instagram} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isCl}>
+                            <a href="https://www.instagram.com/uplagro_chile" target="__blank">
+                                <img src={instagram} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                        <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+    
+                        <template if:true={isAR}>
+                            <a href="https://www.instagram.com/uplargentina/" target="__blank">
+                                <img src={instagram} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+    
+                    </li>
+                   
+                </ul>
+            </div>
+            <div class="slds-col slds-x-small-size_12-of-12 displaydiv slds-p-top_large"></div>
+        </div>
+    
+        <div class="slds-grid slds-wrap mobile-view">
+            <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-x-small-size_12-of-12 slds-text-align--center mobile-view-icon">
+                <ul class="slds-p-top_medium iconStyle">
+                    <li class="liborderMobile y-tube1">
+                        <template if:true={isIn}>
+                            <a href="https://www.youtube.com/channel/UCrKOf13Gl4xOF_ooDLcoedg" target="__blank">
+                                <img src={youtubeGray} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isBr}>
+                            <a href="https://www.youtube.com/channel/UC4TWpqUEtKY62nqB2Ox9yfQ" target="__blank">
+                                <img src={youtubeGray} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isMX}>
+                            <a href="https://www.youtube.com/channel/UC2JBZryh2HeE9p-G9qTDwXg" target="__blank">
+                                <img src={youtubeGray} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isCl}>
+                            <a href="https://www.youtube.com/channel/UCV_lx3bSJrch3cKERs2KfzQ" target="__blank">
+                                <img src={youtubeGray} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+    
+                        <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+                        <template if:true={isAR}>
+                            <a href="https://www.youtube.com/channel/UC-t_kHL5S-6yKJAIOrOv0oA" target="__blank">
+                                <img src={youtubeGray} alt="youtube" class="expIcon">
+                            </a>
+                        </template>
+    
+                    </li>
+                    <li class="slds-m-left_large liborderMobile fb1">
+                        <template if:true={isIn}>
+                            <a href="https://www.facebook.com/UPLInd/" target="__blank">
+                                <img src={facebookGray} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isBr}>
+                            <a href="https://www.facebook.com/brasilupl/" target="__blank">
+                                <img src={facebookGray} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isMX}>
+                            <a href="https://www.facebook.com/uplagro.mexico" target="__blank">
+                                <img src={facebookGray} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isCl}>
+                            <a href="https://www.facebook.com/uplagro.chile" target="__blank">
+                                <img src={facebookGray} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+    
+                        <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+
+
+                        <template if:true={isAR}>
+                            <a href="https://www.facebook.com/uplargentina/?fref=ts" target="__blank">
+                                <img src={facebookGray} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+    
+
+
+
+                        <template if:true={isCl}>
+                            <a href="https://www.facebook.com/uplargentina/?fref=ts" target="__blank">
+                                <img src={facebookGray} alt="facebook" class="expIcon">
+                            </a>
+                        </template>
+    
+                    </li>
+                    <template if:true={isIn}>
+                        <li class="slds-m-left_large liborderMobile twiter1">
+                            <a href="https://twitter.com/uplltd" target="__blank">
+                                <img src={twiterGray} alt="twiter" class="expIcon">
+                            </a>
+                        </li>
+                    </template>
+                    <template if:true={isMX}>
+                        <li class="slds-m-left_large liborderMobile twiter1">
+                            <a href="https://twitter.com/uplagro_mexico" target="__blank">
+                                <img src={twiterGray} alt="twiter" class="expIcon">
+                            </a>
+                        </li>
+                    </template>
+                    <template if:true={isCl}>
+                        <li class="slds-m-left_large liborderMobile twiter1">
+                            <a href="https://www.twitter.com/uplagro_chile" target="__blank">
+                                <img src={twiterGray} alt="twiter" class="expIcon">
+                            </a>
+                        </li>
+                    </template>
+    
+                    <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+                    <template if:true={isAR}>
+                        <li class="slds-m-left_large liborderMobile twiter1">
+                            <a href="https://twitter.com/UPLArgentina?lang=es" target="__blank">
+                                <img src={twiterGray} alt="twiter" class="expIcon">
+                            </a>
+                        </li>
+                    </template>
+    
+                    <li class="slds-m-left_large liborderMobile linkdin1">
+                        <a href="https://www.linkedin.com/company/upl-ltd/" target="__blank">
+                            <img src={linkdinGray} alt="linkdin" class="expIcon">
+                        </a>
+                    </li>
+                        <li class="slds-m-left_large liborderMobile insta1">
+                        <template if:true={isIn}>
+                            <a href="https://www.instagram.com/upl_global/" target="__blank">
+                                <img src={instagramGray} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isBr}>
+                            <a href="https://www.instagram.com/uplbr/" target="__blank">
+                                <img src={instagramGray} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isMX}>
+                            <a href="https://www.instagram.com/uplagro_mexico" target="__blank">
+                                <img src={instagramGray} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                        <template if:true={isCl}>
+                            <a href="https://www.instagram.com/uplagro_chile" target="__blank">
+                                <img src={instagramGray} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                        <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+                        <template if:true={isAR}>
+                            <a href="https://www.instagram.com/uplargentina/" target="__blank">
+                                <img src={instagramGray} alt="instagram" class="expIcon">
+                            </a>
+                        </template>
+                    </li>
+                    
+                </ul>
+            </div>
+            <div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-x-small-size_12-of-12 footer-left-text">
+                <template if:true={isBr}>
+                    <ul class="slds-p-around_large contentStyleMobile">
+                        <li class="slds-p-left_medium lipaddinclsMobile text-white">Copyright © UPL {currentYear}</li>
+                    </ul>
+                </template>
+                <template if:true={isIn}>
+                    <ul class="slds-p-around_large contentStyleMobile componentNotoSansLight">
+                        <li class="slds-p-left_medium lipaddinclsMobile text-white">Copyright © UPL {currentYear}</li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/in/terms-of-service" target="__blank" class = "decoration">Terms of Service</a></li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/in/privacy-policy" target="__blank" class = "decoration">Privacy Policy</a></li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/in/sitemap" target="__blank" class = "decoration">Sitemap</a></li>
+                    </ul>
+                </template>
+                <template if:true={isMX}>
+                    <ul class="slds-p-around_large contentStyleMobile componentNotoSansLight">
+                        <li class="slds-p-left_medium lipaddincls text-white">Derechos Reservados © UPL {currentYear}</li>
+                        <li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/mx/T%C3%A9rminos-del-Servicio" target="__blank" class = "decoration">Términos del Servicio</a></li>
+                        <li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/mx/Pol%C3%ADtica-de-Privacidad" target="__blank" class = "decoration">Política de Privacidad</a></li>
+                        <li class="slds-p-left_medium lipaddincls"><a href="https://www.upl-ltd.com/suppliers" target="__blank" class = "decoration">Proveedores</a></li>
+                    </ul>
+                </template>
+                <template if:true={isCl}>
+                    <ul class="slds-p-around_large contentStyleMobile componentNotoSansLight">
+                        <li class="slds-p-left_medium lipaddinclsMobile text-white">Derechos Reservados @ UPL {currentYear}</li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/cl/T%C3%A9rminos-de-servicio" target="__blank" class = "decoration">Términos de servicios</a></li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/cl/Pol%C3%ADticde-privacidad" target="__blank" class = "decoration">Aviso de privacidad</a></li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/suppliers" target="__blank" class = "decoration">Proveedores</a></li>
+                    </ul>
+                </template>
+    
+               <!-- added condition for argentina in grz_FoterComponent, Mohit Garg(Grazitti) : APPS-1757 added on: 16-08-2022 -->
+
+                <template if:true={isAR}>
+                    <ul class="slds-p-around_medium contentStyleMobile">
+                        <li class=" lipaddincls text-white">Derechos Reservados {currentYear}</li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/ar/T%C3%A9rminos-del-Servicio" target="__blank" class = "decoration">Términos del Servicio</a></li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/ar/Pol%C3%ADtica-de-Privacidad" target="__blank" class = "decoration">Política de Privacidad</a></li>
+                        <li class="slds-p-left_small lipaddincls"><a href="https://www.upl-ltd.com/suppliers" target="__blank" class = "decoration">Proveedores</a></li>
+                    </ul>
+                </template>
+
+    
+                <template if:true={isCl}>
+                    <ul class="slds-p-around_large contentStyleMobile componentNotoSansLight">
+                        <li class="slds-p-left_medium lipaddinclsMobile text-white">Derechos Reservados @ UPL {currentYear}</li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/ar/T%C3%A9rminos-del-Servicio" target="__blank" class = "decoration">Términos del Servicio</a></li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/ar/Pol%C3%ADtica-de-Privacidad" target="__blank" class = "decoration">Política de Privacidad</a></li>
+                        <li class="slds-p-left_medium lipaddinclsMobile"><a href="https://www.upl-ltd.com/suppliers" target="__blank" class = "decoration">Proveedores</a></li>
+                    </ul>
+                </template>
+    
+            </div>
+            <div class="slds-col slds-x-small-size_12-of-12 displaydiv slds-p-top_large"></div>
+        </div>
+        <div class="back-to-top" onclick={handleBackToTop} id = "goToTop">
+            <div class="icon-arrow"></div>
+        </div>
+        <!-- ***************for brazil community survey Button **********************-->
+        <!--<template if:true={isBrExternal}>
+            <template if:true={btnEnable}>
+                <div class="surveyDiv blink_me">
+                    <a href={surveyURL}  class="FullLabelDiv " target="__blank">
+                        <img src={surveyIcon} class="survey-img">
+                        <span class="tooltiptext">Faça a Pesquisa</span>
+                    </a>
+                </div>
+            </template>
+        </template>-->
+    </div>
+    </template>

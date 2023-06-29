@@ -1,0 +1,421 @@
+<aura:component implements="force:appHostable" controller="ViewAustraliaInventory">
+    <aura:handler name="change" value="{!v.selItem}" action="{!c.handleItemChange}" />
+    <ltng:require styles="{! $Resource.	datatable + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" scripts="{!join(',', 
+              $Resource.jquery224 , 
+              $Resource.datatable + '/DataTables-1.10.16/media/js/jquery.dataTables.min.js')
+              }" afterScriptsLoaded="{!c.scriptsLoaded}" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:SearchInventoryEvent" action="{!c.searched}" />
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}" />
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}" />
+
+    <aura:attribute name="selItem" type="String" default="" />
+
+    <aura:attribute name="stockrequirement" type="Stock_Requirement__c"
+        default="{'sobjectType': 'Stock_Requirement__c', 'Depot__r.Name': ''}" />
+
+    <aura:attribute name="Wrapperlist" type="object[]" />
+    <aura:attribute name="paginationList" type="object[]" />
+
+    <aura:attribute name="isExpand" type="Boolean" default="true" />
+    <aura:attribute name="SAPCheboxBoolean" type="Boolean" default="false" />
+    <aura:attribute name="isExpandAll" type="Boolean" default="true" />
+    <aura:attribute name="isAdmin" type="boolean" default="false" />
+    <aura:attribute name="showProduct" type="boolean" default="true" />
+    <aura:attribute name="showStorageLocation" type="boolean" default="true" />
+    <aura:attribute name="showSKUCode" type="boolean" default="true" />
+    <aura:attribute name="showbrandName" type="boolean" default="false" />
+    <aura:attribute name="Spinner" type="boolean" default="false" />
+
+    <aura:attribute name="page" default="1" type="integer" access="public" description="using for store page Number" />
+    <aura:attribute name="lastPage" default="0" type="integer" access="public"
+        description="using for store All Pages page Number" />
+    <aura:attribute name="total" default="0" type="integer" access="public" description="total records count store " />
+
+    <aura:attribute name="selectBy" type="string" default="Product/Sku" />
+    <aura:attribute name="test" type="Map" default="{'SearchKey':''}" />
+    <aura:attribute name="Selected_Depots" type="String" default="All" />
+
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <div class="slds-box slds-theme_default">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure slds-m-top_xx-small">
+                            <span class="slds-icon_container slds-icon-standard-opportunity">
+                                <lightning:icon iconName="custom:custom16" size="large" />
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-grid slds-gutters">
+                                <span class="slds-radio" style="margin-left:10px;margin-top:-10px;margin-bottom:30px;">
+                                    <input type="radio" id="sku" value="Product/Sku" name="options" checked="checked"
+                                        onclick="{!c.onRadioSelect}" />
+                                    <label class="slds-radio__label" for="sku" style="display:block">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">{!$Label.c.Product_SKU}</span>
+                                    </label>
+
+                                    <input type="radio" id="strloc" value="Storage Location" name="options"
+                                        onclick="{!c.onRadioSelect}" />
+                                    <label class="slds-radio__label" for="strloc" style="display:block">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">{!$Label.c.Location}</span>
+                                    </label>
+
+                                    <input type="radio" id="SkuNo" value="SKU Code" name="options"
+                                        onclick="{!c.onRadioSelect}" />
+                                    <label class="slds-radio__label" for="SkuNo" style="display:block">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">SKU Number</span>
+                                    </label>
+                                    <input type="radio" id="BrandName" value="Brand Name" name="options"
+                                        onclick="{!c.onRadioSelect}" />
+                                    <label class="slds-radio__label" for="BrandName">
+                                        <span class="slds-radio_faux"></span>
+                                        <span class="slds-form-element__label">Brand Name</span>
+                                    </label><br/>
+                               
+                                <!--<div class="slds-col slds-size_1-of-12 slds-align_absolute-center"></div>-->
+                                <!--<div class="slds-col slds-size_3-of-12 slds-align_absolute-center">-->
+                                   
+                                    <aura:if isTrue="{!v.showProduct}">
+                                        <c:Australia_AutoCompleteLC sObjectType="Stock_Requirement__c"
+                                            autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Description__c"
+                                            WhereClause="(Depot__r.Country__c = 'Australia' AND Depot__r.Active__c = true AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0  OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Description__c"
+                                            selItem="{!v.selItem}" />
+                                        <div id="result" class="slds-is-absolute"></div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.showStorageLocation}">
+                                        <c:Australia_AutoCompleteLC sObjectType="Depot__c"
+                                            autocompleteEvent="{!c.handleItemChange}" fields="Location__c"
+                                            WhereClause="(Depot__r.Country__c = 'Australia' AND Depot__r.Active__c = true AND RecordType.Name='Storage Location' and Location__c != null) ORDER BY Location__c"
+                                            selItem="{!v.selItem}" />
+                                        <div id="result" class="slds-is-absolute"></div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.showSKUCode}">
+                                        <c:Australia_AutoCompleteLC sObjectType="Stock_Requirement__c"
+                                            autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Code__c"
+                                            WhereClause="(Depot__r.Country__c = 'Australia' AND Depot__r.Active__c = true AND  ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                            selItem="{!v.selItem}" />
+                                        <div id="result" class="slds-is-absolute result"></div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.showbrandName}">
+                                        <c:Australia_AutoCompleteLC sObjectType="Stock_Requirement__c"
+                                            autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.Brand_Name__c"
+                                            WhereClause="(Depot__r.Country__c = 'Australia' AND Depot__r.Active__c = true AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                            selItem="{!v.selItem}" />
+                                        <div id="result" class="slds-is-absolute result"></div>
+                                    </aura:if><br/>
+                               <!--</div>-->
+                                <!--<div class="slds-col slds-size_2-of-12 slds-align_absolute-center">-->
+                                    <ui:inputCheckbox aura:id="checkbox" label="Exclude Zero Stock"
+                                                      change="{!c.onChageSAPCheckBox}" /><br/>
+                                    </span>
+                                <!--</div>-->
+                                <!--<div class="slds-col slds-size_4-of-12">-->
+                                    
+                                   <span>
+                                    <div class="slds-grid">
+                                        <!--<div class="slds-size_3-of-12 slds-align_absolute-center">-->
+                                            <label class="slds-radio__label" for="depot_items">
+                                             
+                                                <span
+                                                    class="slds-m-left_small">{!$Label.c.Depot}</span>
+                                            </label>&nbsp;
+                                        <!--</div>-->
+                                        
+                                            <ui:inputSelect class="slds-input select my-multi-select" multiple="true"
+                                                aura:id="depot_items" value="{!v.Selected_Depots}"
+                                                change="{!c.onDepotChange}" />
+                                        
+                                    </div>
+                                <!--</div>--> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters" style="margin-bottom:10px;">
+            <div class="slds-col slds-size_1-of-3" style="margin-top:10px;">
+                <span>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-form-element__control" style="width:70px;">
+
+                                <ui:inputSelect aura:id="recordSize" label="" class="slds-input"
+                                    change="{!c.onpagesizechange}">
+                                    <ui:inputSelectOption text="10" label="10" />
+                                    <ui:inputSelectOption text="20" label="20" />
+                                    <ui:inputSelectOption text="50" label="50" value="true" />
+                                    <ui:inputSelectOption text="100" label="100" />
+                                </ui:inputSelect>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+        <ui:scrollerWrapper class="sWrapTest slds-m-top_small">
+            <div class="slds-table--header-fixed_container" style="height:600px; border-bottom: 2px solid #ccc;">
+                <div class="slds-scrollable tableFixHead" style="height:100%;">
+                    <table id="tableId"
+                        class="slds-table slds-table_bordered slds-table_cell-buffer slds-table--header-fixed inventory"
+                        style="border:1px solid #ccc;overflow:auto" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 8%;">
+                                    <div title="Name">
+                                        <button class="slds-button slds-button--icon " onclick="{!c.toggleExpandAll}">
+                                            <img src="{!$Resource.ShowDetails}" id="expandall"
+                                                style="max-width:20px; max-height:20px; margin-left:5px;"
+                                                class="expand" />
+                                        </button>
+                                        <button class="slds-button slds-button--icon " onclick="{!c.toggleCollapseAll}">
+                                            <img src="{!$Resource.HideDetails}" id="collapseall"
+                                                style="max-width:20px; max-height:20px; display:none; margin-left:-1px;"
+                                                class="collapse" />
+                                        </button>
+                                    </div>
+                                </th>
+                                <th style="width: 7%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;margin-top: -1px;" title="Depot">
+                                        <p> {!$Label.c.Depot}</p></div>
+                                </th>
+                                <th style="width: 18%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;margin-top: -2px;" title="Product_SKU">
+                                       <p class="slds-wrap">{!$Label.c.Product_SKU}</p></div>
+                                </th>
+                                <th style="width: 12%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;margin-top: -2px;" title="SKU Code">
+                                        <p class="slds-wrap"> SKU Code</p>
+                                    </div>
+                                </th>
+                                <th style="width: 10%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;margin-top: -1px;" title="Physical_Stock">
+                                        <p class="slds-wrap">{!$Label.c.Physical_Stock}</p>
+                                    </div>
+                                </th>
+                                <th style="width: 10%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;width:8%;margin-top: -1px;" title="Incoming_Purchase_Orders">
+                                        <!-- <p class="slds-truncate">{!$Label.c.Incoming_Purchase_Orders}</p> -->
+                                        <p class="slds-wrap">Incoming PO</p>
+                                    </div>
+                                </th>
+                                <th style="width: 9%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;width:7%;margin-top: -1px;" title="Stock_In_Transit">
+                                        <p class="slds-wrap">{!$Label.c.Stock_In_Transit}</p>
+                                    </div>
+                                </th>
+                                <th style="width: 6%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;" title="UOM">
+                                        <p class="slds-wrap"> {!$Label.c.UOM}</p></div>
+                                </th>
+                                <th style="width: 12%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;width:8%;margin-top: -2px;" title="Outgoing_Reservations">
+                                        <p class="slds-wrap">{!$Label.c.Outgoing_Reservations}</p>
+                                    </div>
+                                </th>
+                                <th style="width: 8%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;margin-top: -1px;" title="Net_Stock">
+                                        {!$Label.c.Net_Stock}</div>
+                                </th>
+                                <th style="width: 8%;white-space: pre-wrap;">
+                                    <div style="margin-left: 5px;margin-top: -1px;" title="Quantities_Scheduled_for_Delivery">
+                                        {!$Label.c.Quantities_Scheduled_for_Delivery}</div>
+                                </th>
+                                 <!--//Updated for RITM0551759 09-05-2023 - Added Quantities_Scheduled_for_Delivery__c Field.-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.Wrapperlist}" var="stkReqInv" indexVar="i">
+                                <tr>
+                                    <td>
+                                        <!--<div class="slds-truncate cls1" title="button">-->
+                                            <button class="slds-button slds-button--icon expandall" 
+                                                onclick="{!c.toggleExpand}" data-row-index="{!i}" id="{!i+'expand'}">
+                                                <img src="{!$Resource.ShowDetails}" id="{!i+'imgexp'}"
+                                                    style="width:20px; height:20px; max-width:20px; max-height:20px; margin-left:5px;" class="expandimg" />
+                                            </button>
+                                            <button class="slds-button slds-button--icon collapseall"
+                                                onclick="{!c.toggleCollapse}" data-row-index="{!i}"
+                                                id="{!i+'collapse'}">
+                                                <img src="{!$Resource.HideDetails}" id="{!i+'imgcolsp'}"
+                                                    style="width:20px; height:20px; max-width:20px; max-height:20px; display:none;margin-left:-1px;" class="collapseimg" />
+                                            </button>
+                                        <!--</div> -->
+                                    </td>
+                                    <td>
+                                        <!-- <div class="slds-truncate cls1" title="Name" >
+                                            {!stkReqInv.stkReq.Depot__r.Name}
+                                        </div> -->
+                                        <div class="slds-truncate cls1" title="Name">
+                                            {!stkReqInv.stkReq.Depot__r.Depot_Code__c}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate cls1" title="Name">
+                                            {!stkReqInv.stkReq.SKU__r.SKU_Description__c}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate cls1" title="Name">
+                                            {!stkReqInv.stkReq.SKU__r.SKU_Code__c}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate cls1" title="Name">
+                                            <!-- <apex:outputText value="{0, number, ###,##0}" id="myNumberDisplay" >
+                                                <apex:param value="{!stkReqInv.stkReq.Unrestricted_Stock__c}"/>
+                                            </apex:outputText> -->
+                                            <lightning:formattedNumber value="{!stkReqInv.stkReq.Unrestricted_Stock__c}"
+                                                maximumFractionDigits="2" />
+                                            <!--  -->
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="slds-truncate cls1" title="Name">
+
+                                            <lightning:formattedNumber
+                                                value="{!stkReqInv.stkReq.Purchase_Order_Stock__c}"
+                                                maximumFractionDigits="2" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate cls1" title="Name">
+
+                                            <lightning:formattedNumber value="{!stkReqInv.stkReq.Stock_In_Transit__c}"
+                                                maximumFractionDigits="2" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate cls1" title="Name">
+                                            {!stkReqInv.stkReq.UOM__c}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate cls1" title="Name">
+
+                                            <lightning:formattedNumber
+                                                value="{!stkReqInv.stkReq.Outgoing_Reservations__c}"
+                                                maximumFractionDigits="2" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate cls1" title="Name">
+
+                                            <lightning:formattedNumber value="{!stkReqInv.stkReq.Net_Stock_Europe__c}"
+                                                maximumFractionDigits="2" />
+                                        </div>
+                                    </td>
+                                    
+
+<td>
+                                        <div class="slds-truncate cls1" title="Name">
+
+                                            <lightning:formattedNumber value="{!stkReqInv.stkReq.Quantities_Scheduled_for_Delivery__c}"
+                                                maximumFractionDigits="2" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <aura:if isTrue="{!!(empty(stkReqInv.lstStrLocInv))}">
+                                    <tr>
+                                        <td style="padding:0; margin:0;"></td>
+                                        <td colspan="8" style="padding:0; margin:0;">
+                                            <table style="border:1px solid #ccc;display:none;"
+                                                class="slds-table table inventory" id="{!i+'table'}" cellspacing="0"
+                                                width="100%" data-row-index="{!i}">
+                                                <tr>
+                                                    <th
+                                                        style="background-color: #5583C5; color:#fff; font-weight: bold; border:0;">
+                                                        {!$Label.c.Location}</th>
+                                                    <th
+                                                        style="background-color: #5583C5; color:#fff; font-weight: bold; border:0;">
+                                                        {!$Label.c.Product_SKU}</th>
+                                                    <th
+                                                        style="background-color: #5583C5; color:#fff; font-weight: bold; border:0;">
+                                                        {!$Label.c.Unrestricted_Inventory}</th>
+                                                    <!-- <th
+                                                        style="background-color: #5583C5; color:#fff; font-weight: bold; border:0;">
+                                                        {!$Label.c.UOM}</th> -->
+                                                    <th
+                                                        style="background-color: #5583C5; color:#fff; font-weight: bold; border:0;">
+                                                        Batch Number</th>
+                                                    <th
+                                                        style="background-color: #5583C5; color:#fff; font-weight: bold; border:0;">
+                                                        {!$Label.c.Production_Date}</th>
+                                                    <th
+                                                        style="background-color: #5583C5; color:#fff; font-weight: bold; border:0;">
+                                                        {!$Label.c.Expiry_Date}</th>
+                                                </tr>
+                                                <tbody>
+                                                    <aura:iteration items="{!stkReqInv.lstStrLocInv}" var="InvstrLoc">
+                                                        <tr>
+                                                            <td>{!InvstrLoc.Storage_Location_Depot__r.Location__c}</td>
+                                                            <td>{!InvstrLoc.SKU__r.SKU_Description__c}</td>
+                                                            <td>
+                                                                <lightning:formattedNumber
+                                                                    value="{!InvstrLoc.Stock_Quantity__c}"
+                                                                    maximumFractionDigits="2" />
+                                                            </td>
+                                                            <!-- <td>{!InvstrLoc.UOM__c}</td> -->
+                                                            <td>{!InvstrLoc.Batch_Number__c}</td>
+                                                            <td>{!InvstrLoc.Production_Date__c}</td>
+                                                            <td>{!InvstrLoc.Expiry_Date__c}</td>
+                                                             <!--//Updated for RITM0551759 09-05-2023 - Added Quantities_Scheduled_for_Delivery__c Field.-->
+                                                             
+                                                        </tr>
+                                                    </aura:iteration>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </aura:if>
+                                <tr id="{!i+'tr'}" class="tr">
+                                    <aura:if isTrue="{!empty(stkReqInv.lstStrLocInv)}">
+                                        <td style="padding:0; margin:0;"></td>
+                                        <td id="{!i+'errtd'}" class="errtd" colspan="8"
+                                            style="text-align:center;font-size:13px;font-style:italic;display:none;">
+                                            {!$Label.c.Data_Not_Available}</td>
+                                    </aura:if>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </ui:scrollerWrapper>
+        <div class="slds-grid slds-gutters" style="margin-bottom:10px;">
+            <div class="slds-col slds-size_1-of-3" style="margin-top:10px;"></div>
+            <div class="slds-col slds-size_2-of-3">
+                <span>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control" style="float:right; margin-top:10px;">
+                            <lightning:button disabled="{!v.page == 1}" onclick="{!c.First}"
+                                class="slds-button slds-button--neutral" label="{!$Label.c.First}" />
+                            <lightning:button disabled="{!v.page == 1}" onclick="{!c.previous}"
+                                class="slds-button slds-button--neutral" label="{!$Label.c.Previous}" />
+                            <lightning:button disabled="{!v.page == v.lastPage}" aura:id="nextbtn"
+                                class="slds-button slds-button--neutral" onclick="{!c.next}" label="{!$Label.c.Next}" />
+                            <lightning:button disabled="{!v.page == v.lastPage}" onclick="{!c.Last}"
+                                class="slds-button slds-button--neutral" label="{!$Label.c.Last}" />
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </div>
+</aura:component>

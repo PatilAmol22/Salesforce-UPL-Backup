@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Call_Future</name>
+        <label>Call Future</label>
+        <locationX>50</locationX>
+        <locationY>314</locationY>
+        <actionName>AssignPermissionSetToBDP</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <apiVersion>54.0</apiVersion>
+    <decisions>
+        <name>Check_Whether_Update_SAPS_Is_Complete_Or_Not</name>
+        <label>Check Whether Update SAPS Is Complete Or Not</label>
+        <locationX>182</locationX>
+        <locationY>194</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>If_SAPS_Is_Complete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.BatchJobDefinition</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>0ma0K000000000GQAQ</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Success</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_Future</targetReference>
+            </connector>
+            <label>If SAPS Is Complete</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Remove Permission Sets {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Remove Permission Sets</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Whether_Update_SAPS_Is_Complete_Or_Not</targetReference>
+        </connector>
+        <object>BatchJobStatusChangedEvent</object>
+        <triggerType>PlatformEvent</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,66 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="ContactDetailController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>
+	<aura:attribute name="userInfo" type="ContactDetailController.ContactInfo"/>
+      <br />
+     <div class="slds-grid slds-wrap" style="background:#fff; margin-bottom:5px; padding:0; border-radius:5px 5px 0 0;">
+     <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+               <!-- <span class="slds-icon_container slds-icon-standard-opportunity" style="float:left; margin-top:8px; margin-left:10px;">
+                    <lightning:icon iconName="standard:case" alternative-text="note" size="medium"/>
+                </span> -->
+            <div class="titleregular" style="float:left; margin:8px; font-size:36px; font-weight:normal;">
+                <span class="slds-page-header_title" title="Account Ledger">{!$Label.c.Contact_Detail}</span>
+            </div>
+       </div>  
+    </div>     
+ 
+    <aura:if isTrue="{!$Browser.formFactor == 'DESKTOP'}">
+        <table width="100%" class="slds-table slds-table--bordered">
+          <tr>
+            <td width="30"><lightning:icon iconName="standard:user" alternativeText="Contact Name" size="small"/></td>
+            <th width="130">{!$Label.c.Contact_Name}:</th>
+            <td>{!v.userInfo.Name}</td>
+          </tr>
+          <tr> 
+            <td><lightning:icon iconName="standard:call" alternativeText="Contact Number" size="small"/></td>
+            <th>{!$Label.c.Contact_Number}:</th>
+            <td>{!v.userInfo.MobilePhone}</td>
+          </tr>
+          <tr>  
+            <td><lightning:icon iconName="standard:email" alternativeText="Contact Email" size="small"/></td>
+            <th>{!$Label.c.Contact_Email}:</th>
+            <td>{!v.userInfo.Email}</td>
+          </tr>
+        </table>
+    </aura:if>
+    <aura:if isTrue="{!$Browser.formFactor != 'DESKTOP'}">
+        <div class="slds-table slds-table--bordered">
+            <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner ">
+                <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                    <b><lightning:icon iconName="standard:user" alternativeText="Contact Name" size="small"/>&nbsp;{!$Label.c.Contact_Name}:</b>
+                </div>
+                <div class="slds-col slds-float_left slds-size_6-of-12">
+                    <b>{!v.userInfo.Name}</b>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner">
+                <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                    <b><lightning:icon iconName="standard:call" alternativeText="Contact Number" size="small"/>&nbsp;{!$Label.c.Contact_Number}:</b>
+                </div>
+                <div class="slds-col slds-float_left slds-size_6-of-12">
+                    <b>{!v.userInfo.MobilePhone}</b>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters slds-card__body slds-card__body_inner slds-cell-wrap">
+                <div class="slds-col slds-float_right slds-text-align_left slds-size_6-of-12">
+                    <b><lightning:icon iconName="standard:email" alternativeText="Contact Email" size="small"/>&nbsp;{!$Label.c.Contact_Email}:</b>
+                </div>
+                <div class="slds-col slds-float_left slds-size_6-of-12">
+                    <b>{!v.userInfo.Email}</b>
+                </div>
+            </div>
+        </div>    
+    </aura:if>
+    
+</aura:component>

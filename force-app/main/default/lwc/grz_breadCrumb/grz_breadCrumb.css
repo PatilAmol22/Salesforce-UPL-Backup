@@ -1,0 +1,21 @@
+.crumbClass{
+    padding-bottom: 3%;
+    padding-top: 1%;
+}
+.slds-breadcrumb .slds-breadcrumb__item:before{
+    color:#888888;
+}
+.imageClass{
+    height: 18px;
+    margin-bottom: 3px;
+}
+a{
+    text-decoration: none;
+}
+.emptyLink{
+    color: #888888;
+    pointer-events: none;
+}
+.hideClass::before{
+content: none !important;
+}

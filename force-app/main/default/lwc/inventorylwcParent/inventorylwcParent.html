@@ -1,0 +1,96 @@
+<template>
+    <div class="marginClass">
+    <div class="slds-grid slds-gutters slds-p-around_small " style="background-color:#FAFAF9; margin-top:-10px;">
+    <ul class=" Ul_class slds-table" style="background-color:#FAFAF9">
+        <li class=" li-items"><div class="style_div" style="display: flex; float:none; padding-bottom: 10px">
+            <span class="slds-p-right_x-small">
+                <!-- <lightning-icon icon-name="custom:custom16" title="custom16" size="large" ></lightning-icon> -->
+                <svg focusable="false" data-key="custom16" aria-hidden="true" viewBox="0 0 100 100" class="slds-icon slds-icon_large iconClass"><g><g><path d="M72 70h-1V48c0-1.1-.9-2-2-2h-2c-1.1 0-2 .9-2 2v22h-6V48c0-1.1-.9-2-2-2h-2c-1.1 0-2 .9-2 2v22h-6V48c0-1.1-.9-2-2-2h-2c-1.1 0-2 .9-2 2v22h-6V48c0-1.1-.9-2-2-2h-2c-1.1 0-2 .9-2 2v22h-1c-3.3 0-6 2.7-6 6v2c0 1.1.9 2 2 2h52c1.1 0 2-.9 2-2v-2c0-3.3-2.7-6-6-6zM77 34.4L52.3 20.8c-.7-.5-1.5-.8-2.3-.8-.8 0-1.6.3-2.3.8L23 34.4c-.6.4-1 1-1 1.7V38c0 1.1.9 2 2 2h52c1.1 0 2-.9 2-2v-1.8c0-.7-.4-1.4-1-1.8zM50 36c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z"></path></g></g></svg>
+            </span>
+            <span class="" style="line-height: normal;">
+                <div>
+                    <h2 class="headingClass" style="">Inventory Stock </h2>
+                   <h2 class="headingClass" style="">Quantity</h2>
+                </div>
+            </span>
+        </div></li>
+        <li class="li-items"><div class="style_div lappyRadio " style="padding-bottom: 10px">
+            <span class="slds-radio slds-p-around_xxx-small">
+                <div style="padding-bottom: 5px;">
+                 <label class="radio-inline textFont" style="padding-right: 34px;"> 
+                   <input type="radio" name="optradio" data-kpp="abc" data-radioname="SKU__r.SKU_Description__c" class="radioCustom" id="red"   onchange={handleradiochange}></input>Product/SKU
+                 </label>
+                 <label class="radio-inline " >
+                     <input type="radio" class="radioCustom" data-radioname="SKU__r.SKU_Code__c" name="optradio" onchange={handleradiochange}></input>SKU Number
+                   </label>
+                 </div>
+                 <div>
+                     <label class="radio-inline textFont" style="padding-right: 10px;">
+                         <input type="radio" class="radioCustom" data-radioname="Depot_Code__c" name="optradio" onchange={handleradiochange}></input>Storage Location
+                       </label>
+                 <label class="radio-inline ">
+                   <input type="radio" class="radioCustom"  data-radioname="SKU__r.Brand_Name__c" name="optradio" onchange={handleradiochange}></input>Brand Name
+                 </label>
+                   </div>
+             </span>  
+        </div></li>
+        <li class="li-items"><div class="style_div lappyInput">
+            <span class="slds-radio slds-p-around_xxx-small" style="">
+                <c-data-list option-selected={selectedValue} onsearch={handleSearch} class="textFont"></c-data-list>
+            </span>
+        </div></li>
+        <li class="" style="margin-right: 30px; margin-top: 2px;"><div class="style_div salesOrgInput">
+            <span>
+                <label for="Sales ORG" style="font-weight: bolder; color:#59474D;" class="textFont">Sales ORG</label>
+                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_header-hidden" style="background-color:#FAFAF9">
+                    <thead class="slds-assistive-text">
+    
+                    </thead>
+                    <!-- overflow-y:scroll; -->
+                    <tbody
+                        style="display:block; min-height: 50px; max-height: 85px; background-color:#FAFAF9 ">
+                        <template for:each={orgData} for:item="row">
+                            <tr key={row} class="slds-hint-parent rowColorWhite" data-typee={row.label}
+                                onclick={rowClick}>
+                                <th data-label="Opportunity Name" scope="row">
+                                    <div class="slds-truncate" title="Cloudhub">
+                                        <h3 tabindex="-1" data-idd={row.label} style="" class="textFont">{row.value}</h3>
+                                    </div>
+                                </th>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </span>
+        </div></li>
+        <li class="li-items" ><div class="style_div lappyCheck" style="height:100%">
+            <div class="slds-form-element__control " style="top:25%">
+                <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-73" value="checkbox-unique-id-73"
+                        checked={isChecked} onchange={checkbox} />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-73">
+                        <span class="slds-checkbox_faux" style="margin-right: 5px"></span>
+                        <span class="slds-form-element__label" style="color:#59474D;">Exclude Zero Stock</span>
+                    </label>
+                </div>
+            </div>
+        </div></li>
+
+    </ul>
+</div>
+ 
+    <template if:true={childData}>
+        <div class="slds-grid slds-gutters slds-p-around_small" style="background-color: white; ">
+            <c-inventorylwc-child 
+            selected-depots={searchDepot}
+            nozero-record={isChecked}
+            org-value={clickedOrgList}
+            fieldname={searchfield}
+            search-term={searchData}
+            onitms={handleItemSelected}
+            style="width:100%">
+            </c-inventorylwc-child>
+        </div>
+    </template>
+</div>
+</template>

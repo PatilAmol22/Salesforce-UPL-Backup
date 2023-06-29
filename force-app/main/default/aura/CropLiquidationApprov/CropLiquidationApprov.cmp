@@ -1,0 +1,15 @@
+<aura:component controller="LiquidationApprovalController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="CropTerritoryId" type="Territory_Distributor__c"/>
+    <aura:attribute name="isSubmittedCropLiqui" type="String"/>
+    <aura:attribute name="cropMonth" type="String"/>
+    <aura:attribute name="cropFY" type="String"/>
+    <aura:attribute name="CheckIfLiquidationIsSubmitted" type="Boolean" default="true" />
+    <aura:attribute name="pageReference" type="String"/>
+    <aura:method name="callChildMethod" action="{!c.callChildMethod}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" access="public" />
+    
+	<aura:if isTrue="{!v.CheckIfLiquidationIsSubmitted}">
+    <iframe src="{! v.pageReference+'/apex/CropLiquidationApproval?tId=' + v.CropTerritoryId+'&amp;fy='+v.cropFY+'&amp;m='+v.cropMonth}" width="100%" height="500px;" />
+    </aura:if>
+</aura:component>

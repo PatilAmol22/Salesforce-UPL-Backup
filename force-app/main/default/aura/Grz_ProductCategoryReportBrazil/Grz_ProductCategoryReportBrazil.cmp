@@ -1,0 +1,37 @@
+<!--<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Grz_CreditDonutChart">-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Grz_ReportControllerBrazil">
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="nodatafound" type="Boolean" default="false" />
+    <aura:attribute name="Message" type="String"/>
+    <aura:attribute name="startDate" type="String"/>
+    <aura:attribute name="endDate" type="String"/>
+    <aura:attribute name="todayDate" type="String"/>
+    <aura:attribute name="distributorValue" type="String"/>
+    <aura:attribute name="error" type="Boolean" default="true" />
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}" 
+                  afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    <aura:handler name="change" value="{!v.distributorValue}" action="{!c.scriptsLoaded}"/>
+    <aura:handler name="change" value="{!v.startDate}" action="{!c.scriptsLoaded}"/>
+    <aura:handler name="change" value="{!v.endDate}" action="{!c.scriptsLoaded}"/>
+    
+    <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small">
+        <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small">
+            <div class="slds-col slds-size_12-of-12 filter-div">
+                <div class="textCSS componentNotoSansLight">Produto com categoria</div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.loaded }">
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:set>
+        </aura:if>  
+        <div>             
+            <div class="chart-container">
+                <canvas id="pie-charts-product"/>
+            </div>
+            <aura:if isTrue="{!v.nodatafound }">
+                <p class="Errors componentNotoSansBold">Nenhum dado encontrado</p>
+            </aura:if> 
+        </div> 
+    </div>
+</aura:component>

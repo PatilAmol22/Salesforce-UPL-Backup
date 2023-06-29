@@ -1,0 +1,41 @@
+<apex:component controller="AFTerritoryStatusSBUController" access="global">
+    <apex:attribute type="String" name="usrSBUCode" description="SBU Code" assignTo="{!sbuCode}"/>
+    <apex:outputPanel rendered="{!AFTerritoryStatusSBUList}">
+    <p>
+        Dear Manager,<br/><br/>
+        The status of liquidation for MTD -   <apex:outputText value="{!liqMnth}"></apex:outputText> is as belows-
+    </p>
+        <apex:repeat value="{!terrStatusWrapMap}" var="zoneKey">
+            <b>
+            	<apex:outputText value="{!zoneKey}"/>
+            </b>
+            <table style="border: 1px solid black;border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">Territory Name</th>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">Territory Code</th>
+                <th style="border: 1px solid black;border-collapse: collapse; text-align: center;">Status</th>
+            </tr>
+            <apex:repeat var="terr" value="{!terrStatusWrapMap[zoneKey]}">
+                <tr>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.territoryName}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.territoryCode}</td>
+                    <td style="border: 1px solid black;border-collapse: collapse; text-align: center;">{!terr.status}</td>
+                </tr>
+            </apex:repeat>
+        </table>
+            <br/>
+        </apex:repeat>
+        <p>
+             <br/>
+    Please refer the below links to view the liquidation data for the completed territories:
+        <br/>
+    <br/>
+    <a href="{!$Label.AF_Product_Liquidation_Report}">Product Liquidation</a>
+        <br/><br/>
+    <a href="{!$Label.AF_Crop_Liquidation_Report}">Crop Liquidation</a>
+        <br/><br/> 
+            Thanks,<br/>
+            UPL Ltd
+    	</p>
+    </apex:outputPanel>
+</apex:component>

@@ -1,0 +1,1651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>flow</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>CaseProduct Automation Process</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_14_A1</name>
+        <label>call case prod automation</label>
+        <locationX>1400</locationX>
+        <locationY>200</locationY>
+        <actionName>CaseProduct_Automation_Process</actionName>
+        <actionType>flow</actionType>
+        <connector>
+            <targetReference>myDecision15</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>caseProdVar</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue>Case_Product__c</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>caseProdVar</name>
+            <value>
+                <elementReference>myVariable_current</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>flow</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>CaseProduct Automation Process</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Calling case product automation process</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>CaseProduct_Automation_Process</actionName>
+        <actionType>flow</actionType>
+        <connector>
+            <targetReference>myDecision2</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>caseProdVar</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue>Case_Product__c</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>caseProdVar</name>
+            <value>
+                <elementReference>myVariable_current</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>50.0</apiVersion>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_pmetdec</targetReference>
+            </connector>
+            <label>Update List Price Per Unit</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>4.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision13</name>
+        <label>myDecision13</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision15</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_14</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_14</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_14_A1</targetReference>
+            </connector>
+            <label>For Complaint Record</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>5.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision15</name>
+        <label>myDecision15</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_16</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_16</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_16_A1</targetReference>
+            </connector>
+            <label>update value if complaint</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision2</name>
+        <label>myDecision2</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_3</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_3_A1</targetReference>
+            </connector>
+            <label>Update Total Product Value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>2.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision5</name>
+        <label>myDecision5</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision8</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_6</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_6</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_6_pmetdec</targetReference>
+            </connector>
+            <label>Update value</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>3.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision8</name>
+        <label>myDecision8</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision13</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_9</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_9</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_9_A1</targetReference>
+            </connector>
+            <label>For CSR Record</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_1_pmetdec</name>
+        <label>Previously Met Decision</label>
+        <locationX>100</locationX>
+        <locationY>100</locationY>
+        <defaultConnector>
+            <targetReference>myRule_1_A1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1_pmetnullrule</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Previously Met - Null</label>
+        </rules>
+        <rules>
+            <name>myRule_1_pmetrule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1_pmetrule</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myDecision2</targetReference>
+            </connector>
+            <label>Previously Met - Prev</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_6_pmetdec</name>
+        <label>Previously Met Decision</label>
+        <locationX>600</locationX>
+        <locationY>100</locationY>
+        <defaultConnector>
+            <targetReference>myRule_6_A1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
+        <rules>
+            <name>myRule_6_pmetnullrule</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_6_A1</targetReference>
+            </connector>
+            <label>Previously Met - Null</label>
+        </rules>
+        <rules>
+            <name>myRule_6_pmetrule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_6_pmetrule</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myDecision8</targetReference>
+            </connector>
+            <label>Previously Met - Prev</label>
+        </rules>
+    </decisions>
+    <description>Added complaint</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>([Case_Product__c].Current_Net_Price_All_In__c  - (
+(([Case_Product__c].Proposed_List_Price_Unit__c  - [Case_Product__c].Off_Invoice_Discount__c ) - (([Case_Product__c].Proposed_List_Price_Unit__c  - [Case_Product__c].Off_Invoice_Discount__c ) * ([Case_Product__c].Distributor_Rebate__c  + [Case_Product__c].Rebate_All_In__c ))) - 
+(
+(([Case_Product__c].Proposed_List_Price_Unit__c  - [Case_Product__c].Off_Invoice_Discount__c ) - (([Case_Product__c].Proposed_List_Price_Unit__c  - [Case_Product__c].Off_Invoice_Discount__c ) * ([Case_Product__c].Distributor_Rebate__c  + [Case_Product__c].Grower_Rebate_All_In__c ))) * ([Case_Product__c].Retailer_Rebate_All_In__c  + [Case_Product__c].Grower_Rebate_All_In__c )
+) 
+) ) * [Case_Product__c].Expected_Volume__c </stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_10_myRule_9_A3_9586541157</name>
+        <dataType>Currency</dataType>
+        <expression>({!myVariable_current.Current_Net_Price_All_In__c}  - (
+(({!myVariable_current.Proposed_List_Price_Unit__c}  - {!myVariable_current.Off_Invoice_Discount__c} ) - (({!myVariable_current.Proposed_List_Price_Unit__c}  - {!myVariable_current.Off_Invoice_Discount__c} ) * ({!myVariable_current.Distributor_Rebate__c}  + {!myVariable_current.Rebate_All_In__c} ))) - 
+(
+(({!myVariable_current.Proposed_List_Price_Unit__c}  - {!myVariable_current.Off_Invoice_Discount__c} ) - (({!myVariable_current.Proposed_List_Price_Unit__c}  - {!myVariable_current.Off_Invoice_Discount__c} ) * ({!myVariable_current.Distributor_Rebate__c}  + {!myVariable_current.Grower_Rebate_All_In__c} ))) * ({!myVariable_current.Retailer_Rebate_All_In__c}  + {!myVariable_current.Grower_Rebate_All_In__c} )
+) 
+) ) * {!myVariable_current.Expected_Volume__c}</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(
+	OR(ISNULL([Case_Product__c].Proposed_Payment_Term__c ), ISBLANK([Case_Product__c].Proposed_Payment_Term__c), ISNULL([Case_Product__c].Current_Payment_Term__c), ISBLANK([Case_Product__c].Current_Payment_Term__c)), 
+	0, 
+	IF([Case_Product__c].Proposed_Payment_Term__c &lt;&gt; [Case_Product__c].Current_Payment_Term__c,1,0)
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_11_myRule_9_A2_6465551050</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+	OR(ISNULL({!myVariable_current.Proposed_Payment_Term__c} ), ISBLANK({!myVariable_current.Proposed_Payment_Term__c}), ISNULL({!myVariable_current.Current_Payment_Term__c}), ISBLANK({!myVariable_current.Current_Payment_Term__c})), 
+	0, 
+	IF({!myVariable_current.Proposed_Payment_Term__c} &lt;&gt; {!myVariable_current.Current_Payment_Term__c},1,0)
+)</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(
+	OR(ISNULL([Case_Product__c].PLN__c),ISNULL([Case_Product__c].Proposed_Net_Price_All_In__c )), 
+	0, 
+	IF([Case_Product__c].PLN__c - [Case_Product__c].Proposed_Net_Price_All_In__c &gt; 0,1,0)
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_12_myRule_9_A1_4026025363</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+	OR(ISNULL({!myVariable_current.PLN__c}),ISNULL({!myVariable_current.Proposed_Net_Price_All_In__c} )), 
+	0, 
+	IF({!myVariable_current.PLN__c} - {!myVariable_current.Proposed_Net_Price_All_In__c} &gt; 0,1,0)
+)</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>[Case_Product__c].Replacement_List_price_per_Unit__c *[Case_Product__c].Replacement_Unit__c </stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_17_myRule_16_A1_6275164194</name>
+        <dataType>Currency</dataType>
+        <expression>{!myVariable_current.Replacement_List_price_per_Unit__c} *{!myVariable_current.Replacement_Unit__c}</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF([Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_FOC, [Case_Product__c].Quantity_Invoiced__c, IF( [Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Sample, [Case_Product__c].Volume__c, IF ( [Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Product_Swap &amp;&amp; ISPICKVAL([Case_Product__c].Product_Exchange_Type__c,&apos;Purchase&apos;) , [Case_Product__c].Volume__c, 0))) * [Case_Product__c].List_Price_Unit__c</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_4_myRule_3_A1_8694834195</name>
+        <dataType>Currency</dataType>
+        <expression>IF({!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_FOC}, {!myVariable_current.Quantity_Invoiced__c}, IF( {!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Sample}, {!myVariable_current.Volume__c}, IF ( {!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Product_Swap} &amp;&amp; ISPICKVAL({!myVariable_current.Product_Exchange_Type__c},&apos;Purchase&apos;) , {!myVariable_current.Volume__c}, 0))) * {!myVariable_current.List_Price_Unit__c}</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>[Case_Product__c].Volume__c * [Case_Product__c].List_Price_Unit__c </stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_7_myRule_6_A1_4667763358</name>
+        <dataType>Currency</dataType>
+        <expression>{!myVariable_current.Volume__c} * {!myVariable_current.List_Price_Unit__c}</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+	OR(
+	ISNEW(), 
+	ISCHANGED([Case_Product__c].Brand_Pack_Size__c )
+	), 
+	IF(
+	OR(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),NOT(ISBLANK([Case_Product__c].Case__r.AccountId))),
+	IF(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),
+	
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.AccountId)),
+			IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.Account.Sales_Org__c )),
+			OR(
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.AccountId)),IF(NOT(ISBLANK([Case_Product__c].Case__r.Account.Sales_Org__c)),
+		OR(
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		)
+	),
+	false
+	),
+	OR(
+	 [Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_CSR,
+	[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_FOC ,
+	[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Sample 
+	)  
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	OR(
+	ISNEW(), 
+	ISCHANGED({!myVariable_current.Brand_Pack_Size__c} )
+	), 
+	IF(
+	OR(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),NOT(ISBLANK({!myVariable_current.Case__r.AccountId}))),
+	IF(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),
+	
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.AccountId})),
+			IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.Account.Sales_Org__c} )),
+			OR(
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.AccountId})),IF(NOT(ISBLANK({!myVariable_current.Case__r.Account.Sales_Org__c})),
+		OR(
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		)
+	),
+	false
+	),
+	OR(
+	 {!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_CSR},
+	{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_FOC} ,
+	{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Sample} 
+	)  
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Complaint,
+	OR(
+	ISNEW(), 
+	ISCHANGED([Case_Product__c].Replacement_Product__c)
+	), 
+	IF(
+	OR(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),NOT(ISBLANK([Case_Product__c].Case__r.AccountId))),
+	IF(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),
+	
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.AccountId)),
+			IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.Account.Sales_Org__c )),
+			OR(
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.AccountId)),IF(NOT(ISBLANK([Case_Product__c].Case__r.Account.Sales_Org__c)),
+		OR(
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		)
+	),
+	false
+	))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_14</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Complaint},
+	OR(
+	ISNEW(), 
+	ISCHANGED({!myVariable_current.Replacement_Product__c})
+	), 
+	IF(
+	OR(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),NOT(ISBLANK({!myVariable_current.Case__r.AccountId}))),
+	IF(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),
+	
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.AccountId})),
+			IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.Account.Sales_Org__c} )),
+			OR(
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.AccountId})),IF(NOT(ISBLANK({!myVariable_current.Case__r.Account.Sales_Org__c})),
+		OR(
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		)
+	),
+	false
+	))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Complaint,
+OR(
+ISNEW(),
+ISCHANGED([Case_Product__c].Replacement_Product__c),
+ISCHANGED([Case_Product__c].Replacement_Unit__c),
+ISCHANGED([Case_Product__c].Replacement_List_price_per_Unit__c)
+), 
+IF(
+	OR(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),NOT(ISBLANK([Case_Product__c].Case__r.AccountId))),
+	IF(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),
+	
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.AccountId)),
+			IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.Account.Sales_Org__c )),
+			OR(
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.AccountId)),IF(NOT(ISBLANK([Case_Product__c].Case__r.Account.Sales_Org__c)),
+		OR(
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		)
+	),
+	false
+	)
+
+
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_16</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Complaint},
+OR(
+ISNEW(),
+ISCHANGED({!myVariable_current.Replacement_Product__c}),
+ISCHANGED({!myVariable_current.Replacement_Unit__c}),
+ISCHANGED({!myVariable_current.Replacement_List_price_per_Unit__c})
+), 
+IF(
+	OR(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),NOT(ISBLANK({!myVariable_current.Case__r.AccountId}))),
+	IF(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),
+	
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.AccountId})),
+			IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.Account.Sales_Org__c} )),
+			OR(
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.AccountId})),IF(NOT(ISBLANK({!myVariable_current.Case__r.Account.Sales_Org__c})),
+		OR(
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		)
+	),
+	false
+	)
+
+
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+	OR(
+	ISNEW(), 
+	ISCHANGED([Case_Product__c].Brand_Pack_Size__c )
+	), 
+	IF(
+	OR(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),NOT(ISBLANK([Case_Product__c].Case__r.AccountId))),
+	IF(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),
+	
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.AccountId)),
+			IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.Account.Sales_Org__c )),
+			OR(
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.AccountId)),IF(NOT(ISBLANK([Case_Product__c].Case__r.Account.Sales_Org__c)),
+		OR(
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		)
+	),
+	false
+	),
+	OR(
+	 [Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_CSR,
+	[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_FOC ,
+	[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Sample 
+	)  
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1_pmetrule</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	OR(
+	ISNEW(), 
+	ISCHANGED({!myVariable_old.Brand_Pack_Size__c} )
+	), 
+	IF(
+	OR(NOT(ISBLANK({!myVariable_old.Case__r.ContactId})),NOT(ISBLANK({!myVariable_old.Case__r.AccountId}))),
+	IF(NOT(ISBLANK({!myVariable_old.Case__r.ContactId})),
+	
+		IF(NOT(ISBLANK({!myVariable_old.Case__r.Contact.AccountId})),
+			IF(NOT(ISBLANK({!myVariable_old.Case__r.Contact.Account.Sales_Org__c} )),
+			OR(
+			 {!myVariable_old.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_old.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK({!myVariable_old.Case__r.AccountId})),IF(NOT(ISBLANK({!myVariable_old.Case__r.Account.Sales_Org__c})),
+		OR(
+			 {!myVariable_old.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_old.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		)
+	),
+	false
+	),
+	OR(
+	 {!myVariable_old.RecordType.DeveloperName} = {!$Label.Case_RecordType_CSR},
+	{!myVariable_old.RecordType.DeveloperName} = {!$Label.Case_RecordType_FOC} ,
+	{!myVariable_old.RecordType.DeveloperName} = {!$Label.Case_RecordType_Sample} 
+	)  
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+	OR(
+	ISNEW(), 
+	ISCHANGED([Case_Product__c].Brand_Pack_Size__c ),
+        ISCHANGED([Case_Product__c].List_Price_Unit__c ),
+        ISCHANGED([Case_Product__c].Volume__c ),
+        ISCHANGED([Case_Product__c].Quantity_Invoiced__c )
+	), 
+	IF(
+	OR(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),NOT(ISBLANK([Case_Product__c].Case__r.AccountId))),
+	IF(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),
+	
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.AccountId)),
+			IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.Account.Sales_Org__c )),
+			OR(
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.AccountId)),IF(NOT(ISBLANK([Case_Product__c].Case__r.Account.Sales_Org__c)),
+		OR(
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		)
+	),
+	false
+	),
+	OR(
+	 [Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_FOC,
+	[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Sample ,
+	[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Product_Swap 
+	)  
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_3</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+	OR(
+	ISNEW(), 
+	ISCHANGED({!myVariable_current.Brand_Pack_Size__c} ),
+        ISCHANGED({!myVariable_current.List_Price_Unit__c} ),
+        ISCHANGED({!myVariable_current.Volume__c} ),
+        ISCHANGED({!myVariable_current.Quantity_Invoiced__c} )
+	), 
+	IF(
+	OR(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),NOT(ISBLANK({!myVariable_current.Case__r.AccountId}))),
+	IF(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),
+	
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.AccountId})),
+			IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.Account.Sales_Org__c} )),
+			OR(
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.AccountId})),IF(NOT(ISBLANK({!myVariable_current.Case__r.Account.Sales_Org__c})),
+		OR(
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		)
+	),
+	false
+	),
+	OR(
+	 {!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_FOC},
+	{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Sample} ,
+	{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Product_Swap} 
+	)  
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+OR(
+ISNEW(),
+ISCHANGED([Case_Product__c].Brand_Pack_Size__c ),
+ISCHANGED([Case_Product__c].Volume__c  ),
+ISCHANGED([Case_Product__c].List_Price_Unit__c   )
+), 
+IF(
+	OR(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),NOT(ISBLANK([Case_Product__c].Case__r.AccountId))),
+	IF(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),
+	
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.AccountId)),
+			IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.Account.Sales_Org__c )),
+			OR(
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.AccountId)),IF(NOT(ISBLANK([Case_Product__c].Case__r.Account.Sales_Org__c)),
+		OR(
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		)
+	),
+	false
+	),
+OR(
+[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Sample,
+[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Product_Swap 
+) 
+
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_6</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+OR(
+ISNEW(),
+ISCHANGED({!myVariable_current.Brand_Pack_Size__c} ),
+ISCHANGED({!myVariable_current.Volume__c}  ),
+ISCHANGED({!myVariable_current.List_Price_Unit__c}   )
+), 
+IF(
+	OR(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),NOT(ISBLANK({!myVariable_current.Case__r.AccountId}))),
+	IF(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),
+	
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.AccountId})),
+			IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.Account.Sales_Org__c} )),
+			OR(
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.AccountId})),IF(NOT(ISBLANK({!myVariable_current.Case__r.Account.Sales_Org__c})),
+		OR(
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		)
+	),
+	false
+	),
+OR(
+{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Sample},
+{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_Product_Swap} 
+) 
+
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+OR(
+ISNEW(),
+ISCHANGED([Case_Product__c].Brand_Pack_Size__c ),
+ISCHANGED([Case_Product__c].Volume__c  ),
+ISCHANGED([Case_Product__c].List_Price_Unit__c   )
+), 
+IF(
+	OR(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),NOT(ISBLANK([Case_Product__c].Case__r.AccountId))),
+	IF(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),
+	
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.AccountId)),
+			IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.Account.Sales_Org__c )),
+			OR(
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.AccountId)),IF(NOT(ISBLANK([Case_Product__c].Case__r.Account.Sales_Org__c)),
+		OR(
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		)
+	),
+	false
+	),
+OR(
+[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Sample,
+[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_Product_Swap 
+) 
+
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_6_pmetrule</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+OR(
+ISNEW(),
+ISCHANGED({!myVariable_old.Brand_Pack_Size__c} ),
+ISCHANGED({!myVariable_old.Volume__c}  ),
+ISCHANGED({!myVariable_old.List_Price_Unit__c}   )
+), 
+IF(
+	OR(NOT(ISBLANK({!myVariable_old.Case__r.ContactId})),NOT(ISBLANK({!myVariable_old.Case__r.AccountId}))),
+	IF(NOT(ISBLANK({!myVariable_old.Case__r.ContactId})),
+	
+		IF(NOT(ISBLANK({!myVariable_old.Case__r.Contact.AccountId})),
+			IF(NOT(ISBLANK({!myVariable_old.Case__r.Contact.Account.Sales_Org__c} )),
+			OR(
+			 {!myVariable_old.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_old.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK({!myVariable_old.Case__r.AccountId})),IF(NOT(ISBLANK({!myVariable_old.Case__r.Account.Sales_Org__c})),
+		OR(
+			 {!myVariable_old.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_old.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		)
+	),
+	false
+	),
+OR(
+{!myVariable_old.RecordType.DeveloperName} = {!$Label.Case_RecordType_Sample},
+{!myVariable_old.RecordType.DeveloperName} = {!$Label.Case_RecordType_Product_Swap} 
+) 
+
+)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+IF(
+	OR(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),NOT(ISBLANK([Case_Product__c].Case__r.AccountId))),
+	IF(NOT(ISBLANK([Case_Product__c].Case__r.ContactId)),
+	
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.AccountId)),
+			IF(NOT(ISBLANK([Case_Product__c].Case__r.Contact.Account.Sales_Org__c )),
+			OR(
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK([Case_Product__c].Case__r.AccountId)),IF(NOT(ISBLANK([Case_Product__c].Case__r.Account.Sales_Org__c)),
+		OR(
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.NAM_SalesOrg ,
+			 [Case_Product__c].Case__r.Account.Sales_Org__r.Sales_Org_Code__c = $Label.Canada_SalesOrg
+			),false),
+			false
+		)
+	),
+	false
+	)
+ ,
+[Case_Product__c].RecordType.DeveloperName = $Label.Case_RecordType_CSR 
+
+
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_9</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+IF(
+	OR(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),NOT(ISBLANK({!myVariable_current.Case__r.AccountId}))),
+	IF(NOT(ISBLANK({!myVariable_current.Case__r.ContactId})),
+	
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.AccountId})),
+			IF(NOT(ISBLANK({!myVariable_current.Case__r.Contact.Account.Sales_Org__c} )),
+			OR(
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Contact.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		),
+		
+		IF(NOT(ISBLANK({!myVariable_current.Case__r.AccountId})),IF(NOT(ISBLANK({!myVariable_current.Case__r.Account.Sales_Org__c})),
+		OR(
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.NAM_SalesOrg} ,
+			 {!myVariable_current.Case__r.Account.Sales_Org__r.Sales_Org_Code__c} = {!$Label.Canada_SalesOrg}
+			),false),
+			false
+		)
+	),
+	false
+	)
+ ,
+{!myVariable_current.RecordType.DeveloperName} = {!$Label.Case_RecordType_CSR} 
+
+
+)</expression>
+    </formulas>
+    <interviewLabel>Case_Product_Automation_Process-2_InterviewLabel</interviewLabel>
+    <label>Case Product Automation Process</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Case_Product__c</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Case_Product__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_16_A1</name>
+        <label>value update if comp</label>
+        <locationX>1600</locationX>
+        <locationY>200</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Currency</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Value</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Value__c</field>
+            <value>
+                <elementReference>formula_17_myRule_16_A1_6275164194</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case_Product__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Case_Product__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_3_A1</name>
+        <label>Update Total Product Value</label>
+        <locationX>300</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>myDecision5</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Currency</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Total Product Value</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Total_Product_Value__c</field>
+            <value>
+                <elementReference>formula_4_myRule_3_A1_8694834195</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case_Product__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Case_Product__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_6_A1</name>
+        <label>Update value</label>
+        <locationX>600</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>myDecision8</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Currency</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Value</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Value__c</field>
+            <value>
+                <elementReference>formula_7_myRule_6_A1_4667763358</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case_Product__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Case_Product__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_9_A1</name>
+        <label>Update PLN changed</label>
+        <locationX>900</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>myRule_9_A2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Number</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>PLN Changed</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>PLN_Changed__c</field>
+            <value>
+                <elementReference>formula_12_myRule_9_A1_4026025363</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case_Product__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Case_Product__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_9_A2</name>
+        <label>Update Payment term changed</label>
+        <locationX>900</locationX>
+        <locationY>300</locationY>
+        <connector>
+            <targetReference>myRule_9_A3</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Number</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Payment Term Changed</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Payment_Term_Changed__c</field>
+            <value>
+                <elementReference>formula_11_myRule_9_A2_6465551050</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case_Product__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Case_Product__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_9_A3</name>
+        <label>Update total offer impact</label>
+        <locationX>900</locationX>
+        <locationY>400</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Currency</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Total Offer Impact</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Tot_Offer_Impact__c</field>
+            <value>
+                <elementReference>formula_10_myRule_9_A3_9586541157</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case_Product__c</object>
+    </recordUpdates>
+    <startElementReference>myDecision</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Case_Product__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case_Product__c</objectType>
+    </variables>
+</Flow>

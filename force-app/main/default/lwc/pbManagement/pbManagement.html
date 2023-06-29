@@ -1,0 +1,306 @@
+<template>
+    <div class="slds" style="background:#fff;">
+        <!--<h1 style="color:#000; font-weight:normal; font-size:18px; padding:10px 3px 3px 3px; margin:5px 0 10px 10px;" class="slds-m-bottom_medium">Price Book Management</h1>-->
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:0px solid #cce4f8;">
+            
+                <div style="clear:both;"></div>
+                
+                <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:0; background:#dcedfb; font-weight:bold;">
+                      {labels.Period}
+                </h3>
+          
+                <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" style="margin:10px 0 10px 0;">
+                    <div class="slds-form-element" style="margin-top:12px;">
+                        <div class="slds-form-element__control">
+                            <lightning-combobox
+                                name="progress"
+                                label={labels.Year}
+                                value={value}
+                                placeholder={labels.Select_Progress}
+                                options={YearData}
+                                onchange={handleChange} >
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </div>  
+                   
+        </div>
+     <div if:true={showDetails}>
+        <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:0; background:#dcedfb; font-weight:bold;">
+                      {selectedYearValueCB} {labels.Year_Detail}
+        </h3>
+
+        <div class="slds-scrollable_x" style="margin-bottom:0;">
+            <table width="100%" class="slds-table slds-table_bordered slds-table_cell-buffer">
+              <thead>
+                <tr class="slds-text-heading--label">
+                <th class="slds-is-sortable" scope="col">
+                  <div class="slds-truncate">{labels.Month}</div>
+                </th>
+                <th class="slds-is-sortable" scope="col">
+                  <div class="slds-truncate" style="text-align:center;">{labels.Upload_Overwrite}</div>
+                </th>
+                <th class="slds-is-sortable" scope="col">
+                  <div class="slds-truncate" style="text-align:center;">{labels.Download}</div>
+                </th>
+                <th class="slds-is-sortable" scope="col">
+                  <div class="slds-truncate" style="text-align:center;">{labels.SKUS_NOT_INCLUDED_IN_PRICE_BOOK}</div>
+                </th>            
+                <th class="slds-cell-shrink"></th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.January}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="January-01" disabled={disableButton1} onclick={openModal}></lightning-button>
+                    <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload" target="__blank" style="text-align:center;" class={disableLink1}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="01" disabled={disableButton_ds1} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="01" disabled={disableButton_ds1} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.Febuary}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="February-02" disabled={disableButton2} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink2}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="02" disabled={disableButton_ds2} onclick={openDownloadReport} ></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="02" disabled={disableButton_ds2} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.March}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="March-03" disabled={disableButton3} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableButton}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="03" disabled={disableButton_ds3} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        
+                        <lightning-button variant="base" label={labels.click_here} value="03" disabled={disableButton_ds3} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.April}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="April-04" disabled={disableButton4} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink4}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="04" disabled={disableButton_ds4} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="04" disabled={disableButton_ds4} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.May}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="May-05" disabled={disableButton5} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink5}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="05" disabled={disableButton_ds5} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="05" disabled={disableButton_ds5} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.June}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="June-06" disabled={disableButton6} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink6}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="06" disabled={disableButton_ds6} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="06" disabled={disableButton_ds6} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.July}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="July-07" disabled={disableButton7} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink7}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="07" disabled={disableButton_ds7} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="07" disabled={disableButton_ds7} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.August}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="August-08" disabled={disableButton8} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink8}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="08" disabled={disableButton_ds8} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="08" disabled={disableButton_ds8} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.September}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="September-09" disabled={disableButton9} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink9}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="09" disabled={disableButton_ds9} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="09" disabled={disableButton_ds9} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.October}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="October-10" disabled={disableButton10} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink10}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="10" disabled={disableButton_ds10} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="10" disabled={disableButton_ds10} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.November}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="November-11" disabled={disableButton11} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink11}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;" >
+                        <lightning-button variant="base" label={labels.click_here} value="11" disabled={disableButton_ds11} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="11" disabled={disableButton_ds11} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+
+                <tr  class="slds-hint-parent">
+                    <td class="slds-truncate" data-label="Month">{labels.December}</td>
+                    <td class="slds-truncate" data-label="Upload/Overwrite" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="December-12" disabled={disableButton12} onclick={openModal}></lightning-button>
+                        <!--<a href="https://upl--upltest.lightning.force.com/lightning/n/Price_Book_Upload"  target="__blank" style="text-align:center;" class={disableLink12}>click here</a>-->
+                    </td>              
+                    <td class="slds-truncate" data-label="Download" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="12" disabled={disableButton_ds12} onclick={openDownloadReport}></lightning-button>
+                    </td> 
+                    <td class="slds-truncate" data-label="List SKUs if no price book defined" style="text-align:center;">
+                        <lightning-button variant="base" label={labels.click_here} value="12" disabled={disableButton_ds12} onclick={openSKUNotIncludedReport}></lightning-button>
+                    </td>              
+                </tr>
+                
+              </tbody>
+              </table>
+          </div>
+    </div>
+
+
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" style="color:#000;" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">{labels.Close}</span>
+                    </button>
+                    <h1 id="modal-heading-01" style="color:#000; font-weight:normal; font-size:18px; padding:10px 3px 3px 3px; margin:5px 0 10px 10px;" class="slds-m-bottom_medium">{labels.Price_Book_Upload}</h1>
+                </header>
+            
+                <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0; border:1px solid #cce4f8;">
+        
+                    <div style="clear:both;"></div>
+            
+
+                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1" style="margin-top:12px;">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <div style="font-size:14px; font-weight:bold; text-align: center;">{labels.You_are_uploading_a_Price_book_for} {monthString} {selectedYearValueCB}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#dcedfb; font-weight:bold; text-align: center;">{labels.File_Upload_Detail}</h3>
+                    
+                    <lightning-card>  
+                        
+                        <div style="margin:0 auto; text-align:left;">
+                            <h1 style="top:0 auto; margin-left: 15px;"><lightning-icon icon-name="standard:pricebook"></lightning-icon> &nbsp; {labels.Upload_Price_Book_Data_Here}</h1> 
+                            <div style="margin-left: 15px;">    
+                                <lightning-file-upload
+                                    accept={acceptedFormats}
+                                    record-id={recordIdPB}
+                                    onuploadfinished={handleUploadFinished}
+                                    multiple>
+                                </lightning-file-upload>
+                            </div>
+                        </div>
+                    
+                        <lightning-accordion allow-multiple-sections-open class="example-accordion" active-section-name="Instruction">
+                            <lightning-accordion-section name="Instruction" label={labels.Instructions_for_uploading_Price_Book_CSV}>
+                                
+                                <ul class="slds-list_dotted">
+                                    <li>{labels.File_to_be_uploaded_must_be_in_CSV_format}</li>
+                                    <li>{labels.Please_follow_the_same_column_sequence_and_column_names_as_given_in_template}</li>
+                                    <li>{labels.Blank_values_are_not_accepted_for_price_columns_in_the_CSV_Please_use_the_value}</li>
+                                    <li>{labels.Once_the_file_gets_uploaded_you_will_receive_an_email_notification}</li>
+                                    <li>{labels.Please_change_the_xls_template_to_csv_while_uploading_the_Price_Book_file}</li>
+                                    
+                                </ul>
+                                
+                            </lightning-accordion-section>
+                
+                            <lightning-accordion-section name="Sample csv" label={labels.Sample_Price_Book_CSV_file_template}>
+                                <ul class="slds-list_dotted">
+                                    <!--<li><a href="https://upl--uat.lightning.force.com/servlet/servlet.FileDownload?file=0151m000000HChoAAG">{labels.Download_Template}</a></li>-->
+                                    <li><a href={Link}>{labels.Download_Template}</a></li>
+                                </ul>
+                                
+                            </lightning-accordion-section>
+                        </lightning-accordion>
+                    </lightning-card>
+
+                </div>
+            
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">{labels.Cancel}</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>                
+    </template>
+    </div>
+</template>

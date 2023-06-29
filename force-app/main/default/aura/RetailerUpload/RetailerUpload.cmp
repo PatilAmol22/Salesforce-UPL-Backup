@@ -1,0 +1,58 @@
+<aura:component controller= "RetailerUploadController"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<!-- Attribute -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="FileName" type="string" />
+    <aura:attribute name="doc" type="string" />
+    <!-- ends -->
+    <div></div>   
+    <body class="bgColor">
+        <br/>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size--1-of-12 slds-small-size--1-of-1 slds-large-size--9-of-12">             
+            </div>
+            <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size--1-of-12 slds-small-size--1-of-1 slds-large-size--3-of-12">             
+                <div class="slds-float_right">
+                    <a href="{!v.doc}" >{!$Label.c.RetailerUploadTemplate}</a>
+                </div>
+            </div>
+        </div>
+        <ui:outputText aura:id="Success" class="slds-align_absolute-center success-text slds-hide"  value="Update Successful"></ui:outputText>    
+        <ui:outputText aura:id="selectfile" class="slds-align_absolute-center error-text slds-hide"  value="{!$Label.c.SICerrorfile}"></ui:outputText>
+        <br />
+        <br />
+        
+                
+        <lightning:layout>
+            <lightning:layoutItem flexibility="auto"  size="2">
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" size="4">
+                <div class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <div class="slds-grid slds-wrap" style="padding-top:30px;">
+                            <label class="slds-form-element__label slds-text-heading_small"><aura:unescapedHtml value="{!$Label.c.UploadRetailerFile}"></aura:unescapedHtml> <span class="error-text"> *</span></label> 
+                        </div>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto"  size="12">           
+                <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size--2-of-12 slds-small-size--1-of-1 slds-large-size--4-of-12">
+                    <lightning:input aura:id="fileId" type="file" name="file" multiple="false" onchange="{!c.onFileUploaded}"/> 
+                    <ui:outputText aura:id="filename" class="slds-hide" value="{!v.FileName}"></ui:outputText>
+                    
+                </div> 
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        
+        <!-- button-->  
+        <div class="slds-align_absolute-center">
+            <lightning:button label="{!$Label.c.UploadButton}" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.fileSelected}"/>   
+        </div>
+        <br/>
+        <br/> 
+                
+        </body>
+</aura:component>

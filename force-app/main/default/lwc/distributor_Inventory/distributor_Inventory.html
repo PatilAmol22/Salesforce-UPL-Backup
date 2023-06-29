@@ -1,0 +1,146 @@
+<template>
+
+    <div class="slds-box slds-theme_default" style="padding-block-end: 5%;">
+
+      <div style="background:#ccc; color:#000; padding:10px; font-weight:600;">{labels.Distributor_Inventory_lbl}</div> <!--Distributor Inventory-->
+    
+      <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px; margin-bottom:15px;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+            <lightning-input
+                name="enter-search"
+                label={labels.Distributor_Name}
+                type="search"
+                value={di_name_value}
+                onchange={handleDistributorName}
+                >
+            </lightning-input>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+                <lightning-input
+                    autocomplete="off"
+                    name="enter-search"
+                    label={labels.Distributor_Code}
+                    type="search"
+                    value={di_code_value}
+                    onchange={handleDistributorCode}>
+                </lightning-input>
+        </div>
+
+        <!--Sayan added Material Name and Code as new search columns RITM0212196-->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+          <lightning-input
+              name="enter-search"
+              label={labels.Material_Name}
+              type="search"
+              value={di_material_name_value}
+              onchange={handleMaterialName}
+              >
+          </lightning-input>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+          <lightning-input
+              name="enter-search"
+              label={labels.Material_Code}
+              type="search"
+              value={di_material_code_value}
+              onchange={handleMaterialCode}
+              >
+          </lightning-input>
+        </div>
+        <!--End of columns added for RITM0212196-->
+
+        <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+          <lightning-combobox
+          label={labels.Month}
+          name={labels.Month}
+          value={di_month}
+          options={monthOption}
+          onchange={handleChangeMonthOption}>
+          </lightning-combobox>
+       </div>
+       <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12" style="font-weight:600; float:left;"> 
+        <lightning-combobox
+        label={labels.Fiscal_Year}
+        name={labels.Fiscal_Year}
+        value={di_fiscal_year}
+        options={di_fiscal_yearOptions}
+        onchange={handleChangeFiscalYearOption}>
+        </lightning-combobox>
+      </div>
+       
+        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12"></div>
+      
+        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-12" style="font-weight:600; margin-top:15px; float:right;"> 
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_horizontal slds-is-editing">
+                  <label class="slds-form-element__label" for="single-form-element-id-03">{labels.Page_size}</label>
+                  <div class="slds-form-element__control">
+                <lightning-combobox
+                    name={labels.Page_size}
+                    value={pageSize}
+                    options={page_size_Option}
+                    onchange={handleChangePageSize}>
+                </lightning-combobox>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+      </div>
+
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+          <span><p style="margin-left: 10px">{labels.Selected_Records} : <b style="color:red;">{recordsCount}</b></p></span>
+        </div>
+        <div class="slds-col">
+            <span>                    
+                <lightning-button label={buttonLabel}
+                                  icon-name="utility:delete"
+                                  disabled={isTrue}
+                                  variant="destructive" 
+                                  onclick={deleteAccounts}
+                                  style="margin-right: 10px;float:right"></lightning-button>
+            </span>
+        </div>
+    </div>
+
+        <div class="slds-scrollable_x" style="border:1px solid #ccc;margin-top: 10px;">
+        <div style="height: 300px;">
+                <lightning-datatable 
+                    key-field="id"
+                    data={items}
+                    columns={columns}
+                    min-column-width="150"
+                    onsort={updateColumnSorting}
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
+                    onrowselection={getSelectedRecords}
+                    >
+                </lightning-datatable>
+                <div if:true={is_loading} class="slds-spinner_inline spinner-padding" style="margin-top: -154px;">
+                <lightning-spinner  variant="brand" 
+                alternative-text="Loading..."     
+                size="medium"></lightning-spinner>
+                </div>
+              </div>
+                
+                <div class style="margin-top:15px; float:left;">
+                 <p>{labels.Page} : {page} of {totalPage}</p>
+                </div>
+
+                <div style="margin-top:15px; margin-bottom:20px; float:right;">
+                
+                <lightning-button-group>
+                    <lightning-button variant="brand" label={labels.First} icon-name="action:back" onclick={firstPage} disabled={firstbtn_disable}></lightning-button>
+                    <lightning-button variant="brand" label={labels.Previous} icon-name="action:back" onclick={previousPage} disabled={previousbtn_disable}></lightning-button>
+                    <lightning-button variant="brand" label={labels.Next} icon-name="utility:forward" onclick={nextPage} disabled={nextbtn_disable}></lightning-button>
+                    <lightning-button variant="brand" label={labels.Last} icon-name="utility:forward" onclick={lastPage} disabled={lastbtn_disable}></lightning-button>
+                </lightning-button-group>
+            </div>
+            </div>
+
+    </div>
+
+</template>

@@ -1,0 +1,187 @@
+.THIS .aCSS{
+    color:#F47920;
+    font-size:15px;
+}
+.THIS.mainCSS{
+    background: white !important;
+    border: 1px solid #DDDDDD;
+    position: relative;
+    
+}
+
+.THIS .noteclass {
+  color: rgb(136, 136, 136);
+}
+
+.THIS .view-btn{
+    color: #f47920;
+    font-size: 15px;
+    cursor:pointer;
+}
+.THIS .textCSS{
+    text-align: left;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-size:20px;
+}
+.THIS .chartCSS{
+    color: #000000;
+    text-align: left;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-size:13px;
+    height:30px;
+}
+.THIS .borderCSS{
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    
+}
+
+.THIS .boxCSS{
+    width: 16px;
+    height: 16px;
+    background: #00BDF2 0% 0% no-repeat padding-box;
+    border: 1px solid #00BDF2;
+    opacity: 1;
+}
+
+.THIS .mx-boxCSS{
+    width: 13px;
+    height: 13px;
+    background: #00BDF2 0% 0% no-repeat padding-box;
+    border: 1px solid #00BDF2;
+    opacity: 1;
+}
+
+.THIS .boxCSS3{
+    background: #00BDF2 0% 0% no-repeat padding-box;
+    border: 1px solid #00BDF2;
+    opacity: 1;
+    color:#00BDF2;
+}
+.THIS .boxCSS2{
+    background: #FF8833 0% 0% no-repeat padding-box;
+    border: 1px solid #FF8833;
+    opacity: 1;
+    color:#FF8833;
+}
+.THIS .Res{
+    text-align : left;
+}
+
+.THIS .ResCre{
+    text-align : left;
+    padding-left: 4px;
+}
+
+.THIS .Bottomcss{
+    margin-bottom : 14px;
+}
+
+.THIS .Errors{
+    margin-bottom : 14px;
+    color: red;
+    position: relative;
+    padding-top: -24%;
+    top: -400px;
+    text-align:center;
+    padding: 5%;
+    font-size: 24px;
+}
+/*.THIS .borderleft {
+border-left: 1px solid #e5e5e5;
+}*/
+.THIS .hidePadding {
+    padding: 0px;
+}
+.THIS .orderDataClass{
+    font-weight:bold;
+}
+@media only screen and (max-width: 1024px) and (min-width: 768px){
+    
+    .THIS .Res{
+        
+        margin-bottom: 0px;
+    }
+    
+    .THIS .ResCre{
+        margin-bottom: 0px;
+        padding-left: 9px;
+    }
+    
+    .THIS .Bottomcss{
+        margin-bottom : 0px;
+    }
+}
+@media screen and (max-width: 1023px) {
+    .THIS .hidePadding {
+        padding: 0px;
+    }
+    .THIS .borderleft {
+        border-left: 0;
+    }
+    .THIS .br-textCSS{
+        font-size: 15px;
+    }
+    .THIS .br-view-btn{
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width: 768px){
+    
+    .THIS .Bottomcss{
+        margin-bottom: 13px;
+    }
+    .THIS .below-pad{
+        padding-bottom:5%;
+    }
+    .THIS .ResCre{
+        padding-left: 70px;
+    }
+    
+    .THIS .chartCSS{
+        padding-right: 10px;
+    }
+    .THIS.br-bt{
+        padding-bottom:0;
+    }
+    
+    
+    
+}
+@media only screen and (max-width: 767px){
+    .THIS .below-pad{
+        padding-bottom:0%;
+    }
+    .THIS .view-btn{
+        font-size: 15px;
+    }
+    .THIS .textCSS{
+        font-size:18px;
+    }
+}
+.THIS .marquee {
+    width: auto;
+    line-height: 50px;
+    color: rgb(240, 13, 13);
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: white;
+}
+ 
+.THIS .marquee p {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 10s linear infinite;
+    font-size:13px;
+}
+ 
+@keyframes marquee {
+    0%   { transform: translate(0,0); }
+    100% { transform: translate(-100%,0); }
+}

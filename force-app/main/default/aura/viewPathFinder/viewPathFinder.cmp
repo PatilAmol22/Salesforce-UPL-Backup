@@ -1,0 +1,10 @@
+<aura:component implements="lightning:actionOverride,force:appHostable,force:hasRecordId,flexipage:availableForAllPageTypes,force:hasSObjectName,lightning:hasPageReference,force:lightningQuickAction,lightning:isUrlAddressable" access="global" >
+    <aura:attribute name="pageReference" type="object" access="global" />
+	<aura:attribute name="recordId" type="string" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="isView" type="boolean" default="false" />
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.handlePageChange}" />
+    <!-- <aura:if isTrue="{!v.isView}">
+        <c:gtmPathFinder aura:id="pathfinder" gtmid="{!v.recordId}"></c:gtmPathFinder>
+    </aura:if> -->
+</aura:component>

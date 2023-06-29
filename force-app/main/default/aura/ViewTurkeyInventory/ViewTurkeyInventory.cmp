@@ -1,0 +1,457 @@
+<aura:component controller="ViewTurkeyInventory" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"> 
+    <aura:handler name="change" value="{!v.selItem}" action="{!c.handleItemChange}" />
+    <ltng:require scripts="{! $Resource.jquery331}" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    
+    <aura:handler event="c:SearchInventoryEvent" action="{!c.searched}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>      
+    <aura:attribute name="Wrapperlist" type="object[]"/>  
+    <aura:attribute name="paginationList" type="object[]"/>  
+    <aura:attribute name="isExpand" type="Boolean" default ="true"/>
+    <aura:attribute name="isExpandAll" type="Boolean" default ="true"/>
+    <aura:attribute name="page" default="1" type="integer" access="public" description="using for store page Number"/>  
+    <aura:attribute name="pages" default="0" type="integer" access="public" description="using for store All Pages page Number"/>  
+    <aura:attribute name="total" default="0" type="integer" access="public" description="total records count store "/>
+    <aura:attribute name="selectBy" type ="string" default="Product/Sku"/>
+     <aura:attribute name="isAdmin" type ="boolean" default="false"  />
+    <aura:attribute name="showProduct" type="boolean" default="true" />
+    <aura:attribute name="showStorageLocation" type="boolean" default="true" />
+    <aura:attribute name="showSKUCode" type="boolean" default="true" />
+    <aura:attribute name="showbrandName" type="boolean" default="false" />
+    <aura:attribute name="selItem" type="String" default="" />
+    <aura:attribute name="SAPCheboxBoolean" type="Boolean" default="false" />
+	<aura:attribute name="Selected_Depots" type="String" default="All" />
+    <aura:attribute name="countryName" type="String" />
+    
+<div class="slds-box slds-theme_default">
+    
+        <!-- PAGE HEADER -->
+<div class="slds-page-header">
+  <!-- LAYOUT GRID -->
+  <div class="slds-grid">
+    <!-- GRID COL --> <lightning:icon iconName="custom:custom16" size="Medium"/>
+    <div class="slds-col slds-has-flexi-truncate">
+     
+        <!-- HEADING AREA 
+      <p class="slds-text-title_caps slds-line-height_reset">Turkey Inventory</p>-->
+      <h1 class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate" style="padding:5px 0 0 10px" title="Inventory">{!$Label.c.Inventory}</h1>
+      <!-- / HEADING AREA -->
+    </div>
+    <!-- ACTION BUTTONS -->
+    <!-- / ACTION BUTTONS -->
+  </div>
+  <!-- / LAYOUT GRID -->
+  <!-- PAGE HEADER DETAIL ROW -->
+  <!-- / PAGE HEADER DETAIL ROW -->
+</div>
+<!-- / PAGE HEADER -->
+
+  				
+
+<div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0 0 10px 0; border:0px solid #cce4f8;">    
+    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2" style="margin-top:12px;">
+      <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          <legend class="slds-form-element__legend slds-form-element__label"></legend>
+  <div class="slds-form-element__control">
+    <span class="slds-radio">
+      <input type="radio" id="sku" value="Product/Sku" name="options" checked= "checked" onclick ="{!c.onRadioSelect}" />
+      <label class="slds-radio__label" for="sku">
+        <span class="slds-radio_faux"></span>
+        <span class="slds-form-element__label">{!$Label.c.Product_SKU}</span>
+      </label>
+   
+      <input type="radio" id="skucode" value="SKU Code" name="options" onclick ="{!c.onRadioSelect}" />
+      <label class="slds-radio__label" for="skucode">
+        <span class="slds-radio_faux"></span>
+        <span class="slds-form-element__label">{!$Label.c.SKU_Number}</span>
+      </label>
+        
+      <input type="radio" id="strloc" value="Storage Location" name="options" onclick ="{!c.onRadioSelect}"/>
+      <label class="slds-radio__label" for="strloc">
+        <span class="slds-radio_faux"></span>
+        <span class="slds-form-element__label">{!$Label.c.Storage_Location}</span>
+      </label>
+        
+        <input type="radio" id="BrandName" value="Brand Name" name="options"
+               onclick="{!c.onRadioSelect}" />
+        <label class="slds-radio__label" for="BrandName">
+            <span class="slds-radio_faux"></span>
+            <span class="slds-form-element__label">{!$Label.c.Brand_Name}</span>
+        </label>  
+    </span>
+  </div>
+     <!--  <span class="slds-form-element__label">[Press browser Refresh button if page do not load properly]</span>   -->
+      </div>
+      </div>
+    </div>
+
+    </div> 
+    
+      <!--ui:inputText aura:id="input1"  change="{!c.searchKeyChange}" label= "" placeholder ="{!$Label.c.Search_by_Product_SKU_or_Storage_Location}"></ui:inputText>-->  	
+   
+   <aura:if isTrue="{!v.countryName=='Poland'}">
+    <aura:if isTrue="{!v.showProduct}">
+        
+           <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Description__c"
+                                  WhereClause="(Depot__r.Country__c = 'Poland' AND SKU__r.SKU_Description__c!=null AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0  OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Description__c"
+                                  selItem="{!v.selItem}" />
+        
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStorageLocation}">
+        
+           <c:AutoComplete_Lightning sObjectType="Depot__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="Depot_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'Poland' AND RecordType.Name='Storage Location') ORDER BY Name"
+                                  selItem="{!v.selItem}" />
+        
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showSKUCode}">
+        
+           <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'Poland' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showbrandName}">
+        
+           <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.Brand_Name__c"
+                                  WhereClause="(Depot__r.Country__c = 'Poland' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    </aura:if>
+   
+   <aura:if isTrue="{!v.countryName=='Turkey'}">
+    <aura:if isTrue="{!v.showProduct}">
+        <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Description__c"
+                                  WhereClause="(Depot__r.Country__c = 'Turkey' AND SKU__r.SKU_Description__c!=null AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0  OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Description__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStorageLocation}">
+        
+            <c:AutoComplete_Lightning sObjectType="Depot__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="Depot_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'Turkey' AND RecordType.Name='Storage Location') ORDER BY Name"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showSKUCode}">
+        
+        <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'Turkey' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showbrandName}">
+        
+            
+            <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.Brand_Name__c"
+                                  WhereClause="(Depot__r.Country__c = 'Turkey' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    </aura:if>
+   
+   <aura:if isTrue="{!v.countryName=='Australia'}">
+    <aura:if isTrue="{!v.showProduct}">
+        <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Description__c"
+                                  WhereClause="(Depot__r.Country__c = 'Australia' AND SKU__r.SKU_Description__c!=null AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0  OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Description__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStorageLocation}">
+        
+            <c:AutoComplete_Lightning sObjectType="Depot__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="Depot_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'Australia' AND RecordType.Name='Storage Location') ORDER BY Name"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showSKUCode}">
+        
+        <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'Australia' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showbrandName}">
+        
+            
+            <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.Brand_Name__c"
+                                  WhereClause="(Depot__r.Country__c = 'Australia' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    </aura:if>
+   
+   <aura:if isTrue="{!v.countryName=='New Zealand'}">
+   
+    <aura:if isTrue="{!v.showProduct}">
+        <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Description__c"
+                                  WhereClause="(Depot__r.Country__c = 'New Zealand' AND SKU__r.SKU_Description__c!=null AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0  OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Description__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStorageLocation}">
+        
+            <c:AutoComplete_Lightning sObjectType="Depot__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="Depot_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'New Zealand' AND RecordType.Name='Storage Location') ORDER BY Name"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showSKUCode}">
+        
+        <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'New Zealand' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showbrandName}">
+        
+            
+            <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.Brand_Name__c"
+                                  WhereClause="(Depot__r.Country__c = 'New Zealand' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    </aura:if>
+	
+	<aura:if isTrue="{!v.countryName=='Country Head - AUS/NZ'}">
+    <aura:if isTrue="{!v.showProduct}">
+        <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Description__c"
+                                  WhereClause="(Depot__r.Country__c = 'Country Head - AUS/NZ' AND SKU__r.SKU_Description__c!=null AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0  OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Description__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showStorageLocation}">
+        
+            <c:AutoComplete_Lightning sObjectType="Depot__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="Depot_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'Country Head - AUS/NZ' AND RecordType.Name='Storage Location') ORDER BY Name"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showSKUCode}">
+        
+        <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.SKU_Code__c"
+                                  WhereClause="(Depot__r.Country__c = 'Country Head - AUS/NZ' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showbrandName}">
+        
+            
+            <c:AutoComplete_Lightning sObjectType="Stock_Requirement__c"
+                                  autocompleteEvent="{!c.handleItemChange}" fields="SKU__r.Brand_Name__c"
+                                  WhereClause="(Depot__r.Country__c = 'Country Head - AUS/NZ' AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0 OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Code__c"
+                                  selItem="{!v.selItem}" />
+        
+        <div id="result" class="slds-is-absolute result"></div>
+    </aura:if>
+    </aura:if>
+   <!--WhereClause="((Depot__r.Country__c = 'Poland' OR Depot__r.Country__c = 'Turkey' OR Depot__r.Country__c = 'Australia' OR Depot__r.Country__c = 'New Zealand' OR Depot__r.Country__c = 'Country Head - AUS/NZ') AND SKU__r.SKU_Description__c!=null AND ( Unrestricted_Stock__c != 0 OR Stock_In_Transit__c != 0  OR Purchase_Order_Stock__c != 0 )) ORDER BY SKU__r.SKU_Description__c"-->
+   
+    
+    <div class="slds-p-horizontal" style="margin-top:10px;">
+        <div class="slds-grid">
+            <div class="slds-size_4-of-12">
+                <ui:inputCheckbox aura:id="checkbox" class="myCheckbox" label="{!$Label.c.Exclude_Zero_Stock}" change="{!c.onChageSAPCheckBox}" />
+                 
+            
+            </div>
+        <div class="slds-size_1-of-12 slds-m-right">
+                <label class="slds-radio__label" for="depot_items">
+                    <span class="slds-m-right_medium">{!$Label.c.Depot}</span>
+                </label>
+            </div>
+            <div class="slds-size_7-of-12" >
+                <ui:inputSelect class="slds-input select my-multi-select myInputSelectHieght" multiple="true"
+                                aura:id="depot_items" value="{!v.Selected_Depots}"
+                                change="{!c.onDepotChange}" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-grid slds-gutters" style="margin-bottom:10px;">
+    <div class="slds-col slds-size_1-of-3" style="margin-top:10px;">        
+    <span>
+       <div class="slds-form-element">
+      <div class="slds-form-element__control">
+                <div class="slds-form-element__control" style="width:70px;">
+                             
+      <ui:inputSelect aura:id="recordSize" label="" class="slds-input" change="{!c.onpagesizechange}">
+          <ui:inputSelectOption text="10" label="10" />
+          <ui:inputSelectOption text="20" label="20"/>
+          <ui:inputSelectOption text="50" label="50" value="true"/>
+          <ui:inputSelectOption text="100" label="100" />
+                   </ui:inputSelect>
+          </div>       
+      </div>
+      </div>    
+    </span>
+  </div>
+        
+   <div class="slds-col slds-size_2-of-3">
+    <span>
+    	<div class="slds-form-element">
+          <div class="slds-form-element__control" style="float:right; margin-top:10px;">
+              <lightning:button disabled="{!v.page == 1}" onclick="{!c.First}" class="slds-button slds-button--neutral" label="{!$Label.c.First}"/>  
+        <lightning:button disabled="{!v.page == 1}" onclick="{!c.previous}" class="slds-button slds-button--neutral" label="{!$Label.c.Previous}"/>  
+        <lightning:button disabled="{!v.page == v.pages}" aura:id="nextbtn" class="slds-button slds-button--neutral" onclick="{!c.next}" label="{!$Label.c.Next}"/>  
+        <lightning:button disabled="{!v.page == v.pages}" onclick="{!c.Last}" class="slds-button slds-button--neutral" label="{!$Label.c.Last}"/>    
+      </div>
+      </div>
+    </span>
+  </div>
+</div>
+   <ui:scrollerWrapper class="sWrapTest">
+ <div>
+   <!--div class="" style ="border-bottom: 2px solid #ccc; overflow-x:scroll ; -webkit-overflow-scrolling: touch;"-->
+    <div class="slds-m-around_medium slds-form-element slds-scrollable_x" style="margin:0; padding:0;">
+        <table id="tableId" class="table1 slds-table slds-table_bordered slds-table_cell-buffer inventory" style="border:1px solid #ccc;" cellspacing="0" width="100%">
+            <thead >
+                <tr>
+                    <th>
+                         <button  class="slds-button slds-button--icon " onclick="{!c.toggleExpandAll}">
+                                <img src="{!$Resource.ShowDetails}" id = "expandall" style ="max-width:20px; max-height:20px; margin-left:5px;" class = "expand"/> 
+                            </button>                
+                        	<button class="slds-button slds-button--icon " onclick="{!c.toggleCollapseAll}">
+                                <img src="{!$Resource.HideDetails}" id = "collapseall" style="max-width:20px; max-height:20px; display:none; margin-left:-1px;" class = "collapse"/> 
+                            </button>
+            </th>       
+            <th>{!$Label.c.Depot}</th>
+            <th>{!$Label.c.Product_SKU}</th>
+            <th>{!$Label.c.Gross_Inventory}</th>
+            <th>{!$Label.c.Open_Order_Inventory}</th>
+            <th>{!$Label.c.Open_Delivery_Inventory}</th>
+            <th>{!$Label.c.Net_Inventory}</th>
+                    <aura:if isTrue="{!or(v.Wrapperlist[1].stkReq.Depot__r.SalesOrg__r.Sales_Org_Code__c=='6100',v.Wrapperlist[1].stkReq.Depot__r.SalesOrg__r.Sales_Org_Code__c=='6051',v.isAdmin == true)}">
+            <th>{!$Label.c.Export_Inventory}</th>
+                         </aura:if>
+            <th>{!$Label.c.UOM}</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.Wrapperlist}" var="stkReqInv" indexVar="i" >
+                    <tr>       
+                    	<td> 
+                            <button class="slds-button slds-button--icon expandall" onclick="{!c.toggleExpand}" data-row-index="{!i}" id = "{!i+'expand'}">
+                                <img src="{!$Resource.ShowDetails}" id = "{!i+'imgexp'}" style ="width:20px; height:20px; max-width:20px; max-height:20px; margin-left:5px;" class = "expandimg"/> 
+                            </button>
+                        	<button class="slds-button slds-button--icon collapseall" onclick="{!c.toggleCollapse}" data-row-index="{!i}" id = "{!i+'collapse'}">
+                            	<img src="{!$Resource.HideDetails}"  id = "{!i+'imgcolsp'}" style="width:20px; height:20px; max-width:20px; max-height:20px; display:none;margin-left:-1px;" class = "collapseimg"/> 
+                            </button>                        
+                        </td>
+                        <td>{!stkReqInv.stkReq.Depot__r.Name}</td>
+                        <td>{!stkReqInv.stkReq.SKU__r.SKU_Description__c}</td>
+                        <td>{!stkReqInv.InvSum}</td>
+                        <td>{!stkReqInv.stkReq.Sales_Order_Stock__c}</td>
+                        <td>{!stkReqInv.stkReq.Delivery_Stock__c}</td>
+                        <td>{!stkReqInv.stkReq.Available_Stock__c}</td>
+                        <aura:if isTrue="{!or(v.Wrapperlist[1].stkReq.Depot__r.SalesOrg__r.Sales_Org_Code__c=='6100',v.Wrapperlist[1].stkReq.Depot__r.SalesOrg__r.Sales_Org_Code__c=='6051',v.isAdmin == true)}"> 
+                        <td>{!stkReqInv.stkReq.Purchase_Order_Stock__c}</td>
+                             </aura:if>
+                        <td>{!stkReqInv.stkReq.UOM__c}</td>
+                        
+                         </tr>
+                    	<aura:if isTrue="{! !empty(stkReqInv.lstStrLocInv)}">
+                    	<tr>
+                             
+                            <td style="padding:0; margin:0;"></td>
+                            <td colspan="8" style="padding:0; margin:0;">
+                                <div class="slds-scrollable_x" style=" width: 80rem;border-bottom: 2px solid #ccc;">
+                                <table style="border:1px solid #ccc;display:none;" class="slds-table table inventory" id="{!i+'table'}" cellspacing="0" width="100%" data-row-index="{!i}">
+                           <tr>  
+                               
+                               
+                                <th style = "background-color: #5583C5; color:#fff; font-weight: bold; border:0;">{!$Label.c.Storage_Location}</th>
+                                <th style = "background-color: #5583C5; color:#fff; font-weight: bold; border:0;">{!$Label.c.Product_SKU}</th>
+                                <th style = "background-color: #5583C5; color:#fff; font-weight: bold; border:0;">{!$Label.c.Unrestricted_Inventory}</th>
+                                <th style = "background-color: #5583C5; color:#fff; font-weight: bold; border:0;">{!$Label.c.UOM}</th>
+                               <th style = "background-color: #5583C5; color:#fff; font-weight: bold; border:0;">{!$Label.c.Batch_Number}</th>
+                                <th style = "background-color: #5583C5; color:#fff; font-weight: bold; border:0;">{!$Label.c.Production_Date}</th>
+                                <th style = "background-color: #5583C5; color:#fff; font-weight: bold; border:0;">{!$Label.c.Expiry_Date}</th>
+                           </tr>
+                            <tbody>
+                            <aura:iteration items="{!stkReqInv.lstStrLocInv}" var="InvstrLoc">
+                                <tr>
+                                	<td>{!InvstrLoc.Storage_Location_Depot__r.Name}</td>
+                                    <td>{!InvstrLoc.SKU__r.SKU_Description__c}</td>
+                                    <td>{!InvstrLoc.Stock_Quantity__c}</td>
+                                    <td>{!InvstrLoc.UOM__c}</td>
+                                    <td>{!InvstrLoc.Batch_Number__c}</td>
+                                    <td>{!InvstrLoc.Production_Date__c}</td>
+                                    <td>{!InvstrLoc.Expiry_Date__c}</td>
+                                </tr>
+                                 </aura:iteration>  
+    						</tbody>
+                             </table>
+                                </div>          
+                            </td>
+                           
+                   </tr>
+                            
+                    </aura:if>
+                    <tr id="{!i+'tr'}" class="tr">
+                    <aura:if isTrue="{!empty(stkReqInv.lstStrLocInv)}">
+                        <td style="padding:0; margin:0;"></td><td id="{!i+'errtd'}" class="errtd" colspan="8" style="text-align:center;font-size:13px;font-style:italic;display:none;">{!$Label.c.Data_Not_Available}</td>
+                     </aura:if>
+                        </tr>
+                </aura:iteration>  
+            </tbody>
+        </table>
+       </div>
+    <!--/div-->
+     </div>
+    </ui:scrollerWrapper>  
+  </div>
+ 
+ 
+ 
+</aura:component>

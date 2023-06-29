@@ -1,0 +1,8 @@
+<aura:component controller="NewAccountOverride_Controller"  implements="lightning:actionOverride,force:appHostable,force:hasRecordId,flexipage:availableForAllPageTypes,force:hasSObjectName,lightning:hasPageReference,force:lightningQuickAction" access="global"  >
+	
+    <aura:attribute name="pageReference" type="object" access="global"></aura:attribute>
+    <aura:attribute name="recordId" type="string" ></aura:attribute>    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}"/>
+    
+</aura:component>

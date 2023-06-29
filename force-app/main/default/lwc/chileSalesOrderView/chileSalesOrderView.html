@@ -1,0 +1,220 @@
+<template>
+<!--CR#174 -Chile Margin Block Edit Order- SKI- Satish Tiware -  03/12/2022 Start Here -->
+<!--<div  style="border:1px solid #ccc; width: 80%; margin: 10px;"> -->
+<div style="padding: 10px;">
+<img src="https://upl.my.salesforce.com/servlet/servlet.ImageServer?id=0150K000009suFW&oid=00D280000013Zui"
+alt="Company Logo" height="75" width="100" />
+</div>
+<br/><br/>
+<div style="margin-left:10px; font: size 12px;"><b>Sales Order Details:</b></div>
+
+    <table class="slds-table slds-table_bordered slds-table_col-bordered slds-Scrollable_x"
+                aria-labelledby="element-with-table-label other-element-with-table-label"
+                style="border:3px solid rgb(229, 229, 229);width:00%; margin:10px;" border="1">
+
+
+        <tbody>
+
+            <tr>
+                <th><b>{label.Reason}</b></th>
+                <td>{reason}</td>  
+            </tr>
+
+        <tr>
+            <th><b>{label.Sales_Order_Number}</b></th>
+            <td>{salesOrderData.SalesOrderNo}</td>  
+        </tr>
+  
+        <tr> 
+         
+            <th><b>{label.Distributor_Name}</b></th>
+            <td>{salesOrderData.DistributorName}</td>
+        </tr>
+
+        <tr>
+          <template if:true={isCOO}>
+            <th><b>Shipping Location</b></th>
+            <td>{salesOrderData.ShippingLoc}</td>  
+          </template>
+        </tr>
+
+    
+        <tr>
+            <th><b>{label.Total_Order_Value}</b></th>
+            <td>{salesOrderData.TotalAmount} USD</td>
+        </tr>
+    
+        
+        <tr>
+            <th><b>{label.Overall_Margin}</b></th>
+            <template if:true={marginLevel}>
+            <td style="background-color:#FFEBCD;">{overAllMargine} %</td>
+        </template>
+        <template if:false={marginLevel}>
+            <td>{overAllMargine} %</td>
+        </template>
+            
+        </tr>
+  
+        <tr>
+            <template if:false={isCOO}>
+            <th><b>{label.Order_Status}</b></th>
+            <td>{salesOrderData.OrderStatus}</td>
+            </template>
+        </tr>
+
+        <tr>
+            <th><b>{label.Payment_Term}</b></th>
+            <td>{salesOrderData.PaymentTerm}</td>
+        </tr>
+
+        <tr>
+          <template if:true={isCOO}>
+          <th><b>{label.Payment_Method}</b></th>
+          <td>{salesOrderData.PaymentMethod}</td>
+          </template>
+      </tr>
+
+        <tr>
+            <th><b>{label.Order_Type}</b></th>
+            <td>{salesOrderData.OrderType}</td>
+        </tr>
+
+        <tr>
+          <template if:true={isCOO}>
+          <th><b>{label.Inco_Term}</b></th>
+          <td>{salesOrderData.IncoTerm}</td>
+          </template>
+      </tr>
+
+        <tr>
+            <th><b>{label.Remarks}</b></th>
+            <td>{salesOrderData.Remark}</td>
+        </tr>
+        <template for:each={lastApproverComment} for:item="ac">
+        <tr key={ac}>
+            <th><b>{label.Last_Approver_Comment}</b></th>
+            <td>{ac.Comments}</td>
+        </tr>
+        </template>
+    </tbody>
+</table>
+<br/><br/>
+<div style="margin-left:10px; font: size 12px;"><b>Sales Order Line Item Details:</b></div>
+<div class="slds-Scrollable_x">
+<table class="slds-table slds-table_bordered slds-table_col-bordered" aria-labelledby="element-with-table-label
+other-element-with-table-label" style="border:3px solid rgb(229, 229, 229); width:00%; margin:10px;" border="1">
+
+    <thead>
+        <tr>     
+          <template if:true={isCOO}>    
+             <th style="background-color:  #039be5; color:#fff">{label.MG_Desc}</th>
+             </template>
+             <th style="background-color:  #039be5; color:#fff">{label.Brand_Name}</th>
+             <template if:true={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.SKU_Code}</th>
+             </template>
+			       <th style="background-color:  #039be5; color:#fff">{label.SKU_Description}</th>
+             <template if:false={isCOO}>
+			       <th style="background-color:  #039be5; color:#fff">{label.Min_Price_Ltr_Kg}</th>
+             </template>
+             <template if:false={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.List_Price_Ltr_Kg}</th>
+             </template>
+             <template if:true={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.Base_UOM}</th>
+             </template>
+             <template if:true={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.Base_UOM_Qty}</th>
+             </template>
+             <th style="background-color:  #039be5; color:#fff">{label.Quantity}</th>
+             <template if:true={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.Currency}</th>
+             </template>
+             <template if:true={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.Net_Price}</th>
+             </template>
+             <template if:true={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.PLN_Price}</th>
+             </template>
+             <template if:false={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.Max_Price}</th>
+             </template>
+             <template if:false={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.Final_Price}</th>
+             </template>
+             <th style="background-color:  #039be5; color:#fff">{label.Contribution_Margin}</th>
+             <template if:true={isCOO}>
+             <th style="background-color:  #039be5; color:#fff">{label.Promotion_Free_goods_Bonification}</th>
+             </template>
+             <th style="background-color:  #039be5; color:#fff">{label.Near_Expiry_Exception_SKU}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <template for:each={soliData} for:item="SO">
+        <tr key={SO}>
+          <template if:true={isCOO}>
+              <td>{SO.MGDesc}</td>
+              </template>
+              <td>{SO.productName}</td>
+              <template if:true={isCOO}>
+              <td>{SO.SkuCode}</td>
+              </template>
+              <td>{SO.skuName}</td> 
+              <template if:false={isCOO}>
+              <td>{SO.minPrice} USD</td>
+              </template>
+              <template if:false={isCOO}>
+              <td>{SO.listPrice} USD</td>
+              </template>
+              <template if:true={isCOO}>
+              <td>{SO.BaseUOM}</td>
+              </template>
+              <template if:true={isCOO}>
+              <td>{SO.BaseUOMQty}</td>
+              </template>
+              <td>{SO.Quantity}</td>
+              <template if:true={isCOO}>
+              <td>USD</td>
+              </template>
+              <template if:true={isCOO}>
+              <td>{SO.NetPrice}</td>
+              </template>
+              <template if:true={isCOO}>
+              <td>{SO.PLNPrice}</td>
+              </template>
+              <template if:false={isCOO}>
+              <td>{SO.maxPrice} USD</td>
+              </template>
+              <template if:false={isCOO}>
+              <td>{SO.netPrices} USD</td>
+              </template>
+                   <template if:true={SO.level}>
+              <td style="background-color:#FFEBCD;">{SO.contributionMargin} %</td>
+                   </template>
+                   <template if:false={SO.level}>
+              <td>{SO.contributionMargin} %</td>
+                   </template>
+                   <template if:true={isCOO}>
+                   <template if:true={SO.Promo}>
+              <td style="background-color:#FFEBCD;">Yes</td>
+              </template>
+              <template if:false={SO.Promo}>
+               <td></td>
+              </template>
+            </template>
+                   <template if:true={SO.skuExpriry}>
+                   <td style="background-color: #FFEBCD;">Yes</td>
+                   </template>
+                   <template if:false={SO.skuExpriry}>
+              <td></td>
+            </template>
+         </tr>
+        </template>
+    </tbody>
+
+</table>
+</div>
+<!--</div>-->
+<!--CR#174 -Chile Margin Block Edit Order- SKI- Satish Tiware -  03/12/2022 End Here -->
+</template>

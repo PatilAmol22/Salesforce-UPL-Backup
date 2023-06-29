@@ -1,0 +1,53 @@
+.custommcss{
+    background-color:white; 
+      margin-left: 10%;
+    width: 83%;
+    padding: 1%;font-size:20px ;
+     position: absolute;
+}
+@media only screen and (max-width: 1024px) {
+
+   .custommcss{
+   background-color: #fff;
+    margin-left: 3%;
+    width: 91%;
+    padding: 1%;
+    font-size: 16px;
+    position: absolute;
+}
+}
+@media only screen and (max-width: 768px) {
+
+   .custommcss{
+   background-color: #fff;
+    margin-left: 3%;
+    width: 91%;
+    padding: 1%;
+    font-size: 16px;
+    position: absolute;
+}
+}
+@media only screen and (max-width: 550px) {
+
+   .custommcss{
+   background-color: #fff;
+    margin-left: 3%;
+    width: 93%;
+    padding: 1%;
+    font-size: 16px;
+    position: relative;
+}
+}
+
+@media only screen and (max-width: 320px) {
+
+   .paddingclass{
+  padding-right: 3%;
+ 
+
+}
+ .custommcss{
+     font-size: 15px;
+ }
+
+}

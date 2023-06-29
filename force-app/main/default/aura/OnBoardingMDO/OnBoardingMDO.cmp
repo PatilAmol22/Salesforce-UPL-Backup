@@ -1,0 +1,16 @@
+<aura:component controller="OnBoardingMDOController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global">
+    <!-- All attribute defined -->
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="ErrorMsg" type="String" />
+    <aura:attribute name="isShowTrue" type="Boolean" />
+    
+    <!-- All handler defined -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:if isTrue="{!v.isShowTrue}">
+        <ui:outputText value="{!v.ErrorMsg}"/>
+    </aura:if>
+    
+</aura:component>

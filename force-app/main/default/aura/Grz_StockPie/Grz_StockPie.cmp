@@ -1,0 +1,63 @@
+<!--********************************************************************************************
+* Name			    : Grz_StockPie.cmp
+* Description	    : Aura component to display inventory data as Pie Graph 
+* Apex Controller	: Grz_StockReport 
+* LastModefied Date	: 28/07/2022 
+* Created By	    : Nikhil Verma (Grazitti)
+* **********************************************************************************************-->
+<aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global" controller="Grz_StockReport">
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="nodatafound" type="Boolean" default="false" />
+    <aura:attribute name="Message" type="String" />
+    <aura:attribute name="isParentBr" type="Boolean" default="false" />
+    <aura:attribute name="distributorValuep" type="String" default="All" />
+    <aura:attribute name="distributorOptionsBr" type="List" />
+    <aura:attribute name="error" type="Boolean" default="true" />
+
+    <!-- Added for Sub Group Filter Functionality for Main Parent Distributor, GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022  -->
+    <aura:attribute name="isMainParent" type="Boolean" default="false" />
+    <aura:attribute name="subGroupValue" type="String" default= ""/>
+    <aura:attribute name="subGroupOptionsBr" type="List" />
+    <aura:handler name="change" value="{!v.subGroupValue}" action="{!c.scriptsLoaded}" />
+
+    <ltng:require scripts="{!$Resource.Grz_Resourse+'/Grz_Resourse/JS/Chart.js'}"
+        afterScriptsLoaded="{!c.scriptsLoaded}" />
+
+    <aura:handler name="change" value="{!v.distributorValuep}" action="{!c.scriptsLoaded}" />
+    <div class="mainCSS NotoSansLightcls slds-p-bottom_x-small">
+        <div class="slds-grid slds-wrap slds-m-around_small slds-p-bottom_medium slds-border_bottom slds-p-top_x-small">
+            <div class="slds-col slds-size_12-of-12 filter-div">
+                <div class="textCSS componentNotoSansLight">Valor em Estoque por Dias Restantes</div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.loaded }">
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:set>
+        </aura:if>
+
+        <aura:if isTrue="{!v.isParentBr}">
+            <div class="parent-filter slds-p-left_small slds-p-right_small">
+                <lightning:combobox aura:id="Cliente" label="Cliente" value="{!v.distributorValuep}" placeholder="Cliente"
+                    options="{!v.distributorOptionsBr}" onchange="{!c.handleDistributor}" />
+            </div>
+        </aura:if>
+        <!-- Sub-Group filter, GRZ(Nikhil Verma) : APPS-1394 PO & Delivery Date :28-07-2022-->
+        <aura:if isTrue="{!v.isMainParent}">
+            <div class="parent-filter slds-p-left_small slds-p-right_small">
+                <lightning:combobox label="Sub-Grupo" value="{!v.subGroupValue}" placeholder="Sub-Grupo"
+                    options="{!v.subGroupOptionsBr}" onchange="{!c.handleSubGroup}" />
+            </div>
+        </aura:if>
+        <div>
+            <div class="">
+                <canvas id="stockpie-charts" class="canCSS slds-align_absolute-center" width="300" height="300" />
+            </div>
+            <aura:if isTrue="{!v.nodatafound }">
+                <p class="Errors componentNotoSansBold">Nenhum dado encontrado</p>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

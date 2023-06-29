@@ -1,0 +1,48 @@
+.table-head-width {
+    width: 100%;
+  }
+  .table-head-css {
+    height: 40px;
+    
+    /*width: 9%;*/
+  }
+  
+  .table-body {
+    color: black;
+    background-color: #ffffff;
+    font-size: 12px;
+  }
+  .NoApproval{
+    color: black;
+    background-color: #ffffff;
+    padding: 12px 10px;
+    text-align: center;
+    width: 100%;
+    font-size: 15px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+  }
+  .table-body-css {
+    height: 40px;
+    /*width: 9%;*/
+  }
+  .table-head {
+    background-color: #cad1cc;
+    color: #fdfcfc;
+  }
+  .button {
+    border: none;
+    color: white;
+    background-color:rgb(125, 202, 250);
+    padding: 12px 10px;
+    text-align: center;
+    width: 100%;
+    font-size: 15px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+  .button:focus {
+    background-color: #14dd46;
+  }

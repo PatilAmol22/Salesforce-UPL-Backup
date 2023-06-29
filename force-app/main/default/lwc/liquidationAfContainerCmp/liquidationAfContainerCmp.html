@@ -1,0 +1,18 @@
+<template>
+    <!--Show and Hide Spinner-->
+    <template if:false={hideSpinner}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    </template>
+    <template if:false={showAfHeader}>
+        <lightning-card>
+            <div>
+                <b>{message}</b>
+            </div>
+        </lightning-card>
+    </template>
+    <template if:true={showAfHeader}>
+        <c-liquidation-af-header-cmp fiscalyear={fiscalYear} terrmap={territoryMap} usrrole={userRole} istmavbmap={isTmAvailableMap} iszsmrolemap={isZsmRoleMp}></c-liquidation-af-header-cmp>
+    </template>
+</template>

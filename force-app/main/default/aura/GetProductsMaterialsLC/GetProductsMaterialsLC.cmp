@@ -1,0 +1,16 @@
+<aura:component implements="force:appHostable,force:hasRecordId,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" 
+                controller="GetInvoices">
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="recordError" type="String"/>
+    <aura:attribute name="recordInfo" type="Object" />
+    <aura:attribute name="simpleRecord" type="Object"/>
+    
+      <force:recordData aura:id="recordLoader"
+                   recordId="{!v.recordId}"
+                   fields="Billing_Doc_Number__c"                   
+                   targetFields="{!v.simpleRecord}"
+                   targetError="{!v.recordError}"
+                   recordUpdated="{!c.handleRecordUpdated}"/>
+	
+</aura:component>

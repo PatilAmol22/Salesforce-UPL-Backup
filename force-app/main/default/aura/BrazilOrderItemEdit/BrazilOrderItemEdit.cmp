@@ -1,0 +1,221 @@
+<aura:component  controller="BrazilOrderItemEditController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    <ltng:require styles="{!$Resource.BrazilOrderItemEdit}"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="data1" type="Object" default="[]"/>
+    <aura:attribute name="data2" type="Object" default="[]"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="errors" type="Object" default="[]"/>
+    <aura:attribute name="draftValues" type="Object" default="[]"/>
+    <aura:attribute name="check" type="Boolean" default="false"/>
+	<aura:attribute name="ShowModel" type="boolean"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="today" type="date" />
+    <aura:attribute name="quantity1" type="Sales_Order__c" 
+                    default="{'sobjectType': 'Sales_Order__c',
+                             'Non_Invoice_Quantity__c': '0'}"
+                    />
+    <aura:attribute name="Error" type="String"/><!-- Added by Harshit @WIPRO-->
+
+    <aura:attribute name="cancelMap" type="Map"/>
+    <aura:attribute name="cancel" type="Sales_Order_Line_Item__c" default="{'sobjectType':'Sales_Order_Line_Item__c', 
+                                                                           'Cancellation_Reason__c':''}"/>
+    
+    
+    <aura:attribute name="inventory" 
+                    type="BrazilOrderItemEditController.Inventory[]" access="global" />
+    <aura:attribute name="minMaxDate" 
+                    type="BrazilOrderItemEditController.minMaxDate[]" access="global" />
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    
+    <div class="slds-p-around_medium">
+        <h1 class="slds-text-heading_large">{!$Label.c.Edit_Sales_Order_Line_Items}</h1>
+    </div>
+    
+    <!-- the container element determine the height of the datatable -->
+    
+    <!--div style="height: 300px">
+        <lightning:datatable aura:id="dtTable"
+                             columns="{! v.columns }"
+                             show-row-number-column="true"
+                             hideCheckboxColumn="true"
+                             data="{! v.data }"
+                             keyField="Id"
+                             maxColumnWidth="150"
+                             minColumnWidth="150"
+                             errors="{! v.errors }"
+                             draftValues="{! v.draftValues }"
+                             onsave="{! c.handleSaveEdition }"
+                             onrowselection="{! c.setRecordId }"
+                             
+                             />
+    </div-->
+    
+    <div class="slds-scrollable_x" style="margin-bottom:0px; height: 300px">
+        <table class="slds-table slds-table--bordered " style="width:100%" >
+            <thead>
+                <tr class="slds-text-heading--label">
+                    <!--<th class="slds-is-sortable" scope="col">
+        <div class="slds-truncate">APPROVER</div>
+      </th>-->
+                   <!-- <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="width:200px;">{!$Label.c.Name1}</div>
+                    </th>-->
+                    <!-- Modified by Deeksha for kit selling Project -->
+                    <th class="slds-is-sortable" scope="col">                                        
+                        <div class="slds-truncate" style="width:100px;">{!$Label.c.Product_Name1}</div>
+                    </th> 
+                    <!-- End -->
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="width:130px;">{!$Label.c.Quantity1}</div>
+                    </th> 
+                    
+                    
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="width:130px;">{!$Label.c.Unbilled_Quantity}</div>
+                    </th> 
+                    
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="width:120px;">{!$Label.c.New_Quantity}</div>
+                    </th> 
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="width:130px;">{!$Label.c.Date_Of_Fat1}</div>
+                    </th> 
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="width:130px;">{!$Label.c.Cancel_Item}</div>
+                    </th> 
+                    <th class="slds-is-sortable" scope="col">
+                        <div class="slds-truncate" style="width:130px;">{!$Label.c.Cancellation_Reason}</div>
+                    </th> 
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.data}" var="orderItem" indexVar="i">
+                    
+                    <tr class="slds-hint-parent">
+                        <!--<th class="slds-truncate" scope="row" data-label="APPROVER"><a href="javascript:void(0);">Sanjeev Singh Chaudhary</a></th>-->
+                       <!-- <td>
+                            
+                            <lightning:input 
+                                             placeholder="" 
+                                             value="{!orderItem.Name}" 
+                                             disabled="true"/>
+                            
+                            
+                            
+                        </td>-->
+                        
+                        <td>
+                            
+                            
+                            
+                            <lightning:input  
+                                             placeholder="" 
+                                             value="{!orderItem.SKU_Name__r.SKU_Description__c}" 
+                                             disabled="true"/>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            
+                            <lightning:input  
+                                             placeholder="" 
+                                             type="number"   
+                                             value="{!orderItem.Quantity__c}" 
+                                             disabled="true"/>
+                            
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            
+                            <lightning:input 
+                                             placeholder="" 
+                                             type="number"   
+                                             
+                                             value="{!orderItem.Unbilled_Quatity__c}" 
+                                                 disabled="true"/>
+                            
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            
+                            <ui:inputNumber 
+                                             placeholder="{!orderItem.multipleOf__c}" 
+                                             class="slds-input bg-white"
+                                             value="{!orderItem.New_Quantity__c}" 
+                                             blur="{!c.restrictQuantity}"
+                                             disabled="false"/>
+                            
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            
+                            <lightning:input  
+                                             value="{!orderItem.New_Date_of_FAT__c}"
+                                             type="date"
+                                             disabled="false"/>
+                            
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            
+                            <lightning:input 
+                                             type="checkbox"                                             
+                                             checked="{!orderItem.Cancel_Line_Item__c}" 
+                                             disabled="false"
+                                             onchange="{!c.toggleCancellationReason}"
+                                             />
+                            				
+                            
+                        </td>
+                        
+                        
+                        
+                        <td>
+                             <!--Change by Swaranjeet(Grazitti) #RITM0557675 
+                             <aura:if isTrue="{!v.check}">-->
+							
+                                <lightning:select aura:id="cancelReasonpick" value="{!orderItem.Cancellation_Reason__c}" required="true" onchange="{!c.cancelreason}">
+                                    <!--option value="">None</option-->
+                                    <aura:iteration items="{!v.cancelMap}" var="ind" indexVar="key">
+                                        <option text="{!ind.value}" value="{!ind.key}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            <!--   </aura:if>-->
+
+                                
+                        </td>
+                        
+                        
+                    </tr>
+                </aura:iteration>
+                
+                
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="slds-scrollable_x" style="margin-bottom:0px; align-item:center;text-align: center">
+        
+        <lightning:button label="Cancel" title="Neutral action" onclick="{! c.handleCancelClick }"/>
+        
+        <lightning:button variant="brand" label="Save" title="Brand action" onclick="{! c.handleSaveEdition }" />
+    </div>
+    
+    
+   <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if>    
+    
+    
+    
+</aura:component>

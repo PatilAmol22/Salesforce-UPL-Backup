@@ -1,0 +1,321 @@
+<template>
+    <span class="reload">{reload}</span>
+    <template if:true={showSpinner}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+  
+    <template if:true={showUI}>
+        <template if:false={isFileUpload}>
+            <div class="slds-card slds-p-around_small" >
+                <div style="font-family:calibri; background:#1797c0; margin:0; padding:2px 0 2px 6px; color:#fff; text-align:left; font-size:18px;">
+                    <span class="slds-align_absolute-center">Account Information</span>
+                </div>
+                
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1" style="padding-right: 2%;">
+                        <lightning-combobox name="Type" label="Type" value={value} placeholder="--Select--" options={options} 
+                        onchange={handleTypeChange} ></lightning-combobox>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                      
+                        <lightning-input label="SBU" data-name="SBU__c" placeholder="Search SBU" 
+                            onclick={showSBUOption} onblur={blurEvent} onkeyup={handleZoneSearch} value={sbuSearchString} 
+                            id="combobox-id-3">
+                        </lightning-input>
+                        <template if:true={showSDropdown}>
+                            <div id="listbox-id-3" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                                <ul class="slds-listbox slds-listbox_vertical recordListBox" role="presentation">
+                                    <template if:false={message}>
+                                        <template for:each={SBUListOptions} for:item="option">
+                                            <li key={option.value} data-id={option.value} data-label={option.label}
+                                                onclick={handleSBUSelect} class="slds-listbox__item eachItem">
+                                                <template if:true={option.selected}>
+                                                    <lightning-icon icon-name="utility:check" size="x-small" alternative-text="icon">
+                                                    </lightning-icon>
+                                                </template>
+                                                <span
+                                                    class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{option.label}</span>
+                                            </li>
+                                        </template>
+                                    </template>
+                                    <template if:true={message}>
+                                        <li class="slds-listbox__item">
+                                            <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{message}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                        <template for:each={SelectedSBUListOptions} for:item="option">
+                            <template if:true={option.selected}>
+                                <lightning-pill key={option.value} class="slds-m-around_xx-small" data-objname="SBU__c" name={option.value} label={option.label} onremove={removePill}></lightning-pill>
+                            </template>
+                        </template>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1" style="padding-right: 2%;">
+                        
+                        <lightning-input label="Zone" data-name="Zone__c" placeholder="Search Zone" 
+                        onclick={showZoneOption} onblur={blurEvent} onkeyup={handleZoneSearch} value={zoneSearchString} 
+                            id="combobox-id-1">
+                        </lightning-input>
+                        <template if:true={showDropdown}>
+                            <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                                <ul class="slds-listbox slds-listbox_vertical recordListBox" role="presentation">
+                                    <template if:false={message}>
+                                        <template for:each={zoneListOptions} for:item="option">
+                                            <li key={option.value} data-id={option.value} data-label={option.label}
+                                                onclick={handleZoneSelect} class="slds-listbox__item eachItem">
+                                                <template if:true={option.selected}>
+                                                    <lightning-icon icon-name="utility:check" size="x-small" alternative-text="icon">
+                                                    </lightning-icon>
+                                                </template>
+                                                <span
+                                                    class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{option.label}</span>
+                                            </li>
+                                        </template>
+                                    </template>
+                                    <template if:true={message}>
+                                        <li class="slds-listbox__item">
+                                            <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{message}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                        <template for:each={SelectedZoListOptions} for:item="option">
+                            <template if:true={option.selected}>
+                                <lightning-pill key={option.value} class="slds-m-around_xx-small" data-objname="Zone__c" name={option.value} label={option.label} onremove={removePill}></lightning-pill>
+                            </template>
+                        </template>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                        
+                        <lightning-input label="Region" data-name="Region__c" placeholder="Search Region" 
+                        onclick={showRegionOption} onblur={blurEvent} onkeyup={handleZoneSearch} value={regionSearchString} 
+                            id="combobox-id-4">
+                        </lightning-input>
+                        <template if:true={showRDropdown}>
+                            <div id="listbox-id-4" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                                <ul class="slds-listbox slds-listbox_vertical recordListBox" role="presentation">
+                                    <template if:false={message}>
+                                        <template for:each={RegionListOptions} for:item="option">
+                                            <li key={option.value} data-id={option.value} data-label={option.label}
+                                                onclick={handleRegionSelect} class="slds-listbox__item eachItem">
+                                                <template if:true={option.selected}>
+                                                    <lightning-icon icon-name="utility:check" size="x-small" alternative-text="icon">
+                                                    </lightning-icon>
+                                                </template>
+                                                <span
+                                                    class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{option.label}</span>
+                                            </li>
+                                        </template>
+                                    </template>
+                                    <template if:true={message}>
+                                        <li class="slds-listbox__item">
+                                            <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{message}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                        <template for:each={SelectedRegListOptions} for:item="option">
+                            <template if:true={option.selected}>
+                                <lightning-pill key={option.value} class="slds-m-around_xx-small" data-objname="Region__c" name={option.value} label={option.label} onremove={removePill}></lightning-pill>
+                            </template>
+                        </template>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1" style="padding-right: 2%;">
+                        
+                        <lightning-input label="Territory" data-name="Territory_Distributor__c" placeholder="Search Territory" 
+                        onclick={showTerritoryOption} onblur={blurEvent} onkeyup={handleZoneSearch} value={territorySearchString} 
+                            id="combobox-id-2">
+                        </lightning-input>
+                        <template if:true={showTDropdown}>
+                            <div id="listbox-id-2" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                                <ul class="slds-listbox slds-listbox_vertical recordListBox" role="presentation">
+                                    <template if:false={message}>
+                                        <template for:each={terrirtoryListOptions} for:item="option">
+                                            <li key={option.value} data-id={option.value} data-label={option.label}
+                                                onclick={handleTerritorySelect} class="slds-listbox__item eachItem">
+                                                <template if:true={option.selected}>
+                                                    <lightning-icon icon-name="utility:check" size="x-small" alternative-text="icon">
+                                                    </lightning-icon>
+                                                </template>
+                                                <span
+                                                    class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{option.label}</span>
+                                            </li>
+                                        </template>
+                                    </template>
+                                    <template if:true={message}>
+                                        <li class="slds-listbox__item">
+                                            <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{message}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                        <template for:each={SelectedTerListOptions} for:item="option">
+                            <template if:true={option.selected}>
+                                <lightning-pill key={option.value} class="slds-m-around_xx-small" data-objname="Territory_Distributor__c" name={option.value} label={option.label} onremove={removePill}></lightning-pill>
+                            </template>
+                        </template>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1">
+                       
+                        <lightning-input label="State" data-name="State__c" placeholder="Search State" 
+                        onclick={showStateOption}  onblur={blurEvent} onkeyup={handleZoneSearch} value={StateSearchString} 
+                            id="combobox-id-5">
+                        </lightning-input>
+                        <template if:true={showStDropdown}>
+                            <div id="listbox-id-5" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                                <ul class="slds-listbox slds-listbox_vertical recordListBox" role="presentation">
+                                    <template if:false={message}>
+                                        <template for:each={StateListOptions} for:item="option">
+                                            <li key={option.value} data-id={option.value} data-label={option.label}
+                                                onclick={handleStateSelect} class="slds-listbox__item eachItem">
+                                                <template if:true={option.selected}>
+                                                    <lightning-icon icon-name="utility:check" size="x-small" alternative-text="icon">
+                                                    </lightning-icon>
+                                                </template>
+                                                <span
+                                                    class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{option.label}</span>
+                                            </li>
+                                        </template>
+                                    </template>
+                                    <template if:true={message}>
+                                        <li class="slds-listbox__item">
+                                            <span class="slds-media slds-listbox__option_entity verticalAlign slds-truncate">{message}</span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                        <template for:each={SelectedStListOptions} for:item="option">
+                            <template if:true={option.selected}>
+                                <lightning-pill key={option.value} class="slds-m-around_xx-small" data-objname="State__c" name={option.value} label={option.label} onremove={removePill}></lightning-pill>
+                            </template>
+                        </template>
+                    </div>
+                    
+                </div>
+               
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1" style="padding-right: 2%;">
+                        <lightning-button class="slds-p-top_large slds-float_right" variant="bare" label="Search Customer" onclick={handleSearch} icon-name="utility:save"></lightning-button>
+                    </div>
+                    <div class="slds-size_1-of-2 slds-max-small-size_1-of-1" style="padding-right: 2%;">
+                        <lightning-button class="slds-p-top_large  slds-float_left" variant="bare" label="Reset" onclick={handleReset} icon-name="utility:refresh"></lightning-button>
+                    </div>
+                </div>
+        
+               
+                <div class='slds-p-top_large' >
+                    <template if:true={isAccountSearchResult}>
+                        <div style="font-family:calibri; background:#1797c0; margin:0; padding:2px 0 2px 6px; color:#fff; text-align:left; font-size:18px;">
+                            <span class="slds-align_absolute-center">Customer Information</span>
+                        </div>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-combobox name="progress" label="Page"  value={currentPage} options={pageSizeOptions}  onchange={handlePageChange}></lightning-combobox>  
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input type="text" label="No. of Records" value={totalRecords} disabled></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input type="text" label="Total Selected Records" value={totalSelectedRecords} disabled></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input type="checkbox" label="Select All records" onchange={handleDataSelection} ></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                       
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                            <thead>
+                              <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Opportunity Name">Select</div>
+                                  <lightning-input type="checkbox" data-name="pagecheck" checked={globalChecked} onchange={handleRecordSelection}></lightning-input>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Account Name">Customer SAP Code</div>
+                                  </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Account Name">Account Name</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Close Date">SBU</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Stage">Zone</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="Confidence">Territory</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Confidence">State</div>
+                                  </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Confidence">Email</div>
+                                  </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={recordsToDisplay} for:item="acc">
+                                    <tr key={acc.Id} >
+                                        <td data-label="Select" scope="row">
+                                          <lightning-input type="checkbox" data-acc={acc.Id} value={acc.check} checked={acc.check} onchange={handleCustomerSelection}></lightning-input>
+                                        </td>
+                                        <td data-label="Account SAP Code" scope="row">
+                                            <span>{acc.SAPCode}</span>
+                                        </td>
+                                        <td data-label="Account Name" scope="row">
+                                            <span>{acc.Name}</span>
+                                        </td>
+                                        <td data-label="SBU Name" scope="row">
+                                            <span>{acc.SBUName}</span>
+                                        </td>
+                                        <td data-label="Zone Name" scope="row">
+                                            <span>{acc.ZoneName}</span>
+                                        </td>
+                                        <td data-label="Territory Name" scope="row">
+                                            <span>{acc.TerritoryName}</span>
+                                        </td>
+                                        <td data-label="Territory Name" scope="row">
+                                            <span>{acc.stateName}</span>
+                                        </td>
+                                        <td data-label="Territory Name" scope="row">
+                                            <span>{acc.Email}</span>
+                                        </td>
+                                      </tr>
+                                </template>
+                             
+                             
+                            </tbody>
+                          </table>
+                          <lightning-layout class="slds-grid">
+                            
+                            <lightning-layout-item class="slds-size_1-of-2 slds-max-small-size_1-of-1
+                            slds-size_1-of-2 slds-max-small-size_1-of-1" padding="around-small ">
+                            <lightning-button disabled={bDisableFirst} icon-name="utility:chevronleft" label="Previous" alternative-text="Previous" onclick={previousPage}></lightning-button>  
+                             </lightning-layout-item>
+                             <lightning-layout-item class="slds-size_1-of-2 slds-max-small-size_1-of-1
+                             slds-size_1-of-2 slds-max-small-size_1-of-1" padding="around-small ">
+                                <lightning-button disabled={bDisableLast} icon-name="utility:chevronright" label="Next" alternative-text="Next" onclick={nextPage} class="slds-p-horizontal_x-small slds-float_right" icon-position="right"></lightning-button>                    </lightning-layout-item>
+                        </lightning-layout>
+                    </template>
+                </div>
+                
+                <lightning-button class="slds-p-top_large slds-align_absolute-center" variant="brand" label="Next" onclick={handleNext} disabled={isDisabled}></lightning-button>
+        
+            </div>
+           </template>
+           <template if:true={isFileUpload}>
+            <c-file-upload-india selected-data={selectedAccList} onprevious={handlePrevious}></c-file-upload-india>
+           </template>
+    </template>
+  
+
+    
+</template>

@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <name>Any_other_preference_about_the_type_of_pesticide_chemical_used_containing_Copper</name>
+        <label>Any other preference about the type of pesticide / chemical used containing Copper</label>
+        <locationX>230</locationX>
+        <locationY>867</locationY>
+        <defaultConnector>
+            <targetReference>Create_record_for_copper_based_fungicides_survey</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Selected_any_other_option_for_preference_about_pesticide_chemical</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>If_yes_please_mention_preference_about_the_type_of_pesticide_chemical_used_conta</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Any other, Please specify</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Enter_any_other_preference_for_pesticide_chemical</targetReference>
+            </connector>
+            <label>Selected any other option for preference about pesticide/chemical</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>any_preference_about_the_type_of_pesticide_chemical_used_containing_Copper</name>
+        <label>any preference about the type of pesticide / chemical used containing Copper</label>
+        <locationX>833</locationX>
+        <locationY>905</locationY>
+        <defaultConnector>
+            <targetReference>Create_record_for_copper_based_fungicides_survey</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No preference</defaultConnectorLabel>
+        <rules>
+            <name>Check_if_any_preference_about_type_of_pesticides_used_containing_copper</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>any_preference_type_of_pesticide_chemical_used_in_copper_containg_pesticide</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_6</targetReference>
+            </connector>
+            <label>Check if any preference about type of pesticides used containing copper</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_any_other_option_is_selected_for_disadvantage_of_Copper_based_pesticide</name>
+        <label>Check if any other option is selected for disadvantage of Copper based pesticides</label>
+        <locationX>1182</locationX>
+        <locationY>535</locationY>
+        <defaultConnector>
+            <targetReference>Screen_5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>if_any_other_option_is_selected_for_disadvantage_of_Copper_based_pesticides</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>If_yes_what_are_the_disadvantages_observed_in_Copper_based_pesticides</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Any other, Please specify</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>screen_7</targetReference>
+            </connector>
+            <label>if any other option is selected for disadvantage of Copper based pesticides</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_user_used_Copper_based_pesticides_in_Crops</name>
+        <label>Check if user used Copper based pesticides in Crops?</label>
+        <locationX>757</locationX>
+        <locationY>64</locationY>
+        <defaultConnector>
+            <targetReference>Create_record_for_copper_based_fungicides_survey</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not used Copper based pesticides in Crops</defaultConnectorLabel>
+        <rules>
+            <name>ever_used_Copper_based_pesticides_in_Crops</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Have_you_ever_used_Copper_based_pesticides_in_Crops</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_2</targetReference>
+            </connector>
+            <label>ever used Copper based pesticides in Crops?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>If_yes_what_are_the_disadvantages_observed</name>
+        <label>If yes, what are the disadvantages observed?</label>
+        <locationX>999</locationX>
+        <locationY>366</locationY>
+        <defaultConnector>
+            <targetReference>Screen_5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No disadvantages observed</defaultConnectorLabel>
+        <rules>
+            <name>disadvantages_observed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Did_you_observe_any_disadvantage_of_using_Copper_based_pesticides_in_your_crop</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_4</targetReference>
+            </connector>
+            <label>disadvantages observed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>screenDecision</name>
+        <label>screenDecision</label>
+        <locationX>379</locationX>
+        <locationY>53</locationY>
+        <defaultConnector>
+            <targetReference>test</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>If not heard about Copper based pesticides</defaultConnectorLabel>
+        <rules>
+            <name>have_you_ever_heard_about_Copper_based_pesticides_to_be_used_in_Crops_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Have_you_ever_heard_about_Copper_based_pesticides_to_be_used_in_Crops</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_1</targetReference>
+            </connector>
+            <label>have you ever heard about Copper based pesticides to be used in Crops outcome</label>
+        </rules>
+    </decisions>
+    <dynamicChoiceSets>
+        <name>Copper_pesticides_used_to_cure_diseases</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Copper_based_pesticides_used_to_curedise__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>disadvantages_observed_in_Copper_based_pesticides</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>If_yes_what_are_the_disadvantagesObserv__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>mention_preference_about_type_of_pesticide_chemical_used_containing_Copper</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>mention_type_of_pesticide_chemical_used__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Most_used_crop</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>name_one_crop_in_which_you_hv_used_most__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>YesNoPicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>heard_about_Copper_based_pesticides__c</picklistField>
+        <picklistObject>Axedasurvey__c</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>COPPER BASED FUNGICIDES – MARKET SURVEY {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>COPPER BASED FUNGICIDES – MARKET SURVEY</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_record_for_copper_based_fungicides_survey</name>
+        <label>Create record for copper based fungicides  survey</label>
+        <locationX>578</locationX>
+        <locationY>352</locationY>
+        <connector>
+            <targetReference>Terminate_Message</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Copper_based_pesticides_used_to_curedise__c</field>
+            <value>
+                <elementReference>For_combating_which_pest_or_disease_did_you_use_Copper_based_pesticides</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>If_yes_what_are_the_disadvantagesObserv__c</field>
+            <value>
+                <elementReference>If_yes_what_are_the_disadvantages_observed_in_Copper_based_pesticides</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>recordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>any_disadvantage_of_using_CopperPesticid__c</field>
+            <value>
+                <elementReference>Did_you_observe_any_disadvantage_of_using_Copper_based_pesticides_in_your_crop</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>any_preference_about_the_type_of_pestici__c</field>
+            <value>
+                <elementReference>any_preference_type_of_pesticide_chemical_used_in_copper_containg_pesticide</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>firstThingInMindForCopperBasedPesticides__c</field>
+            <value>
+                <elementReference>What_is_the_first_thing_that_comes_to_your_mind_when_we_talk_about_Copperbased</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>heard_about_Copper_based_pesticides__c</field>
+            <value>
+                <elementReference>Have_you_ever_heard_about_Copper_based_pesticides_to_be_used_in_Crops</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>mentionTypeOfPesticidesUsedInCopperPesti__c</field>
+            <value>
+                <elementReference>Please_mention_any_other_preference_about_the_type_of_pesticide_chemical_used_co</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>mention_other_disadvantages_of_copper__c</field>
+            <value>
+                <elementReference>Please_mention_any_other_disadvantage_of_using_Copper_based_pesticides_in_your_c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>mention_type_of_pesticide_chemical_used__c</field>
+            <value>
+                <elementReference>If_yes_please_mention_preference_about_the_type_of_pesticide_chemical_used_conta</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>name_one_crop_in_which_you_hv_used_most__c</field>
+            <value>
+                <elementReference>If_yes_name_one_crop_in_which_you_have_used_the_most</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>used_Copper_based_pesticides_in_Crops__c</field>
+            <value>
+                <elementReference>Have_you_ever_used_Copper_based_pesticides_in_Crops</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Axedasurvey__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>test</name>
+        <label>test</label>
+        <locationX>222</locationX>
+        <locationY>277</locationY>
+        <connector>
+            <targetReference>Terminate_Message</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>recordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>heard_about_Copper_based_pesticides__c</field>
+            <value>
+                <elementReference>Have_you_ever_heard_about_Copper_based_pesticides_to_be_used_in_Crops</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Axedasurvey__c</object>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_RecordtypeId</name>
+        <label>Get RecordtypeId</label>
+        <locationX>168</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Screen_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>COPPER BASED FUNGICIDES</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>recordTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <screens>
+        <name>Enter_any_other_preference_for_pesticide_chemical</name>
+        <label>Enter any other preference for pesticide/chemical</label>
+        <locationX>470</locationX>
+        <locationY>948</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_record_for_copper_based_fungicides_survey</targetReference>
+        </connector>
+        <fields>
+            <name>Please_mention_any_other_preference_about_the_type_of_pesticide_chemical_used_co</name>
+            <dataType>String</dataType>
+            <fieldText>Please mention any other preference about the type of pesticide / chemical used containing Copper</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_0</name>
+        <label>Screen 0</label>
+        <locationX>289</locationX>
+        <locationY>50</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>screenDecision</targetReference>
+        </connector>
+        <fields>
+            <name>Have_you_ever_heard_about_Copper_based_pesticides_to_be_used_in_Crops</name>
+            <choiceReferences>YesNoPicklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Have you ever heard about Copper based pesticides to be used in Crops?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_1</name>
+        <label>Screen 1</label>
+        <locationX>617</locationX>
+        <locationY>53</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_if_user_used_Copper_based_pesticides_in_Crops</targetReference>
+        </connector>
+        <fields>
+            <name>What_is_the_first_thing_that_comes_to_your_mind_when_we_talk_about_Copperbased</name>
+            <dataType>String</dataType>
+            <fieldText>What is the first thing that comes to your mind, when we talk about Copper based pesticides?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Have_you_ever_used_Copper_based_pesticides_in_Crops</name>
+            <choiceReferences>YesNoPicklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Have you ever used Copper based pesticides in Crops?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_2</name>
+        <label>Screen 2</label>
+        <locationX>1008</locationX>
+        <locationY>49</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Screen_3</targetReference>
+        </connector>
+        <fields>
+            <name>If_yes_name_one_crop_in_which_you_have_used_the_most</name>
+            <choiceReferences>Most_used_crop</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>If yes, name one crop in which you have used the most</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_3</name>
+        <label>Screen 3</label>
+        <locationX>1008</locationX>
+        <locationY>211</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>If_yes_what_are_the_disadvantages_observed</targetReference>
+        </connector>
+        <fields>
+            <name>For_combating_which_pest_or_disease_did_you_use_Copper_based_pesticides</name>
+            <choiceReferences>Copper_pesticides_used_to_cure_diseases</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>For combating which pest or disease, did you use Copper based pesticides?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Did_you_observe_any_disadvantage_of_using_Copper_based_pesticides_in_your_crop</name>
+            <choiceReferences>YesNoPicklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Did you observe any disadvantage of using Copper based pesticides in your crop?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_4</name>
+        <label>Screen 4</label>
+        <locationX>1195</locationX>
+        <locationY>370</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Check_if_any_other_option_is_selected_for_disadvantage_of_Copper_based_pesticide</targetReference>
+        </connector>
+        <fields>
+            <name>If_yes_what_are_the_disadvantages_observed_in_Copper_based_pesticides</name>
+            <choiceReferences>disadvantages_observed_in_Copper_based_pesticides</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>If yes, what are the disadvantages observed in Copper based pesticides</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_5</name>
+        <label>Screen 5</label>
+        <locationX>854</locationX>
+        <locationY>525</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>any_preference_about_the_type_of_pesticide_chemical_used_containing_Copper</targetReference>
+        </connector>
+        <fields>
+            <name>any_preference_type_of_pesticide_chemical_used_in_copper_containg_pesticide</name>
+            <choiceReferences>YesNoPicklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Do you have any preference about the type of pesticide / chemical used containing Copper?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_6</name>
+        <label>Screen 6</label>
+        <locationX>608</locationX>
+        <locationY>799</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Any_other_preference_about_the_type_of_pesticide_chemical_used_containing_Copper</targetReference>
+        </connector>
+        <fields>
+            <name>If_yes_please_mention_preference_about_the_type_of_pesticide_chemical_used_conta</name>
+            <choiceReferences>mention_preference_about_type_of_pesticide_chemical_used_containing_Copper</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>If yes, please mention preference about the type of pesticide / chemical used containing Copper</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>screen_7</name>
+        <label>screen 7</label>
+        <locationX>1073</locationX>
+        <locationY>673</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Screen_5</targetReference>
+        </connector>
+        <fields>
+            <name>Please_mention_any_other_disadvantage_of_using_Copper_based_pesticides_in_your_c</name>
+            <dataType>String</dataType>
+            <fieldText>Please mention any other disadvantage of using Copper based pesticides in your crop?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Terminate_Message</name>
+        <label>Terminate Message</label>
+        <locationX>376</locationX>
+        <locationY>351</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>TerminateMessage</name>
+            <fieldText>Thank you for feedback</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <pausedText>Thank you</pausedText>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>Get_RecordtypeId</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

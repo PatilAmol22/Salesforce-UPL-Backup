@@ -1,0 +1,20 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <div>  
+        <div class="slds-col slds-size_1-of-1 comp-height">
+            <div class="slds-p-around_small base-clr frame-border">
+                <p class="slds-p-bottom_small slds-border_bottom head-title componentNotoSansLight">Instagram</p>
+                <div class="slds-p-top_medium frame-top-pad">
+                    <div class = "frame-border">
+                        <iframe aura:id="frame" class="framedimensions iframe frame-width" src="/uplpartnerportal/apex/Grz_Instagram_Mexico" frameborder="0" allowfullscreen="" title="Embedded post" scrolling = "" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <aura:html tag='style'>
+        div#insext {
+        display: none;
+        }
+        .pointer {cursor: pointer;}
+    </aura:html>
+</aura:component>

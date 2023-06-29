@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event to apply Changes" >
+    <aura:attribute name="indexVar" type="Integer" description="Used For Index " />
+    <aura:attribute name="payWrapper" type="Object" description="Used For storing val" />
+</aura:event>

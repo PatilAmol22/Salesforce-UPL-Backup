@@ -1,0 +1,338 @@
+<!--
+* Component Name: SalesOrderApproval
+* Created On: 15 June 2019
+* Author: Vishal Pawar (vishal.pawar@skinternational.com)
+* Description: Component is used to display all sales order of Columbia which is in Approval Process 
+-->
+
+
+
+<aura:component controller="SalesOrderApprovalController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!--All Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--Handler For Account -->
+    <aura:handler name="oSelectedRecordEventAccount" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEventAccount}"/>
+    <!--Handler For Owner ID -->
+    <aura:handler name="oSelectedRecordEventOwnerName" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEventOwnerName}"/>
+    
+    <ltng:require styles="{! $Resource.datatable1+'/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
+                  scripts="{!join(',', $Resource.jquery224 , $Resource.datatable1 + '/DataTables-1.10.16/media/js/jquery.dataTables.min.js')}" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    
+    
+    <aura:attribute name="toggleSpinner" type="boolean" default="false"/>
+    
+    <aura:attribute name="acclist" type="Account"/>
+    <aura:attribute name="lstSalesOrder" type="object[]"/>    
+    
+    <!--This is for Account -->
+    <aura:attribute name="selectedRecordAccount" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecordsAccount" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWordAccount" type="string"/>
+    <aura:attribute name="MessageAccount" type="String" default=""/>
+    
+    
+    <!--This is for Owner Name -->
+    <aura:attribute name="selectedRecordOwnerName" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecordsOwnerName" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWordOwnerName" type="string"/>
+    <aura:attribute name="MessageOwnerName" type="String" default=""/>
+    
+    
+    <aura:attribute name="eddDate" type="date" />
+    <aura:attribute name="stdDate" type="date" />
+    <aura:attribute name="totalAmount" type="Integer" />
+    
+    <!--create dateValidationError boolean attribute for show error msg on invalid selection
+      and disable submit button -->    
+    <aura:attribute name="dateValidationError" type="boolean" default="false" />
+    <aura:attribute name="dateValidationError1" type="boolean" default="false" />
+    <aura:attribute name="showDataTable" type="boolean" default="false" />
+    <aura:attribute name="displayInfo" type="boolean" default="false" />
+    <aura:attribute name="isAdminLogin" type="boolean" default="false" />
+    
+    
+    
+    <div class="slds-scrollable_y" style="height:500;width:100%">
+        <div class="slds">
+            <div class="slds-page-header">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <!-- <c:svgIcon svgPath="/resource/slds090/assets/icons/standard-sprite/svg/symbols.svg#orders" category="standard" size="large" name="orders"/> -->
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-heading--label"></p>
+                                <div class="slds-grid">
+                                    <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">{!$Label.c.Sales_Order}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <h3 class="slds-section-title--divider slds-p-horizontal--small slds-size--1-of-1" style="margin:8px 0 0 0; background:#769ed9; color:#fff; font-weight:bold;">
+            {!$Label.c.Sales_Order_Details}
+        </h3>
+        
+        <!-- Sanju Sir Added Responsive -->    
+        
+        <div class="slds-grid slds-wrap slds-grid--pull-padded" style="background:#fff; margin:0px; padding:0 0 15px 0; border:1px solid #cce4f8;">
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element" style="margin-top:12px;">
+                            <div class="slds-form-element__control">
+                                
+                                <!--Custom lookup result for Account-->
+                                <div onmouseleave="{!c.onblurAccount}" aura:id="searchResAccount" class="slds-form-element slds-lookup slds-is-close" data-select="single">  
+                                    
+                                    <label class="slds-form-element__label" for="lookup-348"> <label style="color:brown"> </label>{!$Label.c.Account_Name}</label>
+                                    <!--This part is for display search bar for lookup-->  
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                            <!-- This markup is for when an record is selected -->
+                                            
+                                            <div aura:id="lookup-pill-Account" class="slds-pill-container slds-hide">
+                                                <lightning:pill class="pillSize "  label="{!v.selectedRecordAccount.Name}" name="{!v.selectedRecordAccount.Name}" onremove="{!c.clearAccount}">
+                                                </lightning:pill>                                               
+                                                
+                                            </div>
+                                            
+                                            <div aura:id="lookupFieldAccount" class="slds-show">
+                                                <lightning:icon class="slds-input__icon slds-show" aura:id="AccountPill"  size="x-small" alternativeText="search"/>
+                                                <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                    <span class="slds-assistive-text"></span>
+                                                </span>
+                                                <ui:inputText aura:id="vAccount" disabled="{!v.isDisableForAccount}" click="{!c.onfocusAccount}" updateOn="keyup" keyup="{!c.keyPressControllerAccount}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWordAccount}" placeholder="Search..." />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--This part is for Display typehead lookup result List-->  
+                                    <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                        <!-- <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerAccount"/>-->
+                                        <center> {!v.MessageAccount}</center>
+                                        <aura:iteration items="{!v.listOfSearchRecordsAccount}" var="singleRec">
+                                            <c:customLookupResultAccount oRecord="{!singleRec}"/>
+                                        </aura:iteration>
+                                    </ul>
+                                    
+                                </div>
+                                <!--End of Custom lookup result for Account -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element" style="margin-top:12px;">
+                            <div class="slds-form-element__control">
+                                
+                                <lightning:select name="Status_Type" required="false" aura:id="Status_Type"  label="{!$Label.c.Status}" onchange="{!c.toggleStatus}" >
+                                    <option  value="none" text="--None--" ></option>
+                                    
+                                    <aura:if isTrue="{!v.isAdminLogin}">
+                                        <option  value="Draft" text="{!$Label.c.Draft_Orders}" ></option>
+                                        <option  value="Pending" text="{!$Label.c.Pending}" ></option>
+                                        <option  value="Approved" text="{!$Label.c.Approved_Orders}" ></option>
+                                        <option  value="Rejected" text="{!$Label.c.Rejected_Order}" ></option>
+                                        <aura:set attribute="else">
+                                            <option  value="Draft" text="{!$Label.c.Draft_Orders}" ></option>
+                                            <option  value="My_Pending_Orders" text="{!$Label.c.My_Pending_Orders}" ></option>
+                                            <option  value="Approved" text="{!$Label.c.Approved_Orders}" ></option>
+                                            <option  value="Rejected" text="{!$Label.c.Rejected_Order}" ></option>
+                                            <option  value="PendingForOthers" text="{!$Label.c.Pending_for_others}" ></option>    
+                                            
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                </lightning:select>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element" style="margin-top:12px;">
+                            <div class="slds-form-element__control">
+                                <div onmouseleave="{!c.onblurOwnerName}" aura:id="searchResOwnerName" class="slds-form-element slds-lookup slds-is-close" data-select="single">  
+                                    
+                                    <label class="slds-form-element__label" for="lookup-348"> <label style="color:brown"> </label>{!$Label.c.Owner_Name}</label>
+                                    <!--This part is for display search bar for lookup-->  
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                            <!-- This markup is for when an record is selected -->
+                                            
+                                            <div aura:id="lookup-pill-OwnerName" class="slds-pill-container slds-hide">
+                                                <lightning:pill class="pillSize "  label="{!v.selectedRecordOwnerName.Name}" name="{!v.selectedRecordOwnerName.Name}" onremove="{!c.clearOwnerName}">
+                                                </lightning:pill>                                               
+                                                
+                                            </div>
+                                            
+                                            <div aura:id="lookupFieldOwnerName" class="slds-show">
+                                                <lightning:icon class="slds-input__icon slds-show" aura:id="OwnerNamePill"  size="x-small" alternativeText="search"/>
+                                                <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                    <span class="slds-assistive-text"></span>
+                                                </span>
+                                                <ui:inputText aura:id="vOwnerName" disabled="{!v.isDisableForOwnerName}" click="{!c.onfocusOwnerName}" updateOn="keyup" keyup="{!c.keyPressControllerOwnerName}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWordOwnerName}" placeholder="Search..." />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--This part is for Display typehead lookup result List-->  
+                                    <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                        <!-- <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerAccount"/>-->
+                                        <center> {!v.MessageOwnerName}</center>
+                                        <aura:iteration items="{!v.listOfSearchRecordsOwnerName}" var="singleRec">
+                                            <c:customLookupResultOwnerName oRecord="{!singleRec}"/>
+                                        </aura:iteration>
+                                    </ul>
+                                    
+                                </div>
+                                
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element" style="margin-top:12px;">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="startDate" type="date" name="input1"  format ="MM/dd/yyyy"  value="{!v.stdDate}"  onchange="{!c.dateUpdate1}" label="{!$Label.c.Start_Date}" autocomplete="off"  /><!--required="true"-->
+                                <aura:if isTrue="{!v.dateValidationError1}">
+                                    <div class="slds-text-color_error slds-p-left_x-small">
+                                        {!$Label.c.Enter_valid_Date}                                  
+                                    </div>
+                                </aura:if> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">  
+                <div class="slds-form-element" style="margin-top:12px;">
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element" style="margin-top:12px;">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="endDate" 
+                                                 type="date" 
+                                                 name="input1" 
+                                                 label="{!$Label.c.End_Date}" 
+                                                 value="{!v.eddDate}"
+                                                 onchange="{!c.dateUpdate}"
+                                                 autocomplete="off"
+                                                 format ="MM/dd/yyyy"/>
+                                
+                                <aura:if isTrue="{!v.dateValidationError}">
+                                    <div class="slds-text-color_error slds-p-left_x-small">
+                                        {!$Label.c.Enter_valid_Date}
+                                    </div>
+                                </aura:if> 
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+            
+        </div>
+        
+        <!-- End Sanju Sir Added Responsive -->
+        
+        
+        
+        <div class="slds" style="background:#fff;">
+            
+            
+            
+            
+            <!--End of Owner ID-->
+            
+            
+            <div class="slds-align_absolute-center slds-p-top_small slds-p-horizontal--small slds-size--1-of-1" style="padding-bottom:10px; margin-bottom:0px; border-bottom:0px solid #d8dde6;">
+                
+                <lightning:button variant="brand" label="{!$Label.c.Search}" iconName="utility:search" iconPosition="left" onclick="{!c.searchDetailsSalesOrder}"  />
+                <lightning:button variant="brand" label="{!$Label.c.Reset}" iconName="utility:close" iconPosition="left" onclick="{!c.resetItem}"/>
+                
+                <button class="slds-button slds-button--brand" onclick="{!c.downloadCsv}">{!$Label.c.Download_as_Excel}</button>
+                
+                
+            </div> 
+            
+            
+            
+            <div class="slds-scrollable">
+                <!--<div class="slds-page-header">-->
+                <aura:if isTrue="{!v.showDataTable}">
+                    
+                    
+                    <div class="slds-scrollable" style="height:100%;">
+                        <table id="tableId" class="slds-table slds-table_bordered slds-table--header-fixed"  cellspacing="0">
+                            <thead>
+                                <tr>
+                                    
+                                    <th align="center">{!$Label.c.Sales_Order_Number}</th>
+                                    <th align="center">{!$Label.c.Account_Name}</th>
+                                    <th align="center">{!$Label.c.Status} </th>
+                                    
+                                    <th align="center">{!$Label.c.Creation_Date}</th>
+                                     <th align="center" style="display:none">{!$Label.c.Total_Value}</th>
+                                    <th align="center">{!$Label.c.Total_Value}</th>
+                                    
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.lstSalesOrder}" var="salesOrder">
+                                    <tr>
+                                        <td align="center"><a href="{!salesOrder.url}">{!salesOrder.Sales_Order_Number}</a> &nbsp;&nbsp; <lightning:button variant="brand" label="{!$Label.c.View}" value="{!salesOrder.Id}" onclick="{!c.navigatePage}"/></td>
+                                        <!--<td align="center"> <a href="{!salesOrder.url}">{!salesOrder.Sales_Order_Number}</a></td>-->
+                                        <td align="center">{!salesOrder.AccountName}</td>
+                                        <td align="center">{!salesOrder.Status}</td>
+                                        <!--<td align="center"> <ui:outputDate value="{!salesOrder.creationDate}"/></td>-->
+                                        <td align="center">{!salesOrder.creationDate}</td>
+                                        <td align="center" style="display:none">{!salesOrder.totalValue}</td>
+                                       <td><lightning:formattedNumber value="{!salesOrder.totalValue}" style="decimal" minimumFractionDigits="2"/></td>
+                                        
+                                        
+                                    </tr>
+                                </aura:iteration>  
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4" style="text-align:right">Total   :</th>
+                                    <th><lightning:formattedNumber value="{!v.totalAmount}"  style="decimal" minimumFractionDigits="2"/></th>
+                                   
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    
+                </aura:if> 
+                <!--  </div>-->
+                
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

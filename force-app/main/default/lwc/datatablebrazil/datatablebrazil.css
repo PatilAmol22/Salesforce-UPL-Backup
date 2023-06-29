@@ -1,0 +1,45 @@
+div.slds-scrollable_y { 
+    height: 200px;
+}
+.slds-scrollable {
+    -webkit-overflow-scrolling: initial;
+    overflow: unset !important;
+}
+.slds-scrollable_y,.slds-scrollable--y {
+    -webkit-overflow-scrolling: initial;
+    max-height: 100%;
+    overflow: unset !important;
+    overflow-y: unset !important;
+}
+
+.slds-scrollable_x,.slds-scrollable--x {
+    -webkit-overflow-scrolling: initial;
+    max-width: 100%;
+     overflow:unset !important; 
+     overflow-x:unset !important;
+}
+
+
+.picklist-container .slds-dropdown,
+.lookup-container .slds-dropdown{
+    position: absolute !important;
+    z-index: 99 !important;
+    
+    overflow: initial;
+}
+.slds-scope .slds-scrollable_y, .slds-scope .slds-scrollable--y {
+    overflow: unset;
+    overflow-x: unset;
+    overflow-y: unset;
+}
+.slds-scope .slds-scrollable_x, .slds-scope .slds-scrollable--x {
+    overflow: unset;
+}
+[lightning-combobox_combobox-host]{
+    margin-bottom: 5px;
+}
+.slds-scope,.slds-dropdown, .slds-scope .slds-dropdown_fluid{
+    min-width: unset !important;
+    
+    max-width: 100% !important;
+}

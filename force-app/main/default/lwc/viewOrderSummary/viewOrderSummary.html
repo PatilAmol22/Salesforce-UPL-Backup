@@ -1,0 +1,628 @@
+<template>
+   
+    <div class="slds-grid slds-wrap" style="background:#ededed; padding:10px; border-radius:5px 5px 0 0;">
+        <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+            <div class="slds-page-header">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-has-flexi-truncate slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_9-of-12">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-icon icon-name="standard:orders" size="large">
+                                    </lightning-icon>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-heading--label">{label.VIEW_ORDER}</p>
+                                <!--<div class="slds-grid">
+                                    
+                                        <h1 class="slds-text-heading--medium slds-m-right--small slds-truncate slds-align-middle">Raise_Sales_Order</h1>                                
+                                        
+                                </div>-->
+                                <div>{label.Order_No}. {SalesOrderNo}</div>
+                                
+                                    
+                                        <div style="font-weight:bold;">{label.SAP_Order_Number}. {SAP_Order_Number}</div>
+                                     
+                        
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12" style="float:left;">
+                        
+                            <div style="float:right; margin-top:10px;">
+                                
+                                    <div style="float:left; display:inline;">Order Sub Status</div>
+                                    <div style="float:left; display:inline;">Order Sub Status</div>                          
+                                       
+                            </div>                    
+                        
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="slds-box slds-theme_default">
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#769ED9; margin-top:10px;">
+                <p style="color:#fff; padding:10px; font-weight:700;">{label.Select_Inco_Term}</p>
+            </div>
+        </div> 
+
+        <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px; margin-bottom:10px;">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+                <lightning-input type="text"  disabled="true" value={Incoterm} ></lightning-input>
+                
+            </div>
+
+        </div>
+
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#769ED9;">
+                <p style="color:#fff; padding:10px; font-weight:700;">{label.Step} 1: {label.Account_Credit_Summary} </p>
+            </div>
+        </div> 
+
+        <div style="border:1px solid #ccc; margin-top:10px;" class="slds-scrollable_x">
+
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate">{label.Account_Name}</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate">{label.SAP_Code}</div>
+                        </th>
+                        <th class="" scope="col">
+                                <template if:true={showCreditLimit}>
+                            <div class="slds-truncate">{label.Total_Credit_Limit}</div>
+                            </template>
+                        </th>
+                        
+                        <!--this coloum is not visible for community users only-->
+                        
+                        
+                            <!-- <th class="" scope="col">
+                                <div class="slds-truncate">Internal_Credit_Limit</div>
+                            </th> -->
+                        
+                        
+                        
+                        <th class="" scope="col">
+                                <template if:true={showCreditLimit}>
+                            <div class="slds-truncate">{label.Credit_Limit_Used}</div>
+                            </template>
+                        </th>
+                        <th class="" scope="col">
+                                <template if:true={showCreditLimit}>
+                            <div class="slds-truncate">{label.Credit_Limit_Balance}</div>
+                            </template>
+                        </th>
+                        <th class="" scope="col">
+                                <template if:true={showCreditLimit}>
+                            <div class="slds-truncate">{label.Total_Outstanding}</div>
+                            </template>
+                        </th>
+                        <!--
+                        <th class="" scope="col">
+                                <template if:true={showCreditLimit}>
+                            <div class="slds-truncate">{label.Net_Overdue}</div>
+                            </template>
+                        </th>
+                        -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="slds-hint-parent">
+                        <th class="slds-truncate" scope="row" data-label="Account_Name">
+                            {distributorName}
+                        </th>
+                        <td class="slds-truncate" data-label="SAP_Code">
+                            {sapCode}
+                        </td>
+                        <td class="slds-truncate" data-label="Total_Credit_Limit">
+                            <template if:true={showCreditLimit}>
+                            <lightning-formatted-number value={creditLimit} format-style="currency" currency-code="PLN">
+                            </lightning-formatted-number>
+                            </template>
+                            <!--<ui:outputNumber aura:id="creditLimitId" value="{!v.orderFields.DistributorData.creditLimit}"/>-->
+                        </td>
+                        
+                        
+                            <!-- <td class="slds-truncate" data-label="Internal_Credit_Limit">
+                                <lightning-formatted-number value={internalCredit} format-style="currency" currency-code="PLN">
+                                </lightning-formatted-number>
+                                
+                            </td> -->
+                        
+                        <td class="slds-truncate" data-label="Credit_Limit_Used">
+                            <template if:true={showCreditLimit}>
+                            <lightning-formatted-number value={creditUsed} format-style="currency" currency-code="PLN">
+                            </lightning-formatted-number>
+                            </template>
+                            
+                        </td>
+                        <td class="slds-truncate" data-label="Credit_Limit_Balance">
+                            <template if:true={showCreditLimit}>
+                            <lightning-formatted-number value={creditBalance} format-style="currency" currency-code="PLN">
+                            </lightning-formatted-number>
+                            </template>
+                            
+                        </td>
+                        <td class="slds-truncate" data-label="Total_Outstanding">
+                            <template if:true={showCreditLimit}>
+                            <lightning-formatted-number value={paymentOutstanding} format-style="currency" currency-code="PLN">
+                            </lightning-formatted-number>
+                            </template>
+                        </td>
+                        <!--
+                        <td class="slds-truncate" data-label="Net_Overdue" >
+                            <template if:true={showCreditLimit}>
+                            <lightning-formatted-number value={greaterThan90} format-style="currency" currency-code="PLN">
+                            </lightning-formatted-number>
+                            </template>
+                            
+                        </td>
+                        -->
+                    </tr>
+                    
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#769ED9; margin-top:10px;">
+                <p style="color:#fff; padding:10px; font-weight:700;">{label.Step} &nbsp; 2 : {label.Order_Summary}                 
+                    
+                </p>
+            </div>
+        </div> 
+
+
+        <div style="border:1px solid #ccc; margin-top:10px;" class="slds-scrollable_x">
+
+
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="SKU">{label.SKU}</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="UOM">{label.UOM}<br/>miary</div>
+                            
+                        </th>
+                        <th class="" scope="col" style="width:115px">
+                            <div class="slds-truncate" title="Base Price" style="width:115px">{label.Base_Price}<br/>podstawowa</div>
+                            <!--<div class="slds-truncate" title="Base Price">{!$Label.c.Base_Price}</div>-->
+                        </th>
+                        <th class=""  scope="col" style="width:115px;">
+                            <div class="slds-truncate" style="width:115px;" title="Quantity">{label.Quantity}</div>
+                        </th>    
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Multiple Of Qty">{label.Multiple}<br/>of' {label.Quantity}</div>
+                        </th>   
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Pallet Size">{label.Pallet_Size}</div>
+                        </th>
+                        
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Early Order Discount">{label.Early}<br/>{label.Order}<br/>{label.Discount} %</div>
+                            </th>
+                        
+                        
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Big Volume Discount">{label.Big}<br/>{label.Volume} %</div>
+                            </th>
+                        
+                        
+                        
+                            <th class="" scope="col">
+                                
+                                <div class="slds-truncate"  title="Manual Discount">{label.Manual_Discount}<br/> dodatkowy%</div>
+                            </th>
+                        
+                        
+                        
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Logistic Discount">{label.Logistic_Discount}<br/>logistyczny</div>
+                                
+                            </th>
+                        
+                        
+                        
+                        
+                        
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Final Price">{label.Final_Price}<br/>ostateczna</div>
+                            
+                        </th>
+                        <th class="" scope="col" style="width:250px;">
+                            <div class="slds-truncate" title="Net Value">{label.Net_Value}</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Payment Term">{label.Payment_Terms}</div>
+                        </th>
+                        <!-- Added By Paresh Sondigara : CR#152  : PO & Delivery Date -->
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Payment Term">{label.Delivery_Date}</div>
+                        </th>
+                        <!-- Ended By Paresh Sondigara : CR#152  : PO & Delivery Date -->
+
+                            <!-- <th class="" scope="col" style="width:190px;">
+                                <div class="slds-truncate" title="Inventory">Inventory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                            </th>
+                         -->
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={salesOrderList} for:item="item" for:index="index">
+                    <tr class="slds-hint-parent" key={item.id}>
+                        <th class="slds-truncate">
+                            {item.SKU_Name__r. SKU_Description__c}
+                        </th>
+
+                        <td class="slds-truncate" data-label="UOM" >
+                            {item.UOM__c}
+                        </td>
+
+                        <td class="slds-truncate" data-label="Base Price">
+                            <lightning-formatted-number value={item.Net_Price__c}>
+                            </lightning-formatted-number>
+                        </td>
+                        <td class="slds-truncate" data-label="Qty" style="width:140px;">
+                            <lightning-formatted-number value={item.Quantity__c}>
+                            </lightning-formatted-number>
+                            
+                        </td>
+
+                        <td class="slds-truncate" data-label="Multiple Of Qty">
+                            <lightning-formatted-number value={item.multipleOf__c}>
+                            </lightning-formatted-number>
+                            
+                        </td>
+
+                        <td class="slds-truncate" data-label="Pallet Size" style="width:70px;">
+                            <lightning-formatted-number value={item.pallet_Size_Italy__c}>
+                            </lightning-formatted-number>
+                        </td>
+
+                        <td class="slds-truncate" data-label="Early Order Discount">
+                            <lightning-formatted-number value={item.Early_Order_Discount__c}>
+                            </lightning-formatted-number>
+                        </td>
+
+                        <td class="slds-truncate" data-label="Big Volume Discount">
+                            <lightning-formatted-number value={item.Big_Volume_Discount__c}>
+                            </lightning-formatted-number>
+                        </td>
+
+                        <td class="slds-truncate" data-label="Manual Discount" style="width:70px;">
+                            <lightning-formatted-number value={item.Manual_Discount__c}>
+                            </lightning-formatted-number>
+                        </td>
+
+                        <td class="slds-truncate" data-label="Logistic Discount">
+                            <lightning-formatted-number value={item.Logistic_Discount__c}>
+                            </lightning-formatted-number>
+                        </td>
+                        
+
+                        <td class="slds-truncate" data-label="Final Price">
+                            <template if:true={isSfdcCreated}>
+                            <lightning-formatted-number value={item.Unit_Price__c}>
+                            </lightning-formatted-number>
+                            </template>
+                            <template if:true={isSAPCreated}>
+                                <lightning-formatted-number value={item.Net_Price__c}>
+                                </lightning-formatted-number>
+
+                            </template>
+
+                            <!-- net_price__c -->
+                        </td>
+
+                        <td class="slds-truncate" data-label="Net Value" style="width:210px;">
+                            <template if:true={isSfdcCreated}>
+                            <lightning-formatted-number value={item.FinalPrice__c}>
+                            </lightning-formatted-number>
+                        </template>
+                        <template if:true={isSAPCreated}>
+                            <lightning-formatted-number value={item.Price__c}>
+                            </lightning-formatted-number>
+                        </template>
+                            
+                        </td>
+
+                        <td class="slds-truncate" data-label="Payment Term">
+                           <template if:true={isSfdcCreated}>
+                            {item.Payment_Term__r.Payterms_Desc__c}
+                        </template>
+                       
+                        </td>
+
+                        <!-- Added By Paresh Sondigara : CR#152  : PO & Delivery Date -->
+                        <td class="slds-truncate" data-label="Delivery Date">
+                            <lightning-formatted-date-time value={item.Delivery_Date__c}></lightning-formatted-date-time>                       
+                        </td>
+                        <!-- Ended By Paresh Sondigara : CR#152  : PO & Delivery Date -->
+
+
+                        <!-- <td class="slds-truncate" data-label="Net Value" style="width:200px;">
+                            <lightning-formatted-number value={item.Inventory__c}>
+                            </lightning-formatted-number>
+                        </td> -->
+
+                        
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <div class="slds-grid slds-wrap" style="margin-top:10px;">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+                
+                
+                
+            </div>    
+            <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12"></div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                
+                <div style="border:1px solid #ccc; margin-top:10px; width:400px;" class="slds-scrollable_x">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="UOM">{label.UOM}</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Quantity">{label.Quantity}</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Total Net Price">{label.Total_Net_Price}</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <template if:true={ltrDisplay}>
+                                <tr class="slds-hint-parent">
+                        
+                                    <th data-label="Opportunity Name" scope="row">
+                                        <div class="slds-truncate" title="">{label.Litre}</div>
+                                    </th>
+                                    <td data-label="Account Name">
+                                        <div class="slds-truncate" title="">
+                                            <lightning-formatted-number value={qun_ltr1}></lightning-formatted-number>
+                                            
+                                        </div>
+                                    </td>
+                                    <td data-label="Close Date">
+                                        <div class="slds-truncate" title="">
+                                            <lightning-formatted-number value={qun_ltr_amt1} format-style="currency" currency-code="PLN">
+                                            </lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+
+                            <template if:true={kgDisplay}>
+                                <tr class="slds-hint-parent">
+                        
+                                    <th data-label="Opportunity Name" scope="row">
+                                        <div class="slds-truncate" title="">{label.KG}</div>
+                                    </th>
+                                    <td data-label="Account Name">
+                                        <div class="slds-truncate" title="">
+                                            <lightning-formatted-number value={qun_kg1}></lightning-formatted-number>
+                                            
+                                        </div>
+                                    </td>
+                                    <td data-label="Close Date">
+                                        <div class="slds-truncate" title="">
+                                            <lightning-formatted-number value={qun_kg_amt1} format-style="currency" currency-code="PLN">
+                                            </lightning-formatted-number>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+
+
+                         
+                        </tbody>
+                    </table>
+                </div> 
+            </div>
+            
+            <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-12">
+               
+
+
+                <table  class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="UOM">{label.Total_Amount}</div>
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="slds-hint-parent">
+                            <td data-label="Total Amount">
+                                <div class="slds-truncate" title="">
+                                    <lightning-formatted-number value={Gross_Net_Value} format-style="currency" currency-code="PLN">
+                                    </lightning-formatted-number>
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+
+
+
+
+
+                <!-- <table >
+                    <tr>
+                        <th>Total_Amount</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <lightning-formatted-number value={Gross_Net_Value} format-style="currency" currency-code="PLN">
+                            </lightning-formatted-number>
+                        </td>
+                    </tr>
+                </table> -->
+                <!-- <div> <b>Total_Amount</b></div>
+                <lightning-formatted-number value={Gross_Net_Value} format-style="currency" currency-code="PLN">
+                </lightning-formatted-number> -->
+                
+            </div>
+
+          
+        </div>
+
+
+
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#769ED9; margin-top:10px;">
+                <p style="color:#fff; padding:10px; font-weight:700;">{label.Step} 3: {label.Shipping_Address} </p>
+            </div>
+        </div> 
+
+
+        <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+              
+            
+            <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12" style="margin-top:10px;">
+                
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <label>{shippingLocation}</label>
+                        <div class="slds-text-body_regular">
+                            <template if:true={b1}>
+                                {Billing_Street_1}<br/>
+                            </template>
+                            <template if:true={b2}>
+                                {Billing_Street_2}<br/>
+                            </template>
+                            <template if:true={b3}>
+                                {Billing_Street_3}<br/>
+                            </template>
+                            <template if:true={b4}>
+                                {Billing_Street_4}<br/>
+                            </template>
+                            <template if:true={b5}>
+                                {Billing_Street_5}<br/>
+                            </template>
+                            <template if:true={b6}>
+                                {Billing_Street_6}<br/>
+                            </template>
+                            <template if:true={ci}>
+                                {City}<br/>
+                            </template>
+                            <template if:true={p}>
+                                {Pincode}<br/>
+                            </template>
+                            <template if:true={s}>
+                                {State}<br/>
+                            </template>
+                            <template if:true={r}>
+                                {Region}<br/>
+                            </template>
+                            <template if:true={co}>
+                                {Country}<br/>
+                            </template>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!--<lightning:textarea name="input1" label="SHIPPING ADDRESS" />-->
+                
+            </div> 
+            
+        </div>
+
+
+
+
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#769ED9; margin-top:10px;">
+                <p style="color:#fff; padding:10px; font-weight:700;">{label.Step} 4: {label.PO_Number}</p>
+            </div>
+        </div> 
+
+        <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+            <!-- Added By Paresh Sondigara : CR#152  : PO & Delivery Date --> 
+            <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">                
+                <lightning-input label={label.PO_Number} type="text"  disabled="true" value={PONumber} ></lightning-input>                               
+            </div>              
+            <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">                               
+                <lightning-input label={label.Purchase_Order_Date} type="text"  disabled="true" value={PODate} ></lightning-input>               
+            </div>
+            <!-- Ended By Paresh Sondigara : CR#152  : PO & Delivery Date -->
+            
+      
+            
+        </div>
+
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col" style="background:#769ED9; margin-top:10px;">
+                <!-- Added By Paresh Sondigara : CR#152  : PO & Delivery Date -->
+                <p style="color:#fff; padding:10px; font-weight:700;">{label.Note}:  {label.This_order_value_is_exclusive_of_taxes_Taxes_are_applicable_as_extra} <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{label.UPL_is_not_responsible_for_late_delivery}</p>
+                <!-- Ended By Paresh Sondigara : CR#152  : PO & Delivery Date -->
+            </div>
+        </div>
+        
+        
+
+        <div class="slds-grid slds-wrap slds-gutters" style="margin-top:10px;">
+            <div class="slds-col slds-size_1-of-1 slds-large-size_12-of-12">
+                <lightning-textarea class="slds-input" rows="2"
+                                  aura:id="remarks"
+                                  value={Remarks_Long} 
+                                  label={label.Remark} 
+                                  maxlength="128" 
+                                  disabled="true"> 
+                </lightning-textarea>
+                <div>{label.Note} :- {label.Only_128_character_allow}</div>
+            </div>
+            
+        </div>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+ 
+</template>

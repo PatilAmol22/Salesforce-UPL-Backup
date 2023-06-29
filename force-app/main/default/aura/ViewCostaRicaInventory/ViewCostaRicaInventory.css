@@ -1,0 +1,23 @@
+.THIS .my-select select {
+    background: transparent !important;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid #333;
+    border-radius: 0px;
+    font-size: 1.125rem;
+    font-weight: 800;
+  }
+  .THIS .my-multi-select {
+    height: 70px !important;
+  }
+  
+ /* .THIS thead {
+    position: sticky !important; // Updated for INC0418898 GRZ(Dheeraj Sharma) 05-12-2022
+    top: 0 !important;
+  }
+*/
+  .THIS .uiInput--checkbox input, .THIS input.uiInput--checkbox {
+    display: inline-block !important;
+    margin-left: 5px;
+  }

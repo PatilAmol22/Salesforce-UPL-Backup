@@ -1,0 +1,61 @@
+<template>
+    <div class="slds-form-element" style="z-index: 96;">
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class={boxClass} aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                    <template if:false={marketSelectedValue}>
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                <input type="text" class="slds-input slds-combobox__input " id="combobox-id-28" aria-activedescendant="option1" aria-autocomplete="list" aria-controls="listbox-id-17" role="textbox" placeholder="Search..." onfocus={changeHandler}  oninput={changeHandler1} onblur={onBlur} onclick={handleClick}/>
+                                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right validValue">
+                                        <lightning-icon icon-name="utility:search" alternative-text="search" size="xx-small"></lightning-icon>
+                                </span>
+                        </div>   
+                    </template>
+                    <template if:true={marketSelectedValue}>
+                        <div class="slds-combobox_container slds-has-selection">
+                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                            <span class="slds-icon_container slds-icon-custom-custom4 slds-combobox__input-entity-icon" title="Account">
+                                    <lightning-icon icon-name="standard:account" size="small" alternative-text="lookUp" ></lightning-icon>
+                            <span class="slds-assistive-text">Reference</span>
+                            </span>
+                            <input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" id="combobox-id-29" aria-controls="listbox-id-18" role="textbox"  value={marketSelectedRecordName} >
+                                <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" title="Remove selected option" onclick={removeValue}>
+                                        <lightning-icon icon-name="utility:close" alternative-text="close" size="xx-small"></lightning-icon>
+                                </button>
+                            </div>
+                            </div>
+                       </div> 
+                    </template> 
+                    <template if:true={marketRecordExist}>
+                        <div id="listbox-id-17" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                    <template for:each={marketSearchResults} for:item='item' for:index="index">
+                                            <li key={item.Market__c} id={item.Market__c} role="presentation" class="slds-listbox__item" onclick={onSelectValue} data-index={index} data-recordid={item.Market__c} >
+                                                    <div aria-selected="true" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta " role="option" tabindex="0">
+                                                    <span class="slds-media__figure slds-listbox__option-icon">
+                                                    <span class="slds-icon_container slds-icon-custom-custom4" id={item.Market__c} >
+                                                            <lightning-icon icon-name="standard:account" alternative-text="lookUp" size="small"></lightning-icon>
+                                                    </span>
+                                                    </span>
+                                                    <span class="slds-media__body">
+                                                    <span class="slds-listbox__option-text slds-listbox__option-text_entity">{item.Market__r.Name}</span>
+                                                    </span>
+                                                    </div>
+                                            </li>
+                                    </template>
+                              </ul>
+                        </div>
+                    </template>
+                    <template if:true={isMarketRecordNotFound}>
+                        <div class=" slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox" >
+                                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                        <div class="slds-align_absolute-center">{label.No_Result_Found}!  <a class="slds-var-p-left_small" onclick={createNewMarketRecord}>{label.Create_New} {label.Market}</a></div>
+                                </ul>        
+                            </div> 
+                    </template>      
+                </div>    
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,16 @@
+<template>
+    <div class='slds-border_top slds-border_bottom slds-border_left slds-border_right'>
+        <lightning-datatable
+        class="wrapped-header-datatable"
+                data={mydata}
+                columns={columns}
+                key-field="Id"
+                show-row-number-column
+                hide-checkbox-column
+                min-column-width="150px"      
+                onrowselection={getSelectedName}
+                onrowaction={handleRowAction}>
+        </lightning-datatable>
+    </div>
+        
+</template>
